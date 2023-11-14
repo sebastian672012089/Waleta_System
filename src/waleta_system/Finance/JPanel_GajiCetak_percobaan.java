@@ -1251,7 +1251,7 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
 
         txt_upah_cetak_t2.setEditable(false);
         txt_upah_cetak_t2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_upah_cetak_t2.setText("650");
+        txt_upah_cetak_t2.setText("700");
         txt_upah_cetak_t2.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txt_upah_cetak_t2KeyTyped(evt);

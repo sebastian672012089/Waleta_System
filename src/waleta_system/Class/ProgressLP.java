@@ -19,6 +19,7 @@ public class ProgressLP {
     private Date tgl_mulai_cabut;
     private Date tgl_selesai_cabut;
     private Date tgl_masuk_cetak;
+    private Date tgl_cetak_dikerjakan1;
     private Date tgl_selesai_cetak;
     private Date tgl_masuk_f2;
     private Date tgl_koreksi;
@@ -46,6 +47,7 @@ public class ProgressLP {
                         Date mulai_cabut, 
                         Date selesai_cabut, 
                         Date masuk_cetak, 
+                        Date tgl_cetak_dikerjakan1, 
                         Date selesai_cetak, 
                         Date masuk_f2, 
                         Date tgl_koreksi, 
@@ -72,6 +74,7 @@ public class ProgressLP {
         this.tgl_mulai_cabut = mulai_cabut;
         this.tgl_selesai_cabut = selesai_cabut;
         this.tgl_masuk_cetak = masuk_cetak;
+        this.tgl_cetak_dikerjakan1 = tgl_cetak_dikerjakan1;
         this.tgl_selesai_cetak = selesai_cetak;
         this.tgl_masuk_f2 = masuk_f2;
         this.tgl_koreksi = tgl_koreksi;
@@ -203,6 +206,14 @@ public class ProgressLP {
 
     public void setTgl_masuk_cetak(Date tgl_masuk_cetak) {
         this.tgl_masuk_cetak = tgl_masuk_cetak;
+    }
+
+    public Date getTgl_cetak_dikerjakan1() {
+        return tgl_cetak_dikerjakan1;
+    }
+
+    public void setTgl_cetak_dikerjakan1(Date tgl_cetak_dikerjakan1) {
+        this.tgl_cetak_dikerjakan1 = tgl_cetak_dikerjakan1;
     }
 
     public Date getTgl_selesai_cetak() {

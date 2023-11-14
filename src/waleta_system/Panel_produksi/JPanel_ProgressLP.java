@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,6 +58,23 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
     public ArrayList<ProgressLP> prosesList() {
         ArrayList<ProgressLP> prosesList = new ArrayList<>();
         try {
+            HashMap<String, Date[]> List_tanggal = new HashMap<>();
+            Utility.db_sub.connect();
+            String query = "SELECT `tb_cabut`.`no_laporan_produksi`, `tgl_mulai_cabut`, `tgl_cabut`, `tgl_setor_cabut`, `tb_cetak`.`tgl_mulai_cetak`, `tgl_selesai_cetak` "
+                    + "FROM `tb_cabut` "
+                    + "LEFT JOIN `tb_cetak` ON `tb_cabut`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi` "
+                    + "WHERE 1";
+            ResultSet result = Utility.db_sub.getStatement().executeQuery(query);
+            while (result.next()) {
+                Date[] Array_tanggal = new Date[]{
+                    result.getDate("tgl_mulai_cabut"),
+                    result.getDate("tgl_cabut"),
+                    result.getDate("tgl_setor_cabut"),
+                    result.getDate("tgl_mulai_cetak"),
+                    result.getDate("tgl_selesai_cetak")
+                };
+                List_tanggal.put(result.getString("no_laporan_produksi"), Array_tanggal);
+            }
             String filter_status = "";
             if (ComboBox_filter_status.getSelectedIndex() == 1) {
                 filter_status = "AND `tanggal_grading` IS NULL";
@@ -139,28 +157,67 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                         break;
                 }
                 jenis_filter_tanggal = "AND (" + jenis_filter_tanggal + " BETWEEN '" + dateFormat.format(Date_filter1.getDate()) + "' AND '" + dateFormat.format(Date_filter2.getDate()) + "')\n";
-            } 
-            sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`,`tb_laporan_produksi`.`no_kartu_waleta`,`tb_laporan_produksi`.`memo_lp`,`tb_laporan_produksi`.`kode_grade`, `jenis_bulu_lp`, `ruangan`, `jumlah_keping`, `berat_basah`, `tb_laporan_produksi`.`tanggal_lp`, `tanggal_rendam`, `tgl_masuk_cuci`, `tgl_mulai_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'mulai_cabut', `tgl_setor_cabut`, `tgl_mulai_cetak`, `tgl_selesai_cetak`, `tgl_masuk_f2`, `tgl_dikerjakan_f2`, `tgl_f1`, `tgl_f2`, `tgl_setor_f2`, `tb_lab_laporan_produksi`.`tgl_masuk`, `tb_lab_laporan_produksi`.`tgl_selesai`, `tanggal_grading`, `tb_tutupan_grading`.`status_box`, `tb_bahan_baku_masuk_cheat`.`no_registrasi` AS 'rsb_ct1' \n"
-                        + "FROM `tb_laporan_produksi` \n"
-                        + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
-                        + "LEFT JOIN `tb_rendam` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_rendam`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_cuci` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cuci`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_cabut` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_detail_pencabut` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_finishing_2` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`"
-                        + "LEFT JOIN `tb_lab_laporan_produksi` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_lab_laporan_produksi`.`no_laporan_produksi`"
-                        + "LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_bahan_jadi_masuk`.`kode_asal`\n"
-                        + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
-                        + "LEFT JOIN `tb_tutupan_grading` ON `tb_bahan_jadi_masuk`.`kode_tutupan` = `tb_tutupan_grading`.`kode_tutupan`\n"
-                        + "WHERE " + search + " LIKE '%" + txt_search_proses.getText() + "%' AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruang + "%' AND YEAR(`tb_laporan_produksi`.`tanggal_lp`)>=2018  AND `berat_basah` > 0 \n"
-                        + jenis_filter_tanggal
-                        + filter_status
-                        + " GROUP BY `tb_laporan_produksi`.`no_laporan_produksi`";
+            }
+            sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`,`tb_laporan_produksi`.`no_kartu_waleta`,`tb_laporan_produksi`.`memo_lp`,`tb_laporan_produksi`.`kode_grade`, `jenis_bulu_lp`, `ruangan`, `jumlah_keping`, `berat_basah`, "
+                    + "`tb_laporan_produksi`.`tanggal_lp`, `tanggal_rendam`, `tgl_masuk_cuci`, "
+                    + "`tgl_mulai_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'mulai_cabut', `tgl_setor_cabut`, "
+                    + "`tgl_mulai_cetak`, `tgl_cetak_dikerjakan1`, `tgl_selesai_cetak`, "
+                    + "`tgl_masuk_f2`, `tgl_dikerjakan_f2`, `tgl_f1`, `tgl_f2`, `tgl_setor_f2`, "
+                    + "`tb_lab_laporan_produksi`.`tgl_masuk`, `tb_lab_laporan_produksi`.`tgl_selesai`, "
+                    + "`tanggal_grading`, `tb_tutupan_grading`.`status_box`, `tb_bahan_baku_masuk_cheat`.`no_registrasi` AS 'rsb_ct1' \n"
+                    + "FROM `tb_laporan_produksi` \n"
+                    + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
+                    + "LEFT JOIN `tb_rendam` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_rendam`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_cuci` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cuci`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_cabut` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_detail_pencabut` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_finishing_2` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`"
+                    + "LEFT JOIN `tb_lab_laporan_produksi` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_lab_laporan_produksi`.`no_laporan_produksi`"
+                    + "LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_bahan_jadi_masuk`.`kode_asal`\n"
+                    + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
+                    + "LEFT JOIN `tb_tutupan_grading` ON `tb_bahan_jadi_masuk`.`kode_tutupan` = `tb_tutupan_grading`.`kode_tutupan`\n"
+                    + "WHERE " + search + " LIKE '%" + txt_search_proses.getText() + "%' AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruang + "%' AND YEAR(`tb_laporan_produksi`.`tanggal_lp`)>=2018  AND `berat_basah` > 0 \n"
+                    + jenis_filter_tanggal
+                    + filter_status
+                    + " GROUP BY `tb_laporan_produksi`.`no_laporan_produksi`";
             rs = Utility.db.getStatement().executeQuery(sql);
             ProgressLP proses;
             while (rs.next()) {
-                proses = new ProgressLP(rs.getString("no_laporan_produksi"), rs.getString("no_kartu_waleta"), rs.getString("memo_lp"), rs.getString("kode_grade"), rs.getString("jenis_bulu_lp"), rs.getString("ruangan"), rs.getInt("jumlah_keping"), rs.getInt("berat_basah"), rs.getDate("tanggal_lp"), rs.getDate("tanggal_rendam"), rs.getDate("tgl_masuk_cuci"), rs.getDate("tgl_mulai_cabut"), rs.getDate("mulai_cabut"), rs.getDate("tgl_setor_cabut"), rs.getDate("tgl_mulai_cetak"), rs.getDate("tgl_selesai_cetak"), rs.getDate("tgl_masuk_f2"), rs.getDate("tgl_dikerjakan_f2"), rs.getDate("tgl_f1"), rs.getDate("tgl_f2"), rs.getDate("tgl_setor_f2"), rs.getDate("tgl_masuk"), rs.getDate("tgl_selesai"), rs.getDate("tanggal_grading"), rs.getString("status_box"), rs.getString("rsb_ct1"));
+                proses = new ProgressLP(
+                        rs.getString("no_laporan_produksi"),
+                        rs.getString("no_kartu_waleta"),
+                        rs.getString("memo_lp"),
+                        rs.getString("kode_grade"),
+                        rs.getString("jenis_bulu_lp"),
+                        rs.getString("ruangan"),
+                        rs.getInt("jumlah_keping"),
+                        rs.getInt("berat_basah"),
+                        rs.getDate("tanggal_lp"),
+                        rs.getDate("tanggal_rendam"),
+                        rs.getDate("tgl_masuk_cuci"),
+                        //                        rs.getDate("tgl_mulai_cabut"),
+                        //                        rs.getDate("mulai_cabut"),
+                        //                        rs.getDate("tgl_setor_cabut"),
+                        //                        rs.getDate("tgl_mulai_cetak"),
+                        //                        rs.getDate("tgl_cetak_dikerjakan1"),
+                        rs.getDate("tgl_mulai_cabut") != null ? rs.getDate("tgl_mulai_cabut") : List_tanggal.get(rs.getString("no_laporan_produksi")) != null ? List_tanggal.get(rs.getString("no_laporan_produksi"))[0] : null,
+                        rs.getDate("mulai_cabut") != null ? rs.getDate("mulai_cabut") : List_tanggal.get(rs.getString("no_laporan_produksi")) != null ? List_tanggal.get(rs.getString("no_laporan_produksi"))[1] : null,
+                        rs.getDate("tgl_setor_cabut") != null ? rs.getDate("tgl_setor_cabut") : List_tanggal.get(rs.getString("no_laporan_produksi")) != null ? List_tanggal.get(rs.getString("no_laporan_produksi"))[2] : null,
+                        rs.getDate("tgl_mulai_cetak") != null ? rs.getDate("tgl_mulai_cetak") : List_tanggal.get(rs.getString("no_laporan_produksi")) != null ? List_tanggal.get(rs.getString("no_laporan_produksi"))[3] : null,
+                        rs.getDate("tgl_cetak_dikerjakan1") != null ? rs.getDate("tgl_cetak_dikerjakan1") : List_tanggal.get(rs.getString("no_laporan_produksi")) != null ? List_tanggal.get(rs.getString("no_laporan_produksi"))[4] : null,
+                        rs.getDate("tgl_selesai_cetak"),
+                        rs.getDate("tgl_masuk_f2"),
+                        rs.getDate("tgl_dikerjakan_f2"),
+                        rs.getDate("tgl_f1"),
+                        rs.getDate("tgl_f2"),
+                        rs.getDate("tgl_setor_f2"),
+                        rs.getDate("tgl_masuk"),
+                        rs.getDate("tgl_selesai"),
+                        rs.getDate("tanggal_grading"),
+                        rs.getString("status_box"),
+                        rs.getString("rsb_ct1")
+                );
                 prosesList.add(proses);
             }
         } catch (SQLException ex) {
@@ -175,6 +232,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
         double tot_berat_basah = 0;
         double avg_lama_tandon = 0, avg_lama_cabut = 0, avg_lama_koreksi = 0, avg_lama_cetak = 0, avg_lama_f2 = 0, avg_lama_QC = 0, avg_lama_proses = 0, avg_lama_grading = 0;
         int jumlah_tandon = 0, jumlah_cabut = 0, jumlah_koreksi = 0, jumlah_cetak = 0, jumlah_f2 = 0, jumlah_QC = 0, jumlah_proses = 0, jumlah_grading = 0;
+
         ArrayList<ProgressLP> list = prosesList();
         DefaultTableModel model = (DefaultTableModel) Table_progress_lp.getModel();
         Object[] row = new Object[35];
@@ -196,15 +254,16 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
             row[12] = list.get(i).getTgl_mulai_cabut();
             row[13] = list.get(i).getTgl_selesai_cabut();
             row[14] = list.get(i).getTgl_masuk_cetak();
-            row[15] = list.get(i).getTgl_selesai_cetak();
-            row[16] = list.get(i).getTgl_masuk_f2();
-            row[17] = list.get(i).getTgl_koreksi();
-            row[18] = list.get(i).getTgl_f1();
-            row[19] = list.get(i).getTgl_f2();
-            row[20] = list.get(i).getTgl_setor_f2();
-            row[21] = list.get(i).getTgl_masuk_lab();
-            row[22] = list.get(i).getTgl_setor_lab();
-            row[23] = list.get(i).getTgl_grading_bj();
+            row[15] = list.get(i).getTgl_cetak_dikerjakan1();
+            row[16] = list.get(i).getTgl_selesai_cetak();
+            row[17] = list.get(i).getTgl_masuk_f2();
+            row[18] = list.get(i).getTgl_koreksi();
+            row[19] = list.get(i).getTgl_f1();
+            row[20] = list.get(i).getTgl_f2();
+            row[21] = list.get(i).getTgl_setor_f2();
+            row[22] = list.get(i).getTgl_masuk_lab();
+            row[23] = list.get(i).getTgl_setor_lab();
+            row[24] = list.get(i).getTgl_grading_bj();
 
             long lama_tandon = 0;
             if (list.get(i).getTgl_cuci() != null) {
@@ -216,7 +275,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     lama_tandon = Math.abs(today.getTime() - list.get(i).getTgl_cuci().getTime());
                 }
             }
-            row[24] = TimeUnit.MILLISECONDS.toDays(lama_tandon);
+            row[25] = TimeUnit.MILLISECONDS.toDays(lama_tandon);
 
             long lama_cabut = 0;
             if (list.get(i).getTgl_masuk_cabut() != null) {
@@ -228,7 +287,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     lama_cabut = Math.abs(today.getTime() - list.get(i).getTgl_masuk_cabut().getTime());
                 }
             }
-            row[25] = TimeUnit.MILLISECONDS.toDays(lama_cabut);
+            row[26] = TimeUnit.MILLISECONDS.toDays(lama_cabut);
 
             long lama_koreksi = 0;
             if (list.get(i).getTgl_selesai_cabut() != null) {
@@ -240,7 +299,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     lama_koreksi = Math.abs(today.getTime() - list.get(i).getTgl_selesai_cabut().getTime());
                 }
             }
-            row[26] = TimeUnit.MILLISECONDS.toDays(lama_koreksi);
+            row[27] = TimeUnit.MILLISECONDS.toDays(lama_koreksi);
 
             long lama_cetak = 0;
             if (list.get(i).getTgl_masuk_cetak() != null) {
@@ -252,7 +311,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     lama_cetak = Math.abs(today.getTime() - list.get(i).getTgl_masuk_cetak().getTime());
                 }
             }
-            row[27] = TimeUnit.MILLISECONDS.toDays(lama_cetak);
+            row[28] = TimeUnit.MILLISECONDS.toDays(lama_cetak);
 
             long lama_f2 = 0;
             if (list.get(i).getTgl_masuk_f2() != null) {
@@ -264,7 +323,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     lama_f2 = Math.abs(today.getTime() - list.get(i).getTgl_masuk_f2().getTime());
                 }
             }
-            row[28] = TimeUnit.MILLISECONDS.toDays(lama_f2);
+            row[29] = TimeUnit.MILLISECONDS.toDays(lama_f2);
 
             long lama_qc = 0;
             if (list.get(i).getTgl_masuk_lab() != null) {
@@ -276,7 +335,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     lama_qc = Math.abs(today.getTime() - list.get(i).getTgl_masuk_lab().getTime());
                 }
             }
-            row[29] = TimeUnit.MILLISECONDS.toDays(lama_qc);
+            row[30] = TimeUnit.MILLISECONDS.toDays(lama_qc);
 
 //            Date tgl_masuk_lama_proses = list.get(i).getTgl_lp();
 //            Date tgl_keluar_lama_proses = list.get(i).getTgl_setor_lab();
@@ -290,7 +349,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     lama_proses = Math.abs(today.getTime() - list.get(i).getTgl_lp().getTime());
                 }
             }
-            row[30] = TimeUnit.MILLISECONDS.toDays(lama_proses);
+            row[31] = TimeUnit.MILLISECONDS.toDays(lama_proses);
 
             long lama_grading = 0;
             if (list.get(i).getTgl_setor_lab() != null) {
@@ -302,7 +361,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     lama_grading = Math.abs(today.getTime() - list.get(i).getTgl_setor_lab().getTime());
                 }
             }
-            row[31] = TimeUnit.MILLISECONDS.toDays(lama_grading);
+            row[32] = TimeUnit.MILLISECONDS.toDays(lama_grading);
 
             if ("SELESAI".equals(list.get(i).getStatus_box())) {
                 row[32] = "Barang Jadi";
@@ -350,33 +409,6 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                 Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
                 switch (column) {
-                    case 24:
-                        if ((long) Table_progress_lp.getValueAt(row, column) == 2) {
-                            if (isSelected) {
-                                comp.setBackground(Color.gray);
-                                comp.setForeground(Color.yellow);
-                            } else {
-                                comp.setBackground(Color.yellow);
-                                comp.setForeground(Color.BLACK);
-                            }
-                        } else if ((long) Table_progress_lp.getValueAt(row, column) > 2) {
-                            if (isSelected) {
-                                comp.setBackground(Color.gray);
-                                comp.setForeground(Color.WHITE);
-                            } else {
-                                comp.setBackground(Color.PINK);
-                                comp.setForeground(Color.red);
-                            }
-                        } else {
-                            if (isSelected) {
-                                comp.setBackground(Table_progress_lp.getSelectionBackground());
-                                comp.setForeground(Table_progress_lp.getSelectionForeground());
-                            } else {
-                                comp.setBackground(Table_progress_lp.getBackground());
-                                comp.setForeground(Table_progress_lp.getForeground());
-                            }
-                        }
-                        break;
                     case 25:
                         if ((long) Table_progress_lp.getValueAt(row, column) == 2) {
                             if (isSelected) {
@@ -432,6 +464,33 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                         }
                         break;
                     case 27:
+                        if ((long) Table_progress_lp.getValueAt(row, column) == 2) {
+                            if (isSelected) {
+                                comp.setBackground(Color.gray);
+                                comp.setForeground(Color.yellow);
+                            } else {
+                                comp.setBackground(Color.yellow);
+                                comp.setForeground(Color.BLACK);
+                            }
+                        } else if ((long) Table_progress_lp.getValueAt(row, column) > 2) {
+                            if (isSelected) {
+                                comp.setBackground(Color.gray);
+                                comp.setForeground(Color.WHITE);
+                            } else {
+                                comp.setBackground(Color.PINK);
+                                comp.setForeground(Color.red);
+                            }
+                        } else {
+                            if (isSelected) {
+                                comp.setBackground(Table_progress_lp.getSelectionBackground());
+                                comp.setForeground(Table_progress_lp.getSelectionForeground());
+                            } else {
+                                comp.setBackground(Table_progress_lp.getBackground());
+                                comp.setForeground(Table_progress_lp.getForeground());
+                            }
+                        }
+                        break;
+                    case 28:
                         if ((long) Table_progress_lp.getValueAt(row, column) == 3) {
                             if (isSelected) {
                                 comp.setBackground(Color.gray);
@@ -458,7 +517,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                             }
                         }
                         break;
-                    case 28://lama F2
+                    case 29://lama F2
                         if ((long) Table_progress_lp.getValueAt(row, column) == 4) {
                             if (isSelected) {
                                 comp.setBackground(Color.gray);
@@ -652,14 +711,14 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
 
             },
             new String [] {
-                "No LP", "No Kartu", "Memo", "Grade", "Bulu Upah", "Ruang", "Kpg", "Gram", "Tgl LP", "Rendam", "Cuci", "Cabut", "Mulai Cabut", "Selesai Cbt", "Cetak", "Selesai Ctk", "F2", "Koreksi F2", "F1", "F2", "Selesai F2", "QC", "Selesai QC", "Grading BJ", "Lama Tandon", "Lama Cabut", "Lama Koreksi", "Lama Cetak", "Lama F2", "Lama QC", "Lama Proses", "Lama Grading", "Status", "RSB CT 1"
+                "No LP", "No Kartu", "Memo", "Grade", "Bulu Upah", "Ruang", "Kpg", "Gram", "Tgl LP", "Rendam", "Cuci", "Cabut", "Mulai Cabut", "Selesai Cbt", "Masuk Cetak", "Selesai Ctk T1", "Selesai Ctk", "F2", "Koreksi F2", "F1", "F2", "Selesai F2", "QC", "Selesai QC", "Grading BJ", "Lama Tandon", "Lama Cabut", "Lama Koreksi", "Lama Cetak", "Lama F2", "Lama QC", "Lama Proses", "Lama Grading", "Status", "RSB CT 1"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

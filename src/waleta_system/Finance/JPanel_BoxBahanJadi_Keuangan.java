@@ -1,16 +1,12 @@
 package waleta_system.Finance;
 
 import java.awt.event.KeyEvent;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,29 +14,9 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
-import net.sf.jasperreports.view.JasperViewer;
-import waleta_system.BahanJadi.JDialog_Create_LPSuwir;
-import waleta_system.BahanJadi.JDialog_Edit_rePacking;
-import waleta_system.BahanJadi.JDialog_Insert_Edit_kinerjaGBJ;
-import waleta_system.BahanJadi.JDialog_Out;
-import waleta_system.BahanJadi.JDialog_Setor_Packing;
-import waleta_system.BahanJadi.JDialog_rePacking;
-import waleta_system.BahanJadi.JDialog_reProcess;
-import waleta_system.BahanJadi.JDialog_terima_retur;
-import waleta_system.BahanJadi.JDialog_treatment_box;
-import waleta_system.BahanJadi.JFrame_Reproses_Belum_Repack;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Class.Utility;
-import waleta_system.Packing.JDialog_new_SPK_SE_Lokal;
 
 public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
 
