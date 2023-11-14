@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Pengiriman" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.2100000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<queryString>
+		<![CDATA[SELECT `tb_laporan_produksi_tv2`.`no_laporan_produksi`, `no_kartu_waleta`, `tb_laporan_produksi_tv2`.`kode_grade`, `kode_rsb`, `tgl_masuk`, `tgl_uji`, `tgl_selesai`, GREATEST(`nitrit_utuh`,`jidun`, `nitrit_flat`) AS 'nitrit', 0 AS 'nitrit_treatment', `status_akhir`
+FROM `tb_lab_laporan_produksi`
+LEFT JOIN `tb_laporan_produksi_tv2` ON `tb_lab_laporan_produksi`.`no_laporan_produksi` = `tb_laporan_produksi_tv2`.`no_laporan_produksi`
+ORDER BY `tgl_uji` ASC]]>
+	</queryString>
+	<field name="no_laporan_produksi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_kartu_waleta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_grade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_rsb" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_masuk" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_uji" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_selesai" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nitrit" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nitrit_treatment" class="java.lang.Long"/>
+	<field name="status_akhir" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="130" y="0" width="245" height="75" uuid="40e54398-17de-47a4-8a8c-a7090df84273"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph spacingBefore="5"/>
+				</textElement>
+				<text><![CDATA[CATATAN PENGUJIAN SODIUM NITRIT SEMI BARANG JADI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="375" y="0" width="70" height="15" uuid="20f530eb-d7a6-4eaa-92fe-c8ae014479e1"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[No Dokumen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="375" y="15" width="70" height="15" uuid="4171a1ae-c1b5-41a1-96e2-184e0625167d"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[No Revisi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="375" y="30" width="70" height="15" uuid="6520effd-1275-4076-8dee-20b3995d3b7b"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="375" y="45" width="70" height="30" uuid="3fad08bd-281a-4a16-9c19-e761bbcdc2f8"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Menggantikan dokumen no.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="445" y="0" width="10" height="15" uuid="f91668b5-73e5-4035-8cf0-bcbda0ef20c1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="445" y="15" width="10" height="15" uuid="4b3da31a-27db-43db-ad2d-db02b02ae577"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="445" y="30" width="10" height="15" uuid="012f2916-24f5-48cf-b17f-e412ac7fe082"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="445" y="45" width="10" height="30" uuid="2914133f-1ce9-4a64-93bf-a9e1ea7975ad"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="455" y="0" width="100" height="15" uuid="e5d04af7-f626-456a-bd31-bb9c1aab4880"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[FR/WAJ/QC/07/e]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="455" y="15" width="100" height="15" uuid="f9da1d4e-3103-4e63-a451-238336cc738d"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[03]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="455" y="45" width="100" height="30" uuid="725b8965-163f-4987-b7c5-51bd100c9246"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[FR/WAJ/QC/07/b]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="455" y="30" width="100" height="15" uuid="0bd9c6c6-672c-4f32-8daf-db207ff4fcb8"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[01 November 2022]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="130" height="30" uuid="a641d52b-9a27-464a-ac8d-e2063ab1ab79"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="11" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[PT. WALETA ASIA JAYA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="0" y="30" width="130" height="45" uuid="aa4dca7a-6071-4496-bfdc-e0d142923b2a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[DEPARTEMEN QUALITY CONTROL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="15" width="245" height="60" forecolor="#000000" uuid="4da26c51-4290-472f-b9f9-5eea0ed1ac04"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[RECORD OF SODIUM NITRITE TEST OF SEMI FINISHED GOODS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="120" y="15" width="100" height="15" forecolor="#000000" uuid="84065f79-7714-46a0-b5b3-1db516bde78a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Card Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="120" height="30" forecolor="#000000" uuid="bd9aea6f-081d-49a3-9f5e-bf223cc126e7"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="9" isBold="true"/>
+					<paragraph spacingBefore="3"/>
+				</textElement>
+				<text><![CDATA[No Laporan Produksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="485" y="0" width="70" height="30" forecolor="#000000" uuid="314f1b8d-04ae-4edb-81cc-d480bfed984e"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="9" isBold="true"/>
+					<paragraph spacingBefore="3"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="15" width="70" height="15" forecolor="#000000" uuid="7ba7e641-588e-4caa-bf21-910f500f401d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Date of test]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="220" y="0" width="110" height="30" forecolor="#000000" uuid="c33fec7a-564b-420f-88bf-88e525baf2f2"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="9" isBold="true"/>
+					<paragraph spacingBefore="3"/>
+				</textElement>
+				<text><![CDATA[Grade Barang Jadi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="400" y="0" width="85" height="30" forecolor="#000000" uuid="35d9e9a6-8bb2-4971-9533-730685187012"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="9" isBold="true"/>
+					<paragraph spacingBefore="3"/>
+				</textElement>
+				<text><![CDATA[Sodium Nitrit (ppm)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="15" width="110" height="15" forecolor="#000000" uuid="dafdace9-cb19-4edd-b24f-2f2c0ec176c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Grade of Finished Goods]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="15" width="85" height="15" forecolor="#000000" uuid="bcc81ff4-dfe8-4011-8333-ab49cca21e98"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Sodium NItrite (ppm)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="15" width="70" height="15" forecolor="#000000" uuid="938602be-1961-42d9-a2c0-d18c03db0165"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="330" y="0" width="70" height="30" forecolor="#000000" uuid="40e1c37d-55d5-4045-9bbf-cee8fc3e467d"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="9" isBold="true"/>
+					<paragraph spacingBefore="3"/>
+				</textElement>
+				<text><![CDATA[Tanggal Uji]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="120" height="15" forecolor="#000000" uuid="51ebd95a-330b-4c5b-91a4-85dd34c3326c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Production Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="120" y="0" width="100" height="30" forecolor="#000000" uuid="c149105c-50ae-4c93-9bed-1b1ff8f83b05"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="9" isBold="true"/>
+					<paragraph spacingBefore="3"/>
+				</textElement>
+				<text><![CDATA[No Kartu]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement style="Detail" x="400" y="0" width="85" height="15" uuid="f8fb7274-70dd-406f-8265-daa9f4a09555"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nitrit}>21?$F{nitrit_treatment}:$F{nitrit}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Detail" x="485" y="0" width="70" height="15" uuid="3040f37a-46c7-480e-94e4-7ed06c807506"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{status_akhir}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Detail" x="330" y="0" width="70" height="15" uuid="eee6ef71-d2e6-4ba6-bd1c-ddb6f03cc3ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy").format($F{tgl_uji})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="120" height="15" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="220" y="0" width="110" height="15" uuid="6ef51509-e02f-4603-896e-30441ba40ace"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kode_grade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="120" y="0" width="100" height="15" uuid="f39e115c-948b-447c-a524-1540170b9b60"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_kartu_waleta} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="83" splitType="Stretch">
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+				<reportElement x="160" y="18" width="120" height="65" uuid="e0161475-283c-4564-a7cd-05d3541eb8b5"/>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD Kholipah.png"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+				<reportElement x="280" y="18" width="120" height="65" uuid="22b414b3-de9f-4569-8319-6272e199794e"/>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD Hani.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="TTD" x="160" y="13" width="120" height="20" uuid="edc21156-a64b-4b4e-9bdd-a4beedd6aaf3"/>
+				<textElement verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Dilaporkan Oleh:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="280" y="13" width="120" height="20" uuid="5e36b204-0c9d-446c-b1e7-65314e4814fb"/>
+				<textElement verticalAlignment="Top">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Disetujui oleh :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="13" width="120" height="20" forecolor="#000000" uuid="d150f72b-3560-497a-990c-4661ae085f4e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Approved by :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="13" width="120" height="20" forecolor="#000000" uuid="edd3348a-b34d-4ca8-9dcf-242a15f9d76d"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reported by :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="280" y="33" width="120" height="50" uuid="1cc4add7-a60b-4a07-97ab-6c8ccdaa1d88"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="160" y="33" width="120" height="50" uuid="0ab24a25-bae5-4e3d-992c-e9a60984b676"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement style="Page footer" x="515" y="63" width="40" height="20" forecolor="#000000" uuid="2f63bff7-d4ce-4657-9401-46a39ec0f090"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page footer" x="435" y="63" width="80" height="20" forecolor="#000000" uuid="1dcec066-63fd-4366-87a9-0e33ccc62a0b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Halaman "+$V{PAGE_NUMBER}+" dari"]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+				<reportElement x="303" y="10" width="120" height="65" uuid="68bf6019-e3cc-44cf-8939-5704b1b5d928"/>
+				<imageExpression><![CDATA["Report\\ReportImages\\QC PASED.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

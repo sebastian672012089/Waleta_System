@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Data_Repacking_subreportDataAsal" pageWidth="535" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="98585139-60dd-497d-b830-adb7d6db58b7">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<parameter name="PARAM_KODE_REPACKING" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT `kode_repacking`, `tb_repacking`.`no_box`, `kode_grade`, `tb_repacking`.`keping`, `tb_repacking`.`gram`, `status`, `tb_box_bahan_jadi`.`status_terakhir`, `tb_box_bahan_jadi`.`lokasi_terakhir` FROM `tb_repacking` JOIN `tb_box_bahan_jadi` ON `tb_repacking`.`no_box` = `tb_box_bahan_jadi`.`no_box` JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode` WHERE `kode_repacking` = $P{PARAM_KODE_REPACKING} AND `status` = 'ASAL']]>
+	</queryString>
+	<field name="kode_repacking" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_box" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_grade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="keping" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gram" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status_terakhir" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="lokasi_terakhir" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TotalBiji" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{keping}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalBerat" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{gram}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement style="Page header" x="0" y="0" width="535" height="15" forecolor="#000000" uuid="7a753a2b-2716-48fa-ae83-8df5b8787160"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Tabel Data Asal Re-Packing]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="310" y="0" width="75" height="15" forecolor="#000000" uuid="81803384-89b1-4af2-a8f9-62f5399202d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Gram]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="110" height="15" forecolor="#000000" uuid="40f8f50a-971c-4602-9492-4833de1926e0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[No Box]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="110" y="0" width="125" height="15" forecolor="#000000" uuid="e4c3d34f-c5a1-440d-a975-243ada6ee83f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Grade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="235" y="0" width="75" height="15" forecolor="#000000" uuid="eabe248b-35a8-433c-be65-ea6c2b3c5703"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Keping]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="385" y="0" width="75" height="15" forecolor="#000000" uuid="38affdad-4012-4982-bf02-5269b96b2fdf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Status Box]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="460" y="0" width="75" height="15" forecolor="#000000" uuid="1a2d1792-26fe-4894-84cb-483c472aced2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Lokasi Box]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement style="Detail" x="110" y="0" width="125" height="15" uuid="a08a2718-0729-4b5f-899f-c1bb14e256cb"/>
+				<textElement>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kode_grade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="310" y="0" width="75" height="15" uuid="42b4c39f-07bc-48ba-b4ac-927e49cc2f4c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[Math.round($F{gram})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="110" height="15" uuid="c1ef97ac-4e54-4324-ba29-04c2f3cf5b22"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{no_box}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="235" y="0" width="75" height="15" uuid="36ad62ac-468c-4c31-a911-b4092cfe4bd5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{keping}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="385" y="0" width="75" height="15" uuid="64c8a505-a16f-429f-adbc-77c5315c3cd0"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{status_terakhir}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="460" y="0" width="75" height="15" uuid="94081aa2-8c04-4a48-a207-fa9ae80079c9"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{lokasi_terakhir}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column footer" x="0" y="0" width="235" height="15" forecolor="#000000" uuid="9792ed1e-6698-4f9d-9944-478262ad812f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Column footer" x="310" y="0" width="75" height="15" forecolor="#000000" uuid="716e8f48-0bad-4907-9160-3975331cd505"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{TotalBerat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Column footer" x="235" y="0" width="75" height="15" forecolor="#000000" uuid="5347f5fb-c00a-4be8-8a04-81e9208334b2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[$V{TotalBiji}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="385" y="0" width="150" height="15" forecolor="#000000" uuid="77b4955d-5a32-47db-88c1-d4b73973b24f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

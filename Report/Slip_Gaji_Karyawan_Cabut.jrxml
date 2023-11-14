@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Slip Gaji Karyawan Cabut" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" backcolor="#CCCCCC" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" mode="Transparent" forecolor="#000000" backcolor="#FFFFFF" fill="Solid" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<parameter name="PERIODE_AWAL" class="java.util.Date"/>
+	<parameter name="PERIODE_AKHIR" class="java.util.Date"/>
+	<parameter name="ID_PEGAWAI" class="java.lang.String"/>
+	<parameter name="NAMA_PEGAWAI" class="java.lang.String"/>
+	<parameter name="GRUP" class="java.lang.String"/>
+	<parameter name="TUNJANGAN_HADIR" class="java.lang.Double"/>
+	<parameter name="BONUS_LP" class="java.lang.Double"/>
+	<parameter name="BONUS_MK_UTUH" class="java.lang.Double"/>
+	<parameter name="BONUS_PENCAPAIAN_PRODUKSI" class="java.lang.Double"/>
+	<parameter name="BONUS_TBT" class="java.lang.Double"/>
+	<parameter name="POT_TRANSPORT" class="java.lang.Double"/>
+	<parameter name="POT_BPJS" class="java.lang.Double"/>
+	<parameter name="POT_BPJS_TK" class="java.lang.Double"/>
+	<parameter name="PIUTANG" class="java.lang.Double"/>
+	<parameter name="GAJI_BORONG" class="java.lang.Double"/>
+	<parameter name="GAJI_HARIAN" class="java.lang.Double"/>
+	<parameter name="KETERANGAN" class="java.lang.String"/>
+	<parameter name="LEMBUR" class="java.lang.Double"/>
+	<parameter name="HALAMAN" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[(SELECT `tgl_setor_cabut`,`tb_detail_pencabut`.`no_laporan_produksi` AS 'no_box', `jumlah_cabut`, `jumlah_gram`, ROUND(`jumlah_gram` * `tb_tarif_cabut`.`tarif_gram`) AS 'upah_borong_cabut'
+FROM `tb_detail_pencabut`
+LEFT JOIN `tb_laporan_produksi` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`
+LEFT JOIN `tb_tarif_cabut` ON `tb_laporan_produksi`.`jenis_bulu_lp` = `tb_tarif_cabut`.`bulu_upah`
+LEFT JOIN `tb_cabut` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`
+WHERE `tb_detail_pencabut`.`id_pegawai` = $P{ID_PEGAWAI} AND (`tgl_setor_cabut` BETWEEN $P{PERIODE_AWAL} AND $P{PERIODE_AKHIR}))
+UNION ALL
+(SELECT `tb_reproses`.`tgl_cabut_selesai` AS 'tgl_setor_cabut', `tb_reproses`.`no_box`, `jumlah_cabut`, `jumlah_gram`, ROUND(`jumlah_gram` * `tb_grade_bahan_jadi`.`upah_reproses`) AS 'upah_cabut'
+FROM `tb_reproses_pencabut`
+LEFT JOIN `tb_reproses` ON `tb_reproses_pencabut`.`no_reproses` = `tb_reproses`.`no_reproses`
+LEFT JOIN `tb_box_bahan_jadi` ON `tb_reproses`.`no_box` = `tb_box_bahan_jadi`.`no_box`
+LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`
+WHERE `tb_reproses_pencabut`.`id_pegawai` = $P{ID_PEGAWAI} AND (`tgl_cabut_selesai` BETWEEN $P{PERIODE_AWAL} AND $P{PERIODE_AKHIR}))
+ORDER BY `tgl_setor_cabut`]]>
+	</queryString>
+	<field name="tgl_setor_cabut" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_box" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_cabut" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_gram" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="upah_borong_cabut" class="java.lang.Double"/>
+	<variable name="TotalBiji" class="java.lang.Integer" resetType="Group" resetGroup="GroupTanggalCabut" calculation="Sum">
+		<variableExpression><![CDATA[$F{jumlah_cabut} == null ? 0 : $F{jumlah_cabut}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalBerat" class="java.lang.Integer" resetType="Group" resetGroup="GroupTanggalCabut" calculation="Sum">
+		<variableExpression><![CDATA[$F{jumlah_gram} == null ? 0 : $F{jumlah_gram}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalHarga" class="java.lang.Integer" resetType="Group" resetGroup="GroupTanggalCabut" calculation="Sum">
+		<variableExpression><![CDATA[$F{upah_borong_cabut} == null ? 0 : $F{upah_borong_cabut}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="GroupTanggalCabut">
+		<groupExpression><![CDATA[$F{tgl_setor_cabut}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="16">
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="0" width="555" height="16" forecolor="#FFFFFF" backcolor="#DCDCDC" uuid="f86283e8-567b-4b01-9644-18ba7dabb73c"/>
+				</rectangle>
+				<staticText>
+					<reportElement style="Page footer" x="0" y="0" width="325" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="8021dfa5-1ae4-470f-a62e-870726477212"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+						<font size="11" isBold="true"/>
+						<paragraph leftIndent="5" rightIndent="5"/>
+					</textElement>
+					<text><![CDATA[Total / hari]]></text>
+				</staticText>
+				<textField pattern="#,##0" isBlankWhenNull="true">
+					<reportElement style="Page footer" x="425" y="0" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="0c4d2654-661f-4db3-b018-7ca1c1595c6d"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+						<font size="11" isBold="true"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TotalHarga}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0" isBlankWhenNull="true">
+					<reportElement style="Page footer" x="375" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="6ac474ad-808d-483d-bd52-e84ca25501fb"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+						<font size="11" isBold="true"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TotalBerat}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="Page footer" x="325" y="0" width="50" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="c51e1dab-63d0-409d-87b0-f786fe955029"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+						<font size="11" isBold="true"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TotalBiji}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="48">
+			<staticText>
+				<reportElement style="Page header" x="0" y="16" width="80" height="16" uuid="1a164796-653c-496c-990e-b9af84f8ee1b"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nama Karyawan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="0" y="32" width="80" height="16" uuid="a3c4f966-2f10-4bee-8498-542d84d5c9d8"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Periode]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Page header" x="185" y="32" width="15" height="16" uuid="103da710-1b7a-4a0b-bf3f-e2f29abc17ce"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODE_AWAL}==null?"":"s/d"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="80" y="16" width="5" height="16" uuid="ef79891e-3a26-4409-81d4-af987b5bdd62"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="80" y="32" width="5" height="16" uuid="2722452c-6221-4267-bafb-b49ff7dec318"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Page header" isPrintRepeatedValues="false" x="85" y="16" width="470" height="16" uuid="5322588d-f92a-41c3-b9d3-5b3c8d66e380"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NAMA_PEGAWAI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="85" y="32" width="100" height="16" uuid="b5825418-ca5d-4980-adfb-6919e7e70bed"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODE_AWAL}==null?"All":new SimpleDateFormat("dd-MMM-yy").format($P{PERIODE_AWAL})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="200" y="32" width="100" height="16" uuid="a602bf73-9580-415c-9471-2234e2dd41a8"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODE_AKHIR}==null?"":new SimpleDateFormat("dd-MMM-yy").format($P{PERIODE_AKHIR})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="300" y="32" width="255" height="16" uuid="ccf2d9cb-819e-49b3-8279-ac752dc4bd92"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{GRUP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" isPrintRepeatedValues="false" x="85" y="0" width="180" height="16" uuid="b5a589b1-af50-4e00-924e-d22118eb9d1a"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ID_PEGAWAI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="80" y="0" width="5" height="16" uuid="4e88eb31-2c66-4a72-b9be-fe163a18cada"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="0" y="0" width="80" height="16" uuid="ee636a9e-1a50-4810-8c43-d2729e22e581"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ID Pegawai]]></text>
+			</staticText>
+			<textField pattern="EEEEE, dd MMMMM yyyy">
+				<reportElement x="265" y="0" width="290" height="16" forecolor="#000000" uuid="80d67c93-8e55-479f-9825-8914e337a05f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Printed : " + new SimpleDateFormat("EEEEE, dd MMMM yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="25" height="16" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="125" y="0" width="200" height="16" forecolor="#000000" uuid="271511c0-79c9-4c8f-840e-dfb232dfad6a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[LP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="325" y="0" width="50" height="16" forecolor="#000000" uuid="ad8695c3-1364-4f1d-8a93-dd1d7c12ef82"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Kpg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="425" y="0" width="130" height="16" forecolor="#000000" uuid="1bedefc9-9690-4df9-a875-52d9613065e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Rp]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="375" y="0" width="50" height="16" forecolor="#000000" uuid="b6bdcebf-9667-4461-b082-1b1c92210496"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Gram]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="25" y="0" width="100" height="16" forecolor="#000000" uuid="0c716877-6b10-4ffd-877e-0634fd176f86"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="16" uuid="ceb3e7bd-a5cc-494b-873f-f1f6d6f4e1ca"/>
+				<textField pattern="#,##0.0">
+					<reportElement style="Detail" x="375" y="0" width="50" height="16" uuid="530e4807-2100-4acc-ada1-2dcd8500b1f7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jumlah_gram}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" x="425" y="0" width="130" height="16" uuid="483ae050-6146-4f0b-9492-338e794d0d15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{upah_borong_cabut}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="325" y="0" width="50" height="16" uuid="f8fb7274-70dd-406f-8265-daa9f4a09555"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jumlah_cabut}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="0" y="0" width="25" height="16" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="125" y="0" width="200" height="16" uuid="8cc6c0fa-3300-4787-a405-26696f83ae08"/>
+					<textElement verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{no_box}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="25" y="0" width="100" height="16" uuid="31df8bbf-d406-4285-a63e-19f89b38db22"/>
+					<textElement verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy").format($F{tgl_setor_cabut})]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="239">
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="32" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="2df0423d-eb31-4a40-977b-27abfa1825e1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LEMBUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="32" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="69be8525-be89-4dee-b494-c7b8e55c51ee"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Total Lembur]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="48" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="56e76f6e-5f4c-4f49-9de1-c7dd1b048ca2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TUNJANGAN_HADIR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="48" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="8f73a0df-7372-4492-8dd8-5355e41e5efe"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Tunjangan Hadir]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="64" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="30e40de9-babd-4d6f-8184-c97936706754"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BONUS_LP}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="64" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="5a0b8de7-da10-49c0-a121-155e750844e6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Bonus LP]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="80" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="817d4e87-8084-4c72-895e-1cda44abe865"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BONUS_MK_UTUH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="80" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="599a1066-285f-4e20-8d68-58a48908f679"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Bonus MK Utuh]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="112" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="46ec992a-83bb-40d6-9d1e-538cce783af2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BONUS_TBT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="112" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="14254d69-2a02-4fb5-be95-9ee2ed3906ec"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Bonus Teman Bawa Teman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="128" width="555" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="7b866483-10d4-44cf-a2e5-c705731dd965"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Dikurangi:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="160" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="9e3f1f4f-e2c4-417a-ad01-175f61be2f1a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{POT_BPJS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="160" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="5fb8594e-69e4-4887-a165-146ee31e571b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Potongan BPJS KS]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="208" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="dbfd4fdc-e097-4873-8fef-111cfac988c5"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{GAJI_BORONG}+$P{GAJI_HARIAN}+$P{LEMBUR}+$P{TUNJANGAN_HADIR}+$P{BONUS_LP}+$P{BONUS_MK_UTUH}+$P{BONUS_TBT}+$P{BONUS_PENCAPAIAN_PRODUKSI}+$P{PIUTANG})-($P{POT_TRANSPORT}+$P{POT_BPJS}+$P{POT_BPJS_TK})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="0" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="a5f5c43a-df01-47d9-80e3-9531853668d0"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Total Gaji Cabutan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="192" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="e3c501c2-f3fa-49e8-b1d3-de3f7d9af812"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Piutang Karyawan]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="192" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="e730e7f2-adfb-4252-8bd5-d48b073e6315"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PIUTANG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="0" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="0c998d35-5a69-4d61-a0d4-2f1e20891f61"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{GAJI_BORONG}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="208" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="c0e6c4c1-b4f7-4e45-83fd-d251d7fee712"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="0" y="224" width="475" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="5acec1ea-f11c-44a5-80dd-8a71890d737c"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ket : " + $P{KETERANGAN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="176" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="9b4bf2c7-c24d-495e-aba2-5250c2a124d0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{POT_BPJS_TK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="176" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="bea35079-15f0-468d-acf6-e87e09f0b4ce"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Potongan BPJS TK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="144" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="d45969cc-7842-4db6-a3b5-58f8933ceaa6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Potongan Transport]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="144" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="5d364019-cff8-443d-9a40-f655c05099cb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{POT_TRANSPORT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="16" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="2da678ff-b938-40c6-a60a-8937009f1963"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{GAJI_HARIAN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="16" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="e6185104-ab87-4598-a49f-283b07168396"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Total Gaji Harian]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="475" y="224" width="80" height="15" forecolor="#000000" uuid="42bf7bc4-ad25-45dc-ba2d-35cef22a4144"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Halaman "+$P{HALAMAN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="96" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="3224a66e-27b8-4cf6-9197-f6ed273fff59"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Bonus Pencapaian Produksi]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="96" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="135f170d-cefe-46ff-8028-051a131018f9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BONUS_PENCAPAIAN_PRODUKSI}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

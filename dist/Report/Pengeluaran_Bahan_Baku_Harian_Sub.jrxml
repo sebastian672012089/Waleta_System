@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Pengeluaran Bahan Baku Harian" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{grup_lp}.intValue()%2==0]]></conditionExpression>
+			<style backcolor="#E6E6E6" fill="Solid"/>
+		</conditionalStyle>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<parameter name="IF_JDN_WLT" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CHEAT" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT `no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `tarif_sub`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`, `cheat_no_kartu`, `cheat_rsb`, `cheat_tgl_lp`
+FROM `tb_laporan_produksi`
+LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`
+LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`
+LEFT JOIN `tb_tarif_cabut` ON `tb_laporan_produksi`.`jenis_bulu_lp` = `tb_tarif_cabut`.`bulu_upah`
+LEFT JOIN
+(SELECT `tanggal_lp`, `ruangan`, `grup_lp`, CONCAT(`tanggal_lp`, `ruangan`, `grup_lp`) AS 'kode', SUM(CEIL(`keping_upah`/`kpg_lp`*10000.0)/10000.0) AS 'bobot'
+ FROM `tb_laporan_produksi`
+ LEFT JOIN `tb_tarif_cabut` ON `tb_laporan_produksi`.`jenis_bulu_lp` = `tb_tarif_cabut`.`bulu_upah`
+ WHERE 1 GROUP BY `tanggal_lp`, `ruangan`, `grup_lp`) AS y
+ ON `tb_laporan_produksi`.`tanggal_lp` = y.`tanggal_lp` AND `tb_laporan_produksi`.`ruangan` = y.`ruangan` AND `tb_laporan_produksi`.`grup_lp` = y.`grup_lp`
+ ORDER BY `tanggal_lp` ASC, `ruangan` ASC, `no_laporan_produksi` DESC]]>
+	</queryString>
+	<field name="no_laporan_produksi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_kartu_waleta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_registrasi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal_lp" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ruangan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_grade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_bulu" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_bentuk" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_bulu_lp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="memo_lp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="berat_basah" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="berat_kering" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_keping" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="keping_upah" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarif_sub" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tarif_gram" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kpg_lp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="grup_lp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bobot" class="java.math.BigDecimal"/>
+	<field name="cheat_no_kartu" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cheat_rsb" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cheat_tgl_lp" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TotalBiji" class="java.lang.Long" resetType="Group" resetGroup="GroupGrade" calculation="Sum">
+		<variableExpression><![CDATA[$F{keping_upah}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalGram" class="java.lang.Long" resetType="Group" resetGroup="GroupGrade" calculation="Sum">
+		<variableExpression><![CDATA[$F{berat_basah}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalBobot" class="java.lang.Float" resetType="Group" resetGroup="GroupGrade" calculation="Sum">
+		<variableExpression><![CDATA[($F{jumlah_keping}.floatValue()==0? ($F{berat_basah}.floatValue()/8):$F{jumlah_keping}.floatValue()) / $F{kpg_lp}.floatValue()]]></variableExpression>
+	</variable>
+	<variable name="TotalB" class="java.lang.Float" resetType="Group" resetGroup="GroupGrade" calculation="Sum">
+		<variableExpression><![CDATA[$F{grup_lp}.intValue()==15?0:$F{bobot}.intValue()>=1?$F{keping_upah}.floatValue() / $F{kpg_lp}.floatValue():0]]></variableExpression>
+	</variable>
+	<variable name="TotalK" class="java.lang.Float" resetType="Group" resetGroup="GroupGrade" calculation="Sum">
+		<variableExpression><![CDATA[$F{grup_lp}.intValue()==15?0:$F{bobot}.intValue()>=1?0:$F{keping_upah}.floatValue() / $F{kpg_lp}.floatValue()]]></variableExpression>
+	</variable>
+	<variable name="TotalH" class="java.lang.Float" resetType="Group" resetGroup="GroupGrade" calculation="Sum">
+		<variableExpression><![CDATA[$F{grup_lp}.intValue()==15?1:0]]></variableExpression>
+	</variable>
+	<group name="GroupGrade">
+		<groupExpression><![CDATA[$F{ruangan}]]></groupExpression>
+		<groupHeader>
+			<band height="60">
+				<textField pattern="EEEEE, dd MMMMM yyyy">
+					<reportElement style="Page header" x="10" y="0" width="780" height="15" uuid="cdb740ae-e0f0-4abe-937e-8e59ec9a9f0a"/>
+					<textElement textAlignment="Left">
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cheat_tgl_lp}!=null?
+(new java.text.SimpleDateFormat("EEEEE, dd MMMMM yyyy hh:mm aaa",new Locale("id", "ID"))).format($F{cheat_tgl_lp}):
+(new java.text.SimpleDateFormat("EEEEE, dd MMMMM yyyy hh:mm aaa",new Locale("id", "ID"))).format($F{tanggal_lp})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="100" y="30" width="35" height="30" forecolor="#000000" uuid="f87f6d6d-71e8-4184-8f3b-dd214a831491"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Jenis Bulu Upah]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="492" y="30" width="30" height="30" forecolor="#000000" uuid="7082460a-349e-42b4-b275-7c16487923e6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Gram/Kpg]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="135" y="30" width="30" height="30" forecolor="#000000" uuid="271511c0-79c9-4c8f-840e-dfb232dfad6a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Biji]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="165" y="30" width="30" height="30" forecolor="#000000" uuid="ad8695c3-1364-4f1d-8a93-dd1d7c12ef82"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Gram]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="250" y="30" width="100" height="30" forecolor="#000000" uuid="63493442-c4e3-4480-978c-0b88e6fbe11b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No LP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="567" y="30" width="30" height="30" forecolor="#000000" uuid="508620ad-d519-4c06-86e3-a7c24edea224"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Jenis LP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="0" y="30" width="100" height="30" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Kode Grade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="522" y="30" width="45" height="30" forecolor="#000000" uuid="0cb6c3e2-47ba-46dc-b790-e5b4c825e85e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tarif/Kpg]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="375" y="30" width="117" height="30" forecolor="#000000" uuid="a0fbc9f1-6fe4-443f-859e-e874684477d9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Memo]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="195" y="30" width="55" height="30" forecolor="#000000" uuid="e7102293-7517-4cfe-ae46-210d45c19119"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No Kartu]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="627" y="30" width="65" height="30" forecolor="#000000" uuid="faab592a-ffc9-4185-a433-4df88a044678"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Grup Cabut]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="692" y="30" width="35" height="30" forecolor="#000000" uuid="796d592f-43cc-47c4-8b4a-ec9479715d48"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Setor LP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="767" y="30" width="35" height="30" forecolor="#000000" uuid="de826044-49eb-45d3-b0e5-a8c2f5e7ab90"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Setor HC]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="Page header" x="10" y="15" width="780" height="15" uuid="31df8bbf-d406-4285-a63e-19f89b38db22"/>
+					<textElement textAlignment="Center">
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Ruang "+$F{ruangan}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" x="597" y="30" width="30" height="30" forecolor="#000000" uuid="ad494922-3502-46e2-bcf6-0d184df5ed9d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Bobot LP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="350" y="30" width="25" height="30" forecolor="#000000" uuid="0d956673-6eaf-4e8d-9546-73314f37e29b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Grup LP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="727" y="30" width="40" height="30" forecolor="#000000" uuid="9481bbe0-08f1-437f-9546-74ad3f0e7519"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Terima CTK]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="36">
+				<staticText>
+					<reportElement style="Column footer" x="0" y="0" width="135" height="15" forecolor="#000000" uuid="7086cc77-8b80-4eb0-972f-64d6a86b880b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField pattern="#,##0">
+					<reportElement style="Column footer" x="135" y="0" width="30" height="15" forecolor="#000000" uuid="b41d2ff8-0f2e-4c22-a3fa-695ed591334d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TotalBiji}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Column footer" x="165" y="0" width="30" height="15" forecolor="#000000" uuid="2bceea18-e3ec-4393-8d7c-173f2fe9d5bc"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TotalGram}]]></textFieldExpression>
+				</textField>
+				<textField pattern="0.00">
+					<reportElement style="Column footer" x="492" y="0" width="30" height="15" forecolor="#000000" uuid="27c88f96-44b7-4723-8f34-9c00c98e63d7"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TotalGram}.floatValue()/$V{TotalBiji}.floatValue()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Page header" x="195" y="0" width="30" height="15" forecolor="#000000" uuid="9c0f0990-326a-4c22-bde5-7e11a0a31984"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[B :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Page header" x="255" y="0" width="30" height="15" forecolor="#000000" uuid="d4421206-a383-4937-8baf-ff86266a95c8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[K :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Page header" x="315" y="0" width="45" height="15" forecolor="#000000" uuid="2994505c-c5d4-4453-9d7e-26e967f857e1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[HARIAN :]]></text>
+				</staticText>
+				<textField>
+					<reportElement style="Page header" x="225" y="0" width="30" height="15" forecolor="#000000" uuid="56e8d6b2-44aa-4213-aef2-b43b08de7b25"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[Math.floor($V{TotalB})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Page header" x="285" y="0" width="30" height="15" forecolor="#000000" uuid="e37104df-f25b-4397-9779-5ec2baefc52a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[Math.floor($V{TotalK} * 2)]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Page header" x="360" y="0" width="30" height="15" forecolor="#000000" uuid="481edf9c-33c4-46ed-a8c0-a9e81078663b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[Math.floor($V{TotalH})]]></textFieldExpression>
+				</textField>
+				<textField pattern="0.00">
+					<reportElement style="Column footer" x="597" y="0" width="30" height="15" forecolor="#000000" uuid="e2e2389a-85bc-4ad6-9874-4ad7004f9f71"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{TotalBobot}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Page header" x="390" y="0" width="102" height="15" forecolor="#000000" uuid="8bbd44e5-fc00-4f2c-ac23-faf297b27539"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["IF_JDT_WLT : " + $P{IF_JDN_WLT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement style="Page header" x="10" y="0" width="780" height="15" uuid="49ac4618-84c0-49a3-a6bd-b5836ff920f0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Pengeluaran Bahan Baku Harian]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="20" uuid="ceb3e7bd-a5cc-494b-873f-f1f6d6f4e1ca"/>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="0" y="0" width="100" height="20" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{kode_grade}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="100" y="0" width="35" height="20" uuid="f8fb7274-70dd-406f-8265-daa9f4a09555"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jenis_bulu_lp}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" mode="Opaque" x="135" y="0" width="30" height="20" uuid="483ae050-6146-4f0b-9492-338e794d0d15"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{keping_upah}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" mode="Opaque" x="165" y="0" width="30" height="20" uuid="d39d6804-8d12-4de8-aaae-0b63227ab4e7"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{berat_basah}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="195" y="0" width="55" height="20" uuid="11746251-503e-41d2-8596-6225f5e1c1cd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{cheat_no_kartu} != null?$F{cheat_no_kartu}:$F{no_kartu_waleta})
++ "-" +
+($F{cheat_rsb} != null?$F{cheat_rsb}:$F{no_registrasi})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="250" y="0" width="100" height="20" uuid="c8c4e0be-22f7-4713-ab16-52052e08902d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + ($F{cheat_rsb}!=null?$F{cheat_rsb}:$F{no_registrasi})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" mode="Opaque" x="375" y="0" width="117" height="20" uuid="6990a25f-e502-498d-bb52-61a48b5a2c3b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{memo_lp}]]></textFieldExpression>
+				</textField>
+				<textField pattern="0.00">
+					<reportElement style="Detail" mode="Opaque" x="492" y="0" width="30" height="20" uuid="a0738d26-d3c3-48ec-a42e-d43f262bbbe5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{berat_basah}.floatValue()/$F{keping_upah}.floatValue()]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" mode="Opaque" x="522" y="0" width="45" height="20" uuid="113ae589-79e3-40b7-b6fc-42912081bfaf"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{IF_JDN_WLT}.intValue()==1? ($F{tarif_gram}*($F{berat_basah}.floatValue()/$F{keping_upah}.floatValue()))
+: ($F{tarif_sub}*($F{berat_basah}.floatValue()/$F{keping_upah}.floatValue()))]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="567" y="0" width="30" height="20" uuid="31af865d-2ca9-42f8-805e-e6b3b054cf45"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{grup_lp}.intValue()>30?"HARIAN":$F{bobot}.floatValue()>=1?"B":$F{bobot}.floatValue()>=0.5?"K":"Too Low"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="627" y="0" width="65" height="20" uuid="413c7c23-c6f2-4ff7-b5d1-c65f77a1ed54"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="692" y="0" width="35" height="20" uuid="91252504-770c-4439-b03f-da1892c3babe"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="767" y="0" width="35" height="20" uuid="f5da9aa9-20df-46e9-b637-8f2c6bffc054"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField pattern="###0.0000">
+					<reportElement style="Detail" mode="Opaque" x="597" y="0" width="30" height="20" uuid="8cc6c0fa-3300-4787-a405-26696f83ae08"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[Math.round($F{keping_upah}.floatValue() / $F{kpg_lp}.floatValue() * 1000000.0) / 1000000.0]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="350" y="0" width="25" height="20" uuid="8040a85a-0c4a-4b53-95e7-4a23837c185c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{grup_lp}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" mode="Opaque" x="727" y="0" width="40" height="20" uuid="c87eb883-682a-487c-acc9-bb117eb17018"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-19" y="0" width="840" height="24" forecolor="#FFFFFF" backcolor="#F0F0F0" uuid="08ec9995-2422-4423-8e15-d92cf7217722"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Page footer" x="776" y="0" width="40" height="20" forecolor="#000000" uuid="2f63bff7-d4ce-4657-9401-46a39ec0f090"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Page footer" x="696" y="0" width="80" height="20" forecolor="#000000" uuid="1dcec066-63fd-4366-87a9-0e33ccc62a0b"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Halaman "+$V{PAGE_NUMBER}+" dari"]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

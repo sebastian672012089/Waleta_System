@@ -1,0 +1,538 @@
+package waleta_system.BahanBaku;
+
+import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import waleta_system.Class.ColumnsAutoSizer;
+import waleta_system.Class.Utility;
+import waleta_system.Class.ExportToExcel;
+import waleta_system.Class.RumahBurung;
+import waleta_system.MainForm;
+
+public class JPanel_RumahBurung extends javax.swing.JPanel {
+
+    
+    String sql = null;
+    ResultSet rs;
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    DefaultTableCellRenderer TableAlignment = new DefaultTableCellRenderer();
+
+    public JPanel_RumahBurung() {
+        initComponents();
+    }
+
+    public void init() {
+        try {
+            
+            
+            refreshTable();
+            Table_RumahBurung.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent event) {
+                    if (!event.getValueIsAdjusting() && Table_RumahBurung.getSelectedRow() != -1) {
+                        int i = Table_RumahBurung.getSelectedRow();
+                        txt_kode.setText(Table_RumahBurung.getValueAt(i, 0).toString());
+                        txt_no_registrasi.setText(Table_RumahBurung.getValueAt(i, 1).toString());
+                        txt_nama_rumah_burung.setText(Table_RumahBurung.getValueAt(i, 2).toString());
+                        txt_alamat_rumah_burung.setText(Table_RumahBurung.getValueAt(i, 3).toString());
+                        txt_kapasitas.setText(Table_RumahBurung.getValueAt(i, 4).toString());
+                    }
+                }
+            });
+        } catch (Exception ex) {
+            Logger.getLogger(JPanel_RumahBurung.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ArrayList<RumahBurung> RumahBurungList() {
+        ArrayList<RumahBurung> RumahBurungList = new ArrayList<>();
+        try {
+            
+            sql = "SELECT * FROM `waleta_database`.`tb_rumah_burung` WHERE `nama_rumah_burung` LIKE \"%" + txt_search_rumah_burung.getText() + "%\" ORDER BY `kode_rb`";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            RumahBurung RMburung;
+            while (rs.next()) {
+                RMburung = new RumahBurung(rs.getInt("kode_rb"), rs.getString("no_registrasi"), rs.getString("nama_rumah_burung"), rs.getString("alamat_rumah_burung"), rs.getInt("kapasitas_per_tahun"));
+                RumahBurungList.add(RMburung);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return RumahBurungList;
+    }
+
+    public void show_data_rumahBurung() {
+        ArrayList<RumahBurung> list = RumahBurungList();
+        DefaultTableModel model = (DefaultTableModel) Table_RumahBurung.getModel();
+        Object[] row = new Object[5];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getKode_rb();
+            row[1] = list.get(i).getNo_registrasi();
+            row[2] = list.get(i).getNama_rumah_burung();
+            row[3] = list.get(i).getAlamat_rumah_burung();
+            row[4] = list.get(i).getKapasitas_rumah();
+
+            model.addRow(row);
+        }
+        int rowData = Table_RumahBurung.getRowCount();
+        label_total_data_rumahBurung.setText(Integer.toString(rowData));
+    }
+
+    public void refreshTable() {
+        DefaultTableModel model = (DefaultTableModel) Table_RumahBurung.getModel();
+        model.setRowCount(0);
+        show_data_rumahBurung();
+        ColumnsAutoSizer.sizeColumnsToFit(Table_RumahBurung);
+    }
+
+    public void executeSQLQuery(String query, String message) {
+        Utility.db.getConnection();
+        try {
+            Utility.db.getConnection().createStatement();
+            if ((Utility.db.getStatement().executeUpdate(query)) == 1) {
+                JOptionPane.showMessageDialog(this, "data " + message + " Successfully");
+                refreshTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "data not " + message);
+            }
+        } catch (SQLException | HeadlessException e) {
+            JOptionPane.showMessageDialog(this, e);
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel_Rumah_Burung = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        Table_RumahBurung = new javax.swing.JTable();
+        jPanel_operation_rumah_burung = new javax.swing.JPanel();
+        button_update_rumah_burung = new javax.swing.JButton();
+        button_insert_rumah_burung = new javax.swing.JButton();
+        button_delete_rumah_burung = new javax.swing.JButton();
+        button_clear_rumah_burung = new javax.swing.JButton();
+        txt_kode = new javax.swing.JTextField();
+        txt_nama_rumah_burung = new javax.swing.JTextField();
+        txt_alamat_rumah_burung = new javax.swing.JTextField();
+        txt_kapasitas = new javax.swing.JTextField();
+        label_no_registrasi = new javax.swing.JLabel();
+        label_nama_rumah_burung = new javax.swing.JLabel();
+        label_alamat_rumah_burung = new javax.swing.JLabel();
+        label_kapasitas = new javax.swing.JLabel();
+        label_no_registrasi1 = new javax.swing.JLabel();
+        txt_no_registrasi = new javax.swing.JTextField();
+        label_kapasitas1 = new javax.swing.JLabel();
+        label_total_data_rumahBurung = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txt_search_rumah_burung = new javax.swing.JTextField();
+        button_search_rumah_burung = new javax.swing.JButton();
+        button_export_RumahBurung = new javax.swing.JButton();
+
+        jPanel_Rumah_Burung.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Rumah_Burung.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Rumah Burung", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
+        jPanel_Rumah_Burung.setPreferredSize(new java.awt.Dimension(1366, 652));
+
+        Table_RumahBurung.setAutoCreateRowSorter(true);
+        Table_RumahBurung.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Kode", "No Registrasi Terdaftar", "Nama Rumah Burung", "Alamat/Lokasi Rumah Burung", "Kapasitas / Tahun"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Table_RumahBurung.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(Table_RumahBurung);
+
+        jPanel_operation_rumah_burung.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_operation_rumah_burung.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Operation", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Yu Gothic", 0, 12))); // NOI18N
+        jPanel_operation_rumah_burung.setName("aah"); // NOI18N
+
+        button_update_rumah_burung.setBackground(new java.awt.Color(255, 255, 255));
+        button_update_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_update_rumah_burung.setText("Update");
+        button_update_rumah_burung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_update_rumah_burungActionPerformed(evt);
+            }
+        });
+
+        button_insert_rumah_burung.setBackground(new java.awt.Color(255, 255, 255));
+        button_insert_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_insert_rumah_burung.setText("insert");
+        button_insert_rumah_burung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_insert_rumah_burungActionPerformed(evt);
+            }
+        });
+
+        button_delete_rumah_burung.setBackground(new java.awt.Color(255, 255, 255));
+        button_delete_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_delete_rumah_burung.setText("Delete");
+        button_delete_rumah_burung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_delete_rumah_burungActionPerformed(evt);
+            }
+        });
+
+        button_clear_rumah_burung.setBackground(new java.awt.Color(255, 255, 255));
+        button_clear_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_clear_rumah_burung.setText("Clear Text");
+        button_clear_rumah_burung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_clear_rumah_burungActionPerformed(evt);
+            }
+        });
+
+        txt_kode.setEditable(false);
+        txt_kode.setBackground(new java.awt.Color(255, 255, 255));
+        txt_kode.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        txt_nama_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        txt_alamat_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        txt_kapasitas.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        label_no_registrasi.setBackground(new java.awt.Color(255, 255, 255));
+        label_no_registrasi.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_no_registrasi.setText("Kode Rumah Burung :");
+
+        label_nama_rumah_burung.setBackground(new java.awt.Color(255, 255, 255));
+        label_nama_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_nama_rumah_burung.setText("Nama Rumah Burung :");
+
+        label_alamat_rumah_burung.setBackground(new java.awt.Color(255, 255, 255));
+        label_alamat_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_alamat_rumah_burung.setText("Alamat Rumah Burung :");
+
+        label_kapasitas.setBackground(new java.awt.Color(255, 255, 255));
+        label_kapasitas.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_kapasitas.setText("Kapasitas / tahun :");
+
+        label_no_registrasi1.setBackground(new java.awt.Color(255, 255, 255));
+        label_no_registrasi1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_no_registrasi1.setText("No. Registrasi :");
+
+        txt_no_registrasi.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        label_kapasitas1.setBackground(new java.awt.Color(255, 255, 255));
+        label_kapasitas1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_kapasitas1.setText("Note : No Registrasi 3-4 digit artinya RSB tsb sudah teregistrasi.");
+
+        javax.swing.GroupLayout jPanel_operation_rumah_burungLayout = new javax.swing.GroupLayout(jPanel_operation_rumah_burung);
+        jPanel_operation_rumah_burung.setLayout(jPanel_operation_rumah_burungLayout);
+        jPanel_operation_rumah_burungLayout.setHorizontalGroup(
+            jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_operation_rumah_burungLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_operation_rumah_burungLayout.createSequentialGroup()
+                        .addGroup(jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_alamat_rumah_burung, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_nama_rumah_burung, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_kapasitas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_no_registrasi, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_no_registrasi1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_kode, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                            .addComponent(txt_kapasitas, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_alamat_rumah_burung, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_nama_rumah_burung, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_no_registrasi, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_operation_rumah_burungLayout.createSequentialGroup()
+                        .addGap(0, 182, Short.MAX_VALUE)
+                        .addComponent(button_update_rumah_burung)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_insert_rumah_burung)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_delete_rumah_burung)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_clear_rumah_burung))
+                    .addComponent(label_kapasitas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel_operation_rumah_burungLayout.setVerticalGroup(
+            jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_operation_rumah_burungLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_no_registrasi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_no_registrasi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_no_registrasi1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_nama_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nama_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_alamat_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_alamat_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_kapasitas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_kapasitas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_kapasitas1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel_operation_rumah_burungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_update_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_insert_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_delete_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_clear_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
+        );
+
+        label_total_data_rumahBurung.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        label_total_data_rumahBurung.setText("TOTAL");
+
+        jLabel5.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel5.setText("Total Data :");
+
+        txt_search_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_rumah_burung.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_rumah_burungKeyPressed(evt);
+            }
+        });
+
+        button_search_rumah_burung.setBackground(new java.awt.Color(255, 255, 255));
+        button_search_rumah_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_search_rumah_burung.setText("Search");
+        button_search_rumah_burung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_search_rumah_burungActionPerformed(evt);
+            }
+        });
+
+        button_export_RumahBurung.setBackground(new java.awt.Color(255, 255, 255));
+        button_export_RumahBurung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_export_RumahBurung.setText("Export To Excel");
+        button_export_RumahBurung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_export_RumahBurungActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_Rumah_BurungLayout = new javax.swing.GroupLayout(jPanel_Rumah_Burung);
+        jPanel_Rumah_Burung.setLayout(jPanel_Rumah_BurungLayout);
+        jPanel_Rumah_BurungLayout.setHorizontalGroup(
+            jPanel_Rumah_BurungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Rumah_BurungLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Rumah_BurungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1334, Short.MAX_VALUE)
+                    .addGroup(jPanel_Rumah_BurungLayout.createSequentialGroup()
+                        .addComponent(txt_search_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_search_rumah_burung)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_total_data_rumahBurung)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button_export_RumahBurung))
+                    .addGroup(jPanel_Rumah_BurungLayout.createSequentialGroup()
+                        .addComponent(jPanel_operation_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel_Rumah_BurungLayout.setVerticalGroup(
+            jPanel_Rumah_BurungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Rumah_BurungLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Rumah_BurungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_Rumah_BurungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label_total_data_rumahBurung)
+                        .addComponent(jLabel5))
+                    .addGroup(jPanel_Rumah_BurungLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt_search_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_search_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_export_RumahBurung)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel_operation_rumah_burung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(jPanel_Rumah_Burung, javax.swing.GroupLayout.DEFAULT_SIZE, 1364, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel_Rumah_Burung, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void button_update_rumah_burungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_update_rumah_burungActionPerformed
+        // TODO add your handling code here:
+        //        TableModel Table = (DefaultTableModel)Table_RumahBurung.getModel();
+        int j = Table_RumahBurung.getSelectedRow();
+        int total_baris = Table_RumahBurung.getRowCount();
+        Boolean Check = true;
+        if (j == -1) {
+            JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+        } else {
+            if (!txt_kode.getText().equals(Table_RumahBurung.getValueAt(j, 0))) {
+                for (int i = 0; i < total_baris; i++) {
+                    if (txt_kode.getText().equals(Table_RumahBurung.getValueAt(i, 0))) {
+                        JOptionPane.showMessageDialog(this, "Nomor Registrasi (" + txt_no_registrasi.getText() + ") sudah terpakai, tidak boleh ada Nomor Registrasi yang sama");
+                        Check = false;
+                    }
+                }
+            }
+            if (Check) {
+                String Query = "UPDATE `tb_rumah_burung` SET `no_registrasi` = '" + txt_no_registrasi.getText() + "', `nama_rumah_burung` = '" + txt_nama_rumah_burung.getText() + "', `alamat_rumah_burung` = '" + txt_alamat_rumah_burung.getText() + "', `kapasitas_per_tahun` = '" + txt_kapasitas.getText() + "' WHERE `tb_rumah_burung`.`kode_rb` = '" + Table_RumahBurung.getValueAt(j, 0).toString() + "'";
+                executeSQLQuery(Query, "updated !");
+                button_clear_rumah_burung.doClick();
+            }
+        }
+    }//GEN-LAST:event_button_update_rumah_burungActionPerformed
+
+    private void button_insert_rumah_burungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_insert_rumah_burungActionPerformed
+        // TODO add your handling code here:
+        try {
+            int total_baris = Table_RumahBurung.getRowCount();
+            Boolean Check = true;
+            for (int i = 0; i < total_baris; i++) {
+                if (txt_kode.getText().equals(Table_RumahBurung.getValueAt(i, 0))) {
+                    JOptionPane.showMessageDialog(this, "No registrasi Rumah Burung (" + txt_no_registrasi.getText() + ") sudah ada");
+                    Check = false;
+                }
+            }
+            if (Check) {
+                int next_kode = 0;
+                String next = "SELECT MAX(`kode_rb`)+1 AS 'kode' FROM `tb_rumah_burung`";
+                ResultSet rst = Utility.db.getStatement().executeQuery(next);
+                if (rst.next()) {
+                    next_kode = rst.getInt("kode");
+                }
+                String Query = "INSERT INTO `tb_rumah_burung` (`kode_rb`, `no_registrasi`, `nama_rumah_burung`, `alamat_rumah_burung`, `kapasitas_per_tahun`) VALUES ('" + next_kode + "', '" + txt_no_registrasi.getText() + "', '" + txt_nama_rumah_burung.getText() + "', '" + txt_alamat_rumah_burung.getText() + "', '" + txt_kapasitas.getText() + "')";
+                executeSQLQuery(Query, "inserted !");
+                button_clear_rumah_burung.doClick();
+            }
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(this, e);
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_button_insert_rumah_burungActionPerformed
+
+    private void button_delete_rumah_burungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_rumah_burungActionPerformed
+        // TODO add your handling code here:
+        try {
+            int j = Table_RumahBurung.getSelectedRow();
+            if (j == -1) {
+                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+            } else {
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    // delete code here
+                    String Query = "DELETE FROM `tb_rumah_burung` WHERE `tb_rumah_burung`.`no_registrasi` = \'" + txt_no_registrasi.getText() + "\'";
+                    executeSQLQuery(Query, "deleted !");
+                    button_clear_rumah_burung.doClick();
+                }
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }//GEN-LAST:event_button_delete_rumah_burungActionPerformed
+
+    private void button_clear_rumah_burungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_clear_rumah_burungActionPerformed
+        // TODO add your handling code here:
+        txt_kode.setText(null);
+        txt_no_registrasi.setText(null);
+        txt_nama_rumah_burung.setText(null);
+        txt_alamat_rumah_burung.setText(null);
+        txt_kapasitas.setText(null);
+    }//GEN-LAST:event_button_clear_rumah_burungActionPerformed
+
+    private void txt_search_rumah_burungKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_rumah_burungKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable();
+        }
+    }//GEN-LAST:event_txt_search_rumah_burungKeyPressed
+
+    private void button_search_rumah_burungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_search_rumah_burungActionPerformed
+        // TODO add your handling code here:
+        refreshTable();
+    }//GEN-LAST:event_button_search_rumah_burungActionPerformed
+
+    private void button_export_RumahBurungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_RumahBurungActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) Table_RumahBurung.getModel();
+        ExportToExcel.writeToExcel(model, jPanel_Rumah_Burung);
+    }//GEN-LAST:event_button_export_RumahBurungActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable Table_RumahBurung;
+    private javax.swing.JButton button_clear_rumah_burung;
+    public javax.swing.JButton button_delete_rumah_burung;
+    private javax.swing.JButton button_export_RumahBurung;
+    public javax.swing.JButton button_insert_rumah_burung;
+    private javax.swing.JButton button_search_rumah_burung;
+    public javax.swing.JButton button_update_rumah_burung;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel_Rumah_Burung;
+    private javax.swing.JPanel jPanel_operation_rumah_burung;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel label_alamat_rumah_burung;
+    private javax.swing.JLabel label_kapasitas;
+    private javax.swing.JLabel label_kapasitas1;
+    private javax.swing.JLabel label_nama_rumah_burung;
+    private javax.swing.JLabel label_no_registrasi;
+    private javax.swing.JLabel label_no_registrasi1;
+    private javax.swing.JLabel label_total_data_rumahBurung;
+    private javax.swing.JTextField txt_alamat_rumah_burung;
+    private javax.swing.JTextField txt_kapasitas;
+    private javax.swing.JTextField txt_kode;
+    private javax.swing.JTextField txt_nama_rumah_burung;
+    private javax.swing.JTextField txt_no_registrasi;
+    private javax.swing.JTextField txt_search_rumah_burung;
+    // End of variables declaration//GEN-END:variables
+}

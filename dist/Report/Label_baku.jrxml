@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Catatan Penerimaan dan Grading Sarang Burung Mentah" printOrder="Horizontal" pageWidth="250" pageHeight="158" orientation="Landscape" columnWidth="246" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="11" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.9965000000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<parameter name="no_kartu_waleta" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT `tb_grading_bahan_baku`.`no_kartu_waleta`, `tgl_grading`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_rumah_burung`.`nama_rumah_burung`, `no_grading`, `kode_grade`, `jumlah_keping`, `total_berat`, `harga_bahanbaku`, `nama_pegawai` AS 'pekerja_grading'
+FROM `tb_grading_bahan_baku`
+LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_grading_bahan_baku`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`
+LEFT JOIN `tb_rumah_burung` ON `tb_bahan_baku_masuk_cheat`.`no_registrasi` = `tb_rumah_burung`.`no_registrasi`
+LEFT JOIN `tb_karyawan` ON `tb_grading_bahan_baku`.`pekerja_grading` = `tb_karyawan`.`id_pegawai`
+WHERE `tb_grading_bahan_baku`.`no_kartu_waleta` = $P{no_kartu_waleta}
+ORDER BY `tb_grading_bahan_baku`.`no_kartu_waleta` DESC]]>
+	</queryString>
+	<field name="no_kartu_waleta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_grading" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_registrasi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_rumah_burung" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_grading" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_grade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_keping" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_berat" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="harga_bahanbaku" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pekerja_grading" class="java.lang.String"/>
+	<variable name="TotalBiji" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{jumlah_keping}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalBerat" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_berat}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalAllBiji" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{jumlah_keping}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalAllBerat" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_berat}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="RerataKpg" class="java.lang.Float">
+		<variableExpression><![CDATA[$F{jumlah_keping}>0?$F{total_berat}.floatValue()/$F{jumlah_keping}.floatValue():0]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="145" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="42" width="126" height="14" uuid="92aa1dc2-1f8e-43c3-867c-dda0592dd719"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + $F{nama_rumah_burung} + "(" + $F{no_registrasi} + ")"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="27" width="204" height="12" forecolor="#000000" uuid="66c1355b-354c-4589-a25b-4d2679c6d1f0"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Records of Raw Material Storage]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="84" width="126" height="14" uuid="1d916d13-3490-4878-93cf-4565e11f1232"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + (int) ($F{total_berat}) + "  Gram"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="0" y="56" width="120" height="14" forecolor="#000000" uuid="967a22e0-1d43-478a-9848-2f27ff46026c"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="8" isBold="false"/>
+					<paragraph leftIndent="3" spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[Tanggal / Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="0" y="98" width="120" height="14" forecolor="#000000" uuid="5c08c4f0-7d0b-4fe5-94cb-a48c9a93f8a8"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="8" isBold="false"/>
+					<paragraph leftIndent="3" spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[Jumlah (pcs) / Total pcs]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="56" width="126" height="14" uuid="5aaeb7df-74e4-4489-b4a2-5f5344a274ca"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + new SimpleDateFormat("dd MMMM yyyy").format($F{tgl_grading})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="0" width="204" height="12" uuid="65c3ca6b-d2ca-4778-970c-90b42d8dc06e"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FR/WAJ/BM/02/a/2]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Detail" positionType="Float" x="120" y="126" width="126" height="14" uuid="39931091-acf0-43e8-9884-fd6e35cbbb8d"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + $F{pekerja_grading}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="112" width="126" height="14" uuid="35dec223-a7b0-460f-80fd-f961dc8202e6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + $F{kode_grade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="0" y="112" width="120" height="14" forecolor="#000000" uuid="fcb8740d-6a34-4e9b-af98-1b523c68e10e"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="8" isBold="false" isItalic="true"/>
+					<paragraph leftIndent="3" spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[Grade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="0" y="84" width="120" height="14" forecolor="#000000" uuid="8d5d76b4-8277-457d-ac66-9eef4eb5dd8e"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="8" isBold="false"/>
+					<paragraph leftIndent="3" spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[Berat / Weight]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="70" width="126" height="14" uuid="7a635c0f-8c7c-458d-aca5-65cae9844e4e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + $P{no_kartu_waleta} + "-" + $F{no_registrasi}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="0" width="42" height="42" backcolor="#66FFFF" uuid="6bb2cab9-842b-43a5-80a9-8a856c59684d"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{no_grading}.toString(),
+        com.google.zxing.BarcodeFormat.QR_CODE, 100, 100,
+        com.google.common.collect.ImmutableMap.of(com.google.zxing.EncodeHintType.MARGIN,0)
+    )
+)]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="0" y="126" width="120" height="14" forecolor="#000000" uuid="957f4b26-9398-4b28-b9ff-e1c7b0478f8c"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="8" isBold="false"/>
+					<paragraph leftIndent="3" spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[Petugas / Worker]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="0" y="70" width="120" height="14" forecolor="#000000" uuid="665c3d9d-9da8-40c9-ad5a-c406c7862cba"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="8" isBold="false"/>
+					<paragraph leftIndent="3" spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[No Kartu / Card Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="0" y="42" width="120" height="14" forecolor="#000000" uuid="c4e38e50-aa3e-428c-b39e-d154900c2e11"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="8" isBold="false"/>
+					<paragraph leftIndent="3" spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[Nama Rumah Burung/Bird Nest Name]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="98" width="126" height="14" uuid="e9b5bae3-9a73-4b75-873a-eb78dc916a47"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[": " + $F{jumlah_keping}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="12" width="204" height="15" uuid="a6b4285d-49af-48e7-af76-99fa8e6df9bf"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Catatan Penyimpanan Bahan Mentah]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="222" y="112" width="24" height="14" uuid="c76cf058-bbc2-4e3d-a9ad-337c8b5ce1e0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{RerataKpg}>=8?"J":""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

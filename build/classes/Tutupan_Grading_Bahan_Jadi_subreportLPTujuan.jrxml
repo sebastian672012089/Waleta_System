@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Tutupan_Grading_Bahan_Jadi_subreportLPTujuan" columnCount="2" pageWidth="554" pageHeight="802" columnWidth="277" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="42daa519-53b8-4135-baa3-efa22d096e19">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<parameter name="PARAM_KODE_TUTUPAN" class="java.lang.String"/>
+	<parameter name="COUNT_LP" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT `tb_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `tb_finishing_2`.`fbonus_f2` + `tb_finishing_2`.`fnol_f2` + `tb_finishing_2`.`pecah_f2` + `tb_finishing_2`.`flat_f2` AS `biji`, `tb_finishing_2`.`berat_fbonus` + `tb_finishing_2`.`berat_fnol` + `tb_finishing_2`.`berat_pecah` + `tb_finishing_2`.`berat_flat` AS `gram`, `tb_finishing_2`.`hancuran`, `tb_finishing_2`.`bonggol`, `tb_finishing_2`.`rontokan`, `tb_finishing_2`.`serabut` FROM `tb_bahan_jadi_masuk` LEFT JOIN `tb_laporan_produksi` ON `tb_bahan_jadi_masuk`.`kode_asal` = `tb_laporan_produksi`.`no_laporan_produksi` LEFT JOIN `tb_finishing_2` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_bahan_jadi_masuk`.`kode_asal` WHERE `kode_tutupan` = $P{PARAM_KODE_TUTUPAN}]]>
+	</queryString>
+	<field name="no_laporan_produksi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_grade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="biji" class="java.lang.Long"/>
+	<field name="gram" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="hancuran" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="bonggol" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rontokan" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="serabut" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TotalBiji" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{biji}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalGram" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{gram}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalHancuran" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{hancuran}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalBonggol" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{bonggol}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalRontokan" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{rontokan}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalSerabut" class="java.lang.Long" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{serabut}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalAllBiji" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{biji}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalAllGram" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{gram}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalAllHancuran" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{hancuran}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalAllBonggol" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{bonggol}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalAllRontokan" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{rontokan}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalAllSerabut" class="java.lang.Long" calculation="Sum">
+		<variableExpression><![CDATA[$F{serabut}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement style="Page header" x="0" y="0" width="267" height="15" forecolor="#000000" uuid="acdb98bb-7788-4b4d-bb0b-d805ef1abc49"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A. PENERIMAAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="0" y="15" width="45" height="15" forecolor="#000000" uuid="e645ad1e-1628-4f62-ad69-d3b965dfad09"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<text><![CDATA[Tanggal :]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Page header" x="45" y="15" width="222" height="15" forecolor="#000000" uuid="b3df6e74-f488-4702-834a-67d14985e6ff"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="170" y="15" width="25" height="15" forecolor="#000000" uuid="e3b53893-a468-4145-abab-90c5aa9c756d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Gram]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="145" y="15" width="25" height="15" forecolor="#000000" uuid="b78345b0-111d-4d15-a180-3b8afa27acc8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Biji]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="145" y="0" width="50" height="15" forecolor="#000000" uuid="7939d6db-23c2-4d5e-845f-edb8c4b5f1ea"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="15" y="0" width="60" height="30" forecolor="#000000" uuid="273b5a99-e7da-4890-90cd-4888b252311c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[No Laporan Produksi (LP)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="75" y="0" width="70" height="30" forecolor="#000000" uuid="a4803d33-8b36-48c0-ba24-ba3808de7c1d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Grade Bahan Baku]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="15" height="30" forecolor="#000000" uuid="93a1dae0-c269-4094-8423-37843deb9bc2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="195" y="0" width="80" height="15" forecolor="#000000" uuid="3299b63a-8763-4930-a3b3-5230f4d9b4a5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[By Product (Gr)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="195" y="15" width="20" height="15" forecolor="#000000" uuid="5df4394a-8639-4988-b51a-03b7ca702bab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[HC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="215" y="15" width="20" height="15" forecolor="#000000" uuid="35569c80-3f60-47db-8e1e-707c4f5a3f0e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[BGL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="235" y="15" width="20" height="15" forecolor="#000000" uuid="15b972a4-f3e6-440e-81b8-961975c0c7c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Ront]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="255" y="15" width="20" height="15" forecolor="#000000" uuid="d2294605-3ad7-43cb-8f8c-b3ad1a2e149d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[SR]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement style="Detail" x="15" y="0" width="60" height="15" uuid="fe592d9c-1ad6-4f73-ad31-990458a51eb5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="170" y="0" width="25" height="15" uuid="75d67a7f-2ae4-4bc8-9757-a4e29a201fbe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{gram})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="75" y="0" width="70" height="15" uuid="c59215af-0d83-4b02-9436-fa40b41a13a8"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{kode_grade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="145" y="0" width="25" height="15" uuid="5cf2075c-cf05-4743-b483-fa512859fe50"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{biji}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="15" height="15" uuid="0c09935f-f60c-450f-b9b7-720a00cd9dfb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="195" y="0" width="20" height="15" uuid="d0a873f0-e442-4a1e-aac6-fac522a019c1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hancuran}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="215" y="0" width="20" height="15" uuid="5349993e-ff20-447d-bdcf-fa1f00d0ce5b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bonggol}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="235" y="0" width="20" height="15" uuid="41f4d900-5e0c-46b9-8f1e-7c8dff107e60"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rontokan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="255" y="0" width="20" height="15" uuid="4dc143ba-ea64-4385-b2c8-9b49c7eb8409"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{serabut}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="255" y="15" width="20" height="15" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="6a1b9f9b-e233-4c53-8588-ee5a77fd4fc2">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.toString().equals($P{COUNT_LP})]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalAllSerabut}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="215" y="15" width="20" height="15" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="96f64ed3-c84f-4ced-9127-f7d40bc0a0d6">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.toString().equals($P{COUNT_LP})]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalAllBonggol}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="145" y="15" width="25" height="15" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="48b9c476-fe6c-4d7e-a3d9-8feeb101ca2d">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.toString().equals($P{COUNT_LP})]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalAllBiji}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Column footer" x="0" y="15" width="145" height="15" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="3bc2b3a8-42f4-42da-a26b-f8f214d7802b">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.toString().equals($P{COUNT_LP})]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="235" y="15" width="20" height="15" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="0fdc73ac-1069-4f5f-a956-d2307aad6a95">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.toString().equals($P{COUNT_LP})]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalAllRontokan}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="195" y="15" width="20" height="15" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="d0bf0276-4357-49ec-a978-929234500eb9">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.toString().equals($P{COUNT_LP})]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalAllHancuran}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="170" y="15" width="25" height="15" isRemoveLineWhenBlank="true" forecolor="#000000" uuid="c64e6edf-9dcf-4dca-a082-5b084cbb6995">
+					<printWhenExpression><![CDATA[$V{REPORT_COUNT}.toString().equals($P{COUNT_LP})]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalAllGram}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Tutupan Grading Bahan Jadi" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="7"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<parameter name="PARAM_KODE_TUTUPAN" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\mn\\Downloads\\newest waleta\\Waleta_System\\src\\waleta_system\\Report\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT `tb_tutupan_grading`.`kode_tutupan`, `tgl_mulai_tutupan`, `tgl_selesai_tutupan`, `nama_rumah_burung`, COUNT(`tb_bahan_jadi_masuk`.`kode_tutupan`) AS 'asal', SUM(`tb_bahan_jadi_masuk`.`keping`) AS 'jumlah_keping', SUM(`tb_bahan_jadi_masuk`.`berat`) AS 'jumlah_berat',
+(SELECT COUNT(`tb_laporan_produksi`.`no_laporan_produksi`) FROM `tb_bahan_jadi_masuk` LEFT JOIN `tb_laporan_produksi` ON `tb_bahan_jadi_masuk`.`kode_asal` = `tb_laporan_produksi`.`no_laporan_produksi` LEFT JOIN `tb_finishing_2` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_bahan_jadi_masuk`.`kode_asal` WHERE `kode_tutupan` = $P{PARAM_KODE_TUTUPAN}) AS 'count_lp'
+ FROM `tb_tutupan_grading` LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_tutupan_grading`.`kode_tutupan` = `tb_bahan_jadi_masuk`.`kode_tutupan` LEFT JOIN `tb_rumah_burung` ON `tb_tutupan_grading`.`kode_rumah_burung` = `tb_rumah_burung`.`no_registrasi` WHERE `tb_tutupan_grading`.`kode_tutupan` = $P{PARAM_KODE_TUTUPAN} GROUP BY `tb_tutupan_grading`.`kode_tutupan`]]>
+	</queryString>
+	<field name="kode_tutupan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_mulai_tutupan" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_selesai_tutupan" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_rumah_burung" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="asal" class="java.lang.Long"/>
+	<field name="jumlah_keping" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_berat" class="java.math.BigDecimal"/>
+	<field name="count_lp" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="130" height="30" uuid="ac87c5da-08c1-4440-bdca-3bbe3d42d7a8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="11" isBold="false" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[PT. WALETA ASIA JAYA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="0" y="30" width="130" height="45" uuid="fc686bda-782a-4f75-ae82-00269ab7c9e4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[DEPARTEMEN BAHAN JADI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Title" x="130" y="0" width="221" height="75" uuid="3bf64f64-1b73-4a5e-9c18-389134730366"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="12" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[LAPORAN GRADING]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="351" y="0" width="70" height="15" uuid="ebf020e2-a0d6-4e4b-940f-e76c2a210c27"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[No Dokumen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="421" y="0" width="13" height="15" uuid="502b7597-7b0d-435a-b71b-a8c0ad307b18"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="434" y="0" width="120" height="15" uuid="0bc99bd3-1b87-484a-a4d4-01237604f2d1"/>
+				<textElement markup="none">
+					<font fontName="Arial Narrow" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[FR/WAJ/BJ/001/f]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="351" y="15" width="70" height="15" uuid="aeb8784b-8b53-4466-b35c-4f08c2b4ace2"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[No Revisi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="421" y="15" width="13" height="15" uuid="a7ca173f-81c7-4771-b265-10df525c9ee0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="434" y="15" width="120" height="15" uuid="ba40a513-1181-4e89-8a98-4a9e9f39159b"/>
+				<textElement markup="none">
+					<font fontName="Arial Narrow" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[01]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="351" y="30" width="70" height="15" uuid="8a696364-acf5-434a-8e18-536461e31eaa"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="421" y="30" width="13" height="15" uuid="18c42a04-92b1-473f-80d1-3a57bbe5ed49"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="434" y="30" width="120" height="15" uuid="777f7a06-fabc-4bf5-be19-876040d6f5e3"/>
+				<textElement markup="none">
+					<font fontName="Arial Narrow" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[12 Maret 2018]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="351" y="45" width="70" height="30" uuid="a6b91c32-521c-4d59-9065-91ab58afa1eb"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Menggantikan dokumen no.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="421" y="45" width="13" height="30" uuid="a59e019b-b911-496f-9775-5e4ff53377cd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="434" y="45" width="120" height="30" uuid="941353c6-6642-4bd7-a1d0-c3c40948adc6"/>
+				<textElement markup="none">
+					<font fontName="Arial Narrow" size="11" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[FR/WAJ/BJ/001/f]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="224" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="10" y="0" width="260" height="15" uuid="ceb3e7bd-a5cc-494b-873f-f1f6d6f4e1ca"/>
+			</frame>
+			<subreport>
+				<reportElement positionType="Float" x="1" y="114" width="554" height="100" uuid="afb3c85a-5101-4f22-b62c-a4a7b4b863af"/>
+				<subreportParameter name="PARAM_KODE_TUTUPAN">
+					<subreportParameterExpression><![CDATA[$P{PARAM_KODE_TUTUPAN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Tutupan_Grading_Bahan_Jadi_subreportGradeTutupan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport runToBottom="false">
+				<reportElement positionType="Float" x="1" y="0" width="554" height="100" uuid="253de93c-8836-4e68-9b69-6b191e4e0455"/>
+				<subreportParameter name="PARAM_KODE_TUTUPAN">
+					<subreportParameterExpression><![CDATA[$P{PARAM_KODE_TUTUPAN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="COUNT_LP">
+					<subreportParameterExpression><![CDATA[$F{count_lp}.toString()]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Tutupan_Grading_Bahan_Jadi_subreportLPTujuan.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement style="TTD" x="150" y="0" width="120" height="15" uuid="edc21156-a64b-4b4e-9bdd-a4beedd6aaf3"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Dilaporkan Oleh:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="150" y="15" width="120" height="35" uuid="0ab24a25-bae5-4e3d-992c-e9a60984b676"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="270" y="0" width="120" height="15" uuid="1d56e4f4-e0bf-4024-8344-47ef446e87a4"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Disetujui Oleh:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="270" y="15" width="120" height="35" uuid="475ed394-6846-49b7-87c4-44b26c001711"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

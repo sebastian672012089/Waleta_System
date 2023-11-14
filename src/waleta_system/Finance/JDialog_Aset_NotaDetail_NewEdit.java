@@ -1,0 +1,731 @@
+package waleta_system.Finance;
+
+import java.awt.event.KeyEvent;
+import waleta_system.Class.Utility;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+public class JDialog_Aset_NotaDetail_NewEdit extends javax.swing.JDialog {
+
+    private String sql = null;
+    private ResultSet rs;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    DecimalFormat decimalFormat = new DecimalFormat();
+
+    public JDialog_Aset_NotaDetail_NewEdit(java.awt.Frame parent, boolean modal, String kode_nota, String kode) {
+        super(parent, modal);
+        try {
+            initComponents();
+            this.setResizable(false);
+            label_kode_nota.setText(kode_nota);
+
+            sql = "SELECT `kode_dep` FROM `tb_departemen` WHERE 1";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            while (rs.next()) {
+                ComboBox_departemen.addItem(rs.getString("kode_dep"));
+            }
+
+            if (kode == null) {
+                button_pilih_aset.setEnabled(true);
+                sql = "SELECT COUNT(`kode_nota_detail`)+1 AS 'jumlah' FROM `tb_aset_nota_detail` WHERE `kode_nota` = '" + kode_nota + "'";
+                rs = Utility.db.getStatement().executeQuery(sql);
+                if (rs.next()) {
+                    txt_kode.setText(kode_nota + "-" + String.format("%04d", rs.getInt("jumlah")));
+                }
+            } else {
+                getData(kode);
+                button_pilih_aset.setEnabled(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JDialog_Aset_NotaDetail_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void getData(String kode) {
+        try {
+            sql = "SELECT `kode_nota_detail`, `kode_nota`, `tb_aset_nota_detail`.`kode_aset`, `tgl_datang`, `jumlah`, `satuan`, `harga_satuan`, `diskon`, `pajak`, `departemen`, `keperluan`, "
+                    + "`nama_aset`, `merk_aset`, `spesifikasi_aset` "
+                    + "FROM `tb_aset_nota_detail` "
+                    + "LEFT JOIN `tb_aset_master` ON `tb_aset_nota_detail`.`kode_aset` = `tb_aset_master`.`kode_aset` "
+                    + "WHERE `kode_nota_detail` = '" + kode + "' ";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            if (rs.next()) {
+                txt_kode.setText(rs.getString("kode_nota_detail"));
+                txt_kode_aset.setText(rs.getString("kode_aset"));
+                txt_nama_aset.setText(rs.getString("nama_aset"));
+                txt_spesifikasi_aset.setText(rs.getString("spesifikasi_aset"));
+                Date_datang.setDate(rs.getDate("tgl_datang"));
+                txt_jumlah_barang.setText(rs.getString("jumlah"));
+                txt_satuan.setText(rs.getString("satuan"));
+                txt_harga_satuan.setText(rs.getString("harga_satuan"));
+                txt_diskon.setText(rs.getString("diskon"));
+                txt_pajak.setText(rs.getString("pajak"));
+                count_total();
+                ComboBox_departemen.setSelectedItem(rs.getString("departemen"));
+                txt_keperluan.setText(rs.getString("keperluan"));
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JDialog_Aset_NotaDetail_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void count_total() {
+        try {
+            int jumlah_barang = 0;
+            int harga_satuan = 0;
+            int diskon = 0;
+            int pajak = 0;
+
+            if (txt_jumlah_barang.getText() != null && !txt_jumlah_barang.getText().equals("")) {
+                jumlah_barang = Integer.valueOf(txt_jumlah_barang.getText().replaceAll(",", ""));
+            }
+            if (txt_harga_satuan.getText() != null && !txt_harga_satuan.getText().equals("")) {
+                harga_satuan = Integer.valueOf(txt_harga_satuan.getText().replaceAll(",", ""));
+            }
+            if (txt_diskon.getText() != null && !txt_diskon.getText().equals("")) {
+                diskon = Integer.valueOf(txt_diskon.getText().replaceAll(",", ""));
+            }
+            if (txt_pajak.getText() != null && !txt_pajak.getText().equals("")) {
+                pajak = Integer.valueOf(txt_pajak.getText().replaceAll(",", ""));
+            }
+
+            int subtotal = (jumlah_barang * harga_satuan) + pajak - diskon;
+            txt_subtotal.setText(decimalFormat.format(subtotal));
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Inputan angka salah!");
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        label_title = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        button_pilih_aset = new javax.swing.JButton();
+        txt_kode = new javax.swing.JTextField();
+        txt_kode_aset = new javax.swing.JTextField();
+        txt_nama_aset = new javax.swing.JTextField();
+        Date_datang = new com.toedter.calendar.JDateChooser();
+        txt_jumlah_barang = new javax.swing.JTextField();
+        txt_satuan = new javax.swing.JTextField();
+        txt_harga_satuan = new javax.swing.JTextField();
+        txt_diskon = new javax.swing.JTextField();
+        txt_pajak = new javax.swing.JTextField();
+        txt_subtotal = new javax.swing.JTextField();
+        ComboBox_departemen = new javax.swing.JComboBox<>();
+        txt_keperluan = new javax.swing.JTextField();
+        button_save = new javax.swing.JButton();
+        button_cancel = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        txt_spesifikasi_aset = new javax.swing.JTextField();
+        label_kode_nota = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        label_title.setBackground(new java.awt.Color(255, 255, 255));
+        label_title.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_title.setText("Kode Nota :");
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel14.setText("Kode :");
+        jLabel14.setFocusable(false);
+
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel5.setText("Kode Aset :");
+        jLabel5.setFocusable(false);
+
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel9.setText("Nama Aset :");
+        jLabel9.setFocusable(false);
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel6.setText("Tanggal Kedatangan :");
+        jLabel6.setFocusable(false);
+
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel7.setText("Jumlah Barang :");
+        jLabel7.setFocusable(false);
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel13.setText("Satuan");
+        jLabel13.setFocusable(false);
+
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel12.setText("Harga Satuan (Rp.) :");
+        jLabel12.setFocusable(false);
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel8.setText("Diskon (Rp.) :");
+        jLabel8.setFocusable(false);
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel15.setText("Pajak (Rp.) :");
+        jLabel15.setFocusable(false);
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel16.setText("SubTotal (Rp.) :");
+        jLabel16.setFocusable(false);
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel10.setText("Departemen :");
+        jLabel10.setFocusable(false);
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel11.setText("Keperluan :");
+        jLabel11.setFocusable(false);
+
+        button_pilih_aset.setBackground(new java.awt.Color(255, 255, 255));
+        button_pilih_aset.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_pilih_aset.setText("Pilih Aset");
+        button_pilih_aset.setFocusable(false);
+        button_pilih_aset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_pilih_asetActionPerformed(evt);
+            }
+        });
+
+        txt_kode.setEditable(false);
+        txt_kode.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_kode.setFocusable(false);
+
+        txt_kode_aset.setEditable(false);
+        txt_kode_aset.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_kode_aset.setFocusable(false);
+
+        txt_nama_aset.setEditable(false);
+        txt_nama_aset.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_nama_aset.setFocusable(false);
+
+        Date_datang.setBackground(new java.awt.Color(255, 255, 255));
+        Date_datang.setDate(new Date());
+        Date_datang.setDateFormatString("dd MMM yyyy");
+        Date_datang.setFocusable(false);
+        Date_datang.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        txt_jumlah_barang.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_jumlah_barang.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_jumlah_barangFocusLost(evt);
+            }
+        });
+        txt_jumlah_barang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_jumlah_barangKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_jumlah_barangKeyTyped(evt);
+            }
+        });
+
+        txt_satuan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_satuan.setText("Unit");
+
+        txt_harga_satuan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_harga_satuan.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_harga_satuanFocusLost(evt);
+            }
+        });
+        txt_harga_satuan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_harga_satuanKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_harga_satuanKeyTyped(evt);
+            }
+        });
+
+        txt_diskon.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_diskon.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_diskonFocusLost(evt);
+            }
+        });
+        txt_diskon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_diskonKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_diskonKeyTyped(evt);
+            }
+        });
+
+        txt_pajak.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_pajak.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_pajakFocusLost(evt);
+            }
+        });
+        txt_pajak.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_pajakKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_pajakKeyTyped(evt);
+            }
+        });
+
+        txt_subtotal.setEditable(false);
+        txt_subtotal.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_subtotal.setFocusable(false);
+
+        ComboBox_departemen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        ComboBox_departemen.setFocusable(false);
+
+        txt_keperluan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        button_save.setBackground(new java.awt.Color(255, 255, 255));
+        button_save.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_save.setText("SAVE");
+        button_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_saveActionPerformed(evt);
+            }
+        });
+
+        button_cancel.setBackground(new java.awt.Color(255, 255, 255));
+        button_cancel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_cancel.setText("CANCEL");
+        button_cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_cancelActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel17.setText("Spesifikasi Aset :");
+        jLabel17.setFocusable(false);
+
+        txt_spesifikasi_aset.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_nama_aset, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(txt_harga_satuan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_satuan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_pajak, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txt_kode_aset, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_pilih_aset))
+                            .addComponent(txt_jumlah_barang, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_keperluan, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addComponent(txt_diskon, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Date_datang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ComboBox_departemen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_spesifikasi_aset, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(304, 304, 304)
+                        .addComponent(button_cancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_save)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_kode, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_kode_aset, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_pilih_aset, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nama_aset, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_spesifikasi_aset, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_datang, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_jumlah_barang, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_satuan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_harga_satuan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_diskon, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_pajak, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_subtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ComboBox_departemen, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_keperluan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_save, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        label_kode_nota.setBackground(new java.awt.Color(255, 255, 255));
+        label_kode_nota.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_kode_nota.setForeground(new java.awt.Color(255, 0, 0));
+        label_kode_nota.setText("YY-0000");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(label_title)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_kode_nota)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_kode_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void txt_diskonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_diskonKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_diskonKeyTyped
+
+    private void txt_harga_satuanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_harga_satuanKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_harga_satuanKeyTyped
+
+    private void txt_jumlah_barangKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jumlah_barangKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_jumlah_barangKeyTyped
+
+    private void txt_pajakKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pajakKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_pajakKeyTyped
+
+    private void button_pilih_asetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_pilih_asetActionPerformed
+        // TODO add your handling code here:
+        JDialog_Aset_PilihAset dialog = new JDialog_Aset_PilihAset(new javax.swing.JFrame(), true);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+        dialog.setEnabled(true);
+
+        int x = JDialog_Aset_PilihAset.table_master_data_aset.getSelectedRow();
+        if (x != -1) {
+            txt_kode_aset.setText(JDialog_Aset_PilihAset.table_master_data_aset.getValueAt(x, 0).toString());
+            txt_nama_aset.setText(JDialog_Aset_PilihAset.table_master_data_aset.getValueAt(x, 1).toString());
+        }
+    }//GEN-LAST:event_button_pilih_asetActionPerformed
+
+    private void button_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveActionPerformed
+        // TODO add your handling code here:
+        try {
+            boolean check = true;
+
+            if (txt_jumlah_barang.getText() == null || txt_jumlah_barang.getText().equals("") || txt_jumlah_barang.getText().equals("0")) {
+                JOptionPane.showMessageDialog(this, "Maaf Jumlah barang tidak bisa kosong / 0");
+                check = false;
+            } else if (Date_datang.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Maaf tanggal kedatangan tidak boleh kosong!");
+                check = false;
+            } else if (txt_kode_aset.getText() == null || txt_kode_aset.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Maaf aset belum dipilih!");
+                check = false;
+            } else if (button_pilih_aset.isEnabled()) {
+                for (int i = 0; i < JPanel_Aset_NotaPembelian.table_nota_detail.getRowCount(); i++) {
+                    if (JPanel_Aset_NotaPembelian.table_nota_detail.getValueAt(i, 2).equals(txt_kode_aset.getText())
+                            && JPanel_Aset_NotaPembelian.table_nota_detail.getValueAt(i, 5).equals(txt_spesifikasi_aset.getText())) {
+                        JOptionPane.showMessageDialog(this, "Maaf aset dengan spesifikasi yang sama sudah masuk ditabel!");
+                        check = false;
+                        break;
+                    }
+                }
+            }
+
+            if (check) {
+                int jumlah_barang = 0;
+                int harga_satuan = 0;
+                int diskon = 0;
+                int pajak = 0;
+                if (txt_jumlah_barang.getText() != null && !txt_jumlah_barang.getText().equals("")) {
+                    jumlah_barang = Integer.valueOf(txt_jumlah_barang.getText().replaceAll(",", ""));
+                }
+                if (txt_harga_satuan.getText() != null && !txt_harga_satuan.getText().equals("")) {
+                    harga_satuan = Integer.valueOf(txt_harga_satuan.getText().replaceAll(",", ""));
+                }
+                if (txt_diskon.getText() != null && !txt_diskon.getText().equals("")) {
+                    diskon = Integer.valueOf(txt_diskon.getText().replaceAll(",", ""));
+                }
+                if (txt_pajak.getText() != null && !txt_pajak.getText().equals("")) {
+                    pajak = Integer.valueOf(txt_pajak.getText().replaceAll(",", ""));
+                }
+                if (button_pilih_aset.isEnabled()) {//insert
+                    sql = "INSERT INTO `tb_aset_nota_detail`(`kode_nota_detail`, `kode_nota`, `kode_aset`, `spesifikasi_aset`, `tgl_datang`, `jumlah`, `satuan`, `harga_satuan`, `diskon`, `pajak`, `departemen`, `keperluan`) "
+                            + "VALUES ("
+                            + "'" + txt_kode.getText() + "',"
+                            + "'" + label_kode_nota.getText() + "',"
+                            + "'" + txt_kode_aset.getText() + "',"
+                            + "'" + txt_spesifikasi_aset.getText() + "',"
+                            + "'" + dateFormat.format(Date_datang.getDate()) + "',"
+                            + "'" + jumlah_barang + "',"
+                            + "'" + txt_satuan.getText() + "',"
+                            + "'" + harga_satuan + "',"
+                            + "'" + diskon + "',"
+                            + "'" + pajak + "',"
+                            + "'" + ComboBox_departemen.getSelectedItem().toString() + "',"
+                            + "'" + txt_keperluan.getText() + "'"
+                            + ")";
+                } else {//update
+                    sql = "UPDATE `tb_aset_nota_detail` SET "
+                            + "`spesifikasi_aset`='" + txt_spesifikasi_aset.getText() + "',"
+                            + "`tgl_datang`='" + dateFormat.format(Date_datang.getDate()) + "',"
+                            + "`jumlah`='" + jumlah_barang + "',"
+                            + "`satuan`='" + txt_satuan.getText() + "',"
+                            + "`harga_satuan`='" + harga_satuan + "',"
+                            + "`diskon`='" + diskon + "',"
+                            + "`pajak`='" + pajak + "',"
+                            + "`departemen`='" + ComboBox_departemen.getSelectedItem().toString() + "',"
+                            + "`keperluan`='" + txt_keperluan.getText() + "'"
+                            + "WHERE `kode_nota_detail`='" + txt_kode.getText() + "'";
+                }
+                Utility.db.getConnection().createStatement();
+                if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
+                    this.dispose();
+                    JOptionPane.showMessageDialog(this, "Data Berhasil simpan");
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JDialog_Aset_NotaDetail_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_saveActionPerformed
+
+    private void txt_jumlah_barangFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_jumlah_barangFocusLost
+        // TODO add your handling code here:
+        count_total();
+    }//GEN-LAST:event_txt_jumlah_barangFocusLost
+
+    private void txt_harga_satuanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_harga_satuanFocusLost
+        // TODO add your handling code here:
+        count_total();
+    }//GEN-LAST:event_txt_harga_satuanFocusLost
+
+    private void txt_diskonFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_diskonFocusLost
+        // TODO add your handling code here:
+        count_total();
+    }//GEN-LAST:event_txt_diskonFocusLost
+
+    private void txt_pajakFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_pajakFocusLost
+        // TODO add your handling code here:
+        count_total();
+    }//GEN-LAST:event_txt_pajakFocusLost
+
+    private void button_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_cancelActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_button_cancelActionPerformed
+
+    private void txt_jumlah_barangKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jumlah_barangKeyReleased
+        // TODO add your handling code here:
+        int jumlah_barang = 0;
+        if (txt_jumlah_barang.getText() != null && !txt_jumlah_barang.getText().equals("")) {
+            jumlah_barang = Integer.valueOf(txt_jumlah_barang.getText().replaceAll(",", ""));
+            txt_jumlah_barang.setText(decimalFormat.format(jumlah_barang));
+        }
+    }//GEN-LAST:event_txt_jumlah_barangKeyReleased
+
+    private void txt_harga_satuanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_harga_satuanKeyReleased
+        // TODO add your handling code here:
+        int harga_satuan = 0;
+        if (txt_harga_satuan.getText() != null && !txt_harga_satuan.getText().equals("")) {
+            harga_satuan = Integer.valueOf(txt_harga_satuan.getText().replaceAll(",", ""));
+            txt_harga_satuan.setText(decimalFormat.format(harga_satuan));
+        }
+    }//GEN-LAST:event_txt_harga_satuanKeyReleased
+
+    private void txt_diskonKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_diskonKeyReleased
+        // TODO add your handling code here:
+        int diskon = 0;
+        if (txt_diskon.getText() != null && !txt_diskon.getText().equals("")) {
+            diskon = Integer.valueOf(txt_diskon.getText().replaceAll(",", ""));
+            txt_diskon.setText(decimalFormat.format(diskon));
+        }
+    }//GEN-LAST:event_txt_diskonKeyReleased
+
+    private void txt_pajakKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pajakKeyReleased
+        // TODO add your handling code here:
+        int pajak = 0;
+        if (txt_pajak.getText() != null && !txt_pajak.getText().equals("")) {
+            pajak = Integer.valueOf(txt_pajak.getText().replaceAll(",", ""));
+            txt_pajak.setText(decimalFormat.format(pajak));
+        }
+    }//GEN-LAST:event_txt_pajakKeyReleased
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBox_departemen;
+    private com.toedter.calendar.JDateChooser Date_datang;
+    private javax.swing.JButton button_cancel;
+    private javax.swing.JButton button_pilih_aset;
+    private javax.swing.JButton button_save;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel label_kode_nota;
+    private javax.swing.JLabel label_title;
+    private javax.swing.JTextField txt_diskon;
+    private javax.swing.JTextField txt_harga_satuan;
+    private javax.swing.JTextField txt_jumlah_barang;
+    private javax.swing.JTextField txt_keperluan;
+    private javax.swing.JTextField txt_kode;
+    private javax.swing.JTextField txt_kode_aset;
+    private javax.swing.JTextField txt_nama_aset;
+    private javax.swing.JTextField txt_pajak;
+    private javax.swing.JTextField txt_satuan;
+    private javax.swing.JTextField txt_spesifikasi_aset;
+    private javax.swing.JTextField txt_subtotal;
+    // End of variables declaration//GEN-END:variables
+}

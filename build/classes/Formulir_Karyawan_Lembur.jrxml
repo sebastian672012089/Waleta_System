@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Formulir Karyawan Lembur" columnCount="2" pageWidth="595" pageHeight="842" columnWidth="277" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<parameter name="tgl_lembur_absen" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT `nomor_lembur`, `tb_surat_lembur_detail`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `nama_bagian`, `tanggal_lembur`, `jenis_lembur`, `mulai_lembur`, `selesai_lembur`, `jumlah_jam`, `nomor_surat`, `absen_masuk`, `absen_pulang`, IF(`jenis_lembur` = 'Masuk', TIMESTAMPDIFF(minute, `absen_masuk`, `selesai_lembur`), TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`)) AS 'menit_lembur'
+FROM `tb_surat_lembur_detail`
+LEFT JOIN `tb_karyawan` ON `tb_surat_lembur_detail`.`id_pegawai` = `tb_karyawan`.`id_pegawai`
+LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`
+LEFT JOIN (
+SELECT `pin`, MIN(TIME(`scan_date`)) AS 'absen_masuk', MAX(TIME(`scan_date`)) AS 'absen_pulang'
+FROM `att_log`
+WHERE DATE(`scan_date`) = $P{tgl_lembur_absen}
+GROUP BY `pin`) attlog ON `tb_karyawan`.`pin_finger` = attlog.`pin`
+WHERE
+`jumlah_jam`+`menit_istirahat_lembur` >= 3
+ AND `tanggal_lembur` =$P{tgl_lembur_absen}
+ AND `nama_bagian` <> 'DRIVER'
+AND IF(`jenis_lembur` = 'Masuk', TIMESTAMPDIFF(minute, `absen_masuk`, `selesai_lembur`), TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`)) >= 180
+GROUP BY `tb_surat_lembur_detail`.`id_pegawai`
+ORDER BY `nama_bagian`, `tb_karyawan`.`nama_pegawai`]]>
+	</queryString>
+	<field name="nomor_lembur" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_pegawai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_pegawai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_bagian" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal_lembur" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_lembur" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mulai_lembur" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="selesai_lembur" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_jam" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomor_surat" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="absen_masuk" class="java.sql.Time"/>
+	<field name="absen_pulang" class="java.sql.Time"/>
+	<field name="menit_lembur" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Stretch">
+			<staticText>
+				<reportElement style="Page header" x="0" y="1" width="556" height="20" uuid="2521627e-362f-4141-9d50-59d9c8b34c81"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Formulir Karyawan Lembur]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement style="Page header" x="1" y="21" width="554" height="20" uuid="67f0e5be-0024-4b78-a818-23f125d2646e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hari/ Tanggal : "+(new java.text.SimpleDateFormat("EEEEE, dd MMMMM yyyy",new Locale("id", "ID"))).format($F{tanggal_lembur})]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="1" y="0" width="20" height="15" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="21" y="0" width="122" height="15" forecolor="#000000" uuid="ad494922-3502-46e2-bcf6-0d184df5ed9d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="143" y="0" width="89" height="15" forecolor="#000000" uuid="991ebda7-8d40-4954-a736-24bd85883614"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Bagian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="232" y="0" width="43" height="15" forecolor="#000000" uuid="2e88bfae-15cc-41c9-b4b8-281aeb920939"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Jam]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="1" y="0" width="274" height="15" uuid="ceb3e7bd-a5cc-494b-873f-f1f6d6f4e1ca"/>
+				<textField>
+					<reportElement style="Detail" x="0" y="0" width="20" height="15" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="20" y="0" width="122" height="15" uuid="8cc6c0fa-3300-4787-a405-26696f83ae08"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nama_pegawai}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="142" y="0" width="89" height="15" uuid="ab312bc9-43e2-4428-af95-a50509ccc710"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nama_bagian}]]></textFieldExpression>
+				</textField>
+				<textField pattern="HH:mm:ss">
+					<reportElement style="Detail" x="231" y="0" width="43" height="15" uuid="b40893d4-75bc-4ae2-937d-c2def74205a9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{jenis_lembur}.equals("Masuk")? $F{selesai_lembur} : $F{absen_pulang}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement style="TTD" x="425" y="14" width="120" height="15" uuid="1d56e4f4-e0bf-4024-8344-47ef446e87a4"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[Mengetahui HR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="425" y="29" width="120" height="33" uuid="475ed394-6846-49b7-87c4-44b26c001711"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="100" width="597" height="24" forecolor="#FFFFFF" backcolor="#F0F0F0" uuid="08ec9995-2422-4423-8e15-d92cf7217722"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Page footer" x="533" y="0" width="40" height="20" forecolor="#000000" uuid="2f63bff7-d4ce-4657-9401-46a39ec0f090"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Page footer" x="453" y="0" width="80" height="20" forecolor="#000000" uuid="1dcec066-63fd-4366-87a9-0e33ccc62a0b"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Halaman "+$V{PAGE_NUMBER}+" dari"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE, dd MMMMM yyyy">
+					<reportElement style="Page footer" x="22" y="0" width="197" height="20" forecolor="#000000" uuid="80d67c93-8e55-479f-9825-8914e337a05f"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

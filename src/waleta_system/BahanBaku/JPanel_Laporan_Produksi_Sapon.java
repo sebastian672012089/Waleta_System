@@ -1,0 +1,594 @@
+package waleta_system.BahanBaku;
+
+import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import waleta_system.Class.ColumnsAutoSizer;
+import waleta_system.Class.ExportToExcel;
+import waleta_system.Class.Utility;
+import waleta_system.MainForm;
+
+public class JPanel_Laporan_Produksi_Sapon extends javax.swing.JPanel {
+
+    String sql = null;
+    String sql2 = null;
+    ResultSet rs;
+    Date date = new Date();
+    DecimalFormat decimalFormat = new DecimalFormat();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    DefaultTableCellRenderer TableAlignment = new DefaultTableCellRenderer();
+    float kadar_air_bahan_baku = 0;
+
+    public JPanel_Laporan_Produksi_Sapon() {
+        initComponents();
+    }
+
+    public void init() {
+        try {
+            ComboBox_sub_lp_Sapon.removeAllItems();
+            ComboBox_sub_lp_Sapon.addItem("All");
+            sql = "SELECT DISTINCT(`sub`) AS 'sub' FROM `tb_laporan_produksi_sapon` WHERE 1";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            while (rs.next()) {
+                ComboBox_sub_lp_Sapon.addItem(rs.getString("sub"));
+            }
+            refreshTable_lp_sapon();
+        } catch (Exception ex) {
+            Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void refreshTable_lp_sapon() {
+        try {
+            double total_kpg = 0, total_gram = 0;
+            DefaultTableModel model = (DefaultTableModel) Table_LP_Sapon.getModel();
+            model.setRowCount(0);
+            String sub = "AND `sub` = '" + ComboBox_sub_lp_Sapon.getSelectedItem().toString() + "' ";
+            if ("All".equals(ComboBox_sub_lp_Sapon.getSelectedItem().toString())) {
+                sub = "";
+            }
+            String filter_tanggal_lp = "";
+            if (Date_Search_LP_Sapon1.getDate() != null && Date_Search_LP_Sapon2.getDate() != null) {
+                filter_tanggal_lp = "AND `tanggal_lp` BETWEEN '" + dateFormat.format(Date_Search_LP_Sapon1.getDate()) + "' AND '" + dateFormat.format(Date_Search_LP_Sapon2.getDate()) + "' ";
+            }
+            sql = "SELECT `no_lp_sapon`, `sub`, `tanggal_lp`, `kode_grade`, `bulu_upah`, `memo`, `keping`, "
+                    + "`gram_sapon`, `berat_setelah_cuci`, `nilai_lp` "
+                    + "FROM `tb_laporan_produksi_sapon` "
+                    + "WHERE `no_lp_sapon` LIKE '%" + txt_search_no_lp_Sapon.getText() + "%' "
+                    + sub + filter_tanggal_lp
+                    + "ORDER BY `no_lp_sapon` DESC";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            Object[] row = new Object[15];
+            while (rs.next()) {
+                row[0] = rs.getString("no_lp_sapon");
+                row[1] = rs.getString("sub");
+                row[2] = rs.getDate("tanggal_lp");
+                row[3] = rs.getString("kode_grade");
+                row[4] = rs.getString("bulu_upah");
+                row[5] = rs.getInt("keping");
+                row[6] = rs.getInt("gram_sapon");
+                row[7] = rs.getInt("berat_setelah_cuci");
+                row[8] = rs.getInt("nilai_lp");
+                row[9] = Math.round(rs.getFloat("berat_setelah_cuci") * 100f / rs.getFloat("gram_sapon")) / 100f;
+                model.addRow(row);
+                total_kpg = total_kpg + rs.getInt("keping");
+                total_gram = total_gram + rs.getInt("gram_sapon");
+            }
+            ColumnsAutoSizer.sizeColumnsToFit(Table_LP_Sapon);
+            int rowData = Table_LP_Sapon.getRowCount();
+            label_total_lp_Sapon.setText(Integer.toString(rowData));
+            label_total_keping_LP_sapon.setText(decimalFormat.format(total_kpg) + " Keping");
+            label_total_gram_Sapon.setText(decimalFormat.format(total_gram) + " Gram");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Laporan_Produksi_Sapon.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel_laporan_produksi = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        Table_LP_Sapon = new javax.swing.JTable();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        ComboBox_sub_lp_Sapon = new javax.swing.JComboBox<>();
+        label_total_keping_LP_sapon = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        Date_Search_LP_Sapon2 = new com.toedter.calendar.JDateChooser();
+        label_total_gram_Sapon = new javax.swing.JLabel();
+        Date_Search_LP_Sapon1 = new com.toedter.calendar.JDateChooser();
+        label_total_lp_Sapon = new javax.swing.JLabel();
+        button_search_lp_Sapon = new javax.swing.JButton();
+        jLabel24 = new javax.swing.JLabel();
+        txt_search_no_lp_Sapon = new javax.swing.JTextField();
+        button_create_lp_Sapon = new javax.swing.JButton();
+        button_edit_lp_Sapon = new javax.swing.JButton();
+        button_print_lp1 = new javax.swing.JButton();
+        button_print_lp_semua = new javax.swing.JButton();
+        button_export_lp_Sapon = new javax.swing.JButton();
+        button_delete_lp_Sapon = new javax.swing.JButton();
+
+        jPanel_laporan_produksi.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_laporan_produksi.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Laporan Produksi Sapon", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
+        jPanel_laporan_produksi.setPreferredSize(new java.awt.Dimension(1366, 700));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        Table_LP_Sapon.setAutoCreateRowSorter(true);
+        Table_LP_Sapon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        Table_LP_Sapon.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No LP Sapon", "SUB", "Tanggal LP", "Grade", "Bulu Upah", "Keping", "Gram Sapon", "Berat Setelah Cuci", "Nilai LP", "Pengembangan"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Table_LP_Sapon.getTableHeader().setReorderingAllowed(false);
+        jScrollPane8.setViewportView(Table_LP_Sapon);
+
+        jLabel36.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel36.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel36.setText("Tgl LP Sapon :");
+
+        jLabel37.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel37.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel37.setText("Sampai");
+
+        jLabel21.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel21.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel21.setText("No LP :");
+
+        jLabel28.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel28.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel28.setText("Total Keping :");
+
+        ComboBox_sub_lp_Sapon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_sub_lp_Sapon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
+
+        label_total_keping_LP_sapon.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_keping_LP_sapon.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        label_total_keping_LP_sapon.setText("TOTAL");
+
+        jLabel23.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel23.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel23.setText("Sub :");
+
+        jLabel29.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel29.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel29.setText("Tot Gram :");
+
+        Date_Search_LP_Sapon2.setBackground(new java.awt.Color(255, 255, 255));
+        Date_Search_LP_Sapon2.setDate(new Date());
+        Date_Search_LP_Sapon2.setDateFormatString("dd MMMM yyyy");
+        Date_Search_LP_Sapon2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        label_total_gram_Sapon.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_gram_Sapon.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        label_total_gram_Sapon.setText("TOTAL");
+
+        Date_Search_LP_Sapon1.setBackground(new java.awt.Color(255, 255, 255));
+        Date_Search_LP_Sapon1.setToolTipText("");
+        Date_Search_LP_Sapon1.setDate(new Date(new Date().getTime()-(7 * 24 * 60 * 60 * 1000)));
+        Date_Search_LP_Sapon1.setDateFormatString("dd MMMM yyyy");
+        Date_Search_LP_Sapon1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        Date_Search_LP_Sapon1.setMinSelectableDate(new java.util.Date(1420048915000L));
+
+        label_total_lp_Sapon.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_lp_Sapon.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        label_total_lp_Sapon.setText("TOTAL");
+
+        button_search_lp_Sapon.setBackground(new java.awt.Color(255, 255, 255));
+        button_search_lp_Sapon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_search_lp_Sapon.setText("Search");
+        button_search_lp_Sapon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_search_lp_SaponActionPerformed(evt);
+            }
+        });
+
+        jLabel24.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel24.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        jLabel24.setText("Total Data :");
+
+        txt_search_no_lp_Sapon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_no_lp_Sapon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_no_lp_SaponKeyPressed(evt);
+            }
+        });
+
+        button_create_lp_Sapon.setBackground(new java.awt.Color(255, 255, 255));
+        button_create_lp_Sapon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_create_lp_Sapon.setText("Buat LP Sapon");
+        button_create_lp_Sapon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_create_lp_SaponActionPerformed(evt);
+            }
+        });
+
+        button_edit_lp_Sapon.setBackground(new java.awt.Color(255, 255, 255));
+        button_edit_lp_Sapon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_edit_lp_Sapon.setText("Edit LP Sapon");
+        button_edit_lp_Sapon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_edit_lp_SaponActionPerformed(evt);
+            }
+        });
+
+        button_print_lp1.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_lp1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_lp1.setText("Print 1 LP");
+        button_print_lp1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_lp1ActionPerformed(evt);
+            }
+        });
+
+        button_print_lp_semua.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_lp_semua.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_lp_semua.setText("Print Semua LP");
+        button_print_lp_semua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_lp_semuaActionPerformed(evt);
+            }
+        });
+
+        button_export_lp_Sapon.setBackground(new java.awt.Color(255, 255, 255));
+        button_export_lp_Sapon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_export_lp_Sapon.setText("Export Excel");
+        button_export_lp_Sapon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_export_lp_SaponActionPerformed(evt);
+            }
+        });
+
+        button_delete_lp_Sapon.setBackground(new java.awt.Color(255, 255, 255));
+        button_delete_lp_Sapon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_delete_lp_Sapon.setText("Delete LP Sapon");
+        button_delete_lp_Sapon.setEnabled(false);
+        button_delete_lp_Sapon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_delete_lp_SaponActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane8)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_no_lp_Sapon, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_sub_lp_Sapon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel36)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_Search_LP_Sapon1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel37)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_Search_LP_Sapon2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_search_lp_Sapon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_create_lp_Sapon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_edit_lp_Sapon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_delete_lp_Sapon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_print_lp1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_print_lp_semua)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_lp_Sapon))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel24)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_lp_Sapon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel28)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_keping_LP_sapon)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel29)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_gram_Sapon)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_Search_LP_Sapon1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_Search_LP_Sapon2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_search_lp_Sapon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_no_lp_Sapon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_sub_lp_Sapon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_create_lp_Sapon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_edit_lp_Sapon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_delete_lp_Sapon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_print_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_print_lp_semua, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_export_lp_Sapon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_total_keping_LP_sapon, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_total_gram_Sapon, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_total_lp_Sapon, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel_laporan_produksiLayout = new javax.swing.GroupLayout(jPanel_laporan_produksi);
+        jPanel_laporan_produksi.setLayout(jPanel_laporan_produksiLayout);
+        jPanel_laporan_produksiLayout.setHorizontalGroup(
+            jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(3, 3, 3))
+        );
+        jPanel_laporan_produksiLayout.setVerticalGroup(
+            jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addComponent(jPanel_laporan_produksi, javax.swing.GroupLayout.DEFAULT_SIZE, 1370, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel_laporan_produksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void button_delete_lp_SaponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_lp_SaponActionPerformed
+        // TODO add your handling code here:
+        try {
+            Utility.db_sub.connect();
+            int j = Table_LP_Sapon.getSelectedRow();
+            if (j == -1) {
+                JOptionPane.showMessageDialog(this, "SIlahkan klik data yang ingin di hapus !");
+            } else {
+                // delete code here
+                String no_lp_sapon = Table_LP_Sapon.getValueAt(j, 0).toString();
+                sql = "SELECT * FROM `tb_detail_pekerja_sapon` WHERE `no_lp_sapon` = '" + no_lp_sapon + "'";
+                rs = Utility.db_sub.getStatement().executeQuery(sql);
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(this, "Maaf " + no_lp_sapon + " sudah dikerjakan oleh sub, tidak bisa melakukan edit!");
+                } else {
+                    int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus " + no_lp_sapon + " ?", "Warning", 0);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        try {
+                            Utility.db.getConnection().setAutoCommit(false);
+                            Utility.db_sub.getConnection().setAutoCommit(false);
+                            String query_update = "DELETE FROM `tb_laporan_produksi_sapon` WHERE `no_lp_sapon` = '" + no_lp_sapon + "'";
+                            Utility.db.getStatement().executeUpdate(query_update);
+                            Utility.db_sub.getStatement().executeUpdate(query_update);
+                            Utility.db.getConnection().commit();
+                            Utility.db_sub.getConnection().commit();
+                            JOptionPane.showMessageDialog(this, no_lp_sapon + " telah berhasil dihapus!");
+                        } catch (Exception e) {
+                            try {
+                                Utility.db.getConnection().rollback();
+                                Utility.db_sub.getConnection().rollback();
+                            } catch (SQLException ex) {
+                                Logger.getLogger(JDialog_Edit_Insert_LP_Sapon.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            JOptionPane.showMessageDialog(this, e);
+                            Logger.getLogger(JDialog_Edit_Insert_LP_Sapon.class.getName()).log(Level.SEVERE, null, e);
+                        } finally {
+                            try {
+                                Utility.db.getConnection().setAutoCommit(true);
+                                Utility.db_sub.getConnection().setAutoCommit(true);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(JDialog_Edit_Insert_LP_Sapon.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_button_delete_lp_SaponActionPerformed
+
+    private void button_export_lp_SaponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_lp_SaponActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) Table_LP_Sapon.getModel();
+        ExportToExcel.writeToExcel(model, this);
+    }//GEN-LAST:event_button_export_lp_SaponActionPerformed
+
+    private void button_create_lp_SaponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_create_lp_SaponActionPerformed
+        // TODO add your handling code here:
+        JDialog_Edit_Insert_LP_Sapon dialog = new JDialog_Edit_Insert_LP_Sapon(new javax.swing.JFrame(), true, null);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+        dialog.setEnabled(true);
+        refreshTable_lp_sapon();
+    }//GEN-LAST:event_button_create_lp_SaponActionPerformed
+
+    private void button_edit_lp_SaponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_edit_lp_SaponActionPerformed
+        // TODO add your handling code here:
+        int x = Table_LP_Sapon.getSelectedRow();
+        if (x > -1) {
+            try {
+                String no_lp_sapon = Table_LP_Sapon.getValueAt(x, 0).toString();
+                Utility.db_sub.connect();
+                sql = "SELECT * FROM `tb_detail_pekerja_sapon` WHERE `no_lp_sapon` = '" + no_lp_sapon + "'";
+                rs = Utility.db_sub.getStatement().executeQuery(sql);
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(this, "Maaf " + no_lp_sapon + " sudah dikerjakan oleh sub, tidak bisa melakukan edit!");
+                } else {
+                    JDialog_Edit_Insert_LP_Sapon dialog = new JDialog_Edit_Insert_LP_Sapon(new javax.swing.JFrame(), true, no_lp_sapon);
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+                    dialog.setEnabled(true);
+                    refreshTable_lp_sapon();
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(JPanel_Laporan_Produksi_Sapon.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_button_edit_lp_SaponActionPerformed
+
+    private void button_print_lp_semuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_print_lp_semuaActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (Table_LP_Sapon.getRowCount() > 0) {
+                refreshTable_lp_sapon();
+                JRDesignQuery newQuery = new JRDesignQuery();
+                newQuery.setText(sql);
+                JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Laporan_Produksi_Sapon_Sub.jrxml");
+                JASP_DESIGN.setQuery(newQuery);
+                JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+                JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
+                JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
+            } else {
+                JOptionPane.showMessageDialog(this, "Tidak ada data pada tabel !", "warning!", 1);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage());
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_print_lp_semuaActionPerformed
+
+    private void button_print_lp1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_print_lp1ActionPerformed
+        try {
+            int j = Table_LP_Sapon.getSelectedRow();
+            if (j == -1) {
+                JOptionPane.showMessageDialog(this, "Pilih LP yang mau di print", "warning!", 1);
+            } else {
+                String no_lp = Table_LP_Sapon.getValueAt(j, 0).toString();
+                String query = "SELECT `no_lp_sapon`, `sub`, `tanggal_lp`, `kode_grade`, `bulu_upah`, `memo`, `keping`, `gram_sapon`, `berat_setelah_cuci`, `nilai_lp` "
+                        + "FROM `tb_laporan_produksi_sapon` WHERE `no_lp_sapon` = '" + no_lp + "'";
+                JRDesignQuery newQuery = new JRDesignQuery();
+                newQuery.setText(query);
+                JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Laporan_Produksi_Sapon_Sub.jrxml");
+                JASP_DESIGN.setQuery(newQuery);
+                JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+//                Map<String, Object> params = new HashMap<String, Object>();
+//                params.put("CHEAT", 1);
+                JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
+                JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage());
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_print_lp1ActionPerformed
+
+    private void button_search_lp_SaponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_search_lp_SaponActionPerformed
+        // TODO add your handling code here:
+        refreshTable_lp_sapon();
+    }//GEN-LAST:event_button_search_lp_SaponActionPerformed
+
+    private void txt_search_no_lp_SaponKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_no_lp_SaponKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_lp_sapon();
+        }
+    }//GEN-LAST:event_txt_search_no_lp_SaponKeyPressed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBox_sub_lp_Sapon;
+    private com.toedter.calendar.JDateChooser Date_Search_LP_Sapon1;
+    private com.toedter.calendar.JDateChooser Date_Search_LP_Sapon2;
+    public static javax.swing.JTable Table_LP_Sapon;
+    public javax.swing.JButton button_create_lp_Sapon;
+    public javax.swing.JButton button_delete_lp_Sapon;
+    public javax.swing.JButton button_edit_lp_Sapon;
+    private javax.swing.JButton button_export_lp_Sapon;
+    private javax.swing.JButton button_print_lp1;
+    private javax.swing.JButton button_print_lp_semua;
+    private javax.swing.JButton button_search_lp_Sapon;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel_laporan_produksi;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JLabel label_total_gram_Sapon;
+    private javax.swing.JLabel label_total_keping_LP_sapon;
+    private javax.swing.JLabel label_total_lp_Sapon;
+    private javax.swing.JTextField txt_search_no_lp_Sapon;
+    // End of variables declaration//GEN-END:variables
+}

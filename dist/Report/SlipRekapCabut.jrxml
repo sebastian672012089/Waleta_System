@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SlipRekapCabut" language="groovy" columnCount="3" pageWidth="595" pageHeight="842" columnWidth="185" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9d885ddd-35fa-4d41-9f6b-5602e7bf92bb">
+	<property name="ireport.zoom" value="2.143588810000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Border">
+		<box>
+			<topPen lineWidth="0.5"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<queryString>
+		<![CDATA[SELECT SUBSTRING_INDEX(`nama_bagian`, '-', -3) AS 'grup', `tb_detail_pencabut`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `tb_detail_pencabut`.`no_laporan_produksi`,  `jumlah_cabut`, `jumlah_gram`
+FROM `tb_detail_pencabut`
+LEFT JOIN `tb_cabut` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`
+LEFT JOIN `tb_karyawan` ON `tb_detail_pencabut`.`id_pegawai` = `tb_karyawan`.`id_pegawai`
+LEFT JOIN `tb_bagian` ON `tb_detail_pencabut`.`kode_bagian` = `tb_bagian`.`kode_bagian`
+WHERE `tb_cabut`.`tgl_setor_cabut` BETWEEN '2023-06-08' AND '2023-06-14'
+ORDER BY `grup`, `id_pegawai`]]>
+	</queryString>
+	<field name="grup" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_pegawai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_pegawai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_laporan_produksi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_cabut" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_gram" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="total_keping" class="java.lang.Integer" resetType="Group" resetGroup="Group2" calculation="Sum">
+		<variableExpression><![CDATA[$F{jumlah_cabut}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<group name="Group1" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{grup}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{id_pegawai}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement x="35" y="0" width="145" height="15" forecolor="#006699" uuid="cfd6b106-d7da-4f3a-b6e8-f5066bfa0b08"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nama_pegawai}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="35" height="15" forecolor="#000000" uuid="16dea49c-b09c-4dcd-afd0-7f1e608191cc"/>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+					<text><![CDATA[Nama:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Border" x="0" y="15" width="20" height="15" forecolor="#000000" uuid="1c6f7cbd-b54c-4418-ab69-e2f9fd23b9cb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Border" x="20" y="15" width="125" height="15" forecolor="#000000" uuid="51695d2e-7629-4ebc-b076-a4d784c24560"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[No Laporan Produksi]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Border" x="145" y="15" width="35" height="15" forecolor="#000000" uuid="72e172bd-e22c-4fb9-988a-3428eb0a0f2c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Kpg]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="15">
+				<textField>
+					<reportElement style="Border" x="0" y="0" width="145" height="15" forecolor="#000000" uuid="191e95bc-4f5a-466e-9180-a324fe66d003"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total Keping : "]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Border" x="145" y="0" width="35" height="15" forecolor="#000000" uuid="0bcb88f1-4c27-4fc5-84ed-ac3b6dbe203f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_keping}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<pageHeader>
+		<band height="20">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="35" height="20" forecolor="#666666" backcolor="#E6E6E6" uuid="ac457580-6ba5-4f59-b7ed-f6ffafb5e9df"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Grup]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="35" y="0" width="520" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7a10f14a-a498-4b2a-b490-6956ddfda91e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{grup}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="15">
+			<textField>
+				<reportElement style="Border" x="145" y="0" width="35" height="15" forecolor="#000000" uuid="05db9059-ca87-4573-a5eb-419333a77cd7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jumlah_cabut}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Border" x="0" y="0" width="20" height="15" forecolor="#000000" uuid="aa92b2c0-3301-49de-8510-63749551eea9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{Group2_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Border" x="20" y="0" width="125" height="15" forecolor="#000000" uuid="ec58089a-6d41-4c16-92a6-74512f325410"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="8dd96aac-ea1e-434b-b35a-15cb015eee65"/>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="8ec9aaef-a168-4c30-aceb-3c3418828154"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="2d29ce10-61da-467f-a7c7-680999e30a5b"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

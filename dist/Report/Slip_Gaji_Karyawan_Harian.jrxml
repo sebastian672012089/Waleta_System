@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Slip Gaji Karyawan Cabut" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" backcolor="#CCCCCC" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#FFFFFF"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" mode="Transparent" forecolor="#000000" backcolor="#FFFFFF" fill="Solid" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<parameter name="PERIODE_AWAL" class="java.util.Date"/>
+	<parameter name="PERIODE_AKHIR" class="java.util.Date"/>
+	<parameter name="ID_PEGAWAI" class="java.lang.String"/>
+	<parameter name="NAMA_PEGAWAI" class="java.lang.String"/>
+	<parameter name="GRUP" class="java.lang.String"/>
+	<parameter name="TUNJANGAN_HADIR" class="java.lang.Double"/>
+	<parameter name="BONUS_LP" class="java.lang.Double"/>
+	<parameter name="BONUS_MK_UTUH" class="java.lang.Double"/>
+	<parameter name="BONUS_PENCAPAIAN_PRODUKSI" class="java.lang.Double"/>
+	<parameter name="BONUS_TBT" class="java.lang.Double"/>
+	<parameter name="POT_TRANSPORT" class="java.lang.Double"/>
+	<parameter name="POT_TERLAMBAT" class="java.lang.Double"/>
+	<parameter name="POT_IJIN" class="java.lang.Double"/>
+	<parameter name="POT_BPJS" class="java.lang.Double"/>
+	<parameter name="POT_BPJS_TK" class="java.lang.Double"/>
+	<parameter name="PIUTANG" class="java.lang.Double"/>
+	<parameter name="GAJI_BORONG" class="java.lang.Double"/>
+	<parameter name="GAJI_HARIAN" class="java.lang.Double"/>
+	<parameter name="KETERANGAN" class="java.lang.String"/>
+	<parameter name="LEMBUR" class="java.lang.Double"/>
+	<parameter name="HALAMAN" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT `id_pegawai`, `tanggal`,
+`jumlah_lembur_menit`,
+`menit_terlambat`,
+`menit_ijin`,
+`tb_lembur_rekap`.`premi_hadir`, `tb_level_gaji`.`upah_per_hari`, `tb_lembur_rekap`.`level_gaji`
+FROM `tb_lembur_rekap`
+LEFT JOIN `tb_level_gaji` ON `tb_lembur_rekap`.`level_gaji` = `tb_level_gaji`.`level_gaji`
+WHERE `id_pegawai` = $P{ID_PEGAWAI} AND (`tanggal` BETWEEN $P{PERIODE_AWAL} AND $P{PERIODE_AKHIR})
+AND `tb_level_gaji`.`upah_per_hari` > 0]]>
+	</queryString>
+	<field name="id_pegawai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_lembur_menit" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="menit_terlambat" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="menit_ijin" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="premi_hadir" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="upah_per_hari" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="level_gaji" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="GajiHari" class="java.lang.Float">
+		<variableExpression><![CDATA[$F{premi_hadir}==0?0:
+$F{premi_hadir}==4?0:
+$F{premi_hadir}==5?0:
+$F{upah_per_hari}.floatValue()]]></variableExpression>
+	</variable>
+	<variable name="Upah_per_jam" class="java.lang.Float">
+		<variableExpression><![CDATA[$F{level_gaji}.toUpperCase().equals("PERCOBAAN") ? ($F{upah_per_hari}/8f) : ($F{upah_per_hari}/7f)]]></variableExpression>
+	</variable>
+	<variable name="Lembur" class="java.lang.Float">
+		<variableExpression><![CDATA[($F{jumlah_lembur_menit}.floatValue()/60f) *
+($P{GRUP}.equals("HRD-SECURITY-GA") || $P{GRUP}.equals("HRD-SECURITY-OFFICE")?10000f:
+    ($F{premi_hadir}!=4&&$F{premi_hadir}!=5?$V{Upah_per_jam} * 1.5f:
+    ($P{GRUP}.equals("GA ALAT-DRIVER-GA")?$V{Upah_per_jam} * 1.5f:
+    $V{Upah_per_jam} * 2f)
+    )
+)]]></variableExpression>
+	</variable>
+	<variable name="Terlambat" class="java.lang.Float">
+		<variableExpression><![CDATA[1.5f * $F{menit_terlambat}.floatValue() * ($V{Upah_per_jam} /60f)]]></variableExpression>
+	</variable>
+	<variable name="Ijin" class="java.lang.Float">
+		<variableExpression><![CDATA[($F{menit_ijin}.floatValue()/60) * $V{Upah_per_jam}]]></variableExpression>
+	</variable>
+	<variable name="TotalGajiHari" class="java.lang.Float" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$V{GajiHari}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalLembur" class="java.lang.Float" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$V{Lembur}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalTerlambat" class="java.lang.Float" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$V{Terlambat}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="TotalIjin" class="java.lang.Float" resetType="Page" calculation="Sum">
+		<variableExpression><![CDATA[$V{Ijin}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="48">
+			<textField>
+				<reportElement style="Page header" isPrintRepeatedValues="false" x="85" y="16" width="470" height="16" uuid="158f90bc-a65a-49d2-a3ce-a00bb6b29598"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NAMA_PEGAWAI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="85" y="32" width="100" height="16" uuid="07ccc18a-50cb-4272-8b59-160e3157534a"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODE_AWAL}==null?"All":new SimpleDateFormat("dd-MMM-yy").format($P{PERIODE_AWAL})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="0" y="32" width="80" height="16" uuid="f2b4a02e-9e8e-4245-8770-69e04451cd97"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Periode]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Page header" x="185" y="32" width="15" height="16" uuid="c0047b17-0659-4df0-a311-8beab6508c56"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODE_AWAL}==null?"":"s/d"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="80" y="32" width="5" height="16" uuid="5550d685-1f31-4bc0-a343-ba64ead4a49f"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="EEEEE, dd MMMMM yyyy">
+				<reportElement x="265" y="0" width="290" height="16" forecolor="#000000" uuid="fc4682b8-06c6-4edc-bd4c-5333e8118316"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Printed : " + new SimpleDateFormat("EEEEE, dd MMMM yyyy").format(new java.util.Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" isPrintRepeatedValues="false" x="85" y="0" width="180" height="16" uuid="4efb8c34-98d1-459c-9e35-ea73d999e1bc"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{ID_PEGAWAI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="80" y="0" width="5" height="16" uuid="ec97ba78-4068-488e-83bf-9eb761758089"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="0" y="16" width="80" height="16" uuid="33f9bdf4-3302-4760-ab14-f237c68ba792"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nama Karyawan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="80" y="16" width="5" height="16" uuid="54318538-c436-4697-b026-12523d0d0afc"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="0" y="0" width="80" height="16" uuid="173d28ac-2317-4b4b-98b6-31e1f58d7efd"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ID Pegawai]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Page header" x="300" y="32" width="255" height="16" uuid="61dac329-6fcf-45b5-9756-d3d28ff05d18"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{GRUP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="200" y="32" width="100" height="16" uuid="6f80af6f-bfa7-40c1-a09a-6ea2ca649eba"/>
+				<textElement verticalAlignment="Top" markup="none">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PERIODE_AKHIR}==null?"":new SimpleDateFormat("dd-MMM-yy").format($P{PERIODE_AKHIR})]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="25" height="16" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="105" y="0" width="80" height="16" forecolor="#000000" uuid="271511c0-79c9-4c8f-840e-dfb232dfad6a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Gaji Harian]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="425" y="0" width="130" height="16" forecolor="#000000" uuid="1bedefc9-9690-4df9-a875-52d9613065e8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="25" y="0" width="80" height="16" forecolor="#000000" uuid="0c716877-6b10-4ffd-877e-0634fd176f86"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="265" y="0" width="80" height="16" forecolor="#000000" uuid="151dba86-60c4-41f4-b880-82722690f8c5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Terlambat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="345" y="0" width="80" height="16" forecolor="#000000" uuid="dfdf435c-172b-48cd-9e66-552d9b00d020"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Ijin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="185" y="0" width="80" height="16" forecolor="#000000" uuid="74042b91-c04c-469b-ab01-385121c7c36e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Lembur]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="16" uuid="ceb3e7bd-a5cc-494b-873f-f1f6d6f4e1ca"/>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" x="425" y="0" width="130" height="16" uuid="483ae050-6146-4f0b-9492-338e794d0d15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($V{GajiHari} + $V{Lembur}) - ($V{Terlambat} + $V{Ijin})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="0" y="0" width="25" height="16" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" x="105" y="0" width="80" height="16" uuid="8cc6c0fa-3300-4787-a405-26696f83ae08"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph rightIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{GajiHari}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="25" y="0" width="80" height="16" uuid="31df8bbf-d406-4285-a63e-19f89b38db22"/>
+					<textElement verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy").format($F{tanggal})]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" x="265" y="0" width="80" height="16" uuid="0244b5c7-c96c-46bf-a04b-629799d3d535"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Terlambat}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" x="345" y="0" width="80" height="16" uuid="b38e7d7a-5938-4ba7-939a-5c9afd0b04f9"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Ijin}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" x="185" y="0" width="80" height="16" uuid="f39b0dcc-a794-4832-8cc2-ff8dee7d9e95"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11" isBold="false"/>
+						<paragraph rightIndent="5"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{Lembur}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="255">
+			<staticText>
+				<reportElement style="Column footer" x="0" y="80" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="1a429fe7-8c9b-4510-9589-083b781711bc"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Bonus LP]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="64" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="b1ce88e2-2f2f-4169-92cc-10ebc4453b92"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TUNJANGAN_HADIR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="80" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="5c0cbb8f-12b2-443c-9911-1fe1c17a4b76"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BONUS_LP}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="96" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="10405e9d-5f71-4fad-bc8a-bc5945e6749e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Bonus MK Utuh]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="48" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="05070b3b-90ab-4b1c-8b46-e0b844ba7b38"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Total Lembur]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="128" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="18805c7b-4d2c-493c-92f0-a6fbc1b592d4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BONUS_TBT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="240" width="80" height="15" forecolor="#000000" uuid="fb24c91d-39df-471d-b4df-59f6eecbf31b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Halaman "+$P{HALAMAN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="160" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="f79b866f-444c-4af0-a69b-b3ad15a1d9b4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{POT_TRANSPORT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="160" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="ecd91f95-679f-454e-a2bf-d526720a6748"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Potongan Transport]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="32" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="44f8c555-46d1-4317-b0ab-6f2829a0c8e6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{GAJI_BORONG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="176" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="da1d6a38-a1c0-4c78-b58a-8576aa3334ed"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{POT_BPJS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="176" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="4f6c6d16-7ff3-45e2-b2b6-8931aa509705"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Potongan BPJS KS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="128" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="ad8015f7-74b7-4ca4-8a43-4c30bb59fc39"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Bonus Teman Bawa Teman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="192" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="30051d38-b3eb-4143-aaab-3edd397e96bb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Potongan BPJS TK]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="208" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="1ff4ece6-dd9d-4c53-93fa-d4f5a064bffa"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{PIUTANG}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="48" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="557ff557-93fb-4af5-9aeb-988cadfbb940"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{LEMBUR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="144" width="555" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="ec4174e8-5a4b-461a-9ae3-398243842cea"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Dikurangi:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="32" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="fd493eea-4201-49b1-9d7a-b5b69fb02184"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Gaji Borong]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="96" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="fcaa6442-0430-47e1-aedc-fda8e2e89105"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BONUS_MK_UTUH}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="0" y="240" width="475" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="eefe1e70-3df4-432e-9404-7a0cd0ac7d18"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="10"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Ket : " + $P{KETERANGAN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="208" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="4f47e03e-e101-4ed2-98f2-1bbb1c1c4213"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Piutang Karyawan]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="192" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="87eb1bb6-1ae3-4ceb-b5f1-699b7823885d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{POT_BPJS_TK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="64" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="7dd8b1fe-2cbe-478b-99f9-a54e6ec68a77"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Tunjangan Hadir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="16" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="46427272-e486-4acc-93b9-d92000bbae2b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Total Gaji Harian]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="16" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="a7711e05-d9f9-41cb-a1d1-7133a1c069e4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{GAJI_HARIAN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="224" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="8e6c021c-75aa-4f5c-a592-0b317704b63c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{GAJI_BORONG}+$P{GAJI_HARIAN}+$P{LEMBUR}+$P{TUNJANGAN_HADIR}+$P{BONUS_LP}+$P{BONUS_MK_UTUH}+$P{BONUS_PENCAPAIAN_PRODUKSI}+$P{BONUS_TBT}+$P{PIUTANG})-
+($P{POT_TRANSPORT}+$P{POT_BPJS}+$P{POT_BPJS_TK}+$P{POT_TERLAMBAT}+$P{POT_IJIN})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="224" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="4aaa9416-c115-46f3-9f42-e6aae9f256fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="16" forecolor="#FFFFFF" backcolor="#DCDCDC" uuid="f86283e8-567b-4b01-9644-18ba7dabb73c"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Page footer" x="0" y="0" width="105" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="8021dfa5-1ae4-470f-a62e-870726477212"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true"/>
+					<paragraph leftIndent="5" rightIndent="5"/>
+				</textElement>
+				<text><![CDATA[Total / hari]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Page footer" x="425" y="0" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="0c4d2654-661f-4db3-b018-7ca1c1595c6d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($V{TotalGajiHari} + $V{TotalLembur}) - ($V{TotalTerlambat} + $V{TotalIjin})]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Page footer" x="345" y="0" width="80" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="6ac474ad-808d-483d-bd52-e84ca25501fb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalIjin}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Page footer" x="265" y="0" width="80" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="1df26c7c-06ff-48ec-8720-832b01a6f41c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalTerlambat}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Page footer" x="185" y="0" width="80" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="59fdb99d-0273-405a-846b-533b74243989"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalLembur}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Page footer" x="105" y="0" width="80" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="c6bbe040-a7e2-46b3-973f-43155c724b4f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalGajiHari}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column footer" x="0" y="112" width="425" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="bc5e69b1-1332-4593-b4d8-8a309e55e0f7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Bonus Pencapaian Produksi]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column footer" x="425" y="112" width="130" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="0ed32f35-1d93-42b5-b33e-50778f22736f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="11"/>
+					<paragraph rightIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BONUS_PENCAPAIAN_PRODUKSI}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Catatan Pemeriksaan Kebersihan Sarang Walet Selama Proses" pageWidth="555" pageHeight="401" orientation="Landscape" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.1566298682885963"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" hAlign="Left" vAlign="Middle" fontName="Arial" fontSize="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<box>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0" hAlign="Center" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<parameter name="ID" class="java.lang.String"/>
+	<parameter name="NAMA" class="java.lang.String"/>
+	<parameter name="TGL1" class="java.lang.String"/>
+	<parameter name="TGL2" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT `id_pegawai`, `nik_ktp`, `nama_pegawai`, A.`kode_bagian`, `status`, `tanggal_masuk`, `level_gaji`, `tb_bagian`.`nama_bagian`,
+(SELECT `id_pegawai` FROM `tb_karyawan` WHERE `nik_ktp` = A.`nik_ktp` AND `tanggal_keluar` IS NOT NULL
+ORDER BY `tanggal_keluar` DESC LIMIT 1) AS 'id_lama',
+(SELECT `tanggal_masuk` FROM `tb_karyawan` WHERE `nik_ktp` = A.`nik_ktp` AND `tanggal_keluar` IS NOT NULL
+ORDER BY `tanggal_keluar` DESC LIMIT 1) AS 'tanggal_masuk_lama',
+(SELECT `tanggal_keluar` FROM `tb_karyawan` WHERE `nik_ktp` = A.`nik_ktp` AND `tanggal_keluar` IS NOT NULL
+ORDER BY `tanggal_keluar` DESC LIMIT 1) AS 'tanggal_keluar_lama',
+(SELECT `level_gaji` FROM `tb_karyawan` WHERE `nik_ktp` = A.`nik_ktp` AND `tanggal_keluar` IS NOT NULL
+ORDER BY `tanggal_keluar` DESC LIMIT 1) AS 'level_gaji_lama',
+(SELECT `nama_bagian` FROM `tb_karyawan` LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian` WHERE `nik_ktp` = A.`nik_ktp` AND `tanggal_keluar` IS NOT NULL
+ORDER BY `tanggal_keluar` DESC LIMIT 1) AS 'bagian_lama'
+FROM `tb_karyawan` A LEFT JOIN `tb_bagian` ON A.`kode_bagian` = `tb_bagian`.`kode_bagian`
+WHERE `id_pegawai` LIKE $P{ID} AND `nama_pegawai` LIKE $P{NAMA} AND (`tanggal_masuk` BETWEEN $P{TGL1} AND $P{TGL2})
+HAVING `id_lama` IS NOT NULL
+ORDER BY A.`nama_pegawai`]]>
+	</queryString>
+	<field name="id_pegawai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nik_ktp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_pegawai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_bagian" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal_masuk" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="level_gaji" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_bagian" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_lama" class="java.lang.String"/>
+	<field name="tanggal_masuk_lama" class="java.sql.Date"/>
+	<field name="tanggal_keluar_lama" class="java.sql.Date"/>
+	<field name="level_gaji_lama" class="java.lang.String"/>
+	<field name="bagian_lama" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="65">
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="555" height="30" uuid="40e54398-17de-47a4-8a8c-a7090df84273"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="11" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[PT. WALETA ASIA JAYA
+FORM ANAK LAMA MASUK LAGI]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="30" width="555" height="35" uuid="946524c9-d963-4a13-a35f-2527a84de2a0"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Page header" x="0" y="30" width="70" height="15" uuid="cbb67e3e-bff0-44bf-ab35-7db917a94e51"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Page header" isPrintRepeatedValues="false" x="70" y="30" width="297" height="15" uuid="5322588d-f92a-41c3-b9d3-5b3c8d66e380"/>
+				<textElement verticalAlignment="Middle" markup="none">
+					<font isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[":" + new SimpleDateFormat("dd MMMM yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="0" y="45" width="70" height="15" uuid="676ea6b8-2fbb-4f05-8708-cc32a34a9345"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Departemen]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Page header" x="70" y="45" width="297" height="15" uuid="97a20355-d155-4df6-9184-4831925bc275"/>
+				<textElement verticalAlignment="Middle" markup="none"/>
+				<textFieldExpression><![CDATA[":"]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="25" height="15" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="25" y="0" width="150" height="15" forecolor="#000000" uuid="ad494922-3502-46e2-bcf6-0d184df5ed9d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="175" y="0" width="95" height="15" forecolor="#000000" uuid="989bccda-f04f-4936-a5a5-2188cee615bd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bagian Lama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="270" y="0" width="95" height="15" forecolor="#000000" uuid="271511c0-79c9-4c8f-840e-dfb232dfad6a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bagian Baru]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="365" y="0" width="70" height="15" forecolor="#000000" uuid="50f8d040-57ca-4ff5-b371-aa90286ac393"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Masa Kerja Lama]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="495" y="0" width="60" height="15" forecolor="#000000" uuid="5ebf6b56-7496-4e9a-9329-3bb2e5ce3727"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Level gaji baru]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="435" y="0" width="60" height="15" forecolor="#000000" uuid="77de9307-a322-47b3-8fba-b86cced4a847"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal Keluar]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="20" uuid="ceb3e7bd-a5cc-494b-873f-f1f6d6f4e1ca"/>
+				<textField>
+					<reportElement style="Detail" x="0" y="0" width="25" height="20" uuid="28533d17-20c9-44e1-a76c-da2f2ce9fedd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="25" y="0" width="150" height="20" uuid="8cc6c0fa-3300-4787-a405-26696f83ae08"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nama_pegawai}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="175" y="0" width="95" height="20" uuid="f8fb7274-70dd-406f-8265-daa9f4a09555"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{bagian_lama}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="270" y="0" width="95" height="20" uuid="4cb97358-1e69-43cf-affa-70d832a76f78"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nama_bagian}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="365" y="0" width="70" height="20" uuid="7c61c14a-b747-465a-84dd-f1e3a71b01fd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[((Math.abs($F{tanggal_keluar_lama}.getTime() - $F{tanggal_masuk_lama}.getTime()) / (1000*60*60*24)) / 365) + "Th "
++ (((Math.abs($F{tanggal_keluar_lama}.getTime() - $F{tanggal_masuk_lama}.getTime()) / (1000*60*60*24)) % 365) / 30) + "Bln "
++ (((Math.abs($F{tanggal_keluar_lama}.getTime() - $F{tanggal_masuk_lama}.getTime()) / (1000*60*60*24)) % 365) % 30) + "Hr"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="435" y="0" width="60" height="20" uuid="f410a263-c3bb-4ea7-b1c4-a8aaf75bd3d0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy").format($F{tanggal_keluar_lama})]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Row" x="495" y="0" width="60" height="20" uuid="483ae050-6146-4f0b-9492-338e794d0d15"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph leftIndent="3"/>
+					</textElement>
+					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="80">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="555" height="80" uuid="5c1be662-1288-4418-87e5-13538f9dbfed"/>
+			</rectangle>
+			<staticText>
+				<reportElement style="Page header" x="0" y="15" width="100" height="15" uuid="927d851c-dfff-46fb-81f0-6d1ea9a5df19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diajukan Oleh,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="0" y="60" width="100" height="15" uuid="831b6508-8b9f-47ca-a445-e7aab315da63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kepala Departemen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="0" y="5" width="555" height="10" uuid="f87d104c-d46f-4a21-9be3-976dd3336251"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isItalic="true"/>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<text><![CDATA[Notes : Setiap permindahan wajib dihari kamis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="227" y="60" width="100" height="15" uuid="f410581a-f181-45a6-b9a6-53b22f733e3e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HRD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="227" y="15" width="100" height="15" uuid="851ee579-a17d-4b8f-8cc7-93433a50ec0a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Disetujui,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="455" y="60" width="100" height="15" uuid="32f8eebe-c022-4066-a137-7cc3c62d5d4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payroll]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="455" y="15" width="100" height="15" uuid="c68f4166-32fe-440c-b27e-38df1c8c8b38"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mengetahui,]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

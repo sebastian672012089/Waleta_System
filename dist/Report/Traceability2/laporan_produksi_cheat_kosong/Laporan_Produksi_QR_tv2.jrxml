@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Produksi" language="groovy" pageWidth="935" pageHeight="609" orientation="Landscape" whenNoDataType="BlankPage" columnWidth="915" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="2.049040366095212"/>
+	<property name="ireport.x" value="829"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="barcode" forecolor="#000000" rotation="Left" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="6" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="6" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="6" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="8">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="8">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<parameter name="PARAM_NO_LP" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\mn\\Downloads\\newest waleta\\Waleta_System\\src\\waleta_system\\Report\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parameterHalaman" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parameterJumlahHalaman" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
+	</parameter>
+	<parameter name="parameterIsKosong" class="java.lang.Boolean">
+		<defaultValueExpression><![CDATA[true]]></defaultValueExpression>
+	</parameter>
+	<parameter name="target_utuh" class="java.lang.String"/>
+	<parameter name="target_pch" class="java.lang.String"/>
+	<parameter name="target_sp" class="java.lang.String"/>
+	<parameter name="target_sh" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT CT.`no_laporan_produksi`, CT.`no_kartu_waleta`, CT.`kode_rsb`, CT.`kode_grade`, CT.`jumlah_keping`, CT.`berat_basah`, `jenis_bulu_lp`
+FROM `tb_laporan_produksi_tv2` CT
+LEFT JOIN `tb_laporan_produksi` ON CT.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`
+WHERE CT.`no_laporan_produksi` = $P{PARAM_NO_LP} ORDER BY CT.`no_laporan_produksi` DESC]]>
+	</queryString>
+	<field name="no_laporan_produksi" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_kartu_waleta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_rsb" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_grade" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jumlah_keping" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="berat_basah" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_bulu_lp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="589" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="0" y="99" width="145" height="15" uuid="40e54398-17de-47a4-8a8c-a7090df84273"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="false" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PRODUKSI]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Page header" x="0" y="114" width="145" height="15" uuid="a36f8983-d9de-4b3b-b821-43fcc446966c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="0" y="159" width="145" height="15" uuid="cf934fa9-83f3-4a45-a2b9-2d5dedc47761"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[No. Revisi : 02]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="0" y="174" width="178" height="415" uuid="801fb12e-c004-498c-b858-00840ba819b1"/>
+				<subreportParameter name="PARAM_NO_LP">
+					<subreportParameterExpression><![CDATA[$F{no_laporan_produksi}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Laporan_Produksi_subreportBahanBaku_tv2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="183" y="79" width="96" height="510" uuid="7391e231-b1f5-4576-aaa3-5db95b70ebfc"/>
+				<subreportParameter name="PARAM_NO_LP">
+					<subreportParameterExpression><![CDATA[$F{no_laporan_produksi}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parameterIsKosong">
+					<subreportParameterExpression><![CDATA[$P{parameterIsKosong}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Laporan_Produksi_subreportPerendaman_tv2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="284" y="79" width="96" height="510" uuid="9ca0a080-b240-48b3-b1ac-6707424c062f"/>
+				<subreportParameter name="PARAM_NO_LP">
+					<subreportParameterExpression><![CDATA[$F{no_laporan_produksi}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parameterIsKosong">
+					<subreportParameterExpression><![CDATA[$P{parameterIsKosong}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Laporan_Produksi_subreportPencucian_tv2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="385" y="79" width="96" height="510" uuid="a359a495-fe5f-4566-8c6c-d1c9bed22ae9"/>
+				<subreportParameter name="PARAM_NO_LP">
+					<subreportParameterExpression><![CDATA[$F{no_laporan_produksi}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parameterIsKosong">
+					<subreportParameterExpression><![CDATA[$P{parameterIsKosong}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Laporan_Produksi_subreportPencabutan_tv2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="486" y="79" width="96" height="510" uuid="3b09d624-685a-4f3f-b597-7fe5e41f2dec"/>
+				<subreportParameter name="PARAM_NO_LP">
+					<subreportParameterExpression><![CDATA[$F{no_laporan_produksi}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parameterIsKosong">
+					<subreportParameterExpression><![CDATA[$P{parameterIsKosong}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Laporan_Produksi_subreportPembentukan_tv2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport runToBottom="false">
+				<reportElement x="587" y="79" width="184" height="338" uuid="a75e030d-5270-4e82-9938-a85bd1eed788"/>
+				<subreportParameter name="PARAM_NO_LP">
+					<subreportParameterExpression><![CDATA[$F{no_laporan_produksi}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="parameterIsKosong">
+					<subreportParameterExpression><![CDATA[$P{parameterIsKosong}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Laporan_Produksi_subreportGrading_tv2.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="587" y="417" width="184" height="172" uuid="ac662748-e65d-4fa8-ac60-ee51ff43c000"/>
+				<subreportParameter name="target_sh">
+					<subreportParameterExpression><![CDATA[$P{target_sh}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PARAM_NO_LP">
+					<subreportParameterExpression><![CDATA[$F{no_laporan_produksi}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="target_sp">
+					<subreportParameterExpression><![CDATA[$P{target_sp}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="target_pch">
+					<subreportParameterExpression><![CDATA[$P{target_pch}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="target_utuh">
+					<subreportParameterExpression><![CDATA[$P{target_utuh}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Laporan_Produksi_subreportEvaluasi_tv2.jasper"]]></subreportExpression>
+			</subreport>
+			<image scaleImage="RetainShape">
+				<reportElement x="165" y="0" width="60" height="60" uuid="dc6c37e6-601e-411e-9e10-2fb881aaad0b"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{no_laporan_produksi},
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="272" y="0" width="60" height="60" uuid="5feb2ba4-179d-4f5c-b171-126e6cef8081"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{no_laporan_produksi},
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="377" y="0" width="60" height="60" uuid="461e0732-715f-4314-ab8d-6de0c72a2456"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{no_laporan_produksi},
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="481" y="0" width="60" height="60" uuid="e112c091-65c7-4404-a432-5d4bf0637e7d"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{no_laporan_produksi},
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="586" y="0" width="60" height="60" uuid="54567a7f-e86d-40c9-881c-02b36901306f"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{no_laporan_produksi},
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="692" y="0" width="60" height="60" uuid="57a147b6-d18e-4986-b13e-ecc98fa5c85d"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{no_laporan_produksi},
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="Page header" x="145" y="0" width="100" height="10" uuid="6c664150-8b75-4573-bab6-c2020cd60a31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["GBJ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="145" y="50" width="100" height="10" uuid="5fb988ce-f55d-4dc9-9e19-c31c66f43052"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="145" y="60" width="100" height="10" uuid="e6d8a494-0c67-4379-8f00-5ad51eccd0ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_kartu_waleta} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="252" y="0" width="100" height="10" uuid="424c6a41-bfde-4cdc-80ef-77d1c69a0ee0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rendam"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="252" y="50" width="100" height="10" uuid="0fea287e-2a3c-47d5-b491-a6d2190b8087"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="252" y="60" width="100" height="10" uuid="8ab74a23-3627-4935-aa88-d35c2c80f5f6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_kartu_waleta} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="357" y="0" width="100" height="10" uuid="f7df0567-9e91-4c56-af54-8e2bd1ca960f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SSK"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="357" y="50" width="100" height="10" uuid="04cd04e9-b051-453f-930f-0bece8431f2f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="357" y="60" width="100" height="10" uuid="2c554b3c-479e-49c0-a3f8-72a526a27e4d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_kartu_waleta} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="462" y="0" width="100" height="10" uuid="10cbbd8c-12bb-4186-8639-95aeb9483a7f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["HC"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="462" y="50" width="100" height="10" uuid="544c41f7-16fe-44c3-a49e-eba9e1523fbd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="462" y="60" width="100" height="10" uuid="3d473976-369c-404a-8858-8fc3723e7948"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_kartu_waleta} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="566" y="0" width="100" height="10" uuid="5b80e914-4cf4-497b-af4d-9ecafb786520"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Kaki"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="566" y="50" width="100" height="10" uuid="bb3e124e-6cfa-48c1-8eb8-93e5347db65d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="566" y="60" width="100" height="10" uuid="e9431d6b-c6ec-4f18-b3ae-fdc3a76b7645"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_kartu_waleta} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="671" y="0" width="100" height="10" uuid="e6ebf971-18e5-440e-b71a-f1b866b0913b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["QC"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="671" y="50" width="100" height="10" uuid="b569cb69-54e8-4f47-954d-e25865ad049b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="671" y="60" width="100" height="10" uuid="9e894739-4d92-4d79-92d1-3d538e9fb7ca"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_kartu_waleta} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="0" y="129" width="145" height="15" uuid="d69ed074-996a-42fa-b25e-0905d3d88e8f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[No.Document : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="0" y="144" width="145" height="15" uuid="a5f3fa3b-4aaf-4c3d-9dab-dfac3e3e73c5"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[FR/WAJ/PRD/01/a/1]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Page header" x="0" y="0" width="130" height="10" uuid="345100e8-6e88-418e-8bf5-591d7b4e58c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["GBJ"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="0" y="60" width="130" height="10" uuid="540bd852-98e4-41fb-a14d-115902a80987"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_kartu_waleta} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape">
+				<reportElement x="35" y="0" width="60" height="60" uuid="8655b25b-4b6b-44f4-ba32-4b507d01f901"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{no_laporan_produksi},
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="Page header" x="0" y="50" width="130" height="10" uuid="d31fd160-312a-4bef-8018-b0486204e05c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{kode_rsb}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="0" y="81" width="130" height="10" uuid="63599093-378f-49d7-a711-51ff9836110a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Bulu:" + $F{jenis_bulu_lp} + ", Kpg:" + $F{jumlah_keping} + ", Gr:" + $F{berat_basah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="0" y="71" width="130" height="10" uuid="fe9d7233-ae84-4b04-b281-842d1a74810a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Grade:" + $F{kode_grade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
