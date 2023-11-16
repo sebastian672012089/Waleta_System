@@ -1096,6 +1096,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         button_edit_pecah.setBackground(new java.awt.Color(255, 255, 255));
         button_edit_pecah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_edit_pecah.setText("Edit Pecah");
+        button_edit_pecah.setEnabled(false);
         button_edit_pecah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_edit_pecahActionPerformed(evt);

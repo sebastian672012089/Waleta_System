@@ -221,7 +221,6 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
                     }
                     double bonus_ctk1 = (Math.floor(rs.getDouble("bonus_lp_cetak1") / 0.5d) * 0.5d) * bonus_per_lp_cetak1;
                     row[9] = bonus_ctk1;
-                    total_bonus = total_bonus + bonus_ctk1;
                     double bonus_ctk2 = (Math.floor(rs.getDouble("bonus_lp_cetak2") / 0.5d) * 0.5d) * bonus_per_lp_cetak2;
                     row[10] = bonus_ctk2;
                     total_bonus = total_bonus + bonus_ctk2;

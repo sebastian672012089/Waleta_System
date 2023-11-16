@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -229,12 +230,30 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
                 default:
                     break;
             }
+            HashMap<String, Date[]> List_tanggal = new HashMap<>();
+            Utility.db_sub.connect();
+            String query = "SELECT `tb_cabut`.`no_laporan_produksi`, `tgl_mulai_cabut`, `tgl_cabut`, `tgl_setor_cabut`, `tb_cetak`.`tgl_mulai_cetak`, `tgl_selesai_cetak` "
+                    + "FROM `tb_cabut` "
+                    + "LEFT JOIN `tb_cetak` ON `tb_cabut`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi` "
+                    + "WHERE 1";
+            ResultSet result = Utility.db_sub.getStatement().executeQuery(query);
+            while (result.next()) {
+                Date[] Array_tanggal = new Date[]{
+                    result.getDate("tgl_mulai_cabut"),
+                    result.getDate("tgl_cabut"),
+                    result.getDate("tgl_setor_cabut"),
+                    result.getDate("tgl_mulai_cetak"),
+                    result.getDate("tgl_selesai_cetak")
+                };
+                List_tanggal.put(result.getString("no_laporan_produksi"), Array_tanggal);
+            }
+            
             sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`, `tanggal_lp`, `berat_basah`, "
                     + "`tb_cuci`.`no_laporan_produksi` AS 'lp_cuci', `tb_cuci`.`cuci_diserahkan`, "
                     + "`tb_cabut`.`no_laporan_produksi` AS 'lp_cabut', `tb_cabut`.`tgl_mulai_cabut`, `tb_cabut`.`tgl_setor_cabut`, "
                     + "`tb_cetak`.`no_laporan_produksi` AS 'lp_cetak', `tb_cetak`.`tgl_mulai_cetak`, `tb_cetak`.`tgl_selesai_cetak`, "
                     + "`tb_finishing_2`.`no_laporan_produksi` AS 'lp_f2', `tb_finishing_2`.`tgl_dikerjakan_f2`, `tgl_masuk_f2`, `tb_finishing_2`.`tgl_f1`, `tb_finishing_2`.`tgl_f2`, `tb_finishing_2`.`tgl_setor_f2`,\n"
-                    + "`tb_lab_laporan_produksi`.`no_laporan_produksi` AS 'lp_qc', `tb_lab_laporan_produksi`.`tgl_uji`, `tb_lab_laporan_produksi`.`tgl_selesai_qc`, `tb_lab_laporan_produksi`.`status`,\n"
+                    + "`tb_lab_laporan_produksi`.`no_laporan_produksi` AS 'lp_qc', `tb_lab_laporan_produksi`.`tgl_uji`, `tb_lab_laporan_produksi`.`tgl_selesai` AS 'tgl_selesai_qc', `tb_lab_laporan_produksi`.`status`,\n"
                     + "`tb_bahan_jadi_masuk`.`kode_asal`, `tb_bahan_jadi_masuk`.`tanggal_grading`, `tb_bahan_jadi_masuk`.`kode_tutupan`, `tb_bahan_jadi_masuk`.`keping`, `tb_bahan_jadi_masuk`.`berat`\n"
                     + "FROM `tb_laporan_produksi` "
                     + "LEFT JOIN `tb_cuci` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cuci`.`no_laporan_produksi`\n"
@@ -249,6 +268,8 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
             rs = Utility.db.getStatement().executeQuery(sql);
             dataset1.clear();
             while (rs.next()) {
+                Date tgl_setor_cabut = rs.getDate("tgl_setor_cabut") != null ? rs.getDate("tgl_setor_cabut") : List_tanggal.get(rs.getString("no_laporan_produksi")) != null ? List_tanggal.get(rs.getString("no_laporan_produksi"))[2] : null;
+                Date tgl_selesai_cetak = rs.getDate("tgl_selesai_cetak") != null ? rs.getDate("tgl_selesai_cetak") : List_tanggal.get(rs.getString("no_laporan_produksi")) != null ? List_tanggal.get(rs.getString("no_laporan_produksi"))[4] : null;
                 if (rs.getDate("tanggal_grading") != null) {
                     gbj_tutupan_lp++;
                     gbj_tutupan_gram = gbj_tutupan_gram + rs.getInt("berat");
@@ -274,16 +295,16 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
                 } else if (rs.getDate("tgl_dikerjakan_f2") != null) {
                     f1_lp++;
                     f1_gram = f1_gram + rs.getInt("berat_basah");
-                } else if (rs.getDate("tgl_selesai_cetak") != null) {
+                } else if (tgl_selesai_cetak != null) {
                     koreksi_lp++;
                     koreksi_gram = koreksi_gram + rs.getInt("berat_basah");
-                } else if (rs.getDate("tgl_setor_cabut") != null) {
+                } else if (tgl_setor_cabut != null) {
                     cetak_lp++;
                     cetak_gram = cetak_gram + rs.getInt("berat_basah");
                 } else if (rs.getString("cuci_diserahkan") != null && !rs.getString("cuci_diserahkan").equals("-")) {
                     cabut_lp++;
                     cabut_gram = cabut_gram + rs.getInt("berat_basah");
-                } else if (rs.getString("cuci_diserahkan").equals("-")) {
+                } else if (rs.getString("cuci_diserahkan") != null && rs.getString("cuci_diserahkan").equals("-")) {
                     cuci_lp++;
                     cuci_gram = cuci_gram + rs.getInt("berat_basah");
                 } else if (rs.getDate("tanggal_lp") != null) {
