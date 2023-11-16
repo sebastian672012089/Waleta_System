@@ -235,13 +235,14 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
-                <StringItem index="0" value="BCA168-CNY"/>
-                <StringItem index="1" value="BCA972-IDR"/>
-                <StringItem index="2" value="BCA817-IDR"/>
-                <StringItem index="3" value="BCA889-USD"/>
-                <StringItem index="4" value="CIMB100-IDR"/>
-                <StringItem index="5" value="CIMB200-IDR"/>
+              <StringArray count="7">
+                <StringItem index="0" value="BCA167-CNY"/>
+                <StringItem index="1" value="BCA168-CNY"/>
+                <StringItem index="2" value="BCA972-IDR"/>
+                <StringItem index="3" value="BCA817-IDR"/>
+                <StringItem index="4" value="BCA889-USD"/>
+                <StringItem index="5" value="CIMB100-IDR"/>
+                <StringItem index="6" value="CIMB200-IDR"/>
               </StringArray>
             </Property>
           </Properties>

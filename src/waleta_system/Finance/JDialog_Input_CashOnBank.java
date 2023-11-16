@@ -94,7 +94,7 @@ public class JDialog_Input_CashOnBank extends javax.swing.JDialog {
         jLabel11.setText("Currency :");
 
         ComboBox_currency.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        ComboBox_currency.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BCA168-CNY", "BCA972-IDR", "BCA817-IDR", "BCA889-USD", "CIMB100-IDR", "CIMB200-IDR" }));
+        ComboBox_currency.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BCA167-CNY", "BCA168-CNY", "BCA972-IDR", "BCA817-IDR", "BCA889-USD", "CIMB100-IDR", "CIMB200-IDR" }));
 
         Date_input.setBackground(new java.awt.Color(255, 255, 255));
 

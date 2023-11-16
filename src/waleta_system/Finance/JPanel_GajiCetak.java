@@ -185,7 +185,7 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
                 row[1] = rs.getString("cetak_dikerjakan");
                 row[2] = rs.getString("nama_pegawai");
                 row[3] = rs.getString("nama_bagian");
-                float total_bobot_lp_bonus = rs.getFloat("bonus_lp_cetak1") + rs.getFloat("bonus_lp_cetak2");
+                float total_bobot_lp_bonus = rs.getFloat("bonus_lp_cetak2");
                 row[4] = Math.round(total_bobot_lp_bonus * 100.f) / 100.f;
                 row[5] = rs.getFloat("total_kpg");
                 total_kpg = total_kpg + rs.getInt("total_kpg");

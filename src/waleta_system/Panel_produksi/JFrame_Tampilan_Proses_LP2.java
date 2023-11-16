@@ -286,12 +286,16 @@ public class JFrame_Tampilan_Proses_LP2 extends javax.swing.JFrame {
             int normal_lp = 0, normal_gram = 0, normal_kpg = 0;
             Object[] row = new Object[6];
             sql = "SELECT `tb_cabut`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tgl_setor_cabut`, `tb_detail_pencabut`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, DATEDIFF(CURRENT_DATE(), `tgl_setor_cabut`) AS 'Result', `tb_finishing_2`.`tgl_input_byProduct`\n"
-                    + "FROM `tb_cabut` LEFT JOIN `tb_laporan_produksi` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "FROM `tb_cabut` "
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_finishing_2` ON `tb_cabut`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_detail_pencabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_detail_pencabut`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
-                    + "WHERE `tb_laporan_produksi`.`ruangan` IN (" + filter_ruangan + ")\n"
-                    + "AND `tb_cabut`.`tgl_setor_cabut` > '2019-06-01' AND `tb_finishing_2`.`tgl_input_byProduct` IS NULL\n"
+                    + "WHERE "
+                    + "`tb_laporan_produksi`.`ruangan` IN (" + filter_ruangan + ")\n"
+                    + "AND `tb_cabut`.`tgl_setor_cabut` > '2019-06-01' "
+                    + "AND `tb_finishing_2`.`tgl_input_byProduct` IS NULL\n"
+                    + "AND `tb_finishing_2`.`tgl_setor_f2` IS NOT NULL\n"
                     + "GROUP BY `tb_cabut`.`no_laporan_produksi` \n"
                     + "ORDER BY `result` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);

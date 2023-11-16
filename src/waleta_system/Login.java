@@ -948,6 +948,45 @@ public class Login extends javax.swing.JFrame {
         }
     }
 
+    public void ImportDataEdit_cabuto() {
+        try {
+            int n = 0;
+            chooser.setDialogTitle("Select CSV file to import!");
+            int result = chooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                Utility.db_cabuto.getConnection();
+                File file = chooser.getSelectedFile();
+                String filename1 = file.getAbsolutePath();
+                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                    String line;
+                    String Query = null;
+                    try {
+                        Utility.db_cabuto.getConnection().setAutoCommit(false);
+                        while ((line = br.readLine()) != null) {
+                            String[] value = line.split(";");
+                            Query = "UPDATE `tb_lp` SET `harga_baku`='" + value[1] + "' "
+                                    + "WHERE `no_laporan_produksi` = '" + value[0] + "' ";
+                            Utility.db_cabuto.getStatement().executeUpdate(Query);
+                            System.out.println(Query);
+                            n++;
+                        }
+                        Utility.db_cabuto.getConnection().commit();
+                        JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
+                    } catch (Exception ex) {
+                        Utility.db_cabuto.getConnection().rollback();
+                        JOptionPane.showMessageDialog(this, ex + "\n" + Query);
+                        Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        Utility.db_cabuto.getConnection().setAutoCommit(true);
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void getcnyidr() {
         try {
             URL url = new URL("http://api.exchangeratesapi.io/v1/latest?access_key=622f667f4d350e4a7fff78f47a68fcbe");
@@ -993,12 +1032,14 @@ public class Login extends javax.swing.JFrame {
             Utility.db.connect();
             Utility.db_sub.connect();
             Utility.db_maklun.connect();
+            Utility.db_cabuto.connect();
             checkVersion();
         } catch (Exception ex) {
             Logger.getLogger(Waleta_System.class.getName()).log(Level.SEVERE, null, ex);
         }
 //        ImportDataEdit();
 //        ImportDataEdit_sub();
+//        ImportDataEdit_cabuto();
         //        try {
 //            BufferedImage img = com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
 //                    new com.google.zxing.qrcode.QRCodeWriter().encode(
@@ -1120,7 +1161,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.223");
+        label_version.setText("2.2.225");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N

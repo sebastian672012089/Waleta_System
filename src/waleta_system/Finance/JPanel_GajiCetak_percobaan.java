@@ -30,7 +30,10 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
     int max_lama_inap_t1 = 0;
     int max_lama_inap_t2 = 0;
     int max_lama_inap_t12 = 0;
-    float upah_cetak_t2 = 0f;
+    float upah_cetak_t2_utuh = 0f;
+    float upah_cetak_t2_pch = 0f;
+    float upah_cetak_t2_flat = 0f;
+    float upah_cetak_t2_jdn = 0f;
     float upah_reproses_utuh = 0f;
     float upah_reproses_pch = 0f;
     float upah_reproses_flat = 0f;
@@ -67,8 +70,8 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
 
     public void refreshTable_cetak() {
         try {
-            float total_gaji = 0;
-            double total_bonus = 0, total_gram = 0, total_kpg = 0;
+            float total_gaji = 0f;
+            double total_bonus = 0d, total_gram = 0d, total_kpg = 0d;
             int nomor = 0;
 
             DefaultTableModel model = (DefaultTableModel) table_data_pegawai_cetak.getModel();
@@ -78,11 +81,14 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
             max_lama_inap_t1 = Integer.valueOf(txt_max_lama_inap_t1.getText());
             max_lama_inap_t2 = Integer.valueOf(txt_max_lama_inap_t2.getText());
             max_lama_inap_t12 = max_lama_inap_t1 + max_lama_inap_t2;
-            upah_cetak_t2 = Integer.valueOf(txt_upah_cetak_t2.getText());
+            upah_cetak_t2_utuh = Integer.valueOf(txt_upah_cetak_t2.getText());
+            upah_cetak_t2_pch = upah_cetak_t2_utuh / 2f;
+            upah_cetak_t2_flat = upah_cetak_t2_pch / 2f;
+            upah_cetak_t2_jdn = 0f;
             upah_reproses_utuh = Integer.valueOf(txt_upah_reproses.getText());
-            upah_reproses_pch = upah_reproses_utuh / 2;
-            upah_reproses_flat = upah_reproses_pch / 2;
-            upah_reproses_jdn = 800;
+            upah_reproses_pch = upah_reproses_utuh / 2f;
+            upah_reproses_flat = upah_reproses_pch / 2f;
+            upah_reproses_jdn = 800f;
 
             Date date1 = DateFilter_SetorCetak1.getDate();
             Date date2 = DateFilter_SetorCetak2.getDate();
@@ -135,10 +141,10 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                     + "SUM(IF((`cetak_mangkok`+`cetak_pecah`+`cetak_flat`)=0,`cetak_jidun_real` / `kpg_lp_jidun`, `keping_upah` / IF(`tb_grade_bahan_baku`.`kategori`='FLAT',`kpg_lp_flat`, `kpg_lp`))) AS 'Jumlah_LP', \n"
                     + "SUM(`tb_laporan_produksi`.`keping_upah`) AS 'total_kpg', "
                     + "SUM(`tb_laporan_produksi`.`berat_basah`) AS 'total_gram', \n"
-                    + "SUM(`cetak_mangkok` * " + upah_cetak_t2 + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'mku', \n"
-                    + "SUM(`cetak_pecah` * " + upah_cetak_t2 + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'mpch', \n"
-                    + "SUM(`cetak_flat` * " + upah_cetak_t2 + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'flat', \n"
-                    + "SUM(`cetak_jidun_real` * " + upah_cetak_t2 + ") AS 'jdn', \n"
+                    + "SUM(`cetak_mangkok` * " + upah_cetak_t2_utuh + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'mku', \n"
+                    + "SUM(`cetak_pecah` * " + upah_cetak_t2_pch + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'mpch', \n"
+                    + "SUM(`cetak_flat` * " + upah_cetak_t2_flat + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'flat', \n"
+                    + "SUM(`cetak_jidun_real` * " + upah_cetak_t2_jdn + ") AS 'jdn', \n"
                     + "0 AS 'bobot_bonus_lp_t1', \n"
                     + "SUM(IF(DATEDIFF(`tgl_selesai_cetak`, IF(`tgl_cetak_dikerjakan1` IS NULL, `tgl_mulai_cetak`, `tgl_cetak_dikerjakan1`)) <= " + max_lama_inap_t2 + " AND ((`cetak_mangkok`/`keping_upah`)*100)>=`target_ctk_mku`, (IF((`cetak_mangkok`+`cetak_pecah`+`cetak_flat`)=0,`cetak_jidun_real` / `kpg_lp_jidun`, `keping_upah` / IF(`tb_grade_bahan_baku`.`kategori`='FLAT',`kpg_lp_flat`, `kpg_lp`))), 0)) AS 'bobot_bonus_lp_t2', \n"
                     + "0 AS 'bobot_bonus_lp_t12' \n"
@@ -353,10 +359,10 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                 sql = "SELECT `tb_cetak`.`no_laporan_produksi`, `tgl_selesai_cetak`, `tb_laporan_produksi`.`kode_grade`, `jenis_bulu_lp`, `jumlah_keping`, `berat_basah`, `cetak_dikerjakan`, `kpg_lp`, `cetak_mangkok`, `tb_grade_bahan_baku`.`kategori`, "
                         + "IF((`cetak_mangkok`+`cetak_pecah`+`cetak_flat`)=0,`kpg_lp_jidun`, IF(`tb_grade_bahan_baku`.`kategori`='FLAT',`kpg_lp_flat`, `kpg_lp`)) AS 'kpg_lp_besar', "
                         + "DATEDIFF(`tgl_selesai_cetak`, IF(`tgl_cetak_dikerjakan1` IS NULL, `tgl_mulai_cetak`, `tgl_cetak_dikerjakan1`)) AS 'lama_inap',\n"
-                        + "(`cetak_mangkok` * " + upah_cetak_t2 + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'mku', \n"
-                        + "(`cetak_pecah` * " + upah_cetak_t2 + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'mpch', \n"
-                        + "(`cetak_flat` * " + upah_cetak_t2 + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'flat', \n"
-                        + "(`cetak_jidun_real` * " + upah_cetak_t2 + ") AS 'jdn', \n"
+                        + "(`cetak_mangkok` * " + upah_cetak_t2_utuh + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'mku', \n"
+                        + "(`cetak_pecah` * " + upah_cetak_t2_pch + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'mpch', \n"
+                        + "(`cetak_flat` * " + upah_cetak_t2_flat + " * IF(LOCATE('JUMBO', `tb_laporan_produksi`.`kode_grade`)>0 OR LOCATE('BPU', `tb_laporan_produksi`.`kode_grade`)>0, 1.05, 1)) AS 'flat', \n"
+                        + "(`cetak_jidun_real` * " + upah_cetak_t2_jdn + ") AS 'jdn', \n"
                         + "(IF((`cetak_mangkok`+`cetak_pecah`+`cetak_flat`)=0,`cetak_jidun_real` / `kpg_lp_jidun`, `keping_upah` / IF(`tb_grade_bahan_baku`.`kategori`='FLAT',`kpg_lp_flat`, `kpg_lp`))) AS 'bobot',\n"
                         + "`tb_grade_bahan_baku`.`target_ctk_mku`\n"
                         + "FROM `tb_cetak` \n"
@@ -1247,7 +1253,7 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
 
         jLabel34.setBackground(new java.awt.Color(255, 255, 255));
         jLabel34.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel34.setText("Upah Cetak T2 :");
+        jLabel34.setText("Upah Cetak T2 Utuh :");
 
         txt_upah_cetak_t2.setEditable(false);
         txt_upah_cetak_t2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N

@@ -71,12 +71,15 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                int x = JOptionPane.showConfirmDialog(null, "do you want really close app?", "exit on close", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-                if (x == JOptionPane.YES_OPTION) {
-                    e.getWindow().dispose();
-                    timer.cancel();
-                    timerTask.cancel();
-                }
+                e.getWindow().dispose();
+                timer.cancel();
+                timerTask.cancel();
+//                int x = JOptionPane.showConfirmDialog(null, "do you want really close app?", "exit on close", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+//                if (x == JOptionPane.YES_OPTION) {
+//                    e.getWindow().dispose();
+//                    timer.cancel();
+//                    timerTask.cancel();
+//                }
             }
         });
     }
@@ -231,7 +234,7 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
                     + "`tb_cabut`.`no_laporan_produksi` AS 'lp_cabut', `tb_cabut`.`tgl_mulai_cabut`, `tb_cabut`.`tgl_setor_cabut`, "
                     + "`tb_cetak`.`no_laporan_produksi` AS 'lp_cetak', `tb_cetak`.`tgl_mulai_cetak`, `tb_cetak`.`tgl_selesai_cetak`, "
                     + "`tb_finishing_2`.`no_laporan_produksi` AS 'lp_f2', `tb_finishing_2`.`tgl_dikerjakan_f2`, `tgl_masuk_f2`, `tb_finishing_2`.`tgl_f1`, `tb_finishing_2`.`tgl_f2`, `tb_finishing_2`.`tgl_setor_f2`,\n"
-                    + "`tb_lab_laporan_produksi`.`no_laporan_produksi` AS 'lp_qc', `tb_lab_laporan_produksi`.`tgl_uji`, `tb_lab_laporan_produksi`.`tgl_selesai`, `tb_lab_laporan_produksi`.`status`,\n"
+                    + "`tb_lab_laporan_produksi`.`no_laporan_produksi` AS 'lp_qc', `tb_lab_laporan_produksi`.`tgl_uji`, `tb_lab_laporan_produksi`.`tgl_selesai_qc`, `tb_lab_laporan_produksi`.`status`,\n"
                     + "`tb_bahan_jadi_masuk`.`kode_asal`, `tb_bahan_jadi_masuk`.`tanggal_grading`, `tb_bahan_jadi_masuk`.`kode_tutupan`, `tb_bahan_jadi_masuk`.`keping`, `tb_bahan_jadi_masuk`.`berat`\n"
                     + "FROM `tb_laporan_produksi` "
                     + "LEFT JOIN `tb_cuci` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cuci`.`no_laporan_produksi`\n"
@@ -246,6 +249,49 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
             rs = Utility.db.getStatement().executeQuery(sql);
             dataset1.clear();
             while (rs.next()) {
+                if (rs.getDate("tanggal_grading") != null) {
+                    gbj_tutupan_lp++;
+                    gbj_tutupan_gram = gbj_tutupan_gram + rs.getInt("berat");
+                } else if (rs.getDate("tgl_selesai_qc") != null) {
+                    gbj_grading_lp++;
+                    if (rs.getString("kode_asal") != null) {
+                        gbj_grading_gram = gbj_grading_gram + rs.getInt("berat");
+                    } else {
+                        gbj_grading_gram = gbj_grading_gram + rs.getInt("berat_basah");
+                    }
+                } else if (rs.getDate("tgl_uji") != null && rs.getString("status").equals("HOLD/NON GNS")) {
+                    qc_hold_lp++;
+                    qc_hold_gram = qc_hold_gram + rs.getInt("berat_basah");
+                } else if (rs.getDate("tgl_setor_f2") != null) {
+                    qc_sampling_lp++;
+                    qc_sampling_gram = qc_sampling_gram + rs.getInt("berat_basah");
+                } else if (rs.getDate("tgl_f2") != null) {
+                    final_lp++;
+                    final_gram = final_gram + rs.getInt("berat_basah");
+                } else if (rs.getDate("tgl_f1") != null) {
+                    f2_lp++;
+                    f2_gram = f2_gram + rs.getInt("berat_basah");
+                } else if (rs.getDate("tgl_dikerjakan_f2") != null) {
+                    f1_lp++;
+                    f1_gram = f1_gram + rs.getInt("berat_basah");
+                } else if (rs.getDate("tgl_selesai_cetak") != null) {
+                    koreksi_lp++;
+                    koreksi_gram = koreksi_gram + rs.getInt("berat_basah");
+                } else if (rs.getDate("tgl_setor_cabut") != null) {
+                    cetak_lp++;
+                    cetak_gram = cetak_gram + rs.getInt("berat_basah");
+                } else if (rs.getString("cuci_diserahkan") != null && !rs.getString("cuci_diserahkan").equals("-")) {
+                    cabut_lp++;
+                    cabut_gram = cabut_gram + rs.getInt("berat_basah");
+                } else if (rs.getString("cuci_diserahkan").equals("-")) {
+                    cuci_lp++;
+                    cuci_gram = cuci_gram + rs.getInt("berat_basah");
+                } else if (rs.getDate("tanggal_lp") != null) {
+                    gbm_lp++;
+                    gbm_gram = gbm_gram + rs.getInt("berat_basah");
+                } else {
+                }
+                /*
                 //GBJ
                 if (rs.getString("tanggal_lp").equals(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))) {
                     gbm_lp++;
@@ -287,17 +333,17 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
                     final_gram = final_gram + rs.getInt("berat_basah");
                 }
                 //QC Sampling
-                if (rs.getString("lp_qc") != null && rs.getDate("tgl_uji") == null && rs.getDate("tgl_selesai") == null) {
+                if (rs.getString("lp_qc") != null && rs.getDate("tgl_uji") == null && rs.getDate("tgl_selesai_qc") == null) {
                     qc_sampling_lp++;
                     qc_sampling_gram = qc_sampling_gram + rs.getInt("berat_basah");
                 }
                 //QC Hold
-                if (rs.getDate("tgl_uji") != null && rs.getDate("tgl_selesai") == null && rs.getString("status").equals("HOLD/NON GNS")) {
+                if (rs.getDate("tgl_uji") != null && rs.getDate("tgl_selesai_qc") == null && rs.getString("status").equals("HOLD/NON GNS")) {
                     qc_hold_lp++;
                     qc_hold_gram = qc_hold_gram + rs.getInt("berat_basah");
                 }
                 //GBJ grading
-                if (rs.getDate("tanggal_grading") == null && rs.getDate("tgl_selesai") != null) {
+                if (rs.getDate("tanggal_grading") == null && rs.getDate("tgl_selesai_qc") != null) {
                     gbj_grading_lp++;
                     if (rs.getString("kode_asal") != null) {
                         gbj_grading_gram = gbj_grading_gram + rs.getInt("berat");
@@ -311,6 +357,7 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
                     gbj_tutupan_lp++;
                     gbj_tutupan_gram = gbj_tutupan_gram + rs.getInt("berat");
                 }
+                */
             }
 
             dataset1.setValue(cuci_gram, "Berat", "Cuci");

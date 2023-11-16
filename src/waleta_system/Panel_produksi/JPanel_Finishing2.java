@@ -33,7 +33,6 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import waleta_system.Class.ColumnsAutoSizer;
-
 import waleta_system.Class.DataF2;
 import waleta_system.Class.ExportToExcel;
 import waleta_system.MainForm;
@@ -239,50 +238,44 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) Table_Data_f2.getModel();
             model.setRowCount(0);
 
+            String search_tgl = null;
             if (Date1_f2.getDate() != null && Date2_f2.getDate() != null) {
-                String search_tgl = null;
                 if (null != ComboBox_SearchDate.getSelectedItem().toString()) {
                     switch (ComboBox_SearchDate.getSelectedItem().toString()) {
                         case "Tgl Input By Product":
-                            search_tgl = "`tb_finishing_2`.`tgl_input_byProduct` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_input_byProduct` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
                             break;
                         case "Tgl Koreksi Kering":
-                            search_tgl = "`tb_finishing_2`.`tgl_dikerjakan_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_dikerjakan_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
                             break;
                         case "Tgl F1":
-                            search_tgl = "`tb_finishing_2`.`tgl_f1` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_f1` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
                             break;
                         case "Tgl F2":
-                            search_tgl = "`tb_finishing_2`.`tgl_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
                             break;
                         case "Tgl Setor":
-                            search_tgl = "`tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
                             break;
                         case "Tgl input ssk":
-                            search_tgl = "`tb_finishing_2`.`tgl_input_sesekan` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_input_sesekan` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
                             break;
                         default:
                             break;
                     }
                 }
-                sql = "SELECT `tb_finishing_2`.*, `jumlah_keping`, `berat_basah`, `kode_grade`, `tb_laporan_produksi`.`no_kartu_waleta`, `ruangan`, `no_registrasi`, `cheat_no_kartu`, `cheat_rsb` \n"
-                        + "FROM `tb_finishing_2` "
-                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
-                        //                        + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "WHERE `tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp.getText() + "%' AND `tb_laporan_produksi`.`memo_lp` LIKE '%" + txt_search_memo_f2.getText() + "%' AND " + search_tgl + "\n"
-                        + "AND `ruangan` " + ComboBox_ruangan_like.getSelectedItem().toString() + " '%" + txt_search_ruangan.getText() + "%'"
-                        + "ORDER BY `tb_finishing_2`.`tgl_masuk_f2` DESC";
-            } else {
-                sql = "SELECT `tb_finishing_2`.*, `jumlah_keping`, `berat_basah`, `kode_grade`, `tb_laporan_produksi`.`no_kartu_waleta`, `ruangan`, `no_registrasi`, `cheat_no_kartu`, `cheat_rsb` \n"
-                        + "FROM `tb_finishing_2` "
-                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
-                        //                        + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "WHERE `tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp.getText() + "%' AND `tb_laporan_produksi`.`memo_lp` LIKE '%" + txt_search_memo_f2.getText() + "%'"
-                        + "AND `ruangan` " + ComboBox_ruangan_like.getSelectedItem().toString() + " '%" + txt_search_ruangan.getText() + "%'"
-                        + " ORDER BY `tb_finishing_2`.`tgl_masuk_f2` DESC";
             }
+            sql = "SELECT `tb_finishing_2`.*, `jumlah_keping`, `berat_basah`, `kode_grade`, `tb_laporan_produksi`.`no_kartu_waleta`, `ruangan`, `no_registrasi`, `cheat_no_kartu`, `cheat_rsb` \n"
+                    + "FROM `tb_finishing_2` "
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
+                    //                        + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "WHERE "
+                    + "`tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp.getText() + "%' "
+                    + "AND `tb_laporan_produksi`.`memo_lp` LIKE '%" + txt_search_memo_f2.getText() + "%'"
+                    + "AND `ruangan` " + ComboBox_ruangan_like.getSelectedItem().toString() + " '" + txt_search_ruangan.getText() + "'"
+                    + search_tgl
+                    + " ORDER BY `tb_finishing_2`.`tgl_masuk_f2` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[45];
             while (rs.next()) {

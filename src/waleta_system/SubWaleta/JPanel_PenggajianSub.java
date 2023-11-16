@@ -1011,7 +1011,9 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                         + "WHERE `tanggal_piutang` <= '" + dateFormat.format(tanggal_selesai) + "' AND `status` = 0 "
                         + "GROUP BY `id_pegawai`"
                         + ") PIUTANG ON `tb_karyawan`.`id_pegawai` = PIUTANG.`id_pegawai` \n"
-                        + "WHERE `tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_nama2.getText() + "%'  "
+                        + "WHERE \n"
+                        + "`tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_nama2.getText() + "%' \n"
+                        + "AND `tb_karyawan`.`id_pegawai` LIKE '00%' \n"
                         + "AND `bagian` LIKE '%" + txt_search_sub.getText() + "%' ";
                 rs = Utility.db_sub.getStatement().executeQuery(sql);
                 Object[] row = new Object[40];
