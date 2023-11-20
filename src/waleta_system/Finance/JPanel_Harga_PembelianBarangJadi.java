@@ -23,7 +23,6 @@ import waleta_system.Class.Utility;
 
 public class JPanel_Harga_PembelianBarangJadi extends javax.swing.JPanel {
 
-    
     String sql = null;
     ResultSet rs;
     Date date = new Date();
@@ -107,6 +106,7 @@ public class JPanel_Harga_PembelianBarangJadi extends javax.swing.JPanel {
             label_total_harga.setText(decimalFormat.format(total_harga));
 
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Harga_PembelianBarangJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
         ColumnsAutoSizer.sizeColumnsToFit(Table_pembelian_bahan_jadi);
@@ -410,9 +410,11 @@ public class JPanel_Harga_PembelianBarangJadi extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Update failed!");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error Connection!");
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_Harga_PembelianBarangJadi.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");
+                Logger.getLogger(JPanel_Harga_PembelianBarangJadi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_Table_pembelian_bahan_jadiMouseClicked

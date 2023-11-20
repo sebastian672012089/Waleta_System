@@ -714,7 +714,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.227");
+        jLabel19.setText("2.2.230");
 
         jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");
@@ -6206,7 +6206,7 @@ public class MainForm extends javax.swing.JFrame {
     public static javax.swing.JMenuItem jMenuItem_Keu_Laporan;
     private javax.swing.JMenuItem jMenuItem_Keu_Lembur;
     public static javax.swing.JMenuItem jMenuItem_Keu_LemburStaff;
-    private javax.swing.JMenuItem jMenuItem_Keu_LemburStaff_baru;
+    public static javax.swing.JMenuItem jMenuItem_Keu_LemburStaff_baru;
     private javax.swing.JMenuItem jMenuItem_Keu_LevelGaji;
     private javax.swing.JMenuItem jMenuItem_Keu_MasterDataAset;
     public static javax.swing.JMenuItem jMenuItem_Keu_Neraca;

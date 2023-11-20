@@ -3094,8 +3094,10 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Error Connection!");
+                Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");
+                Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Pilih No LP yang akan di edit");

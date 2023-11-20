@@ -88,7 +88,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) Table_laporan_produksi.getModel();
             model.setRowCount(0);
             decimalFormat.setMaximumFractionDigits(0);
-            float total_gram = 0, total_gram_lengkap = 0, total_lp_lengkap = 0, total_gram_bjd = 0;
+            float total_gram_basah = 0, total_gram_basah_lengkap = 0, total_gram_kering_lengkap = 0, total_lp_lengkap = 0, total_gram_bjd = 0;
             double total_nilai_baku = 0, total_biaya_produksi = 0, total_biaya_kaki = 0, total_harga_jual = 0, total_margin = 0;
             double biaya_produksi_per_gr = 0, kurs = 0;
             float harga_kaki = 0;
@@ -128,7 +128,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                 kode_grade = "";
             }
 
-            sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `memo_lp`, `tanggal_lp`, `tb_laporan_produksi`.`kode_grade`, `ruangan`, `berat_basah`, (`tambahan_kaki1` + `tambahan_kaki2`) AS 'kaki', `cetak_dikerjakan`, `ketua_regu`,  "
+            sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `memo_lp`, `tanggal_lp`, `tb_laporan_produksi`.`kode_grade`, `ruangan`, `berat_basah`, `berat_kering`, (`tambahan_kaki1` + `tambahan_kaki2`) AS 'kaki', `cetak_dikerjakan`, `ketua_regu`,  "
                     + "ROUND((`berat_basah` * `tb_grading_bahan_baku`.`harga_bahanbaku`), 5) AS 'nilai_baku', "
                     + "BJD_PRICE.`berat_grading_bj`, "
                     + "BJD_PRICE.`rmb_jual`, "
@@ -139,11 +139,11 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`"
                     + "LEFT JOIN `tb_grading_bahan_baku` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_grading_bahan_baku`.`no_kartu_waleta` AND `tb_laporan_produksi`.`kode_grade` = `tb_grading_bahan_baku`.`kode_grade` "
                     + "LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_bahan_jadi_masuk`.`kode_asal` "
-                    + "LEFT JOIN (SELECT `kode_asal_bahan_jadi`, SUM(`tb_grading_bahan_jadi`.`gram`) AS 'berat_grading_bj', SUM((`tb_grading_bahan_jadi`.`gram`/1000) * ("
-                    + "SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `grade` = `tb_grading_bahan_jadi`.`grade_bahan_jadi` ORDER BY `tanggal` DESC LIMIT 1 \n"
-                    + ")) AS 'rmb_jual' \n"
+                    + "LEFT JOIN (SELECT `kode_asal_bahan_jadi`, SUM(`tb_grading_bahan_jadi`.`gram`) AS 'berat_grading_bj', SUM((`tb_grading_bahan_jadi`.`gram`/1000) * `tb_grade_bahan_jadi`.`harga`) AS 'rmb_jual' \n"
                     + "FROM `tb_grading_bahan_jadi` \n"
-                    + "WHERE 1 GROUP BY `kode_asal_bahan_jadi`) BJD_PRICE "
+                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode` \n"
+                    + "WHERE 1 "
+                    + "GROUP BY `kode_asal_bahan_jadi`) BJD_PRICE "
                     + "ON `tb_laporan_produksi`.`no_laporan_produksi` = BJD_PRICE.`kode_asal_bahan_jadi`\n"
                     + "WHERE "
                     + "`tb_laporan_produksi`.`no_laporan_produksi` LIKE '%" + txt_search_lp.getText() + "%' "
@@ -162,7 +162,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                 row[4] = result.getString("memo_lp");
                 row[5] = result.getString("ruangan");
                 row[6] = result.getInt("berat_basah");
-                total_gram = total_gram + result.getInt("berat_basah");
+                total_gram_basah = total_gram_basah + result.getInt("berat_basah");
                 row[7] = result.getDouble("nilai_baku");
                 row[8] = result.getInt("kaki");
                 double biaya_kaki = (harga_kaki / 1000) * kurs * result.getFloat("kaki");
@@ -177,7 +177,8 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                 if (result.getInt("nilai_baku") > 0 && berat_grading_bj > 0) {
                     gross_margin = harga_jual - (biaya_produksi + result.getDouble("nilai_baku") + biaya_kaki);
                     total_lp_lengkap++;
-                    total_gram_lengkap = total_gram_lengkap + result.getInt("berat_basah");
+                    total_gram_basah_lengkap = total_gram_basah_lengkap + result.getInt("berat_basah");
+                    total_gram_kering_lengkap = total_gram_kering_lengkap + result.getInt("berat_kering");
                     total_nilai_baku = total_nilai_baku + result.getDouble("nilai_baku");
                     total_gram_bjd = total_gram_bjd + berat_grading_bj;
                     total_biaya_produksi = total_biaya_produksi + biaya_produksi;
@@ -196,11 +197,11 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Table_laporan_produksi);
 
             int total_data = Table_laporan_produksi.getRowCount();
-            float persen_lengkap = Math.round((total_gram_lengkap / total_gram) * 1000) / 10;
-            float rendemen = Math.round((total_gram_bjd / total_gram_lengkap) * 1000) / 10;
-            label_total_keseluruhan.setText(decimalFormat.format(total_data) + " LP   " + decimalFormat.format(total_gram) + " Gram");
+            float persen_lengkap = Math.round((total_gram_basah_lengkap / total_gram_basah) * 1000) / 10;
+            float rendemen = Math.round((total_gram_bjd / total_gram_kering_lengkap) * 1000) / 10;
+            label_total_keseluruhan.setText(decimalFormat.format(total_data) + " LP   " + decimalFormat.format(total_gram_basah) + " Gram Basah");
             label_persen_data_lengkap.setText(persen_lengkap + "%");
-            label_total_bahan_baku.setText(decimalFormat.format(total_lp_lengkap) + " LP   " + decimalFormat.format(total_gram_lengkap) + " Gram");
+            label_total_bahan_baku.setText(decimalFormat.format(total_lp_lengkap) + " LP   " + decimalFormat.format(total_gram_basah) + " Gram Basah");
             label_total_nilai_baku.setText(decimalFormat.format(total_nilai_baku));
             label_total_gram_bjd.setText(decimalFormat.format(total_gram_bjd) + " Gram");
             label_total_rendemen.setText(decimalFormat.format(rendemen) + "%");
@@ -241,7 +242,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                 }
             }
             sql = "SELECT `tb_grade_bahan_jadi`.`kode_grade`, SUM(`gram`) AS 'gram', "
-                    + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `grade` = `tb_grading_bahan_jadi`.`grade_bahan_jadi` ORDER BY `tanggal` DESC LIMIT 1) AS 'harga' \n"
+                    + "`tb_grade_bahan_jadi`.`harga` \n"
                     + "FROM `tb_grading_bahan_jadi` "
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`\n"
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_grading_bahan_jadi`.`kode_asal_bahan_jadi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
@@ -287,7 +288,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
 //                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`\n"
 //                    + "WHERE `kode_asal_bahan_jadi` = '" + no_lp + "'";
             sql = "SELECT `kode_asal_bahan_jadi`, `tb_grade_bahan_jadi`.`kode_grade`, `keping`, `gram`, "
-                    + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `grade` = `tb_grading_bahan_jadi`.`grade_bahan_jadi` ORDER BY `tanggal` DESC LIMIT 1) AS 'harga' \n"
+                    + "`tb_grade_bahan_jadi`.`harga` \n"
                     + "FROM `tb_grading_bahan_jadi` "
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`\n"
                     + "WHERE `kode_asal_bahan_jadi` = '" + no_lp + "'";
@@ -763,7 +764,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
 
         jLabel33.setBackground(new java.awt.Color(255, 255, 255));
         jLabel33.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel33.setText("Rendemen :");
+        jLabel33.setText("Rendemen (Berat Kering) :");
 
         label_total_rendemen.setBackground(new java.awt.Color(255, 255, 255));
         label_total_rendemen.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N

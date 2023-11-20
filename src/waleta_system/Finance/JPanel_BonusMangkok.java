@@ -188,35 +188,27 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
     public ArrayList<DataF2> SetoranHarianList() {
         ArrayList<DataF2> F2List = new ArrayList<>();
         try {
-
             String ruang = "";
             if (ComboBox_ruangan.getSelectedItem() != "All") {
                 ruang = ComboBox_ruangan.getSelectedItem().toString();
             }
+            String filter_tanggal = "";
             if (date_setoran1 == null || date_setoran2 == null) {
-                sql = "SELECT `tb_finishing_2`.`no_laporan_produksi`, `tb_karyawan`.`nama_pegawai`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`ruangan`, `tb_grade_bahan_baku`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bentuk`, `tb_grade_bahan_baku`.`jenis_bulu`, "
-                        + "`tgl_input_sesekan`, `tgl_dikerjakan_f2`, `pekerja_koreksi_kering`, `tgl_f1`, `pekerja_f1`, `tgl_f2`, `pekerja_f2`, `tgl_masuk_f2`, `f2_diterima`, `tgl_setor_f2`, `f2_disetor`, `f2_timbang`, `fbonus_f2`, `berat_fbonus`, `fnol_f2`, `berat_fnol`, `pecah_f2`, `berat_pecah`, `flat_f2`, `berat_flat`, `jidun_utuh_f2`, `jidun_pecah_f2`, `berat_jidun`, `sesekan`, `hancuran`, `rontokan`, `bonggol`, `serabut`, `tanpa_kaki_f1`, `kaki_kecil_f1`, `kaki_besar_f1`, `flat_f1`, `tambahan_kaki1`, `lp_kaki1`, `tambahan_kaki2`, `lp_kaki2`, `admin_f2`, `otorisasi`, COUNT(`tb_detail_pencabut`.`id_pegawai`) AS 'total_pekerja' \n"
-                        + "FROM `tb_finishing_2` "
-                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_grade_bahan_baku`.`kode_grade` = `tb_laporan_produksi`.`kode_grade`\n"
-                        + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_karyawan` ON `tb_karyawan`.`id_pegawai` = `tb_cetak`.`cetak_dikerjakan`\n"
-                        + "LEFT JOIN `tb_detail_pencabut` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
-                        + "WHERE `tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_no_lp.getText() + "%' AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruang + "%' \n"
-                        + "GROUP BY `tb_finishing_2`.`no_laporan_produksi` ORDER BY `tb_finishing_2`.`tgl_setor_f2` DESC";
-            } else {
-                sql = "SELECT `tb_finishing_2`.`no_laporan_produksi`, `tb_karyawan`.`nama_pegawai`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`ruangan`, `tb_grade_bahan_baku`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bentuk`, `tb_grade_bahan_baku`.`jenis_bulu`, "
-                        + "`tgl_input_sesekan`, `tgl_dikerjakan_f2`, `pekerja_koreksi_kering`, `tgl_f1`, `pekerja_f1`, `tgl_f2`, `pekerja_f2`, `tgl_masuk_f2`, `f2_diterima`, `tgl_setor_f2`, `f2_disetor`, `f2_timbang`, `fbonus_f2`, `berat_fbonus`, `fnol_f2`, `berat_fnol`, `pecah_f2`, `berat_pecah`, `flat_f2`, `berat_flat`, `jidun_utuh_f2`, `jidun_pecah_f2`, `berat_jidun`, `sesekan`, `hancuran`, `rontokan`, `bonggol`, `serabut`, `tanpa_kaki_f1`, `kaki_kecil_f1`, `kaki_besar_f1`, `flat_f1`, `tambahan_kaki1`, `lp_kaki1`, `tambahan_kaki2`, `lp_kaki2`, `admin_f2`, `otorisasi`, COUNT(`tb_detail_pencabut`.`id_pegawai`) AS 'total_pekerja' \n"
-                        + "FROM `tb_finishing_2` "
-                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_grade_bahan_baku`.`kode_grade` = `tb_laporan_produksi`.`kode_grade`\n"
-                        + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_karyawan` ON `tb_karyawan`.`id_pegawai` = `tb_cetak`.`cetak_dikerjakan`\n"
-                        + "LEFT JOIN `tb_detail_pencabut` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
-                        + "WHERE `tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_no_lp.getText() + "%' AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruang + "%' \n"
-                        + "AND `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "'\n"
-                        + "GROUP BY `tb_finishing_2`.`no_laporan_produksi` ORDER BY `tb_finishing_2`.`tgl_setor_f2` DESC";
+                filter_tanggal = "AND `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "'\n";
             }
+            sql = "SELECT `tb_finishing_2`.`no_laporan_produksi`, `tb_karyawan`.`nama_pegawai`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`ruangan`, `tb_grade_bahan_baku`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bentuk`, `tb_grade_bahan_baku`.`jenis_bulu`, "
+                    + "`tgl_input_sesekan`, `tgl_dikerjakan_f2`, `pekerja_koreksi_kering`, `tgl_f1`, `pekerja_f1`, `tgl_f2`, `pekerja_f2`, `tgl_masuk_f2`, `f2_diterima`, `tgl_setor_f2`, `f2_disetor`, `f2_timbang`, `fbonus_f2`, `berat_fbonus`, `fnol_f2`, `berat_fnol`, `pecah_f2`, `berat_pecah`, `flat_f2`, `berat_flat`, `jidun_utuh_f2`, `jidun_pecah_f2`, `berat_jidun`, `sesekan`, `hancuran`, `rontokan`, `bonggol`, `serabut`, `tanpa_kaki_f1`, `kaki_kecil_f1`, `kaki_besar_f1`, `flat_f1`, `tambahan_kaki1`, `lp_kaki1`, `tambahan_kaki2`, `lp_kaki2`, `admin_f2`, `otorisasi`, COUNT(`tb_detail_pencabut`.`id_pegawai`) AS 'total_pekerja' \n"
+                    + "FROM `tb_finishing_2` "
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_grade_bahan_baku`.`kode_grade` = `tb_laporan_produksi`.`kode_grade`\n"
+                    + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_karyawan`.`id_pegawai` = `tb_cetak`.`cetak_dikerjakan`\n"
+                    + "LEFT JOIN `tb_detail_pencabut` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
+                    + "WHERE "
+                    + "`tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_no_lp.getText() + "%' "
+                    + "AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruang + "%' \n"
+                    + filter_tanggal
+                    + "GROUP BY `tb_finishing_2`.`no_laporan_produksi` ORDER BY `tb_finishing_2`.`tgl_setor_f2` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             DataF2 f2;
             while (rs.next()) {
@@ -359,7 +351,8 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
             String pekerja_cabut = null;
             String ketua_grup_cabut = null;
             try {
-                String query = "SELECT `tb_karyawan`.`nama_pegawai`, `tb_cabut`.`ketua_regu` FROM `tb_detail_pencabut` "
+                String query = "SELECT `tb_karyawan`.`nama_pegawai`, `tb_cabut`.`ketua_regu` "
+                        + "FROM `tb_detail_pencabut` "
                         + "LEFT JOIN `tb_karyawan` ON `tb_detail_pencabut`.`id_pegawai` = `tb_karyawan`.`id_pegawai`"
                         + "LEFT JOIN `tb_cabut` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`"
                         + "WHERE `tb_detail_pencabut`.`no_laporan_produksi` = '" + list.get(i).getNo_lp() + "'";
@@ -522,15 +515,21 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
             if ("All".equals(label_ruangan_cabut.getText())) {
                 ruangan = "";
             }
+            String filter_nama_karyawan = "";
+            if (txt_search_nama_BonusPegawaiCabut.getText() != null && !txt_search_nama_BonusPegawaiCabut.getText().equals("")) {
+                filter_nama_karyawan = "AND `tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_nama_BonusPegawaiCabut.getText() + "%'";
+            }
             sql = "SELECT `nomor`, `grup_cabut`, `tb_detail_pencabut`.`no_laporan_produksi`, `tb_detail_pencabut`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `jumlah_cabut`, `jumlah_gram`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`jumlah_keping`"
                     + "FROM `tb_detail_pencabut` \n"
                     + "LEFT JOIN `tb_finishing_2` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "JOIN `tb_karyawan` ON `tb_detail_pencabut`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
                     + "JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
-                    + "WHERE `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "' "
+                    + "WHERE "
+                    + "`tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "' "
                     + "AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruangan + "%' "
                     + "AND `tb_karyawan`.`level_gaji` LIKE 'BORONG%' "
+                    + filter_nama_karyawan
                     + "ORDER BY `tb_karyawan`.`nama_pegawai`";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[8];
@@ -608,6 +607,10 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
             if ("All".equals(label_ruangan_cabut.getText())) {
                 ruangan = "";
             }
+            String filter_nama_karyawan = "";
+            if (txt_search_nama_BonusPegawaiCetak.getText() != null && !txt_search_nama_BonusPegawaiCetak.getText().equals("")) {
+                filter_nama_karyawan = "AND `tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_nama_BonusPegawaiCetak.getText() + "%'";
+            }
             sql = "SELECT `cetak_dikerjakan`, `tb_karyawan`.`nama_pegawai`, `tb_bagian`.`nama_bagian`, `tb_cetak`.`no_laporan_produksi`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`"
                     + "FROM `tb_cetak`\n"
                     + "LEFT JOIN `tb_finishing_2` ON `tb_cetak`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
@@ -619,6 +622,7 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                     + "AND `cetak_dikerjakan_level` NOT LIKE '%TRAINING%' "
                     + "AND `tb_bagian`.`nama_bagian` NOT LIKE '%TRAINER%' "
                     + "AND `tb_bagian`.`nama_bagian` NOT LIKE '%PENGAWAS%' "
+                    + filter_nama_karyawan
                     + "ORDER BY `tb_karyawan`.`nama_pegawai`";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[8];
@@ -696,6 +700,10 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
             if ("All".equals(label_ruangan_f2.getText())) {
                 ruangan = "";
             }
+            String filter_nama_karyawan = "1";
+            if (txt_search_nama_BonusPegawaiF2.getText() != null && !txt_search_nama_BonusPegawaiF2.getText().equals("")) {
+                filter_nama_karyawan = "`NAMA` LIKE '%" + txt_search_nama_BonusPegawaiF2.getText() + "%'";
+            }
             sql = "SELECT * FROM ("
                     + "SELECT `tb_karyawan`.`id_pegawai` AS 'ID', `pekerja_f1` AS 'NAMA', 'f1' AS 'jenis_pekerja', `tb_bagian`.`nama_bagian`, `tb_finishing_2`.`no_laporan_produksi`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah` \n"
                     + "FROM `tb_finishing_2` \n"
@@ -703,7 +711,10 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_karyawan` ON `tb_finishing_2`.`pekerja_f1` = `tb_karyawan`.`nama_pegawai`\n"
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
                     + "WHERE `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "' AND `pekerja_f1` IS NOT NULL AND `tb_karyawan`.`status` LIKE 'IN%' AND `tb_karyawan`.`level_gaji` NOT LIKE 'TRAINING%'\n"
-                    + "AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruangan + "%' AND `tb_bagian`.`nama_bagian` NOT LIKE '%TRAINER%' AND `tb_bagian`.`nama_bagian` NOT LIKE '%PENGAWAS%' "
+                    + "AND "
+                    + "`tb_laporan_produksi`.`ruangan` LIKE '%" + ruangan + "%' "
+                    + "AND `tb_bagian`.`nama_bagian` NOT LIKE '%TRAINER%' "
+                    + "AND `tb_bagian`.`nama_bagian` NOT LIKE '%PENGAWAS%' "
                     + "UNION ALL\n"
                     + "SELECT `tb_karyawan`.`id_pegawai` AS 'ID', `pekerja_f2` AS 'NAMA', 'f2' AS 'jenis_pekerja', `tb_bagian`.`nama_bagian`, `tb_finishing_2`.`no_laporan_produksi`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah` \n"
                     + "FROM `tb_finishing_2` \n"
@@ -711,16 +722,25 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_karyawan` ON `tb_finishing_2`.`pekerja_f2` = `tb_karyawan`.`nama_pegawai`\n"
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
                     + "WHERE `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "' AND `pekerja_f2` IS NOT NULL AND `tb_karyawan`.`status` LIKE 'IN%' AND `tb_karyawan`.`level_gaji` NOT LIKE 'TRAINING%'\n"
-                    + "AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruangan + "%' AND `tb_bagian`.`nama_bagian` NOT LIKE '%TRAINER%' AND `tb_bagian`.`nama_bagian` NOT LIKE '%PENGAWAS%' "
+                    + "AND "
+                    + "`tb_laporan_produksi`.`ruangan` LIKE '%" + ruangan + "%' "
+                    + "AND `tb_bagian`.`nama_bagian` NOT LIKE '%TRAINER%' "
+                    + "AND `tb_bagian`.`nama_bagian` NOT LIKE '%PENGAWAS%' "
                     + "UNION ALL\n"
                     + "SELECT `tb_karyawan`.`id_pegawai` AS 'ID', `f2_disetor` AS 'NAMA', 'final' AS 'jenis_pekerja', `tb_bagian`.`nama_bagian`, `tb_finishing_2`.`no_laporan_produksi`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah` \n"
                     + "FROM `tb_finishing_2` \n"
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_finishing_2`.`f2_disetor` = `tb_karyawan`.`nama_pegawai`\n"
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
-                    + "WHERE `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "' AND `f2_disetor` IS NOT NULL AND `tb_karyawan`.`status` LIKE 'IN%' AND `tb_karyawan`.`level_gaji` NOT LIKE 'TRAINING%' "
-                    + "AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruangan + "%' AND `tb_bagian`.`nama_bagian` NOT LIKE '%TRAINER%' AND `tb_bagian`.`nama_bagian` NOT LIKE '%PENGAWAS%' "
-                    + ") A WHERE 1 ORDER BY `NAMA`, `no_laporan_produksi`";
+                    + "WHERE "
+                    + "`tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "' AND `f2_disetor` IS NOT NULL AND `tb_karyawan`.`status` LIKE 'IN%' AND `tb_karyawan`.`level_gaji` NOT LIKE 'TRAINING%' "
+                    + "AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruangan + "%' "
+                    + "AND `tb_bagian`.`nama_bagian` NOT LIKE '%TRAINER%' "
+                    + "AND `tb_bagian`.`nama_bagian` NOT LIKE '%PENGAWAS%' "
+                    + ") A "
+                    + "WHERE "
+                    + filter_nama_karyawan
+                    + "ORDER BY `NAMA`, `no_laporan_produksi`";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[8];
             String id = "";
@@ -855,6 +875,9 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
         label_ruangan_cabut = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         label_total_rupiah_cabut = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txt_search_nama_BonusPegawaiCabut = new javax.swing.JTextField();
+        button_refresh_BonusPegawaiCabut = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -868,6 +891,9 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
         label_ruangan_cetak = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         label_total_rupiah_cetak = new javax.swing.JLabel();
+        txt_search_nama_BonusPegawaiCetak = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        button_refresh_BonusPegawaiCetak = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
@@ -881,6 +907,9 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
         label_ruangan_f2 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
         label_total_rupiah_f2 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        txt_search_nama_BonusPegawaiF2 = new javax.swing.JTextField();
+        button_refresh_BonusPegawaiF2 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
@@ -1232,22 +1261,6 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label_total_bonus_f2))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_no_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ComboBox_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Date_Penggajian, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(button_search)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(CheckBox_Show_BonusOnly))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel52)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_persen_bonus_f1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1262,8 +1275,24 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_form_laporan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_export_bonus)))
-                        .addGap(0, 207, Short.MAX_VALUE)))
+                                .addComponent(button_export_bonus))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_no_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_Penggajian, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(button_search)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(CheckBox_Show_BonusOnly)))
+                        .addGap(0, 237, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1400,6 +1429,26 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
         label_total_rupiah_cabut.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_rupiah_cabut.setText("-");
 
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel3.setText("Nama :");
+
+        txt_search_nama_BonusPegawaiCabut.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_nama_BonusPegawaiCabut.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_nama_BonusPegawaiCabutKeyPressed(evt);
+            }
+        });
+
+        button_refresh_BonusPegawaiCabut.setBackground(new java.awt.Color(255, 255, 255));
+        button_refresh_BonusPegawaiCabut.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_refresh_BonusPegawaiCabut.setText("Refresh");
+        button_refresh_BonusPegawaiCabut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_refresh_BonusPegawaiCabutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -1410,6 +1459,14 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_ruangan_cabut)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel34)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_rupiah_cabut))
                             .addComponent(jLabel10)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel18)
@@ -1418,18 +1475,16 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel19)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_date_cabut2)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_ruangan_cabut)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel34)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_rupiah_cabut)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_export_detail_cabut)))
+                                .addComponent(label_date_cabut2))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_nama_BonusPegawaiCabut, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_refresh_BonusPegawaiCabut)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_detail_cabut)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1451,10 +1506,17 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                         .addComponent(label_total_rupiah_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label_ruangan_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label_ruangan_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_search_nama_BonusPegawaiCabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(button_refresh_BonusPegawaiCabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_export_detail_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1533,6 +1595,26 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
         label_total_rupiah_cetak.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_rupiah_cetak.setText("-");
 
+        txt_search_nama_BonusPegawaiCetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_nama_BonusPegawaiCetak.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_nama_BonusPegawaiCetakKeyPressed(evt);
+            }
+        });
+
+        jLabel36.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel36.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel36.setText("Nama :");
+
+        button_refresh_BonusPegawaiCetak.setBackground(new java.awt.Color(255, 255, 255));
+        button_refresh_BonusPegawaiCetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_refresh_BonusPegawaiCetak.setText("Refresh");
+        button_refresh_BonusPegawaiCetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_refresh_BonusPegawaiCetakActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -1543,6 +1625,14 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                     .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_ruangan_cetak)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel35)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_rupiah_cetak))
                             .addComponent(jLabel20)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addComponent(jLabel22)
@@ -1551,18 +1641,16 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel23)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_date_cetak2)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_ruangan_cetak)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel35)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_rupiah_cetak)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_export_detail_cetak)))
+                                .addComponent(label_date_cetak2))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addComponent(jLabel36)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_nama_BonusPegawaiCetak, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_refresh_BonusPegawaiCetak)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_detail_cetak)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -1584,7 +1672,14 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                         .addComponent(label_total_rupiah_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label_ruangan_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label_ruangan_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_search_nama_BonusPegawaiCetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(button_refresh_BonusPegawaiCetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_export_detail_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane8)
@@ -1666,6 +1761,26 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
         label_total_rupiah_f2.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_rupiah_f2.setText("-");
 
+        jLabel37.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel37.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel37.setText("Nama :");
+
+        txt_search_nama_BonusPegawaiF2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_nama_BonusPegawaiF2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_nama_BonusPegawaiF2KeyPressed(evt);
+            }
+        });
+
+        button_refresh_BonusPegawaiF2.setBackground(new java.awt.Color(255, 255, 255));
+        button_refresh_BonusPegawaiF2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_refresh_BonusPegawaiF2.setText("Refresh");
+        button_refresh_BonusPegawaiF2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_refresh_BonusPegawaiF2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -1676,6 +1791,14 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                     .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel42)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_ruangan_f2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel45)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_rupiah_f2))
                             .addComponent(jLabel41)
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jLabel43)
@@ -1684,18 +1807,16 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel44)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_date_finishing2)))
-                        .addGap(0, 135, Short.MAX_VALUE))
-                    .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jLabel42)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_ruangan_f2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel45)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_rupiah_f2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_export_detail_f2)))
+                                .addComponent(label_date_finishing2))
+                            .addGroup(jPanel10Layout.createSequentialGroup()
+                                .addComponent(jLabel37)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_nama_BonusPegawaiF2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_refresh_BonusPegawaiF2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_detail_f2)))
+                        .addGap(0, 68, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -1717,7 +1838,14 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                         .addComponent(label_total_rupiah_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label_ruangan_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label_ruangan_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_search_nama_BonusPegawaiF2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(button_refresh_BonusPegawaiF2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_export_detail_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane12)
@@ -2596,6 +2724,8 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
 
     private void button_export_detail_f2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_detail_f2ActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tabel_BonusPegawaiF2.getModel();
+        ExportToExcel.writeToExcel(model, jPanel1);
     }//GEN-LAST:event_button_export_detail_f2ActionPerformed
 
     private void button_export_rekap_f2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_rekap_f2ActionPerformed
@@ -2629,6 +2759,42 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_saveData_bonusF2ActionPerformed
 
+    private void txt_search_nama_BonusPegawaiCabutKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_nama_BonusPegawaiCabutKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_bonusPegawaiCabut();
+        }
+    }//GEN-LAST:event_txt_search_nama_BonusPegawaiCabutKeyPressed
+
+    private void button_refresh_BonusPegawaiCabutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refresh_BonusPegawaiCabutActionPerformed
+        // TODO add your handling code here:
+        refreshTable_bonusPegawaiCabut();
+    }//GEN-LAST:event_button_refresh_BonusPegawaiCabutActionPerformed
+
+    private void txt_search_nama_BonusPegawaiCetakKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_nama_BonusPegawaiCetakKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_bonusPegawaiCetak();
+        }
+    }//GEN-LAST:event_txt_search_nama_BonusPegawaiCetakKeyPressed
+
+    private void button_refresh_BonusPegawaiCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refresh_BonusPegawaiCetakActionPerformed
+        // TODO add your handling code here:
+        refreshTable_bonusPegawaiCetak();
+    }//GEN-LAST:event_button_refresh_BonusPegawaiCetakActionPerformed
+
+    private void txt_search_nama_BonusPegawaiF2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_nama_BonusPegawaiF2KeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_bonusPegawaiF2();
+        }
+    }//GEN-LAST:event_txt_search_nama_BonusPegawaiF2KeyPressed
+
+    private void button_refresh_BonusPegawaiF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refresh_BonusPegawaiF2ActionPerformed
+        // TODO add your handling code here:
+        refreshTable_bonusPegawaiF2();
+    }//GEN-LAST:event_button_refresh_BonusPegawaiF2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CheckBox_Show_BonusOnly;
@@ -2644,6 +2810,9 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
     private javax.swing.JButton button_export_rekap_cetak;
     private javax.swing.JButton button_export_rekap_f2;
     private javax.swing.JButton button_form_laporan;
+    private javax.swing.JButton button_refresh_BonusPegawaiCabut;
+    private javax.swing.JButton button_refresh_BonusPegawaiCetak;
+    private javax.swing.JButton button_refresh_BonusPegawaiF2;
     private javax.swing.JButton button_saveData_bonusCabut;
     private javax.swing.JButton button_saveData_bonusCetak;
     private javax.swing.JButton button_saveData_bonusF2;
@@ -2670,12 +2839,15 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
@@ -2768,5 +2940,8 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
     private javax.swing.JTextField txt_persen_bonus_f1;
     private javax.swing.JTextField txt_persen_bonus_f2;
     private javax.swing.JTextField txt_persen_bonus_finalCheck;
+    private javax.swing.JTextField txt_search_nama_BonusPegawaiCabut;
+    private javax.swing.JTextField txt_search_nama_BonusPegawaiCetak;
+    private javax.swing.JTextField txt_search_nama_BonusPegawaiF2;
     // End of variables declaration//GEN-END:variables
 }

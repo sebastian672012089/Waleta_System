@@ -101,7 +101,7 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
                     + "(`tambahan_kaki1` + `tambahan_kaki2`) AS 'kaki',  "
                     + "ROUND(`berat_basah` * `tb_grading_bahan_baku`.`harga_bahanbaku`, 0) AS 'nilai_baku', "
                     + "SUM(`tb_grading_bahan_jadi`.`gram`) AS 'berat_grading', "
-                    + "SUM((`tb_grading_bahan_jadi`.`gram`/1000) * harga_bjd.`cny_kg`) AS 'rmb_jual' "
+                    + "SUM((`tb_grading_bahan_jadi`.`gram`/1000) * `tb_grade_bahan_jadi`.`harga`) AS 'rmb_jual' "
                     + "FROM `tb_laporan_produksi` "
                     + "LEFT JOIN `tb_bahan_baku_masuk` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk`.`no_kartu_waleta`"
                     + "LEFT JOIN `tb_supplier` ON `tb_bahan_baku_masuk`.`kode_supplier` = `tb_supplier`.`kode_supplier`"
@@ -109,8 +109,7 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_finishing_2` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`"
                     + "LEFT JOIN `tb_grading_bahan_baku` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_grading_bahan_baku`.`no_kartu_waleta` AND `tb_laporan_produksi`.`kode_grade` = `tb_grading_bahan_baku`.`kode_grade` "
                     + "LEFT JOIN `tb_grading_bahan_jadi` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_grading_bahan_jadi`.`kode_asal_bahan_jadi` "
-                    + "LEFT JOIN (SELECT `grade`, `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` = (SELECT `tanggal` FROM `tb_grade_bahan_jadi_harga` ORDER BY `tanggal` DESC LIMIT 1)) harga_bjd "
-                    + "ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = harga_bjd.`grade` "
+                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode` "
                     + "WHERE `nama_supplier` LIKE '%" + txt_search_supplier.getText() + "%' "
                     + "AND `tb_laporan_produksi`.`no_kartu_waleta` LIKE '%" + txt_no_kartu.getText() + "%' "
                     + "AND `nama_rumah_burung` LIKE '%" + txt_search_rsb.getText() + "%' "
@@ -309,13 +308,11 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
             decimalFormat.setMaximumFractionDigits(0);
             long total_gram = 0, total_nilai = 0;
             double kurs = Double.valueOf(txt_kurs.getText());
-            sql = "SELECT `tb_grading_bahan_jadi`.`grade_bahan_jadi`, `tb_grade_bahan_jadi`.`kode_grade`, `tb_grading_bahan_jadi`.`gram`, harga_bjd.`cny_kg`,  "
-                    + "SUM((`tb_grading_bahan_jadi`.`gram`/1000) * harga_bjd.`cny_kg`) AS 'rmb_jual' "
+            sql = "SELECT `tb_grading_bahan_jadi`.`grade_bahan_jadi`, `tb_grade_bahan_jadi`.`kode_grade`, `tb_grading_bahan_jadi`.`gram`, `tb_grade_bahan_jadi`.`harga` AS 'cny_kg',  "
+                    + "SUM((`tb_grading_bahan_jadi`.`gram`/1000) * `tb_grade_bahan_jadi`.`harga`) AS 'rmb_jual' "
                     + "FROM `tb_grading_bahan_jadi` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_grading_bahan_jadi`.`kode_asal_bahan_jadi` "
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode` "
-                    + "LEFT JOIN (SELECT `grade`, `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` = (SELECT `tanggal` FROM `tb_grade_bahan_jadi_harga` ORDER BY `tanggal` DESC LIMIT 1)) harga_bjd "
-                    + "ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = harga_bjd.`grade` "
                     + "WHERE `tb_laporan_produksi`.`no_kartu_waleta` = '" + no_kartu + "'"
                     + "GROUP BY `tb_grading_bahan_jadi`.`grade_bahan_jadi` ";
             rs = Utility.db.getStatement().executeQuery(sql);

@@ -238,7 +238,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) Table_Data_f2.getModel();
             model.setRowCount(0);
 
-            String search_tgl = null;
+            String search_tgl = "";
             if (Date1_f2.getDate() != null && Date2_f2.getDate() != null) {
                 if (null != ComboBox_SearchDate.getSelectedItem().toString()) {
                     switch (ComboBox_SearchDate.getSelectedItem().toString()) {
@@ -265,7 +265,13 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                     }
                 }
             }
-            sql = "SELECT `tb_finishing_2`.*, `jumlah_keping`, `berat_basah`, `kode_grade`, `tb_laporan_produksi`.`no_kartu_waleta`, `ruangan`, `no_registrasi`, `cheat_no_kartu`, `cheat_rsb` \n"
+
+            String search_ruangan = "AND `ruangan` LIKE '" + txt_search_ruangan.getText() + "'";
+            if (txt_search_ruangan.getText() == null || txt_search_ruangan.getText().equals("") || txt_search_ruangan.getText().equals("%%")) {
+                search_ruangan = "";
+            }
+
+            sql = "SELECT `tb_finishing_2`.*, `jumlah_keping`, `berat_basah`, `kode_grade`, `tb_laporan_produksi`.`no_kartu_waleta`, `ruangan`, `no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `edited` \n"
                     + "FROM `tb_finishing_2` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
@@ -273,11 +279,11 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                     + "WHERE "
                     + "`tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp.getText() + "%' "
                     + "AND `tb_laporan_produksi`.`memo_lp` LIKE '%" + txt_search_memo_f2.getText() + "%'"
-                    + "AND `ruangan` " + ComboBox_ruangan_like.getSelectedItem().toString() + " '" + txt_search_ruangan.getText() + "'"
+                    + search_ruangan
                     + search_tgl
                     + " ORDER BY `tb_finishing_2`.`tgl_masuk_f2` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[45];
+            Object[] row = new Object[50];
             while (rs.next()) {
                 row[0] = rs.getString("no_laporan_produksi");
                 row[1] = rs.getInt("jumlah_keping");
@@ -327,6 +333,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 row[42] = rs.getInt("kaki_besar_f1");
                 row[43] = rs.getInt("flat_f1");
                 row[44] = rs.getDate("tgl_input_sesekan");
+                row[45] = rs.getString("edited");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Data_f2);
@@ -987,7 +994,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         jLabel24 = new javax.swing.JLabel();
         button_laporan_terima_SUB = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
-        ComboBox_ruangan_like = new javax.swing.JComboBox<>();
         txt_search_ruangan = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -1172,14 +1178,14 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No LP", "Kpg", "Berat Angin", "Grade", "Ruang", "Tgl BP masuk", "Tgl Masuk", "Diterima", "Tgl koreksi kering", "Pekerja Koreksi", "Tgl F1", "Pekerja F1", "Tgl F2", "Pekerja F2", "Tgl Selesai", "Diserahkan", "P. Timbang", "FBonus", "Berat FBonus", "F Nol", "Berat F Nol", "Pch.Kpg", "Pch.BK", "Flat.Kpg", "Flat.BK", "Jidun.Utuh", "Jidun.Pch", "Jidun.BK", "S", "H", "R", "B", "Srbt", "G.Kaki 1", "LP kaki 1", "G. kaki 2", "LP kaki 2", "Admin", "Otorisasi", "Keterangan", "Tanpa Kaki F1", "Kaki Kecil F1", "Kaki Besar F1", "Flat F1", "Tgl Input Ssk"
+                "No LP", "Kpg", "Berat Angin", "Grade", "Ruang", "Tgl BP masuk", "Tgl Masuk", "Diterima", "Tgl koreksi kering", "Pekerja Koreksi", "Tgl F1", "Pekerja F1", "Tgl F2", "Pekerja F2", "Tgl Selesai", "Diserahkan", "P. Timbang", "FBonus", "Berat FBonus", "F Nol", "Berat F Nol", "Pch.Kpg", "Pch.BK", "Flat.Kpg", "Flat.BK", "Jidun.Utuh", "Jidun.Pch", "Jidun.BK", "S", "H", "R", "B", "Srbt", "G.Kaki 1", "LP kaki 1", "G. kaki 2", "LP kaki 2", "Admin", "Otorisasi", "Keterangan", "Tanpa Kaki F1", "Kaki Kecil F1", "Kaki Besar F1", "Flat F1", "Tgl Input Ssk", "Edited"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1423,9 +1429,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         jLabel27.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel27.setText("Ruangan");
 
-        ComboBox_ruangan_like.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_ruangan_like.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LIKE", "NOT LIKE" }));
-
         txt_search_ruangan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_search_ruangan.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -1496,9 +1499,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel27)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ComboBox_ruangan_like, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_search_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_search_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ComboBox_SearchDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1523,7 +1524,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         .addComponent(txt_search_memo_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ComboBox_ruangan_like, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txt_search_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txt_search_no_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3447,6 +3447,9 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
 
     private void txt_search_ruanganKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_ruanganKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_F2();
+        }
     }//GEN-LAST:event_txt_search_ruanganKeyPressed
 
 
@@ -3455,7 +3458,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> ComboBox_SearchDate;
     private javax.swing.JComboBox<String> ComboBox_evaluasi_ruanganMLEM;
     private javax.swing.JComboBox<String> ComboBox_ruangan;
-    private javax.swing.JComboBox<String> ComboBox_ruangan_like;
     private javax.swing.JComboBox<String> ComboBox_searchBentuk;
     private com.toedter.calendar.JDateChooser Date1_f2;
     private com.toedter.calendar.JDateChooser Date2_f2;

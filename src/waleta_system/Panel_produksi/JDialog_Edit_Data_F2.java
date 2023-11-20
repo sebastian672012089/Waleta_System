@@ -1193,9 +1193,9 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
 //            }
 
             if (check) {
-                String Query2 = "UPDATE `tb_lab_laporan_produksi` SET `tgl_masuk`='" + dateFormat.format(Date_setor_f2.getDate()) + "' "
+                String Query_UPDATE_QC = "UPDATE `tb_lab_laporan_produksi` SET `tgl_masuk`='" + dateFormat.format(Date_setor_f2.getDate()) + "' "
                         + "WHERE `no_laporan_produksi`='" + label_no_lp.getText() + "'";
-                String Query1 = "UPDATE `tb_finishing_2` SET "
+                String Query_UPDATE_F2 = "UPDATE `tb_finishing_2` SET "
                         + "`tgl_input_byProduct`=" + tgl_masuk_bp + ","
                         + "`tgl_masuk_f2`='" + dateFormat.format(Date_masuk_f2.getDate()) + "',"
                         + "`f2_diterima`='" + txt_diterima.getText() + "',"
@@ -1230,10 +1230,11 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
                         + "`lp_kaki2`='" + txt_lp_kaki2.getText() + "',"
                         + "`admin_f2`='" + txt_admin.getText() + "', "
                         + "`otorisasi`='" + nama_otorisasi + "', "
-                        + "`keterangan`='" + keterangan + "' "
+                        + "`keterangan`='" + keterangan + "', "
+                        + "`edited`='" + MainForm.Login_NamaPegawai + " "+new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date)+"' "
                         + "WHERE `no_laporan_produksi`='" + label_no_lp.getText() + "'";
-                if ((Utility.db.getStatement().executeUpdate(Query1)) == 1) {
-                    if ((Utility.db.getStatement().executeUpdate(Query2)) == 1) {
+                if ((Utility.db.getStatement().executeUpdate(Query_UPDATE_F2)) == 1) {
+                    if ((Utility.db.getStatement().executeUpdate(Query_UPDATE_QC)) == 1) {
                         JOptionPane.showMessageDialog(this, "Data " + label_no_lp.getText() + " berhasil diubah");
                         this.dispose();
                         JPanel_Finishing2.button_search_f2.doClick();

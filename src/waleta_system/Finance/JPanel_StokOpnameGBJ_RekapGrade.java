@@ -490,9 +490,11 @@ public class JPanel_StokOpnameGBJ_RekapGrade extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Update failed!");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error Connection!");
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_StokOpnameGBJ_RekapGrade.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");
+                Logger.getLogger(JPanel_StokOpnameGBJ_RekapGrade.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_tabel_stockOpnameMouseClicked

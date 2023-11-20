@@ -12,9 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import waleta_system.BahanBaku.JPanel_GradeBahanBaku;
 import waleta_system.Class.ColumnsAutoSizer;
-
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Class.Utility;
 
@@ -64,12 +62,12 @@ public class JPanel_PriceList_GradeBJ extends javax.swing.JPanel {
                 row[5] = rs.getInt("harga");
                 String grade = rs.getString("kode");
                 String query = "SELECT \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CURRENT_DATE AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_1', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 1 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_2', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 2 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_3', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 3 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_4', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 4 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_5', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 5 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_6' \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CURRENT_DATE AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_1', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 1 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_2', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 2 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_3', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 3 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_4', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 4 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_5', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 5 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_6' \n"
                         + "FROM DUAL";
                 ResultSet result = Utility.db.getStatement().executeQuery(query);
                 if (result.next()) {
@@ -81,7 +79,7 @@ public class JPanel_PriceList_GradeBJ extends javax.swing.JPanel {
             label_total_GNS.setText(Integer.toString(Table_PriceList.getRowCount()));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JPanel_PriceList_GradeBJ.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -108,12 +106,12 @@ public class JPanel_PriceList_GradeBJ extends javax.swing.JPanel {
                 row[1] = rs.getString("kode_grade");
                 String grade = rs.getString("kode");
                 String query = "SELECT \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CURRENT_DATE AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_1', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 1 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_2', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 2 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_3', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 3 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_4', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 4 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_5', \n"
-                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 5 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `tanggal` DESC LIMIT 1) AS 'bulan_6' \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CURRENT_DATE AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_1', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 1 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_2', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 2 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_3', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 3 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_4', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 4 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_5', \n"
+                        + "(SELECT `cny_kg` FROM `tb_grade_bahan_jadi_harga` WHERE `tanggal` <= CONCAT(LEFT(NOW() - INTERVAL 5 MONTH,7),'-31') AND `grade` = '" + grade + "' ORDER BY `no` DESC LIMIT 1) AS 'bulan_6' \n"
                         + "FROM DUAL";
                 ResultSet result = Utility.db.getStatement().executeQuery(query);
                 if (result.next()) {
@@ -130,7 +128,7 @@ public class JPanel_PriceList_GradeBJ extends javax.swing.JPanel {
             label_total_GNS.setText(Integer.toString(Table_History.getRowCount()));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JPanel_PriceList_GradeBJ.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -377,7 +375,7 @@ public class JPanel_PriceList_GradeBJ extends javax.swing.JPanel {
                     sql = "UPDATE `tb_grade_bahan_jadi` SET `harga`='" + decimalFormat.format(HARGA_F) + "' "
                             + "WHERE `kode`='" + kode + "'";
                     if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                        String insert_history = "INSERT INTO `tb_grade_bahan_jadi_harga`(`tanggal`, `grade`, `cny_kg`) VALUES (CURRENT_DATE,'"+kode+"','" + decimalFormat.format(HARGA_F) + "')";
+                        String insert_history = "INSERT INTO `tb_grade_bahan_jadi_harga`(`tanggal`, `grade`, `cny_kg`) VALUES (CURRENT_DATE,'" + kode + "','" + decimalFormat.format(HARGA_F) + "')";
                         if ((Utility.db.getStatement().executeUpdate(insert_history)) == 1) {
                             refreshTable();
                             JOptionPane.showMessageDialog(this, "Update success!");
@@ -388,10 +386,9 @@ public class JPanel_PriceList_GradeBJ extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Update failed!");
                     }
                 }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error Connection!");
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Input must be number!");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_PriceList_GradeBJ.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_Table_PriceListMouseClicked

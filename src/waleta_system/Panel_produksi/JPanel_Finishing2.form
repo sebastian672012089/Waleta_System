@@ -146,9 +146,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="ComboBox_ruangan_like" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="txt_search_ruangan" min="-2" pref="45" max="-2" attributes="0"/>
+                                      <Component id="txt_search_ruangan" min="-2" pref="121" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="ComboBox_SearchDate" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -179,7 +177,6 @@
                               <Component id="txt_search_memo_f2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="jLabel17" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="jLabel27" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="ComboBox_ruangan_like" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txt_search_ruangan" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -254,7 +251,7 @@
                       <Font name="Arial" size="11" style="0"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="45" rowCount="0">
+                      <Table columnCount="46" rowCount="0">
                         <Column editable="false" title="No LP" type="java.lang.String"/>
                         <Column editable="false" title="Kpg" type="java.lang.Integer"/>
                         <Column editable="false" title="Berat Angin" type="java.lang.Integer"/>
@@ -300,10 +297,16 @@
                         <Column editable="false" title="Kaki Besar F1" type="java.lang.Integer"/>
                         <Column editable="false" title="Flat F1" type="java.lang.Integer"/>
                         <Column editable="false" title="Tgl Input Ssk" type="java.lang.Object"/>
+                        <Column editable="false" title="Edited" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                       <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
                         <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                           <Title/>
                           <Editor/>
@@ -1028,22 +1031,6 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Ruangan"/>
               </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="ComboBox_ruangan_like">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Arial" size="11" style="0"/>
-                </Property>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="2">
-                    <StringItem index="0" value="LIKE"/>
-                    <StringItem index="1" value="NOT LIKE"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="txt_search_ruangan">
               <Properties>

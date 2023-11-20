@@ -753,11 +753,8 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
                 } else {
                     JOptionPane.showMessageDialog(this, "Update failed!");
                 }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error Connection!");
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Input must be a number!");
-            } catch (ParseException ex) {
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex);
                 Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

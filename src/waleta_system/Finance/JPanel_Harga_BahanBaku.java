@@ -732,7 +732,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
                     JOptionPane.showMessageDialog(this, "Update failed!");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error Connection!");
+                JOptionPane.showMessageDialog(this, ex);
                 Logger.getLogger(JPanel_Harga_BahanBaku.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");

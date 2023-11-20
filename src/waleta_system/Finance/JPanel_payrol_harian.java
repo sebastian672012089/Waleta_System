@@ -135,7 +135,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                 }
 
                 String search_bagian = "AND A.`grup` LIKE '" + txt_search_bagian.getText() + "' ";
-                if (txt_search_bagian.getText() == null || txt_search_bagian.getText().equals("")) {
+                if (txt_search_bagian.getText() == null || txt_search_bagian.getText().equals("") || txt_search_bagian.getText().equals("%%")) {
                     search_bagian = "";
                 }
 

@@ -24,7 +24,6 @@ import waleta_system.Class.StockBahanBaku;
 
 public class JDialog_AdjustmentBaku extends javax.swing.JDialog {
 
-     
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     String sql = null;
     ResultSet rs;
@@ -52,7 +51,7 @@ public class JDialog_AdjustmentBaku extends javax.swing.JDialog {
         });
 
         try {
-            
+
             sql = "SELECT `kode_grade` FROM `tb_grade_bahan_baku` ORDER BY `kode_grade`";
             ResultSet rs1 = Utility.db.getStatement().executeQuery(sql);
             while (rs1.next()) {
@@ -198,7 +197,8 @@ public class JDialog_AdjustmentBaku extends javax.swing.JDialog {
                 return false;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error Connection!");
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JDialog_AdjustmentBaku.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
     }
@@ -223,7 +223,7 @@ public class JDialog_AdjustmentBaku extends javax.swing.JDialog {
                 int kpg_akhir = kpg_awal + Integer.valueOf(txt_kpg_diambil.getText());
                 int gram_akhir = gram_awal + Integer.valueOf(txt_gram_diambil.getText());
                 String insert = "INSERT INTO `tb_adjustment_baku`(`jenis_adjustment`, `no_kartu_waleta`, `grade_bahan_baku`, `keping`, `gram`, `tgl_adjustment`, `tgl_stok_opname`, `kpg_awal`, `gram_awal`, `kpg_akhir`, `gram_akhir`) "
-                        + "VALUES ('PENAMBAHAN','" + label_kartu.getText() + "','" + label_grade.getText() + "','" + txt_kpg_diambil.getText() + "','" + txt_gram_diambil.getText() + "','" + dateFormat.format(new Date()) + "','" + dateFormat.format(Date_stokOpname.getDate()) + "', '"+kpg_awal+"', '"+gram_awal+"', '"+kpg_akhir+"', '"+gram_akhir+"')";
+                        + "VALUES ('PENAMBAHAN','" + label_kartu.getText() + "','" + label_grade.getText() + "','" + txt_kpg_diambil.getText() + "','" + txt_gram_diambil.getText() + "','" + dateFormat.format(new Date()) + "','" + dateFormat.format(Date_stokOpname.getDate()) + "', '" + kpg_awal + "', '" + gram_awal + "', '" + kpg_akhir + "', '" + gram_akhir + "')";
                 Utility.db.getConnection().createStatement();
                 Utility.db.getStatement().executeUpdate(insert);
 
@@ -234,7 +234,7 @@ public class JDialog_AdjustmentBaku extends javax.swing.JDialog {
                         + "`kode_grade`='" + label_grade.getText() + "'";
                 Utility.db.getConnection().createStatement();
                 Utility.db.getStatement().executeUpdate(update1);
-                
+
                 String update2 = "UPDATE `tb_bahan_baku_masuk` SET "
                         + "`keping_real`=(`keping_real`+" + keping + "),"
                         + "`berat_real`=(`berat_real`+" + gram + ") WHERE "
@@ -276,7 +276,7 @@ public class JDialog_AdjustmentBaku extends javax.swing.JDialog {
                 int kpg_akhir = kpg_awal - Integer.valueOf(txt_kpg_diambil.getText());
                 int gram_akhir = gram_awal - Integer.valueOf(txt_gram_diambil.getText());
                 String insert = "INSERT INTO `tb_adjustment_baku`(`jenis_adjustment`, `no_kartu_waleta`, `grade_bahan_baku`, `keping`, `gram`, `tgl_adjustment`, `tgl_stok_opname`, `kpg_awal`, `gram_awal`, `kpg_akhir`, `gram_akhir`) "
-                        + "VALUES ('PENGURANGAN','" + label_kartu.getText() + "','" + label_grade.getText() + "','" + txt_kpg_diambil.getText() + "','" + txt_gram_diambil.getText() + "','" + dateFormat.format(new Date()) + "','" + dateFormat.format(Date_stokOpname.getDate()) + "', '"+kpg_awal+"', '"+gram_awal+"', '"+kpg_akhir+"', '"+gram_akhir+"')";
+                        + "VALUES ('PENGURANGAN','" + label_kartu.getText() + "','" + label_grade.getText() + "','" + txt_kpg_diambil.getText() + "','" + txt_gram_diambil.getText() + "','" + dateFormat.format(new Date()) + "','" + dateFormat.format(Date_stokOpname.getDate()) + "', '" + kpg_awal + "', '" + gram_awal + "', '" + kpg_akhir + "', '" + gram_akhir + "')";
                 Utility.db.getConnection().createStatement();
                 Utility.db.getStatement().executeUpdate(insert);
 
@@ -287,7 +287,7 @@ public class JDialog_AdjustmentBaku extends javax.swing.JDialog {
                         + "`kode_grade`='" + label_grade.getText() + "'";
                 Utility.db.getConnection().createStatement();
                 Utility.db.getStatement().executeUpdate(update1);
-                
+
                 String update2 = "UPDATE `tb_bahan_baku_masuk` SET "
                         + "`keping_real`=(`keping_real`-" + keping + "),"
                         + "`berat_real`=(`berat_real`-" + gram + ") WHERE "
@@ -601,7 +601,7 @@ public class JDialog_AdjustmentBaku extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(JDialog_AdjustmentBaku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the dialog */

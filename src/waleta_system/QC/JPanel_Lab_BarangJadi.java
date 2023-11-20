@@ -550,7 +550,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error Connection!");
+                JOptionPane.showMessageDialog(this, ex);
                 Logger.getLogger(JPanel_Lab_BarangJadi.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");

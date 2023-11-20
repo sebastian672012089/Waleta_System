@@ -637,9 +637,13 @@ public class Login extends javax.swing.JFrame {
             if (checkAccess(dataMenu, AksesMenu.MENU_ITEM_LEMBUR_STAFF, Login.CharAt.VIEW)) {
                 MainForm.jMenuItem_Keu_LemburStaff.setEnabled(false);
                 MainForm.jMenuItem_Keu_LemburStaff.setVisible(false);
+                MainForm.jMenuItem_Keu_LemburStaff_baru.setEnabled(false);
+                MainForm.jMenuItem_Keu_LemburStaff_baru.setVisible(false);
             } else {
                 MainForm.jMenuItem_Keu_LemburStaff.setEnabled(true);
                 MainForm.jMenuItem_Keu_LemburStaff.setVisible(true);
+                MainForm.jMenuItem_Keu_LemburStaff_baru.setEnabled(true);
+                MainForm.jMenuItem_Keu_LemburStaff_baru.setVisible(true);
             }
             if (checkAccess(dataMenu, AksesMenu.MENU_ITEM_DATA_PENGIRIMAN_KEUANGAN, Login.CharAt.VIEW)) {
                 MainForm.jMenuItem_Keu_DataEkspor.setEnabled(false);
@@ -1161,7 +1165,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.227");
+        label_version.setText("2.2.230");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
