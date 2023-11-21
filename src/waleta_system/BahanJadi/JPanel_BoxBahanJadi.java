@@ -363,26 +363,22 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             float total_stok = 0, total_keluar_f2 = 0;
             DefaultTableModel model = (DefaultTableModel) table_data_LPsuwir.getModel();
             model.setRowCount(0);
+            String filter_tanggal = "";;
             if (Date_Search_LPsuwir_1.getDate() != null && Date_Search_LPsuwir_2.getDate() != null) {
-                sql = "SELECT `tb_lp_suwir`.`no_lp_suwir`, `tgl_lp_suwir`, `keping`, `gram`, `gram_akhir`, COUNT(`no_box`) AS 'jumlah_box'\n"
-                        + "FROM `tb_lp_suwir` \n"
-                        + "LEFT JOIN `tb_lp_suwir_detail` ON `tb_lp_suwir`.`no_lp_suwir` = `tb_lp_suwir_detail`.`no_lp_suwir`\n"
-                        + "WHERE `tb_lp_suwir`.`no_lp_suwir` LIKE '%" + txt_search_lpsuwir.getText() + "%' AND `tgl_lp_suwir` BETWEEN '" + dateFormat.format(Date_Search_LPsuwir_1.getDate()) + "' AND '" + dateFormat.format(Date_Search_LPsuwir_2.getDate()) + "'\n"
-                        + "GROUP BY `tb_lp_suwir`.`no_lp_suwir` ORDER BY `tgl_lp_suwir` DESC";
-
-            } else {
-                sql = "SELECT `tb_lp_suwir`.`no_lp_suwir`, `tgl_lp_suwir`, `keping`, `gram`, `gram_akhir`, COUNT(`no_box`) AS 'jumlah_box'\n"
-                        + "FROM `tb_lp_suwir` \n"
-                        + "LEFT JOIN `tb_lp_suwir_detail` ON `tb_lp_suwir`.`no_lp_suwir` = `tb_lp_suwir_detail`.`no_lp_suwir`\n"
-                        + "WHERE `tb_lp_suwir`.`no_lp_suwir` LIKE '%" + txt_search_lpsuwir.getText() + "%'"
-                        + "GROUP BY `tb_lp_suwir`.`no_lp_suwir` ORDER BY `tgl_lp_suwir` DESC";
-
+                filter_tanggal = "AND `tgl_lp_suwir` BETWEEN '" + dateFormat.format(Date_Search_LPsuwir_1.getDate()) + "' AND '" + dateFormat.format(Date_Search_LPsuwir_2.getDate()) + "'\n";
             }
+            sql = "SELECT `tb_lp_suwir`.`no_lp_suwir`, `tgl_lp_suwir`, `keping`, `gram`, `gram_akhir`, COUNT(`no_box`) AS 'jumlah_box'\n"
+                    + "FROM `tb_lp_suwir` \n"
+                    + "LEFT JOIN `tb_lp_suwir_detail` ON `tb_lp_suwir`.`no_lp_suwir` = `tb_lp_suwir_detail`.`no_lp_suwir`\n"
+                    + "WHERE "
+                    + "`tb_lp_suwir`.`no_lp_suwir` LIKE '%" + txt_search_lpsuwir.getText() + "%' "
+                    + filter_tanggal
+                    + "GROUP BY `tb_lp_suwir`.`no_lp_suwir` "
+                    + "ORDER BY `tgl_lp_suwir` DESC";
             PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
             Object[] baris = new Object[9];
             while (rs.next()) {
-
                 baris[0] = rs.getString("no_lp_suwir");
                 baris[1] = rs.getDate("tgl_lp_suwir");
                 baris[2] = rs.getInt("keping");
@@ -432,7 +428,9 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) table_LaporanProduksi_LPSuwir.getModel();
             model.setRowCount(0);
             sql = "SELECT `no_laporan_produksi`, `tambahan_kaki1`, `lp_kaki1`, `tambahan_kaki2`, `lp_kaki2` FROM `tb_finishing_2` "
-                    + "WHERE `lp_kaki1` = '" + lp_kaki + "' OR `lp_kaki2` = '" + lp_kaki + "'";
+                    + "WHERE "
+                    + "`lp_kaki1` = '" + lp_kaki + "' "
+                    + "OR `lp_kaki2` = '" + lp_kaki + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[5];
             while (rs.next()) {
@@ -464,7 +462,8 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             float total_gram = 0;
             DefaultTableModel model = (DefaultTableModel) table_BoxReprosesi_LPSuwir.getModel();
             model.setRowCount(0);
-            sql = "SELECT `no_reproses`, `no_box`, `tanggal_proses`, `no_lp_suwir`, `no_lp_suwir2`, `gram_kaki`, `gram_kaki2` FROM `tb_reproses` WHERE `no_lp_suwir` = '" + lp_kaki + "' OR `no_lp_suwir2` = '" + lp_kaki + "'";
+            sql = "SELECT `no_reproses`, `no_box`, `tanggal_proses`, `no_lp_suwir`, `no_lp_suwir2`, `gram_kaki`, `gram_kaki2` "
+                    + "FROM `tb_reproses` WHERE `no_lp_suwir` = '" + lp_kaki + "' OR `no_lp_suwir2` = '" + lp_kaki + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[5];
             while (rs.next()) {
@@ -782,6 +781,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
         button_edit_lp_suwir1 = new javax.swing.JButton();
         label_total_keluar_f2 = new javax.swing.JLabel();
         jLabel75 = new javax.swing.JLabel();
+        button_Print_LP_SWR = new javax.swing.JButton();
         jPanel_data_pinjam_barangJadi = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         table_data_pinjam_barang_jadi = new javax.swing.JTable();
@@ -2327,6 +2327,15 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
         jLabel75.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel75.setText("Total Keluar F2 :");
 
+        button_Print_LP_SWR.setBackground(new java.awt.Color(255, 255, 255));
+        button_Print_LP_SWR.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_Print_LP_SWR.setText("Print");
+        button_Print_LP_SWR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_Print_LP_SWRActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_data_LP_suwirLayout = new javax.swing.GroupLayout(jPanel_data_LP_suwir);
         jPanel_data_LP_suwir.setLayout(jPanel_data_LP_suwirLayout);
         jPanel_data_LP_suwirLayout.setHorizontalGroup(
@@ -2370,6 +2379,8 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                                 .addComponent(button_edit_lp_suwir)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_editgram)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_Print_LP_SWR)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_export_LPSuwir))
                             .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 871, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -2419,7 +2430,8 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                         .addComponent(button_export_AsalBox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_editgram, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_edit_lp_suwir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_edit_lp_suwir1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(button_edit_lp_suwir1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_Print_LP_SWR, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_data_LP_suwirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3586,7 +3598,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan pilih no box yang akan di edit !");
             } else {
                 String no_box = table_dataBox.getValueAt(j, 0).toString();
-                String memo_lama = table_dataBox.getValueAt(j, 16) != null? table_dataBox.getValueAt(j, 16).toString() : "";
+                String memo_lama = table_dataBox.getValueAt(j, 16) != null ? table_dataBox.getValueAt(j, 16).toString() : "";
                 String memo_baru = JOptionPane.showInputDialog("Memo : ", memo_lama);
                 if (memo_baru != null) {
                     String Query = "UPDATE `tb_box_bahan_jadi` SET `memo_box_bj`='" + memo_baru + "' WHERE `no_box` = '" + no_box + "'";
@@ -3603,6 +3615,27 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_edit_memo_boxActionPerformed
+
+    private void button_Print_LP_SWRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_Print_LP_SWRActionPerformed
+        // TODO add your handling code here:
+        try {
+            int j = table_data_LPsuwir.getSelectedRow();
+            if (j == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu LP Suwir pada tabel!", "warning!", 1);
+            } else {
+                JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Laporan_Produksi_LP_Suwir.jrxml");
+                JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("NO_LP_SUWIR", table_data_LPsuwir.getValueAt(j, 0).toString());
+                params.put("STOK", (float) table_data_LPsuwir.getValueAt(j, 8));
+                JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
+                JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
+            }
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage());
+            Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_Print_LP_SWRActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -3624,6 +3657,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser Date_proses_terakhir1;
     private com.toedter.calendar.JDateChooser Date_proses_terakhir2;
     public javax.swing.JButton button_Belum_Repack;
+    private javax.swing.JButton button_Print_LP_SWR;
     private javax.swing.JButton button_delete_kinerja;
     private javax.swing.JButton button_edit_kinerja;
     public javax.swing.JButton button_edit_lp_suwir;

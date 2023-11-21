@@ -1752,9 +1752,11 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     if (Tabel_data_payslip.getValueAt(i, 28) != null) {
                         bagian = "'" + Tabel_data_payslip.getValueAt(i, 28).toString() + "'";
                     }
-                    String insert_payroll_data = "INSERT INTO `tb_payrol_data`(`tgl_penggajian`, `id_pegawai`, `lembur`, `pot_terlambat`, `pot_ijin_keluar`, `tunjangan_hadir`, `pot_transport`, `pot_bpjs`, `pot_bpjs_tk`, `bonus_tbt`, `gaji_harian`, `gaji_borong`, `bonus_1`, `bonus_2`, `bonus_pencapaian_produksi`, `piutang`, `keterangan`, `bagian`, `level_gaji`, `jam_kerja`) "
-                            + "VALUES ('" + dateFormat.format(Date_penggajian.getDate()) + "',"
+                    String insert_payroll_data = "INSERT INTO `tb_payrol_data`(`tgl_penggajian`, `id_pegawai`, `total_jam_lembur`, `lembur`, `pot_terlambat`, `pot_ijin_keluar`, `tunjangan_hadir`, `pot_transport`, `pot_bpjs`, `pot_bpjs_tk`, `bonus_tbt`, `gaji_harian`, `gaji_borong`, `bonus_1`, `bonus_2`, `bonus_pencapaian_produksi`, `piutang`, `keterangan`, `bagian`, `level_gaji`, `jam_kerja`) "
+                            + "VALUES ("
+                            + "'" + dateFormat.format(Date_penggajian.getDate()) + "',"
                             + "'" + Tabel_data_payslip.getValueAt(i, 1).toString() + "'," //ID PEGAWAI
+                            + "'" + Tabel_data_payslip.getValueAt(i, 10).toString() + "'," //TOTAL JAM LEMBUR
                             + "'" + Tabel_data_payslip.getValueAt(i, 11).toString() + "'," //LEMBUR
                             + "'" + Tabel_data_payslip.getValueAt(i, 12).toString() + "'," //POT TERLAMBAT
                             + "'" + Tabel_data_payslip.getValueAt(i, 13).toString() + "'," //POT IJIN KELUAR
@@ -1775,6 +1777,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                             + "'" + Tabel_data_payslip.getValueAt(i, 30).toString() + "'" //jam kerja
                             + ") "
                             + "ON DUPLICATE KEY UPDATE "
+                            + "`total_jam_lembur`='" + Tabel_data_payslip.getValueAt(i, 10).toString() + "',"
                             + "`lembur`='" + Tabel_data_payslip.getValueAt(i, 11).toString() + "',"
                             + "`pot_terlambat`='" + Tabel_data_payslip.getValueAt(i, 12).toString() + "',"
                             + "`pot_ijin_keluar`='" + Tabel_data_payslip.getValueAt(i, 13).toString() + "',"

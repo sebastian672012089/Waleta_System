@@ -2191,6 +2191,8 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="button_editgram" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="button_Print_LP_SWR" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="button_export_LPSuwir" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jScrollPane10" min="-2" pref="871" max="-2" attributes="0"/>
@@ -2250,6 +2252,7 @@
                               <Component id="button_editgram" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="button_edit_lp_suwir" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="button_edit_lp_suwir1" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="button_Print_LP_SWR" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabel32" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
@@ -3192,6 +3195,20 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Total Keluar F2 :"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="button_Print_LP_SWR">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Print"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_Print_LP_SWRActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Produksi" language="groovy" pageWidth="210" pageHeight="1000" whenNoDataType="AllSectionsNoDetail" columnWidth="200" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.3995221406292229"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="barcode" forecolor="#000000" rotation="Left" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="8" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="6" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="6" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="0.5"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="6" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="8">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="8">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<parameter name="NO_LP_SUWIR" class="java.lang.String"/>
+	<parameter name="STOK" class="java.lang.Float"/>
+	<queryString>
+		<![CDATA[SELECT *
+FROM
+(SELECT `no_laporan_produksi` AS 'no_lp_no_box', `tambahan_kaki1` AS 'gram_ambil', `lp_kaki1` AS 'no_lp_swr'
+FROM `tb_finishing_2`
+WHERE `lp_kaki1` = $P{NO_LP_SUWIR} AND `tgl_f1` = CURRENT_DATE
+UNION ALL
+SELECT `no_laporan_produksi`, `tambahan_kaki2`, `lp_kaki2`
+FROM `tb_finishing_2`
+WHERE `lp_kaki2` = $P{NO_LP_SUWIR} AND `tgl_f1` = CURRENT_DATE
+UNION ALL
+SELECT `no_box`, `gram_kaki`, `no_lp_suwir`
+FROM `tb_reproses`
+WHERE `no_lp_suwir` = $P{NO_LP_SUWIR} AND `tgl_f1` = CURRENT_DATE
+UNION ALL
+SELECT `no_box`, `gram_kaki2`, `no_lp_suwir2`
+FROM `tb_reproses`
+WHERE `no_lp_suwir2` = $P{NO_LP_SUWIR} AND `tgl_f1` = CURRENT_DATE
+) AS DATA
+LEFT JOIN `tb_lp_suwir` ON DATA.`no_lp_swr` = `tb_lp_suwir`.`no_lp_suwir`
+WHERE `tb_lp_suwir`.`no_lp_suwir` = $P{NO_LP_SUWIR}]]>
+	</queryString>
+	<field name="no_lp_no_box" class="java.lang.String"/>
+	<field name="gram_ambil" class="java.lang.Float"/>
+	<field name="no_lp_swr" class="java.lang.String"/>
+	<field name="no_lp_suwir" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tgl_lp_suwir" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="keping" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gram" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gram_akhir" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="TotalGram" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{gram_ambil}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="125">
+			<staticText>
+				<reportElement style="Title" x="0" y="0" width="200" height="15" uuid="40e54398-17de-47a4-8a8c-a7090df84273"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[LAPORAN PRODUKSI SUWIR]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" onErrorType="Icon">
+				<reportElement x="0" y="30" width="80" height="80" uuid="8ea23141-88d9-4ea3-9c3e-53e0da3bc846"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{no_lp_suwir}.toString(),
+        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
+    )
+)]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement style="Page header" x="0" y="15" width="200" height="15" uuid="597c584e-1899-4894-8302-560fbd2f2e4b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_lp_suwir}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Page header" x="0" y="110" width="200" height="15" uuid="e43b5325-372b-4203-8365-3555cf23c67a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["LIST PENGGUNAAN"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="80" y="50" width="40" height="20" uuid="9a349b97-4740-43fd-80ff-01daebf10b4b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Gr Akhir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="120" y="50" width="5" height="20" uuid="3f9e22e0-6d65-437e-8aea-f9ab25dfbe0a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Page header" x="125" y="50" width="75" height="20" uuid="2868a5b6-4423-4cd3-99a7-6b0c315e7104"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gram_akhir}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="80" y="30" width="40" height="20" uuid="e079c330-2afb-45d0-843d-80286a8d1f17"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Gr Awal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="120" y="30" width="5" height="20" uuid="f6da75f4-91af-49e7-91ec-f3ff050786e4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Page header" x="125" y="30" width="75" height="20" uuid="2a1e5a95-3e67-47f9-b3cd-966dd80d0045"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gram}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Page header" x="125" y="70" width="75" height="20" uuid="45ccf651-35ab-4608-9933-35e12585029c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{STOK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Page header" x="80" y="70" width="40" height="20" uuid="4b3f5fb9-14d2-4a2f-978d-a8f926fd554b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Stok]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Page header" x="120" y="70" width="5" height="20" uuid="22864bc1-3298-41f1-b162-98c38525a829"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="140" y="0" width="60" height="15" forecolor="#000000" uuid="72a15080-8a4d-412c-95e6-e9f008df8d85"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gram]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="140" height="15" forecolor="#000000" uuid="8e54df6f-8713-45e9-9c03-328e5a2323e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No LP / No Box]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="0" y="0" width="140" height="15" forecolor="#000000" uuid="16b7201b-ed9d-4926-9ab9-e45db7fade43"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{no_lp_no_box}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement style="Column header" x="140" y="0" width="60" height="15" forecolor="#000000" uuid="5b6710ad-9074-49c1-8f9a-7902b08af036"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gram_ambil}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="15">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="140" height="15" forecolor="#000000" uuid="32971b91-97cc-47ab-a3c6-6af0e7aa1e0e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Penggunaan ]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement style="Column header" x="140" y="0" width="60" height="15" forecolor="#000000" uuid="f23871b7-f889-4935-849a-e9a9bacb4fc3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TotalGram}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

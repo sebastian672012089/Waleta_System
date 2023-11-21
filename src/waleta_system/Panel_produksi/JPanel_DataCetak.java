@@ -592,7 +592,7 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
         });
 
         button_catatan_pengeringan_sarang_burung.setBackground(new java.awt.Color(255, 255, 255));
-        button_catatan_pengeringan_sarang_burung.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        button_catatan_pengeringan_sarang_burung.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_catatan_pengeringan_sarang_burung.setText("Catatan Pengeringan Sarang Burung");
         button_catatan_pengeringan_sarang_burung.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -750,7 +750,7 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_jumlah_lp_target_disetor))
                             .addComponent(jLabel16))
-                        .addGap(0, 135, Short.MAX_VALUE)))
+                        .addGap(0, 133, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(

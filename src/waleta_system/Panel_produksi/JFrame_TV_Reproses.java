@@ -110,6 +110,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
     }
 
     public void refreshTabel_setoran_cetak() {
+        //TABEL 1
         try {
             DefaultTableModel model = (DefaultTableModel) Table_Setoran_cetak1.getModel();
             model.setRowCount(0);
@@ -118,12 +119,12 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "WHERE "
                     + "`tgl_selesai_cetak` = (SELECT `tgl_selesai_cetak` FROM `tb_cetak` WHERE `tgl_selesai_cetak` <> CURRENT_DATE \n"
-                    + "GROUP BY `tgl_selesai_cetak` ORDER BY `tgl_selesai_cetak` DESC LIMIT 0, 1)\n"
+                    + "GROUP BY `tgl_selesai_cetak` ORDER BY `tgl_selesai_cetak` DESC LIMIT 1)\n"
                     + "GROUP BY `tb_laporan_produksi`.`ruangan` WITH ROLLUP";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[6];
             while (rs.next()) {
-                label_setoran_cetak1.setText("CTK H-1 : " + rs.getString("tgl_selesai_cetak"));
+                label_setoran_cetak1.setText("CTK H-1 : " + new SimpleDateFormat("dd-MMM").format(rs.getDate("tgl_selesai_cetak")));
                 row[0] = rs.getString("ruangan");
                 row[1] = rs.getInt("ctk_mk");
                 row[2] = rs.getInt("ctk_pch");
@@ -131,11 +132,12 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 row[4] = rs.getInt("ctk_jdn");
                 model.addRow(row);
             }
-            ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak1, 20);
+            ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak1);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //TABEL 2
         try {
             DefaultTableModel model = (DefaultTableModel) Table_Setoran_cetak2.getModel();
             model.setRowCount(0);
@@ -145,12 +147,12 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                     + "LEFT JOIN `tb_finishing_2` ON `tb_cetak`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
                     + "WHERE "
                     + "`tgl_dikerjakan_f2` = (SELECT `tgl_dikerjakan_f2` FROM `tb_finishing_2` WHERE `tgl_dikerjakan_f2` <> CURRENT_DATE \n"
-                    + "GROUP BY `tgl_dikerjakan_f2` ORDER BY `tgl_dikerjakan_f2` DESC LIMIT 0, 1)\n"
+                    + "GROUP BY `tgl_dikerjakan_f2` ORDER BY `tgl_dikerjakan_f2` DESC LIMIT 1)\n"
                     + "GROUP BY `tb_laporan_produksi`.`ruangan` WITH ROLLUP";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[6];
             while (rs.next()) {
-                label_setoran_cetak2.setText("Tgl Koreksi : " + rs.getString("tgl_dikerjakan_f2"));
+                label_setoran_cetak2.setText("Tgl Koreksi : " + new SimpleDateFormat("dd-MMM").format(rs.getDate("tgl_dikerjakan_f2")));
                 row[0] = rs.getString("ruangan");
                 row[1] = rs.getInt("ctk_mk");
                 row[2] = rs.getInt("ctk_pch");
@@ -158,11 +160,12 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 row[4] = rs.getInt("ctk_jdn");
                 model.addRow(row);
             }
-            ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak2, 20);
+            ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak2);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //TABEL 3
         try {
             DefaultTableModel model = (DefaultTableModel) Table_Setoran_cetak3.getModel();
             model.setRowCount(0);
@@ -172,12 +175,12 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                     + "LEFT JOIN `tb_finishing_2` ON `tb_cetak`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
                     + "WHERE "
                     + "`tgl_f1` = (SELECT `tgl_f1` FROM `tb_finishing_2` WHERE `tgl_f1` <> CURRENT_DATE \n"
-                    + "GROUP BY `tgl_f1` ORDER BY `tgl_f1` DESC LIMIT 0, 1)\n"
+                    + "GROUP BY `tgl_f1` ORDER BY `tgl_f1` DESC LIMIT 1)\n"
                     + "GROUP BY `tb_laporan_produksi`.`ruangan` WITH ROLLUP";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[6];
             while (rs.next()) {
-                label_setoran_cetak3.setText("Tgl F1 : " + rs.getString("tgl_f1"));
+                label_setoran_cetak3.setText("Tgl F1 : " + new SimpleDateFormat("dd-MMM").format(rs.getDate("tgl_f1")));
                 row[0] = rs.getString("ruangan");
                 row[1] = rs.getInt("ctk_mk");
                 row[2] = rs.getInt("ctk_pch");
@@ -185,7 +188,35 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 row[4] = rs.getInt("ctk_jdn");
                 model.addRow(row);
             }
-            ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak3, 20);
+            ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak3);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //TABEL 4
+        try {
+            DefaultTableModel model = (DefaultTableModel) Table_Setoran_cetak4.getModel();
+            model.setRowCount(0);
+            sql = "SELECT `tgl_f2`, `tb_laporan_produksi`.`ruangan`, COUNT(`tb_cetak`.`no_laporan_produksi`) AS 'jumlah_lp', SUM(`cetak_mangkok`) AS 'ctk_mk', SUM(`cetak_pecah`) AS 'ctk_pch', SUM(`cetak_flat`) AS 'ctk_flat', SUM(`cetak_jidun_real`) AS 'ctk_jdn' \n"
+                    + "FROM `tb_cetak` "
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_finishing_2` ON `tb_cetak`.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
+                    + "WHERE "
+                    + "`tgl_f2` = (SELECT `tgl_f2` FROM `tb_finishing_2` WHERE `tgl_f2` <> CURRENT_DATE \n"
+                    + "GROUP BY `tgl_f2` ORDER BY `tgl_f2` DESC LIMIT 1)\n"
+                    + "GROUP BY `tb_laporan_produksi`.`ruangan` WITH ROLLUP";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            Object[] row = new Object[6];
+            while (rs.next()) {
+                label_setoran_cetak4.setText("Tgl F2 : " + new SimpleDateFormat("dd-MMM").format(rs.getDate("tgl_f2")));
+                row[0] = rs.getString("ruangan");
+                row[1] = rs.getInt("ctk_mk");
+                row[2] = rs.getInt("ctk_pch");
+                row[3] = rs.getInt("ctk_flat");
+                row[4] = rs.getInt("ctk_jdn");
+                model.addRow(row);
+            }
+            ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak4);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
@@ -1344,6 +1375,10 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
         label_setoran_cetak2 = new javax.swing.JLabel();
         jScrollPane24 = new javax.swing.JScrollPane();
         Table_Setoran_cetak2 = new javax.swing.JTable();
+        jPanel8 = new javax.swing.JPanel();
+        label_setoran_cetak4 = new javax.swing.JLabel();
+        jScrollPane26 = new javax.swing.JScrollPane();
+        Table_Setoran_cetak4 = new javax.swing.JTable();
         jPanel_F1 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         Table_WIP_F1 = new javax.swing.JTable();
@@ -1508,11 +1543,11 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(204, 255, 255));
 
         label_setoran_cetak1.setBackground(new java.awt.Color(255, 255, 255));
-        label_setoran_cetak1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        label_setoran_cetak1.setText("H-1");
+        label_setoran_cetak1.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
+        label_setoran_cetak1.setText("CTK H-1 : dd-MMM");
 
         Table_Setoran_cetak1.setAutoCreateRowSorter(true);
-        Table_Setoran_cetak1.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        Table_Setoran_cetak1.setFont(new java.awt.Font("Arial", 0, 22)); // NOI18N
         Table_Setoran_cetak1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1536,7 +1571,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        Table_Setoran_cetak1.setRowHeight(35);
+        Table_Setoran_cetak1.setRowHeight(30);
         Table_Setoran_cetak1.getTableHeader().setReorderingAllowed(false);
         jScrollPane21.setViewportView(Table_Setoran_cetak1);
 
@@ -1547,10 +1582,10 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane21, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                    .addComponent(jScrollPane21, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(label_setoran_cetak1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 50, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -1566,11 +1601,11 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(204, 255, 255));
 
         label_setoran_cetak3.setBackground(new java.awt.Color(255, 255, 255));
-        label_setoran_cetak3.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        label_setoran_cetak3.setText("H-3");
+        label_setoran_cetak3.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
+        label_setoran_cetak3.setText("Tgl F1 : dd-MMM");
 
         Table_Setoran_cetak3.setAutoCreateRowSorter(true);
-        Table_Setoran_cetak3.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        Table_Setoran_cetak3.setFont(new java.awt.Font("Arial", 0, 22)); // NOI18N
         Table_Setoran_cetak3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1594,7 +1629,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        Table_Setoran_cetak3.setRowHeight(35);
+        Table_Setoran_cetak3.setRowHeight(30);
         Table_Setoran_cetak3.getTableHeader().setReorderingAllowed(false);
         jScrollPane25.setViewportView(Table_Setoran_cetak3);
 
@@ -1607,8 +1642,8 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(label_setoran_cetak3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane25, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE))
+                        .addGap(0, 81, Short.MAX_VALUE))
+                    .addComponent(jScrollPane25, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -1617,18 +1652,18 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(label_setoran_cetak3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane25, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+                .addComponent(jScrollPane25, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jPanel6.setBackground(new java.awt.Color(204, 255, 255));
 
         label_setoran_cetak2.setBackground(new java.awt.Color(255, 255, 255));
-        label_setoran_cetak2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        label_setoran_cetak2.setText("H-2");
+        label_setoran_cetak2.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
+        label_setoran_cetak2.setText("Tgl Koreksi : dd-MMM");
 
         Table_Setoran_cetak2.setAutoCreateRowSorter(true);
-        Table_Setoran_cetak2.setFont(new java.awt.Font("Arial", 0, 30)); // NOI18N
+        Table_Setoran_cetak2.setFont(new java.awt.Font("Arial", 0, 22)); // NOI18N
         Table_Setoran_cetak2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -1652,7 +1687,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        Table_Setoran_cetak2.setRowHeight(35);
+        Table_Setoran_cetak2.setRowHeight(30);
         Table_Setoran_cetak2.getTableHeader().setReorderingAllowed(false);
         jScrollPane24.setViewportView(Table_Setoran_cetak2);
 
@@ -1665,8 +1700,8 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(label_setoran_cetak2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane24, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))
+                        .addGap(0, 8, Short.MAX_VALUE))
+                    .addComponent(jScrollPane24, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -1675,7 +1710,65 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(label_setoran_cetak2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane24, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+                .addComponent(jScrollPane24, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel8.setBackground(new java.awt.Color(204, 255, 255));
+
+        label_setoran_cetak4.setBackground(new java.awt.Color(255, 255, 255));
+        label_setoran_cetak4.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
+        label_setoran_cetak4.setText("Tgl F2 : dd-MMM");
+
+        Table_Setoran_cetak4.setAutoCreateRowSorter(true);
+        Table_Setoran_cetak4.setFont(new java.awt.Font("Arial", 0, 22)); // NOI18N
+        Table_Setoran_cetak4.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Ruang", "MK", "PCH", "Flat", "JDN"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Table_Setoran_cetak4.setRowHeight(30);
+        Table_Setoran_cetak4.getTableHeader().setReorderingAllowed(false);
+        jScrollPane26.setViewportView(Table_Setoran_cetak4);
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(label_setoran_cetak4)
+                        .addGap(0, 76, Short.MAX_VALUE))
+                    .addComponent(jScrollPane26, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label_setoran_cetak4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane26, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1684,17 +1777,20 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
         jPanel_setoran_cetakLayout.setHorizontalGroup(
             jPanel_setoran_cetakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_setoran_cetakLayout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel_setoran_cetakLayout.setVerticalGroup(
             jPanel_setoran_cetakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("SETORAN CETAK", jPanel_setoran_cetak);
@@ -2100,7 +2196,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
             jPanel_ReprosesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_ReprosesLayout.createSequentialGroup()
                 .addGroup(jPanel_ReprosesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
                     .addGroup(jPanel_ReprosesLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel61)
@@ -2113,7 +2209,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_stok_reproses)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
                     .addComponent(jScrollPane6)
                     .addComponent(jScrollPane4))
                 .addContainerGap())
@@ -2380,9 +2476,9 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
         jPanel_spkLayout.setHorizontalGroup(
             jPanel_spkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_spkLayout.createSequentialGroup()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE))
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE))
             .addGroup(jPanel_spkLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label_jam)
@@ -3280,6 +3376,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
     public static javax.swing.JTable Table_Setoran_cetak1;
     public static javax.swing.JTable Table_Setoran_cetak2;
     public static javax.swing.JTable Table_Setoran_cetak3;
+    public static javax.swing.JTable Table_Setoran_cetak4;
     private javax.swing.JTable Table_WIP_F1;
     private javax.swing.JTable Table_WIP_F2;
     private javax.swing.JTable Table_WIP_Final;
@@ -3330,6 +3427,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel_F1;
     private javax.swing.JPanel jPanel_F2;
     private javax.swing.JPanel jPanel_Final;
@@ -3358,6 +3456,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane21;
     private javax.swing.JScrollPane jScrollPane24;
     private javax.swing.JScrollPane jScrollPane25;
+    private javax.swing.JScrollPane jScrollPane26;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
@@ -3400,6 +3499,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
     private javax.swing.JLabel label_setoran_cetak1;
     private javax.swing.JLabel label_setoran_cetak2;
     private javax.swing.JLabel label_setoran_cetak3;
+    private javax.swing.JLabel label_setoran_cetak4;
     private javax.swing.JLabel label_siaga1;
     private javax.swing.JLabel label_tgl_isu;
     private javax.swing.JLabel label_tgl_isu1;

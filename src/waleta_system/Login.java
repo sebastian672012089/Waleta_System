@@ -864,9 +864,9 @@ public class Login extends javax.swing.JFrame {
 //                                    + "`jumlah_keping` = '" + value[2] + "',\n"
 //                                    + "`total_berat` = '" + value[3] + "',\n"
 //                                    + "`harga_bahanbaku` = '" + value[4] + "';";
-                            Query = "UPDATE `tb_level_gaji_pengajuan_kenaikan` SET \n"
-                                    + "`diketahui_kadep` = '" + value[1] + "'\n"
-                                    + "WHERE `no` = '" + value[0] + "'";
+                            Query = "UPDATE `tb_laporan_produksi` SET \n"
+                                    + "`berat_kering` = '" + value[1] + "'\n"
+                                    + "WHERE `no_laporan_produksi` = '" + value[0] + "'";
 //                            Query = "UPDATE `tb_rendam` SET \n"
 //                                    + "`waktu_mulai_pengeringan` = '" + value[1] + "',\n"
 //                                    + "`waktu_selesai_pengeringan` = '" + value[2] + "'\n"

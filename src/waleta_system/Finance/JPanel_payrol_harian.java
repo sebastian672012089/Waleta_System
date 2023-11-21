@@ -708,9 +708,10 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                 }
                             }
                         }
-                        String insert_payroll_data = "INSERT INTO `tb_payrol_data`(`tgl_penggajian`, `id_pegawai`, `lembur`, `pot_terlambat`, `pot_ijin_keluar`, `tunjangan_hadir`, `pot_transport`, `pot_bpjs`, `pot_bpjs_tk`, `bonus_tbt`, `gaji_harian`, `gaji_borong`, `bonus_1`, `bonus_2`, `bonus_pencapaian_produksi`, `piutang`, `keterangan`, `bagian`, `level_gaji`, `jam_kerja`) "
+                        String insert_payroll_data = "INSERT INTO `tb_payrol_data`(`tgl_penggajian`, `id_pegawai`, `total_jam_lembur`, `lembur`, `pot_terlambat`, `pot_ijin_keluar`, `tunjangan_hadir`, `pot_transport`, `pot_bpjs`, `pot_bpjs_tk`, `bonus_tbt`, `gaji_harian`, `gaji_borong`, `bonus_1`, `bonus_2`, `bonus_pencapaian_produksi`, `piutang`, `keterangan`, `bagian`, `level_gaji`, `jam_kerja`) "
                                 + "VALUES ('" + dateFormat.format(Date_penggajian.getDate()) + "',"
                                 + "'" + Tabel_data.getValueAt(i, 1).toString() + "'," //ID PEGAWAI
+                                + "'" + convertNullWithZero(Tabel_data.getValueAt(i, 10)) + "'," //TOTAL JAM LEMBUR
                                 + "'" + convertNullWithZero(Tabel_data.getValueAt(i, 11)) + "'," //LEMBUR
                                 + "'" + convertNullWithZero(Tabel_data.getValueAt(i, 12)) + "'," //POT TERLAMBAT
                                 + "'" + convertNullWithZero(Tabel_data.getValueAt(i, 13)) + "'," //POT IJIN KELUAR
@@ -731,6 +732,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                 + "'" + Tabel_data.getValueAt(i, 30).toString() + "'" //jam_kerja
                                 + ") "
                                 + "ON DUPLICATE KEY UPDATE "
+                                + "`total_jam_lembur`='" + convertNullWithZero(Tabel_data.getValueAt(i, 10)) + "',"
                                 + "`lembur`='" + convertNullWithZero(Tabel_data.getValueAt(i, 11)) + "',"
                                 + "`pot_terlambat`='" + convertNullWithZero(Tabel_data.getValueAt(i, 12)) + "',"
                                 + "`pot_ijin_keluar`='" + convertNullWithZero(Tabel_data.getValueAt(i, 13)) + "',"
