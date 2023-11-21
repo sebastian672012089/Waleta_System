@@ -21,7 +21,7 @@ public class JDialog_otorisasi_lembur extends javax.swing.JDialog {
     String SPL = null;
     String Pemberi_otorisasi = null;
 
-    public JDialog_otorisasi_lembur(java.awt.Frame parent, boolean modal, String jenis, String SPL) {
+    public JDialog_otorisasi_lembur(java.awt.Frame parent, boolean modal, String jenis, String SPL, String a) {
         super(parent, modal);
         initComponents();
         this.jenis = jenis;

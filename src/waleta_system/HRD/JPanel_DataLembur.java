@@ -1961,13 +1961,26 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         if (i == -1) {
             JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di kirim !");
         } else {
-            String SPL = Table_SPL_PEJUANG.getValueAt(i, 0).toString();
-            JDialog_otorisasi_lembur dialog = new JDialog_otorisasi_lembur(new javax.swing.JFrame(), true, "disetujui", SPL);
-            dialog.pack();
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);
-            dialog.setEnabled(true);
-            refreshTable_SPL_PEJUANG();
+            boolean check = true;
+            if (!MainForm.Login_Posisi.equals("MANAGER") && !MainForm.Login_Posisi.equals("STAFF 5") && !MainForm.Login_Posisi.equals("STAFF 6")) {
+                JOptionPane.showMessageDialog(this, "Hanya STAFF / MANAGER yang bisa menyetujui lembur !");
+                check = false;
+            } else if (Table_SPL_PEJUANG.getValueAt(i, 8) != null) {//sudah diketahui hr
+                JOptionPane.showMessageDialog(this, "Data lembur sudah disetujui !");
+                check = false;
+            }
+            if (check) {
+                try {
+                    sql = "UPDATE `tb_surat_lembur` SET "
+                            + "`disetujui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
+                            + "WHERE `nomor_surat` = '" + Table_SPL_PEJUANG.getValueAt(i, 0).toString() + "'";
+                    Utility.db.getStatement().executeUpdate(sql);
+                    refreshTable_SPL_PEJUANG();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, ex);
+                    Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_button_disetujui_SPL_PEJUANGActionPerformed
 
@@ -1991,7 +2004,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             if (check) {
                 try {
                     sql = "UPDATE `tb_surat_lembur` SET "
-                            + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "' "
+                            + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
                             + "WHERE `nomor_surat` = '" + Table_SPL_PEJUANG.getValueAt(i, 0).toString() + "'";
                     Utility.db.getStatement().executeUpdate(sql);
                     refreshTable_SPL_PEJUANG();
@@ -2091,7 +2104,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                                 && Table_SPL_PEJUANG.getValueAt(i, 9) == null) {//belum diketahui hr
 
                             sql = "UPDATE `tb_surat_lembur` SET "
-                                    + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "' "
+                                    + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
                                     + "WHERE `nomor_surat` = '" + Table_SPL_PEJUANG.getValueAt(i, 0).toString() + "'";
                             Utility.db.getStatement().executeUpdate(sql);
                             data_masuk++;
@@ -2126,6 +2139,8 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 
     private void button_export_SPL_STAFFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_SPL_STAFFActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) Table_SPL_STAFF.getModel();
+        ExportToExcel.writeToExcel(model, jPanel1);
     }//GEN-LAST:event_button_export_SPL_STAFFActionPerformed
 
     private void button_edit_SPL_STAFFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_edit_SPL_STAFFActionPerformed
@@ -2159,13 +2174,26 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         if (i == -1) {
             JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di kirim !");
         } else {
-            String SPL = Table_SPL_STAFF.getValueAt(i, 0).toString();
-            JDialog_otorisasi_lembur dialog = new JDialog_otorisasi_lembur(new javax.swing.JFrame(), true, "disetujui", SPL);
-            dialog.pack();
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);
-            dialog.setEnabled(true);
-            refreshTable_SPL_STAFF();
+            boolean check = true;
+            if (!MainForm.Login_Posisi.equals("MANAGER") && !MainForm.Login_Posisi.equals("STAFF 5") && !MainForm.Login_Posisi.equals("STAFF 6")) {
+                JOptionPane.showMessageDialog(this, "Hanya STAFF / MANAGER yang bisa menyetujui lembur !");
+                check = false;
+            } else if (Table_SPL_STAFF.getValueAt(i, 8) != null) {//sudah diketahui hr
+                JOptionPane.showMessageDialog(this, "Data lembur sudah disetujui !");
+                check = false;
+            }
+            if (check) {
+                try {
+                    sql = "UPDATE `tb_surat_lembur` SET "
+                            + "`disetujui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
+                            + "WHERE `nomor_surat` = '" + Table_SPL_STAFF.getValueAt(i, 0).toString() + "'";
+                    Utility.db.getStatement().executeUpdate(sql);
+                    refreshTable_SPL_STAFF();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, ex);
+                    Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_button_disetujui_SPL_STAFFActionPerformed
 
@@ -2189,7 +2217,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             if (check) {
                 try {
                     sql = "UPDATE `tb_surat_lembur` SET "
-                            + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "' "
+                            + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
                             + "WHERE `nomor_surat` = '" + Table_SPL_STAFF.getValueAt(i, 0).toString() + "'";
                     Utility.db.getStatement().executeUpdate(sql);
                     refreshTable_SPL_PEJUANG();
@@ -2220,7 +2248,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                                 && Table_SPL_STAFF.getValueAt(i, 9) == null) {//belum diketahui hr
 
                             sql = "UPDATE `tb_surat_lembur` SET "
-                                    + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "' "
+                                    + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
                                     + "WHERE `nomor_surat` = '" + Table_SPL_STAFF.getValueAt(i, 0).toString() + "'";
                             Utility.db.getStatement().executeUpdate(sql);
                             data_masuk++;

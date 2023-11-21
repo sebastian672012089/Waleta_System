@@ -88,10 +88,11 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) Table_laporan_produksi.getModel();
             model.setRowCount(0);
             decimalFormat.setMaximumFractionDigits(0);
-            float total_gram_basah = 0, total_gram_basah_lengkap = 0, total_gram_kering_lengkap = 0, total_lp_lengkap = 0, total_gram_bjd = 0;
-            double total_nilai_baku = 0, total_biaya_produksi = 0, total_biaya_kaki = 0, total_harga_jual = 0, total_margin = 0;
+            double total_gram_basah = 0, total_gram_basah_lengkap = 0, total_gram_kering_lengkap = 0, total_lp_lengkap = 0;
+            double total_gram_bjd = 0, total_berat_main_grade_bj = 0, total_berat_susut_proses_bj = 0;
+            double total_nilai_baku = 0, total_biaya_produksi = 0, total_gram_kaki = 0, total_biaya_kaki = 0, total_harga_jual = 0, total_margin = 0;
             double biaya_produksi_per_gr = 0, kurs = 0;
-            float harga_kaki = 0;
+            double harga_kaki = 0;
             try {
                 harga_kaki = Integer.valueOf(txt_harga_kaki.getText());
             } catch (NumberFormatException e) {
@@ -128,9 +129,9 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                 kode_grade = "";
             }
 
-            sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `memo_lp`, `tanggal_lp`, `tb_laporan_produksi`.`kode_grade`, `ruangan`, `berat_basah`, `berat_kering`, (`tambahan_kaki1` + `tambahan_kaki2`) AS 'kaki', `cetak_dikerjakan`, `ketua_regu`,  "
+            sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `memo_lp`, `tanggal_lp`, `tb_laporan_produksi`.`kode_grade`, `ruangan`, `berat_basah`, `berat_kering`, (`tambahan_kaki1` + `tambahan_kaki2`) AS 'gram_kaki_f2', `cetak_dikerjakan`, `ketua_regu`,  "
                     + "ROUND((`berat_basah` * `tb_grading_bahan_baku`.`harga_bahanbaku`), 5) AS 'nilai_baku', "
-                    + "BJD_PRICE.`berat_grading_bj`, "
+                    + "BJD_PRICE.`berat_main_grade_bj`, BJD_PRICE.`berat_susut_proses_bj`, "
                     + "BJD_PRICE.`rmb_jual`, "
                     + "`tb_bahan_jadi_masuk`.`tanggal_grading` "
                     + "FROM `tb_laporan_produksi` "
@@ -139,7 +140,11 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`"
                     + "LEFT JOIN `tb_grading_bahan_baku` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_grading_bahan_baku`.`no_kartu_waleta` AND `tb_laporan_produksi`.`kode_grade` = `tb_grading_bahan_baku`.`kode_grade` "
                     + "LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_bahan_jadi_masuk`.`kode_asal` "
-                    + "LEFT JOIN (SELECT `kode_asal_bahan_jadi`, SUM(`tb_grading_bahan_jadi`.`gram`) AS 'berat_grading_bj', SUM((`tb_grading_bahan_jadi`.`gram`/1000) * `tb_grade_bahan_jadi`.`harga`) AS 'rmb_jual' \n"
+                    + "LEFT JOIN "
+                    + "(SELECT `kode_asal_bahan_jadi`, "
+                    + "SUM(IF(`tb_grade_bahan_jadi`.`bentuk_grade` NOT IN ('By Product', 'Kaki', 'Mess'), `tb_grading_bahan_jadi`.`gram`, 0)) AS 'berat_main_grade_bj', "
+                    + "SUM(IF(`tb_grade_bahan_jadi`.`bentuk_grade` IN ('By Product', 'Kaki', 'Mess'), `tb_grading_bahan_jadi`.`gram`, 0)) AS 'berat_susut_proses_bj', "
+                    + "SUM((`tb_grading_bahan_jadi`.`gram`/1000) * `tb_grade_bahan_jadi`.`harga`) AS 'rmb_jual' \n"
                     + "FROM `tb_grading_bahan_jadi` \n"
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode` \n"
                     + "WHERE 1 "
@@ -164,23 +169,29 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                 row[6] = result.getInt("berat_basah");
                 total_gram_basah = total_gram_basah + result.getInt("berat_basah");
                 row[7] = result.getDouble("nilai_baku");
-                row[8] = result.getInt("kaki");
-                double biaya_kaki = (harga_kaki / 1000) * kurs * result.getFloat("kaki");
+                double gram_kaki_f2 = result.getFloat("gram_kaki_f2");
+                row[8] = gram_kaki_f2;
+                double biaya_kaki = (harga_kaki / 1000) * kurs * gram_kaki_f2;
                 row[9] = biaya_kaki;
                 double biaya_produksi = biaya_produksi_per_gr * result.getInt("berat_basah");
                 row[10] = Math.round(biaya_produksi);
-                int berat_grading_bj = result.getInt("berat_grading_bj");
+                double berat_main_grade_bj = result.getInt("berat_main_grade_bj") - gram_kaki_f2;
+                double berat_susut_proses_bj = result.getInt("berat_susut_proses_bj");
+                double berat_grading_bj = berat_main_grade_bj + berat_susut_proses_bj;
                 row[11] = berat_grading_bj;
                 double harga_jual = result.getDouble("rmb_jual") * kurs * 0.98d;
                 row[12] = Math.round(harga_jual);
                 double gross_margin = 0;
                 if (result.getInt("nilai_baku") > 0 && berat_grading_bj > 0) {
+                    total_gram_kaki = total_gram_kaki + gram_kaki_f2;
                     gross_margin = harga_jual - (biaya_produksi + result.getDouble("nilai_baku") + biaya_kaki);
                     total_lp_lengkap++;
                     total_gram_basah_lengkap = total_gram_basah_lengkap + result.getInt("berat_basah");
                     total_gram_kering_lengkap = total_gram_kering_lengkap + result.getInt("berat_kering");
                     total_nilai_baku = total_nilai_baku + result.getDouble("nilai_baku");
                     total_gram_bjd = total_gram_bjd + berat_grading_bj;
+                    total_berat_main_grade_bj = total_berat_main_grade_bj + berat_main_grade_bj;
+                    total_berat_susut_proses_bj = total_berat_susut_proses_bj + berat_susut_proses_bj;
                     total_biaya_produksi = total_biaya_produksi + biaya_produksi;
                     total_biaya_kaki = total_biaya_kaki + biaya_kaki;
                     total_harga_jual = total_harga_jual + harga_jual;
@@ -189,7 +200,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                 total_margin = total_margin + gross_margin;
                 float persen_margin = ((float) gross_margin / (result.getFloat("nilai_baku") + (float) biaya_produksi)) * 100f;
                 row[14] = Math.round(persen_margin * 100f) / 100f;
-                row[15] = Math.round(((result.getFloat("berat_basah") - (berat_grading_bj - result.getFloat("kaki"))) / result.getFloat("berat_basah")) * 10000.f) / 100.f;
+                row[15] = Math.round(((result.getFloat("berat_basah") - (berat_grading_bj - gram_kaki_f2)) / result.getFloat("berat_basah")) * 10000.f) / 100.f;
                 row[16] = result.getString("ketua_regu");
                 row[17] = result.getDate("tanggal_grading");
                 model.addRow(row);
@@ -198,13 +209,16 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
 
             int total_data = Table_laporan_produksi.getRowCount();
             float persen_lengkap = Math.round((total_gram_basah_lengkap / total_gram_basah) * 1000) / 10;
-            float rendemen = Math.round((total_gram_bjd / total_gram_kering_lengkap) * 1000) / 10;
+            float persen_rendemen = Math.round((total_berat_main_grade_bj / total_gram_kering_lengkap) * 1000) / 10;
+            float persen_susut_proses = Math.round((total_berat_susut_proses_bj / total_gram_kering_lengkap) * 1000) / 10;
             label_total_keseluruhan.setText(decimalFormat.format(total_data) + " LP   " + decimalFormat.format(total_gram_basah) + " Gram Basah");
             label_persen_data_lengkap.setText(persen_lengkap + "%");
-            label_total_bahan_baku.setText(decimalFormat.format(total_lp_lengkap) + " LP   " + decimalFormat.format(total_gram_basah) + " Gram Basah");
+            label_total_bahan_baku.setText(decimalFormat.format(total_lp_lengkap) + " LP   " + decimalFormat.format(total_gram_basah_lengkap) + " Gram Basah");
             label_total_nilai_baku.setText(decimalFormat.format(total_nilai_baku));
+            label_total_gram_kaki.setText(decimalFormat.format(total_gram_kaki) + " Gram");
             label_total_gram_bjd.setText(decimalFormat.format(total_gram_bjd) + " Gram");
-            label_total_rendemen.setText(decimalFormat.format(rendemen) + "%");
+            label_persen_total_rendemen.setText(decimalFormat.format(persen_rendemen) + "%");
+            label_persen_total_susut_proses.setText(decimalFormat.format(persen_susut_proses) + "%");
             label_total_jual.setText(decimalFormat.format(total_harga_jual));
             label_total_produksi.setText(decimalFormat.format(total_biaya_produksi));
             label_total_kaki.setText(decimalFormat.format(total_biaya_kaki));
@@ -234,8 +248,8 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
 
             String no_lp = "";
             for (int i = 0; i < Table_laporan_produksi.getRowCount(); i++) {
-                if ((double) Table_laporan_produksi.getValueAt(i, 7) > 0 && (int) Table_laporan_produksi.getValueAt(i, 11) > 0) {
-                    if (i != 0) {
+                if ((double) Table_laporan_produksi.getValueAt(i, 7) > 0 && (double) Table_laporan_produksi.getValueAt(i, 11) > 0) {
+                    if (!no_lp.equals("")) {
                         no_lp = no_lp + ", ";
                     }
                     no_lp = no_lp + "'" + Table_laporan_produksi.getValueAt(i, 0).toString() + "'";
@@ -244,8 +258,8 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
             sql = "SELECT `tb_grade_bahan_jadi`.`kode_grade`, SUM(`gram`) AS 'gram', "
                     + "`tb_grade_bahan_jadi`.`harga` \n"
                     + "FROM `tb_grading_bahan_jadi` "
-                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`\n"
-                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_grading_bahan_jadi`.`kode_asal_bahan_jadi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode` \n"
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_grading_bahan_jadi`.`kode_asal_bahan_jadi` = `tb_laporan_produksi`.`no_laporan_produksi` \n"
                     + "WHERE "
                     + "`tb_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") "
                     + "GROUP BY `tb_grade_bahan_jadi`.`kode_grade`";
@@ -379,7 +393,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
         jLabel32 = new javax.swing.JLabel();
         label_total_gram_bjd = new javax.swing.JLabel();
         jLabel33 = new javax.swing.JLabel();
-        label_total_rendemen = new javax.swing.JLabel();
+        label_persen_total_rendemen = new javax.swing.JLabel();
         label_persen_data_lengkap = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         label_grading_no_lp = new javax.swing.JLabel();
@@ -388,6 +402,10 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
         Table_laporan_produksi = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         tabel_hasilGrading_rekap = new javax.swing.JTable();
+        jLabel36 = new javax.swing.JLabel();
+        label_persen_total_susut_proses = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        label_total_gram_kaki = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -542,7 +560,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                         .addComponent(Date_2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_refresh)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(457, Short.MAX_VALUE))
         );
         jPanel_search_laporan_produksiLayout.setVerticalGroup(
             jPanel_search_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -756,7 +774,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
 
         jLabel32.setBackground(new java.awt.Color(255, 255, 255));
         jLabel32.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel32.setText("Total BJD :");
+        jLabel32.setText("Total BJD (-Kaki) :");
 
         label_total_gram_bjd.setBackground(new java.awt.Color(255, 255, 255));
         label_total_gram_bjd.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -766,9 +784,9 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
         jLabel33.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel33.setText("Rendemen (Berat Kering) :");
 
-        label_total_rendemen.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_rendemen.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        label_total_rendemen.setText("0");
+        label_persen_total_rendemen.setBackground(new java.awt.Color(255, 255, 255));
+        label_persen_total_rendemen.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_persen_total_rendemen.setText("0");
 
         label_persen_data_lengkap.setBackground(new java.awt.Color(255, 255, 255));
         label_persen_data_lengkap.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -845,6 +863,22 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Rekap Hasil Grading", jScrollPane4);
 
+        jLabel36.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel36.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel36.setText("SP (Berat Kering) :");
+
+        label_persen_total_susut_proses.setBackground(new java.awt.Color(255, 255, 255));
+        label_persen_total_susut_proses.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_persen_total_susut_proses.setText("0");
+
+        jLabel37.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel37.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel37.setText("Total Kaki :");
+
+        label_total_gram_kaki.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_gram_kaki.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_gram_kaki.setText("0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -859,6 +893,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                                 .addComponent(jLabel29)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(button_export))
+                            .addComponent(jTabbedPane1)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -868,19 +903,11 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabel24)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(label_total_nilai_baku))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel32)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(label_total_gram_bjd)
+                                        .addComponent(label_total_nilai_baku)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel33)
+                                        .addComponent(jLabel37)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(label_total_rendemen)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel28)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(label_total_jual))
+                                        .addComponent(label_total_gram_kaki))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel25)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -902,9 +929,24 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(label_total_margin)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(label_total_margin_persen)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jTabbedPane1))
+                                        .addComponent(label_total_margin_persen))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel32)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_total_gram_bjd)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel33)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_persen_total_rendemen)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel36)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_persen_total_susut_proses)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel28)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_total_jual)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -976,19 +1018,28 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(label_total_keseluruhan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_total_bahan_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_total_nilai_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label_total_gram_kaki, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label_total_bahan_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label_total_nilai_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_total_gram_bjd, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_total_rendemen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_total_jual, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label_total_jual, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel36, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label_persen_total_susut_proses, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label_total_gram_bjd, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label_persen_total_rendemen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1185,6 +1236,8 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel_search_laporan_produksi;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1194,10 +1247,13 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel label_grading_no_lp;
     private javax.swing.JLabel label_persen_data_lengkap;
+    private javax.swing.JLabel label_persen_total_rendemen;
+    private javax.swing.JLabel label_persen_total_susut_proses;
     private javax.swing.JLabel label_total_bahan_baku;
     private javax.swing.JLabel label_total_gradebaku;
     private javax.swing.JLabel label_total_gram_bjd;
     private javax.swing.JLabel label_total_gram_grading;
+    private javax.swing.JLabel label_total_gram_kaki;
     private javax.swing.JLabel label_total_harga_grading;
     private javax.swing.JLabel label_total_jual;
     private javax.swing.JLabel label_total_kaki;
@@ -1206,7 +1262,6 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
     private javax.swing.JLabel label_total_margin_persen;
     private javax.swing.JLabel label_total_nilai_baku;
     private javax.swing.JLabel label_total_produksi;
-    private javax.swing.JLabel label_total_rendemen;
     private javax.swing.JTable tabel_gradeBaku;
     private javax.swing.JTable tabel_hasilGrading;
     private javax.swing.JTable tabel_hasilGrading_rekap;

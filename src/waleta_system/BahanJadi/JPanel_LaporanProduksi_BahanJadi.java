@@ -151,6 +151,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                     + "AND `kode_asal` LIKE '%" + txt_search_no_lp.getText() + "%' "
                     + "AND `tb_laporan_produksi`.`no_kartu_waleta` LIKE '%" + txt_search_no_kartu.getText() + "%' "
                     + "AND `tb_laporan_produksi`.`memo_lp` LIKE '%" + txt_search_memo.getText() + "%' "
+                    + "AND `tanggal_grading` IS NOT NULL "
                     + search_pekerja
                     + kode_grade
                     + ruangan
@@ -558,7 +559,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Laporan Produksi Bahan Jadi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Laporan Produksi Barang Jadi", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
 
         tabel_LaporanProduksi.setAutoCreateRowSorter(true);
         tabel_LaporanProduksi.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
