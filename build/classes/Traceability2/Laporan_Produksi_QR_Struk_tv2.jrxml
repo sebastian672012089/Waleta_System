@@ -942,7 +942,7 @@ WHERE 1 ORDER BY `no_laporan_produksi` DESC]]>
 					<font size="8"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{berat_basah}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{berat_kering}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement style="Column header" x="0" y="219" width="60" height="15" forecolor="#000000" uuid="4b5229d2-c466-4b8a-96b2-532d71a63265"/>

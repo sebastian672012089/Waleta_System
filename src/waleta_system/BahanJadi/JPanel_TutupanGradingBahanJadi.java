@@ -36,11 +36,9 @@ import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
 import waleta_system.Class.DataTutupanGrading;
 import waleta_system.Class.ExportToExcel;
-import waleta_system.MainForm;
 
 public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
 
-    
     String sql = null;
     ResultSet rs;
     Date date = new Date();
@@ -55,8 +53,6 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
 
     public void init() {
         try {
-            
-            
             refreshTable_Tutupan();
             Table_TutupanGrading.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                 @Override
@@ -122,122 +118,114 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
 
     public ArrayList<DataTutupanGrading> DataTutupanGradingList() {
         ArrayList<DataTutupanGrading> DataTutupanGradingList = new ArrayList<>();
-        try {
-            
-            if (Date_filter1.getDate() != null && Date_filter2.getDate() != null) {
-                sql = "SELECT `tb_tutupan_grading`.`kode_tutupan`, `tgl_mulai_tutupan`, `tgl_selesai_tutupan`, `nama_rumah_burung`, COUNT(`tb_bahan_jadi_masuk`.`kode_tutupan`) AS 'asal', SUM(`tb_bahan_jadi_masuk`.`keping`) AS 'jumlah_keping', SUM(`tb_bahan_jadi_masuk`.`berat`) AS 'jumlah_berat', `status`, `status_box`, `tgl_statusBox`\n"
-                        + "FROM `tb_tutupan_grading` \n"
-                        + "LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_tutupan_grading`.`kode_tutupan` = `tb_bahan_jadi_masuk`.`kode_tutupan`\n"
-                        + "LEFT JOIN `tb_rumah_burung` ON `tb_tutupan_grading`.`kode_rumah_burung` = `tb_rumah_burung`.`no_registrasi` \n"
-                        + "WHERE `tb_tutupan_grading`.`kode_tutupan` LIKE '%" + txt_search_kodeTutupan.getText() + "%' AND `tgl_selesai_tutupan` BETWEEN '" + dateFormat.format(Date_filter1.getDate()) + "' AND '" + dateFormat.format(Date_filter2.getDate()) + "' "
-                        + "GROUP BY `tb_tutupan_grading`.`kode_tutupan` ORDER BY `tgl_mulai_tutupan` DESC";
-            } else {
-                sql = "SELECT `tb_tutupan_grading`.`kode_tutupan`, `tgl_mulai_tutupan`, `tgl_selesai_tutupan`, `nama_rumah_burung`, COUNT(`tb_bahan_jadi_masuk`.`kode_tutupan`) AS 'asal', SUM(`tb_bahan_jadi_masuk`.`keping`) AS 'jumlah_keping', SUM(`tb_bahan_jadi_masuk`.`berat`) AS 'jumlah_berat', `status`, `status_box`, `tgl_statusBox`\n"
-                        + "FROM `tb_tutupan_grading` \n"
-                        + "LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_tutupan_grading`.`kode_tutupan` = `tb_bahan_jadi_masuk`.`kode_tutupan`\n"
-                        + "LEFT JOIN `tb_rumah_burung` ON `tb_tutupan_grading`.`kode_rumah_burung` = `tb_rumah_burung`.`no_registrasi` \n"
-                        + "WHERE `tb_tutupan_grading`.`kode_tutupan` LIKE '%" + txt_search_kodeTutupan.getText() + "%' "
-                        + "GROUP BY `tb_tutupan_grading`.`kode_tutupan` ORDER BY `tgl_mulai_tutupan` DESC";
-            }
-            rs = Utility.db.getStatement().executeQuery(sql);
-            DataTutupanGrading DataTutupan;
-            while (rs.next()) {
-                DataTutupan = new DataTutupanGrading(rs.getString("kode_tutupan"), rs.getDate("tgl_mulai_tutupan"), rs.getDate("tgl_selesai_tutupan"), rs.getString("nama_rumah_burung"), rs.getInt("asal"), rs.getInt("jumlah_keping"), rs.getInt("jumlah_berat"), rs.getString("status"), rs.getString("status_box"), rs.getDate("tgl_statusBox"));
-                DataTutupanGradingList.add(DataTutupan);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         return DataTutupanGradingList;
     }
 
     public void refreshTable_Tutupan() {
-        ArrayList<DataTutupanGrading> list = DataTutupanGradingList();
-        double total_gram = 0, total_kpg = 0, total_asal = 0;
-        DefaultTableModel model = (DefaultTableModel) Table_TutupanGrading.getModel();
-        model.setRowCount(0);
-        Object[] baris = new Object[10];
-        for (int i = 0; i < list.size(); i++) {
-            baris[0] = list.get(i).getKode_tutupan();
-            baris[1] = list.get(i).getTanggal_mulai();
-            baris[2] = list.get(i).getTanggal_selesai();
-            baris[3] = list.get(i).getNama_rumah_burung();
-            baris[4] = list.get(i).getJumlah_asal();
-            baris[5] = list.get(i).getJumlah_keping();
-            baris[6] = list.get(i).getTotal_berat();
-            baris[7] = list.get(i).getStatus();
-            baris[8] = list.get(i).getStatus_box();
-            baris[9] = list.get(i).getTgl_statusBox();
-
-            String filter_status = ComboBox_FilterStatus.getSelectedItem().toString();
-            if (filter_status.equals("All")) {
-                total_asal = total_asal + list.get(i).getJumlah_asal();
-                total_kpg = total_kpg + list.get(i).getJumlah_keping();
-                total_gram = total_gram + list.get(i).getTotal_berat();
-                model.addRow(baris);
-            } else if (filter_status.equals("Proses - Proses") && list.get(i).getStatus().equals("PROSES") && list.get(i).getStatus_box().equals("PROSES")) {
-                total_asal = total_asal + list.get(i).getJumlah_asal();
-                total_kpg = total_kpg + list.get(i).getJumlah_keping();
-                total_gram = total_gram + list.get(i).getTotal_berat();
-                model.addRow(baris);
-            } else if (filter_status.equals("Selesai - Proses") && list.get(i).getStatus().equals("SELESAI") && list.get(i).getStatus_box().equals("PROSES")) {
-                total_asal = total_asal + list.get(i).getJumlah_asal();
-                total_kpg = total_kpg + list.get(i).getJumlah_keping();
-                total_gram = total_gram + list.get(i).getTotal_berat();
-                model.addRow(baris);
-            } else if (filter_status.equals("Selesai - Selesai") && list.get(i).getStatus().equals("SELESAI") && list.get(i).getStatus_box().equals("SELESAI")) {
-                total_asal = total_asal + list.get(i).getJumlah_asal();
-                total_kpg = total_kpg + list.get(i).getJumlah_keping();
-                total_gram = total_gram + list.get(i).getTotal_berat();
-                model.addRow(baris);
+        try {
+            double total_gram = 0, total_kpg = 0, total_asal = 0;
+            DefaultTableModel model = (DefaultTableModel) Table_TutupanGrading.getModel();
+            model.setRowCount(0);
+            String filter_tanggal = "";
+            if (Date_filter1.getDate() != null && Date_filter2.getDate() != null) {
+                filter_tanggal = "AND `tgl_selesai_tutupan` BETWEEN '" + dateFormat.format(Date_filter1.getDate()) + "' AND '" + dateFormat.format(Date_filter2.getDate()) + "' ";
             }
-        }
-        ColumnsAutoSizer.sizeColumnsToFit(Table_TutupanGrading);
-
-        final Color green = new Color(0, 145, 0);
-        Table_TutupanGrading.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (column == 7 || column == 8) {
-                    if (Table_TutupanGrading.getValueAt(row, column).toString().equals("SELESAI")) {
-                        if (isSelected) {
-                            comp.setBackground(Table_TutupanGrading.getSelectionBackground());
-                            comp.setForeground(green);
-                        } else {
-                            comp.setBackground(Table_TutupanGrading.getBackground());
-                            comp.setForeground(green);
-                        }
-                    } else {
-                        if (isSelected) {
-                            comp.setBackground(Table_TutupanGrading.getSelectionBackground());
-                            comp.setForeground(Color.red);
-                        } else {
-                            comp.setBackground(Table_TutupanGrading.getBackground());
-                            comp.setForeground(Color.red);
-                        }
-                    }
-                } else {
-                    if (isSelected) {
-                        comp.setBackground(Table_TutupanGrading.getSelectionBackground());
-                        comp.setForeground(Table_TutupanGrading.getSelectionForeground());
-                    } else {
-                        comp.setBackground(Table_TutupanGrading.getBackground());
-                        comp.setForeground(Table_TutupanGrading.getForeground());
-                    }
+            sql = "SELECT `tb_tutupan_grading`.`kode_tutupan`, `tgl_mulai_tutupan`, `tgl_selesai_tutupan`, `nama_rumah_burung`, COUNT(`tb_bahan_jadi_masuk`.`kode_tutupan`) AS 'asal', SUM(`tb_bahan_jadi_masuk`.`keping`) AS 'jumlah_keping', SUM(`tb_bahan_jadi_masuk`.`berat`) AS 'jumlah_berat', `status`, `status_box`, `tgl_statusBox`, `memo_tutupan`\n"
+                    + "FROM `tb_tutupan_grading` \n"
+                    + "LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_tutupan_grading`.`kode_tutupan` = `tb_bahan_jadi_masuk`.`kode_tutupan`\n"
+                    + "LEFT JOIN `tb_rumah_burung` ON `tb_tutupan_grading`.`kode_rumah_burung` = `tb_rumah_burung`.`no_registrasi` \n"
+                    + "WHERE "
+                    + "`tb_tutupan_grading`.`kode_tutupan` LIKE '%" + txt_search_kodeTutupan.getText() + "%' "
+                    + filter_tanggal
+                    + "GROUP BY `tb_tutupan_grading`.`kode_tutupan` "
+                    + "ORDER BY `tgl_mulai_tutupan` DESC";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            Object[] baris = new Object[15];
+            while (rs.next()) {
+                baris[0] = rs.getString("kode_tutupan");
+                baris[1] = rs.getDate("tgl_mulai_tutupan");
+                baris[2] = rs.getDate("tgl_selesai_tutupan");
+                baris[3] = rs.getString("nama_rumah_burung");
+                baris[4] = rs.getInt("asal");
+                baris[5] = rs.getInt("jumlah_keping");
+                baris[6] = rs.getInt("jumlah_berat");
+                baris[7] = rs.getString("status");
+                baris[8] = rs.getString("status_box");
+                baris[9] = rs.getDate("tgl_statusBox");
+                baris[10] = rs.getString("memo_tutupan");
+                String filter_status = ComboBox_FilterStatus.getSelectedItem().toString();
+                if (filter_status.equals("All")) {
+                    total_asal = total_asal + rs.getInt("asal");
+                    total_kpg = total_kpg + rs.getInt("jumlah_keping");
+                    total_gram = total_gram + rs.getInt("jumlah_berat");
+                    model.addRow(baris);
+                } else if (filter_status.equals("Proses - Proses") && rs.getString("status").equals("PROSES") && rs.getString("status_box").equals("PROSES")) {
+                    total_asal = total_asal + rs.getInt("asal");
+                    total_kpg = total_kpg + rs.getInt("jumlah_keping");
+                    total_gram = total_gram + rs.getInt("jumlah_berat");
+                    model.addRow(baris);
+                } else if (filter_status.equals("Selesai - Proses") && rs.getString("status").equals("SELESAI") && rs.getString("status_box").equals("PROSES")) {
+                    total_asal = total_asal + rs.getInt("asal");
+                    total_kpg = total_kpg + rs.getInt("jumlah_keping");
+                    total_gram = total_gram + rs.getInt("jumlah_berat");
+                    model.addRow(baris);
+                } else if (filter_status.equals("Selesai - Selesai") && rs.getString("status").equals("SELESAI") && rs.getString("status_box").equals("SELESAI")) {
+                    total_asal = total_asal + rs.getInt("asal");
+                    total_kpg = total_kpg + rs.getInt("jumlah_keping");
+                    total_gram = total_gram + rs.getInt("jumlah_berat");
+                    model.addRow(baris);
                 }
-                return comp;
             }
-        });
-        Table_TutupanGrading.repaint();
+            ColumnsAutoSizer.sizeColumnsToFit(Table_TutupanGrading);
 
-        decimalFormat.setMaximumFractionDigits(0);
-        int rowData = Table_TutupanGrading.getRowCount();
-        label_total_data.setText(decimalFormat.format(rowData));
-        label_jumlah_lp.setText(decimalFormat.format(total_asal));
-        label_total_berat.setText(decimalFormat.format(total_gram));
-        label_total_keping.setText(decimalFormat.format(total_kpg));
+            final Color green = new Color(0, 145, 0);
+            Table_TutupanGrading.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (column == 7 || column == 8) {
+                        if (Table_TutupanGrading.getValueAt(row, column).toString().equals("SELESAI")) {
+                            if (isSelected) {
+                                comp.setBackground(Table_TutupanGrading.getSelectionBackground());
+                                comp.setForeground(green);
+                            } else {
+                                comp.setBackground(Table_TutupanGrading.getBackground());
+                                comp.setForeground(green);
+                            }
+                        } else {
+                            if (isSelected) {
+                                comp.setBackground(Table_TutupanGrading.getSelectionBackground());
+                                comp.setForeground(Color.red);
+                            } else {
+                                comp.setBackground(Table_TutupanGrading.getBackground());
+                                comp.setForeground(Color.red);
+                            }
+                        }
+                    } else {
+                        if (isSelected) {
+                            comp.setBackground(Table_TutupanGrading.getSelectionBackground());
+                            comp.setForeground(Table_TutupanGrading.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Table_TutupanGrading.getBackground());
+                            comp.setForeground(Table_TutupanGrading.getForeground());
+                        }
+                    }
+                    return comp;
+                }
+            });
+            Table_TutupanGrading.repaint();
 
+            decimalFormat.setMaximumFractionDigits(0);
+            int rowData = Table_TutupanGrading.getRowCount();
+            label_total_data.setText(decimalFormat.format(rowData));
+            label_jumlah_lp.setText(decimalFormat.format(total_asal));
+            label_total_berat.setText(decimalFormat.format(total_gram));
+            label_total_keping.setText(decimalFormat.format(total_kpg));
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void refreshTable_Asal() {
@@ -270,7 +258,8 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                 label_total_gram_detail_asal.setText(decimalFormat.format(total_berat));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -318,6 +307,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                 label_total_gram_hasil_grading.setText(decimalFormat.format(total_berat));
                 label_total_box_hasil_grading.setText(decimalFormat.format(total_box));
             } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex);
                 Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -350,6 +340,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                 label_total_kpg_rincianLP.setText(decimalFormat.format(total_kpg));
                 label_total_gram_rincianLP.setText(decimalFormat.format(total_gram));
             } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex);
                 Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -381,6 +372,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
             label_total_kpg_rincianBox.setText(decimalFormat.format(total_kpg));
             label_total_gram_rincianBox.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -396,7 +388,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
             }
         } catch (SQLException | HeadlessException e) {
             JOptionPane.showMessageDialog(this, e);
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -1275,9 +1267,6 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
 
     private void jMenuItem_BoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_BoxActionPerformed
         // TODO add your handling code here:
-        JPanel_BoxBahanJadi.txt_search_no_tutupan.setText(Table_TutupanGrading.getValueAt(row, 0).toString());
-//        jTabbedPane1.setSelectedIndex(1);
-        MainForm.jMenuItem_Data_box_bahan_jadi.doClick();
     }//GEN-LAST:event_jMenuItem_BoxActionPerformed
 
     private void button_export_TutupanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_TutupanActionPerformed
@@ -1333,7 +1322,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
             int x = Table_TutupanGrading.getSelectedRow();
             String kode_tutupan = Table_TutupanGrading.getValueAt(x, 0).toString();
             String status = Table_TutupanGrading.getValueAt(x, 7).toString();
-            String memo_tutupan = Table_TutupanGrading.getValueAt(x, 10) == null? "" : Table_TutupanGrading.getValueAt(x, 10).toString();
+            String memo_tutupan = Table_TutupanGrading.getValueAt(x, 10) == null ? "" : Table_TutupanGrading.getValueAt(x, 10).toString();
             Date mulai = dateFormat.parse(Table_TutupanGrading.getValueAt(x, 1).toString());
             Date selesai = dateFormat.parse(Table_TutupanGrading.getValueAt(x, 2).toString());
 
@@ -1409,7 +1398,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
 
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage());
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_printActionPerformed
 

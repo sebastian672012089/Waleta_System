@@ -2133,8 +2133,28 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                         Utility.db.getConnection().setAutoCommit(false);
                         while ((line = br.readLine()) != null) {
                             String[] value = line.split(";");
-                            Query = "INSERT INTO `tb_laporan_produksi_tv2`(`no_laporan_produksi`, `kode_rsb`, `no_kartu_waleta`, `kode_grade`, `memo_lp_cheat`, `tanggal_lp`, `tgl_grading`, `jumlah_keping`, `berat_basah`, `kode_tutupan`) "
-                                    + "VALUES ('" + value[0] + "','" + value[1] + "','" + value[2] + "','" + value[3] + "','" + value[4] + "','" + value[5] + "','" + value[6] + "','" + value[7] + "','" + value[8] + "','" + value[9] + "')";
+                            Query = "INSERT INTO `tb_laporan_produksi_tv2`("
+                                    + "`no_laporan_produksi`, "
+                                    + "`kode_rsb`, "
+                                    + "`no_kartu_waleta`, "
+                                    + "`kode_grade`, "
+                                    + "`memo_lp_cheat`, "
+                                    + "`tanggal_lp`, "
+                                    + "`tgl_grading`, "
+                                    + "`jumlah_keping`, "
+                                    + "`berat_basah`, "
+                                    + "`kode_tutupan`) "
+                                    + "VALUES ("
+                                    + "'" + value[0] + "',"
+                                    + "'" + value[1] + "',"
+                                    + "'" + value[2] + "',"
+                                    + "'" + value[3] + "',"
+                                    + "'" + value[4] + "',"
+                                    + "'" + value[5] + "',"
+                                    + "'" + value[6] + "',"
+                                    + "'" + value[7] + "',"
+                                    + "'" + value[8] + "',"
+                                    + "'" + value[9] + "')";
                             Utility.db.getConnection().prepareStatement(Query);
                             if ((Utility.db.getStatement().executeUpdate(Query)) > 0) {
                                 System.out.println(value[0]);
@@ -3124,13 +3144,15 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                     }
                     no_lp = no_lp + "'" + Table_traceability.getValueAt(i, 5).toString() + "'";
                 }
-                String query = "SELECT CT.`no_laporan_produksi`, CT.`kode_rsb` AS 'no_registrasi', CT.`no_kartu_waleta`, CT.`tanggal_lp`, CT.`kode_grade`, `tb_laporan_produksi`.`ruangan`, CT.`memo_lp_cheat`, CT.`jumlah_keping`, CT.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `target_ctk_mku`,\n"
+                String query = "SELECT CT.`no_laporan_produksi`, CT.`kode_rsb` AS 'no_registrasi', CT.`no_kartu_waleta`, CT.`tanggal_lp`, CT.`kode_grade`, `tb_laporan_produksi`.`ruangan`, CT.`memo_lp_cheat`, CT.`jumlah_keping`, CT.`berat_basah`, "
+                        + "CT.`berat_basah` * (1 - (`tb_bahan_baku_masuk_cheat`.`kadar_air_bahan_baku` / 100)) AS `berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `target_ctk_mku`,\n"
                         + "`tgl_input_byProduct`, `tgl_setor_f2`, `f2_disetor`, `pekerja_f2`,\n"
                         + "GRD.`Kpg_Utuh`, GRD.`Kpg_Pecah`, GRD.`Kpg_Flat`, GRD.`Kpg_Jidun`,\n"
                         + "GRD.`Gram_Utuh`, GRD.`Gram_Pecah`, GRD.`Gram_Flat`, GRD.`Gram_Jidun`,\n"
                         + "GRD.`Sesekan`, GRD.`Hancuran`, GRD.`Rontokan`, GRD.`Bonggol`, GRD.`Serabut`\n"
                         + "FROM `tb_laporan_produksi_tv2` CT\n"
                         + "LEFT JOIN `tb_laporan_produksi` ON CT.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                        + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON CT.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
                         + "LEFT JOIN `tb_grade_bahan_baku` ON CT.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
                         + "LEFT JOIN `tb_finishing_2` ON CT.`no_laporan_produksi` = `tb_finishing_2`.`no_laporan_produksi`\n"
                         + "LEFT JOIN (SELECT `no_laporan_produksi`,\n"

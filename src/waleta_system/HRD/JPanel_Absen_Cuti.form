@@ -499,8 +499,8 @@
                             <Column editable="false" title="Nama" type="java.lang.String"/>
                             <Column editable="false" title="Bagian" type="java.lang.String"/>
                             <Column editable="false" title="Posisi" type="java.lang.String"/>
-                            <Column editable="false" title="Tgl Input" type="java.lang.Object"/>
-                            <Column editable="false" title="Tgl Pengajuan Cuti" type="java.lang.Object"/>
+                            <Column editable="false" title="Tgl Pengajuan" type="java.lang.Object"/>
+                            <Column editable="false" title="Tgl Mulai Cuti" type="java.lang.Object"/>
                             <Column editable="false" title="Hari" type="java.lang.Integer"/>
                             <Column editable="false" title="Jenis Cuti" type="java.lang.String"/>
                             <Column editable="false" title="Ketegori" type="java.lang.String"/>

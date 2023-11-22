@@ -683,7 +683,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode Pengajuan", "Nama", "Bagian", "Posisi", "Tgl Input", "Tgl Pengajuan Cuti", "Hari", "Jenis Cuti", "Ketegori", "Keterangan", "Pengganti", "Disetujui", "Diketahui"
+                "Kode Pengajuan", "Nama", "Bagian", "Posisi", "Tgl Pengajuan", "Tgl Mulai Cuti", "Hari", "Jenis Cuti", "Ketegori", "Keterangan", "Pengganti", "Disetujui", "Diketahui"
             }
         ) {
             Class[] types = new Class [] {

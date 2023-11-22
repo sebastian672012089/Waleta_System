@@ -51,16 +51,8 @@ public class JPanel_PengajuanKenaikanLevelGaji_ViewOnly extends javax.swing.JPan
     }
 
     public void init() {
-        try {
-            sql = "SELECT `kode_departemen` FROM `tb_bagian` WHERE `kode_bagian` = '" + MainForm.Login_kodeBagian + "'";
-            rs = Utility.db.getStatement().executeQuery(sql);
-            if (rs.next()) {
-                txt_departemen.setText(rs.getString("kode_departemen"));
-            }
-            refreshTable();
-        } catch (SQLException ex) {
-            Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji_ViewOnly.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        txt_departemen.setText(MainForm.Login_Departemen);
+        refreshTable();
     }
 
     public void refreshTable() {
@@ -93,6 +85,10 @@ public class JPanel_PengajuanKenaikanLevelGaji_ViewOnly extends javax.swing.JPan
             if (Date1.getDate() != null && Date2.getDate() != null) {
                 filter_tanggal = "AND `tanggal_pengajuan` BETWEEN '" + dateFormat.format(Date1.getDate()) + "' AND '" + dateFormat.format(Date2.getDate()) + "' ";
             }
+            String filter_departemen  = "";
+            if (txt_departemen.getText() != null && !txt_departemen.getText().equals("")) {
+                filter_departemen  = "AND `tb_bagian`.`kode_departemen` = '" + txt_departemen.getText() + "' ";
+            }
 
             DefaultTableModel model = (DefaultTableModel) Table_pengajuan_kenaikan_gaji.getModel();
             model.setRowCount(0);
@@ -105,7 +101,7 @@ public class JPanel_PengajuanKenaikanLevelGaji_ViewOnly extends javax.swing.JPan
                     + "WHERE "
                     + "`nama_pegawai` LIKE '%" + txt_search_nama.getText() + "%' "
                     + "AND `tb_level_gaji_pengajuan_kenaikan`.`id_pegawai` LIKE '%" + txt_search_id.getText() + "%' "
-//                    + "AND `tb_bagian`.`nama_bagian` LIKE '%-" + txt_departemen.getText() + "-%' "
+                    + filter_departemen
                     + "AND `tb_bagian`.`nama_bagian` LIKE '%" + txt_search_bagian.getText() + "%' "
                     + diketahui_kadep
                     + diketahui_manager
