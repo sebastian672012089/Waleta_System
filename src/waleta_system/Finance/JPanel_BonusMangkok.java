@@ -35,7 +35,6 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
     }
 
     public void init() {
-        refreshTable_Setoran();
         Table_LP_Bonus.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
@@ -192,10 +191,6 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
             if (ComboBox_ruangan.getSelectedItem() != "All") {
                 ruang = ComboBox_ruangan.getSelectedItem().toString();
             }
-            String filter_tanggal = "";
-            if (date_setoran1 == null || date_setoran2 == null) {
-                filter_tanggal = "AND `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "'\n";
-            }
             sql = "SELECT `tb_finishing_2`.`no_laporan_produksi`, `tb_karyawan`.`nama_pegawai`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`ruangan`, `tb_grade_bahan_baku`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bentuk`, `tb_grade_bahan_baku`.`jenis_bulu`, "
                     + "`tgl_input_sesekan`, `tgl_dikerjakan_f2`, `pekerja_koreksi_kering`, `tgl_f1`, `pekerja_f1`, `tgl_f2`, `pekerja_f2`, `tgl_masuk_f2`, `f2_diterima`, `tgl_setor_f2`, `f2_disetor`, `f2_timbang`, `fbonus_f2`, `berat_fbonus`, `fnol_f2`, `berat_fnol`, `pecah_f2`, `berat_pecah`, `flat_f2`, `berat_flat`, `jidun_utuh_f2`, `jidun_pecah_f2`, `berat_jidun`, `sesekan`, `hancuran`, `rontokan`, `bonggol`, `serabut`, `tanpa_kaki_f1`, `kaki_kecil_f1`, `kaki_besar_f1`, `flat_f1`, `tambahan_kaki1`, `lp_kaki1`, `tambahan_kaki2`, `lp_kaki2`, `admin_f2`, `otorisasi`, COUNT(`tb_detail_pencabut`.`id_pegawai`) AS 'total_pekerja' \n"
                     + "FROM `tb_finishing_2` "
@@ -207,7 +202,7 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                     + "WHERE "
                     + "`tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_no_lp.getText() + "%' "
                     + "AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruang + "%' \n"
-                    + filter_tanggal
+                    + "AND `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(date_setoran1) + "' AND '" + dateFormat.format(date_setoran2) + "'\n"
                     + "GROUP BY `tb_finishing_2`.`no_laporan_produksi` ORDER BY `tb_finishing_2`.`tgl_setor_f2` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             DataF2 f2;
@@ -422,15 +417,36 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
     }
 
     public void refreshTable_Setoran() {
-        DefaultTableModel model = (DefaultTableModel) Table_LP_Bonus.getModel();
-        model.setRowCount(0);
-        show_data_bonusMangkok();
-        ColumnsAutoSizer.sizeColumnsToFit(Table_LP_Bonus);
+        boolean check = true;
+        try {
+            double persen_bonus_f1 = Double.valueOf(txt_persen_bonus_f1.getText());
+            double persen_bonus_f2 = Double.valueOf(txt_persen_bonus_f2.getText());
+            double persen_bonus_finalCheck = Double.valueOf(txt_persen_bonus_finalCheck.getText());
+        } catch (NumberFormatException e) {
+            check = false;
+            JOptionPane.showMessageDialog(this, "Maaf Format angka pada persentase bonus F1/F2/Final Check Salah!");
+        }
+        if (Date_Penggajian.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Filter Tanggal tidak boleh kosong !");
+            check = false;
+        } else if (!(new SimpleDateFormat("EEEEE").format(Date_Penggajian.getDate()).toUpperCase().equals("THURSDAY") || new SimpleDateFormat("EEEEE").format(Date_Penggajian.getDate()).toUpperCase().equals("KAMIS"))) {
+            check = false;
+            JOptionPane.showMessageDialog(this, "Tanggal penggajian seharusnya hari kamis");
+        }
+        if (check) {
+            date_setoran1 = new Date(Date_Penggajian.getDate().getTime() - (7 * 24 * 60 * 60 * 1000));
+            date_setoran2 = new Date(Date_Penggajian.getDate().getTime() - (1 * 24 * 60 * 60 * 1000));
 
-        DefaultTableModel model2 = (DefaultTableModel) table_pegawai_bonus.getModel();
-        model2.setRowCount(0);
-        label_no_lp.setText("-");
-        label_total_pekerja.setText("0");
+            DefaultTableModel model = (DefaultTableModel) Table_LP_Bonus.getModel();
+            model.setRowCount(0);
+            show_data_bonusMangkok();
+            ColumnsAutoSizer.sizeColumnsToFit(Table_LP_Bonus);
+
+            DefaultTableModel model2 = (DefaultTableModel) table_pegawai_bonus.getModel();
+            model2.setRowCount(0);
+            label_no_lp.setText("-");
+            label_total_pekerja.setText("0");
+        }
     }
 
     public void refreshTable_Pencabut() {
@@ -700,9 +716,9 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
             if ("All".equals(label_ruangan_f2.getText())) {
                 ruangan = "";
             }
-            String filter_nama_karyawan = "1";
+            String filter_nama_karyawan = " 1 ";
             if (txt_search_nama_BonusPegawaiF2.getText() != null && !txt_search_nama_BonusPegawaiF2.getText().equals("")) {
-                filter_nama_karyawan = "`NAMA` LIKE '%" + txt_search_nama_BonusPegawaiF2.getText() + "%'";
+                filter_nama_karyawan = " `NAMA` LIKE '%" + txt_search_nama_BonusPegawaiF2.getText() + "%' ";
             }
             sql = "SELECT * FROM ("
                     + "SELECT `tb_karyawan`.`id_pegawai` AS 'ID', `pekerja_f1` AS 'NAMA', 'f1' AS 'jenis_pekerja', `tb_bagian`.`nama_bagian`, `tb_finishing_2`.`no_laporan_produksi`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah` \n"
@@ -2551,27 +2567,7 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
 
     private void button_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_searchActionPerformed
         // TODO add your handling code here:
-        boolean check = true;
-        try {
-            double persen_bonus_f1 = Double.valueOf(txt_persen_bonus_f1.getText());
-            double persen_bonus_f2 = Double.valueOf(txt_persen_bonus_f2.getText());
-            double persen_bonus_finalCheck = Double.valueOf(txt_persen_bonus_finalCheck.getText());
-        } catch (NumberFormatException e) {
-            check = false;
-            JOptionPane.showMessageDialog(this, "Maaf Format angka pada persentase bonus F1/F2/Final Check Salah!");
-        }
-        if (Date_Penggajian.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Filter Tanggal tidak boleh kosong !");
-            check = false;
-        } else if (!(new SimpleDateFormat("EEEEE").format(Date_Penggajian.getDate()).toUpperCase().equals("THURSDAY") || new SimpleDateFormat("EEEEE").format(Date_Penggajian.getDate()).toUpperCase().equals("KAMIS"))) {
-            check = false;
-            JOptionPane.showMessageDialog(this, "Tanggal penggajian seharusnya hari kamis");
-        }
-        if (check) {
-            date_setoran1 = new Date(Date_Penggajian.getDate().getTime() - (7 * 24 * 60 * 60 * 1000));
-            date_setoran2 = new Date(Date_Penggajian.getDate().getTime() - (1 * 24 * 60 * 60 * 1000));
-            refreshTable_Setoran();
-        }
+        refreshTable_Setoran();
     }//GEN-LAST:event_button_searchActionPerformed
 
     private void button_export_bonusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_bonusActionPerformed
@@ -2622,8 +2618,6 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Tanggal penggajian seharusnya hari kamis");
         }
         if (check) {
-            date_setoran1 = new Date(Date_Penggajian.getDate().getTime() - (7 * 24 * 60 * 60 * 1000));
-            date_setoran2 = new Date(Date_Penggajian.getDate().getTime() - (1 * 24 * 60 * 60 * 1000));
             label_date_cabut1.setText(new SimpleDateFormat("dd MMMM yyyy").format(date_setoran1));
             label_date_cabut2.setText(new SimpleDateFormat("dd MMMM yyyy").format(date_setoran2));
             label_date_cetak1.setText(new SimpleDateFormat("dd MMMM yyyy").format(date_setoran1));

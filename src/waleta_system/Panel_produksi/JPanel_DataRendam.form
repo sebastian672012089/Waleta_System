@@ -82,7 +82,9 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="button_export_data_rendam" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="button_print" min="-2" max="-2" attributes="0"/>
+                          <Component id="button_Catatan_Rendaman_Bahan_Mentah" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="button_input_waktu_rendam" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
@@ -113,9 +115,10 @@
                       <Component id="button_export_data_rendam" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="jLabel2" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="txt_search_no_lp" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
-                      <Component id="button_print" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="button_Catatan_Rendaman_Bahan_Mentah" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="Date1_rendam" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
+                      <Component id="button_input_waktu_rendam" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -607,7 +610,7 @@
             <Property name="text" type="java.lang.String" value="Total Data Rendam :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="button_print">
+        <Component class="javax.swing.JButton" name="button_Catatan_Rendaman_Bahan_Mentah">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -615,10 +618,10 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="11" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Print"/>
+            <Property name="text" type="java.lang.String" value="Catatan_Rendaman_Bahan_Mentah"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_printActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_Catatan_Rendaman_Bahan_MentahActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -651,6 +654,20 @@
           </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_search_memoKeyPressed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="button_input_waktu_rendam">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="11" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Input Waktu Rendam .csv"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_input_waktu_rendamActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -145,9 +145,6 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
                             is_ijin_pulang = true;
                             jam_ijin_pulang = rs_ijin.getString("jam_keluar");
                             Date jam_keluar = Timeformat.parse(rs_ijin.getString("jam_keluar"));
-                            if (jam_pulang != null && jam_keluar.before(jam_pulang)) { //jam pulang normal tidak null artinya hari itu bukan hari libur
-                                ijin_pulang = jam_pulang.getTime() - jam_keluar.getTime();
-                            }
                         } else {
                             Date jam_keluar = Timeformat.parse(rs_ijin.getString("jam_keluar"));
                             Date jam_kembali = Timeformat.parse(rs_ijin.getString("jam_kembali"));
@@ -160,22 +157,22 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
                     Date jam_mulai_lembur_masuk = null, jam_selesai_lembur_masuk = null;
                     String no_spl_pulang = null, text_jam_mulai_lembur_pulang = "", text_jam_selesai_lembur_pulang = "";
                     Date jam_mulai_lembur_pulang = null, jam_selesai_lembur_pulang = null;
-                    int jumlah_jam_spl_masuk = 0, jumlah_jam_spl_pulang = 0, menit_istirahat_lembur_masuk = 0, menit_istirahat_lembur_pulang = 0;
+                    int menit_istirahat_lembur_masuk = 0, menit_istirahat_lembur_pulang = 0, total_menit_istirahat_lembur = 0;
+                    int jumlah_jam_spl_masuk = 0, jumlah_jam_spl_pulang = 0, total_jam_lembur_spl = 0, total_menit_lembur_spl = 0;
                     String query_spl = "SELECT `mulai_lembur`, `selesai_lembur`, `jumlah_jam`, `menit_istirahat_lembur`, `jenis_spl`, `jenis_lembur`, `tb_surat_lembur_detail`.`nomor_surat`, `tb_libur`.`keterangan`, `tb_surat_lembur`.`disetujui`, `tb_surat_lembur`.`diketahui` "
                             + "FROM `tb_surat_lembur_detail` "
                             + "LEFT JOIN `tb_surat_lembur` ON `tb_surat_lembur_detail`.`nomor_surat` = `tb_surat_lembur`.`nomor_surat`"
                             + "LEFT JOIN `tb_libur` ON `tb_surat_lembur_detail`.`tanggal_lembur` = `tb_libur`.`tanggal_libur`"
                             + "WHERE "
                             + "`id_pegawai` = '" + rs.getString("id_pegawai") + "' "
-                            + "AND `tb_surat_lembur_detail`.`tanggal_lembur` = '" + rs.getDate("tanggal") + "' "
-                            + "AND `tb_surat_lembur`.`disetujui` IS NOT NULL ";
+                            + "AND `jenis_spl` = 'STAFF' \n"
+                            + "AND `tb_surat_lembur_detail`.`tanggal_lembur` = '" + dateFormat.format(rs.getDate("tanggal")) + "' ";
                     ResultSet rs_spl = Utility.db.getStatement().executeQuery(query_spl);
                     while (rs_spl.next()) {
-                        if (rs_spl.getString("diketahui") == null && rs_spl.getString("jenis_spl").equals("STAFF")) {
+                        if (rs_spl.getString("disetujui") == null || rs_spl.getString("diketahui") == null) {
                             label_data_lembur_tidak_valid.setVisible(true);
                         }
                         if (rs_spl.getString("jenis_lembur").equals("Masuk")) {
-//                        jam_masuk = Timeformat.parse(rs_spl.getString("mulai_lembur"));
                             no_spl_masuk = rs_spl.getString("nomor_surat");
                             jam_mulai_lembur_masuk = Timeformat.parse(rs_spl.getString("mulai_lembur"));
                             jam_selesai_lembur_masuk = Timeformat.parse(rs_spl.getString("selesai_lembur"));
@@ -193,6 +190,9 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
                             jumlah_jam_spl_pulang = rs_spl.getInt("jumlah_jam");
                             menit_istirahat_lembur_pulang = rs_spl.getInt("menit_istirahat_lembur");
                         }
+                        total_jam_lembur_spl = jumlah_jam_spl_masuk + jumlah_jam_spl_pulang;
+                        total_menit_lembur_spl = total_jam_lembur_spl * 60;
+                        total_menit_istirahat_lembur = menit_istirahat_lembur_masuk + menit_istirahat_lembur_pulang;
                     }
 
                     long menit_terlambat = 0;
@@ -227,34 +227,25 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
 //                                } else {
 //                                    absen_pulang = jam_pulang;
 //                                }
-                                
+
                                 //absen_pulang = new Date((long) Math.floor(absen_pulang.getTime() / (1 * 60 * 1000)) * (1 * 60 * 1000));
                                 //pembulatan kebawah jam pulang ke kelipatan 1 menit
                             }
                         }
 
                         durasi_kerja = (absen_pulang.getTime() - absen_masuk.getTime()) - (ijin_keluar);
-//                        total_menit_kerja = (durasi_kerja / (60 * 1000)) - menit_istirahat;
                         total_menit_kerja = (durasi_kerja / (60 * 1000));
                         durasi_lembur = (absen_pulang.getTime() - absen_masuk.getTime()) - (jam_kerja + ijin_keluar);
                         total_menit_lembur = (durasi_lembur / (60 * 1000)); //total lembur dalam menit
 
-                        String query_pengurangan_lembur = "SELECT `pengurangan` FROM `tb_lembur_pengurangan` "
-                                + "WHERE `id_pegawai` = '" + rs.getString("id_pegawai") + "' AND `tgl_lembur` = '" + rs.getDate("tanggal") + "'";
-                        ResultSet rs_pengurangan_lembur = Utility.db.getStatement().executeQuery(query_pengurangan_lembur);
-                        if (rs_pengurangan_lembur.next()) {
-                            total_menit_lembur = total_menit_lembur - rs_pengurangan_lembur.getInt("pengurangan");
-                        }
-
 //                        jam_kerja_full = (jam_kerja / (60 * 1000)) - menit_istirahat;//jam kerja full dalam menit
                         jam_kerja_full = (jam_kerja / (60 * 1000));//jam kerja full dalam menit
-                        if (jam_kerja_full <= 360) {
-                            minimal_durasi_kerja = 285;
+                        if (jam_kerja_full <= 360) {//jam kerja di bawah 6 jam
+                            minimal_durasi_kerja = 285;//min 4 jam 45 menit
                         } else {
                             minimal_durasi_kerja = 360;//minimal 6 jam
                         }
-                    } else if (no_spl_masuk != null && jam_mulai_lembur_masuk != null && jam_selesai_lembur_masuk != null) {
-                        // hari libur dengan spl masuk
+                    } else if (no_spl_masuk != null && jam_mulai_lembur_masuk != null) {// hari libur dengan spl masuk
 //                        if (absen_masuk.before(jam_mulai_lembur_masuk)) {
 //                            absen_masuk = jam_mulai_lembur_masuk;
 //                        }
@@ -265,16 +256,18 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
                         total_menit_kerja = (durasi_kerja / (60 * 1000));
                         durasi_lembur = (absen_pulang.getTime() - absen_masuk.getTime()) - (ijin_keluar);
                         total_menit_lembur = (durasi_lembur / (60 * 1000)); //total lembur dalam menit
-
-                        String query_pengurangan_lembur = "SELECT `pengurangan` FROM `tb_lembur_pengurangan` "
-                                + "WHERE `id_pegawai` = '" + rs.getString("id_pegawai") + "' "
-                                + "AND `tgl_lembur` = '" + rs.getDate("tanggal") + "'";
-                        ResultSet rs_pengurangan_lembur = Utility.db.getStatement().executeQuery(query_pengurangan_lembur);
-                        if (rs_pengurangan_lembur.next()) {
-                            total_menit_lembur = total_menit_lembur - rs_pengurangan_lembur.getInt("pengurangan");
-                        }
                     } else {//hari libur tanpa spl
 
+                    }
+
+                    String query_pengurangan_lembur = "SELECT `pengurangan` FROM `tb_lembur_pengurangan` "
+                            + "WHERE `id_pegawai` = '" + rs.getString("id_pegawai") + "' AND `tgl_lembur` = '" + rs.getDate("tanggal") + "'";
+                    ResultSet rs_pengurangan_lembur = Utility.db.getStatement().executeQuery(query_pengurangan_lembur);
+                    if (rs_pengurangan_lembur.next()) {
+                        total_menit_lembur = total_menit_lembur - rs_pengurangan_lembur.getInt("pengurangan");
+                    }
+                    if (total_menit_lembur > total_menit_lembur_spl) {
+                        total_menit_lembur = total_menit_lembur_spl;
                     }
 
                     if (total_menit_kerja < minimal_durasi_kerja) {//jam kerja kurang dari 6 jam
@@ -330,23 +323,22 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
                     long menit_ijin_keluar = ijin_keluar / (60 * 1000);
                     long menit_ijin_pulang = ijin_pulang / (60 * 1000);
 
-                    long total_jam_lembur = 0;
                     if (rs.getString("nama_bagian").contains("SECURITY")) {
                         if (total_menit_lembur >= 480) {//lembur lebih dari 8 jam
-                            total_menit_lembur = total_menit_lembur - 60;
-                            total_jam_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
+                            total_menit_lembur = total_menit_lembur - 60;//dikurangi istirahat 60 menit
+                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
                         } else if (total_menit_lembur > 120) {//kelipatan 30 menit di hitung setelah jam ke 2
-                            total_jam_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
+                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
                         } else if (total_menit_lembur > 0) {
-                            total_jam_lembur = (int) Math.floor(total_menit_lembur / 60) * 60;
+                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 60) * 60;
                         } else {
-                            total_jam_lembur = 0;
+//                            total_menit_lembur = 0;
                         }
                     } else { //selain bagian security
                         if (total_menit_lembur > 0) {
-                            total_jam_lembur = (int) Math.floor(total_menit_lembur / 60) * 60;
+                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 60) * 60;//pembulatan kelipatan 1 jam / 60 menit
                         } else {
-                            total_jam_lembur = 0;
+//                            total_menit_lembur = 0;
                         }
 //                        if (total_menit_lembur >= 510) {//lembur lebih dari 8.5 jam
 //                            total_menit_lembur = total_menit_lembur - 60;
@@ -368,7 +360,7 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
                     row[28] = Math.round(menit_terlambat);
                     row[29] = Math.round(menit_ijin_keluar + menit_ijin_pulang);// menit ijin pulang / keluar
                     row[30] = total_menit_lembur;
-                    row[31] = Math.round(total_jam_lembur / 60f);
+                    row[31] = total_menit_lembur / 60f;
                     row[32] = level_gaji;
                     row[33] = rs.getString("jam_kerja");
                     row[34] = premi_hadir;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Catatan Rendemen Bahan Mentah" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
 	<property name="ireport.zoom" value="1.331000000000001"/>
-	<property name="ireport.x" value="35"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true">
 		<box>
@@ -359,7 +359,7 @@ ORDER BY `tb_rendam`.`tanggal_rendam` DESC, `tb_rendam`.`no_laporan_produksi`]]>
 		<band height="15" splitType="Stretch">
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="37" y="0" width="480" height="15" uuid="ceb3e7bd-a5cc-494b-873f-f1f6d6f4e1ca"/>
-				<textField pattern="dd/MM/yyy">
+				<textField pattern="dd-MMM-yyyy">
 					<reportElement style="Detail" x="0" y="0" width="60" height="15" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial Narrow" size="8" isPdfEmbedded="false"/>

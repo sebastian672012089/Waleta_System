@@ -48,7 +48,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
 
     public void refreshTable_PembelianBahanKimia() {
         try {
-            int total_pembelian = 0, total_pemakaian = 0;
+            float total_pembelian = 0, total_pemakaian = 0;
             DefaultTableModel model = (DefaultTableModel) Table_PembelianBahanKimia.getModel();
             model.setRowCount(0);
             String filter_tanggal_pembelian = "";
@@ -78,12 +78,12 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                 row[2] = rs.getDate("tanggal_expired");
                 row[3] = rs.getInt("kode_bahan_kimia");
                 row[4] = rs.getString("nama_bahan_kimia");
-                row[5] = rs.getInt("jumlah_pembelian");
+                row[5] = rs.getFloat("jumlah_pembelian");
                 row[6] = rs.getString("satuan");
-                row[7] = rs.getInt("jumlah_pembelian") - rs.getInt("jumlah_pemakaian");
+                row[7] = rs.getFloat("jumlah_pembelian") - rs.getFloat("jumlah_pemakaian");
                 model.addRow(row);
-                total_pembelian = total_pembelian + rs.getInt("jumlah_pembelian");
-                total_pemakaian = total_pemakaian + rs.getInt("jumlah_pemakaian");
+                total_pembelian = total_pembelian + rs.getFloat("jumlah_pembelian");
+                total_pemakaian = total_pemakaian + rs.getFloat("jumlah_pemakaian");
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_PembelianBahanKimia);
             int rowData = Table_PembelianBahanKimia.getRowCount();
@@ -98,7 +98,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
 
     public void refreshTable_DataPemakaian_perPembelian(int id_pembelian) {
         try {
-            int total_pemakaian = 0;
+            float total_pemakaian = 0;
             DefaultTableModel model = (DefaultTableModel) Table_DataPemakaian_perPembelian.getModel();
             model.setRowCount(0);
             sql = "SELECT `id_pemakaian`, `waktu_ambil`, `jumlah_pemakaian`, `tb_lab_bahan_kimia_pemakaian`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `id_pembelian` \n"
@@ -114,7 +114,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                 row[2] = rs.getString("nama_pegawai");
                 row[3] = rs.getInt("jumlah_pemakaian");
                 model.addRow(row);
-                total_pemakaian = total_pemakaian + rs.getInt("jumlah_pemakaian");
+                total_pemakaian = total_pemakaian + rs.getFloat("jumlah_pemakaian");
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_DataPemakaian_perPembelian);
             int rowData = Table_DataPemakaian_perPembelian.getRowCount();
@@ -159,7 +159,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
     
     public void refreshTable_PemakaianBahanKimia() {
         try {
-            int total_pemakaian = 0;
+            float total_pemakaian = 0;
             DefaultTableModel model = (DefaultTableModel) table_PemakaianBahanKimia.getModel();
             model.setRowCount(0);
             String filter_tanggal_pemakaian = "";
@@ -180,10 +180,10 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                 row[0] = rs.getTimestamp("waktu_ambil");
                 row[1] = rs.getString("nama_pegawai");
                 row[2] = rs.getString("nama_bahan_kimia");
-                row[3] = rs.getInt("jumlah_pemakaian");
+                row[3] = rs.getFloat("jumlah_pemakaian");
                 row[4] = rs.getString("satuan");
                 model.addRow(row);
-                total_pemakaian = total_pemakaian + rs.getInt("jumlah_pemakaian");
+                total_pemakaian = total_pemakaian + rs.getFloat("jumlah_pemakaian");
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_PemakaianBahanKimia);
             int rowData = table_PemakaianBahanKimia.getRowCount();
@@ -520,7 +520,9 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_PembelianBahanKimiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane8)))
+                    .addGroup(jPanel_PembelianBahanKimiaLayout.createSequentialGroup()
+                        .addComponent(jScrollPane8)
+                        .addContainerGap())))
         );
 
         jTabbedPane1.addTab("Pembelian Bahan Kimia", jPanel_PembelianBahanKimia);

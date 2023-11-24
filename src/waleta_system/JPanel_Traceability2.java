@@ -2016,7 +2016,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                 }
                 no_lp = no_lp + "'" + Table_traceability.getValueAt(i, 5).toString() + "'";
             }
-            String Query = "SELECT `tanggal_rendam`, `tb_rendam`.`no_laporan_produksi`, `no_kartu_waleta`, `kode_rsb`, `jumlah_keping`, `berat_basah`, `lama_waktu_rendam` \n"
+            String Query = "SELECT `tanggal_rendam`, `tb_rendam`.`no_laporan_produksi`, `no_kartu_waleta`, `kode_rsb`, `jumlah_keping`, `berat_basah`, `lama_waktu_rendam`, `waktu_mulai_rendam`, `waktu_selesai_rendam` \n"
                     + "FROM `tb_rendam` "
                     + "LEFT JOIN `tb_laporan_produksi_tv2` ON `tb_rendam`.`no_laporan_produksi` = `tb_laporan_produksi_tv2`.`no_laporan_produksi`\n"
                     + "WHERE `tb_rendam`.`no_laporan_produksi` IN (" + no_lp + ") \n"

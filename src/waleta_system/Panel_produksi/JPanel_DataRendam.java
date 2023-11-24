@@ -4,6 +4,9 @@ import waleta_system.Class.Utility;
 
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -13,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -165,10 +169,11 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         label_total_data_rendam = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        button_print = new javax.swing.JButton();
+        button_Catatan_Rendaman_Bahan_Mentah = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txt_search_memo = new javax.swing.JTextField();
+        button_input_waktu_rendam = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Rendam", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -395,12 +400,12 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Total Data Rendam :");
 
-        button_print.setBackground(new java.awt.Color(255, 255, 255));
-        button_print.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_print.setText("Print");
-        button_print.addActionListener(new java.awt.event.ActionListener() {
+        button_Catatan_Rendaman_Bahan_Mentah.setBackground(new java.awt.Color(255, 255, 255));
+        button_Catatan_Rendaman_Bahan_Mentah.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_Catatan_Rendaman_Bahan_Mentah.setText("Catatan_Rendaman_Bahan_Mentah");
+        button_Catatan_Rendaman_Bahan_Mentah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_printActionPerformed(evt);
+                button_Catatan_Rendaman_Bahan_MentahActionPerformed(evt);
             }
         });
 
@@ -416,6 +421,15 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         txt_search_memo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_search_memoKeyPressed(evt);
+            }
+        });
+
+        button_input_waktu_rendam.setBackground(new java.awt.Color(255, 255, 255));
+        button_input_waktu_rendam.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_input_waktu_rendam.setText("Input Waktu Rendam .csv");
+        button_input_waktu_rendam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_input_waktu_rendamActionPerformed(evt);
             }
         });
 
@@ -445,7 +459,9 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export_data_rendam)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print)
+                        .addComponent(button_Catatan_Rendaman_Bahan_Mentah)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_input_waktu_rendam)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1002, Short.MAX_VALUE)
@@ -469,9 +485,10 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                     .addComponent(button_export_data_rendam, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_search_no_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_print, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_Catatan_Rendaman_Bahan_Mentah, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date1_rendam, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_input_waktu_rendam, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
@@ -609,7 +626,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         ExportToExcel.writeToExcel(model, jPanel_DataRendam);
     }//GEN-LAST:event_button_export_data_rendamActionPerformed
 
-    private void button_printActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_printActionPerformed
+    private void button_Catatan_Rendaman_Bahan_MentahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_Catatan_Rendaman_Bahan_MentahActionPerformed
         try {
             String no_lp = "";
             for (int i = 0; i < Table_Data_Rendam.getRowCount(); i++) {
@@ -642,7 +659,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         } catch (JRException ex) {
             Logger.getLogger(JPanel_DataRendam.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_button_printActionPerformed
+    }//GEN-LAST:event_button_Catatan_Rendaman_Bahan_MentahActionPerformed
 
     private void txt_no_lp_rendamKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_no_lp_rendamKeyTyped
         // TODO add your handling code here:
@@ -666,17 +683,61 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_no_lp_rendamKeyPressed
 
+    private void button_input_waktu_rendamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_waktu_rendamActionPerformed
+        // TODO add your handling code here:
+        try {
+            int n = 0;
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Select CSV file to import!");
+            int result = chooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                Utility.db.getConnection();
+                File file = chooser.getSelectedFile();
+                String filename1 = file.getAbsolutePath();
+                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                    String line;
+                    String Query = null;
+                    try {
+                        Utility.db.getConnection().setAutoCommit(false);
+                        while ((line = br.readLine()) != null) {
+                            String[] value = line.split(";");
+                            Query = "UPDATE `tb_rendam` SET \n"
+                                    + "`waktu_mulai_rendam` = '" + value[1] + "',\n"
+                                    + "`waktu_selesai_rendam` = '" + value[2] + "'\n"
+                                    + "WHERE `no_laporan_produksi` = '" + value[0] + "'";
+                            Utility.db.getStatement().executeUpdate(Query);
+                            n++;
+                            System.out.println(Query);
+                        }
+                        Utility.db.getConnection().commit();
+                        JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
+                    } catch (Exception ex) {
+                        Utility.db.getConnection().rollback();
+                        JOptionPane.showMessageDialog(this, ex + "\n" + Query);
+                        Logger.getLogger(JPanel_DataRendam.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        Utility.db.getConnection().setAutoCommit(true);
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_DataRendam.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_input_waktu_rendamActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date1_rendam;
     private com.toedter.calendar.JDateChooser Date2_rendam;
     private com.toedter.calendar.JDateChooser Date_tgl_rendam;
     private javax.swing.JTable Table_Data_Rendam;
+    private javax.swing.JButton button_Catatan_Rendaman_Bahan_Mentah;
     private javax.swing.JButton button_clear_rendam;
     public javax.swing.JButton button_delete_rendam;
     private javax.swing.JButton button_export_data_rendam;
+    private javax.swing.JButton button_input_waktu_rendam;
     public javax.swing.JButton button_insert_rendam;
-    private javax.swing.JButton button_print;
     private javax.swing.JButton button_search_rendam;
     public javax.swing.JButton button_update_rendam;
     private javax.swing.JLabel jLabel1;
