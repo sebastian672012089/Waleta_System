@@ -568,7 +568,7 @@ public class JPanel_Sub_Waleta extends javax.swing.JPanel {
         // TODO add your handling code here:
         int j = Table_Sub_Waleta.getSelectedRow();
         if (j == -1) {
-            JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+            JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
         } else {
             try {
                 Utility.db_sub.connect();

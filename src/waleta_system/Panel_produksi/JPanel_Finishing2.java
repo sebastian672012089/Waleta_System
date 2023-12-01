@@ -3816,7 +3816,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         try {
             int j = Table_Data_f2.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 sql = "SELECT `no_laporan_produksi` FROM `tb_lab_laporan_produksi` WHERE `tb_lab_laporan_produksi`.`no_laporan_produksi` = '" + Table_Data_f2.getValueAt(j, 0) + "'";
                 rs = Utility.db.getStatement().executeQuery(sql);
@@ -3991,7 +3991,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         try {
             int j = Table_balen.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {

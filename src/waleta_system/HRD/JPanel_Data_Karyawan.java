@@ -730,7 +730,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
 
             if (GET_ROW_KTP == -1 && GET_ROW_BERKAS == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {

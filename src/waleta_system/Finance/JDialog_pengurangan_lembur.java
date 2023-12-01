@@ -319,7 +319,7 @@ public class JDialog_pengurangan_lembur extends javax.swing.JDialog {
         try {
             int j = Table_data_pengurangan_lembur.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Delete?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {

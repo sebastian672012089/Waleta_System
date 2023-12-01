@@ -235,7 +235,7 @@ public class JDialog_pengampunan_terlambat extends javax.swing.JDialog {
         try {
             int j = Table_data.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 String Query = "DELETE FROM `tb_pengampunan_terlambat` WHERE `tanggal_pengampunan` = '" + Table_data.getValueAt(j, 0).toString() + "'";
                 Utility.db.getConnection().createStatement();

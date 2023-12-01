@@ -1896,7 +1896,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 //        try {
 //            int row = Table_surat_lembur.getSelectedRow();
 //            if (row == -1) {
-//                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+//                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
 //            } else {
 //                int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
 //                if (dialogResult == JOptionPane.YES_OPTION) {
@@ -2328,8 +2328,8 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
     private javax.swing.JButton button_export_rekap;
     private javax.swing.JButton button_print_laporan;
     private javax.swing.JButton button_search1;
-    public static javax.swing.JButton button_search_SPL_PEJUANG;
-    public static javax.swing.JButton button_search_SPL_STAFF;
+    private javax.swing.JButton button_search_SPL_PEJUANG;
+    private javax.swing.JButton button_search_SPL_STAFF;
     public static javax.swing.JButton button_search_karyawan_data_lembur;
     public static javax.swing.JButton button_search_rekap;
     private javax.swing.JLabel jLabel1;

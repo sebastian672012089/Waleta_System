@@ -738,7 +738,7 @@ public class Login extends javax.swing.JFrame {
                     String user = rs.getString("user");
                     String idPegawai = rs.getString("id_pegawai");
                     String nama = rs.getString("nama_pegawai");
-                    int bagian = rs.getInt("kode_bagian");
+                    int kode_bagian = rs.getInt("kode_bagian");
                     String nama_bagian = rs.getString("nama_bagian");
                     String departemen = rs.getString("kode_departemen");
                     String posisi = rs.getString("posisi");
@@ -750,7 +750,7 @@ public class Login extends javax.swing.JFrame {
                     while (rs.next()) {
                         dataMenu.add(new AksesMenu.Akses(rs.getString("menu"), rs.getString("hak_akses")));
                     }
-                    MainForm main = new MainForm(user, idPegawai, nama, bagian, nama_bagian, departemen, posisi, dataMenu);
+                    MainForm main = new MainForm(user, idPegawai, nama, kode_bagian, nama_bagian, departemen, posisi, dataMenu);
                     getAccess(dataMenu);
                     main.pack();
                     main.setLocationRelativeTo(this);
@@ -914,6 +914,7 @@ public class Login extends javax.swing.JFrame {
 
     public void ImportDataEdit_sub() {
         try {
+            Utility.db_sub.connect();
             int n = 0;
             chooser.setDialogTitle("Select CSV file to import!");
             int result = chooser.showOpenDialog(this);
@@ -954,6 +955,7 @@ public class Login extends javax.swing.JFrame {
 
     public void ImportDataEdit_cabuto() {
         try {
+            Utility.db_cabuto.connect();
             int n = 0;
             chooser.setDialogTitle("Select CSV file to import!");
             int result = chooser.showOpenDialog(this);
@@ -1034,9 +1036,6 @@ public class Login extends javax.swing.JFrame {
 
         try {
             Utility.db.connect();
-            Utility.db_sub.connect();
-            Utility.db_maklun.connect();
-            Utility.db_cabuto.connect();
             checkVersion();
         } catch (Exception ex) {
             Logger.getLogger(Waleta_System.class.getName()).log(Level.SEVERE, null, ex);
@@ -1165,7 +1164,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.234");
+        label_version.setText("2.2.241");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N

@@ -39,7 +39,8 @@ public class DBConnect_cabuto {
             conn = ds.getConnection();
             stmt = conn.createStatement();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex, "Access Denied !", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "SERVER ONLINE BERMASALAH!", "Access Denied !", JOptionPane.ERROR_MESSAGE);
+//            JOptionPane.showMessageDialog(null, ex, "Access Denied !", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(DBConnect_cabuto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

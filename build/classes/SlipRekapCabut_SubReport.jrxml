@@ -142,13 +142,13 @@ ORDER BY `tb_detail_pencabut`.`no_laporan_produksi`]]>
 				<measure name="jumlah_cabutMeasure" class="java.lang.Integer" calculation="Sum">
 					<measureExpression><![CDATA[$F{jumlah_cabut}]]></measureExpression>
 				</measure>
-				<crosstabCell width="35" height="25">
+				<crosstabCell width="25" height="25">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="25" uuid="6a6dd2d5-72a1-4860-822b-72e4528599f2"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="25" uuid="6a6dd2d5-72a1-4860-822b-72e4528599f2"/>
 							<textElement verticalAlignment="Middle">
 								<font size="8"/>
 							</textElement>
@@ -156,13 +156,13 @@ ORDER BY `tb_detail_pencabut`.`no_laporan_produksi`]]>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="35" height="25" rowTotalGroup="nama_pegawai">
+				<crosstabCell width="25" height="25" rowTotalGroup="nama_pegawai">
 					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="25" uuid="bdce3927-7928-4209-84cf-5f433a2c129d"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="25" uuid="bdce3927-7928-4209-84cf-5f433a2c129d"/>
 							<textElement verticalAlignment="Middle">
 								<font size="8" isBold="true"/>
 							</textElement>
@@ -170,13 +170,13 @@ ORDER BY `tb_detail_pencabut`.`no_laporan_produksi`]]>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="35" height="25" columnTotalGroup="no_laporan_produksi">
+				<crosstabCell width="25" height="25" columnTotalGroup="no_laporan_produksi">
 					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="25" uuid="30604156-0914-49cf-b7b9-c8d85a631f10"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="25" uuid="30604156-0914-49cf-b7b9-c8d85a631f10"/>
 							<textElement verticalAlignment="Middle">
 								<font size="8" isBold="true"/>
 							</textElement>
@@ -184,13 +184,13 @@ ORDER BY `tb_detail_pencabut`.`no_laporan_produksi`]]>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="35" rowTotalGroup="nama_pegawai" columnTotalGroup="no_laporan_produksi">
+				<crosstabCell width="25" rowTotalGroup="nama_pegawai" columnTotalGroup="no_laporan_produksi">
 					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="25" uuid="35870435-7f68-467c-93dc-862b9482f0e0"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="25" uuid="35870435-7f68-467c-93dc-862b9482f0e0"/>
 							<textElement verticalAlignment="Middle">
 								<font size="8" isBold="true"/>
 							</textElement>

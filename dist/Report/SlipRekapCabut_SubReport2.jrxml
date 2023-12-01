@@ -117,7 +117,7 @@ ORDER BY `tb_detail_pencabut`.`no_laporan_produksi`]]>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="30" uuid="09fa1bce-846a-4606-b820-9bd3f2625931"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="30" uuid="09fa1bce-846a-4606-b820-9bd3f2625931"/>
 								<textElement verticalAlignment="Middle">
 									<font size="6"/>
 								</textElement>
@@ -132,13 +132,13 @@ ORDER BY `tb_detail_pencabut`.`no_laporan_produksi`]]>
 				<measure name="dapat_bonus_lpMeasure" class="java.lang.Boolean" calculation="First">
 					<measureExpression><![CDATA[$F{dapat_bonus_lp}]]></measureExpression>
 				</measure>
-				<crosstabCell width="35" height="25">
+				<crosstabCell width="25" height="25">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="25" uuid="e3bdbe33-d07c-42bb-8de3-6324d2cc72a9"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="25" uuid="e3bdbe33-d07c-42bb-8de3-6324d2cc72a9"/>
 							<textElement verticalAlignment="Middle"/>
 							<textFieldExpression><![CDATA[$V{dapat_bonus_lpMeasure}?"Yes":"No"]]></textFieldExpression>
 						</textField>

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class DBConnect {
+
     MysqlDataSource ds = new MysqlDataSource();
     final String DRIVER = "com.mysql.jdbc.Driver";
     String username = null;
@@ -14,9 +15,8 @@ public class DBConnect {
     Connection conn = null;
     Statement state = null;
     private Statement stmt;
-    
-    public DBConnect()
-    {
+
+    public DBConnect() {
         System.out.println("connecting .. ");
         ds.setServerName("192.168.10.2");
         ds.setPort(3306);
@@ -25,9 +25,8 @@ public class DBConnect {
         ds.setPassword("test");
         ds.setAutoReconnect(true);
     }
-    
-    public void connect()
-    {
+
+    public void connect() {
         try {
             conn = ds.getConnection();
             stmt = conn.createStatement();
@@ -36,21 +35,20 @@ public class DBConnect {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void closeConnection() throws SQLException, Exception
-    {
+
+    public void closeConnection() throws SQLException, Exception {
         stmt.close();
         conn.close();
     }
-    
-    public Statement getStatement(){
+
+    public Statement getStatement() {
         return stmt;
     }
-    
-    public Connection getConnection(){
+
+    public Connection getConnection() {
         return conn;
     }
-    
+
     public static void main(String[] args) {
         try {
             new DBConnect().connect();

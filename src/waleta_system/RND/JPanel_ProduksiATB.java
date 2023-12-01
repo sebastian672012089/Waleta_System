@@ -54,6 +54,18 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                     if (!event.getValueIsAdjusting() && table_data_produksi_atb.getSelectedRow() != -1) {
                         try {
                             int i = table_data_produksi_atb.getSelectedRow();
+                            txt_no_lp_input.setText(table_data_produksi_atb.getValueAt(i, 1).toString());
+                            ComboBox_id_pegawai_atb.setSelectedItem(table_data_produksi_atb.getValueAt(i, 3).toString());
+                            txt_keping.setText(table_data_produksi_atb.getValueAt(i, 4).toString());
+                            if (table_data_produksi_atb.getValueAt(i, 6) != null) {//tangal selesai
+                                Date_mulai.setDate(dateFormat.parse(table_data_produksi_atb.getValueAt(i, 6).toString()));
+                            }
+                            if (table_data_produksi_atb.getValueAt(i, 7) != null) {//waktu selesai
+                                Spinner_jam_mulai.setValue(Integer.valueOf(table_data_produksi_atb.getValueAt(i, 7).toString().split(":")[0]));
+                                Spinner_menit_mulai.setValue(Integer.valueOf(table_data_produksi_atb.getValueAt(i, 7).toString().split(":")[1]));
+                            }
+                            txt_operator_id.setText(table_data_produksi_atb.getValueAt(i, 17).toString());
+                            txt_operator_nama.setText(table_data_produksi_atb.getValueAt(i, 18).toString());
 
                             if (table_data_produksi_atb.getValueAt(i, 8) != null) {//tangal selesai
                                 Date_selesai.setDate(dateFormat.parse(table_data_produksi_atb.getValueAt(i, 8).toString()));
@@ -62,8 +74,8 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                                 Spinner_jam_selesai.setValue(Integer.valueOf(table_data_produksi_atb.getValueAt(i, 9).toString().split(":")[0]));
                                 Spinner_menit_selesai.setValue(Integer.valueOf(table_data_produksi_atb.getValueAt(i, 9).toString().split(":")[1]));
                             }
-                            if (table_data_produksi_atb.getValueAt(i, 18) != null) {//layer selesai
-                                ComboBox_layer_selesai.setSelectedItem(table_data_produksi_atb.getValueAt(i, 18).toString());
+                            if (table_data_produksi_atb.getValueAt(i, 19) != null) {//layer selesai
+                                ComboBox_layer_selesai.setSelectedItem(table_data_produksi_atb.getValueAt(i, 19).toString());
                             }
                         } catch (Exception ex) {
                             Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,7 +118,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                 filter_grade = "AND `tb_laporan_produksi`.`kode_grade` LIKE '%" + txt_search_grade.getText() + "%' \n";
             }
 
-            sql = "SELECT `no`, `tb_atb_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `id_pegawai_atb`, `keping`, `gram`, `waktu_mulai`, `waktu_selesai`, `nama_pegawai`, `layer_selesai`, "
+            sql = "SELECT `no`, `tb_atb_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `id_pegawai_atb`, `keping`, `gram`, `waktu_mulai`, `waktu_selesai`, `tb_atb_produksi`.`operator`, `nama_pegawai`, `layer_selesai`, "
                     + "`jenis_bulu_lp`, `tarif_sub`, `tb_laporan_produksi_penilaian_bulu`.`tanggal` AS 'tgl_penilaian_bulu' \n"
                     + "FROM `tb_atb_produksi` \n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_atb_produksi`.`operator` = `tb_karyawan`.`id_pegawai`\n"
@@ -120,7 +132,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                     + filter_id_mesin_ATB
                     + filter_tanggal;
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[20];
+            Object[] row = new Object[30];
             while (rs.next()) {
                 row[0] = rs.getString("no");
                 row[1] = rs.getString("no_laporan_produksi");
@@ -188,9 +200,10 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                 row[15] = rs.getFloat("tarif_sub");
                 float upah_borong = Math.round((rs.getFloat("tarif_sub") * rs.getFloat("gram")));
                 row[16] = upah_borong;
-                row[17] = rs.getString("nama_pegawai");
-                row[18] = rs.getString("layer_selesai");
-                row[19] = rs.getDate("tgl_penilaian_bulu");
+                row[17] = rs.getString("operator");
+                row[18] = rs.getString("nama_pegawai");
+                row[19] = rs.getString("layer_selesai");
+                row[20] = rs.getDate("tgl_penilaian_bulu");
                 model.addRow(row);
                 total_kpg += rs.getFloat("keping");
                 total_gram += rs.getFloat("gram");
@@ -358,6 +371,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
         button_pick_pekerja = new javax.swing.JButton();
         txt_operator_id = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
+        button_edit = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txt_watt_atb = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -452,14 +466,14 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "No LP", "Grade", "ID Pegawai ATB", "Kpg", "Gram", "Tgl Mulai", "Waktu Mulai", "Tgl Selesai", "Waktu Selesai", "Jam Normal", "Jam Malam", "Total Biaya Listrik", "Biaya Listrik/Kpg", "Jenis Bulu", "Upah/gr", "Upah Brg", "Operator", "Layer Selesai", "Tgl Penilaian"
+                "No", "No LP", "Grade", "ID Pegawai ATB", "Kpg", "Gram", "Tgl Mulai", "Waktu Mulai", "Tgl Selesai", "Waktu Selesai", "Jam Normal", "Jam Malam", "Total Biaya Listrik", "Biaya Listrik/Kpg", "Jenis Bulu", "Upah/gr", "Upah Brg", "Operator ID", "Operator", "Layer Selesai", "Tgl Penilaian"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -522,6 +536,11 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
         jLabel7.setText("Keping :");
 
         txt_keping.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_keping.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_kepingKeyTyped(evt);
+            }
+        });
 
         Date_mulai.setBackground(new java.awt.Color(255, 255, 255));
         Date_mulai.setDate(new Date());
@@ -581,6 +600,15 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
         jLabel32.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel32.setText("Operator :");
 
+        button_edit.setBackground(new java.awt.Color(255, 255, 255));
+        button_edit.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_edit.setText("Ubah");
+        button_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_editActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -599,25 +627,24 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                     .addComponent(ComboBox_id_pegawai_atb, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Date_mulai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(button_tambah)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_delete))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Spinner_jam_mulai, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Spinner_menit_mulai, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 61, Short.MAX_VALUE))
+                        .addComponent(Spinner_jam_mulai, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Spinner_menit_mulai, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txt_no_lp_input)
                     .addComponent(txt_keping)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txt_operator_id)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_pick_pekerja, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_operator_nama))
+                    .addComponent(txt_operator_nama)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(button_tambah)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_delete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_edit)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -656,7 +683,8 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_tambah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1224,7 +1252,13 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
 
                     String waktu_mulai = dateFormat.format(Date_mulai.getDate()) + " " + Spinner_jam_mulai.getValue().toString() + ":" + Spinner_menit_mulai.getValue().toString() + ":00";
                     String Query = "INSERT INTO `tb_atb_produksi`(`no_laporan_produksi`, `id_pegawai_atb`, `waktu_mulai`, `keping`, `gram`, `operator`) "
-                            + "VALUES ('" + txt_no_lp_input.getText() + "','" + ComboBox_id_pegawai_atb.getSelectedItem().toString() + "','" + waktu_mulai + "'," + keping + ", " + berat + ", '" + txt_operator_id.getText() + "')";
+                            + "VALUES ("
+                            + "'" + txt_no_lp_input.getText() + "',"
+                            + "'" + ComboBox_id_pegawai_atb.getSelectedItem().toString() + "',"
+                            + "'" + waktu_mulai + "',"
+                            + "" + keping + ", "
+                            + "" + berat + ", "
+                            + "'" + txt_operator_id.getText() + "')";
                     Utility.db.getStatement().executeUpdate(Query);
 
                     String Query2 = "UPDATE `tb_laporan_produksi` SET `memo_lp` = CONCAT(`memo_lp`, ' - ATB') WHERE `no_laporan_produksi` = '" + txt_no_lp_input.getText() + "' AND `memo_lp` NOT LIKE '% - ATB%'";
@@ -1381,6 +1415,71 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_search_nama_operatorKeyPressed
 
+    private void button_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_editActionPerformed
+        // TODO add your handling code here:
+        try {
+            int j = table_data_produksi_atb.getSelectedRow();
+            if (j == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Data yang akan di hapus");
+            } else {
+                boolean check = true;
+                float keping = 0;
+                float berat = 0;
+
+                sql = "SELECT `no_laporan_produksi`, `keping_upah`, `berat_basah` FROM `tb_laporan_produksi` WHERE `no_laporan_produksi` = '" + txt_no_lp_input.getText() + "'";
+                rs = Utility.db.getStatement().executeQuery(sql);
+                if (!rs.next()) {
+                    JOptionPane.showMessageDialog(this, "No LP " + txt_no_lp_input.getText() + " tidak ditemukan!");
+                    check = false;
+                } else if (txt_no_lp_input.getText() == null || txt_no_lp_input.getText().equals("")) {
+                    JOptionPane.showMessageDialog(this, "No LP tidak bisa kosong");
+                    check = false;
+                } else if (Date_mulai.getDate() == null) {
+                    JOptionPane.showMessageDialog(this, "Tanggal belum di pilih");
+                    check = false;
+                } else {
+                    try {
+                        keping = Float.valueOf(txt_keping.getText());
+                        float berat_per_kpg = rs.getFloat("berat_basah") / rs.getFloat("keping_upah");
+                        berat = Math.round(keping * berat_per_kpg * 10f) / 10f;
+                    } catch (NumberFormatException e) {
+                        JOptionPane.showMessageDialog(this, "Format Keping salah!");
+                        check = false;
+                    }
+                }
+                if (check) {
+                    String waktu_mulai = dateFormat.format(Date_mulai.getDate()) + " " + Spinner_jam_mulai.getValue().toString() + ":" + Spinner_menit_mulai.getValue().toString() + ":00";
+                    String Query = "UPDATE `tb_atb_produksi` SET "
+                            + "`id_pegawai_atb`='" + ComboBox_id_pegawai_atb.getSelectedItem().toString() + "', "
+                            + "`keping`='" + keping + "', "
+                            + "`gram`='" + berat + "', "
+                            + "`waktu_mulai`='" + waktu_mulai + "', "
+                            + "`operator`='" + txt_operator_id.getText() + "' "
+                            + "WHERE `no` = '" + table_data_produksi_atb.getValueAt(j, 0).toString() + "'";
+                    if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
+                        JOptionPane.showMessageDialog(this, "data SAVED");
+                        refreshTable_produksi();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "UPDATE failed!");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+            Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_button_editActionPerformed
+
+    private void txt_kepingKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kepingKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_kepingKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_export_rekap_grade;
@@ -1397,6 +1496,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
     private javax.swing.JSpinner Spinner_menit_mulai;
     private javax.swing.JSpinner Spinner_menit_selesai;
     public javax.swing.JButton button_delete;
+    public javax.swing.JButton button_edit;
     private javax.swing.JButton button_export;
     private javax.swing.JButton button_pick_pekerja;
     public static javax.swing.JButton button_search;

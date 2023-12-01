@@ -342,7 +342,7 @@ public class JPanel_DataTRSela extends javax.swing.JPanel {
         try {
             int j = Table_Data_tr_sela.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 sql = "SELECT `no_laporan_produksi` FROM `tb_finishing_2` WHERE `tb_finishing_2`.`no_laporan_produksi` = '" + Table_Data_tr_sela.getValueAt(j, 0) + "'";
                 rs = Utility.db.getStatement().executeQuery(sql);

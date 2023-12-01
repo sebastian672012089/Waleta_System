@@ -1125,7 +1125,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
         try {
             int j = table_data_pencabut_reproses.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {

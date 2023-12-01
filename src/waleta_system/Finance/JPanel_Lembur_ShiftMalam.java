@@ -518,8 +518,10 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 double total_lembur_all = 0, total_premi_hadir_all = 0, total_transfer_all = 0;
                 DefaultTableModel model = (DefaultTableModel) Tabel_data_payslip.getModel();
                 model.setRowCount(0);
-                sql = "SELECT `tb_jadwal_kerja_sc`.`id_pegawai`, `pin_finger`, `nama_pegawai`, CONCAT(IFNULL(`divisi_bagian`,''), '-', IFNULL(`bagian_bagian`,''), '-', IFNULL(`ruang_bagian`,'')) AS 'nama_bagian', `posisi`, `tb_karyawan`.`status`, `tb_karyawan`.`level_gaji`"
-                        + ", `jam_kerja`, `jalur_jemputan`, `upah_per_hari`, `premi_hadir`, `potongan_bpjs`, `potongan_bpjs_tk`, SUM(IF(`jenis_hari` = 'Hari Kerja', 1, 0)) AS 'hari_kerja_normal' "
+                sql = "SELECT `tb_jadwal_kerja_sc`.`id_pegawai`, `pin_finger`, `nama_pegawai`, "
+                        + "CONCAT(IFNULL(`divisi_bagian`,''), '-', IFNULL(`bagian_bagian`,''), '-', IFNULL(`ruang_bagian`,'')) AS 'nama_bagian', "
+                        + "`posisi`, `tb_karyawan`.`status`, `tb_karyawan`.`level_gaji`, `jam_kerja`, `jalur_jemputan`, `upah_per_hari`, `premi_hadir`, `potongan_bpjs`, `potongan_bpjs_tk`, "
+                        + "SUM(IF(`jenis_hari` = 'Hari Kerja', 1, 0)) AS 'hari_kerja_normal' "
                         + "FROM `tb_jadwal_kerja_sc` \n"
                         + "LEFT JOIN `tb_karyawan` ON `tb_jadwal_kerja_sc`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
                         + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
@@ -1521,10 +1523,10 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         } else {
             int dialogResult = JOptionPane.showConfirmDialog(this, "Adjustment untuk jam pulang " + tabel_data_lembur_security.getValueAt(i, 3).toString() + "?", "Warning", 0);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                String id = tabel_data_lembur_security.getValueAt(i, 2).toString();
-                String nama = tabel_data_lembur_security.getValueAt(i, 3).toString();
-                String tanggal = tabel_data_lembur_security.getValueAt(i, 1).toString();
-                String scan_terakhir = tabel_data_lembur_security.getValueAt(i, 13).toString();
+                String id = tabel_data_lembur_security.getValueAt(i, 0).toString();
+                String nama = tabel_data_lembur_security.getValueAt(i, 1).toString();
+                String tanggal = tabel_data_lembur_security.getValueAt(i, 7).toString();
+                String scan_terakhir = tabel_data_lembur_security.getValueAt(i, 13) == null? "Tidak ada absen masuk!" : tabel_data_lembur_security.getValueAt(i, 13).toString();
                 JDialog_adjustment_absen_pulang dialog = new JDialog_adjustment_absen_pulang(new javax.swing.JFrame(), true, id, nama, tanggal, scan_terakhir);
                 dialog.pack();
                 dialog.setLocationRelativeTo(this);

@@ -71,8 +71,6 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
             }
             ComboBox_status_karyawan.setSelectedItem("IN");
 
-            refreshTable();
-
             Table_karyawan.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent event) {
@@ -108,52 +106,59 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         }
     }
 
-    public void refreshTable() {
+    public void refreshTable_rekap_cuti_karyawan() {
         try {
             int tot_absen = 0, tot_cuti_sakit = 0, tot_cuti_ijin = 0, tot_cuti_tahunan = 0;
             DefaultTableModel model = (DefaultTableModel) Table_karyawan.getModel();
             model.setRowCount(0);
 
-            String bagian = "";
-            if (!"All".equals(ComboBox_bagian.getSelectedItem().toString())) {
-                bagian = "AND `tb_bagian`.`nama_bagian` = '" + ComboBox_bagian.getSelectedItem().toString() + "' ";
-            }
             String departemen = "";
             if (!"All".equals(ComboBox_departemen.getSelectedItem().toString())) {
                 departemen = "AND `tb_bagian`.`kode_departemen` = '" + ComboBox_departemen.getSelectedItem().toString() + "' ";
             }
-
-            String kelamin = "";
-            if (!"All".equals(ComboBox_kelamin.getSelectedItem().toString())) {
-                kelamin = "AND `tb_karyawan`.`jenis_kelamin` = '" + ComboBox_kelamin.getSelectedItem().toString() + "' ";
+            String bagian = "";
+            if (txt_search_bagian_rekap.getText() != null && !txt_search_bagian_rekap.getText().equals("")) {
+                bagian = "AND `tb_bagian`.`nama_bagian` LIKE '%" + txt_search_bagian_rekap.getText() + "%' ";
+            }
+            String posisi = "";
+            if (ComboBox_posisi.getSelectedIndex() == 1) {
+                posisi = "AND `tb_karyawan`.`posisi` = 'PEJUANG' ";
+            } else if (ComboBox_posisi.getSelectedIndex() == 2) {
+                posisi = "AND `tb_karyawan`.`posisi` LIKE 'STAFF%' ";
             }
             String status = "";
             if (!"All".equals(ComboBox_status_karyawan.getSelectedItem().toString())) {
                 status = "AND `tb_karyawan`.`status` = '" + ComboBox_status_karyawan.getSelectedItem().toString() + "' ";
             }
 
-            sql = "SELECT `id_pegawai`, `nama_pegawai`, `tb_bagian`.`nama_bagian`,`tb_bagian`.`kode_departemen`, `posisi`, `status` "
+            sql = "SELECT `id_pegawai`, `nama_pegawai`, `tb_bagian`.`nama_bagian`,`tb_bagian`.`kode_departemen`, `posisi`, `status`, `tanggal_masuk`,"
+                    + "IF(YEAR(`tanggal_masuk`) = YEAR(CURRENT_DATE()), TIMESTAMPDIFF(MONTH, `tanggal_masuk`, CONCAT(YEAR(`tanggal_masuk`), '-12-31')), 12) AS months_left "
                     + "FROM `tb_karyawan` "
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`"
                     + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' "
                     + bagian
                     + departemen
-                    + kelamin
+                    + posisi
                     + status
                     + "ORDER BY `id_pegawai` DESC";
             pst = Utility.db.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
-            Object[] row = new Object[11];
+            Object[] row = new Object[20];
             while (rs.next()) {
                 row[0] = rs.getString("id_pegawai");
                 row[1] = rs.getString("nama_pegawai");
                 row[2] = rs.getString("posisi");
                 row[3] = rs.getString("nama_bagian");
                 row[4] = rs.getString("status");
-                row[5] = 0;
+                row[5] = rs.getDate("tanggal_masuk");
                 row[6] = 0;
                 row[7] = 0;
                 row[8] = 0;
+                row[9] = 0;
+                int jatah_cuti = rs.getInt("months_left");
+                int cuti_terpakai = 0;
+                int sisa_cuti = 0;
+                
                 String query = "SELECT `jenis_cuti`, COUNT(`kode_cuti`) AS 'hari'\n"
                         + "FROM `tb_cuti` WHERE `id_pegawai` = '" + rs.getString("id_pegawai") + "'\n"
                         + "GROUP BY `jenis_cuti`";
@@ -164,32 +169,34 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                             + "GROUP BY `jenis_cuti`";
                 }
                 ResultSet result = Utility.db.getStatement().executeQuery(query);
-                int sisa_cuti = 12;
                 while (result.next()) {
                     switch (result.getString("jenis_cuti")) {
                         case "Cuti Khusus":
-                            row[5] = result.getInt("hari");
+                            row[6] = result.getInt("hari");
                             tot_cuti_ijin = tot_cuti_ijin + result.getInt("hari");
                             break;
                         case "Cuti Sakit":
-                            row[6] = result.getInt("hari");
+                            row[7] = result.getInt("hari");
                             tot_cuti_sakit = tot_cuti_sakit + result.getInt("hari");
                             break;
                         case "Cuti Tahunan":
-                            row[7] = result.getInt("hari");
+                            row[8] = result.getInt("hari");
                             tot_cuti_tahunan = tot_cuti_tahunan + result.getInt("hari");
-                            sisa_cuti = sisa_cuti - result.getInt("hari");
+                            cuti_terpakai = cuti_terpakai + result.getInt("hari");
                             break;
                         case "Absen":
-                            row[8] = result.getInt("hari");
+                            row[9] = result.getInt("hari");
                             tot_absen = tot_absen + result.getInt("hari");
-                            sisa_cuti = sisa_cuti - result.getInt("hari");
+                            cuti_terpakai = cuti_terpakai + result.getInt("hari");
                             break;
                         default:
                             break;
                     }
                 }
-                row[9] = sisa_cuti;
+                sisa_cuti = jatah_cuti - cuti_terpakai;
+                row[10] = jatah_cuti;
+                row[11] = cuti_terpakai;
+                row[12] = sisa_cuti;
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_karyawan);
@@ -392,22 +399,6 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         }
     }
 
-    public void executeQuery(String query, String message) {
-        Utility.db.getConnection();
-        try {
-            Utility.db.getConnection().createStatement();
-            if ((Utility.db.getStatement().executeUpdate(query)) == 1) {
-                refreshTable();
-                JOptionPane.showMessageDialog(this, "data " + message + " Successfully");
-            } else {
-                JOptionPane.showMessageDialog(this, "data not " + message);
-            }
-        } catch (SQLException | HeadlessException e) {
-            Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(this, e);
-        }
-    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -480,29 +471,27 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         label_total_absen = new javax.swing.JLabel();
-        button_export = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table_Cuti_per_karyawan = new javax.swing.JTable();
-        jPanel_search_karyawan = new javax.swing.JPanel();
-        txt_search_karyawan = new javax.swing.JTextField();
-        button_refresh_data_cuti = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        jLabel35 = new javax.swing.JLabel();
-        ComboBox_departemen = new javax.swing.JComboBox<>();
-        ComboBox_bagian = new javax.swing.JComboBox<>();
-        Date_Ijin_absen1 = new com.toedter.calendar.JDateChooser();
-        Date_Ijin_absen2 = new com.toedter.calendar.JDateChooser();
-        jLabel8 = new javax.swing.JLabel();
-        ComboBox_kelamin = new javax.swing.JComboBox<>();
-        ComboBox_status_karyawan = new javax.swing.JComboBox<>();
-        jLabel11 = new javax.swing.JLabel();
         label_total_sakit = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         label_total_cuti_tahunan = new javax.swing.JLabel();
+        button_export = new javax.swing.JButton();
+        Date_Ijin_absen1 = new com.toedter.calendar.JDateChooser();
+        Date_Ijin_absen2 = new com.toedter.calendar.JDateChooser();
+        txt_search_karyawan = new javax.swing.JTextField();
+        txt_search_bagian_rekap = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        button_refresh_data_cuti = new javax.swing.JButton();
+        ComboBox_posisi = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        ComboBox_status_karyawan = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        ComboBox_departemen = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1046,14 +1035,14 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID Pegawai", "Nama Pegawai", "Posisi", "Bagian", "Status", "Cuti Khusus", "Cuti Sakit", "Cuti Tahunan", "Absen", "Sisa Cuti"
+                "ID Pegawai", "Nama Pegawai", "Posisi", "Bagian", "Status", "Tgl Masuk", "Cuti Khusus", "Cuti Sakit", "Cuti Tahunan", "Absen", "Jatah Cuti", "Terpakai", "Sisa Cuti"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1068,39 +1057,30 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         jScrollPane5.setViewportView(Table_karyawan);
 
         label_total_ijin.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_ijin.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_ijin.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_ijin.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label_total_ijin.setText("0");
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel13.setText("TOTAL SAKIT :");
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel13.setText("Total Sakit :");
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel1.setText("TOTAL CUTI KHUSUS :");
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel1.setText("Total Cuti Khusus :");
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel10.setText("DATA IJIN CUTI / ABSEN");
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel9.setText("DAFTAR KARYAWAN WALETA");
 
         label_total_absen.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_absen.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_absen.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_absen.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label_total_absen.setText("0");
-
-        button_export.setBackground(new java.awt.Color(255, 255, 255));
-        button_export.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_export.setText("Export to Excel");
-        button_export.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_exportActionPerformed(evt);
-            }
-        });
 
         Table_Cuti_per_karyawan.setAutoCreateRowSorter(true);
         Table_Cuti_per_karyawan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -1129,56 +1109,32 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(Table_Cuti_per_karyawan);
 
-        jPanel_search_karyawan.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_search_karyawan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        label_total_sakit.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_sakit.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        label_total_sakit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label_total_sakit.setText("0");
 
-        txt_search_karyawan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_search_karyawan.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_search_karyawanKeyPressed(evt);
-            }
-        });
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel5.setText("Total Absen :");
 
-        button_refresh_data_cuti.setBackground(new java.awt.Color(255, 255, 255));
-        button_refresh_data_cuti.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_refresh_data_cuti.setText("Search");
-        button_refresh_data_cuti.addActionListener(new java.awt.event.ActionListener() {
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel6.setText("Total Cuti Tahunan :");
+
+        label_total_cuti_tahunan.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_cuti_tahunan.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        label_total_cuti_tahunan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label_total_cuti_tahunan.setText("0");
+
+        button_export.setBackground(new java.awt.Color(255, 255, 255));
+        button_export.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_export.setText("Export to Excel");
+        button_export.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_refresh_data_cutiActionPerformed(evt);
+                button_exportActionPerformed(evt);
             }
         });
-
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel2.setText("Nama Karyawan :");
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel3.setText("Departemen :");
-
-        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel7.setText("Bagian :");
-
-        jLabel34.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel34.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
-        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel34.setText("-");
-
-        jLabel35.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel35.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
-        jLabel35.setText("Date Filter (by Tanggal Absen) :");
-
-        ComboBox_departemen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_departemen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
-        ComboBox_departemen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBox_departemenActionPerformed(evt);
-            }
-        });
-
-        ComboBox_bagian.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_bagian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
 
         Date_Ijin_absen1.setBackground(new java.awt.Color(255, 255, 255));
         Date_Ijin_absen1.setToolTipText("");
@@ -1190,109 +1146,62 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         Date_Ijin_absen2.setDateFormatString("dd MMMM yyyy");
         Date_Ijin_absen2.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
 
+        txt_search_karyawan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_karyawan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_karyawanKeyPressed(evt);
+            }
+        });
+
+        txt_search_bagian_rekap.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_bagian_rekap.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_bagian_rekapKeyPressed(evt);
+            }
+        });
+
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel8.setText("Jenis Kelamin  :");
+        jLabel8.setText("Posisi :");
 
-        ComboBox_kelamin.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_kelamin.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Laki-Laki", "Perempuan" }));
+        button_refresh_data_cuti.setBackground(new java.awt.Color(255, 255, 255));
+        button_refresh_data_cuti.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_refresh_data_cuti.setText("Search");
+        button_refresh_data_cuti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_refresh_data_cutiActionPerformed(evt);
+            }
+        });
+
+        ComboBox_posisi.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_posisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "PEJUANG", "STAFF" }));
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel2.setText("Nama :");
 
         ComboBox_status_karyawan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         ComboBox_status_karyawan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "IN", "OUT" }));
         ComboBox_status_karyawan.setSelectedIndex(1);
 
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel3.setText("Departemen :");
+
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel11.setText("Status  :");
 
-        javax.swing.GroupLayout jPanel_search_karyawanLayout = new javax.swing.GroupLayout(jPanel_search_karyawan);
-        jPanel_search_karyawan.setLayout(jPanel_search_karyawanLayout);
-        jPanel_search_karyawanLayout.setHorizontalGroup(
-            jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_search_karyawanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_search_karyawan)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(ComboBox_departemen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(ComboBox_bagian, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(ComboBox_kelamin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addGroup(jPanel_search_karyawanLayout.createSequentialGroup()
-                        .addComponent(ComboBox_status_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_refresh_data_cuti)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 359, Short.MAX_VALUE)
-                .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel35)
-                    .addGroup(jPanel_search_karyawanLayout.createSequentialGroup()
-                        .addComponent(Date_Ijin_absen1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_Ijin_absen2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jPanel_search_karyawanLayout.setVerticalGroup(
-            jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_search_karyawanLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel_search_karyawanLayout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ComboBox_status_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_refresh_data_cuti, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel_search_karyawanLayout.createSequentialGroup()
-                        .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_search_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(ComboBox_bagian, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ComboBox_kelamin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(ComboBox_departemen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_Ijin_absen1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_Ijin_absen2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_search_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel7.setText("Bagian :");
 
-        label_total_sakit.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_sakit.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        label_total_sakit.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label_total_sakit.setText("0");
+        jLabel35.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel35.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+        jLabel35.setText("Tanggal :");
 
-        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel5.setText("TOTAL ABSEN :");
-
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel6.setText("TOTAL CUTI TAHUNAN :");
-
-        label_total_cuti_tahunan.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_cuti_tahunan.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        label_total_cuti_tahunan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label_total_cuti_tahunan.setText("0");
+        ComboBox_departemen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_departemen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1301,41 +1210,85 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel_search_karyawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_ijin)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_sakit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_cuti_tahunan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_absen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_export))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane5))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_ijin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_sakit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_cuti_tahunan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_absen))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_departemen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_bagian_rekap, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_posisi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_status_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel35)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_Ijin_absen1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_Ijin_absen2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_refresh_data_cuti)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel_search_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(Date_Ijin_absen1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_Ijin_absen2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_bagian_rekap, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_refresh_data_cuti, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_posisi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_status_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_departemen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1347,11 +1300,9 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                         .addComponent(label_total_cuti_tahunan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(label_total_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1397,35 +1348,16 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
     private void txt_search_karyawanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_karyawanKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            refreshTable();
+            refreshTable_rekap_cuti_karyawan();
         }
     }//GEN-LAST:event_txt_search_karyawanKeyPressed
 
     private void button_refresh_data_cutiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refresh_data_cutiActionPerformed
         // TODO add your handling code here:
-        refreshTable();
+        refreshTable_rekap_cuti_karyawan();
         DefaultTableModel model_ijin = (DefaultTableModel) Table_Cuti_per_karyawan.getModel();
         model_ijin.setRowCount(0);
     }//GEN-LAST:event_button_refresh_data_cutiActionPerformed
-
-    private void ComboBox_departemenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBox_departemenActionPerformed
-        // TODO add your handling code here:
-        try {
-            ComboBox_bagian.removeAllItems();
-            String query = "SELECT `nama_bagian` FROM `tb_bagian` ORDER BY `nama_bagian`";
-            if (ComboBox_departemen.getSelectedItem() != "All") {
-                query = "SELECT `nama_bagian` FROM `tb_bagian` WHERE `kode_departemen`='" + ComboBox_departemen.getSelectedItem() + "'";
-            }
-            rs = Utility.db.getStatement().executeQuery(query);
-            ComboBox_bagian.addItem("All");
-            while (rs.next()) {
-                ComboBox_bagian.addItem(rs.getString("nama_bagian"));
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
-            Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }//GEN-LAST:event_ComboBox_departemenActionPerformed
 
     private void button_add_ijin_cutiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_add_ijin_cutiActionPerformed
         // TODO add your handling code here:
@@ -1441,17 +1373,17 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         try {
             int row = Table_Cuti_keseluruhan.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     // delete code here
                     String Query = "DELETE FROM `tb_cuti` WHERE `kode_cuti` = '" + Table_Cuti_keseluruhan.getValueAt(row, 0) + "'";
-                    executeQuery(Query, "deleted !");
+                    Utility.db.getStatement().executeUpdate(Query);
                     refreshTable_Cuti();
                 }
             }
-        } catch (HeadlessException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -1545,12 +1477,11 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     String kode_pengajuan = Table_pengajuan.getValueAt(Table_pengajuan.getSelectedRow(), 0).toString();
                     sql = "UPDATE `tb_cuti_pengajuan` SET `diketahui`='DIKETAHUI OLEH: " + MainForm.Login_NamaPegawai + "' WHERE `kode_pengajuan`='" + kode_pengajuan + "'";
                     if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                        refreshTable();
+                        refreshTable_pengajuan_cuti();
                         JOptionPane.showMessageDialog(this, "DIKETAHUI OLEH: " + MainForm.Login_NamaPegawai);
                     } else {
                         JOptionPane.showMessageDialog(this, "Failed!");
                     }
-                    refreshTable_pengajuan_cuti();
                 } else {
                     JOptionPane.showMessageDialog(this, "Maaf hanya login user HRD yang dapat mengetahui pengajuan Cuti!");
                 }
@@ -1572,12 +1503,11 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     String kode_pengajuan = Table_pengajuan.getValueAt(Table_pengajuan.getSelectedRow(), 0).toString();
                     sql = "UPDATE `tb_cuti_pengajuan` SET `disetujui`='DISETUJUI OLEH: " + MainForm.Login_NamaPegawai + "' WHERE `kode_pengajuan`='" + kode_pengajuan + "'";
                     if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                        refreshTable();
+                        refreshTable_pengajuan_cuti();
                         JOptionPane.showMessageDialog(this, "DISETUJUI OLEH: " + MainForm.Login_NamaPegawai);
                     } else {
                         JOptionPane.showMessageDialog(this, "Failed!");
                     }
-                    refreshTable_pengajuan_cuti();
                 } else {
                     JOptionPane.showMessageDialog(this, "Maaf hanya login user STAFF 5 / STAFF 6 yang dapat menyetujui pengajuan Cuti!");
                 }
@@ -1595,15 +1525,18 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_search_bagianKeyPressed
 
+    private void txt_search_bagian_rekapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_bagian_rekapKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_search_bagian_rekapKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboBox_bagian;
     private javax.swing.JComboBox<String> ComboBox_bagian_pengajuan;
     private javax.swing.JComboBox<String> ComboBox_departemen;
     private javax.swing.JComboBox<String> ComboBox_departemen_pengajuan;
-    private javax.swing.JComboBox<String> ComboBox_kelamin;
     private javax.swing.JComboBox<String> ComboBox_kelamin1;
     private javax.swing.JComboBox<String> ComboBox_kelamin_pengajuan;
+    private javax.swing.JComboBox<String> ComboBox_posisi;
     private javax.swing.JComboBox<String> ComboBox_posisi1;
     private javax.swing.JComboBox<String> ComboBox_posisi_pengajuan;
     private javax.swing.JComboBox<String> ComboBox_realisasi_cuti;
@@ -1651,7 +1584,6 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
@@ -1665,7 +1597,6 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel_search_karyawan;
     private javax.swing.JPanel jPanel_search_karyawan2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -1680,6 +1611,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
     private javax.swing.JLabel label_total_ijin;
     private javax.swing.JLabel label_total_sakit;
     private javax.swing.JTextField txt_search_bagian;
+    private javax.swing.JTextField txt_search_bagian_rekap;
     private javax.swing.JTextField txt_search_karyawan;
     private javax.swing.JTextField txt_search_karyawan1;
     private javax.swing.JTextField txt_search_karyawan_pengajuan;

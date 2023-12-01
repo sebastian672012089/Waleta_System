@@ -1405,7 +1405,7 @@ public class JPanel_BahanBakuMasuk_Cheat extends javax.swing.JPanel {
         try {
             int j = Table_Bahan_Baku_Masuk_ct.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 String no_kartu_bayangan = Table_Bahan_Baku_Masuk_ct.getValueAt(j, 0).toString();
                 if (no_kartu_bayangan.contains("BY")) {

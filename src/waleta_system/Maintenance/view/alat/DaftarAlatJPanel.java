@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package waleta_system.Maintenance.view.alat;
 
 import java.awt.Color;
@@ -14,10 +9,6 @@ import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 import waleta_system.Maintenance.view.MainFrame_Maintenance;
 
-/**
- *
- * @author User
- */
 public class DaftarAlatJPanel extends javax.swing.JPanel {
 
     private final MainFrame_Maintenance mainJFrame;

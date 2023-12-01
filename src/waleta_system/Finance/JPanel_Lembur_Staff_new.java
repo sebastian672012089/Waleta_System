@@ -56,8 +56,8 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
             if (Date_Search_Lembur1.getDate() != null && Date_Search_Lembur2.getDate() != null) {
                 sql = "SELECT UPPER(DAYNAME(DATE(`scan_date`))) AS 'Hari',DATE(`scan_date`) AS 'tanggal', `att_log`.`pin`, `tb_karyawan`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `jenis_kelamin`, `tb_karyawan`.`posisi`, `tb_karyawan`.`status`,`tb_bagian`.`nama_bagian`, `tb_bagian`.`kode_departemen`, `tb_karyawan`.`jam_kerja`, `tb_karyawan`.`level_gaji`, `tb_karyawan`.`jalur_jemputan`, `tb_karyawan`.`potongan_bpjs`, `potongan_bpjs_tk`, "
                         + "`tb_level_gaji`.`upah_per_hari`, `lembur_per_jam`, `lembur_x_hari_kerja`, `lembur_x_hari_libur`, \n"
-                        + "MIN(TIME(`scan_date`)) AS 'Masuk', \n"
-                        + "MAX(TIME(`scan_date`)) AS 'Pulang', \n"
+                        + "DATE_FORMAT(MIN(TIME(`scan_date`)), '%H:%i') AS 'Masuk', \n"
+                        + "DATE_FORMAT(MAX(TIME(`scan_date`)), '%H:%i') AS 'Pulang', \n"
                         + "`tb_surat_lembur_detail`.`nomor_surat`, `jumlah_jam`, `mulai_lembur`\n"
                         + "FROM `att_log` \n"
                         + "LEFT JOIN `att_mesin_finger` ON `att_log`.`sn` = `att_mesin_finger`.`sn`\n"
@@ -196,8 +196,10 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
                     }
 
                     long menit_terlambat = 0;
-                    Date absen_masuk = Timeformat.parse(rs.getString("Masuk"));
-                    Date absen_pulang = Timeformat.parse(rs.getString("Pulang"));
+//                    Date absen_masuk = Timeformat.parse(rs.getString("Masuk"));
+//                    Date absen_pulang = Timeformat.parse(rs.getString("Pulang"));
+                    Date absen_masuk = new SimpleDateFormat("HH:mm").parse(rs.getString("Masuk"));
+                    Date absen_pulang = new SimpleDateFormat("HH:mm").parse(rs.getString("Pulang"));
                     boolean tidak_absen_masuk = false, tidak_absen_pulang = false;
                     if (jam_masuk != null) {//hari kerja
                         if (absen_masuk.after(new Date(jam_masuk.getTime() + (4 * 60 * 60 * 1000)))) {
@@ -801,7 +803,7 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
                 String id = tabel_data_lembur.getValueAt(i, 2).toString();
                 String nama = tabel_data_lembur.getValueAt(i, 3).toString();
                 String tanggal = tabel_data_lembur.getValueAt(i, 1).toString();
-                String scan_terakhir = tabel_data_lembur.getValueAt(i, 13).toString();
+                String scan_terakhir = tabel_data_lembur.getValueAt(i, 11) == null? "Tidak ada absen masuk!" : tabel_data_lembur.getValueAt(i, 11).toString();
                 JDialog_adjustment_absen_pulang dialog = new JDialog_adjustment_absen_pulang(new javax.swing.JFrame(), true, id, nama, tanggal, scan_terakhir);
                 dialog.pack();
                 dialog.setLocationRelativeTo(this);

@@ -511,7 +511,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
         try {
             int j = Table_Data_Cuci.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {

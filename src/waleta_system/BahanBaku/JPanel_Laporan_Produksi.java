@@ -1070,7 +1070,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             //            DefaultTableModel Table = (DefaultTableModel)Table_laporan_produksi.getModel();
             int j = Table_laporan_produksi.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {

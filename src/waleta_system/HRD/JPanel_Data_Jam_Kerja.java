@@ -1435,7 +1435,7 @@ public class JPanel_Data_Jam_Kerja extends javax.swing.JPanel {
         try {
             int j = Table_Jam_kerja.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Delete this data?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {

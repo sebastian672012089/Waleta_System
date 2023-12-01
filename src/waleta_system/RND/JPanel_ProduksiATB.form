@@ -296,7 +296,7 @@
                   <Font name="Arial" size="11" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="20" rowCount="0">
+                  <Table columnCount="21" rowCount="0">
                     <Column editable="false" title="No" type="java.lang.String"/>
                     <Column editable="false" title="No LP" type="java.lang.String"/>
                     <Column editable="false" title="Grade" type="java.lang.String"/>
@@ -314,6 +314,7 @@
                     <Column editable="false" title="Jenis Bulu" type="java.lang.String"/>
                     <Column editable="false" title="Upah/gr" type="java.lang.Float"/>
                     <Column editable="false" title="Upah Brg" type="java.lang.Float"/>
+                    <Column editable="false" title="Operator ID" type="java.lang.String"/>
                     <Column editable="false" title="Operator" type="java.lang.String"/>
                     <Column editable="false" title="Layer Selesai" type="java.lang.String"/>
                     <Column editable="false" title="Tgl Penilaian" type="java.lang.Object"/>
@@ -321,6 +322,11 @@
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
@@ -518,21 +524,11 @@
                           <Component id="ComboBox_id_pegawai_atb" alignment="0" max="32767" attributes="0"/>
                           <Component id="Date_mulai" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="button_tambah" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="button_delete" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="Spinner_jam_mulai" min="-2" pref="50" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel17" min="-2" pref="10" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="Spinner_menit_mulai" min="-2" pref="50" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="0" pref="61" max="32767" attributes="0"/>
+                              <Component id="Spinner_jam_mulai" min="-2" pref="50" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel17" min="-2" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="Spinner_menit_mulai" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
                           <Component id="txt_no_lp_input" alignment="0" max="32767" attributes="0"/>
                           <Component id="txt_keping" alignment="0" max="32767" attributes="0"/>
@@ -542,6 +538,13 @@
                               <Component id="button_pick_pekerja" min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
                           <Component id="txt_operator_nama" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="button_tambah" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="button_delete" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="button_edit" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -591,6 +594,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="button_delete" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="button_tambah" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="button_edit" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -654,6 +658,9 @@
                   <Font name="Arial" size="11" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_kepingKeyTyped"/>
+              </Events>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="Date_mulai">
               <Properties>
@@ -806,6 +813,23 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Operator :"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="button_edit">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="11" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Ubah"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_editActionPerformed"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

@@ -800,7 +800,7 @@ public class JPanel_Lembur_Staff extends javax.swing.JPanel {
                 String id = tabel_data_lembur.getValueAt(i, 2).toString();
                 String nama = tabel_data_lembur.getValueAt(i, 3).toString();
                 String tanggal = tabel_data_lembur.getValueAt(i, 1).toString();
-                String scan_terakhir = tabel_data_lembur.getValueAt(i, 13).toString();
+                String scan_terakhir = tabel_data_lembur.getValueAt(i, 11) == null? "Tidak ada absen masuk!" : tabel_data_lembur.getValueAt(i, 11).toString();
                 JDialog_adjustment_absen_pulang dialog = new JDialog_adjustment_absen_pulang(new javax.swing.JFrame(), true, id, nama, tanggal, scan_terakhir);
                 dialog.pack();
                 dialog.setLocationRelativeTo(this);

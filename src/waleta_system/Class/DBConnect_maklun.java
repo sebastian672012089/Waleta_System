@@ -39,13 +39,14 @@ public class DBConnect_maklun {
         }
     }
     
-    public void connect() throws SQLException, Exception
+    public void connect()
     {
         try {
             conn = ds.getConnection();
             stmt = conn.createStatement();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex, "Access Denied !", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "SERVER ONLINE BERMASALAH!", "Access Denied !", JOptionPane.ERROR_MESSAGE);
+//            JOptionPane.showMessageDialog(null, ex, "Access Denied !", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(DBConnect_maklun.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

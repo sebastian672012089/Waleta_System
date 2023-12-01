@@ -19,7 +19,7 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date today = new Date();
 
-    public JDialog_adjustment_absen_pulang(java.awt.Frame parent, boolean modal, String ID, String nama, String tanggal, String scan_terakhir) {
+    public JDialog_adjustment_absen_pulang(java.awt.Frame parent, boolean modal, String ID, String nama, String tanggal, String scan_masuk) {
         super(parent, modal);
         initComponents();
         this.setResizable(false);
@@ -28,7 +28,7 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
             label_id.setText(ID);
             label_nama.setText(nama);
             label_tanggal.setText(tanggal);
-            label_jam_scan_terakhir.setText(scan_terakhir);
+            label_jam_scan_masuk.setText(scan_masuk);
             sql = "SELECT `kode_keluar`, `tanggal_keluar`, `jam_keluar`, `keterangan`, `pengawas`, `print_by` FROM `tb_ijin_keluar` "
                     + "WHERE `id_pegawai` = '" + ID + "' AND `tanggal_keluar` = '" + tanggal + "' AND `jam_kembali` IS NULL";
             rs = Utility.db.getStatement().executeQuery(sql);
@@ -55,7 +55,7 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         label_id = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        label_jam_scan_terakhir = new javax.swing.JLabel();
+        label_jam_scan_masuk = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         button_save = new javax.swing.JButton();
@@ -97,10 +97,10 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
         jLabel3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel3.setText("Nama :");
 
-        label_jam_scan_terakhir.setBackground(new java.awt.Color(255, 255, 255));
-        label_jam_scan_terakhir.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        label_jam_scan_terakhir.setText("-");
-        label_jam_scan_terakhir.setToolTipText("");
+        label_jam_scan_masuk.setBackground(new java.awt.Color(255, 255, 255));
+        label_jam_scan_masuk.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_jam_scan_masuk.setText("-");
+        label_jam_scan_masuk.setToolTipText("");
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -108,7 +108,7 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel6.setText("Jam Scan Terakhir :");
+        jLabel6.setText("Scan Masuk :");
 
         button_save.setBackground(new java.awt.Color(255, 255, 255));
         button_save.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -243,7 +243,7 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ComboBox_menit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 168, Short.MAX_VALUE))
-                            .addComponent(label_jam_scan_terakhir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_jam_scan_masuk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(label_tanggal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(label_nomor_ijin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(label_jam_keluar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -273,7 +273,7 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jam_scan_terakhir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label_jam_scan_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -379,7 +379,7 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
     private javax.swing.JLabel label_disetujui;
     private javax.swing.JLabel label_id;
     private javax.swing.JLabel label_jam_keluar;
-    private javax.swing.JLabel label_jam_scan_terakhir;
+    private javax.swing.JLabel label_jam_scan_masuk;
     private javax.swing.JLabel label_keterangan;
     private javax.swing.JLabel label_nama;
     private javax.swing.JLabel label_nomor_ijin;

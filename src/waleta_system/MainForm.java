@@ -28,7 +28,7 @@ import waleta_system.Class.Utility;
 
 public class MainForm extends javax.swing.JFrame {
 
-    public static String Login_idPegawai, Login_NamaPegawai, Login_Posisi, Login_namaBagian, Login_Departemen;
+    public static String user, Login_idPegawai, Login_NamaPegawai, Login_Posisi, Login_namaBagian, Login_Departemen;
     public static int Login_kodeBagian;
     public static List<AksesMenu.Akses> dataMenu;
 
@@ -47,6 +47,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuBar1.remove(jMenu_User);
         jMenuBar1.add(Box.createHorizontalGlue());
         jMenuBar1.add(jMenu_User);
+        MainForm.user = user;
         MainForm.Login_idPegawai = Login_idPegawai;
         MainForm.Login_NamaPegawai = Login_NamaPegawai;
         MainForm.Login_kodeBagian = Login_kodeBagian;
@@ -714,7 +715,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.234");
+        jLabel19.setText("2.2.241");
 
         jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");

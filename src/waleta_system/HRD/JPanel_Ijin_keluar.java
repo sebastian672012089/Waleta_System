@@ -1072,7 +1072,7 @@ public class JPanel_Ijin_keluar extends javax.swing.JPanel {
         try {
             int row = Table_Ijin_Keluar.getSelectedRow();
             if (row == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else if (Table_Ijin_Keluar.getValueAt(row, 6) != null) {
                 JOptionPane.showMessageDialog(this, "Maaf sudah ada jam keluarnya tidak bisa hapus data !");
             } else {

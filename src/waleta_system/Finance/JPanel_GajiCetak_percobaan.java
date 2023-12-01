@@ -244,17 +244,21 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                 } else {
                     int bonus_per_lp_cetak1 = 0;
                     int bonus_per_lp_cetak2 = 0;
+                    int bonus_per_lp_cetak12 = 0;
                     if (rs.getString("cetak_dikerjakan_level") != null && rs.getString("cetak_dikerjakan_level").toLowerCase().contains("brg")) {
                         bonus_per_lp_cetak1 = Integer.valueOf(txt_bonus_per_lp_borong_cetak1.getText());
                         bonus_per_lp_cetak2 = Integer.valueOf(txt_bonus_per_lp_borong_cetak2.getText());
+                        bonus_per_lp_cetak12 = Integer.valueOf(txt_bonus_per_lp_borong_cetak12.getText());
                     } else if ((rs.getString("cetak_dikerjakan_level") != null && rs.getString("cetak_dikerjakan_level").toLowerCase().contains("training"))
                             || rs.getString("nama_bagian").toLowerCase().contains("trainer")
                             || rs.getString("nama_bagian").toLowerCase().contains("pengawas")) {
                         bonus_per_lp_cetak1 = 0;
                         bonus_per_lp_cetak2 = 0;
+                        bonus_per_lp_cetak12 = 0;
                     } else {
                         bonus_per_lp_cetak1 = Integer.valueOf(txt_bonus_per_lp_harian_cetak1.getText());
                         bonus_per_lp_cetak2 = Integer.valueOf(txt_bonus_per_lp_harian_cetak2.getText());
+                        bonus_per_lp_cetak12 = Integer.valueOf(txt_bonus_per_lp_harian_cetak12.getText());
                     }
                     double bonus_ctk1 = (Math.floor(rs.getDouble("bobot_bonus_lp_t1") / 0.5d) * 0.5d) * bonus_per_lp_cetak1;
                     row[9] = bonus_ctk1;
@@ -262,7 +266,7 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                     double bonus_ctk2 = (Math.floor(rs.getDouble("bobot_bonus_lp_t2") / 0.5d) * 0.5d) * bonus_per_lp_cetak2;
                     row[10] = bonus_ctk2;
                     total_bonus = total_bonus + bonus_ctk2;
-                    double bonus_ctk12 = (Math.floor(rs.getDouble("bobot_bonus_lp_t12") / 0.5d) * 0.5d) * (bonus_per_lp_cetak1 + bonus_per_lp_cetak2);
+                    double bonus_ctk12 = (Math.floor(rs.getDouble("bobot_bonus_lp_t12") / 0.5d) * 0.5d) * bonus_per_lp_cetak12;
                     row[11] = bonus_ctk12;
                     total_bonus = total_bonus + bonus_ctk12;
                     row[12] = bonus_ctk1 + bonus_ctk2 + bonus_ctk12;
@@ -612,6 +616,12 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
         txt_max_lama_inap_t2 = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
         txt_upah_cetak_t2 = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        txt_bonus_per_lp_borong_cetak12 = new javax.swing.JTextField();
+        txt_bonus_per_lp_harian_cetak12 = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        txt_max_lama_inap_t12 = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -948,7 +958,7 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_gaji_detail_lp1))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -1042,7 +1052,7 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                         .addComponent(jLabel61)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_gaji_detail_lp2))
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE))
+                    .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
@@ -1136,7 +1146,7 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                         .addComponent(jLabel64)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_gaji_detail_lp3))
-                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE))
+                    .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel13Layout.setVerticalGroup(
@@ -1224,7 +1234,7 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                         .addComponent(jLabel29)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_gaji_detail_reproses))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel11Layout.setVerticalGroup(
@@ -1263,6 +1273,39 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                 txt_upah_cetak_t2KeyTyped(evt);
             }
         });
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel14.setText("Bonus Kecepatan / LP Harian (Rp.) Cetak 12 :");
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel15.setText("Bonus Kecepatan / LP Borong (Rp.) Cetak 12 :");
+
+        txt_bonus_per_lp_borong_cetak12.setEditable(false);
+        txt_bonus_per_lp_borong_cetak12.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_bonus_per_lp_borong_cetak12.setText("4000");
+        txt_bonus_per_lp_borong_cetak12.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_bonus_per_lp_borong_cetak12KeyTyped(evt);
+            }
+        });
+
+        txt_bonus_per_lp_harian_cetak12.setEditable(false);
+        txt_bonus_per_lp_harian_cetak12.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_bonus_per_lp_harian_cetak12.setText("3000");
+        txt_bonus_per_lp_harian_cetak12.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_bonus_per_lp_harian_cetak12KeyTyped(evt);
+            }
+        });
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel16.setText("Max lama inap (hari) T12 :");
+
+        txt_max_lama_inap_t12.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_max_lama_inap_t12.setText("4");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1357,8 +1400,20 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(CheckBox_BorongOnly)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_search)))
-                        .addGap(0, 117, Short.MAX_VALUE))
+                                .addComponent(button_search))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_bonus_per_lp_borong_cetak12, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_bonus_per_lp_harian_cetak12, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_max_lama_inap_t12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 108, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1403,6 +1458,14 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
                     .addComponent(txt_bonus_per_lp_harian_cetak2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_max_lama_inap_t2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_bonus_per_lp_borong_cetak12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_bonus_per_lp_harian_cetak12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_max_lama_inap_t12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1612,6 +1675,14 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_upah_cetak_t2KeyTyped
 
+    private void txt_bonus_per_lp_borong_cetak12KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bonus_per_lp_borong_cetak12KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_bonus_per_lp_borong_cetak12KeyTyped
+
+    private void txt_bonus_per_lp_harian_cetak12KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bonus_per_lp_harian_cetak12KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_bonus_per_lp_harian_cetak12KeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CheckBox_BorongOnly;
@@ -1628,6 +1699,9 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
@@ -1689,12 +1763,15 @@ public class JPanel_GajiCetak_percobaan extends javax.swing.JPanel {
     private javax.swing.JLabel label_total_kpg_cetak;
     private javax.swing.JTable table_data_pegawai_cetak;
     private javax.swing.JTextField txt_bonus_per_lp_borong_cetak1;
+    private javax.swing.JTextField txt_bonus_per_lp_borong_cetak12;
     private javax.swing.JTextField txt_bonus_per_lp_borong_cetak2;
     private javax.swing.JTextField txt_bonus_per_lp_harian_cetak1;
+    private javax.swing.JTextField txt_bonus_per_lp_harian_cetak12;
     private javax.swing.JTextField txt_bonus_per_lp_harian_cetak2;
     private javax.swing.JTextField txt_hari_kerja;
     private javax.swing.JTextField txt_kenaikan_jumbo;
     private javax.swing.JTextField txt_max_lama_inap_t1;
+    private javax.swing.JTextField txt_max_lama_inap_t12;
     private javax.swing.JTextField txt_max_lama_inap_t2;
     private javax.swing.JTextField txt_minimal_lp_dikerjakan;
     private javax.swing.JTextField txt_search_bagian;

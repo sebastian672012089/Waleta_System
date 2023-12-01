@@ -27,45 +27,21 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
 
     public JDialog_Add_SuratPerintahLembur(java.awt.Frame parent, boolean modal, String no_surat, String jenis_spl) {
         super(parent, modal);
-        try {
-            initComponents();
-            label_jenis_spl.setText(jenis_spl);
-            label_diajukan.setText(MainForm.Login_NamaPegawai);
-            button_add.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/add_green.png")), button_add.getWidth(), button_add.getHeight()));
-            button_delete.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/delete-icon.png")), button_delete.getWidth(), button_delete.getHeight()));
+        initComponents();
+        label_jenis_spl.setText(jenis_spl);
+        label_diajukan.setText(MainForm.Login_NamaPegawai);
+        button_add.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/add_green.png")), button_add.getWidth(), button_add.getHeight()));
+        button_delete.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/delete-icon.png")), button_delete.getWidth(), button_delete.getHeight()));
 
-            this.no_surat = no_surat;
-            if (no_surat != null) {
-                load_data_Edit(no_surat);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(JDialog_Add_SuratPerintahLembur.class.getName()).log(Level.SEVERE, null, ex);
+        this.no_surat = no_surat;
+        if (no_surat != null) {
+            load_data_Edit(no_surat);
         }
     }
 
     public void set_no_urut() {
         for (int i = 0; i < Table_pegawai_lembur.getRowCount(); i++) {
             Table_pegawai_lembur.setValueAt(i + 1, i, 0);
-        }
-    }
-
-    public void deteksi_jenis_hari_otomatis() {
-        String jenis_hari = "Hari Kerja";
-        if (Date_tgl_lembur.getDate() != null) {
-            if (new SimpleDateFormat("EEEE", Locale.ENGLISH).format(Date_tgl_lembur.getDate()).equals("Sunday")) {
-                jenis_hari = "Hari Libur";
-            } else {
-                try {
-                    sql = "SELECT * FROM `tb_libur` WHERE `tanggal_libur` = '" + dateFormat.format(Date_tgl_lembur.getDate()) + "' ";
-                    rs = Utility.db.getStatement().executeQuery(sql);
-                    if (rs.next()) {
-                        jenis_hari = "Hari Libur";
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(JDialog_Add_SuratPerintahLembur.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            ComboBox_jenis_hari.setSelectedItem(jenis_hari);
         }
     }
 
@@ -141,22 +117,21 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
                     + "`uraian_tugas`='" + uraian_tugas + "',"
                     + "`diajukan`='" + label_diajukan.getText() + "' "
                     + "WHERE `nomor_surat`='" + nomor_surat + "'";
-            if ((Utility.db.getStatement().executeUpdate(Query_surat)) > 0) {
-                for (int i = 0; i < Table_pegawai_lembur.getRowCount(); i++) {
-                    String id_pegawai = Table_pegawai_lembur.getValueAt(i, 2).toString();
-                    String mulai_lembur = Table_pegawai_lembur.getValueAt(i, 5).toString();
-                    String selesai_lembur = Table_pegawai_lembur.getValueAt(i, 6).toString();
-                    String jumlah_jam = Table_pegawai_lembur.getValueAt(i, 7).toString();
-                    String menit_istirahat_lembur = Table_pegawai_lembur.getValueAt(i, 8).toString();
-                    Query_pegawai = "INSERT INTO `tb_surat_lembur_detail`(`id_pegawai`, `tanggal_lembur`, `jenis_lembur`,`mulai_lembur`,`selesai_lembur`, `jumlah_jam`, `menit_istirahat_lembur`, `nomor_surat`) "
-                            + "VALUES ('" + id_pegawai + "','" + tanggal_lembur + "', '" + jenis_lembur + "','" + mulai_lembur + "','" + selesai_lembur + "','" + jumlah_jam + "','" + menit_istirahat_lembur + "','" + nomor_surat + "')";
-                    Utility.db.getStatement().executeUpdate(Query_pegawai);
-                }
-                JOptionPane.showMessageDialog(this, "Data Added!");
-                JPanel_DataLembur.button_search_SPL_PEJUANG.doClick();
-                this.dispose();
-                Utility.db.getConnection().commit();
+            Utility.db.getStatement().executeUpdate(Query_surat);
+
+            for (int i = 0; i < Table_pegawai_lembur.getRowCount(); i++) {
+                String id_pegawai = Table_pegawai_lembur.getValueAt(i, 2).toString();
+                String mulai_lembur = Table_pegawai_lembur.getValueAt(i, 5).toString();
+                String selesai_lembur = Table_pegawai_lembur.getValueAt(i, 6).toString();
+                String jumlah_jam = Table_pegawai_lembur.getValueAt(i, 7).toString();
+                String menit_istirahat_lembur = Table_pegawai_lembur.getValueAt(i, 8).toString();
+                Query_pegawai = "INSERT INTO `tb_surat_lembur_detail`(`id_pegawai`, `tanggal_lembur`, `jenis_lembur`,`mulai_lembur`,`selesai_lembur`, `jumlah_jam`, `menit_istirahat_lembur`, `nomor_surat`) "
+                        + "VALUES ('" + id_pegawai + "','" + tanggal_lembur + "', '" + jenis_lembur + "','" + mulai_lembur + "','" + selesai_lembur + "','" + jumlah_jam + "','" + menit_istirahat_lembur + "','" + nomor_surat + "')";
+                Utility.db.getStatement().executeUpdate(Query_pegawai);
             }
+            Utility.db.getConnection().commit();
+            JOptionPane.showMessageDialog(this, "Data Added!");
+            this.dispose();
         } catch (SQLException | HeadlessException e) {
             try {
                 Utility.db.getConnection().rollback();
@@ -213,7 +188,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
                     Utility.db.getStatement().executeUpdate(Query_pegawai);
                 }
                 JOptionPane.showMessageDialog(this, "Data Added!");
-                JPanel_DataLembur.button_search_SPL_PEJUANG.doClick();
                 this.dispose();
                 Utility.db.getConnection().commit();
             }
@@ -311,11 +285,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
         Date_tgl_lembur.setBackground(new java.awt.Color(255, 255, 255));
         Date_tgl_lembur.setDateFormatString("dd MMMM yyyy");
         Date_tgl_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        Date_tgl_lembur.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                Date_tgl_lemburFocusLost(evt);
-            }
-        });
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -563,11 +532,10 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
         // TODO add your handling code here:
         boolean check = true;
         try {
-            deteksi_jenis_hari_otomatis();
             if (Table_pegawai_lembur.getRowCount() == 0) {
                 throw new Exception("Nama2 karyawan yang akan lembur belum di masukkan!");
             }
-            
+
             if (ComboBox_jenis_lembur.getSelectedItem().toString().equals("-")) {
                 throw new Exception("Jenis Lembur belum dipilih");
             }
@@ -607,11 +575,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_button_simpanActionPerformed
-
-    private void Date_tgl_lemburFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Date_tgl_lemburFocusLost
-        // TODO add your handling code here:
-        deteksi_jenis_hari_otomatis();
-    }//GEN-LAST:event_Date_tgl_lemburFocusLost
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

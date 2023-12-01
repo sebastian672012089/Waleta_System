@@ -34,6 +34,8 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
     DecimalFormat decimalFormat = new DecimalFormat();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DefaultTableCellRenderer TableAlignment = new DefaultTableCellRenderer();
+    HashMap<String, Date[]> List_tanggal = new HashMap<>();
+    HashMap<String, String> List_JenisTujuan = new HashMap<>();
 
     public JPanel_ProgressLP() {
         initComponents();
@@ -49,16 +51,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
             while (rs.next()) {
                 ComboBox_ruangan.addItem(rs.getString("ruangan"));
             }
-//            refreshTable();
-        } catch (Exception ex) {
-            Logger.getLogger(JPanel_ProgressLP.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
-    public ArrayList<ProgressLP> prosesList() {
-        ArrayList<ProgressLP> prosesList = new ArrayList<>();
-        try {
-            HashMap<String, Date[]> List_tanggal = new HashMap<>();
             Utility.db_sub.connect();
             String query = "SELECT `tb_cabut`.`no_laporan_produksi`, `tgl_mulai_cabut`, `tgl_cabut`, `tgl_setor_cabut`, `tb_cetak`.`tgl_mulai_cetak`, `tgl_selesai_cetak` "
                     + "FROM `tb_cabut` "
@@ -75,6 +68,24 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                 };
                 List_tanggal.put(result.getString("no_laporan_produksi"), Array_tanggal);
             }
+
+            Utility.db_maklun.connect();
+            String Query_Maklun = "SELECT `tb_lp`.`no_lp`, `tb_transaksi`.`jenis_tujuan_akhir` FROM `tb_lp` LEFT JOIN `tb_transaksi` ON `tb_lp`.`id_lp` = `tb_transaksi`.`id_lp` WHERE 1";
+            ResultSet Result_Maklun = Utility.db_maklun.getStatement().executeQuery(Query_Maklun);
+            while (Result_Maklun.next()) {
+                List_JenisTujuan.put(Result_Maklun.getString("no_lp"), Result_Maklun.getString("jenis_tujuan_akhir"));
+            }
+//            refreshTable();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_ProgressLP.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public ArrayList<ProgressLP> prosesList() {
+        ArrayList<ProgressLP> prosesList = new ArrayList<>();
+        try {
+
             String filter_status = "";
             if (ComboBox_filter_status.getSelectedIndex() == 1) {
                 filter_status = "AND `tanggal_grading` IS NULL";
@@ -235,7 +246,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
 
         ArrayList<ProgressLP> list = prosesList();
         DefaultTableModel model = (DefaultTableModel) Table_progress_lp.getModel();
-        Object[] row = new Object[35];
+        Object[] row = new Object[50];
         jProgressBar1.setMaximum(list.size());
         for (int i = 0; i < list.size(); i++) {
             jProgressBar1.setValue(jProgressBar1.getValue() + 1);
@@ -364,32 +375,33 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
             row[32] = TimeUnit.MILLISECONDS.toDays(lama_grading);
 
             if ("SELESAI".equals(list.get(i).getStatus_box())) {
-                row[32] = "Barang Jadi";
+                row[33] = "Barang Jadi";
             } else {
                 if (list.get(i).getTgl_grading_bj() == null) {
-                    row[32] = "LP Belum Grading";
+                    row[33] = "LP Belum Grading";
                 } else {
-                    row[32] = "LP Proses Grading";
+                    row[33] = "LP Proses Grading";
                 }
             }
-            row[33] = list.get(i).getRsb_ct1();
+            row[34] = list.get(i).getRsb_ct1();
+            row[35] = List_JenisTujuan.getOrDefault(list.get(i).getNo_lp(), "");
 
             if (null != ComboBox_filter_status.getSelectedItem().toString()) {
                 switch (ComboBox_filter_status.getSelectedItem().toString()) {
                     case "LP Belum Grading":
-                        if (row[32] == "LP Belum Grading") {
+                        if (row[33] == "LP Belum Grading") {
                             tot_berat_basah = tot_berat_basah + list.get(i).getBerat_basah();
                             model.addRow(row);
                         }
                         break;
                     case "LP Proses Grading":
-                        if (row[32] == "LP Proses Grading") {
+                        if (row[33] == "LP Proses Grading") {
                             tot_berat_basah = tot_berat_basah + list.get(i).getBerat_basah();
                             model.addRow(row);
                         }
                         break;
                     case "Barang Jadi":
-                        if (row[32] == "Barang Jadi") {
+                        if (row[33] == "Barang Jadi") {
                             tot_berat_basah = tot_berat_basah + list.get(i).getBerat_basah();
                             model.addRow(row);
                         }
@@ -711,14 +723,14 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
 
             },
             new String [] {
-                "No LP", "No Kartu", "Memo", "Grade", "Bulu Upah", "Ruang", "Kpg", "Gram", "Tgl LP", "Rendam", "Cuci", "Cabut", "Mulai Cabut", "Selesai Cbt", "Masuk Cetak", "Selesai Ctk T1", "Selesai Ctk", "F2", "Koreksi F2", "F1", "F2", "Selesai F2", "QC", "Selesai QC", "Grading BJ", "Lama Tandon", "Lama Cabut", "Lama Koreksi", "Lama Cetak", "Lama F2", "Lama QC", "Lama Proses", "Lama Grading", "Status", "RSB CT 1"
+                "No LP", "No Kartu", "Memo", "Grade", "Bulu Upah", "Ruang", "Kpg", "Gram", "Tgl LP", "Rendam", "Cuci", "Cabut", "Mulai Cabut", "Selesai Cbt", "Masuk Cetak", "Selesai Ctk T1", "Selesai Ctk", "F2", "Koreksi F2", "F1", "F2", "Selesai F2", "QC", "Selesai QC", "Grading BJ", "Lama Tandon", "Lama Cabut", "Lama Koreksi", "Lama Cetak", "Lama F2", "Lama QC", "Lama Proses", "Lama Grading", "Status", "RSB CT 1", "Jenis Tujuan"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

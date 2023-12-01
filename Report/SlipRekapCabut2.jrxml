@@ -22,7 +22,9 @@ FROM `tb_detail_pencabut`
 LEFT JOIN `tb_cabut` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`
 LEFT JOIN `tb_karyawan` ON `tb_detail_pencabut`.`id_pegawai` = `tb_karyawan`.`id_pegawai`
 LEFT JOIN `tb_bagian` ON `tb_detail_pencabut`.`kode_bagian` = `tb_bagian`.`kode_bagian`
-WHERE `tb_cabut`.`tgl_setor_cabut` BETWEEN $P{PERIODE_AWAL} AND $P{PERIODE_AKHIR}]]>
+WHERE `tb_cabut`.`tgl_setor_cabut` BETWEEN $P{PERIODE_AWAL} AND $P{PERIODE_AKHIR}
+AND (`nama_bagian` LIKE '%CABUT-BORONG%' OR `nama_bagian` LIKE '%CABUT-TRAINING%')
+ORDER BY `ruang_bagian`, `bagian_bagian`]]>
 	</queryString>
 	<field name="grup" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>

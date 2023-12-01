@@ -140,6 +140,8 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="button_slip_borong_cetak" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="button_slip_borong_cetak2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="button_slip_mandiri_cetak" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="button_export" min="-2" max="-2" attributes="0"/>
@@ -147,7 +149,7 @@
                                   <Component id="button_input_gaji_borong_OM" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="0" pref="96" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="35" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -226,6 +228,7 @@
                       <Component id="button_export" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="button_slip_cabut" alignment="2" min="-2" max="-2" attributes="0"/>
                       <Component id="button_input_gaji_borong_OM" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_slip_borong_cetak2" alignment="2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="403" max="32767" attributes="0"/>
@@ -683,7 +686,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="11" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Print Slip / Grup"/>
+            <Property name="text" type="java.lang.String" value="Slip / Grup"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -698,7 +701,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="11" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Data Bonus Pencapaian Produksi"/>
+            <Property name="text" type="java.lang.String" value="Bonus Pencapaian Produksi"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -867,7 +870,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="11" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Print Slip / Grup 2"/>
+            <Property name="text" type="java.lang.String" value="Slip / Grup 2"/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
@@ -1061,6 +1064,21 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_input_gaji_borong_OMActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="button_slip_borong_cetak2">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="11" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Slip Borong Cetak 2"/>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_slip_borong_cetak2ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

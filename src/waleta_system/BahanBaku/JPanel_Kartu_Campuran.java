@@ -496,7 +496,7 @@ public class JPanel_Kartu_Campuran extends javax.swing.JPanel {
         try {
             int j = Table_kartu_campuran.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Delete !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Menghapus kartu CMP di sini tidak otomatis menghapus kartu masuk waleta, lanjutkan?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {
