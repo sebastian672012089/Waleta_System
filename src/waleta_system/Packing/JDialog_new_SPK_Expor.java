@@ -171,12 +171,12 @@ public class JDialog_new_SPK_Expor extends javax.swing.JDialog {
         if (Date_awb.getDate() != null) {
             tanggal_awb = "'" + dateFormat.format(Date_awb.getDate()) + "'";
         }
-        sql = "INSERT INTO `tb_spk`(`kode_spk`, `buyer`, `no_revisi`, `tanggal_spk`, `tanggal_tk`, `tanggal_keluar`, `tanggal_awb`, `detail`, `approved`) "
+        String INSERT_SPK_WALETA = "INSERT INTO `tb_spk`(`kode_spk`, `buyer`, `no_revisi`, `tanggal_spk`, `tanggal_tk`, `tanggal_keluar`, `tanggal_awb`, `detail`, `approved`) "
                 + "VALUES ('" + kode_spk + "W','" + txt_buyer_code.getText() + "',1,'" + dateFormat.format(Date_spk.getDate()) + "'," + tanggal_tk + ",'" + dateFormat.format(Date_keluar.getDate()) + "'," + tanggal_awb + ", '" + txt_catatan.getText() + "', 'MARKETING MANAGER')";
         Utility.db.getConnection().createStatement();
-        if ((Utility.db.getStatement().executeUpdate(sql)) > 0) {
+        if ((Utility.db.getStatement().executeUpdate(INSERT_SPK_WALETA)) > 0) {
             for (int i = 0; i < Table_detail1.getRowCount(); i++) {
-                sql = "INSERT INTO `tb_spk_detail`(`kode_spk`, `grade_waleta`, `grade_buyer`, `berat_kemasan`, `jumlah_kemasan`, `berat`, `harga_cny`, `keterangan`) "
+                String INSERT_DETAIL_SPK_WALETA = "INSERT INTO `tb_spk_detail`(`kode_spk`, `grade_waleta`, `grade_buyer`, `berat_kemasan`, `jumlah_kemasan`, `berat`, `harga_cny`, `keterangan`) "
                         + "VALUES ("
                         + "'" + kode_spk + "W',"
                         + "'" + Table_detail1.getValueAt(i, 1).toString() + "',"
@@ -187,7 +187,7 @@ public class JDialog_new_SPK_Expor extends javax.swing.JDialog {
                         + "'" + Table_detail1.getValueAt(i, 6).toString() + "',"
                         + "'" + Table_detail1.getValueAt(i, 7).toString() + "')";
                 Utility.db.getConnection().createStatement();
-                Utility.db.getStatement().executeUpdate(sql);
+                Utility.db.getStatement().executeUpdate(INSERT_DETAIL_SPK_WALETA);
             }
         }
     }
@@ -201,12 +201,12 @@ public class JDialog_new_SPK_Expor extends javax.swing.JDialog {
         if (Date_awb.getDate() != null) {
             tanggal_awb = "'" + dateFormat.format(Date_awb.getDate()) + "'";
         }
-        sql = "INSERT INTO `tb_spk`(`kode_spk`, `buyer`, `no_revisi`, `tanggal_spk`, `tanggal_tk`, `tanggal_keluar`, `tanggal_awb`, `detail`, `approved`) "
+        String INSERT_SPK_ESTA = "INSERT INTO `tb_spk`(`kode_spk`, `buyer`, `no_revisi`, `tanggal_spk`, `tanggal_tk`, `tanggal_keluar`, `tanggal_awb`, `detail`, `approved`) "
                 + "VALUES ('" + kode_spk + "E','" + txt_buyer_code.getText() + "',1,'" + dateFormat.format(Date_spk.getDate()) + "'," + tanggal_tk + ",'" + dateFormat.format(Date_keluar.getDate()) + "'," + tanggal_awb + ", '" + txt_catatan.getText() + "', 'MARKETING MANAGER')";
         Utility.db.getConnection().createStatement();
-        if ((Utility.db.getStatement().executeUpdate(sql)) > 0) {
+        if ((Utility.db.getStatement().executeUpdate(INSERT_SPK_ESTA)) > 0) {
             for (int i = 0; i < Table_detail2.getRowCount(); i++) {
-                sql = "INSERT INTO `tb_spk_detail`(`grade_waleta`, `grade_buyer`, `berat_kemasan`, `jumlah_kemasan`, `berat`, `harga_cny`, `keterangan`, `kode_spk`) "
+                String INSERT_DETAIL_SPK_ESTA = "INSERT INTO `tb_spk_detail`(`grade_waleta`, `grade_buyer`, `berat_kemasan`, `jumlah_kemasan`, `berat`, `harga_cny`, `keterangan`, `kode_spk`) "
                         + "VALUES ("
                         + "'" + Table_detail2.getValueAt(i, 1).toString() + "',"
                         + "'" + Table_detail2.getValueAt(i, 2).toString() + "',"
@@ -217,7 +217,7 @@ public class JDialog_new_SPK_Expor extends javax.swing.JDialog {
                         + "'" + Table_detail2.getValueAt(i, 7).toString() + "',"
                         + "'" + kode_spk + "E')";
                 Utility.db.getConnection().createStatement();
-                Utility.db.getStatement().executeUpdate(sql);
+                Utility.db.getStatement().executeUpdate(INSERT_DETAIL_SPK_ESTA);
             }
         }
     }
@@ -231,12 +231,12 @@ public class JDialog_new_SPK_Expor extends javax.swing.JDialog {
         if (Date_awb.getDate() != null) {
             tanggal_awb = "'" + dateFormat.format(Date_awb.getDate()) + "'";
         }
-        sql = "INSERT INTO `tb_spk`(`kode_spk`, `buyer`, `no_revisi`, `tanggal_spk`, `tanggal_tk`, `tanggal_keluar`, `tanggal_awb`, `detail`, `approved`) "
+        String INSERT_SPK_JASTIP = "INSERT INTO `tb_spk`(`kode_spk`, `buyer`, `no_revisi`, `tanggal_spk`, `tanggal_tk`, `tanggal_keluar`, `tanggal_awb`, `detail`, `approved`) "
                 + "VALUES ('" + kode_spk + "J','" + txt_buyer_code.getText() + "',1,'" + dateFormat.format(Date_spk.getDate()) + "'," + tanggal_tk + ",'" + dateFormat.format(Date_keluar.getDate()) + "'," + tanggal_awb + ", '" + txt_catatan.getText() + "', 'MARKETING MANAGER')";
         Utility.db.getConnection().createStatement();
-        if ((Utility.db.getStatement().executeUpdate(sql)) > 0) {
+        if ((Utility.db.getStatement().executeUpdate(INSERT_SPK_JASTIP)) > 0) {
             for (int i = 0; i < Table_detail3.getRowCount(); i++) {
-                sql = "INSERT INTO `tb_spk_detail`(`grade_waleta`, `grade_buyer`, `berat_kemasan`, `jumlah_kemasan`, `berat`, `harga_cny`, `keterangan`, `kode_spk`) "
+                String INSERT_DETAIL_SPK_JASTIP = "INSERT INTO `tb_spk_detail`(`grade_waleta`, `grade_buyer`, `berat_kemasan`, `jumlah_kemasan`, `berat`, `harga_cny`, `keterangan`, `kode_spk`) "
                         + "VALUES ("
                         + "'" + Table_detail3.getValueAt(i, 1).toString() + "',"
                         + "'" + Table_detail3.getValueAt(i, 2).toString() + "',"
@@ -247,7 +247,7 @@ public class JDialog_new_SPK_Expor extends javax.swing.JDialog {
                         + "'" + Table_detail3.getValueAt(i, 7).toString() + "',"
                         + "'" + kode_spk + "J')";
                 Utility.db.getConnection().createStatement();
-                Utility.db.getStatement().executeUpdate(sql);
+                Utility.db.getStatement().executeUpdate(INSERT_DETAIL_SPK_JASTIP);
             }
         }
     }
@@ -1027,10 +1027,10 @@ public class JDialog_new_SPK_Expor extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Silahkan Lengkapi Data diatas !!");
         } else {
             count();
+            this.kode_spk = generateKodeSPK();
+            txt_kode_spk.setText(this.kode_spk);
             try {
                 Utility.db.getConnection().setAutoCommit(false);
-                this.kode_spk = generateKodeSPK();
-                txt_kode_spk.setText(this.kode_spk);
 
                 if (Table_detail1.getRowCount() > 0) {
                     New_spk_waleta();

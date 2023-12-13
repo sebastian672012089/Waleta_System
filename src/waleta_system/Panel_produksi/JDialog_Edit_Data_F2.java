@@ -3,6 +3,7 @@ package waleta_system.Panel_produksi;
 import waleta_system.Class.Utility;
 
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -23,9 +24,15 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
     int keping_awal = 0, jidun_awal = 0;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+    public JDialog_Edit_Data_F2(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        this.setResizable(false);
+        initComponents();
+        getdata();
+    }
+
     public void getdata() {
         try {
-
             int i = JPanel_Finishing2.Table_Data_f2.getSelectedRow();
             label_no_lp.setText(JPanel_Finishing2.Table_Data_f2.getValueAt(i, 0).toString());
 
@@ -131,19 +138,9 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
             txt_lp_kaki2.setText(JPanel_Finishing2.Table_Data_f2.getValueAt(i, 36).toString());
 
             txt_admin.setText(JPanel_Finishing2.Table_Data_f2.getValueAt(i, 37).toString());
-
-        } catch (ParseException ex) {
-            Logger.getLogger(JDialog_Edit_Data_Cabut.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(JDialog_Edit_Data_Cabut.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public JDialog_Edit_Data_F2(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        this.setResizable(false);
-        initComponents();
-        getdata();
     }
 
     /**
@@ -155,9 +152,10 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        button_save = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         label_no_lp = new javax.swing.JLabel();
-        button_save = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         button_pick_diterima = new javax.swing.JButton();
@@ -260,13 +258,7 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         setTitle("Bagian Finishing 2");
         setResizable(false);
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
-        jLabel1.setText("Edit LP Finishing 2");
-
-        label_no_lp.setBackground(new java.awt.Color(255, 255, 255));
-        label_no_lp.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
-        label_no_lp.setText("NO. Laporan Produksi");
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         button_save.setBackground(new java.awt.Color(255, 255, 255));
         button_save.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -276,6 +268,14 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
                 button_saveActionPerformed(evt);
             }
         });
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel1.setText("Edit LP Finishing 2");
+
+        label_no_lp.setBackground(new java.awt.Color(255, 255, 255));
+        label_no_lp.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        label_no_lp.setText("NO. Laporan Produksi");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -297,8 +297,12 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         jLabel9.setText("F. Bonus");
 
         txt_fbonus.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_fbonus.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_fbonus.setText("0");
+        txt_fbonus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fbonusKeyTyped(evt);
+            }
+        });
 
         jLabel15.setBackground(new java.awt.Color(255, 255, 255));
         jLabel15.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -321,8 +325,12 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         jLabel8.setText("Flat :");
 
         txt_flat.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_flat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_flat.setText("0");
+        txt_flat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_flatKeyTyped(evt);
+            }
+        });
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -333,12 +341,20 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         jLabel13.setText("Keping");
 
         txt_mk_pecah.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_mk_pecah.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_mk_pecah.setText("0");
+        txt_mk_pecah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_mk_pecahKeyTyped(evt);
+            }
+        });
 
         txt_bk_flat.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bk_flat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_bk_flat.setText("0");
+        txt_bk_flat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_bk_flatKeyTyped(evt);
+            }
+        });
 
         jLabel16.setBackground(new java.awt.Color(255, 255, 255));
         jLabel16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -349,12 +365,20 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         jLabel17.setText("Grams");
 
         txt_bk_fbonus.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bk_fbonus.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_bk_fbonus.setText("0");
+        txt_bk_fbonus.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_bk_fbonusKeyTyped(evt);
+            }
+        });
 
         txt_bk_pecah.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bk_pecah.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_bk_pecah.setText("0");
+        txt_bk_pecah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_bk_pecahKeyTyped(evt);
+            }
+        });
 
         jLabel18.setBackground(new java.awt.Color(255, 255, 255));
         jLabel18.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -405,16 +429,24 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         jLabel34.setText("F. Nol");
 
         txt_fnol.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_fnol.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_fnol.setText("0");
+        txt_fnol.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_fnolKeyTyped(evt);
+            }
+        });
 
         jLabel35.setBackground(new java.awt.Color(255, 255, 255));
         jLabel35.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel35.setText("Keping");
 
         txt_bk_fnol.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bk_fnol.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_bk_fnol.setText("0");
+        txt_bk_fnol.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_bk_fnolKeyTyped(evt);
+            }
+        });
 
         jLabel36.setBackground(new java.awt.Color(255, 255, 255));
         jLabel36.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -503,16 +535,24 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         jLabel47.setText("Jidun utuh :");
 
         txt_jidun_utuh.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_jidun_utuh.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_jidun_utuh.setText("0");
+        txt_jidun_utuh.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_jidun_utuhKeyTyped(evt);
+            }
+        });
 
         jLabel48.setBackground(new java.awt.Color(255, 255, 255));
         jLabel48.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel48.setText("Keping");
 
         txt_bk_jidun.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bk_jidun.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_bk_jidun.setText("0");
+        txt_bk_jidun.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_bk_jidunKeyTyped(evt);
+            }
+        });
 
         jLabel49.setBackground(new java.awt.Color(255, 255, 255));
         jLabel49.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -523,8 +563,12 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         jLabel50.setText("Jidun pecah :");
 
         txt_jidun_pch.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_jidun_pch.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_jidun_pch.setText("0");
+        txt_jidun_pch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_jidun_pchKeyTyped(evt);
+            }
+        });
 
         jLabel51.setBackground(new java.awt.Color(255, 255, 255));
         jLabel51.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -759,7 +803,6 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
 
         txt_tambah_kaki1.setEditable(false);
         txt_tambah_kaki1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_tambah_kaki1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_tambah_kaki1.setText("0");
 
         jLabel37.setBackground(new java.awt.Color(255, 255, 255));
@@ -783,12 +826,20 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         jLabel39.setText("Grams");
 
         txt_rontokan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_rontokan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_rontokan.setText("0");
+        txt_rontokan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_rontokanKeyTyped(evt);
+            }
+        });
 
         txt_serabut.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_serabut.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_serabut.setText("0");
+        txt_serabut.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_serabutKeyTyped(evt);
+            }
+        });
 
         txt_lp_kaki1.setEditable(false);
         txt_lp_kaki1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -796,8 +847,12 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         txt_lp_kaki1.setText("-");
 
         txt_hancuran.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_hancuran.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_hancuran.setText("0");
+        txt_hancuran.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_hancuranKeyTyped(evt);
+            }
+        });
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -814,6 +869,11 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
 
         txt_netto.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_netto.setText("0");
+        txt_netto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nettoKeyTyped(evt);
+            }
+        });
 
         txt_pekerja_timbang.setEditable(false);
         txt_pekerja_timbang.setBackground(new java.awt.Color(255, 255, 255));
@@ -886,8 +946,12 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         });
 
         txt_bonggol.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bonggol.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_bonggol.setText("0");
+        txt_bonggol.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_bonggolKeyTyped(evt);
+            }
+        });
 
         button_pick_timbang.setBackground(new java.awt.Color(255, 255, 255));
         button_pick_timbang.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -899,8 +963,12 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         });
 
         txt_sesekan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_sesekan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_sesekan.setText("0");
+        txt_sesekan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_sesekanKeyTyped(evt);
+            }
+        });
 
         jLabel23.setBackground(new java.awt.Color(255, 255, 255));
         jLabel23.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -916,7 +984,6 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
 
         txt_tambah_kaki2.setEditable(false);
         txt_tambah_kaki2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_tambah_kaki2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txt_tambah_kaki2.setText("0");
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
@@ -1074,39 +1141,50 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addComponent(label_no_lp)))
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(button_save)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1)
+                        .addComponent(label_no_lp)
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(button_save, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_no_lp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(button_save)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -1385,6 +1463,193 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_button_pick_timbangActionPerformed
 
+    private void txt_fbonusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fbonusKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_fbonusKeyTyped
+
+    private void txt_bk_fbonusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bk_fbonusKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_bk_fbonusKeyTyped
+
+    private void txt_fnolKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fnolKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_fnolKeyTyped
+
+    private void txt_bk_fnolKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bk_fnolKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_bk_fnolKeyTyped
+
+    private void txt_mk_pecahKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_mk_pecahKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_mk_pecahKeyTyped
+
+    private void txt_bk_pecahKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bk_pecahKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_bk_pecahKeyTyped
+
+    private void txt_flatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_flatKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_flatKeyTyped
+
+    private void txt_bk_flatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bk_flatKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_bk_flatKeyTyped
+
+    private void txt_jidun_utuhKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jidun_utuhKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_jidun_utuhKeyTyped
+
+    private void txt_bk_jidunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bk_jidunKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_bk_jidunKeyTyped
+
+    private void txt_jidun_pchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jidun_pchKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_jidun_pchKeyTyped
+
+    private void txt_sesekanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_sesekanKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_sesekanKeyTyped
+
+    private void txt_hancuranKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_hancuranKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_hancuranKeyTyped
+
+    private void txt_rontokanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_rontokanKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_rontokanKeyTyped
+
+    private void txt_bonggolKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bonggolKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_bonggolKeyTyped
+
+    private void txt_serabutKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_serabutKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_serabutKeyTyped
+
+    private void txt_nettoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nettoKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nettoKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_f1;
@@ -1457,6 +1722,7 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel label_netto;
     private javax.swing.JLabel label_no_lp;
     private javax.swing.JTextField txt_admin;

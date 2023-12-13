@@ -241,23 +241,26 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             if (Date1_f2.getDate() != null && Date2_f2.getDate() != null) {
                 if (null != ComboBox_SearchDate.getSelectedItem().toString()) {
                     switch (ComboBox_SearchDate.getSelectedItem().toString()) {
+                        case "Tgl Masuk":
+                            search_tgl = "AND `tb_finishing_2`.`tgl_masuk_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' AND '" + dateFormat.format(Date2_f2.getDate()) + "'\n";
+                            break;
                         case "Tgl Input By Product":
-                            search_tgl = "AND `tb_finishing_2`.`tgl_input_byProduct` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_input_byProduct` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' AND '" + dateFormat.format(Date2_f2.getDate()) + "'\n";
                             break;
                         case "Tgl Koreksi Kering":
-                            search_tgl = "AND `tb_finishing_2`.`tgl_dikerjakan_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_dikerjakan_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' AND '" + dateFormat.format(Date2_f2.getDate()) + "'\n";
                             break;
                         case "Tgl F1":
-                            search_tgl = "AND `tb_finishing_2`.`tgl_f1` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_f1` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' AND '" + dateFormat.format(Date2_f2.getDate()) + "'\n";
                             break;
                         case "Tgl F2":
-                            search_tgl = "AND `tb_finishing_2`.`tgl_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' AND '" + dateFormat.format(Date2_f2.getDate()) + "'\n";
                             break;
                         case "Tgl Setor":
-                            search_tgl = "AND `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' AND '" + dateFormat.format(Date2_f2.getDate()) + "'\n";
                             break;
                         case "Tgl input ssk":
-                            search_tgl = "AND `tb_finishing_2`.`tgl_input_sesekan` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' and '" + dateFormat.format(Date2_f2.getDate()) + "'";
+                            search_tgl = "AND `tb_finishing_2`.`tgl_input_sesekan` BETWEEN '" + dateFormat.format(Date1_f2.getDate()) + "' AND '" + dateFormat.format(Date2_f2.getDate()) + "'\n";
                             break;
                         default:
                             break;
@@ -302,22 +305,22 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 row[15] = rs.getString("f2_disetor");
                 row[16] = rs.getString("f2_timbang");
                 row[17] = rs.getInt("fbonus_f2");
-                row[18] = rs.getInt("berat_fbonus");
+                row[18] = rs.getFloat("berat_fbonus");
                 row[19] = rs.getInt("fnol_f2");
-                row[20] = rs.getInt("berat_fnol");
+                row[20] = rs.getFloat("berat_fnol");
                 row[21] = rs.getInt("pecah_f2");
-                row[22] = rs.getInt("berat_pecah");
+                row[22] = rs.getFloat("berat_pecah");
                 row[23] = rs.getInt("flat_f2");
-                row[24] = rs.getInt("berat_flat");
+                row[24] = rs.getFloat("berat_flat");
                 row[25] = rs.getInt("jidun_utuh_f2");
                 row[26] = rs.getInt("jidun_pecah_f2");
-                row[27] = rs.getInt("berat_jidun");
+                row[27] = rs.getFloat("berat_jidun");
 
-                row[28] = rs.getInt("sesekan");
-                row[29] = rs.getInt("hancuran");
-                row[30] = rs.getInt("rontokan");
-                row[31] = rs.getInt("bonggol");
-                row[32] = rs.getInt("serabut");
+                row[28] = rs.getFloat("sesekan");
+                row[29] = rs.getFloat("hancuran");
+                row[30] = rs.getFloat("rontokan");
+                row[31] = rs.getFloat("bonggol");
+                row[32] = rs.getFloat("serabut");
 
                 row[33] = rs.getFloat("tambahan_kaki1");
                 row[34] = rs.getString("lp_kaki1");
@@ -441,21 +444,21 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         rs.getString("f2_disetor"),
                         rs.getString("f2_timbang"),
                         rs.getInt("fbonus_f2"),
-                        rs.getInt("berat_fbonus"),
+                        rs.getFloat("berat_fbonus"),
                         rs.getInt("fnol_f2"),
-                        rs.getInt("berat_fnol"),
+                        rs.getFloat("berat_fnol"),
                         rs.getInt("pecah_f2"),
-                        rs.getInt("berat_pecah"),
+                        rs.getFloat("berat_pecah"),
                         rs.getInt("flat_f2"),
-                        rs.getInt("berat_flat"),
+                        rs.getFloat("berat_flat"),
                         rs.getInt("jidun_utuh_f2"),
                         rs.getInt("jidun_pecah_f2"),
-                        rs.getInt("berat_jidun"),
-                        rs.getInt("sesekan"),
-                        rs.getInt("hancuran"),
-                        rs.getInt("rontokan"),
-                        rs.getInt("bonggol"),
-                        rs.getInt("serabut"),
+                        rs.getFloat("berat_jidun"),
+                        rs.getFloat("sesekan"),
+                        rs.getFloat("hancuran"),
+                        rs.getFloat("rontokan"),
+                        rs.getFloat("bonggol"),
+                        rs.getFloat("serabut"),
                         rs.getFloat("tambahan_kaki1"),
                         rs.getString("lp_kaki1"),
                         rs.getFloat("tambahan_kaki2"),
@@ -1398,7 +1401,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
@@ -1499,7 +1502,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         });
 
         ComboBox_SearchDate.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_SearchDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tgl Input By Product", "Tgl Koreksi Kering", "Tgl F1", "Tgl F2", "Tgl Setor", "Tgl input ssk" }));
+        ComboBox_SearchDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tgl Masuk", "Tgl Input By Product", "Tgl Koreksi Kering", "Tgl F1", "Tgl F2", "Tgl Setor", "Tgl input ssk" }));
 
         button_input_sesekan.setBackground(new java.awt.Color(255, 255, 255));
         button_input_sesekan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N

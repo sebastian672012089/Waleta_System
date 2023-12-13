@@ -28,22 +28,22 @@ public class DataF2 {
     private String f2_disetor;
     private String f2_timbang;
     private int fbonus_keping;
-    private int fbonus_berat;
+    private float fbonus_berat;
     private int fnol_keping;
-    private int fnol_berat;
+    private float fnol_berat;
     private int pecah_keping;
-    private int pecah_berat;
+    private float pecah_berat;
     private int flat_keping;
-    private int flat_berat;
+    private float flat_berat;
     private int jidun_keping;
     private int jidun_pecah;
-    private int jidun_berat;
+    private float jidun_berat;
 
-    private int sesekan;
-    private int hancuran;
-    private int rontokan;
-    private int bonggol;
-    private int serabut;
+    private float sesekan;
+    private float hancuran;
+    private float rontokan;
+    private float bonggol;
+    private float serabut;
 
     private float tambah_kaki1;
     private String lp_kaki1;
@@ -53,7 +53,7 @@ public class DataF2 {
     private String otorisasi;
     private String keterangan;
 
-    public DataF2(String kartu, String lp, int jumlah_keping, int berat_kering, String memo_lp, String grade, String bentuk, String bulu, String ruang, String pencetak, String pencabut, Date tgl_input_bp, Date tgl_dikerjakan, String pekerja_koreksi, Date tgl_f1, String pekerja_f1, Date tgl_f2, String pekerja_f2, Date tgl_mulai, String diterima, Date tgl_setor, String disetor, String f2_timbang, int fbonus_kpg, int fbonus_brt, int fnol_kpg, int fnol_brt, int pecah_kpg, int pecah_brt, int flat_kpg, int flat_brt, int jidun_kpg, int jidun_pecah, int jidun_brt, int ss, int h, int r, int b, int s, float tmbh_kaki1, String lp_kk1, float tmbh_kaki2, String lp_kk2, String admin, String otorisasi, String keterangan) {
+    public DataF2(String kartu, String lp, int jumlah_keping, int berat_kering, String memo_lp, String grade, String bentuk, String bulu, String ruang, String pencetak, String pencabut, Date tgl_input_bp, Date tgl_dikerjakan, String pekerja_koreksi, Date tgl_f1, String pekerja_f1, Date tgl_f2, String pekerja_f2, Date tgl_mulai, String diterima, Date tgl_setor, String disetor, String f2_timbang, int fbonus_kpg, float fbonus_brt, int fnol_kpg, float fnol_brt, int pecah_kpg, float pecah_brt, int flat_kpg, float flat_brt, int jidun_kpg, int jidun_pecah, float jidun_brt, float ss, float h, float r, float b, float s, float tmbh_kaki1, String lp_kk1, float tmbh_kaki2, String lp_kk2, String admin, String otorisasi, String keterangan) {
         this.no_kartu = kartu;
         this.no_lp = lp;
         this.jumlah_keping = jumlah_keping;
@@ -295,11 +295,11 @@ public class DataF2 {
         this.fbonus_keping = fbonus_keping;
     }
 
-    public int getFbonus_berat() {
+    public float getFbonus_berat() {
         return fbonus_berat;
     }
 
-    public void setFbonus_berat(int fbonus_berat) {
+    public void setFbonus_berat(float fbonus_berat) {
         this.fbonus_berat = fbonus_berat;
     }
 
@@ -311,11 +311,11 @@ public class DataF2 {
         this.fnol_keping = fnol_keping;
     }
 
-    public int getFnol_berat() {
+    public float getFnol_berat() {
         return fnol_berat;
     }
 
-    public void setFnol_berat(int fnol_berat) {
+    public void setFnol_berat(float fnol_berat) {
         this.fnol_berat = fnol_berat;
     }
 
@@ -327,11 +327,11 @@ public class DataF2 {
         this.pecah_keping = pecah_keping;
     }
 
-    public int getPecah_berat() {
+    public float getPecah_berat() {
         return pecah_berat;
     }
 
-    public void setPecah_berat(int pecah_berat) {
+    public void setPecah_berat(float pecah_berat) {
         this.pecah_berat = pecah_berat;
     }
 
@@ -343,24 +343,16 @@ public class DataF2 {
         this.flat_keping = flat_keping;
     }
 
-    public int getFlat_berat() {
+    public float getFlat_berat() {
         return flat_berat;
     }
 
-    public void setFlat_berat(int flat_berat) {
+    public void setFlat_berat(float flat_berat) {
         this.flat_berat = flat_berat;
     }
 
     public int getJidun_keping() {
         return jidun_keping;
-    }
-
-    public void setJidun_keping(int jidun_keping) {
-        this.jidun_keping = jidun_keping;
-    }
-
-    public int getJidun_berat() {
-        return jidun_berat;
     }
 
     public int getJidun_pecah() {
@@ -371,47 +363,55 @@ public class DataF2 {
         this.jidun_pecah = jidun_pecah;
     }
 
-    public void setJidun_berat(int jidun_berat) {
+    public void setJidun_keping(int jidun_keping) {
+        this.jidun_keping = jidun_keping;
+    }
+
+    public float getJidun_berat() {
+        return jidun_berat;
+    }
+
+    public void setJidun_berat(float jidun_berat) {
         this.jidun_berat = jidun_berat;
     }
 
-    public int getSesekan() {
+    public float getSesekan() {
         return sesekan;
     }
 
-    public void setSesekan(int sesekan) {
+    public void setSesekan(float sesekan) {
         this.sesekan = sesekan;
     }
 
-    public int getHancuran() {
+    public float getHancuran() {
         return hancuran;
     }
 
-    public void setHancuran(int hancuran) {
+    public void setHancuran(float hancuran) {
         this.hancuran = hancuran;
     }
 
-    public int getRontokan() {
+    public float getRontokan() {
         return rontokan;
     }
 
-    public void setRontokan(int rontokan) {
+    public void setRontokan(float rontokan) {
         this.rontokan = rontokan;
     }
 
-    public int getBonggol() {
+    public float getBonggol() {
         return bonggol;
     }
 
-    public void setBonggol(int bonggol) {
+    public void setBonggol(float bonggol) {
         this.bonggol = bonggol;
     }
 
-    public int getSerabut() {
+    public float getSerabut() {
         return serabut;
     }
 
-    public void setSerabut(int serabut) {
+    public void setSerabut(float serabut) {
         this.serabut = serabut;
     }
 

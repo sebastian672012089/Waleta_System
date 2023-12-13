@@ -7,8 +7,11 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -17,6 +20,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Class.Utility;
@@ -76,7 +86,9 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             if (Date_pengajuan1.getDate() != null && Date_pengajuan2.getDate() != null) {
                 filter_tgl_pengajuan = "AND `tanggal_pengajuan` BETWEEN '" + dateFormat.format(Date_pengajuan1.getDate()) + "' AND '" + dateFormat.format(Date_pengajuan2.getDate()) + "'";
             }
-            sql = "SELECT `no`, `tanggal_pengajuan`, `tb_aset_pengajuan`.`departemen`, `keperluan`, `nama_barang`, `jumlah`, `link_pembelian`, `dibutuhkan_tanggal`, `nama_pegawai` AS 'diajukan', `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `jenis_pembelian`, `tb_aset_pengajuan`.`status`, `tb_aset_pengajuan`.`keterangan` "
+            sql = "SELECT "
+                    + "`no`, `tanggal_pengajuan`, `tb_aset_pengajuan`.`departemen`, `keperluan`, `nama_barang`, `jumlah`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `nama_pegawai` AS 'diajukan', `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `jenis_pembelian`, `tb_aset_pengajuan`.`status`, `tb_aset_pengajuan`.`keterangan`,"
+                    + " `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, `no_rekening`, `nama_rekening` \n"
                     + "FROM `tb_aset_pengajuan` \n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_aset_pengajuan`.`diajukan` = `tb_karyawan`.`id_pegawai` \n"
                     + "WHERE \n"
@@ -87,7 +99,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                     + filter_status
                     + filter_departemen;
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[20];
+            Object[] row = new Object[30];
             while (rs.next()) {
                 row[0] = rs.getInt("no");
                 row[1] = rs.getDate("tanggal_pengajuan");
@@ -95,16 +107,28 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 row[3] = rs.getString("keperluan");
                 row[4] = rs.getString("nama_barang");
                 row[5] = rs.getInt("jumlah");
-                row[6] = rs.getDate("dibutuhkan_tanggal");
-                row[7] = rs.getString("diajukan");
-                row[8] = rs.getString("diketahui_kadep");
-                row[9] = rs.getString("diketahui");
-                row[10] = rs.getString("disetujui");
-                row[11] = rs.getString("diproses");
-                row[12] = rs.getString("jenis_pembelian");
-                row[13] = rs.getString("status");
-                row[14] = rs.getString("keterangan");
-                row[15] = rs.getString("link_pembelian");
+                row[6] = rs.getInt("estimasi_harga_satuan");
+                row[7] = rs.getInt("jumlah") * rs.getInt("estimasi_harga_satuan");
+                row[8] = rs.getDate("dibutuhkan_tanggal");
+                row[9] = rs.getString("diajukan");
+                row[10] = rs.getString("diketahui_kadep");
+                row[11] = rs.getString("diketahui");
+                row[12] = rs.getString("disetujui");
+                row[13] = rs.getString("diproses");
+                row[14] = rs.getString("jenis_pembelian");
+                row[15] = rs.getString("status");
+                row[16] = rs.getString("keterangan");
+                row[17] = rs.getString("link_pembelian");
+                row[18] = rs.getInt("realisasi_harga_satuan");
+                row[19] = rs.getInt("ppn");
+                row[20] = (rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")));
+                row[21] = rs.getInt("biaya_lain");
+                row[22] = rs.getString("keterangan_biaya_lain");
+                row[23] = (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan"))
+                        + (rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")))
+                        + rs.getFloat("biaya_lain");
+                row[24] = rs.getString("no_rekening");
+                row[25] = rs.getString("nama_rekening");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_pengajuan);
@@ -150,6 +174,8 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         Date_pengajuan1 = new com.toedter.calendar.JDateChooser();
         Date_pengajuan2 = new com.toedter.calendar.JDateChooser();
+        button_realisasi = new javax.swing.JButton();
+        button_form_pengajuan = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -160,14 +186,14 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Tgl Pengajuan", "Departemen", "Keperluan", "Nama Barang", "Jumlah", "Dibutuhkan Tgl", "Diajukan Oleh", "Diketahui Kadep", "Diketahui Oleh", "Disetujui Oleh", "Diproses Oleh", "Jenis Pembelian", "Status", "Keterangan", "Link Pembelian"
+                "No", "Tgl Pengajuan", "Departemen", "Keperluan", "Nama Barang", "Jumlah", "Est. Harga", "Est. Total", "Dibutuhkan Tgl", "Diajukan Oleh", "Diketahui Kadep", "Diketahui Oleh", "Disetujui Oleh", "Diproses Oleh", "Jenis Pembelian", "Status", "Keterangan", "Link Pembelian", "Realisasi Harga (Rp.)", "PPN %", "PPN (Rp.)", "Biaya Lain (Rp.)", "Ket Biaya", "Total (Rp.)", "No Rekening", "Nama Rekening"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -319,10 +345,11 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea1.setRows(5);
-        jTextArea1.setText("Rule : \n1. hanya yang melakukan pengajuan yang bisa edit dan delete pengajuan tsb.\n2. setelah pengajuan diketahui / disetujui, pengajuan tidak dapat di edit / delete.\n3. diketahui dan disetujui bisa dilakukan terpisah. untuk bisa di proses harus sudah di setujui dan diketahui.\n4. status 'sampai' masih bisa kembali ke status 'dikirim'.\n5. jika status sudah 'selesai', tidak bisa mengganti status kembali.");
+        jTextArea1.setText("Rules : \n1. hanya yang melakukan pengajuan yang bisa edit dan delete pengajuan tsb.\n2. setelah pengajuan diketahui / disetujui, pengajuan tidak dapat di edit / delete.\n3. diketahui dan disetujui bisa dilakukan terpisah. untuk bisa di proses harus sudah di setujui dan diketahui.\n4. status 'sampai' masih bisa kembali ke status 'dikirim'.\n5. jika status sudah 'selesai', tidak bisa mengganti status kembali.");
         jScrollPane2.setViewportView(jTextArea1);
 
         button_diketahui_kadep.setBackground(new java.awt.Color(255, 255, 255));
@@ -360,6 +387,24 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
         Date_pengajuan2.setBackground(new java.awt.Color(255, 255, 255));
         Date_pengajuan2.setDateFormatString("dd MMM yyyy");
 
+        button_realisasi.setBackground(new java.awt.Color(255, 255, 255));
+        button_realisasi.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_realisasi.setText("Realisasi");
+        button_realisasi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_realisasiActionPerformed(evt);
+            }
+        });
+
+        button_form_pengajuan.setBackground(new java.awt.Color(255, 255, 255));
+        button_form_pengajuan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_form_pengajuan.setText("Form Pengajuan");
+        button_form_pengajuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_form_pengajuanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -374,14 +419,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_data_nota))
-                            .addComponent(jLabel16)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(button_new)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_edit)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_delete)
+                                .addComponent(label_total_data_nota)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_diketahui_kadep)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -395,13 +433,8 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_sampai)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_selesai)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_buka_link)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_export)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_tv_pengajuan))
+                                .addComponent(button_selesai))
+                            .addComponent(jLabel16)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -421,8 +454,24 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Date_pengajuan2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_search)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(button_search))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(button_new)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_edit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_delete)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_realisasi)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_buka_link)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_tv_pengajuan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_form_pengajuan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export)))
+                        .addGap(0, 314, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -447,20 +496,22 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                     .addComponent(button_new, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_buka_link)
+                    .addComponent(button_tv_pengajuan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_realisasi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_form_pengajuan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_data_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_diketahui, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_disetujui, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_diproses, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_buka_link)
                     .addComponent(button_dikirim, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_sampai, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_diketahui_kadep, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_tv_pengajuan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_total_data_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_diketahui_kadep, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -510,14 +561,14 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih data yang mau di edit !");
             } else {
                 Boolean Check = true;
-                String diajukan_oleh = table_pengajuan.getValueAt(j, 7).toString();
-                if (table_pengajuan.getValueAt(j, 8) != null) {
+                String diajukan_oleh = table_pengajuan.getValueAt(j, 9).toString();
+                if (table_pengajuan.getValueAt(j, 10) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diketahui kadep, tidak bisa edit / hapus");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 9) != null) {
+                } else if (table_pengajuan.getValueAt(j, 11) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diketahui, tidak bisa edit / hapus");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 10) != null) {
+                } else if (table_pengajuan.getValueAt(j, 12) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah disetujui, tidak bisa edit / hapus");
                     Check = false;
                 } else if (!MainForm.Login_NamaPegawai.equals(diajukan_oleh)) {
@@ -548,14 +599,14 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan pilih data yang mau di hapus !");
             } else {
                 Boolean Check = true;
-                String diajukan_oleh = table_pengajuan.getValueAt(j, 7).toString();
-                if (table_pengajuan.getValueAt(j, 8) != null) {
+                String diajukan_oleh = table_pengajuan.getValueAt(j, 9).toString();
+                if (table_pengajuan.getValueAt(j, 10) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diketahui kadep, tidak bisa edit / hapus");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 9) != null) {
+                } else if (table_pengajuan.getValueAt(j, 11) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diketahui, tidak bisa edit / hapus");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 10) != null) {
+                } else if (table_pengajuan.getValueAt(j, 12) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah disetujui, tidak bisa edit / hapus");
                     Check = false;
                 } else if (!MainForm.Login_NamaPegawai.equals(diajukan_oleh)) {
@@ -608,10 +659,10 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 Boolean Check = true;
-                if (table_pengajuan.getValueAt(j, 8) == null) {
+                if (table_pengajuan.getValueAt(j, 10) == null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan belum diketahui kadep");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 9) != null) {
+                } else if (table_pengajuan.getValueAt(j, 11) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diketahui");
                     Check = false;
                 } else if (MainForm.Login_kodeBagian != 244) {//OPERATIONAL MANAGER----OFFICE
@@ -659,10 +710,10 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 Boolean Check = true;
-                if (table_pengajuan.getValueAt(j, 9) == null) {
+                if (table_pengajuan.getValueAt(j, 11) == null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan belum diketahui");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 10) != null) {
+                } else if (table_pengajuan.getValueAt(j, 12) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah disetujui");
                     Check = false;
                 } else if (!MainForm.Login_idPegawai.equals("1") && !MainForm.Login_idPegawai.equals("2")) {
@@ -710,10 +761,10 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 Boolean Check = true;
-                if (table_pengajuan.getValueAt(j, 10) == null) {
+                if (table_pengajuan.getValueAt(j, 12) == null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan belum disetujui");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 11) != null) {
+                } else if (table_pengajuan.getValueAt(j, 13) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diproses");
                     Check = false;
                 } else if (MainForm.Login_Departemen == null || !MainForm.Login_Departemen.equals("KEUANGAN")) {
@@ -807,7 +858,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 // Specify the URL you want to open
-                String url = table_pengajuan.getValueAt(j, 15).toString();
+                String url = table_pengajuan.getValueAt(j, 17).toString();
 
                 // Get the system clipboard
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -832,7 +883,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 Boolean Check = true;
-                if (table_pengajuan.getValueAt(j, 13).toString().equals("Selesai")) {
+                if (table_pengajuan.getValueAt(j, 15).toString().equals("Selesai")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diselesaikan oleh user, status tidak bisa berubah");
                     Check = false;
                 } else if (MainForm.Login_Departemen == null || !MainForm.Login_Departemen.equals("KEUANGAN")) {
@@ -864,7 +915,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 Boolean Check = true;
-                if (table_pengajuan.getValueAt(j, 13).toString().equals("Selesai")) {
+                if (table_pengajuan.getValueAt(j, 15).toString().equals("Selesai")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diselesaikan oleh user, status tidak bisa berubah");
                     Check = false;
                 } else if (MainForm.Login_Departemen == null || !MainForm.Login_Departemen.equals("KEUANGAN")) {
@@ -896,8 +947,8 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 Boolean Check = true;
-                String diajukan_oleh = table_pengajuan.getValueAt(j, 7).toString();
-                if (table_pengajuan.getValueAt(j, 13).toString().equals("Selesai")) {
+                String diajukan_oleh = table_pengajuan.getValueAt(j, 9).toString();
+                if (table_pengajuan.getValueAt(j, 15).toString().equals("Selesai")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diselesaikan oleh user, status tidak bisa berubah");
                     Check = false;
                 } else if (!MainForm.Login_NamaPegawai.equals(diajukan_oleh)) {
@@ -941,7 +992,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                     kode_departemen = rs.getString("kode_departemen");
                 }
 
-                if (table_pengajuan.getValueAt(j, 8) != null) {
+                if (table_pengajuan.getValueAt(j, 10) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diketahui kadep");
                     Check = false;
                 } else if (!MainForm.Login_namaBagian.toUpperCase().contains("KADEP-" + kode_departemen) && MainForm.Login_kodeBagian != 244) {
@@ -989,6 +1040,68 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_button_tv_pengajuanActionPerformed
 
+    private void button_realisasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_realisasiActionPerformed
+        // TODO add your handling code here:
+        int j = table_pengajuan.getSelectedRow();
+        try {
+            if (j == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih data yang mau di edit !");
+            } else {
+                Boolean Check = true;
+                if (Check) {
+                    String no = table_pengajuan.getValueAt(j, 0).toString();
+                    JDialog_Aset_PengajuanPembelian_Realisasi dialog = new JDialog_Aset_PengajuanPembelian_Realisasi(new javax.swing.JFrame(), true, no);
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+                    dialog.setEnabled(true);
+                    refreshTable();
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_realisasiActionPerformed
+
+    private void button_form_pengajuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_form_pengajuanActionPerformed
+        // TODO add your handling code here:
+        int j = table_pengajuan.getSelectedRow();
+        if (j == -1) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
+        } else {
+            try {
+                // Create a DecimalFormatSymbols object and set the grouping separator
+                DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                symbols.setGroupingSeparator('.');
+
+                // Create a DecimalFormat object with custom symbols
+                DecimalFormat FormatHarga = new DecimalFormat("Rp ###,###", symbols);
+                
+                String harga_satuan = FormatHarga.format(table_pengajuan.getValueAt(j, 18));
+                String subtotal = FormatHarga.format((int) table_pengajuan.getValueAt(j, 5) * (int) table_pengajuan.getValueAt(j, 18));
+                String ppn = FormatHarga.format(table_pengajuan.getValueAt(j, 20));
+                String biaya_lain = FormatHarga.format(table_pengajuan.getValueAt(j, 21));
+                String total = FormatHarga.format(table_pengajuan.getValueAt(j, 23));
+                
+                JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Form_Pengajuan_Pembelian.jrxml");
+                Map<String, Object> params = new HashMap<>();
+                params.put("NO_PENGAJUAN", table_pengajuan.getValueAt(j, 0).toString());
+                params.put("harga_satuan", harga_satuan);
+                params.put("subtotal", subtotal);
+                params.put("ppn", ppn);
+                params.put("biaya_lain", biaya_lain);
+                params.put("total", total);
+                JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+                JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
+                JasperViewer.viewReport(JASP_PRINT, false);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_button_form_pengajuanActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_filter_departemen;
@@ -1004,7 +1117,9 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
     private javax.swing.JButton button_disetujui;
     private javax.swing.JButton button_edit;
     private javax.swing.JButton button_export;
+    private javax.swing.JButton button_form_pengajuan;
     private javax.swing.JButton button_new;
+    private javax.swing.JButton button_realisasi;
     private javax.swing.JButton button_sampai;
     private javax.swing.JButton button_search;
     private javax.swing.JButton button_selesai;

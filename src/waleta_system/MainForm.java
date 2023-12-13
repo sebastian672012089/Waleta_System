@@ -392,7 +392,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Barcode_Pengiriman1 = new waleta_system.Packing.JPanel_Barcode_Pengiriman();
         jPanel_HargaBahanBaku1 = new waleta_system.Manajemen.JPanel_HargaBahanBaku();
         jPanel_Data_ARAP_Esta1 = new waleta_system.Finance.JPanel_Data_ARAP_Esta();
-        jPanel_GajiCetak1 = new waleta_system.Finance.JPanel_GajiCetak();
         jPanel_BonusPetikRSB1 = new waleta_system.Manajemen.JPanel_BonusPetikRSB();
         jPanel_Rekap_Biaya_per_KartuBaku1 = new waleta_system.Manajemen.JPanel_Rekap_Biaya_per_KartuBaku();
         jPanel_Reproses1 = new waleta_system.BahanJadi.JPanel_Reproses();
@@ -460,7 +459,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Aset_MasterDataAset1 = new waleta_system.Finance.JPanel_Aset_MasterDataAset();
         jPanel_Aset_NotaPembelian1 = new waleta_system.Finance.JPanel_Aset_NotaPembelian();
         jPanel_PengajuanKenaikanLevelGaji1 = new waleta_system.Finance.JPanel_PengajuanKenaikanLevelGaji();
-        jPanel_Finishing21 = new waleta_system.Panel_produksi.JPanel_Finishing2();
         jPanel_Lab_Heat_Treatment1 = new waleta_system.QC.JPanel_Lab_Heat_Treatment();
         jPanel_PengajuanKenaikanLevelGaji_ViewOnly1 = new waleta_system.JPanel_PengajuanKenaikanLevelGaji_ViewOnly();
         jPanel_Aset_UnitAset1 = new waleta_system.Finance.JPanel_Aset_UnitAset();
@@ -480,8 +478,9 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Absensi_Sub1 = new waleta_system.SubWaleta.JPanel_Absensi_Sub();
         jPanel_TutupanGradingBahanJadi_Keuangan1 = new waleta_system.Finance.JPanel_TutupanGradingBahanJadi_Keuangan();
         jPanel_GajiCABUTO1 = new waleta_system.Finance.JPanel_GajiCABUTO();
-        jPanel_GajiCetak_percobaan1 = new waleta_system.Finance.JPanel_GajiCetak_percobaan();
         jPanel_Lembur_Staff_new1 = new waleta_system.Finance.JPanel_Lembur_Staff_new();
+        jPanel_Finishing21 = new waleta_system.Panel_produksi.JPanel_Finishing2();
+        jPanel_GajiCetak1 = new waleta_system.Finance.JPanel_GajiCetak();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_File = new javax.swing.JMenu();
         jMenu_Home = new javax.swing.JMenuItem();
@@ -630,8 +629,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenu_Keu_Produksi = new javax.swing.JMenu();
         jMenu_produksi_bonusM = new javax.swing.JMenuItem();
         jMenu_produksi_data_cabutan = new javax.swing.JMenuItem();
-        jMenuItem_Keu_GajiCetak = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem_Keu_GajiCETAK = new javax.swing.JMenuItem();
         jMenuItem_Keu_GajiCABUTO = new javax.swing.JMenuItem();
         jMenuItem_Keu_BonusKecepatanF2 = new javax.swing.JMenuItem();
         jMenuItem_Keu_Bonus_ATB = new javax.swing.JMenuItem();
@@ -715,7 +713,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.241");
+        jLabel19.setText("2.2.249");
 
         jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");
@@ -1019,7 +1017,6 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Barcode_Pengiriman1, "card77");
         main_panel.add(jPanel_HargaBahanBaku1, "card78");
         main_panel.add(jPanel_Data_ARAP_Esta1, "card79");
-        main_panel.add(jPanel_GajiCetak1, "card80");
         main_panel.add(jPanel_BonusPetikRSB1, "card81");
         main_panel.add(jPanel_Rekap_Biaya_per_KartuBaku1, "card82");
         main_panel.add(jPanel_Reproses1, "card83");
@@ -1087,7 +1084,6 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Aset_MasterDataAset1, "card134");
         main_panel.add(jPanel_Aset_NotaPembelian1, "card135");
         main_panel.add(jPanel_PengajuanKenaikanLevelGaji1, "card137");
-        main_panel.add(jPanel_Finishing21, "card136");
         main_panel.add(jPanel_Lab_Heat_Treatment1, "card137");
         main_panel.add(jPanel_PengajuanKenaikanLevelGaji_ViewOnly1, "card138");
         main_panel.add(jPanel_Aset_UnitAset1, "card138");
@@ -1107,8 +1103,9 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Absensi_Sub1, "card149");
         main_panel.add(jPanel_TutupanGradingBahanJadi_Keuangan1, "card150");
         main_panel.add(jPanel_GajiCABUTO1, "card151");
-        main_panel.add(jPanel_GajiCetak_percobaan1, "card152");
         main_panel.add(jPanel_Lembur_Staff_new1, "card153");
+        main_panel.add(jPanel_Finishing21, "card153");
+        main_panel.add(jPanel_GajiCetak1, "card152");
 
         jScrollPane2.setViewportView(main_panel);
 
@@ -2515,25 +2512,15 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu_Keu_Produksi.add(jMenu_produksi_data_cabutan);
 
-        jMenuItem_Keu_GajiCetak.setBackground(new java.awt.Color(255, 255, 255));
-        jMenuItem_Keu_GajiCetak.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jMenuItem_Keu_GajiCetak.setText("Penggajian Cetak");
-        jMenuItem_Keu_GajiCetak.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem_Keu_GajiCETAK.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem_Keu_GajiCETAK.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem_Keu_GajiCETAK.setText("Penggajian Cetak");
+        jMenuItem_Keu_GajiCETAK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_Keu_GajiCetakActionPerformed(evt);
+                jMenuItem_Keu_GajiCETAKActionPerformed(evt);
             }
         });
-        jMenu_Keu_Produksi.add(jMenuItem_Keu_GajiCetak);
-
-        jMenuItem13.setBackground(new java.awt.Color(255, 255, 255));
-        jMenuItem13.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jMenuItem13.setText("Penggajian Cetak Percobaan");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
-            }
-        });
-        jMenu_Keu_Produksi.add(jMenuItem13);
+        jMenu_Keu_Produksi.add(jMenuItem_Keu_GajiCETAK);
 
         jMenuItem_Keu_GajiCABUTO.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem_Keu_GajiCABUTO.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -4856,19 +4843,6 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.revalidate();
     }//GEN-LAST:event_jMenuItem_Keu_ARAP_EstaActionPerformed
 
-    private void jMenuItem_Keu_GajiCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_Keu_GajiCetakActionPerformed
-        // TODO add your handling code here:
-        main_panel.removeAll();
-        main_panel.repaint();
-        main_panel.revalidate();
-
-        //add panel
-        jPanel_GajiCetak1.init();
-        main_panel.add(jPanel_GajiCetak1);
-        main_panel.repaint();
-        main_panel.revalidate();
-    }//GEN-LAST:event_jMenuItem_Keu_GajiCetakActionPerformed
-
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         // TODO add your handling code here:
         main_panel.removeAll();
@@ -6120,18 +6094,18 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_GajiCABUTO1.init();
     }//GEN-LAST:event_jMenuItem_Keu_GajiCABUTOActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void jMenuItem_Keu_GajiCETAKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_Keu_GajiCETAKActionPerformed
         // TODO add your handling code here:
         main_panel.removeAll();
         main_panel.repaint();
         main_panel.revalidate();
 
         //add panel
-        main_panel.add(jPanel_GajiCetak_percobaan1);
+        main_panel.add(jPanel_GajiCetak1);
         main_panel.repaint();
         main_panel.revalidate();
-        jPanel_GajiCetak_percobaan1.init();
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+        jPanel_GajiCetak1.init();
+    }//GEN-LAST:event_jMenuItem_Keu_GajiCETAKActionPerformed
 
     private void jMenuItem_Keu_LemburStaff_baruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_Keu_LemburStaff_baruActionPerformed
         // TODO add your handling code here:
@@ -6166,7 +6140,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -6196,7 +6169,7 @@ public class MainForm extends javax.swing.JFrame {
     public static javax.swing.JMenuItem jMenuItem_Keu_DataEkspor;
     public static javax.swing.JMenuItem jMenuItem_Keu_DataKaryawan;
     private javax.swing.JMenuItem jMenuItem_Keu_GajiCABUTO;
-    private javax.swing.JMenuItem jMenuItem_Keu_GajiCetak;
+    private javax.swing.JMenuItem jMenuItem_Keu_GajiCETAK;
     public static javax.swing.JMenuItem jMenuItem_Keu_HargaBaku;
     private javax.swing.JMenuItem jMenuItem_Keu_HargaCMP;
     public static javax.swing.JMenuItem jMenuItem_Keu_HargaEsta;
@@ -6448,7 +6421,6 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.Panel_produksi.JPanel_Finishing2 jPanel_Finishing21;
     private waleta_system.Finance.JPanel_GajiCABUTO jPanel_GajiCABUTO1;
     private waleta_system.Finance.JPanel_GajiCetak jPanel_GajiCetak1;
-    private waleta_system.Finance.JPanel_GajiCetak_percobaan jPanel_GajiCetak_percobaan1;
     private waleta_system.BahanBaku.JPanel_GradeBahanBaku jPanel_GradeBahanBaku1;
     private waleta_system.Finance.JPanel_GradingLP_Tutupan jPanel_GradingLP_Tutupan1;
     private waleta_system.Manajemen.JPanel_HargaBahanBaku jPanel_HargaBahanBaku1;

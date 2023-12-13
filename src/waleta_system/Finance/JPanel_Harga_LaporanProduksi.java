@@ -106,19 +106,19 @@ public class JPanel_Harga_LaporanProduksi extends javax.swing.JPanel {
                 row[3] = rs.getString("kode_tutupan");
                 row[4] = rs.getString("no_kartu_waleta");
                 row[5] = rs.getString("kode_grade");
-                row[6] = rs.getInt("jumlah_keping");
-                row[7] = rs.getFloat("berat_basah");
+                row[6] = rs.getDouble("jumlah_keping");
+                row[7] = rs.getDouble("berat_basah");
                 row[8] = rs.getDouble("harga_bahanbaku");
                 double harga = rs.getDouble("berat_basah") * rs.getDouble("harga_bahanbaku");
-                row[9] = Math.round(harga * 10000d) / 100000d;
                 double biaya_baku_tambahan_per_gram = rs.getDouble("biaya_baku_tambahan_sebulan") / rs.getDouble("total_pengeluaran_lp");
-                row[10] = Math.round(biaya_baku_tambahan_per_gram * 100000d) / 1000000d;
-                row[11] = rs.getDouble("biaya_baku_tambahan_lp");
                 double biaya_tenaga_kerja_per_gram = rs.getDouble("biaya_tenaga_kerja_sebulan") / rs.getDouble("total_pengeluaran_lp");
-                row[12] = Math.round(biaya_tenaga_kerja_per_gram * 100000d) / 1000000d;
-                row[13] = rs.getDouble("biaya_tenaga_kerja_lp");
                 double biaya_overhead_per_gram = rs.getDouble("biaya_overhead_sebulan") / rs.getDouble("total_pengeluaran_lp");
-                row[14] = Math.round(biaya_overhead_per_gram * 100000d) / 1000000d;
+                row[9] = Math.round(harga * 10d) / 10d;
+                row[10] = Math.round(biaya_baku_tambahan_per_gram * 10d) / 10d;
+                row[11] = rs.getDouble("biaya_baku_tambahan_lp");
+                row[12] = Math.round(biaya_tenaga_kerja_per_gram * 10d) / 10d;
+                row[13] = rs.getDouble("biaya_tenaga_kerja_lp");
+                row[14] = Math.round(biaya_overhead_per_gram * 10d) / 10d;
                 row[15] = rs.getDouble("biaya_overhead_lp");
                 model.addRow(row);
                 total_gram = total_gram + rs.getFloat("berat_basah");
@@ -202,7 +202,7 @@ public class JPanel_Harga_LaporanProduksi extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
@@ -526,15 +526,28 @@ public class JPanel_Harga_LaporanProduksi extends javax.swing.JPanel {
 
     private void button_input_biaya_lpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_biaya_lpActionPerformed
         // TODO add your handling code here:
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Input biaya LP hanya untuk yang data biaya sudah masuk, Lanjutkan??", "Warning", 0);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            for (int i = 0; i < Table_laporan_produksi.getRowCount(); i++) {
-                String no_lp = Table_laporan_produksi.getValueAt(i, 0).toString();
-                double biaya_baku = (double) Table_laporan_produksi.getValueAt(i, 10) * (double) Table_laporan_produksi.getValueAt(i, 11);
-                double biaya_tk = (double) Table_laporan_produksi.getValueAt(i, 12) * (double) Table_laporan_produksi.getValueAt(i, 13);
-                double biaya_overhead = (double) Table_laporan_produksi.getValueAt(i, 14) * (double) Table_laporan_produksi.getValueAt(i, 15);
-                
+        try {
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Input biaya LP untuk yang data biaya sudah masuk, Lanjutkan??", "Warning", 0);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                for (int i = 0; i < Table_laporan_produksi.getRowCount(); i++) {
+                    String no_lp = Table_laporan_produksi.getValueAt(i, 0).toString();
+                    double berat_basah_lp = (double) Table_laporan_produksi.getValueAt(i, 7);
+                    double biaya_baku_tambahan = (double) Table_laporan_produksi.getValueAt(i, 10) * berat_basah_lp;
+                    double biaya_tk = (double) Table_laporan_produksi.getValueAt(i, 12) * berat_basah_lp;
+                    double biaya_overhead = (double) Table_laporan_produksi.getValueAt(i, 14) * berat_basah_lp;
+                    String Query = "UPDATE `tb_laporan_produksi` SET "
+                            + "`biaya_baku_tambahan_lp` = '" + biaya_baku_tambahan + "', "
+                            + "`biaya_tenaga_kerja_lp` = '" + biaya_tk + "', "
+                            + "`biaya_overhead_lp` = '" + biaya_overhead + "' "
+                            + "WHERE `no_laporan_produksi` = '" + no_lp + "'";
+                    Utility.db.getConnection().createStatement();
+                    Utility.db.getStatement().executeUpdate(Query);
+                    JOptionPane.showMessageDialog(this, "Data berhasil di ubah");
+                    refreshTable();
+                }
             }
+        } catch (SQLException ex) {
+            Logger.getLogger(JPanel_Harga_LaporanProduksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_input_biaya_lpActionPerformed
 

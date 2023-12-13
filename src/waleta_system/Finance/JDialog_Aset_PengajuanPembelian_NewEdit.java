@@ -1,5 +1,6 @@
 package waleta_system.Finance;
 
+import java.awt.event.KeyEvent;
 import waleta_system.Class.Utility;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
@@ -37,7 +38,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                 this.operand = "edit";
                 txt_no.setText(no);
 
-                sql = "SELECT `no`, `tanggal_pengajuan`, `departemen`, `keperluan`, `nama_barang`, `jumlah`, `link_pembelian`, `dibutuhkan_tanggal`, `diajukan`, `tb_karyawan`.`nama_pegawai`, `diketahui`, `disetujui`, `diproses`, `tb_aset_pengajuan`.`status`, `tb_aset_pengajuan`.`keterangan` \n"
+                sql = "SELECT `no`, `tanggal_pengajuan`, `departemen`, `keperluan`, `nama_barang`, `jumlah`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `diajukan`, `tb_karyawan`.`nama_pegawai`, `diketahui`, `disetujui`, `diproses`, `tb_aset_pengajuan`.`status`, `tb_aset_pengajuan`.`keterangan` \n"
                         + "FROM `tb_aset_pengajuan` \n"
                         + "LEFT JOIN `tb_karyawan` ON `tb_aset_pengajuan`.`diajukan` = `tb_karyawan`.`id_pegawai`\n"
                         + "WHERE `no` = '" + no + "'";
@@ -49,12 +50,14 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                     txt_keperluan.setText(rs.getString("keperluan"));
                     txt_nama_barang.setText(rs.getString("nama_barang"));
                     Spinner_jumlah.setValue(rs.getInt("jumlah"));
+                    txt_estimasi_harga_satuan.setText(rs.getString("estimasi_harga_satuan"));
                     txt_keterangan.setText(rs.getString("keterangan"));
                     txt_link.setText(rs.getString("link_pembelian"));
                     Date_dibutuhkan.setDate(rs.getDate("dibutuhkan_tanggal"));
                     txt_diajukan_id.setText(rs.getString("diajukan"));
                     txt_diajukan_nama.setText(rs.getString("nama_pegawai"));
                 }
+                hitung_total_harga();
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -62,16 +65,29 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         }
     }
 
-    public void baru() {
+    private void hitung_total_harga() {
+        try {
+            int jumlah = (int) Spinner_jumlah.getValue();
+            int harga = txt_estimasi_harga_satuan.getText() == null || txt_estimasi_harga_satuan.getText().equals("") ? 0 : Integer.valueOf(txt_estimasi_harga_satuan.getText());
+            int total = jumlah * harga;
+            txt_estimasi_harga_total.setText("Rp. " + decimalFormat.format(total));
+        } catch (Exception ex) {
+            Logger.getLogger(JDialog_Aset_PengajuanPembelian_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void baru() {
         try {
             String link = txt_link.getText() == null ? "" : txt_link.getText();
-            sql = "INSERT INTO `tb_aset_pengajuan`(`tanggal_pengajuan`, `departemen`, `keperluan`, `nama_barang`, `jumlah`, `link_pembelian`, `dibutuhkan_tanggal`, `diajukan`, `status`, `keterangan`) "
+            String harga = txt_estimasi_harga_satuan.getText() == null || txt_estimasi_harga_satuan.getText().equals("") ? "0" : txt_estimasi_harga_satuan.getText();
+            sql = "INSERT INTO `tb_aset_pengajuan`(`tanggal_pengajuan`, `departemen`, `keperluan`, `nama_barang`, `jumlah`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `diajukan`, `status`, `keterangan`) "
                     + "VALUES ("
                     + "'" + dateFormat.format(Date_pengajuan.getDate()) + "', "
                     + "'" + ComboBox_departemen.getSelectedItem().toString() + "', "
                     + "'" + txt_keperluan.getText() + "', "
                     + "'" + txt_nama_barang.getText() + "', "
                     + "'" + Spinner_jumlah.getValue().toString() + "', "
+                    + "'" + harga + "', "
                     + "'" + link + "', "
                     + "'" + dateFormat.format(Date_dibutuhkan.getDate()) + "', "
                     + "'" + txt_diajukan_id.getText() + "', "
@@ -89,15 +105,17 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         }
     }
 
-    public void edit() {
+    private void edit() {
         try {
             String link = txt_link.getText() == null ? "" : txt_link.getText();
+            String harga = txt_estimasi_harga_satuan.getText() == null || txt_estimasi_harga_satuan.getText().equals("") ? "0" : txt_estimasi_harga_satuan.getText();
             sql = "UPDATE `tb_aset_pengajuan` SET "
                     + "`tanggal_pengajuan`='" + dateFormat.format(Date_pengajuan.getDate()) + "',"
                     + "`departemen`='" + ComboBox_departemen.getSelectedItem().toString() + "',"
                     + "`keperluan`='" + txt_keperluan.getText() + "',"
                     + "`nama_barang`='" + txt_nama_barang.getText() + "',"
                     + "`jumlah`='" + Spinner_jumlah.getValue().toString() + "',"
+                    + "`estimasi_harga_satuan`='" + harga + "',"
                     + "`link_pembelian`='" + link + "',"
                     + "`dibutuhkan_tanggal`='" + dateFormat.format(Date_dibutuhkan.getDate()) + "', "
                     + "`keterangan`='" + txt_keterangan.getText() + "' "
@@ -150,6 +168,10 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         txt_link = new javax.swing.JTextArea();
         txt_diajukan_nama = new javax.swing.JTextField();
         Spinner_jumlah = new javax.swing.JSpinner();
+        jLabel15 = new javax.swing.JLabel();
+        txt_estimasi_harga_satuan = new javax.swing.JTextField();
+        txt_estimasi_harga_total = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -251,6 +273,32 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
 
         Spinner_jumlah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         Spinner_jumlah.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        Spinner_jumlah.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                Spinner_jumlahFocusLost(evt);
+            }
+        });
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel15.setText("Estimasi Harga Satuan :");
+
+        txt_estimasi_harga_satuan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_estimasi_harga_satuan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_estimasi_harga_satuanKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_estimasi_harga_satuanKeyTyped(evt);
+            }
+        });
+
+        txt_estimasi_harga_total.setEditable(false);
+        txt_estimasi_harga_total.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel16.setText("Estimasi Harga Total :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -265,16 +313,18 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_no)
@@ -289,7 +339,9 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                             .addComponent(txt_diajukan_nama)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(Spinner_jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txt_estimasi_harga_satuan)
+                            .addComponent(txt_estimasi_harga_total)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(label_title)))
@@ -328,6 +380,14 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Spinner_jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_estimasi_harga_satuan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_estimasi_harga_total, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -382,6 +442,26 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         }
     }//GEN-LAST:event_button_saveActionPerformed
 
+    private void txt_estimasi_harga_satuanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_estimasi_harga_satuanKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_estimasi_harga_satuanKeyTyped
+
+    private void Spinner_jumlahFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Spinner_jumlahFocusLost
+        // TODO add your handling code here:
+        hitung_total_harga();
+    }//GEN-LAST:event_Spinner_jumlahFocusLost
+
+    private void txt_estimasi_harga_satuanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_estimasi_harga_satuanKeyReleased
+        // TODO add your handling code here:
+        hitung_total_harga();
+    }//GEN-LAST:event_txt_estimasi_harga_satuanKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_departemen;
@@ -394,6 +474,8 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -407,6 +489,8 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
     private javax.swing.JLabel label_title;
     private javax.swing.JTextField txt_diajukan_id;
     private javax.swing.JTextField txt_diajukan_nama;
+    private javax.swing.JTextField txt_estimasi_harga_satuan;
+    private javax.swing.JTextField txt_estimasi_harga_total;
     private javax.swing.JTextArea txt_keperluan;
     private javax.swing.JTextArea txt_keterangan;
     private javax.swing.JTextArea txt_link;

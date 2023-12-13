@@ -211,7 +211,7 @@ public class JPanel_DataBahanBaku_Finance extends javax.swing.JPanel {
                 row[7] = berat_lp + berat_keluar + berat_cmp;
                 row[8] = list.get(i).getKeping_real() - (keping_lp + keping_keluar + keping_cmp);
                 row[9] = list.get(i).getBerat_real() - (berat_lp + berat_keluar + berat_cmp);
-                row[10] = decimalFormat.format(list.get(i).getHarga_kartu() - (harga_lp + harga_jual + harga_cmp));
+                row[10] = list.get(i).getHarga_kartu() - (harga_lp + harga_jual + harga_cmp);
                 model.addRow(row);
                 total_keping_masuk = total_keping_masuk + list.get(i).getKeping_real();
                 total_gram_masuk = total_gram_masuk + list.get(i).getBerat_real();
@@ -672,7 +672,7 @@ public class JPanel_DataBahanBaku_Finance extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false

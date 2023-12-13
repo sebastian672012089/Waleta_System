@@ -100,7 +100,7 @@ public class JDialog_pengurangan_lembur extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         Spinner_pengurangan_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        Spinner_pengurangan_lembur.setModel(new javax.swing.SpinnerNumberModel(1, 1, 600, 1));
+        Spinner_pengurangan_lembur.setModel(new javax.swing.SpinnerNumberModel(1, 1, 1440, 1));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -225,7 +225,7 @@ public class JDialog_pengurangan_lembur extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txt_keterangan)
-                                    .addComponent(Spinner_pengurangan_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Spinner_pengurangan_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_bagian)
                                     .addComponent(txt_nama_pegawai)
                                     .addGroup(jPanel1Layout.createSequentialGroup()

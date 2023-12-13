@@ -51,7 +51,7 @@ public class JFrame_Tampilan_Proses_LP2 extends javax.swing.JFrame {
                 subs.add(rs.getString("kode_sub"));
             }
             filter_ruangan = "'" + ruang + "'";
-            if (ruang.equals("D")) {
+            if (ruang.equals("E")) {
                 for (String sub : subs) {
                     filter_ruangan = filter_ruangan + ", '" + sub + "'";
                 }
@@ -295,7 +295,7 @@ public class JFrame_Tampilan_Proses_LP2 extends javax.swing.JFrame {
                     + "`tb_laporan_produksi`.`ruangan` IN (" + filter_ruangan + ")\n"
                     + "AND `tb_cabut`.`tgl_setor_cabut` > '2019-06-01' "
                     + "AND `tb_finishing_2`.`tgl_input_byProduct` IS NULL\n"
-                    + "AND `tb_finishing_2`.`tgl_setor_f2` IS NOT NULL\n"
+                    + "AND `tb_finishing_2`.`tgl_setor_f2` IS NULL\n"
                     + "GROUP BY `tb_cabut`.`no_laporan_produksi` \n"
                     + "ORDER BY `result` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);

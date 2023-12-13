@@ -73,7 +73,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                 button_save_data_fix.setEnabled(true);
                 button_slip_borong_cabut.setEnabled(true);
                 button_slip_cabut.setEnabled(true);
-                button_slip_borong_cetak.setEnabled(true);
                 button_slip_borong_cetak2.setEnabled(true);
                 button_slip_harian.setEnabled(true);
                 button_slip_mandiri_cetak.setEnabled(true);
@@ -404,6 +403,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                     if (Integer.valueOf(txt_jumlah_karyawan_terlambat.getText()) <= 30) {
                         denda_terlambat = 0;
                     }
+//                    System.out.println("denda_terlambat = " + denda_terlambat + ", jumlah_hari_terlambat = " + jumlah_hari_terlambat + ", denda_terlambat_per_hari = " + denda_terlambat_per_hari);
 
                     double premi_hadir = 0;
                     if (dapat_premi > 0 && hari_masuk_premi >= hari_kerja_normal) {
@@ -423,7 +423,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                             + "AND DATEDIFF(IF(C.`tanggal_keluar` IS NULL, '" + dateFormat.format(Date_penggajian.getDate()) + "', C.`tanggal_keluar`), C.`tanggal_masuk`) > 20 "
                             + "AND DATEDIFF(IF(C.`tanggal_keluar` IS NULL, '" + dateFormat.format(Date_penggajian.getDate()) + "', C.`tanggal_keluar`), C.`tanggal_masuk`) < 28 "
                             + "AND (C.`tanggal_keluar` IS NULL OR C.`tanggal_keluar` BETWEEN '" + dateFormat.format(tanggal_mulai) + "' AND '" + dateFormat.format(tanggal_selesai) + "')";
-//                    System.out.println(sql_tbt);
                     PreparedStatement pst_tbt = Utility.db.getConnection().prepareStatement(sql_tbt);
                     ResultSet rs_tbt = pst_tbt.executeQuery();
                     int jumlah_teman = 0;
@@ -450,7 +449,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                             - potongan_transport //potongan transport
                             - total_potongan_terlambat //potongan terlambat
                             - total_potongan_ijin; //potongan ijin
-                    System.out.println(gaji);
                     if (gaji < 0) {
                         gaji = total_upah_harian //gaji harian
                                 + premi_hadir //premi
@@ -529,7 +527,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                     Objects.toString(row[27], "-"),
                                     Objects.toString(row[28], "-")));
                             total_upah_lembur = total_upah_lembur + Math.round(upah_lembur_seminggu);
-                            total_tunjangan_hadir = total_tunjangan_hadir + Math.round(premi_hadir + denda_terlambat);
+                            total_tunjangan_hadir = total_tunjangan_hadir + Math.round(premi_hadir);
                             total_gaji = total_gaji + Math.round(gaji);
                             if (kode_grup.toUpperCase().contains("CABUT")) {
                                 total_bonus_cabut = total_bonus_cabut + Math.round(total_bonus1);
@@ -571,7 +569,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                 Objects.toString(row[27], "-"),
                                 Objects.toString(row[28], "-")));
                         total_upah_lembur = total_upah_lembur + Math.round(upah_lembur_seminggu);
-                        total_tunjangan_hadir = total_tunjangan_hadir + Math.round(premi_hadir + denda_terlambat);
+                        total_tunjangan_hadir = total_tunjangan_hadir + Math.round(premi_hadir);
                         total_gaji = total_gaji + Math.round(gaji);
                         if (kode_grup.toUpperCase().contains("CABUT")) {
                             total_bonus_cabut = total_bonus_cabut + Math.round(total_bonus1);
@@ -865,7 +863,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
         button_print_slip_per_grup = new javax.swing.JButton();
         button_input_bonus_pencapaian = new javax.swing.JButton();
         button_slip_borong_cabut = new javax.swing.JButton();
-        button_slip_borong_cetak = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         txt_potongan_bpjs_tk = new javax.swing.JTextField();
         button_export = new javax.swing.JButton();
@@ -1064,16 +1061,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             }
         });
 
-        button_slip_borong_cetak.setBackground(new java.awt.Color(255, 255, 255));
-        button_slip_borong_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_slip_borong_cetak.setText("Slip Borong Cetak");
-        button_slip_borong_cetak.setEnabled(false);
-        button_slip_borong_cetak.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_slip_borong_cetakActionPerformed(evt);
-            }
-        });
-
         jLabel18.setBackground(new java.awt.Color(255, 255, 255));
         jLabel18.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel18.setText("Pot. BPJS TK :");
@@ -1181,7 +1168,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
 
         button_slip_cabut.setBackground(new java.awt.Color(255, 255, 255));
         button_slip_cabut.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_slip_cabut.setText("Slip Cabut NEW!");
+        button_slip_cabut.setText("Slip Cabut");
         button_slip_cabut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_slip_cabutActionPerformed(evt);
@@ -1224,7 +1211,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
 
         button_slip_borong_cetak2.setBackground(new java.awt.Color(255, 255, 255));
         button_slip_borong_cetak2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_slip_borong_cetak2.setText("Slip Borong Cetak 2");
+        button_slip_borong_cetak2.setText("Slip Borong Cetak");
         button_slip_borong_cetak2.setEnabled(false);
         button_slip_borong_cetak2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1334,8 +1321,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_slip_cabut)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_slip_borong_cetak)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_slip_borong_cetak2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_slip_mandiri_cetak)
@@ -1343,7 +1328,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                 .addComponent(button_export)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_input_gaji_borong_OM)))
-                        .addGap(0, 35, Short.MAX_VALUE)))
+                        .addGap(0, 113, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -1402,7 +1387,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(button_print_slip_per_grup)
                     .addComponent(button_slip_borong_cabut)
-                    .addComponent(button_slip_borong_cetak)
                     .addComponent(button_slip_mandiri_cetak)
                     .addComponent(button_slip_harian)
                     .addComponent(button_print_slip_per_grup2)
@@ -1466,7 +1450,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
         button_print_slip_per_grup2.setEnabled(false);
         button_save_data_fix.setEnabled(false);
         button_slip_borong_cabut.setEnabled(false);
-        button_slip_borong_cetak.setEnabled(false);
         button_slip_harian.setEnabled(false);
         button_slip_mandiri_cetak.setEnabled(false);
 
@@ -1487,7 +1470,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                 button_print_slip_per_grup2.setEnabled(true);
                 button_save_data_fix.setEnabled(true);
                 button_slip_borong_cabut.setEnabled(true);
-                button_slip_borong_cetak.setEnabled(true);
                 button_slip_harian.setEnabled(true);
                 button_slip_mandiri_cetak.setEnabled(true);
             }
@@ -1605,79 +1587,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_slip_borong_cabutActionPerformed
-
-    private void button_slip_borong_cetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_slip_borong_cetakActionPerformed
-        // TODO add your handling code here:
-        Date tanggal_mulai = new Date(Date_penggajian.getDate().getTime() - (7 * 24 * 60 * 60 * 1000));
-        Date tanggal_selesai = new Date(Date_penggajian.getDate().getTime() - (1 * 24 * 60 * 60 * 1000));
-        try {
-            double gaji_harian = Double.valueOf(Tabel_data.getValueAt(0, 20).toString());
-            double potongan_terlambat = Double.valueOf(Tabel_data.getValueAt(0, 12).toString());
-            double potongan_ijin = Double.valueOf(Tabel_data.getValueAt(0, 13).toString());
-            gaji_harian = gaji_harian - (potongan_terlambat + potongan_ijin);
-            JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Slip_Gaji_karyawan_Cetak.jrxml");
-            Map<String, Object> map = new HashMap<>();
-            map.put("HALAMAN", 1);
-            map.put("PERIODE_AWAL", tanggal_mulai);
-            map.put("PERIODE_AKHIR", tanggal_selesai);
-            map.put("ID_PEGAWAI", Tabel_data.getValueAt(0, 1).toString());
-            map.put("NAMA_PEGAWAI", Tabel_data.getValueAt(0, 2).toString());
-            map.put("LEMBUR", Double.valueOf(Tabel_data.getValueAt(0, 11).toString()));
-            map.put("TUNJANGAN_HADIR", Double.valueOf(Tabel_data.getValueAt(0, 14).toString()));
-            map.put("POT_TRANSPORT", Double.valueOf(Tabel_data.getValueAt(0, 15).toString()));
-            map.put("POT_BPJS", Double.valueOf(Tabel_data.getValueAt(0, 16).toString()));
-            map.put("POT_BPJS_TK", Double.valueOf(Tabel_data.getValueAt(0, 17).toString()));
-            map.put("BONUS_TBT", Double.valueOf(Tabel_data.getValueAt(0, 18).toString()));
-            map.put("GAJI_HARIAN", gaji_harian);
-            map.put("GAJI_BORONG", Double.valueOf(Tabel_data.getValueAt(0, 21).toString()));
-            map.put("BONUS_LP", Double.valueOf(Tabel_data.getValueAt(0, 22).toString()));
-            map.put("BONUS_MK_UTUH", Double.valueOf(Tabel_data.getValueAt(0, 23).toString()));
-            map.put("BONUS_PENCAPAIAN_PRODUKSI", Double.valueOf(Tabel_data.getValueAt(0, 24).toString()));
-            map.put("PIUTANG", Double.valueOf(Tabel_data.getValueAt(0, 25).toString()));
-            map.put("KETERANGAN", Tabel_data.getValueAt(0, 27).toString());
-            map.put("GRUP", Tabel_data.getValueAt(0, 28));
-            JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
-            JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
-            for (int i = 1; i < Tabel_data.getRowCount(); i++) {
-                double gaji_harian2 = Double.valueOf(Tabel_data.getValueAt(i, 20).toString());
-                double potongan_terlambat2 = Double.valueOf(Tabel_data.getValueAt(i, 12).toString());
-                double potongan_ijin2 = Double.valueOf(Tabel_data.getValueAt(i, 13).toString());
-                gaji_harian2 = gaji_harian2 - (potongan_terlambat2 + potongan_ijin2);
-                JasperDesign JASP_DESIGN2 = JRXmlLoader.load("Report\\Slip_Gaji_karyawan_Cetak.jrxml");
-                JasperReport JASP_REP2 = JasperCompileManager.compileReport(JASP_DESIGN2);
-                Map<String, Object> map2 = new HashMap<>();
-                map2.put("HALAMAN", i + 1);
-                map2.put("PERIODE_AWAL", tanggal_mulai);
-                map2.put("PERIODE_AKHIR", tanggal_selesai);
-                map2.put("ID_PEGAWAI", Tabel_data.getValueAt(i, 1).toString());
-                map2.put("NAMA_PEGAWAI", Tabel_data.getValueAt(i, 2).toString());
-                map2.put("LEMBUR", Double.valueOf(Tabel_data.getValueAt(i, 11).toString()));
-                map2.put("TUNJANGAN_HADIR", Double.valueOf(Tabel_data.getValueAt(i, 14).toString()));
-                map2.put("POT_TRANSPORT", Double.valueOf(Tabel_data.getValueAt(i, 15).toString()));
-                map2.put("POT_BPJS", Double.valueOf(Tabel_data.getValueAt(i, 16).toString()));
-                map2.put("POT_BPJS_TK", Double.valueOf(Tabel_data.getValueAt(i, 17).toString()));
-                map2.put("BONUS_TBT", Double.valueOf(Tabel_data.getValueAt(i, 18).toString()));
-                map2.put("GAJI_HARIAN", gaji_harian2);
-                map2.put("GAJI_BORONG", Double.valueOf(Tabel_data.getValueAt(i, 21).toString()));
-                map2.put("BONUS_LP", Double.valueOf(Tabel_data.getValueAt(i, 22).toString()));
-                map2.put("BONUS_MK_UTUH", Double.valueOf(Tabel_data.getValueAt(i, 23).toString()));
-                map2.put("BONUS_PENCAPAIAN_PRODUKSI", Double.valueOf(Tabel_data.getValueAt(i, 24).toString()));
-                map2.put("PIUTANG", Double.valueOf(Tabel_data.getValueAt(i, 25).toString()));
-                map2.put("KETERANGAN", Tabel_data.getValueAt(i, 27).toString());
-                map2.put("GRUP", Tabel_data.getValueAt(i, 28));
-                JasperPrint JASP_PRINT2 = JasperFillManager.fillReport(JASP_REP2, map2, Utility.db.getConnection());
-                List pages = JASP_PRINT2.getPages();
-                for (int k = 0; k < pages.size(); k++) {
-                    JRPrintPage object = (JRPrintPage) pages.get(k);
-                    JASP_PRINT.addPage(object);
-                }
-            }
-            JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_button_slip_borong_cetakActionPerformed
 
     private void button_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_exportActionPerformed
         // TODO add your handling code here:
@@ -1878,47 +1787,11 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
 
     private void button_input_gaji_borong_OMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_gaji_borong_OMActionPerformed
         // TODO add your handling code here:
-        try {
-            JOptionPane.showMessageDialog(this, "Harap hanya memasukkan gaji borong karyawan OM\n"
-                    + "Format csv (ID Pegawai,Tanggal(yyyy-mm-dd),Gaji Borong)\n"
-                    + "pemisah koma (,)");
-            int n = 0;
-            JFileChooser chooser = new JFileChooser();
-            chooser.setDialogTitle("Select CSV file to import!");
-            int result = chooser.showOpenDialog(this);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                Utility.db.getConnection();
-                File file = chooser.getSelectedFile();
-                String filename1 = file.getAbsolutePath();
-                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
-                    String line;
-                    try {
-                        Utility.db.getConnection().setAutoCommit(false);
-                        while ((line = br.readLine()) != null) {
-                            String[] value = line.split(",");
-                            String Query = "INSERT INTO `tb_lembur_rekap`(`id_pegawai`, `tanggal`, `gaji_borong`) "
-                                    + "VALUES ('" + value[0] + "','" + value[1] + "'," + value[2] + ") "
-                                    + "ON DUPLICATE KEY UPDATE `gaji_borong`=" + value[2];
-                            Utility.db.getConnection().prepareStatement(Query);
-                            if ((Utility.db.getStatement().executeUpdate(Query)) > 0) {
-                                n++;
-                            }
-                        }
-                        Utility.db.getConnection().commit();
-                    } catch (Exception ex) {
-                        Utility.db.getConnection().rollback();
-                        JOptionPane.showMessageDialog(this, ex);
-                        Logger.getLogger(JDialog_BonusPencapaianProduksi.class.getName()).log(Level.SEVERE, null, ex);
-                    } finally {
-                        Utility.db.getConnection().setAutoCommit(true);
-                        JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JDialog_BonusPencapaianProduksi.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        JDialog_DataGajiBorongOM_dariCSV dialog = new JDialog_DataGajiBorongOM_dariCSV(new javax.swing.JFrame(), true);
+        dialog.setResizable(false);
+        dialog.setLocationRelativeTo(this);
+        dialog.setEnabled(true);
+        dialog.setVisible(true);
     }//GEN-LAST:event_button_input_gaji_borong_OMActionPerformed
 
     private void button_slip_borong_cetak2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_slip_borong_cetak2ActionPerformed
@@ -2009,7 +1882,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
     private javax.swing.JButton button_print_slip_per_grup2;
     private javax.swing.JButton button_save_data_fix;
     private javax.swing.JButton button_slip_borong_cabut;
-    private javax.swing.JButton button_slip_borong_cetak;
     private javax.swing.JButton button_slip_borong_cetak2;
     private javax.swing.JButton button_slip_cabut;
     private javax.swing.JButton button_slip_harian;

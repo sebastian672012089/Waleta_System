@@ -108,7 +108,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
             String get_absen_query = "SELECT `scan_date` FROM `att_log` "
                     + "WHERE `pin` = '" + pin + "' "
                     + "AND `scan_date` > DATE_ADD('" + jadwal_masuk + "', INTERVAL -2 HOUR) "
-                    + "AND `scan_date` < DATE_ADD('" + jadwal_masuk + "', INTERVAL 2 HOUR) "
+                    + "AND `scan_date` < DATE_ADD('" + jadwal_masuk + "', INTERVAL 4 HOUR) "
                     + "ORDER BY `scan_date` LIMIT 1";
             PreparedStatement get_absen_pst = con.prepareStatement(get_absen_query);
             ResultSet get_absen_result = get_absen_pst.executeQuery();
@@ -644,7 +644,6 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     double bonus_operator_atb = 0;
                     if (rs_bonus_operator_atb.next()) {
                         bonus_operator_atb = rs_bonus_operator_atb.getInt("bonus_operator_atb");
-                        System.out.println(sql_bonus_operator_atb);
                     }
 
                     double gaji = total_upah_harian //gaji harian
@@ -892,7 +891,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea1.setRows(5);
-        jTextArea1.setText("Notes : \n1. Range pencarian absen masuk adalah -2jam dan +2jam, jika tidak ada absen pada range tsb, maka dianggap tidak absen.\n2. Range pencarian absen pulang adalah -2jam dan +12jam, jika tidak ada absen pada range tsb, maka dianggap tidak absen. (max lembur pulang 12jam)\n3. Lembur pagi akan terhitung jika ada surat perintah lembur, jika tidak ada SPL, maka absen masuk akan terhitung dari jam masuk kerja seharusnya. Dan SPL harus sudah disetujui dan diketahui.\n4. Jika Lembur di hari libur tidak perlu ada SPL, hanya harus ada pada jadwal kerja.\n5. jam pulang dibulatkan ke bawah, kelipatan 30 menit.\n6. Upah per menit = upah per hari / (7jam x 60menit). Upah per jam = upah per hari / 7jam.\n7. Potongan terlambat, ijin keluar, dan ijin pulang = menit potongan x upah / menit.\n8. jika potongan tidak lebih dari 60 menit, maka terhitung masuk dan dapat premi.\n9. upah lembur = 1.5x upah per jam, jika libur di hari libur maka upah lembur = 2x upah per jam.\n10. Khusus upah lembur DRIVER 1.5x upah per jam walaupun hari libur.\n11. Khusus BAGIAN SECURITY upah lembur = FLAT 10.000/jam.");
+        jTextArea1.setText("Notes : \n1. Range pencarian absen masuk adalah -2jam dan +4jam, jika tidak ada absen pada range tsb, maka dianggap tidak absen. (max terlambat 4jam)\n2. Range pencarian absen pulang adalah -2jam dan +12jam, jika tidak ada absen pada range tsb, maka dianggap tidak absen. (max lembur pulang 12jam)\n3. Lembur pagi akan terhitung jika ada surat perintah lembur, jika tidak ada SPL, maka absen masuk akan terhitung dari jam masuk kerja seharusnya. Dan SPL harus sudah disetujui dan diketahui.\n4. Jika Lembur di hari libur tidak perlu ada SPL, hanya harus ada pada jadwal kerja.\n5. jam pulang dibulatkan ke bawah, kelipatan 30 menit.\n6. Upah per menit = upah per hari / (7jam x 60menit). Upah per jam = upah per hari / 7jam.\n7. Potongan terlambat, ijin keluar, dan ijin pulang = menit potongan x upah / menit.\n8. jika potongan tidak lebih dari 60 menit, maka terhitung masuk dan dapat premi.\n9. upah lembur = 1.5x upah per jam, jika libur di hari libur maka upah lembur = 2x upah per jam.\n10. Khusus upah lembur DRIVER 1.5x upah per jam walaupun hari libur.\n11. Khusus BAGIAN SECURITY upah lembur = FLAT 10.000/jam.");
         jScrollPane1.setViewportView(jTextArea1);
 
         button_input_absen_manual.setBackground(new java.awt.Color(255, 255, 255));
