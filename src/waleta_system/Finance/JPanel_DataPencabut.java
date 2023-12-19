@@ -463,8 +463,9 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
                 }
             }
             //--------------------------------------------
-
-            refreshTabel_pembagian_bonus_lp_per_karyawan(list_lp_dapat_bonus, model_rekap2);
+            if (list_lp_dapat_bonus.size() > 0) {
+                refreshTabel_pembagian_bonus_lp_per_karyawan(list_lp_dapat_bonus, model_rekap2);
+            }
 
             ColumnsAutoSizer.sizeColumnsToFit(table_bonus_kecepatan);
             ColumnsAutoSizer.sizeColumnsToFit(table_data_rekap_bonus1);

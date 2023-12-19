@@ -77,11 +77,11 @@ public class JPanel_payrol_data extends javax.swing.JPanel {
                 if (txt_search_bagian.getText() == null || txt_search_bagian.getText().equals("")) {
                     search_bagian = "";
                 }
-                String level_gaji = "AND `tb_payrol_data`.`level_gaji` LIKE '" + txt_search_level_gaji.getText() + "' ";
+                String level_gaji = "AND `tb_payrol_data`.`level_gaji` LIKE '%" + txt_search_level_gaji.getText() + "%' ";
                 if (txt_search_level_gaji.getText() == null || txt_search_level_gaji.getText().equals("")) {
                     level_gaji = "";
                 }
-                String jam_kerja = "AND `tb_payrol_data`.`jam_kerja` LIKE '" + txt_search_jam_kerja.getText() + "' ";
+                String jam_kerja = "AND `tb_payrol_data`.`jam_kerja` LIKE '%" + txt_search_jam_kerja.getText() + "%' ";
                 if (txt_search_jam_kerja.getText() == null || txt_search_jam_kerja.getText().equals("")) {
                     jam_kerja = "";
                 }
@@ -320,7 +320,6 @@ public class JPanel_payrol_data extends javax.swing.JPanel {
         jLabel19.setText("Divisi-Bagian-Ruang :");
 
         txt_search_bagian.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_search_bagian.setText("%%");
         txt_search_bagian.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_search_bagianKeyPressed(evt);
@@ -328,7 +327,6 @@ public class JPanel_payrol_data extends javax.swing.JPanel {
         });
 
         txt_search_level_gaji.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_search_level_gaji.setText("%%");
         txt_search_level_gaji.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_search_level_gajiKeyPressed(evt);
@@ -376,7 +374,6 @@ public class JPanel_payrol_data extends javax.swing.JPanel {
         jLabel7.setText("Jam Kerja :");
 
         txt_search_jam_kerja.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_search_jam_kerja.setText("%%");
         txt_search_jam_kerja.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_search_jam_kerjaKeyPressed(evt);
