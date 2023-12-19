@@ -56,7 +56,6 @@ public class JDialog_Input_F2 extends javax.swing.JDialog {
                         + "WHERE `no_laporan_produksi`='" + lp + "'";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
-                    JPanel_Finishing2.button_search_f2.doClick();
                     this.dispose();
                     JOptionPane.showMessageDialog(this, "Data Inserted !");
                 }

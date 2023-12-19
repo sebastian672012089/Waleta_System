@@ -1122,7 +1122,7 @@ public class JPanel_Dokumen_KH extends javax.swing.JPanel {
         int j = Table_dokumen_KH.getSelectedRow();
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 String kapasitas = txt_kapasitas.getText();
                 if (txt_kapasitas.getText().equals("") || txt_kapasitas.getText() == null) {

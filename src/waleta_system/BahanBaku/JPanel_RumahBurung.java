@@ -415,7 +415,7 @@ public class JPanel_RumahBurung extends javax.swing.JPanel {
         int total_baris = Table_RumahBurung.getRowCount();
         Boolean Check = true;
         if (j == -1) {
-            JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+            JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
         } else {
             if (!txt_kode.getText().equals(Table_RumahBurung.getValueAt(j, 0))) {
                 for (int i = 0; i < total_baris; i++) {

@@ -94,7 +94,6 @@ public class JDialog_Input_Kaki_f2 extends javax.swing.JDialog {
                 Utility.db.getConnection().commit();
                 JOptionPane.showMessageDialog(this, "Input Data Sukses");
                 this.dispose();
-                JPanel_Finishing2.button_search_f2.doClick();
             } catch (SQLException e) {
                 try {
                     Utility.db.getConnection().rollback();

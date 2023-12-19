@@ -88,7 +88,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
             sql = "SELECT "
                     + "`no`, `tanggal_pengajuan`, `tb_aset_pengajuan`.`departemen`, `keperluan`, `nama_barang`, `jumlah`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `nama_pegawai` AS 'diajukan', `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `jenis_pembelian`, `tb_aset_pengajuan`.`status`, `tb_aset_pengajuan`.`keterangan`,"
-                    + " `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, `no_rekening`, `nama_rekening` \n"
+                    + " `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, `nama_bank`, `no_rekening`, `nama_rekening` \n"
                     + "FROM `tb_aset_pengajuan` \n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_aset_pengajuan`.`diajukan` = `tb_karyawan`.`id_pegawai` \n"
                     + "WHERE \n"
@@ -121,14 +121,15 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 row[17] = rs.getString("link_pembelian");
                 row[18] = rs.getInt("realisasi_harga_satuan");
                 row[19] = rs.getInt("ppn");
-                row[20] = (rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")));
+                row[20] = Math.round(rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")));
                 row[21] = rs.getInt("biaya_lain");
                 row[22] = rs.getString("keterangan_biaya_lain");
-                row[23] = (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan"))
+                row[23] = Math.round((rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan"))
                         + (rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")))
-                        + rs.getFloat("biaya_lain");
-                row[24] = rs.getString("no_rekening");
-                row[25] = rs.getString("nama_rekening");
+                        + rs.getFloat("biaya_lain"));
+                row[24] = rs.getString("nama_bank");
+                row[25] = rs.getString("no_rekening");
+                row[26] = rs.getString("nama_rekening");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_pengajuan);
@@ -186,14 +187,14 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Tgl Pengajuan", "Departemen", "Keperluan", "Nama Barang", "Jumlah", "Est. Harga", "Est. Total", "Dibutuhkan Tgl", "Diajukan Oleh", "Diketahui Kadep", "Diketahui Oleh", "Disetujui Oleh", "Diproses Oleh", "Jenis Pembelian", "Status", "Keterangan", "Link Pembelian", "Realisasi Harga (Rp.)", "PPN %", "PPN (Rp.)", "Biaya Lain (Rp.)", "Ket Biaya", "Total (Rp.)", "No Rekening", "Nama Rekening"
+                "No", "Tgl Pengajuan", "Departemen", "Keperluan", "Nama Barang", "Jumlah", "Est. Harga", "Est. Total", "Dibutuhkan Tgl", "Diajukan Oleh", "Diketahui Kadep", "Diketahui Oleh", "Disetujui Oleh", "Diproses Oleh", "Jenis Pembelian", "Status", "Keterangan", "Link Pembelian", "Realisasi Harga (Rp.)", "PPN %", "PPN (Rp.)", "Biaya Lain (Rp.)", "Ket Biaya", "Total (Rp.)", "Nama Bank", "No Rekening", "Nama Rekening"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1076,7 +1077,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 symbols.setGroupingSeparator('.');
 
                 // Create a DecimalFormat object with custom symbols
-                DecimalFormat FormatHarga = new DecimalFormat("Rp ###,###", symbols);
+                DecimalFormat FormatHarga = new DecimalFormat("###,###", symbols);
                 
                 String harga_satuan = FormatHarga.format(table_pengajuan.getValueAt(j, 18));
                 String subtotal = FormatHarga.format((int) table_pengajuan.getValueAt(j, 5) * (int) table_pengajuan.getValueAt(j, 18));

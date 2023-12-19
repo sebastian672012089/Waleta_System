@@ -555,7 +555,7 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "data DELETED !!");
                         refreshTable();
                     } else {
-                        JOptionPane.showMessageDialog(this, "data not DELETED !!");
+                        JOptionPane.showMessageDialog(this, "Delete FAILED !!");
                     }
                 }
             }
@@ -651,7 +651,7 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "data DELETED !!");
                         refreshTable();
                     } else {
-                        JOptionPane.showMessageDialog(this, "data not DELETED !!");
+                        JOptionPane.showMessageDialog(this, "Delete FAILED !!");
                     }
                 }
             }

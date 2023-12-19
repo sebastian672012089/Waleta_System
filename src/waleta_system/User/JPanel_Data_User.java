@@ -4643,7 +4643,7 @@ public class JPanel_Data_User extends javax.swing.JPanel implements InterfacePan
                         refreshTable();
                         JOptionPane.showMessageDialog(this, "data deleted Successfully");
                     } else {
-                        JOptionPane.showMessageDialog(this, "data not deleted");
+                        JOptionPane.showMessageDialog(this, "Delete FAILED");
                     }
                 }
             }

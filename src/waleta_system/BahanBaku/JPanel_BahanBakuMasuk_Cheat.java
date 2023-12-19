@@ -1120,7 +1120,7 @@ public class JPanel_BahanBakuMasuk_Cheat extends javax.swing.JPanel {
         }
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else if (Check) {
                 String update_tgl_panen = "`tgl_panen` = '" + dateFormat.format(Date_Panen.getDate()) + "', ";
                 if (Date_Panen.getDate() == null) {
@@ -1167,7 +1167,7 @@ public class JPanel_BahanBakuMasuk_Cheat extends javax.swing.JPanel {
         try {
             int j = Table_Bahan_Baku_Masuk_ct.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 if (Date_Grading.getDate() != null && Date_timbang.getDate() != null) {
                     String Query = "UPDATE `tb_bahan_baku_masuk_cheat` SET `tgl_grading` = '" + dateFormat.format(Date_Grading.getDate()) + "', `tgl_timbang` = '" + dateFormat.format(Date_timbang.getDate()) + "' WHERE `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta` = '" + Table_Bahan_Baku_Masuk_ct.getValueAt(j, 0).toString() + "'";

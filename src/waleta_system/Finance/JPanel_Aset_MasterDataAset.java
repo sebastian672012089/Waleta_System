@@ -490,7 +490,7 @@ public class JPanel_Aset_MasterDataAset extends javax.swing.JPanel {
         Boolean Check = true;
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 if ("".equals(txt_supplier_nama.getText())) {
                     JOptionPane.showMessageDialog(this, "Maaf kode Suplier harus diisi !");

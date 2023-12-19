@@ -439,7 +439,7 @@ public class JPanel_Supplier extends javax.swing.JPanel {
         TableModel model = Table_Supplier.getModel();
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 if ("".equals(txt_kode_supplier.getText())) {
                     JOptionPane.showMessageDialog(this, "Maaf kode Suplier harus diisi !");

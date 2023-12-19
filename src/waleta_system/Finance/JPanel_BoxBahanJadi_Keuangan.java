@@ -58,7 +58,6 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
             while (rs_lokasi.next()) {
                 ComboBox_lokasi.addItem(rs_lokasi.getString("lokasi_terakhir"));
             }
-            ComboBox_lokasi.setSelectedItem("GRADING");
             refreshTable_DataBox();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -69,6 +68,7 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
     public void refreshTable_DataBox() {
         try {
             float total_kpg = 0, total_gram = 0;
+            double total_hpp = 0;
             decimalFormat.setGroupingUsed(true);
             String lokasi = " AND `lokasi_terakhir` = '" + ComboBox_lokasi.getSelectedItem().toString() + "' ";
             if (ComboBox_lokasi.getSelectedItem() == "All") {
@@ -84,12 +84,7 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
                 tanggal = " AND (`tanggal_box` BETWEEN '" + dateFormat.format(Date_box1.getDate()) + "' AND '" + dateFormat.format(Date_box2.getDate()) + "')";
             }
 
-            String search_invoice = " AND `tb_pengiriman`.`invoice_no` LIKE '%" + txt_search_no_invoice.getText() + "%' ";
-            if ("".equals(txt_search_no_invoice.getText()) || txt_search_no_invoice.getText() == null) {
-                search_invoice = "";
-            }
-
-            sql = "SELECT `tb_box_bahan_jadi`.`no_box`, `tanggal_box`, `tb_grade_bahan_jadi`.`kode_grade`, `tb_box_bahan_jadi`.`keping`, `tb_box_bahan_jadi`.`berat`, `no_tutupan`, `status_terakhir`, `lokasi_terakhir`, `tgl_proses_terakhir`, `tb_spk_detail`.`no`, `tb_spk_detail`.`kode_spk`, `tb_spk_detail`.`grade_buyer`, `tb_box_bahan_jadi`.`kode_rsb`, `tb_rumah_burung`.`nama_rumah_burung`, `tb_box_bahan_jadi`.`kode_kh`, `tb_dokumen_kh`.`no_registrasi_rsb`, `no_box_ct1`, `tb_pengiriman`.`invoice_no`, `memo_box_bj` "
+            sql = "SELECT `tb_box_bahan_jadi`.`no_box`, `tanggal_box`, `tb_grade_bahan_jadi`.`kode_grade`, `tb_box_bahan_jadi`.`keping`, `tb_box_bahan_jadi`.`berat`, `no_tutupan`, `status_terakhir`, `lokasi_terakhir`, `tgl_proses_terakhir`, `hpp_box`, `tb_spk_detail`.`no`, `tb_spk_detail`.`kode_spk`, `tb_spk_detail`.`grade_buyer`, `tb_box_bahan_jadi`.`kode_rsb`, `tb_rumah_burung`.`nama_rumah_burung`, `tb_box_bahan_jadi`.`kode_kh`, `tb_dokumen_kh`.`no_registrasi_rsb`, `no_box_ct1`, `tb_pengiriman`.`invoice_no`, `memo_box_bj` "
                     + "FROM `tb_box_bahan_jadi` "
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`"
                     + "LEFT JOIN `tb_box_packing` ON `tb_box_bahan_jadi`.`no_box` = `tb_box_packing`.`no_box`"
@@ -100,7 +95,6 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
                     + "WHERE "
                     + "`tb_box_bahan_jadi`.`no_box` LIKE '%" + txt_search_no_box.getText() + "%' "
                     + "AND `no_tutupan` LIKE '%" + txt_search_no_tutupan.getText() + "%' "
-                    + search_invoice
                     + tanggal 
                     + grade 
                     + lokasi
@@ -117,28 +111,22 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
                 baris[3] = rs.getFloat("keping");
                 baris[4] = rs.getFloat("berat");
                 baris[5] = rs.getString("no_tutupan");
-                baris[6] = rs.getString("status_terakhir");
-                baris[7] = rs.getString("lokasi_terakhir");
-                baris[8] = rs.getDate("tgl_proses_terakhir");
-                baris[9] = rs.getString("kode_spk");
-                baris[10] = rs.getString("grade_buyer");
-                baris[11] = rs.getString("kode_rsb");
-                baris[12] = rs.getString("kode_kh");
-                baris[13] = rs.getString("no_registrasi_rsb");
-                baris[14] = rs.getString("no_box_ct1");
-                baris[15] = rs.getString("invoice_no");
-                baris[16] = rs.getString("memo_box_bj");
+                baris[6] = rs.getString("lokasi_terakhir");
+                baris[7] = rs.getDouble("hpp_box");
                 model.addRow(baris);
 
                 total_kpg += rs.getFloat("keping");
                 total_gram += rs.getFloat("berat");
+                total_hpp += rs.getDouble("hpp_box");
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_dataBox);
             int total_data = table_dataBox.getRowCount();
-            label_total_data_box.setText(Integer.toString(total_data));
+            label_total_data_box.setText(decimalFormat.format(total_data));
             label_total_kpg_data_box.setText(decimalFormat.format(total_kpg));
             label_total_gram_data_box.setText(decimalFormat.format(total_gram));
+            label_total_nilai_hpp.setText("Rp. " + decimalFormat.format(total_hpp));
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_BoxBahanJadi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -275,8 +263,6 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
         jLabel53 = new javax.swing.JLabel();
         Date_box1 = new com.toedter.calendar.JDateChooser();
         Date_box2 = new com.toedter.calendar.JDateChooser();
-        jLabel63 = new javax.swing.JLabel();
-        txt_search_no_invoice = new javax.swing.JTextField();
         jLabel42 = new javax.swing.JLabel();
         txt_search_grade = new javax.swing.JTextField();
         jLabel46 = new javax.swing.JLabel();
@@ -348,14 +334,14 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No. Box", "Tgl Box", "Grade", "Keping", "Berat", "No Tutupan", "Status terakhir", "Lokasi", "invoice"
+                "No. Box", "Tgl Box", "Grade", "Keping", "Berat", "No Tutupan", "Lokasi", "Hpp"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -435,23 +421,14 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
         jLabel53.setText("Tanggal Box :");
 
         Date_box1.setBackground(new java.awt.Color(255, 255, 255));
-        Date_box1.setDateFormatString("dd MMMM yyyy");
+        Date_box1.setDate(new Date());
+        Date_box1.setDateFormatString("dd MMM yyyy");
         Date_box1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         Date_box2.setBackground(new java.awt.Color(255, 255, 255));
-        Date_box2.setDateFormatString("dd MMMM yyyy");
+        Date_box2.setDate(new Date());
+        Date_box2.setDateFormatString("dd MMM yyyy");
         Date_box2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        jLabel63.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel63.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel63.setText("No Invoice :");
-
-        txt_search_no_invoice.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_search_no_invoice.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_search_no_invoiceKeyPressed(evt);
-            }
-        });
 
         jLabel42.setBackground(new java.awt.Color(255, 255, 255));
         jLabel42.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -499,16 +476,12 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Date_box2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel63)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_search_no_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel47)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ComboBox_lokasi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_search_Box)
-                        .addGap(0, 157, Short.MAX_VALUE))
+                        .addGap(0, 341, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Data_BoxLayout.createSequentialGroup()
                         .addComponent(jLabel41)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -546,23 +519,22 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
                     .addComponent(Date_box1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date_box2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel_Data_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel63, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_search_no_invoice, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(ComboBox_lokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_search_Box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_Data_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_export_data_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_total_data_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_total_kpg_data_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_total_gram_data_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel_Data_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_Data_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label_total_nilai_hpp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(label_total_nilai_hpp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_Data_BoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(button_export_data_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label_total_data_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label_total_kpg_data_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label_total_gram_data_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                 .addContainerGap())
@@ -992,13 +964,6 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
         ExportToExcel.writeToExcel(model, jPanel_data_rePacking);
     }//GEN-LAST:event_button_export_hasilRepackingActionPerformed
 
-    private void txt_search_no_invoiceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_no_invoiceKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            refreshTable_DataBox();
-        }
-    }//GEN-LAST:event_txt_search_no_invoiceKeyPressed
-
     private void txt_search_gradeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_gradeKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_search_gradeKeyPressed
@@ -1035,7 +1000,6 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel61;
-    private javax.swing.JLabel jLabel63;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1068,7 +1032,6 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
     private javax.swing.JTextField txt_search_grade;
     private javax.swing.JTextField txt_search_kode_repacking;
     private javax.swing.JTextField txt_search_no_box;
-    private javax.swing.JTextField txt_search_no_invoice;
     public static javax.swing.JTextField txt_search_no_tutupan;
     // End of variables declaration//GEN-END:variables
 }

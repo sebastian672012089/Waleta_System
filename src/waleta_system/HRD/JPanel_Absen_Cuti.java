@@ -131,8 +131,22 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 status = "AND `tb_karyawan`.`status` = '" + ComboBox_status_karyawan.getSelectedItem().toString() + "' ";
             }
 
-            sql = "SELECT `id_pegawai`, `nama_pegawai`, `tb_bagian`.`nama_bagian`,`tb_bagian`.`kode_departemen`, `posisi`, `status`, `tanggal_masuk`,"
-                    + "IF(YEAR(`tanggal_masuk`) = YEAR(CURRENT_DATE()), TIMESTAMPDIFF(MONTH, `tanggal_masuk`, CONCAT(YEAR(`tanggal_masuk`), '-12-31')), 12) AS months_left "
+            sql = "SELECT *, "
+                    + "IF("
+                    + "YEAR(`tanggal_masuk`) = YEAR(CURRENT_DATE()), "
+                    + "TIMESTAMPDIFF(MONTH, `tanggal_masuk`, CONCAT(YEAR(`tanggal_masuk`), '-12-31')) + 1,"
+                    + " 12) AS jatah_cuti "
+                    + "FROM "
+                    + "(SELECT `id_pegawai`, `nama_pegawai`, `tb_bagian`.`nama_bagian`,`tb_bagian`.`kode_departemen`, `posisi`, `status`, "
+                    + "IF("
+                    + "(SELECT DATE(`jam_diketahui_keu`) FROM `tb_form_pindah_grup` WHERE \n"
+                    + "`tb_form_pindah_grup`.`id_pegawai` = `tb_karyawan`.`id_pegawai` AND `levelgaji_baru` = 'STAFF'\n"
+                    + "ORDER BY `jam_diketahui_keu` DESC LIMIT 1) IS NULL, "
+                    + "`tanggal_masuk`, "
+                    + "(SELECT DATE(`jam_diketahui_keu`) FROM `tb_form_pindah_grup` WHERE \n"
+                    + "`tb_form_pindah_grup`.`id_pegawai` = `tb_karyawan`.`id_pegawai` AND `levelgaji_baru` = 'STAFF'\n"
+                    + "ORDER BY `jam_diketahui_keu` DESC LIMIT 1))"
+                    + " AS 'tanggal_masuk' "
                     + "FROM `tb_karyawan` "
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`"
                     + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' "
@@ -140,7 +154,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     + departemen
                     + posisi
                     + status
-                    + "ORDER BY `id_pegawai` DESC";
+                    + "ORDER BY `id_pegawai` DESC) DATA ";
             pst = Utility.db.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
             Object[] row = new Object[20];
@@ -155,16 +169,22 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 row[7] = 0;
                 row[8] = 0;
                 row[9] = 0;
-                int jatah_cuti = rs.getInt("months_left");
+                int jatah_cuti = rs.getInt("jatah_cuti");
                 int cuti_terpakai = 0;
                 int sisa_cuti = 0;
-                
+
                 String query = "SELECT `jenis_cuti`, COUNT(`kode_cuti`) AS 'hari'\n"
-                        + "FROM `tb_cuti` WHERE `id_pegawai` = '" + rs.getString("id_pegawai") + "'\n"
+                        + "FROM `tb_cuti` "
+                        + "WHERE "
+                        + "`id_pegawai` = '" + rs.getString("id_pegawai") + "'\n"
+                        + "AND `tb_cuti`.`tanggal_cuti` >= '" + dateFormat.format(rs.getDate("tanggal_masuk")) + "'"
                         + "GROUP BY `jenis_cuti`";
                 if (Date_Ijin_absen1.getDate() != null && Date_Ijin_absen2.getDate() != null) {
                     query = "SELECT `jenis_cuti`, COUNT(`kode_cuti`) AS 'hari'\n"
-                            + "FROM `tb_cuti` WHERE `id_pegawai` = '" + rs.getString("id_pegawai") + "' "
+                            + "FROM `tb_cuti` "
+                            + "WHERE "
+                            + "`id_pegawai` = '" + rs.getString("id_pegawai") + "' "
+                            + "AND `tb_cuti`.`tanggal_cuti` >= '" + dateFormat.format(rs.getDate("tanggal_masuk")) + "'"
                             + "AND (`tb_cuti`.`tanggal_cuti` BETWEEN '" + dateFormat.format(Date_Ijin_absen1.getDate()) + "' AND '" + dateFormat.format(Date_Ijin_absen2.getDate()) + "') \n"
                             + "GROUP BY `jenis_cuti`";
                 }
@@ -358,8 +378,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 filter_tanggal = "AND `tgl_pengajuan` BETWEEN '" + dateFormat.format(Date_pengajuan1.getDate()) + "' AND '" + dateFormat.format(Date_pengajuan2.getDate()) + "' ";
             }
             sql = "SELECT `kode_pengajuan`, `tgl_input_pengajuan_cuti`, `tb_cuti_pengajuan`.`id_pegawai`, A.`nama_pegawai`, `tb_bagian`.`nama_bagian`, A.`posisi`, `tgl_pengajuan`, "
-                    + "(SELECT COUNT(`kode_cuti`) FROM `tb_cuti` WHERE `tb_cuti`.`kode_pengajuan` = `tb_cuti_pengajuan`.`kode_pengajuan`) AS 'hari', "
-                    + "`jenis_cuti`, `kategori_cuti`, `tb_cuti_pengajuan`.`keterangan`, B.`nama_pegawai` AS 'pengganti', `disetujui`, `diketahui` \n"
+                    + "`jumlah_hari`, `jenis_cuti`, `kategori_cuti`, `tb_cuti_pengajuan`.`keterangan`, B.`nama_pegawai` AS 'pengganti', `disetujui`, `diketahui`, `dibatalkan` \n"
                     + "FROM `tb_cuti_pengajuan` \n"
                     + "LEFT JOIN `tb_karyawan` A ON `tb_cuti_pengajuan`.`id_pegawai` = A.`id_pegawai`\n"
                     + "LEFT JOIN `tb_bagian` ON A.`kode_bagian` = `tb_bagian`.`kode_bagian` "
@@ -381,13 +400,14 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 row[3] = rs.getString("posisi");
                 row[4] = rs.getDate("tgl_input_pengajuan_cuti");
                 row[5] = rs.getDate("tgl_pengajuan");
-                row[6] = rs.getInt("hari");
+                row[6] = rs.getInt("jumlah_hari");
                 row[7] = rs.getString("jenis_cuti");
                 row[8] = rs.getString("kategori_cuti");
                 row[9] = rs.getString("keterangan");
                 row[10] = rs.getString("pengganti");
                 row[11] = rs.getString("disetujui");
                 row[12] = rs.getString("diketahui");
+                row[13] = rs.getString("dibatalkan");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_pengajuan);
@@ -672,14 +692,14 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode Pengajuan", "Nama", "Bagian", "Posisi", "Tgl Pengajuan", "Tgl Mulai Cuti", "Hari", "Jenis Cuti", "Ketegori", "Keterangan", "Pengganti", "Disetujui", "Diketahui"
+                "Kode Pengajuan", "Nama", "Bagian", "Posisi", "Tgl Pengajuan", "Tgl Mulai Cuti", "Hari", "Jenis Cuti", "Ketegori", "Keterangan", "Pengganti", "Disetujui", "Diketahui", "Dibatalkan"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

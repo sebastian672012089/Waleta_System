@@ -43,6 +43,7 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
                         int row = Table_TutupanGrading.getSelectedRow();
                         String kode_tutupan = Table_TutupanGrading.getValueAt(row, 0).toString();
                         label_KodeAsal.setText(kode_tutupan);
+                        label_KodeAsal1.setText(kode_tutupan);
                         refreshTable_Asal(kode_tutupan);
                         refreshTable_rincianBox(kode_tutupan);
                     }
@@ -60,10 +61,13 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
             model.setRowCount(0);
 
             HashMap<String, Integer> gramBox_per_tutupan = new HashMap<>();
-            sql = "SELECT `no_tutupan`, SUM(`berat`) AS 'berat_box' FROM `tb_box_bahan_jadi` WHERE 1 GROUP BY `no_tutupan`";
+            HashMap<String, Double> HppBox_per_tutupan = new HashMap<>();
+            sql = "SELECT `no_tutupan`, SUM(`berat`) AS 'berat_box', SUM(`hpp_box`) AS 'hpp_box' "
+                    + "FROM `tb_box_bahan_jadi` WHERE 1 GROUP BY `no_tutupan`";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
                 gramBox_per_tutupan.put(rs.getString("no_tutupan"), rs.getInt("berat_box"));
+                HppBox_per_tutupan.put(rs.getString("no_tutupan"), rs.getDouble("hpp_box"));
             }
 
             String filter_tanggal = "";
@@ -88,7 +92,7 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
                     + "GROUP BY `tb_bahan_jadi_masuk`.`kode_tutupan` "
                     + "ORDER BY `tb_tutupan_grading`.`tgl_statusBox` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] baris = new Object[10];
+            Object[] baris = new Object[15];
             while (rs.next()) {
                 baris[0] = rs.getString("kode_tutupan");
                 baris[1] = rs.getDate("tgl_statusBox");
@@ -104,6 +108,7 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
                 baris[8] = total_gram_box;
                 double hpp_per_gram_box = total_hpp_tutupan / total_gram_box;
                 baris[9] = Math.round(hpp_per_gram_box * 100000d) / 100000d;
+                baris[10] = HppBox_per_tutupan.getOrDefault(rs.getString("kode_tutupan"), 0d);
 
                 total_biaya_tutupan = total_biaya_tutupan + total_hpp_tutupan;
                 model.addRow(baris);
@@ -168,7 +173,7 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
                 row[2] = rs.getInt("keping");
                 row[3] = rs.getFloat("berat");
                 row[4] = rs.getString("lokasi_terakhir");
-                row[5] = rs.getFloat("hpp_box");
+                row[5] = rs.getDouble("hpp_box");
                 model.addRow(row);
 
                 total_kpg += rs.getInt("keping");
@@ -282,14 +287,14 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
 
             },
             new String [] {
-                "Kode Tutupan", "Tgl Selesai Box", "Harga Baku", "Biaya Tambahan Baku", "Biaya TK", "Biaya Overhead", "% Lengkap", "Total Hpp Tutupan", "Total Gram Box", "Hpp / Gr"
+                "Kode Tutupan", "Tgl Selesai Box", "Harga Baku", "Biaya Tambahan Baku", "Biaya TK", "Biaya Overhead", "% Lengkap", "Total Hpp Tutupan", "Total Gram Box", "Hpp / Gr", "Total Hpp Box"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -342,20 +347,19 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
                 .addGroup(jPanel_Data_TutupanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanel_Data_TutupanLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_search_kodeTutupan, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_filter1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_filter2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_search)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel_Data_TutupanLayout.createSequentialGroup()
                         .addGroup(jPanel_Data_TutupanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_Data_TutupanLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_kodeTutupan, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_filter1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_filter2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_search))
                             .addGroup(jPanel_Data_TutupanLayout.createSequentialGroup()
                                 .addComponent(button_set_hpp_box)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -389,12 +393,13 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_Data_TutupanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel_Data_TutupanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_Data_TutupanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label_total_hpp_tutupan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(label_total_hpp_tutupan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_Data_TutupanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -414,7 +419,7 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -719,7 +724,9 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Set HPP box untuk tutupan " + kode_tutupan + " ??", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     double hpp_per_gram = (double) Table_TutupanGrading.getValueAt(j, 9);
-                    sql = "UPDATE `tb_box_bahan_jadi` SET `hpp_box`=`berat`*" + hpp_per_gram + " WHERE `no_tutupan` = '" + kode_tutupan + "'";
+                    sql = "UPDATE `tb_box_bahan_jadi` SET "
+                            + "`hpp_box`=`berat`*" + hpp_per_gram + " "
+                            + "WHERE `no_tutupan` = '" + kode_tutupan + "'";
                     if (Utility.db.getStatement().executeUpdate(sql) > 0) {
                         JOptionPane.showMessageDialog(this, "Berhasil UPDATE HPP box!");
                         refreshTable_rincianBox(kode_tutupan);

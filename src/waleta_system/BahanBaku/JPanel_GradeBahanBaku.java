@@ -488,7 +488,7 @@ public class JPanel_GradeBahanBaku extends javax.swing.JPanel {
         int total_baris = Table_GradeBahanBaku.getRowCount();
         Boolean Check = true;
         if (j == -1) {
-            JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+            JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
         } else {
             if (!txt_kode_grade.getText().equals(Table_GradeBahanBaku.getValueAt(j, 0))) {
                 for (int i = 0; i < total_baris; i++) {

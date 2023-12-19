@@ -73,7 +73,6 @@ public class JDialog_Input_ByProduct_F2 extends javax.swing.JDialog {
                             + "WHERE `no_laporan_produksi`='" + txt_no_lp.getText() + "'";
                     Utility.db.getConnection().createStatement();
                     if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
-                        JPanel_Finishing2.button_search_f2.doClick();
                         this.dispose();
                         JOptionPane.showMessageDialog(this, "Data Inserted !");
                     }
@@ -82,7 +81,6 @@ public class JDialog_Input_ByProduct_F2 extends javax.swing.JDialog {
                             + "VALUES ('" + txt_no_lp.getText() + "','" + dateFormat.format(Date_input.getDate()) + "','" + txt_sesekan.getText() + "','" + txt_hancuran.getText() + "','" + txt_serabut.getText() + "')";
                     Utility.db.getConnection().createStatement();
                     if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
-                        JPanel_Finishing2.button_search_f2.doClick();
                         this.dispose();
                         JOptionPane.showMessageDialog(this, "Data Inserted !");
                     }

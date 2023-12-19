@@ -520,7 +520,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         Boolean Check = true;
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 if (!txt_no_lp_rendam.getText().equals(Table_Data_Rendam.getValueAt(j, 1))) {
                     JOptionPane.showMessageDialog(this, "cannot change no laporan produksi");

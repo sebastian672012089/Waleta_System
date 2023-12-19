@@ -484,7 +484,7 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
         int j = Table_Data_Lab_BahanBaku.getSelectedRow();
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 sql = "UPDATE `tb_lab_bahan_baku` SET "
                         + "`no_kartu_waleta`='" + txt_no_kartu_waleta.getText() + "',"

@@ -1454,7 +1454,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
         int j = Table_pembelian_bahan_jadi.getSelectedRow();
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 Boolean Check = true;
                 String tgl_pembelian = null;
@@ -1518,7 +1518,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
         int j = Table_pembelian_bahan_jadi.getSelectedRow();
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 String kode = Table_pembelian_bahan_jadi.getValueAt(j, 0).toString();
                 int berat = Math.round((float) Table_pembelian_bahan_jadi.getValueAt(j, 3));

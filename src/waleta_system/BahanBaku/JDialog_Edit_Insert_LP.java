@@ -424,6 +424,9 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 harga_gram_cabuto = result.getInt("harga_gram_cabuto");
             }
             int harga_baku_lp = berat_basah * harga_gram_cabuto;
+//            if (harga_baku_lp == 0) {
+//                throw new Exception("Harga Baku LP cabuto tidak boleh 0!\nsilahkan masukkan harga baku pada master grade baku!");
+//            }
 
             String no_laporan_produksi = generateCode(status);
             String insert_lp_cabuto = "INSERT INTO `tb_lp`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `harga_baku`) "
@@ -1459,6 +1462,9 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                         harga_gram_cabuto = result.getInt("harga_gram_cabuto");
                     }
                     int harga_baku_lp = berat_basah * harga_gram_cabuto;
+//                    if (harga_baku_lp == 0) {
+//                        throw new Exception("Harga Baku LP cabuto tidak boleh 0!\nsilahkan masukkan harga baku pada master grade baku!");
+//                    }
                     Query = "UPDATE `tb_lp` SET "
                             + "`no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "', "
                             + "`tanggal_lp` = '" + dateFormat.format(Date_LP.getDate()) + "', "

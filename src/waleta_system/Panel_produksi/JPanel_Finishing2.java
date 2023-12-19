@@ -955,7 +955,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void refreshTable_LP_suwir() {
         try {
             float total_stok = 0, total_keluar_f2 = 0;
@@ -1149,7 +1149,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         button_input_f2 = new javax.swing.JButton();
         button_input_byproduct = new javax.swing.JButton();
         button_input_koreksi1 = new javax.swing.JButton();
-        button_balen = new javax.swing.JButton();
         button_input_kaki = new javax.swing.JButton();
         button_tv_reproses = new javax.swing.JButton();
         button_laporan_f2 = new javax.swing.JButton();
@@ -1558,15 +1557,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_balen.setBackground(new java.awt.Color(255, 255, 255));
-        button_balen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_balen.setText("Balen");
-        button_balen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_balenActionPerformed(evt);
-            }
-        });
-
         button_input_kaki.setBackground(new java.awt.Color(255, 255, 255));
         button_input_kaki.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_input_kaki.setText("Input Kaki");
@@ -1687,9 +1677,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         .addComponent(button_f2_edit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_f2_delete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_balen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_data_f2))
@@ -1731,7 +1719,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addComponent(button_tv_reproses)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_export_f2)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 158, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -1783,9 +1771,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         .addComponent(button_f2_edit_kaki, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(button_f2_setor_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_f2_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(button_f2_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_balen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(button_f2_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -3774,6 +3760,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             terima_lp.setVisible(true);
             terima_lp.setEnabled(true);
         }
+        refreshTable_F2();
     }//GEN-LAST:event_button_f2_terima_lpActionPerformed
 
     private void button_f2_setor_lpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_f2_setor_lpActionPerformed
@@ -3788,7 +3775,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             setor_lp.setVisible(true);
             setor_lp.setEnabled(true);
             refreshTable_F2();
-//            refreshTable_Setoran();
         }
     }//GEN-LAST:event_button_f2_setor_lpActionPerformed
 
@@ -3807,7 +3793,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 refreshTable_F2();
                 JOptionPane.showMessageDialog(this, "Harap memberikan info edit ke bagian keuangan, karena data akan mempengaruhi perhitungan upah !!");
             }
-//            refreshTable_Setoran();
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, e);
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, e);
@@ -3833,10 +3818,9 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
                             JOptionPane.showMessageDialog(this, "data deleted Successfully");
                         } else {
-                            JOptionPane.showMessageDialog(this, "data not deleted");
+                            JOptionPane.showMessageDialog(this, "Delete FAILED");
                         }
                         refreshTable_F2();
-//                    refreshTable_Setoran();
                     }
                 }
             }
@@ -3897,6 +3881,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 input_koreksi.setLocationRelativeTo(this);
                 input_koreksi.setVisible(true);
                 input_koreksi.setEnabled(true);
+                refreshTable_F2();
             } else {
                 JOptionPane.showMessageDialog(this, "LP belum di terima");
             }
@@ -3915,6 +3900,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             input.setLocationRelativeTo(this);
             input.setVisible(true);
             input.setEnabled(true);
+            refreshTable_F2();
         } else {
             JOptionPane.showMessageDialog(this, "Silahkan klik pada LP yang akan masuk");
         }
@@ -3930,6 +3916,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             input.setLocationRelativeTo(this);
             input.setVisible(true);
             input.setEnabled(true);
+            refreshTable_F2();
         } else {
             JOptionPane.showMessageDialog(this, "Silahkan klik pada LP yang akan masuk");
         }
@@ -3942,6 +3929,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         input_bp.setLocationRelativeTo(this);
         input_bp.setVisible(true);
         input_bp.setEnabled(true);
+        refreshTable_F2();
     }//GEN-LAST:event_button_input_byproductActionPerformed
 
     private void button_input_koreksi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_koreksi1ActionPerformed
@@ -3951,11 +3939,8 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         input.setLocationRelativeTo(this);
         input.setVisible(true);
         input.setEnabled(true);
+        refreshTable_F2();
     }//GEN-LAST:event_button_input_koreksi1ActionPerformed
-
-    private void button_balenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_balenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button_balenActionPerformed
 
     private void txt_search_lp_balenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_lp_balenKeyPressed
         // TODO add your handling code here:
@@ -4027,6 +4012,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         input_kaki.setLocationRelativeTo(this);
         input_kaki.setVisible(true);
         input_kaki.setEnabled(true);
+        refreshTable_F2();
     }//GEN-LAST:event_button_input_kakiActionPerformed
 
     private void button_tv_reprosesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_tv_reprosesActionPerformed
@@ -4046,6 +4032,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         input_sesekan.setLocationRelativeTo(this);
         input_sesekan.setVisible(true);
         input_sesekan.setEnabled(true);
+        refreshTable_F2();
     }//GEN-LAST:event_button_input_sesekanActionPerformed
 
     private void button_laporan_f2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_laporan_f2ActionPerformed
@@ -4098,7 +4085,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 edit_kaki.setEnabled(true);
             }
             refreshTable_F2();
-//            refreshTable_Setoran();
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, e);
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, e);
@@ -4275,7 +4261,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
     public static javax.swing.JTable Table_evaluasi_MLEM;
     private javax.swing.JTable Table_evaluasi_MLEM_summary;
     private javax.swing.JButton button_Print_LP_SWR;
-    public javax.swing.JButton button_balen;
     public static javax.swing.JButton button_delete;
     private javax.swing.JButton button_export_AsalBox;
     private javax.swing.JButton button_export_BoxReproses;
@@ -4299,7 +4284,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
     public static javax.swing.JButton button_laporan_terima_SUB;
     public static javax.swing.JButton button_laporan_terima_WLT;
     public static javax.swing.JButton button_refresh_evaluasiMLEM;
-    public static javax.swing.JButton button_search_f2;
+    private javax.swing.JButton button_search_f2;
     private javax.swing.JButton button_search_lp;
     public static javax.swing.JButton button_search_lp_balen;
     public static javax.swing.JButton button_search_setoran;

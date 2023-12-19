@@ -508,7 +508,7 @@ public class JPanel_BahanBakuKeluar extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "data deleted Successfully");
                         refreshTable();
                     } else {
-                        JOptionPane.showMessageDialog(this, "data not DELETED");
+                        JOptionPane.showMessageDialog(this, "Delete FAILED");
                     }
                 }
             }

@@ -580,7 +580,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
                     if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
                         JOptionPane.showMessageDialog(this, "data DELETED Successfully");
                     } else {
-                        JOptionPane.showMessageDialog(this, "data not DELETED");
+                        JOptionPane.showMessageDialog(this, "Delete FAILED");
                     }
                     refreshTable_bagian();
                 }

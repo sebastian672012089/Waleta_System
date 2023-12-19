@@ -752,6 +752,14 @@ public class Login extends javax.swing.JFrame {
                     }
                     MainForm main = new MainForm(user, idPegawai, nama, kode_bagian, nama_bagian, departemen, posisi, dataMenu);
                     getAccess(dataMenu);
+                    if (!nama_bagian.toUpperCase().contains("KADEP-" + departemen) 
+                            && kode_bagian != 244
+                            && !idPegawai.equals("20180102221")
+                            ) {
+                        MainForm.jMenu_Cabuto.setVisible(false);
+                    } else {
+                        MainForm.jMenu_Cabuto.setVisible(true);
+                    }
                     main.pack();
                     main.setLocationRelativeTo(this);
                     main.setEnabled(true);
@@ -1164,7 +1172,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.249");
+        label_version.setText("2.2.253");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N

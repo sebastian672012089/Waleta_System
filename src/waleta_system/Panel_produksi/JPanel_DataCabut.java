@@ -1126,7 +1126,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
         int j = table_data_pencabut.getSelectedRow();
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 int keping_cabut = Integer.valueOf(txt_jmlh_keping.getText());
                 float berat_basah = 0, total_keping = 0;

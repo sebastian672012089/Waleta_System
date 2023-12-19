@@ -1436,7 +1436,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 basah = "Failed";
             }
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 String Query = "UPDATE `tb_bahan_baku_masuk` SET `uji_kerapatan` = '" + rapat + "', `uji_kerusakan` = '" + rusak + "', `uji_basah` = '" + basah + "' WHERE `tb_bahan_baku_masuk`.`no_kartu_waleta` = '" + Table_Bahan_Baku_Masuk.getValueAt(j, 0).toString() + "'";
                 executeSQLQuery(Query, "updated !");
@@ -1452,7 +1452,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         try {
             int j = Table_Bahan_Baku_Masuk.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 if (Date_Grading.getDate() != null && Date_timbang.getDate() != null) {
                     String Query = "UPDATE `tb_bahan_baku_masuk` SET `tgl_grading` = '" + dateFormat.format(Date_Grading.getDate()) + "', `tgl_timbang` = '" + dateFormat.format(Date_timbang.getDate()) + "' WHERE `tb_bahan_baku_masuk`.`no_kartu_waleta` = '" + Table_Bahan_Baku_Masuk.getValueAt(j, 0).toString() + "'";

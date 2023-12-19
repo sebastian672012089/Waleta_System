@@ -159,7 +159,11 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
                     + "AND `tgl_selesai_cetak` BETWEEN '" + dateFormat.format(DateFilter_SetorCetak1.getDate()) + "' AND '" + dateFormat.format(DateFilter_SetorCetak2.getDate()) + "'\n"
                     + "AND `cetak_dikerjakan` IS NOT NULL \n"
                     + "AND `tgl_selesai_cetak` IS NOT NULL \n"
-                    + "AND (`cetak_dikerjakan1`<>`cetak_dikerjakan` OR `cetak_dikerjakan1` IS NULL) \n"
+                    + "AND ("
+                    + "(`tgl_cetak_dikerjakan1` IS NOT NULL AND `cetak_dikerjakan1` IS NOT NULL)"
+                    + "OR"
+                    + "(`tgl_cetak_dikerjakan1` IS NULL AND `cetak_dikerjakan1` IS NULL)"
+                    + ") \n"
                     + "GROUP BY `cetak_dikerjakan` \n"
                     + ""
                     + "UNION ALL \n"
@@ -378,7 +382,11 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
                         + "AND `tgl_selesai_cetak` BETWEEN '" + dateFormat.format(DateFilter_SetorCetak1.getDate()) + "' AND '" + dateFormat.format(DateFilter_SetorCetak2.getDate()) + "'\n"
                         + "AND `cetak_dikerjakan` IS NOT NULL \n"
                         + "AND `tgl_selesai_cetak` IS NOT NULL \n"
-                        + "AND (`cetak_dikerjakan1`<>`cetak_dikerjakan` OR `cetak_dikerjakan1` IS NULL) \n";
+                        + "AND ("
+                        + "(`tgl_cetak_dikerjakan1` IS NOT NULL AND `cetak_dikerjakan1` IS NOT NULL)"
+                        + "OR"
+                        + "(`tgl_cetak_dikerjakan1` IS NULL AND `cetak_dikerjakan1` IS NULL)"
+                        + ") \n";
             }
 //            System.out.println(sql);
             rs = Utility.db.getStatement().executeQuery(sql);
@@ -523,7 +531,7 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
             Logger.getLogger(JPanel_GajiCetak.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void refreshTable_koreksi() {
         try {
             double total_bonus = 0, total_gram = 0, total_kpg = 0;
@@ -2256,10 +2264,10 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
     private void txt_bonus_koreksiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bonus_koreksiKeyTyped
         // TODO add your handling code here:
         if (!Character.isDigit(evt.getKeyChar())
-            && evt.getKeyChar() != '.'
-            && evt.getKeyCode() != KeyEvent.VK_ENTER
-            && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
-            && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
             evt.consume();
         }
     }//GEN-LAST:event_txt_bonus_koreksiKeyTyped
@@ -2278,10 +2286,10 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
     private void txt_minimal_lp_koreksi_dikerjakanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_minimal_lp_koreksi_dikerjakanKeyTyped
         // TODO add your handling code here:
         if (!Character.isDigit(evt.getKeyChar())
-            && evt.getKeyChar() != '.'
-            && evt.getKeyCode() != KeyEvent.VK_ENTER
-            && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
-            && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
             evt.consume();
         }
     }//GEN-LAST:event_txt_minimal_lp_koreksi_dikerjakanKeyTyped
@@ -2293,12 +2301,12 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
             try {
                 for (int i = 0; i < table_data_pegawai_koreksi.getRowCount(); i++) {
                     String Query = "INSERT INTO `tb_lembur_rekap`(`id_pegawai`, `tanggal`, `bonus1_kecepatan`) "
-                    + "VALUES ("
-                    + "'" + table_data_pegawai_koreksi.getValueAt(i, 1).toString() + "',"
-                    + "'" + dateFormat.format(DateFilter_TerimaCetak2.getDate()) + "',"
-                    + table_data_pegawai_koreksi.getValueAt(i, 7) + ") "
-                    + "ON DUPLICATE KEY UPDATE "
-                    + "`bonus1_kecepatan`=" + table_data_pegawai_koreksi.getValueAt(i, 7);
+                            + "VALUES ("
+                            + "'" + table_data_pegawai_koreksi.getValueAt(i, 1).toString() + "',"
+                            + "'" + dateFormat.format(DateFilter_TerimaCetak2.getDate()) + "',"
+                            + table_data_pegawai_koreksi.getValueAt(i, 7) + ") "
+                            + "ON DUPLICATE KEY UPDATE "
+                            + "`bonus1_kecepatan`=" + table_data_pegawai_koreksi.getValueAt(i, 7);
                     Utility.db.getConnection().createStatement();
                     Utility.db.getStatement().executeUpdate(Query);
                 }

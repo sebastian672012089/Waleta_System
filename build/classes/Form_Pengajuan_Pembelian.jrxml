@@ -89,7 +89,7 @@
 	<parameter name="biaya_lain" class="java.lang.String"/>
 	<parameter name="total" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT `no`, `tanggal_pengajuan`, `departemen`, `keperluan`, `nama_barang`, `jumlah`, `satuan`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `diajukan`, `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `jenis_pembelian`, `status`, `keterangan`, `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, `no_rekening`, `nama_rekening` FROM `tb_aset_pengajuan`
+		<![CDATA[SELECT `no`, `tanggal_pengajuan`, `departemen`, `keperluan`, `nama_barang`, `jumlah`, `satuan`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `diajukan`, `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `jenis_pembelian`, `status`, `keterangan`, `realisasi_jumlah`, `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, CONCAT(`nama_bank`, ' ', `no_rekening`) AS 'no_rekening', `nama_rekening` FROM `tb_aset_pengajuan`
 WHERE `no` = $P{NO_PENGAJUAN}]]>
 	</queryString>
 	<field name="no" class="java.lang.Integer">
@@ -144,6 +144,9 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="keterangan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="realisasi_jumlah" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="realisasi_harga_satuan" class="java.lang.Integer">
@@ -433,8 +436,9 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 			</staticText>
 			<textField pattern="">
 				<reportElement style="Detail" x="375" y="185" width="80" height="25" uuid="d3c21209-8b26-4f3e-b40c-1b80c9b1c51a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font size="10"/>
+					<paragraph rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{harga_satuan}]]></textFieldExpression>
 			</textField>
@@ -443,7 +447,7 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{jumlah}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{realisasi_jumlah}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Column header" x="325" y="185" width="50" height="25" forecolor="#000000" uuid="e225e4ee-1b47-4ef1-a846-060123dba945"/>
@@ -469,8 +473,9 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 			</staticText>
 			<textField pattern="">
 				<reportElement style="Detail" x="455" y="185" width="100" height="25" uuid="d7446783-3cdb-4cee-a41c-af39fbb6e60f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font size="10"/>
+					<paragraph rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{subtotal}]]></textFieldExpression>
 			</textField>
@@ -490,8 +495,9 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 			</staticText>
 			<textField pattern="">
 				<reportElement style="Detail" x="455" y="210" width="100" height="20" uuid="8936728f-7fac-457d-b57a-0d452c5e76d2"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font size="10"/>
+					<paragraph rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{ppn}]]></textFieldExpression>
 			</textField>
@@ -504,15 +510,17 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 			</textField>
 			<textField pattern="">
 				<reportElement style="Detail" x="455" y="230" width="100" height="20" uuid="1dfc5462-f2db-4a94-bbb1-704df705d91a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font size="10"/>
+					<paragraph rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{biaya_lain}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
 				<reportElement style="Detail" x="455" y="250" width="100" height="20" uuid="70587c43-218e-4885-9766-3f89679e42b3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font size="10" isBold="true"/>
+					<paragraph rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
 			</textField>
@@ -580,7 +588,7 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="160" y="290" width="200" height="15" forecolor="#000000" uuid="c5b789e1-ebfb-4d4a-8b6d-0e16fb8a4ac2"/>
+				<reportElement x="160" y="290" width="380" height="15" forecolor="#000000" uuid="c5b789e1-ebfb-4d4a-8b6d-0e16fb8a4ac2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="11" isItalic="false"/>
 				</textElement>
@@ -588,7 +596,7 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 "Tunai" : "Transfer"]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="305" width="200" height="15" forecolor="#000000" uuid="47095477-941e-4e45-b946-c2f42600a43c"/>
+				<reportElement x="160" y="305" width="380" height="15" forecolor="#000000" uuid="47095477-941e-4e45-b946-c2f42600a43c"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="11" isItalic="true"/>
 				</textElement>
@@ -596,14 +604,14 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 "Cash" : "Transfer"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="320" width="200" height="30" forecolor="#000000" uuid="51f84ef0-3182-40b0-84de-2cafe95ffd11"/>
+				<reportElement x="160" y="320" width="380" height="30" forecolor="#000000" uuid="51f84ef0-3182-40b0-84de-2cafe95ffd11"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="11" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no_rekening}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="160" y="350" width="200" height="30" forecolor="#000000" uuid="d4bdf75e-a3de-478e-bf6c-e98170da4e88"/>
+				<reportElement x="160" y="350" width="380" height="30" forecolor="#000000" uuid="d4bdf75e-a3de-478e-bf6c-e98170da4e88"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="11" isItalic="false"/>
 				</textElement>
@@ -692,6 +700,46 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 					<font fontName="Arial" size="11" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Purchasing]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="185" width="25" height="25" forecolor="#000000" uuid="3423f547-d550-427b-b931-6d4282890a2d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="10" isItalic="false"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="185" width="25" height="25" forecolor="#000000" uuid="82540066-bd03-4fc2-a73b-48dc210c22de"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="10" isItalic="false"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="210" width="25" height="20" forecolor="#000000" uuid="0fa0f6cf-066b-4f5c-8178-4b192b454684"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="10" isItalic="false"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="230" width="25" height="20" forecolor="#000000" uuid="6bf1b5e2-2527-4369-8bc3-6da0d02a6f2f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="10" isItalic="false"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="250" width="25" height="20" forecolor="#000000" uuid="ab4c6ab9-4f50-4592-983d-c714a52a7022"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="10" isItalic="false"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
 			</staticText>
 		</band>
 	</detail>

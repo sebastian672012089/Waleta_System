@@ -1056,7 +1056,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
     private void Button_Edit_data_gradingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_Edit_data_gradingActionPerformed
         int i = Table_Grading_Bahan_Baku.getSelectedRow();
         if (i == -1) {
-            JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+            JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
         } else {
             boolean check = true;
             float kpg_keluar = Float.valueOf(Table_Grading_Bahan_Baku.getValueAt(i, 4).toString());

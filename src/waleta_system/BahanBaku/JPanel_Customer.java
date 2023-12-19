@@ -398,7 +398,7 @@ public class JPanel_Customer extends javax.swing.JPanel {
         Boolean Check = true;
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 if (!txt_nama_customer_baku.getText().equals(Table_customer_baku.getValueAt(j, 1))) {
                     for (int i = 0; i < total_baris; i++) {

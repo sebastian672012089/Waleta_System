@@ -596,7 +596,7 @@ public class DetailGradingBaku_Cheat extends javax.swing.JFrame {
         try {
             int i = Table_Grading_Bahan_Baku.getSelectedRow();
             if (i == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 boolean check = true;
                 String no_kartu = label_NO_KARTU.getText();

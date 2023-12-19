@@ -20,7 +20,7 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
         super(parent, modal);
         initComponents();
         try {
-            sql = "SELECT `no`, `keperluan`, `nama_barang`, `jumlah`, `satuan`, `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, `no_rekening`, `nama_rekening` \n"
+            sql = "SELECT `no`, `keperluan`, `nama_barang`, `jumlah`, `satuan`, `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, `nama_bank`, `no_rekening`, `nama_rekening` \n"
                     + "FROM `tb_aset_pengajuan` \n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_aset_pengajuan`.`diajukan` = `tb_karyawan`.`id_pegawai`\n"
                     + "WHERE `no` = '" + no + "'";
@@ -42,6 +42,7 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
                     jLabel21.setEnabled(true);
                     txt_no_rekening.setEnabled(true);
                     txt_nama_rekening.setEnabled(true);
+                    txt_nama_bank.setText(rs.getString("nama_bank"));
                     txt_no_rekening.setText(rs.getString("no_rekening"));
                     txt_nama_rekening.setText(rs.getString("nama_rekening"));
                 } else {
@@ -49,6 +50,7 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
                     ComboBox_metode_bayar.setSelectedIndex(1);
                     jLabel22.setEnabled(false);
                     jLabel21.setEnabled(false);
+                    txt_nama_bank.setEnabled(false);
                     txt_no_rekening.setEnabled(false);
                     txt_nama_rekening.setEnabled(false);
                 }
@@ -67,6 +69,7 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
             int ppn = CheckBox_ppn.isSelected() ? Math.round((jumlah * harga) * 0.11f) : 0;
             int biaya_lain = txt_biaya_lain2.getText() == null || txt_biaya_lain2.getText().equals("") ? 0 : Integer.valueOf(txt_biaya_lain2.getText());
             int total = (jumlah * harga) + ppn + biaya_lain;
+            CheckBox_ppn.setText("Rp. " + decimalFormat.format(ppn));
             txt_realisasi_total.setText("Rp. " + decimalFormat.format(total));
         } catch (Exception ex) {
             Logger.getLogger(JDialog_Aset_PengajuanPembelian_Realisasi.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,18 +79,22 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
     private void edit() {
         try {
             String ppn = CheckBox_ppn.isSelected() ? "11" : "0";
+            String nama_bank = "NULL";
             String no_rekening = "NULL";
             String nama_rekening = "NULL";
             if (ComboBox_metode_bayar.getSelectedIndex() == 0) {
+                nama_bank = "'" + txt_nama_bank.getText() + "'";
                 no_rekening = "'" + txt_no_rekening.getText() + "'";
                 nama_rekening = "'" + txt_nama_rekening.getText() + "'";
             }
             sql = "UPDATE `tb_aset_pengajuan` SET "
+                    + "`realisasi_jumlah`='" + txt_jumlah.getText() + "',"
                     + "`satuan`='" + txt_satuan.getText() + "',"
                     + "`realisasi_harga_satuan`='" + txt_realisasi_harga_satuan.getText() + "',"
                     + "`ppn`='" + ppn + "',"
                     + "`biaya_lain`='" + txt_biaya_lain2.getText() + "',"
                     + "`keterangan_biaya_lain`='" + txt_keterangan_biaya_lain.getText() + "',"
+                    + "`nama_bank`=" + nama_bank + ","
                     + "`no_rekening`=" + no_rekening + ","
                     + "`nama_rekening`=" + nama_rekening + " "
                     + "WHERE `no`='" + txt_no.getText() + "'";
@@ -141,6 +148,7 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
         txt_no_rekening = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         txt_satuan = new javax.swing.JTextField();
+        txt_nama_bank = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -209,7 +217,6 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
         jLabel16.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel16.setText("Realisasi Total :");
 
-        txt_jumlah.setEditable(false);
         txt_jumlah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txt_jumlah.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -240,6 +247,7 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
 
         CheckBox_ppn.setBackground(new java.awt.Color(255, 255, 255));
         CheckBox_ppn.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        CheckBox_ppn.setText("Rp. 0");
         CheckBox_ppn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CheckBox_ppnActionPerformed(evt);
@@ -282,6 +290,8 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
 
         txt_satuan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
+        txt_nama_bank.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -306,8 +316,7 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_keterangan_biaya_lain)
                     .addComponent(CheckBox_ppn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_no_rekening)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
                     .addComponent(txt_nama_rekening)
                     .addComponent(ComboBox_metode_bayar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_realisasi_harga_satuan)
@@ -316,7 +325,11 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
                     .addComponent(txt_no)
                     .addComponent(txt_nama_barang)
                     .addComponent(txt_realisasi_total)
-                    .addComponent(txt_satuan))
+                    .addComponent(txt_satuan)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txt_nama_bank, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_no_rekening)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
@@ -379,7 +392,8 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_no_rekening, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_no_rekening, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nama_bank, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -507,6 +521,7 @@ public class JDialog_Aset_PengajuanPembelian_Realisasi extends javax.swing.JDial
     private javax.swing.JTextField txt_jumlah;
     private javax.swing.JTextArea txt_keperluan;
     private javax.swing.JTextField txt_keterangan_biaya_lain;
+    private javax.swing.JTextField txt_nama_bank;
     private javax.swing.JTextField txt_nama_barang;
     private javax.swing.JTextField txt_nama_rekening;
     private javax.swing.JTextField txt_no;

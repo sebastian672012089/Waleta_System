@@ -1338,7 +1338,7 @@ public class JPanel_Data_Jam_Kerja extends javax.swing.JPanel {
         int j = Table_Jam_kerja.getSelectedRow();
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 String kode_lama = Table_Jam_kerja.getValueAt(j, 0).toString();
                 String hari1 = "", hari2 = "", hari3 = "", hari4 = "", hari5 = "", hari6 = "", hari7 = "";

@@ -426,7 +426,7 @@ public class JPanel_Data_Buyer extends javax.swing.JPanel {
         Boolean Check = true;
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 if (Check) {
                     String Query = "UPDATE `tb_buyer` SET "

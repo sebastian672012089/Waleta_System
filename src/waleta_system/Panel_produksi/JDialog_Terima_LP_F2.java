@@ -60,7 +60,6 @@ public class JDialog_Terima_LP_F2 extends javax.swing.JDialog {
                         + "ON DUPLICATE KEY UPDATE "
                         + "`tgl_masuk_f2`='" + dateFormat.format(Date_terima.getDate()) + "', `f2_diterima`='" + txt_diterima.getText() + "' ";
                 if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
-                    JPanel_Finishing2.button_search_f2.doClick();
                     this.dispose();
                     JOptionPane.showMessageDialog(this, "Data Inserted !");
                 }

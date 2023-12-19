@@ -249,7 +249,6 @@ public class JDialog_Edit_Data_Kaki_F2 extends javax.swing.JDialog {
                 if ((Utility.db.getStatement().executeUpdate(Query1)) == 1) {
                     JOptionPane.showMessageDialog(this, "Data kaki " + label_no_lp.getText() + " berhasil diubah");
                     this.dispose();
-                    JPanel_Finishing2.button_search_f2.doClick();
                 }
             }
 

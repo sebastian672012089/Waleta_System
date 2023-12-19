@@ -421,7 +421,7 @@ public class JPanel_DataTemanBawaTeman extends javax.swing.JPanel {
                     if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
                         JOptionPane.showMessageDialog(this, "data DELETE Successfully");
                     } else {
-                        JOptionPane.showMessageDialog(this, "data not DELETED");
+                        JOptionPane.showMessageDialog(this, "Delete FAILED");
                     }
                     refreshTable_tbt();
                     refreshTable_top10();

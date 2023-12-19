@@ -1,7 +1,6 @@
 package waleta_system.Panel_produksi;
 
 import waleta_system.Class.Utility;
-
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -13,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import waleta_system.Browse_Karyawan;
-
 import waleta_system.MainForm;
 
 public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
@@ -1315,7 +1313,6 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
                     if ((Utility.db.getStatement().executeUpdate(Query_UPDATE_QC)) == 1) {
                         JOptionPane.showMessageDialog(this, "Data " + label_no_lp.getText() + " berhasil diubah");
                         this.dispose();
-                        JPanel_Finishing2.button_search_f2.doClick();
                     }
                 }
             }

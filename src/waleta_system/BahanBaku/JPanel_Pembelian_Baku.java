@@ -534,7 +534,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
         TableModel model = Table_pembelian.getModel();
         try {
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to Update !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 if (txt_grade.getText() == null || txt_grade.getText().equals("")
                         || txt_berat.getText() == null || txt_berat.getText().equals("")
