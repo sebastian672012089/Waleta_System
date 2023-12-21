@@ -1,6 +1,9 @@
 package waleta_system.QC;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -8,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -91,13 +95,13 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[20];
             while (rs.next()) {
-                row[0] = rs.getString("invoice_no");
-                row[1] = rs.getString("kode_spk");
-                row[2] = rs.getDate("tanggal_awb");
-                row[3] = rs.getString("nama_pegawai");
-                row[4] = rs.getFloat("suhu_ruang");
-                row[5] = rs.getFloat("suhu_sarang_awal");
-                row[6] = rs.getInt("no");
+                row[0] = rs.getInt("no");
+                row[1] = rs.getString("invoice_no");
+                row[2] = rs.getString("kode_spk");
+                row[3] = rs.getDate("tanggal_awb");
+                row[4] = rs.getString("nama_pegawai");
+                row[5] = rs.getFloat("suhu_ruang");
+                row[6] = rs.getFloat("suhu_sarang_awal");
                 row[7] = rs.getDate("tgl_heat_treatment");
                 row[8] = rs.getInt("no_tray");
                 row[9] = rs.getString("no_box");
@@ -147,6 +151,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
         button_edit = new javax.swing.JButton();
         button_delete = new javax.swing.JButton();
         button_catatan_pemanasan_barang_jadi = new javax.swing.JButton();
+        button_input_data_csv = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -160,11 +165,11 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Invoice", "kode SPK", "Tgl AWB", "Operator", "Suhu Ruang", "Suhu Sarang awal", "No", "Tgl Heat Treatment", "No Tray", "No Box", "Grade", "Biji (pcs)", "Berat (gr)", "Waktu Preheat", "Suhu Preheat", "Suhu Akhir", "Menit Treatment", "Keterangan"
+                "No", "Invoice", "kode SPK", "Tgl AWB", "Operator", "Suhu Ruang", "Suhu Sarang awal", "Tgl Heat Treatment", "No Tray", "No Box", "Grade", "Biji (pcs)", "Berat (gr)", "Waktu Preheat", "Suhu Preheat", "Suhu Akhir", "Menit Treatment", "Keterangan"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
@@ -278,6 +283,15 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
             }
         });
 
+        button_input_data_csv.setBackground(new java.awt.Color(255, 255, 255));
+        button_input_data_csv.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_input_data_csv.setText("Input Data CSV");
+        button_input_data_csv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_input_data_csvActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -286,7 +300,20 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(button_edit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_delete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_input_data_csv)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_catatan_pemanasan_barang_jadi)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_total_data)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_search_no_box, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,18 +332,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_Refresh)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 487, Short.MAX_VALUE)
-                        .addComponent(button_export_dataTreatment))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(button_edit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_delete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_catatan_pemanasan_barang_jadi)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_data)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(button_export_dataTreatment)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -340,9 +356,10 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_edit)
                     .addComponent(button_delete)
-                    .addComponent(button_catatan_pemanasan_barang_jadi)
                     .addComponent(jLabel2)
-                    .addComponent(label_total_data))
+                    .addComponent(label_total_data)
+                    .addComponent(button_input_data_csv)
+                    .addComponent(button_catatan_pemanasan_barang_jadi))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
                 .addContainerGap())
@@ -442,7 +459,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                 if (i != 0) {
                     no = no + ", ";
                 }
-                no = no + "'" + Table_data.getValueAt(i, 6).toString() + "'";
+                no = no + "'" + Table_data.getValueAt(i, 0).toString() + "'";
             }
             String Query = "SELECT `tb_pengiriman`.`invoice_no`, `tb_spk_detail`.`kode_spk`, `tb_spk`.`tanggal_awb`, "
                     + "`operator_heat_treatment`, `nama_pegawai`, `suhu_ruang`, `suhu_sarang_awal`, "
@@ -479,6 +496,78 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_search_no_invoiceKeyPressed
 
+    private void button_input_data_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_data_csvActionPerformed
+        // TODO add your handling code here:
+        try {
+            JOptionPane.showMessageDialog(this, "Format csv sesuai tabel di sistem, kecuali kolom invoice, kode spk, tgl awb\n"
+                    + "Nama Operator di ganti ID pegawai!");
+            int n = 0;
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Select CSV file to import!");
+            int result = chooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                Utility.db.getConnection();
+                File file = chooser.getSelectedFile();
+                String filename1 = file.getAbsolutePath();
+                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                    String line;
+                    try {
+                        Utility.db.getConnection().setAutoCommit(false);
+                        while ((line = br.readLine()) != null) {
+                            String[] value = line.split(";");
+                            String Query = "INSERT INTO `tb_heat_treatment_pengiriman`("
+                                    + "`operator_heat_treatment`, "
+                                    + "`suhu_ruang`, "
+                                    + "`suhu_sarang_awal`, "
+                                    + "`tgl_heat_treatment`, "
+                                    + "`no_tray`, "
+                                    + "`no_box`, "
+                                    + "`keping`, "
+                                    + "`gram`, "
+                                    + "`waktu_preheat`, "
+                                    + "`suhu_preheat`, "
+                                    + "`suhu_akhir`, "
+                                    + "`waktu_heat_treatment`, "
+                                    + "`keterangan`"
+                                    + ") "
+                                    + "VALUES ("
+                                    + "'" + value[0] + "',"//operator_heat_treatment
+                                    + "'" + value[1] + "',"//suhu_ruang
+                                    + "'" + value[2] + "',"//suhu_sarang_awal
+                                    + "'" + value[3] + "',"//tgl_heat_treatment
+                                    + "'" + value[4] + "',"//no_tray
+                                    + "'" + value[5] + "',"//no_box
+                                    + "'" + value[7] + "',"//keping
+                                    + "'" + value[8] + "',"//gram
+                                    + "'" + value[9] + "',"//waktu_preheat
+                                    + "'" + value[10] + "',"//suhu_preheat
+                                    + "'" + value[11] + "',"//suhu_akhir
+                                    + "'" + value[12] + "',"//waktu_heat_treatment
+                                    + "'" + value[13] + "'"//keterangan
+                                    + ") ";
+                            Utility.db.getConnection().prepareStatement(Query);
+                            if ((Utility.db.getStatement().executeUpdate(Query)) > 0) {
+                                n++;
+                            }
+                        }
+                        Utility.db.getConnection().commit();
+                    } catch (Exception ex) {
+                        Utility.db.getConnection().rollback();
+                        JOptionPane.showMessageDialog(this, ex);
+                        Logger.getLogger(JPanel_Lab_Heat_Treatment.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        Utility.db.getConnection().setAutoCommit(true);
+                        JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
+                        refreshTable();
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Lab_Heat_Treatment.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_input_data_csvActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Table_data;
@@ -487,6 +576,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
     public static javax.swing.JButton button_delete;
     public static javax.swing.JButton button_edit;
     public static javax.swing.JButton button_export_dataTreatment;
+    public static javax.swing.JButton button_input_data_csv;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

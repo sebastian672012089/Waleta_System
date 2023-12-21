@@ -1,6 +1,7 @@
 package waleta_system.Finance;
 
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -1371,17 +1372,38 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
         int dialogResult = JOptionPane.showConfirmDialog(this, "Save " + table_data_rekap_bonus2.getRowCount() + " data ?", "Warning", 0);
         if (dialogResult == JOptionPane.YES_OPTION) {
             try {
-                Utility.db.getConnection().setAutoCommit(false);
+//                Utility.db.getConnection().setAutoCommit(false);
+//                for (int i = 0; i < table_data_rekap_bonus2.getRowCount(); i++) {
+//                    String Query = "INSERT INTO `tb_lembur_rekap`(`id_pegawai`, `tanggal`, `bonus1_kecepatan`) "
+//                            + "VALUES ("
+//                            + "'" + table_data_rekap_bonus2.getValueAt(i, 2).toString() + "',"
+//                            + "'" + table_data_rekap_bonus2.getValueAt(i, 1).toString() + "',"
+//                            + table_data_rekap_bonus2.getValueAt(i, 7).toString() + ") "
+//                            + "ON DUPLICATE KEY UPDATE "
+//                            + "`bonus1_kecepatan`=" + table_data_rekap_bonus2.getValueAt(i, 7).toString();
+//                    Utility.db.getConnection().createStatement();
+//                    Utility.db.getStatement().executeUpdate(Query);
+//                }
+
+                Connection connection = Utility.db.getConnection();
+                connection.setAutoCommit(false);
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "INSERT INTO `tb_lembur_rekap` (`id_pegawai`, `tanggal`, `bonus1_kecepatan`) "
+                        + "VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE `bonus1_kecepatan` = ?"
+                );
+
                 for (int i = 0; i < table_data_rekap_bonus2.getRowCount(); i++) {
-                    String Query = "INSERT INTO `tb_lembur_rekap`(`id_pegawai`, `tanggal`, `bonus1_kecepatan`) "
-                            + "VALUES ("
-                            + "'" + table_data_rekap_bonus2.getValueAt(i, 2).toString() + "',"
-                            + "'" + table_data_rekap_bonus2.getValueAt(i, 1).toString() + "',"
-                            + table_data_rekap_bonus2.getValueAt(i, 7).toString() + ") "
-                            + "ON DUPLICATE KEY UPDATE "
-                            + "`bonus1_kecepatan`=" + table_data_rekap_bonus2.getValueAt(i, 7).toString();
-                    Utility.db.getConnection().createStatement();
-                    Utility.db.getStatement().executeUpdate(Query);
+                    preparedStatement.setString(1, table_data_rekap_bonus2.getValueAt(i, 2).toString());
+                    preparedStatement.setString(2, table_data_rekap_bonus2.getValueAt(i, 1).toString());
+                    preparedStatement.setString(3, table_data_rekap_bonus2.getValueAt(i, 7).toString());
+                    preparedStatement.setString(4, table_data_rekap_bonus2.getValueAt(i, 7).toString());
+
+                    try {
+                        preparedStatement.executeUpdate();
+                    } catch (SQLException ex) {
+                        // Log or handle the specific exception for this row
+                        ex.printStackTrace();
+                    }
                 }
                 Utility.db.getConnection().commit();
                 JOptionPane.showMessageDialog(this, "Data Saved Successfully");

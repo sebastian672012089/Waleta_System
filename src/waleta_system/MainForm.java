@@ -567,6 +567,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem_Data_LP_Cabuto = new javax.swing.JMenuItem();
         jMenuItem_Data_Order_Cabuto = new javax.swing.JMenuItem();
         jMenuItem_Data_GradeBJ = new javax.swing.JMenuItem();
+        jMenuItem_perhitungan_upah = new javax.swing.JMenuItem();
         jMenu_BahanJadi = new javax.swing.JMenu();
         jMenuItem_gudang_bahan_jadi = new javax.swing.JMenuItem();
         jMenuItem_tutupan_grading = new javax.swing.JMenuItem();
@@ -723,7 +724,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.255");
+        jLabel19.setText("2.2.256");
 
         jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");
@@ -1887,6 +1888,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu_Cabuto.add(jMenuItem_Data_GradeBJ);
+
+        jMenuItem_perhitungan_upah.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem_perhitungan_upah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem_perhitungan_upah.setText("Perhitungan Upah Cabuto");
+        jMenuItem_perhitungan_upah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_perhitungan_upahActionPerformed(evt);
+            }
+        });
+        jMenu_Cabuto.add(jMenuItem_perhitungan_upah);
 
         jMenuBar1.add(jMenu_Cabuto);
 
@@ -6248,6 +6259,19 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_GradeBarangJadi_Cabuto1.init();
     }//GEN-LAST:event_jMenuItem_Data_GradeBJActionPerformed
 
+    private void jMenuItem_perhitungan_upahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_perhitungan_upahActionPerformed
+        // TODO add your handling code here:
+        main_panel.removeAll();
+        main_panel.repaint();
+        main_panel.revalidate();
+
+        //add panel
+        main_panel.add(jPanel_GajiCABUTO1);
+        main_panel.repaint();
+        main_panel.revalidate();
+        jPanel_GajiCABUTO1.init();
+    }//GEN-LAST:event_jMenuItem_perhitungan_upahActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JMenuItem JMenuItem_DataPacking;
@@ -6358,6 +6382,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_pack_ProgressPengiriman;
     private javax.swing.JMenuItem jMenuItem_pengajuan_cuti_web;
     private javax.swing.JMenuItem jMenuItem_peramalan_barangjadi;
+    private javax.swing.JMenuItem jMenuItem_perhitungan_upah;
     private javax.swing.JMenuItem jMenuItem_print_weight_label;
     private javax.swing.JMenuItem jMenuItem_sapon_sub;
     private javax.swing.JMenuItem jMenuItem_sesekan_sub;

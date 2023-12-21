@@ -138,6 +138,11 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                 if (txt_search_bagian.getText() == null || txt_search_bagian.getText().equals("") || txt_search_bagian.getText().equals("%%")) {
                     search_bagian = "";
                 }
+                
+                String search_level_gaji = "AND A.`level_gaji` LIKE '%" + txt_search_level_gaji.getText() + "%' ";
+                if (txt_search_level_gaji.getText() == null || txt_search_level_gaji.getText().equals("")) {
+                    search_level_gaji = "";
+                }
 
                 String filter_tanggal_masuk = "";
                 if (Date_Masuk1.getDate() != null && Date_Masuk2.getDate() != null) {
@@ -168,6 +173,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                         + "AND `status` IN ('IN', 'OUT', 'ABSEN')"
                         + "AND (A.`id_pegawai` IS NOT NULL OR B.`id_pegawai` IS NOT NULL OR C.`id_pegawai` IS NOT NULL) "
                         + search_bagian
+                        + search_level_gaji
                         + "GROUP BY `tb_karyawan`.`id_pegawai` "
                         + "ORDER BY A.`grup` ";
 //                        + "AND (`tanggal_keluar` IS NULL OR `tanggal_keluar` >= '" + dateFormat.format(tanggal_mulai) + "')";
@@ -893,6 +899,8 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
         Date_Masuk2 = new com.toedter.calendar.JDateChooser();
         button_input_gaji_borong_OM = new javax.swing.JButton();
         button_slip_borong_cetak2 = new javax.swing.JButton();
+        jLabel23 = new javax.swing.JLabel();
+        txt_search_level_gaji = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1190,7 +1198,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
 
         jLabel22.setBackground(new java.awt.Color(255, 255, 255));
         jLabel22.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jLabel22.setText("Tanggal Masuk :");
+        jLabel22.setText("Tgl Masuk :");
 
         Date_Masuk1.setBackground(new java.awt.Color(255, 255, 255));
         Date_Masuk1.setDateFormatString("dd MMM yyyy");
@@ -1216,6 +1224,17 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
         button_slip_borong_cetak2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_slip_borong_cetak2ActionPerformed(evt);
+            }
+        });
+
+        jLabel23.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel23.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel23.setText("Level Gaji :");
+
+        txt_search_level_gaji.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_search_level_gaji.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_level_gajiKeyPressed(evt);
             }
         });
 
@@ -1287,28 +1306,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Date_penggajian, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_search_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_search_bagian, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel22)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Date_Masuk1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Date_Masuk2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_load)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(CheckBox_hide_Gaji_0))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(button_input_bonus_pencapaian)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_print_slip_per_grup)
@@ -1327,8 +1324,34 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_export)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_input_gaji_borong_OM)))
-                        .addGap(0, 113, Short.MAX_VALUE)))
+                                .addComponent(button_input_gaji_borong_OM))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_penggajian, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_bagian, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_level_gaji, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_Masuk1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_Masuk2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_load)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(CheckBox_hide_Gaji_0)))
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -1348,7 +1371,9 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                     .addComponent(CheckBox_hide_Gaji_0)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date_Masuk1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date_Masuk2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Date_Masuk2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_level_gaji, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1867,6 +1892,10 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_slip_borong_cetak2ActionPerformed
 
+    private void txt_search_level_gajiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_level_gajiKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_search_level_gajiKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CheckBox_hide_Gaji_0;
@@ -1897,6 +1926,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -1925,5 +1955,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
     private javax.swing.JTextField txt_potongan_transport;
     private javax.swing.JTextField txt_search_bagian;
     private javax.swing.JTextField txt_search_karyawan;
+    private javax.swing.JTextField txt_search_level_gaji;
     // End of variables declaration//GEN-END:variables
 }
