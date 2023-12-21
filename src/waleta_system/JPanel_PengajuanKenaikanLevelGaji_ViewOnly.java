@@ -89,6 +89,10 @@ public class JPanel_PengajuanKenaikanLevelGaji_ViewOnly extends javax.swing.JPan
             if (txt_departemen.getText() != null && !txt_departemen.getText().equals("")) {
                 filter_departemen  = "AND `tb_bagian`.`kode_departemen` = '" + txt_departemen.getText() + "' ";
             }
+            String filter_divisi_hrga = "";
+            if (MainForm.Login_Departemen.equals("HRGA") && !MainForm.Login_namaBagian.split("-")[2].equals("")) {
+                filter_divisi_hrga = "AND `tb_bagian`.`divisi_bagian` = '" + MainForm.Login_namaBagian.split("-")[2] + "'";
+            }
 
             DefaultTableModel model = (DefaultTableModel) Table_pengajuan_kenaikan_gaji.getModel();
             model.setRowCount(0);
@@ -102,6 +106,7 @@ public class JPanel_PengajuanKenaikanLevelGaji_ViewOnly extends javax.swing.JPan
                     + "`nama_pegawai` LIKE '%" + txt_search_nama.getText() + "%' "
                     + "AND `tb_level_gaji_pengajuan_kenaikan`.`id_pegawai` LIKE '%" + txt_search_id.getText() + "%' "
                     + filter_departemen
+                    + filter_divisi_hrga
                     + "AND `tb_bagian`.`nama_bagian` LIKE '%" + txt_search_bagian.getText() + "%' "
                     + diketahui_kadep
                     + diketahui_manager
