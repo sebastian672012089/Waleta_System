@@ -74,6 +74,8 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
             if (txt_search_no_spk.getText() == null || txt_search_no_spk.getText().equals("")) {
                 search_spk = "";
             }
+            
+            String search_grade = 
 
             sql = "SELECT `tb_pengiriman`.`invoice_no`, `tb_spk_detail`.`kode_spk`, `tb_spk`.`tanggal_awb`, "
                     + "`operator_heat_treatment`, `nama_pegawai`, `suhu_ruang`, `suhu_sarang_awal`, "

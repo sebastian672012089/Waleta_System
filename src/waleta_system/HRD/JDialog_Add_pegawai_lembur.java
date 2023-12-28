@@ -1,5 +1,7 @@
 package waleta_system.HRD;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.Browse_Karyawan;
 import waleta_system.Class.ColumnsAutoSizer;
+import waleta_system.Class.Utility;
 
 public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
 
@@ -36,6 +39,8 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
         label_bagian = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         label_departemen = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        label_jam_kerja = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         Spinner_jam = new javax.swing.JSpinner();
@@ -101,6 +106,14 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
         label_departemen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_departemen.setText("-");
 
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel17.setText("Jam Kerja :");
+
+        label_jam_kerja.setBackground(new java.awt.Color(255, 255, 255));
+        label_jam_kerja.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_jam_kerja.setText("-");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -109,21 +122,28 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_id, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(label_jam_kerja, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_bagian, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_departemen, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_id, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_bagian, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_departemen, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -145,6 +165,10 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(label_departemen))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(label_jam_kerja))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -321,16 +345,21 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
             Date date2 = format.parse(jam_selesai);
             long difference = date2.getTime() - date1.getTime();
             double menit_jarak_waktu = (double) difference / (60f * 1000f);
+            if (menit_jarak_waktu < 0) {
+                menit_jarak_waktu = -menit_jarak_waktu;
+            }
+            if (date1.after(date2)) {
+                menit_jarak_waktu = 1440 - menit_jarak_waktu;
+            }
             int menit_istirahat = ComboBox_istirahat.getSelectedIndex() * 15;
             double jumlah_menit_lembur = (double) menit_jarak_waktu - menit_istirahat;
             double jumlah_jam_lembur = (double) jumlah_menit_lembur / 60d;
-            
+
 //            System.out.println("menit_jarak_waktu = " + menit_jarak_waktu);
 //            System.out.println("menit_istirahat = " + menit_istirahat);
 //            System.out.println("jumlah_menit_lembur = " + jumlah_menit_lembur);
 //            System.out.println("jumlah_jam_lembur = " + jumlah_jam_lembur);
-
-            if (date1.after(date2)) {
+            if (date1.after(date2) && !label_jam_kerja.getText().equals("SHIFT_MALAM")) {
                 check = false;
                 JOptionPane.showMessageDialog(this, "jam selesai tidak bisa lebih awal dari jam mulai lembur!");
             } else if (menit_jarak_waktu == 0) {
@@ -339,7 +368,7 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
             } else if (menit_istirahat >= menit_jarak_waktu) {
                 check = false;
                 JOptionPane.showMessageDialog(this, "jumlah jam lembur tidak boleh lebih sedikit / sama dengan jam istirahat !!");
-            } 
+            }
 //            else if (jumlah_jam_lembur < 1) {
 //                check = false;
 //                JOptionPane.showMessageDialog(this, "jumlah jam lembur tidak boleh kurang dari 1 jam / 60 menit !!");
@@ -391,6 +420,15 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
             label_nama.setText(Browse_Karyawan.table_list_karyawan.getValueAt(x, 1).toString());
             label_bagian.setText(Browse_Karyawan.table_list_karyawan.getValueAt(x, 2).toString());
             label_departemen.setText(Browse_Karyawan.table_list_karyawan.getValueAt(x, 2).toString().split("-")[1]);
+            try {
+                String sql = "SELECT `jam_kerja` FROM `tb_karyawan` WHERE `id_pegawai` = '" + Browse_Karyawan.table_list_karyawan.getValueAt(x, 0).toString() + "'";
+                ResultSet rs = Utility.db.getStatement().executeQuery(sql);
+                if (rs.next()) {
+                    label_jam_kerja.setText(rs.getString("jam_kerja"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(JDialog_Add_pegawai_lembur.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_button_select_karyawanActionPerformed
 
@@ -411,6 +449,7 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -420,6 +459,7 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
     private javax.swing.JLabel label_bagian;
     private javax.swing.JLabel label_departemen;
     private javax.swing.JLabel label_id;
+    private javax.swing.JLabel label_jam_kerja;
     private javax.swing.JLabel label_jenis_spl;
     private javax.swing.JLabel label_nama;
     // End of variables declaration//GEN-END:variables

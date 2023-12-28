@@ -846,7 +846,7 @@
                         </Property>
                         <Property name="lineWrap" type="boolean" value="true"/>
                         <Property name="rows" type="int" value="5"/>
-                        <Property name="text" type="java.lang.String" value="Notes : &#xa;1. Bonus kecepatan diberikan hanya untuk grup Mandiri / Borong, jika LP yang dikerjakan mencapai target LP&#xa;2. Trainer / Asisten Pengawas tidak dapat bonus kecepatan&#xa;3. Jika level gaji = Training = tidak dapat bonus kecepatan&#xa;4. bobot LP dibulatkan ke bawah kelipatan 0.5.&#xa;5. Gaji Borong hanya untuk level &quot;MANDIRI CTK BRG&quot;.&#xa;6. Lama inap T1 = tgl masuk cetak - tgl t1&#xa;7. Lama inap T2 = tgl t1 - tgl setor cetak. kalau tgl t1 kosong, maka tgl masuk - tgl setor&#xa;8. Lama inap T12 = tgl masuk - tgl setor"/>
+                        <Property name="text" type="java.lang.String" value="Notes : &#xa;1. Bonus kecepatan diberikan hanya untuk grup Mandiri / Borong, jika LP yang dikerjakan mencapai target LP&#xa;2. Trainer / Asisten Pengawas tidak dapat bonus kecepatan&#xa;3. Jika level gaji = Training = tidak dapat bonus kecepatan&#xa;4. bobot LP dibulatkan ke bawah kelipatan 0.5.&#xa;5. Gaji Borong hanya untuk level &quot;MANDIRI CTK BRG&quot;.&#xa;6. Lama inap T1 = tgl masuk cetak - tgl t1&#xa;7. Lama inap T2 = tgl t1 - tgl setor cetak. kalau tgl t1 kosong, maka tgl masuk - tgl setor&#xa;8. Lama inap T12 = tgl masuk - tgl setor&#xa;9. Hanya menampilkan bagian &quot;%CETAK%&quot;"/>
                       </Properties>
                     </Component>
                   </SubComponents>

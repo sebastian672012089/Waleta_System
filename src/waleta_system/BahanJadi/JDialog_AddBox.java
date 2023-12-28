@@ -83,9 +83,12 @@ public class JDialog_AddBox extends javax.swing.JDialog {
             String kode_grade = null;
             String nomor_box = null;
             int total_box = 0;
-            sql = "SELECT COUNT(`no_box`) AS 'total_box', `tb_grade_bahan_jadi`.`kode` "
-                    + "FROM `tb_box_bahan_jadi` LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`"
-                    + "WHERE YEAR(`tanggal_box`) = '" + new SimpleDateFormat("yyyy").format(new Date()) + "' AND `tb_grade_bahan_jadi`.`kode_grade` = '" + grade + "'";
+            sql = "SELECT MAX(RIGHT(`no_box`, 5)+0) AS 'total_box', `tb_grade_bahan_jadi`.`kode` "
+                    + "FROM `tb_box_bahan_jadi` "
+                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`"
+                    + "WHERE "
+                    + "YEAR(`tanggal_box`) = '" + new SimpleDateFormat("yyyy").format(new Date()) + "' "
+                    + "AND `tb_grade_bahan_jadi`.`kode_grade` = '" + grade + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
                 total_box = rs.getInt("total_box") + 1;

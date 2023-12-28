@@ -268,6 +268,7 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
                     if (rs_pengurangan_lembur.next()) {
                         total_menit_lembur = total_menit_lembur - rs_pengurangan_lembur.getInt("pengurangan");
                     }
+                    total_menit_lembur = total_menit_lembur - total_menit_istirahat_lembur;
                     if (total_menit_lembur > total_menit_lembur_spl) {
                         total_menit_lembur = total_menit_lembur_spl;
                     }

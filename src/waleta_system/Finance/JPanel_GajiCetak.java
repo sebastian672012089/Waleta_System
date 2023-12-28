@@ -198,7 +198,9 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
                     + "GROUP BY `cetak_dikerjakan` \n"
                     + ""
                     + ") DATA \n"
-                    + "WHERE `nama_bagian` LIKE '%" + txt_search_bagian.getText() + "%'"
+                    + "WHERE "
+                    + "`nama_bagian` LIKE '%" + txt_search_bagian.getText() + "%'"
+                    + "AND `nama_bagian` LIKE '%CETAK%'"
                     + "GROUP BY `cetak_dikerjakan` "
                     + "ORDER BY `nama_bagian`, `nama_pegawai`";
             PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql);
@@ -632,7 +634,8 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
                         + "LEFT JOIN `tb_cabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
                         + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
                         + "LEFT JOIN `tb_tarif_cabut` ON `tb_laporan_produksi`.`jenis_bulu_lp` = `tb_tarif_cabut`.`bulu_upah`\n"
-                        + "WHERE `cetak_dikoreksi` = '" + nama + "' \n"
+                        + "WHERE "
+                        + "`cetak_dikoreksi` = '" + nama + "' \n"
                         + "AND `tgl_mulai_cetak` BETWEEN '" + dateFormat.format(DateFilter_TerimaCetak1.getDate()) + "' AND '" + dateFormat.format(DateFilter_TerimaCetak2.getDate()) + "'\n";
             }
             rs = Utility.db.getStatement().executeQuery(sql);
@@ -1027,7 +1030,7 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
         jTextArea1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
-        jTextArea1.setText("Notes : \n1. Bonus kecepatan diberikan hanya untuk grup Mandiri / Borong, jika LP yang dikerjakan mencapai target LP\n2. Trainer / Asisten Pengawas tidak dapat bonus kecepatan\n3. Jika level gaji = Training = tidak dapat bonus kecepatan\n4. bobot LP dibulatkan ke bawah kelipatan 0.5.\n5. Gaji Borong hanya untuk level \"MANDIRI CTK BRG\".\n6. Lama inap T1 = tgl masuk cetak - tgl t1\n7. Lama inap T2 = tgl t1 - tgl setor cetak. kalau tgl t1 kosong, maka tgl masuk - tgl setor\n8. Lama inap T12 = tgl masuk - tgl setor");
+        jTextArea1.setText("Notes : \n1. Bonus kecepatan diberikan hanya untuk grup Mandiri / Borong, jika LP yang dikerjakan mencapai target LP\n2. Trainer / Asisten Pengawas tidak dapat bonus kecepatan\n3. Jika level gaji = Training = tidak dapat bonus kecepatan\n4. bobot LP dibulatkan ke bawah kelipatan 0.5.\n5. Gaji Borong hanya untuk level \"MANDIRI CTK BRG\".\n6. Lama inap T1 = tgl masuk cetak - tgl t1\n7. Lama inap T2 = tgl t1 - tgl setor cetak. kalau tgl t1 kosong, maka tgl masuk - tgl setor\n8. Lama inap T12 = tgl masuk - tgl setor\n9. Hanya menampilkan bagian \"%CETAK%\"");
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel59.setBackground(new java.awt.Color(255, 255, 255));

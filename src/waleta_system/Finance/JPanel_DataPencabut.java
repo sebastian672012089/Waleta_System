@@ -569,7 +569,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
         table_data_reproses_cabut = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        button_saveData = new javax.swing.JButton();
+        button_saveDataGajiBorong = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_data_rekap = new javax.swing.JTable();
         button_export_bonus_LP1 = new javax.swing.JButton();
@@ -819,12 +819,12 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        button_saveData.setBackground(new java.awt.Color(255, 255, 255));
-        button_saveData.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_saveData.setText("Save Data");
-        button_saveData.addActionListener(new java.awt.event.ActionListener() {
+        button_saveDataGajiBorong.setBackground(new java.awt.Color(255, 255, 255));
+        button_saveDataGajiBorong.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_saveDataGajiBorong.setText("Save Data Gaji Borong");
+        button_saveDataGajiBorong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_saveDataActionPerformed(evt);
+                button_saveDataGajiBorongActionPerformed(evt);
             }
         });
 
@@ -882,7 +882,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(button_export_bonus_LP1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_saveData)))
+                        .addComponent(button_saveDataGajiBorong)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -890,7 +890,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_saveData, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_saveDataGajiBorong, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_export_bonus_LP1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_filter_rekap))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1272,7 +1272,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
         }
     }//GEN-LAST:event_txt_searchKeyPressed
 
-    private void button_saveDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveDataActionPerformed
+    private void button_saveDataGajiBorongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveDataGajiBorongActionPerformed
         // TODO add your handling code here:
         int dialogResult = JOptionPane.showConfirmDialog(this, "Save " + table_data_rekap.getRowCount() + " data ?", "Warning", 0);
         if (dialogResult == JOptionPane.YES_OPTION) {
@@ -1307,7 +1307,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
                 }
             }
         }
-    }//GEN-LAST:event_button_saveDataActionPerformed
+    }//GEN-LAST:event_button_saveDataGajiBorongActionPerformed
 
     private void button_refresh_rekapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refresh_rekapActionPerformed
         // TODO add your handling code here:
@@ -1443,7 +1443,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
     private javax.swing.JButton button_refresh_allData;
     private javax.swing.JButton button_refresh_bonus;
     private javax.swing.JButton button_refresh_rekap;
-    private javax.swing.JButton button_saveData;
+    private javax.swing.JButton button_saveDataGajiBorong;
     private javax.swing.JButton button_save_data_bonus_kecepatan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

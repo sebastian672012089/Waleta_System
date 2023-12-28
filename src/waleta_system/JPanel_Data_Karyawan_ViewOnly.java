@@ -60,6 +60,10 @@ public class JPanel_Data_Karyawan_ViewOnly extends javax.swing.JPanel {
             int IN = 0, OUT = 0, BATAL = 0, STRIP = 0, ABSEN = 0;
             DefaultTableModel model = (DefaultTableModel) table_data_ktp.getModel();
             model.setRowCount(0);
+            String filter_departemen = "AND `kode_departemen` = '" + MainForm.Login_Departemen + "' \n";
+            if(MainForm.Login_kodeBagian == 247){//kadep QCQA
+                filter_departemen = "AND (`kode_departemen` = 'QCQA' OR `nama_bagian` LIKE '%CABUT%C') \n";
+            }
             String bagian2 = "AND `nama_bagian` LIKE '%" + txt_search_bagian.getText() + "%' \n";
             if (txt_search_bagian.getText() == null || txt_search_bagian.getText().equals("")) {
                 bagian2 = "";
@@ -99,7 +103,7 @@ public class JPanel_Data_Karyawan_ViewOnly extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian` \n"
                     + "WHERE `nama_pegawai` LIKE '%" + txt_search_NamaKaryawan.getText() + "%' \n"
                     + "AND `id_pegawai` LIKE '%" + txt_search_id.getText() + "%' \n"
-                    + "AND `kode_departemen` = '" + MainForm.Login_Departemen + "' \n"
+                    + filter_departemen
                     + bagian2
                     + Status
                     + posisi

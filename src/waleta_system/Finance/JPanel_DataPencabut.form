@@ -590,7 +590,7 @@
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="button_export_bonus_LP1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="button_saveData" min="-2" max="-2" attributes="0"/>
+                                  <Component id="button_saveDataGajiBorong" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -602,7 +602,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="button_saveData" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="button_saveDataGajiBorong" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="button_export_bonus_LP1" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="label_filter_rekap" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -614,7 +614,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="button_saveData">
+                <Component class="javax.swing.JButton" name="button_saveDataGajiBorong">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -622,10 +622,10 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="11" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Save Data"/>
+                    <Property name="text" type="java.lang.String" value="Save Data Gaji Borong"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_saveDataActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_saveDataGajiBorongActionPerformed"/>
                   </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="jScrollPane2">
