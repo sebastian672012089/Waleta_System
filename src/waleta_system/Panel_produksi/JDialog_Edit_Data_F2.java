@@ -19,7 +19,8 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
     String sql = null;
     ResultSet rs;
     Date date = new Date();
-    int keping_awal = 0, jidun_awal = 0;
+    int keping_cetak = 0, jidun_cetak = 0, berat_kering_lp = 0;
+    String ruangan = "";
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public JDialog_Edit_Data_F2(java.awt.Frame parent, boolean modal) {
@@ -34,14 +35,16 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
             int i = JPanel_Finishing2.Table_Data_f2.getSelectedRow();
             label_no_lp.setText(JPanel_Finishing2.Table_Data_f2.getValueAt(i, 0).toString());
 
-            sql = "SELECT IF(`tb_cetak`.`no_laporan_produksi` IS NULL , `tb_laporan_produksi`.`jumlah_keping`, (`cetak_mangkok` + `cetak_pecah` + `cetak_flat`)) AS 'kpg_awal', `cetak_jidun_real` "
+            sql = "SELECT `ruangan`, `berat_kering`, IF(`tb_cetak`.`no_laporan_produksi` IS NULL , `tb_laporan_produksi`.`jumlah_keping`, (`cetak_mangkok` + `cetak_pecah` + `cetak_flat`)) AS 'kpg_awal', `cetak_jidun_real` "
                     + "FROM `tb_laporan_produksi` "
                     + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi` "
                     + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + JPanel_Finishing2.Table_Data_f2.getValueAt(i, 0).toString() + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
-                keping_awal = rs.getInt("kpg_awal");
-                jidun_awal = rs.getInt("cetak_jidun_real");
+                keping_cetak = rs.getInt("kpg_awal");
+                jidun_cetak = rs.getInt("cetak_jidun_real");
+                berat_kering_lp = rs.getInt("berat_kering");
+                ruangan = rs.getString("ruangan");
             }
 
             if (JPanel_Finishing2.Table_Data_f2.getValueAt(i, 5) == null) {
@@ -1215,58 +1218,86 @@ public class JDialog_Edit_Data_F2 extends javax.swing.JDialog {
                 tgl_f2 = "'" + dateFormat.format(Date_f2.getDate()) + "'";
             }
             Utility.db.getConnection().createStatement();
-            int keping_akhir = Integer.valueOf(txt_fbonus.getText())
-                    + Integer.valueOf(txt_fnol.getText())
-                    + Integer.valueOf(txt_mk_pecah.getText())
-                    + Integer.valueOf(txt_flat.getText());
-            int jidun_akhir = Integer.valueOf(txt_jidun_utuh.getText())
-                    + Integer.valueOf(txt_jidun_pch.getText());
-
-//            if (keping_awal != keping_akhir) {
-//                check = false;
-//                JOptionPane.showMessageDialog(this, "Jumlah Keping Awal = " + keping_awal
-//                        + "\nJumlah Keping Akhir = " + keping_akhir
-//                        + "\nMaaf Jumlah keping awal dan akhir tidak sama, silahkan cek kembali !");
-//            }
-            if (keping_awal != keping_akhir) {
-                check = false;
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah keping awal dan akhir tidak sama, apakah ingin melanjutkan?", "Warning", 0);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true);
-                    dialog.pack();
-                    dialog.setLocationRelativeTo(this);
-                    dialog.setVisible(true);
-                    dialog.setEnabled(true);
-//                    System.out.println(dialog.akses());
-                    check = dialog.akses();
-                    nama_otorisasi = dialog.getNama();
-                    keterangan = dialog.getKeterangan();
-                }
-            } else if (jidun_awal != jidun_akhir) {
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah jidun awal dan akhir tidak sama, apakah ingin melanjutkan?", "Warning", 0);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true);
-                    dialog.pack();
-                    dialog.setLocationRelativeTo(this);
-                    dialog.setVisible(true);
-                    dialog.setEnabled(true);
-//                    System.out.println(dialog.akses());
-                    check = dialog.akses();
-                    nama_otorisasi = dialog.getNama();
-                    keterangan = dialog.getKeterangan();
-                }
-            }
-
+            
             float netto_sistem = Float.valueOf(label_netto.getText());
             float netto_manual = Float.valueOf(txt_netto.getText());
+            
+            float bk = berat_kering_lp;
+            float bk_12 = bk * 1.12f;
+            float fbonus = Float.valueOf(txt_bk_fbonus.getText());
+            float fnol = Float.valueOf(txt_bk_fnol.getText());
+            float pecah_flat = Float.valueOf(txt_bk_pecah.getText()) + Float.valueOf(txt_bk_flat.getText());
+            float jidun = Float.valueOf(txt_bk_jidun.getText());
+            float kpg_jidun = Float.valueOf(txt_jidun_utuh.getText()) + Float.valueOf(txt_jidun_pch.getText());
+            float kaki = Float.valueOf(txt_tambah_kaki1.getText()) + Float.valueOf(txt_tambah_kaki2.getText());
+            float keping_akhir = Float.valueOf(txt_fbonus.getText()) + Float.valueOf(txt_fnol.getText()) + Float.valueOf(txt_mk_pecah.getText()) + Float.valueOf(txt_flat.getText());
+            float utuh = fbonus + fnol;
+            float netto_utuh = 0;
+            float netto_jidun = 0;
+            if (jidun > utuh) {
+                netto_jidun = jidun - kaki;
+                netto_utuh = utuh;
+            } else {
+                netto_utuh = utuh - kaki;
+                netto_jidun = jidun;
+            }
+
+            float sp = Float.valueOf(txt_sesekan.getText()) + Float.valueOf(txt_hancuran.getText()) + Float.valueOf(txt_rontokan.getText()) + Float.valueOf(txt_bonggol.getText()) + Float.valueOf(txt_serabut.getText());
+            float sh = bk - (netto_utuh + netto_jidun + pecah_flat + sp);
+            float persen_sh = (sh / bk) * 100;
+
             if (netto_sistem != netto_manual) {
                 check = false;
                 JOptionPane.showMessageDialog(this, "Maaf Netto Manual dan Netto Sistem belum cocok !");
-            } 
-//            else if (netto_manual == 0) {
-//                check = false;
-//                JOptionPane.showMessageDialog(this, "Maaf Netto Manual tidak boleh 0 !");
-//            }
+            } else if (ruangan.length() == 5) {
+                JOptionPane.showMessageDialog(this, "untuk LP sub tidak ada pengecekan keping");
+            } else if (keping_cetak != keping_akhir) {
+                check = false;
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah keping CETAK(" + Math.round(keping_cetak) + ") dan F2(" + Math.round(keping_akhir) + ") tidak sama, apakah ingin melanjutkan?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+//                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Jumlah keping CETAK dan F2 tidak sama");
+//                    dialog.pack();
+//                    dialog.setLocationRelativeTo(this);
+//                    dialog.setVisible(true);
+//                    dialog.setEnabled(true);
+////                    System.out.println(dialog.akses());
+//                    check = dialog.akses();
+//                    nama_otorisasi = dialog.getNama();
+//                    keterangan = dialog.getKeterangan();
+                } else {
+                    check = false;
+                }
+            } else if (jidun_cetak != kpg_jidun) {
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah jidun CETAK(" + Math.round(jidun_cetak) + ") dan F2(" + Math.round(kpg_jidun) + ") tidak sama, apakah ingin melanjutkan?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+//                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Jumlah jidun CETAK dan F2 tidak sama");
+//                    dialog.pack();
+//                    dialog.setLocationRelativeTo(this);
+//                    dialog.setVisible(true);
+//                    dialog.setEnabled(true);
+////                    System.out.println(dialog.akses());
+//                    check = dialog.akses();
+//                    nama_otorisasi = dialog.getNama();
+//                    keterangan = dialog.getKeterangan();
+                } else {
+                    check = false;
+                }
+            } else if (persen_sh < 0f || persen_sh > 20f) {
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Susut hilang(" + Math.round(sh) + "gr " + Math.round(persen_sh) + "%) diluar batas yang ditentukan (0-15%), apakah ingin melanjutkan?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+//                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Susut hilang diluar batas yang ditentukan (0-15%)");
+//                    dialog.pack();
+//                    dialog.setLocationRelativeTo(this);
+//                    dialog.setVisible(true);
+//                    dialog.setEnabled(true);
+////                    System.out.println(dialog.akses());
+//                    check = dialog.akses();
+//                    nama_otorisasi = dialog.getNama();
+//                    keterangan = dialog.getKeterangan();
+                } else {
+                    check = false;
+                }
+            }
 
             if (check) {
                 String Query_UPDATE_QC = "UPDATE `tb_lab_laporan_produksi` SET `tgl_masuk`='" + dateFormat.format(Date_setor_f2.getDate()) + "' "

@@ -43,11 +43,7 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
     int detik = 0, tab = 0;
 
     public JFrame_TV_GradingBaku() {
-        try {
-
-        } catch (Exception ex) {
-            Logger.getLogger(JFrame_TV_GradingBaku.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Utility.db.connect();
         initComponents();
         Table_Data_Nitrit_baku1.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
         Table_Data_Nitrit_baku2.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
@@ -476,10 +472,13 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
 
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MONTH, -1);
-            Date result = cal.getTime();
+            Date a_month_before_today = cal.getTime();
             sql = "SELECT AVG(`jumlah_per_hari`) AS 'avg' FROM \n"
-                    + "(SELECT SUM(`berat_basah`) AS 'jumlah_per_hari' FROM `tb_laporan_produksi` \n"
-                    + "WHERE `no_laporan_produksi` LIKE 'WL.%' AND `tanggal_lp` BETWEEN '" + dateFormat.format(result) + "' AND '" + dateFormat.format(today) + "'\n"
+                    + "(SELECT SUM(`berat_basah`) AS 'jumlah_per_hari' "
+                    + "FROM `tb_laporan_produksi` \n"
+                    + "WHERE "
+                    + "LENGTH(`ruangan`) = 5 "
+                    + "AND `tanggal_lp` BETWEEN '" + dateFormat.format(a_month_before_today) + "' AND '" + dateFormat.format(today) + "'\n"
                     + "GROUP BY `tanggal_lp`) AS T";
             rs = Utility.db.getStatement().executeQuery(sql);
             float rata2_pengeluaran_sub = 0;

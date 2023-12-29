@@ -4145,16 +4145,19 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             if (Date_LaporanTerima.getDate() != null) {
                 String tgl = "";
                 if (ComboBox_LaporanTerima.getSelectedItem().toString().equals("Koreksi Kering")) {
-                    tgl = "tgl_masuk_f2";
+                    tgl = "`tb_finishing_2`.`tgl_masuk_f2` = '" + dateFormat.format(Date_LaporanTerima.getDate()) + "'";
                 } else if (ComboBox_LaporanTerima.getSelectedItem().toString().equals("F1")) {
-                    tgl = "tgl_dikerjakan_f2";
+                    tgl = "`tb_finishing_2`.`tgl_dikerjakan_f2` = '" + dateFormat.format(Date_LaporanTerima.getDate()) + "'";
                 } else if (ComboBox_LaporanTerima.getSelectedItem().toString().equals("F2")) {
-                    tgl = "tgl_f1";
+                    tgl = "`tb_finishing_2`.`tgl_f1` = '" + dateFormat.format(Date_LaporanTerima.getDate()) + "'";
                 }
 
                 sql = "SELECT `tb_finishing_2`.`no_laporan_produksi`, `tgl_masuk_f2`, `tgl_dikerjakan_f2`, `tgl_f1`, `ruangan`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`kode_grade`\n"
-                        + "FROM `tb_finishing_2` LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "WHERE `tb_finishing_2`.`" + tgl + "` = '" + dateFormat.format(Date_LaporanTerima.getDate()) + "' AND `tb_finishing_2`.`no_laporan_produksi` LIKE 'WL.%' "
+                        + "FROM `tb_finishing_2` "
+                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                        + "WHERE "
+                        + tgl
+                        + "AND LENGTH(`ruangan`) = 5 "
                         + "ORDER BY `ruangan`, `tb_finishing_2`.`no_laporan_produksi`";
                 JRDesignQuery newQuery = new JRDesignQuery();
                 newQuery.setText(sql);

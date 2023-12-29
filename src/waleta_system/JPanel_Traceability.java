@@ -102,7 +102,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                 }
             }
 
-            String show_lp_Sub = " AND `kode_asal_bahan_jadi` NOT LIKE 'WL.%' ";
+            String show_lp_Sub = " AND LENGTH(`ruangan`) = 5 ";
             if (CheckBox_showLPSub.isSelected()) {
                 show_lp_Sub = "";
             }

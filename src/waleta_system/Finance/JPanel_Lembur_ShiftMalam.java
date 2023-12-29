@@ -482,7 +482,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     potongan_terlambat = 0;
                     potongan_ijin = 0;
                     upah_per_hari = 0;
-                } else if (premi_hadir == 0) {
+                } else if (premi_hadir == 4 || premi_hadir == 5) {
                     upah_per_hari = 0;
                 }
 

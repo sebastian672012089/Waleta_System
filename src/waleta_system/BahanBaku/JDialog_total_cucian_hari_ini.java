@@ -4,8 +4,10 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,13 +26,14 @@ public class JDialog_total_cucian_hari_ini extends javax.swing.JDialog {
 
     public JDialog_total_cucian_hari_ini(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        Utility.db.connect();
         initComponents();
         Load_Data();
     }
 
     public void Load_Data() {
         try {
-            
+
             String tanggal_cuci = new SimpleDateFormat("EEEEE, dd/MM/yyyy").format(date);
             String tanggal_cabut = new SimpleDateFormat("EEEEE, dd/MM/yyyy").format(Utility.addDaysSkippingFreeDays(date, 1));
             label_tgl_cuci.setText("Tgl Cuci : " + tanggal_cuci);
@@ -43,18 +46,23 @@ public class JDialog_total_cucian_hari_ini extends javax.swing.JDialog {
             int total_kpg_sub = 0, total_gram_sub = 0;
             DefaultTableModel model = (DefaultTableModel) tabel_cucian_hari_ini.getModel();
             model.setRowCount(0);
-            sql = "SELECT `ruangan`, SUM(`jumlah_keping`) AS 'kpg', SUM(`berat_basah`) AS 'gram'\n"
-                    + "FROM `tb_laporan_produksi` WHERE `tanggal_lp` = CURRENT_DATE GROUP BY `ruangan`";
+            sql = "SELECT "
+                    + "`ruangan`, "
+                    + "SUM(`jumlah_keping`) AS 'kpg', "
+                    + "SUM(`berat_basah`) AS 'gram'\n"
+                    + "FROM `tb_laporan_produksi` "
+                    + "WHERE `tanggal_lp` = CURRENT_DATE "
+                    + "GROUP BY `ruangan`";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
                 model.addRow(new Object[]{rs.getString("ruangan"), rs.getFloat("kpg"), rs.getFloat("gram")});
                 myText = myText + rs.getString("ruangan") + " : " + decimalFormat.format(rs.getFloat("kpg")) + " - " + decimalFormat.format(rs.getFloat("gram")) + "\n";
-                if (rs.getString("ruangan").length() == 1) {
-                    total_kpg_waleta = total_kpg_waleta + rs.getInt("kpg");
-                    total_gram_waleta = total_gram_waleta + rs.getInt("gram");
-                } else if (rs.getString("ruangan").length() > 1) {
+                if (rs.getString("ruangan").length() == 5) {
                     total_kpg_sub = total_kpg_sub + rs.getInt("kpg");
                     total_gram_sub = total_gram_sub + rs.getInt("gram");
+                } else {
+                    total_kpg_waleta = total_kpg_waleta + rs.getInt("kpg");
+                    total_gram_waleta = total_gram_waleta + rs.getInt("gram");
                 }
             }
             myText = myText + "\n";
@@ -70,7 +78,7 @@ public class JDialog_total_cucian_hari_ini extends javax.swing.JDialog {
             myText = myText + label_total_sub.getText() + "\n";
             myText = myText + label_total_waleta_sub.getText() + "\n";
             myText = myText + "\n";
-            
+
             //Berdasarkan jenis bulu upah
             float total_gram_br = 0, total_gram_bs = 0, total_gram_bb = 0, total_gram_br_bs_bb = 0;
             sql = "SELECT `jenis_bulu_lp`, SUM(`berat_basah`) AS 'gram'\n"
@@ -135,14 +143,18 @@ public class JDialog_total_cucian_hari_ini extends javax.swing.JDialog {
 
             //Berdasarkan MEMO JD
             float total_jdn_waleta = 0, total_jdn_sub = 0;
-            sql = "SELECT `no_laporan_produksi`, `berat_basah` FROM `tb_laporan_produksi` WHERE `tanggal_lp` = CURRENT_DATE AND `memo_lp` LIKE '%JD%'";
+            sql = "SELECT "
+                    + "`ruangan`, `berat_basah` "
+                    + "FROM `tb_laporan_produksi` "
+                    + "WHERE "
+                    + "`tanggal_lp` = CURRENT_DATE "
+                    + "AND `memo_lp` LIKE '%JD%'";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
-                if (rs.getString("no_laporan_produksi").contains("WL-")) {
-                    total_jdn_waleta = total_jdn_waleta + rs.getInt("berat_basah");
-                } else if (rs.getString("no_laporan_produksi").contains("WL.")) {
+                if (rs.getString("ruangan").length() == 5) {
                     total_jdn_sub = total_jdn_sub + rs.getInt("berat_basah");
                 } else {
+                    total_jdn_waleta = total_jdn_waleta + rs.getInt("berat_basah");
                 }
             }
             label_total_jdn_waleta.setText("WALETA : " + decimalFormat.format(total_jdn_waleta) + "");

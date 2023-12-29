@@ -647,8 +647,12 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
             int tahun = Integer.valueOf(new SimpleDateFormat("yyyy").format(new Date()));
             for (int i = 0; i < 4; i++) {
                 sql = "SELECT AVG(cabutan) AS 'avg' FROM ("
-                        + "SELECT SUM(IF(`jumlah_cabut`>0, `jumlah_cabut`, `jumlah_gram`/8)) AS 'cabutan' FROM `tb_detail_pencabut` "
-                        + "WHERE `no_laporan_produksi` NOT LIKE '%WL.%' AND YEAR(`tanggal_cabut`) = '" + (tahun - i) + "'"
+                        + "SELECT SUM(IF(`jumlah_cabut`>0, `jumlah_cabut`, `jumlah_gram`/8)) AS 'cabutan' "
+                        + "FROM `tb_detail_pencabut` \n"
+                        + "LEFT JOIN `tb_laporan_produksi`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
+                        + "WHERE "
+                        + "LENGTH(`ruangan`) <> 5 "
+                        + "AND YEAR(`tanggal_cabut`) = '" + (tahun - i) + "'"
                         + "GROUP BY `id_pegawai`, `tanggal_cabut`"
                         + ") x";
                 rs = Utility.db.getStatement().executeQuery(sql);

@@ -33,13 +33,13 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         this.no_lp = no_lp;
         this.status = status;
         try {
-            Utility.db_sub.connect();
             sql = "SELECT `bulu_upah` FROM `tb_tarif_cabut` WHERE `status` = 'AKTIF'";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
                 ComboBox_jenisBulu.addItem(rs.getString("bulu_upah"));
             }
 
+            Utility.db_sub.connect();
             sql = "SELECT `kode_sub` FROM `tb_sub_waleta` WHERE `tanggal_tutup` IS NULL";
             rs = Utility.db_sub.getStatement().executeQuery(sql);
             while (rs.next()) {
@@ -84,20 +84,34 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             if (status.equals("insert")) {
                 kode = "WL-";
                 String get_lastNumber = "SELECT MAX(RIGHT(`no_laporan_produksi`, 5)) AS 'last' "
-                        + "FROM `tb_laporan_produksi` WHERE YEAR(`tanggal_lp`) = '" + new SimpleDateFormat("yyyy").format(Date_LP.getDate()) + "' "
+                        + "FROM `tb_laporan_produksi` "
+                        + "WHERE YEAR(`tanggal_lp`) = '" + new SimpleDateFormat("yyyy").format(Date_LP.getDate()) + "' "
                         + "AND `no_laporan_produksi` LIKE 'WL-%'";
                 ResultSet result_lastNumber = Utility.db.getStatement().executeQuery(get_lastNumber);
                 if (result_lastNumber.next()) {
                     LastNumber = result_lastNumber.getInt("last") + 1;
                 }
             } else if (status.equals("sub")) {
-                kode = "WL." + ComboBox_ruangan.getSelectedItem() + "-";
-                String get_lastNumber = "SELECT MAX(RIGHT(`no_laporan_produksi`, 5)) AS 'last' "
-                        + "FROM `tb_laporan_produksi` WHERE YEAR(`tanggal_lp`) = '" + new SimpleDateFormat("yyyy").format(Date_LP.getDate()) + "' "
-                        + "AND `no_laporan_produksi` LIKE '" + kode + "%'";
-                ResultSet result_lastNumber = Utility.db.getStatement().executeQuery(get_lastNumber);
-                if (result_lastNumber.next()) {
-                    LastNumber = result_lastNumber.getInt("last") + 1;
+                if (Integer.valueOf(new SimpleDateFormat("yyyy").format(Date_LP.getDate())) > 2023) {
+                    kode = "WL-";
+                    String get_lastNumber = "SELECT MAX(RIGHT(`no_laporan_produksi`, 5)) AS 'last' "
+                            + "FROM `tb_laporan_produksi` "
+                            + "WHERE YEAR(`tanggal_lp`) = '" + new SimpleDateFormat("yyyy").format(Date_LP.getDate()) + "' "
+                            + "AND `no_laporan_produksi` LIKE 'WL-%'";
+                    ResultSet result_lastNumber = Utility.db.getStatement().executeQuery(get_lastNumber);
+                    if (result_lastNumber.next()) {
+                        LastNumber = result_lastNumber.getInt("last") + 1;
+                    }
+                } else {
+                    kode = "WL." + ComboBox_ruangan.getSelectedItem() + "-";
+                    String get_lastNumber = "SELECT MAX(RIGHT(`no_laporan_produksi`, 5)) AS 'last' "
+                            + "FROM `tb_laporan_produksi` "
+                            + "WHERE YEAR(`tanggal_lp`) = '" + new SimpleDateFormat("yyyy").format(Date_LP.getDate()) + "' "
+                            + "AND `no_laporan_produksi` LIKE '" + kode + "%'";
+                    ResultSet result_lastNumber = Utility.db.getStatement().executeQuery(get_lastNumber);
+                    if (result_lastNumber.next()) {
+                        LastNumber = result_lastNumber.getInt("last") + 1;
+                    }
                 }
             }
         } catch (SQLException | NullPointerException ex) {

@@ -36,7 +36,6 @@ import waleta_system.MainForm;
 
 public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePanel {
 
-    
     String sql = null;
     ResultSet rs;
     Date date = new Date();
@@ -72,13 +71,13 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                         label_lp.setText(Table_Data_Cabut.getValueAt(row, 0).toString());
                         refreshTable_Pencabut();
                         try {
-                            Date tgl_masuk = dateFormat.parse(Table_Data_Cabut.getValueAt(row, 2).toString());
+                            Date tgl_masuk = dateFormat.parse(Table_Data_Cabut.getValueAt(row, 3).toString());
                             Date_pencabut.setMinSelectableDate(tgl_masuk);
                         } catch (ParseException ex) {
                             Logger.getLogger(JPanel_DataCabut.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
-                        if (Table_Data_Cabut.getValueAt(row, 9) == null) {
+                        if (Table_Data_Cabut.getValueAt(row, 10) == null) {
                             button_edit_cabut.setEnabled(false);
                             button_setor_cabut.setEnabled(true);
 
@@ -134,36 +133,39 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 filter_tanggal = "`tb_cabut`.`tgl_setor_cabut`";
                 filter_tanggal = " AND (" + filter_tanggal + " BETWEEN '" + dateFormat.format(Date1_cabut.getDate()) + "' and '" + dateFormat.format(Date2_cabut.getDate()) + "')";
             }
-            sql = "SELECT `tb_cabut`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `keping_upah`, `berat_basah`, `tb_laporan_produksi`.`pekerja_sesekan`, `pekerja_hancuran`, `pekerja_kopyok`, `cabut_diterima`, `tgl_mulai_cabut`, `cabut_diserahkan`, `tgl_setor_cabut`, `sobek_cabut`, `cabut_sobek_lepas`, `gumpil_cabut`, `pecah_cabut`, `cabut_pecah_2`, `cabut_lubang`, `cabut_hilang_kaki`, `cabut_hilang_ujung`, `cabut_kaki_besar`, `cabut_kaki_kecil`, `cabut_hilang_bawah`, `admin_cabut`, `ketua_regu`, `tgl_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'tanggal_cabut'"
+            sql = "SELECT `tb_cabut`.`no_laporan_produksi`, `ruangan`, `tb_laporan_produksi`.`kode_grade`, `keping_upah`, `berat_basah`, `tb_laporan_produksi`.`pekerja_sesekan`, `pekerja_hancuran`, `pekerja_kopyok`, `cabut_diterima`, `tgl_mulai_cabut`, `cabut_diserahkan`, `tgl_setor_cabut`, `sobek_cabut`, `cabut_sobek_lepas`, `gumpil_cabut`, `pecah_cabut`, `cabut_pecah_2`, `cabut_lubang`, `cabut_hilang_kaki`, `cabut_hilang_ujung`, `cabut_kaki_besar`, `cabut_kaki_kecil`, `cabut_hilang_bawah`, `admin_cabut`, `ketua_regu`, `tgl_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'tanggal_cabut'"
                     + "FROM `tb_cabut` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_cuci` ON `tb_cuci`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_detail_pencabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
-                    + "WHERE `tb_cabut`.`no_laporan_produksi` LIKE '%" + txt_search_cabut.getText() + "%' " + ruang + filter_tanggal
+                    + "WHERE `tb_cabut`.`no_laporan_produksi` LIKE '%" + txt_search_cabut.getText() + "%' " 
+                    + ruang 
+                    + filter_tanggal
                     + "GROUP BY `tb_cabut`.`no_laporan_produksi`\n"
                     + "ORDER BY `tb_cabut`.`tgl_mulai_cabut` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[19];
+            Object[] row = new Object[25];
             while (rs.next()) {
                 row[0] = rs.getString("no_laporan_produksi");
-                row[1] = rs.getString("kode_grade");
-                row[2] = rs.getDate("tgl_mulai_cabut");
-                row[3] = rs.getDate("tanggal_cabut");
-                row[4] = rs.getString("cabut_diterima");
-                row[5] = rs.getString("pekerja_sesekan");
-                row[6] = rs.getString("pekerja_hancuran");
-                row[7] = rs.getString("pekerja_kopyok");
-                row[8] = rs.getInt("keping_upah");
-                row[9] = rs.getDate("tgl_setor_cabut");
-                row[10] = rs.getString("cabut_diserahkan");
-                row[11] = rs.getInt("pecah_cabut");
-                row[12] = rs.getInt("sobek_cabut");
-                row[13] = rs.getInt("gumpil_cabut");
-                row[14] = rs.getInt("cabut_hilang_kaki");
-                row[15] = rs.getInt("cabut_hilang_ujung");
-                row[16] = rs.getString("admin_cabut");
-                row[17] = rs.getString("ketua_regu");
-                row[18] = rs.getDate("tgl_cabut");
+                row[1] = rs.getString("ruangan");
+                row[2] = rs.getString("kode_grade");
+                row[3] = rs.getDate("tgl_mulai_cabut");
+                row[4] = rs.getDate("tanggal_cabut");
+                row[5] = rs.getString("cabut_diterima");
+                row[6] = rs.getString("pekerja_sesekan");
+                row[7] = rs.getString("pekerja_hancuran");
+                row[8] = rs.getString("pekerja_kopyok");
+                row[9] = rs.getInt("keping_upah");
+                row[10] = rs.getDate("tgl_setor_cabut");
+                row[11] = rs.getString("cabut_diserahkan");
+                row[12] = rs.getInt("pecah_cabut");
+                row[13] = rs.getInt("sobek_cabut");
+                row[14] = rs.getInt("gumpil_cabut");
+                row[15] = rs.getInt("cabut_hilang_kaki");
+                row[16] = rs.getInt("cabut_hilang_ujung");
+                row[17] = rs.getString("admin_cabut");
+                row[18] = rs.getString("ketua_regu");
+                row[19] = rs.getDate("tgl_cabut");
                 if (ComboBox_filterDate.getSelectedIndex() == 2 && Date1_cabut.getDate() != null && Date2_cabut.getDate() != null) {
                     if (rs.getDate("tanggal_cabut") != null
                             && rs.getDate("tanggal_cabut").after(new Date(Date1_cabut.getDate().getTime() - (1000 * 60 * 60 * 24)))
@@ -465,14 +467,14 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
 
             },
             new String [] {
-                "No LP", "Grade", "Tgl Masuk", "Tgl Cabut", "Diterima", "Pekerja Ssk", "Pekerja Hc", "Pekerja Kopyok", "Kpg upah", "Tgl Selesai", "Diserahkan", "Pecah", "Sobek", "Gumpil", "Hilang Kaki", "Hilang Ujung", "admin", "Ketua Regu", "Tgl Cabut"
+                "No LP", "Ruangan", "Grade", "Tgl Masuk", "Tgl Cabut", "Diterima", "Pekerja Ssk", "Pekerja Hc", "Pekerja Kopyok", "Kpg upah", "Tgl Selesai", "Diserahkan", "Pecah", "Sobek", "Gumpil", "Hilang Kaki", "Hilang Ujung", "admin", "Ketua Regu", "Tgl Cabut"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -682,14 +684,14 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txt_nama_pegawai, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(txt_id_pegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                .addComponent(txt_id_pegawai)
                                 .addGap(0, 0, 0)
                                 .addComponent(button_pick_pencabut, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(txt_jmlh_keping, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8))
-                            .addComponent(Date_pencabut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Date_pencabut, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
                             .addComponent(txt_bagian, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(button_add_pencabut)
@@ -1057,7 +1059,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
 
     private void button_pick_pencabutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_pick_pencabutActionPerformed
         // TODO add your handling code here:
-        String filter_tgl = "AND ((`tb_bagian`.`kode_departemen` = 'PRODUKSI' AND DATE(`att_log`.`scan_date`) = CURRENT_DATE()) OR `tb_bagian`.`kode_departemen` = 'SUB') ";
+        String filter_tgl = "AND ((`tb_bagian`.`kode_departemen` = 'PRODUKSI' AND DATE(`att_log`.`scan_date`) = CURRENT_DATE()) OR `nama_bagian` LIKE '%-C') ";
         Browse_Karyawan dialog = new Browse_Karyawan(new javax.swing.JFrame(), true, filter_tgl);
         dialog.pack();
         dialog.setLocationRelativeTo(this);
@@ -1080,8 +1082,9 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
             JOptionPane.showMessageDialog(this, "Pilih No LP di tabel Cabut terlebih dahulu !");
         } else {
             String no_lp = Table_Data_Cabut.getValueAt(x, 0).toString();
-            if (containsIgnoreCase(no_lp.substring(0, 3), "WL.")) {
-                JOptionPane.showMessageDialog(this, "Maaf tidak bisa menambahkan pencabut LP sub, kelola data cabut lp sub hanya dilakukan melalui aplikasi sub");
+            String ruangan = Table_Data_Cabut.getValueAt(x, 1).toString();
+            if (ruangan.length() == 5) {
+                JOptionPane.showMessageDialog(this, "Maaf tidak bisa menambahkan pencabut LP sub, kelola data cabut lp sub hanya dilakukan melalui aplikasi sarange");
 //                addPencabutSUB(no_lp);
             } else {
                 addPencabutWLT(no_lp);
@@ -1206,9 +1209,9 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
         if (j == -1) {
             JOptionPane.showMessageDialog(this, "Anda belum memilih LP yang akan di setorkan !");
         } else {
-            if (Table_Data_Cabut.getValueAt(j, 10) != "-" && Table_Data_Cabut.getValueAt(j, 9) != null) {
+            if (Table_Data_Cabut.getValueAt(j, 11) != "-" && Table_Data_Cabut.getValueAt(j, 10) != null) {
                 JOptionPane.showMessageDialog(this, "No Laporan Produksi : " + Table_Data_Cabut.getValueAt(j, 0).toString() + "\n Sudah disetor");
-            } else if (!Table_Data_Cabut.getValueAt(j, 8).toString().equals(label_total_cabutan.getText())) {
+            } else if (!Table_Data_Cabut.getValueAt(j, 9).toString().equals(label_total_cabutan.getText())) {
                 JOptionPane.showMessageDialog(this, "Maaf, data keping yang sudah dicabut dan jumlah keping LP tidak sesuai\nSilahkan Cek Kembali !");
             } else if (gram_awal != gram_akhir) {
                 JOptionPane.showMessageDialog(this, "Maaf, data Gram LP dan Gram Cabutan tidak sesuai\nSilahkan Cek Kembali !");

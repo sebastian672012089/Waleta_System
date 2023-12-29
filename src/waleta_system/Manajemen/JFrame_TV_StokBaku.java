@@ -189,8 +189,11 @@ public class JFrame_TV_StokBaku extends javax.swing.JFrame {
             cal.add(Calendar.MONTH, -1);
             Date result = cal.getTime();
             sql = "SELECT AVG(`jumlah_per_hari`) AS 'avg' FROM \n"
-                    + "(SELECT SUM(`berat_basah`) AS 'jumlah_per_hari' FROM `tb_laporan_produksi` \n"
-                    + "WHERE `no_laporan_produksi` LIKE 'WL.%' AND `tanggal_lp` BETWEEN '" + dateFormat.format(result) + "' AND '" + dateFormat.format(today) + "'\n"
+                    + "(SELECT SUM(`berat_basah`) AS 'jumlah_per_hari' "
+                    + "FROM `tb_laporan_produksi` \n"
+                    + "WHERE \n"
+                    + "LENGTH(`ruangan`) = 5 \n"
+                    + "AND `tanggal_lp` BETWEEN '" + dateFormat.format(result) + "' AND '" + dateFormat.format(today) + "'\n"
                     + "GROUP BY `tanggal_lp`) AS T";
             rs = Utility.db.getStatement().executeQuery(sql);
             float rata2_pengeluaran_sub = 0;

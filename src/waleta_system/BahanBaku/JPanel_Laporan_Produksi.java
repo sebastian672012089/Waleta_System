@@ -1219,6 +1219,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             try {
                 Utility.db_sub.connect();
                 String no_lp = Table_laporan_produksi.getValueAt(x, 1).toString();
+                String ruangan = Table_laporan_produksi.getValueAt(x, 9).toString();
                 String query = "SELECT `tgl_setor_cabut` FROM `tb_cabut` WHERE `no_laporan_produksi` = '" + no_lp + "' AND `tgl_setor_cabut` IS NOT NULL";
                 ResultSet result = Utility.db_sub.getStatement().executeQuery(query);
                 if (result.next()) {
@@ -1236,7 +1237,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                     dialog.setLocationRelativeTo(this);
                     dialog.setVisible(true);
                     dialog.setEnabled(true);
-                    if (no_lp.contains("WL.")) {
+                    if (ruangan.length() == 5) {
                         refresh_tabel_sub_online();
                     } else if (Table_laporan_produksi.getValueAt(x, 9).toString().equals("CABUTO")) {
                         refresh_tabel_cabuto_online();

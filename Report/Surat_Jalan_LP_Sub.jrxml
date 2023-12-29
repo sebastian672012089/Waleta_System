@@ -97,7 +97,7 @@
 	<parameter name="TGL2" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT DISTINCT(`ruangan`) AS 'ruangan' FROM `tb_laporan_produksi`
-WHERE `no_laporan_produksi` LIKE 'WL.%'
+WHERE LENGTH(`ruangan`) = 5
 AND `no_laporan_produksi` LIKE $P{NO_LP}
 AND `no_kartu_waleta` LIKE $P{NO_KARTU}
 AND `kode_grade` LIKE $P{GRADE}

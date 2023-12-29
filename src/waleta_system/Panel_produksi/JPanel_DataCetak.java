@@ -964,21 +964,21 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
         // TODO add your handling code here:
         try {
             String query = "";
+            String filter_tanggal = "AND `tb_cetak`.`tgl_mulai_cetak` = CURRENT_DATE ";
             if (Date1_cetak.getDate() != null && Date2_cetak.getDate() != null) {
-                String tgl = "";
                 if (ComboBox_filterTgl.getSelectedIndex() == 0) {
-                    tgl = "tgl_mulai_cetak";
+                    filter_tanggal = "AND `tb_cetak`.`tgl_mulai_cetak` BETWEEN '" + dateFormat.format(Date1_cetak.getDate()) + "' and '" + dateFormat.format(Date2_cetak.getDate()) + "'\n";
                 } else if (ComboBox_filterTgl.getSelectedIndex() == 1) {
-                    tgl = "tgl_selesai_cetak";
+                    filter_tanggal = "AND `tb_cetak`.`tgl_selesai_cetak` BETWEEN '" + dateFormat.format(Date1_cetak.getDate()) + "' and '" + dateFormat.format(Date2_cetak.getDate()) + "'\n";
                 }
-                query = "SELECT `tb_cetak`.`no_laporan_produksi`, `no_kartu_waleta`, `memo_lp`, `tgl_mulai_cetak`, `ruangan`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`kode_grade`\n"
-                        + "FROM `tb_cetak` LEFT JOIN `tb_laporan_produksi` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "WHERE `tb_cetak`.`" + tgl + "` BETWEEN '" + dateFormat.format(Date1_cetak.getDate()) + "' and '" + dateFormat.format(Date2_cetak.getDate()) + "' AND `tb_cetak`.`no_laporan_produksi` LIKE 'WL.%' ORDER BY `ruangan`";
-            } else {
-                query = "SELECT `tb_cetak`.`no_laporan_produksi`, `no_kartu_waleta`, `memo_lp`, `tgl_mulai_cetak`, `ruangan`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`kode_grade`\n"
-                        + "FROM `tb_cetak` LEFT JOIN `tb_laporan_produksi` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "WHERE `tgl_mulai_cetak` = CURDATE() AND `tb_cetak`.`no_laporan_produksi` LIKE 'WL.%' ORDER BY `ruangan`";
             }
+            query = "SELECT `tb_cetak`.`no_laporan_produksi`, `no_kartu_waleta`, `memo_lp`, `tgl_mulai_cetak`, `ruangan`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`kode_grade`\n"
+                    + "FROM `tb_cetak` "
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "WHERE "
+                    + "LENGTH(`ruangan`) = 5 "
+                    + filter_tanggal
+                    + "ORDER BY `ruangan`";
             JRDesignQuery newQuery = new JRDesignQuery();
             newQuery.setText(query);
             JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Laporan_cetak_SUB.jrxml");

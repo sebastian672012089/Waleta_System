@@ -19,8 +19,9 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
     ResultSet rs;
     Date date = new Date();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    float keping_awal = 0, jidun_awal = 0;
+    float keping_cetak = 0, jidun_cetak = 0, berat_kering_lp = 0;
     Date tgl_masuk = null;
+    String ruangan = "";
 
     public JDialog_Setor_LP_F2(java.awt.Frame parent, boolean modal, Object tgl_masuk) {
         super(parent, modal);
@@ -72,20 +73,25 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
             txt_admin.setText(MainForm.Login_NamaPegawai);
 
             sql = "SELECT "
+                    + "`ruangan`, `tb_laporan_produksi`.`berat_kering`, "
                     + "(`cetak_mangkok` + `cetak_pecah` + `cetak_flat`) AS 'awal', "
                     + "`cetak_jidun_real` "
                     + "FROM `tb_cetak` "
-                    + "WHERE `no_laporan_produksi` = '" + JPanel_Finishing2.Table_Data_f2.getValueAt(i, 0).toString() + "'";
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi` "
+                    + "WHERE `tb_cetak`.`no_laporan_produksi` = '" + JPanel_Finishing2.Table_Data_f2.getValueAt(i, 0).toString() + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
-                keping_awal = rs.getInt("awal");
-                jidun_awal = rs.getInt("cetak_jidun_real");
+                keping_cetak = rs.getInt("awal");
+                jidun_cetak = rs.getInt("cetak_jidun_real");
+                berat_kering_lp = rs.getInt("berat_kering");
+                ruangan = rs.getString("ruangan");
             }
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JDialog_Setor_LP_F2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -122,7 +128,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         jLabel33 = new javax.swing.JLabel();
         txt_fnol = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
-        txt_bk_nol = new javax.swing.JTextField();
+        txt_bk_fnol = new javax.swing.JTextField();
         jLabel35 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
@@ -372,11 +378,11 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         jLabel34.setText("Keping");
         jLabel34.setFocusable(false);
 
-        txt_bk_nol.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bk_nol.setText("0");
-        txt_bk_nol.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_bk_fnol.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_bk_fnol.setText("0");
+        txt_bk_fnol.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_bk_nolKeyTyped(evt);
+                txt_bk_fnolKeyTyped(evt);
             }
         });
 
@@ -576,7 +582,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(txt_bk_pecah, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txt_bk_fbonus, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_bk_nol, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_bk_fnol, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txt_bk_jidun, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -616,7 +622,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                             .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_bk_nol, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_bk_fnol, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1128,62 +1134,93 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         try {
             boolean check = true;
             Utility.db.getConnection().createStatement();
-            float keping_akhir = Float.valueOf(txt_fbonus.getText())
-                    + Float.valueOf(txt_fnol.getText())
-                    + Float.valueOf(txt_mk_pecah.getText())
-                    + Float.valueOf(txt_flat.getText());
-            float jidun_akhir = Float.valueOf(txt_jidun_utuh.getText())
-                    + Float.valueOf(txt_jidun_pch.getText());
-
-//            System.out.println("keping awal : " + keping_awal);
-//            System.out.println("keping akhir : " + keping_akhir);
-            if (label_no_lp.getText().substring(0, 3).equals("WL.")) {
-                JOptionPane.showMessageDialog(this, "untuk LP sub tidak ada pengecekan keping");
-            } else if (keping_awal != keping_akhir) {
-                check = false;
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah keping awal dan akhir tidak sama, apakah ingin melanjutkan?", "Warning", 0);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true);
-                    dialog.pack();
-                    dialog.setLocationRelativeTo(this);
-                    dialog.setVisible(true);
-                    dialog.setEnabled(true);
-//                    System.out.println(dialog.akses());
-                    check = dialog.akses();
-                    nama_otorisasi = dialog.getNama();
-                    keterangan = dialog.getKeterangan();
-                } else {
-                    check = false;
-                }
-            } else if (jidun_awal != jidun_akhir) {
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah jidun awal dan akhir tidak sama, apakah ingin melanjutkan?", "Warning", 0);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true);
-                    dialog.pack();
-                    dialog.setLocationRelativeTo(this);
-                    dialog.setVisible(true);
-                    dialog.setEnabled(true);
-//                    System.out.println(dialog.akses());
-                    check = dialog.akses();
-                    nama_otorisasi = dialog.getNama();
-                    keterangan = dialog.getKeterangan();
-                } else {
-                    check = false;
-                }
-            }
 
             float netto_sistem = Float.valueOf(label_netto.getText());
             float netto_manual = Float.valueOf(txt_netto.getText());
+
+            float bk = berat_kering_lp;
+            float bk_12 = bk * 1.12f;
+            float fbonus = Float.valueOf(txt_bk_fbonus.getText());
+            float fnol = Float.valueOf(txt_bk_fnol.getText());
+            float pecah_flat = Float.valueOf(txt_bk_pecah.getText()) + Float.valueOf(txt_bk_flat.getText());
+            float jidun = Float.valueOf(txt_bk_jidun.getText());
+            float kpg_jidun = Float.valueOf(txt_jidun_utuh.getText()) + Float.valueOf(txt_jidun_pch.getText());
+            float kaki = Float.valueOf(txt_tambah_kaki1.getText()) + Float.valueOf(txt_tambah_kaki2.getText());
+            float keping_akhir = Float.valueOf(txt_fbonus.getText()) + Float.valueOf(txt_fnol.getText()) + Float.valueOf(txt_mk_pecah.getText()) + Float.valueOf(txt_flat.getText());
+            float utuh = fbonus + fnol;
+            float netto_utuh = 0;
+            float netto_jidun = 0;
+            if (jidun > utuh) {
+                netto_jidun = jidun - kaki;
+                netto_utuh = utuh;
+            } else {
+                netto_utuh = utuh - kaki;
+                netto_jidun = jidun;
+            }
+
+            float sp = Float.valueOf(txt_sesekan.getText()) + Float.valueOf(txt_hancuran.getText()) + Float.valueOf(txt_rontokan.getText()) + Float.valueOf(txt_bonggol.getText()) + Float.valueOf(txt_serabut.getText());
+            float sh = bk - (netto_utuh + netto_jidun + pecah_flat + sp);
+            float persen_sh = (sh / bk) * 100;
+
+//            System.out.println("keping awal : " + keping_awal);
+//            System.out.println("keping akhir : " + keping_akhir);
             if (netto_sistem != netto_manual) {
                 check = false;
                 JOptionPane.showMessageDialog(this, "Maaf Netto Manual dan Netto Sistem belum cocok !");
-            }
-            if (txt_diserahkan.getText() == null || txt_diserahkan.getText().equals("")) {
+            } else if (txt_diserahkan.getText() == null || txt_diserahkan.getText().equals("")) {
                 check = false;
                 JOptionPane.showMessageDialog(this, "Harap mengisi pekerja Final Check F2 / F2 diserahkan oleh !");
             } else if (txt_pengoreksi.getText() == null || txt_pengoreksi.getText().equals("")) {
                 check = false;
                 JOptionPane.showMessageDialog(this, "Harap mengisi pekerja koreksi !");
+            } else if (ruangan.length() == 5) {
+                JOptionPane.showMessageDialog(this, "untuk LP sub tidak ada pengecekan keping");
+            } else if (keping_cetak != keping_akhir) {
+                check = false;
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah keping CETAK(" + Math.round(keping_cetak) + ") dan F2(" + Math.round(keping_akhir) + ") tidak sama, apakah ingin melanjutkan?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Jumlah keping CETAK dan F2 tidak sama");
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+                    dialog.setEnabled(true);
+//                    System.out.println(dialog.akses());
+                    check = dialog.akses();
+                    nama_otorisasi = dialog.getNama();
+                    keterangan = dialog.getKeterangan();
+                } else {
+                    check = false;
+                }
+            } else if (jidun_cetak != kpg_jidun) {
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah jidun CETAK(" + Math.round(jidun_cetak) + ") dan F2(" + Math.round(kpg_jidun) + ") tidak sama, apakah ingin melanjutkan?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Jumlah jidun CETAK dan F2 tidak sama");
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+                    dialog.setEnabled(true);
+//                    System.out.println(dialog.akses());
+                    check = dialog.akses();
+                    nama_otorisasi = dialog.getNama();
+                    keterangan = dialog.getKeterangan();
+                } else {
+                    check = false;
+                }
+            } else if (persen_sh < 0f || persen_sh > 20f) {
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Susut hilang(" + Math.round(sh) + "gr " + Math.round(persen_sh) + "%) diluar batas yang ditentukan (0-15%), apakah ingin melanjutkan?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Susut hilang diluar batas yang ditentukan (0-15%)");
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+                    dialog.setEnabled(true);
+//                    System.out.println(dialog.akses());
+                    check = dialog.akses();
+                    nama_otorisasi = dialog.getNama();
+                    keterangan = dialog.getKeterangan();
+                } else {
+                    check = false;
+                }
             }
             Utility.db.getConnection().setAutoCommit(false);
             if (check) {
@@ -1194,7 +1231,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                         + "`fbonus_f2`='" + txt_fbonus.getText() + "',"
                         + "`berat_fbonus`='" + txt_bk_fbonus.getText() + "',"
                         + "`fnol_f2`='" + txt_fnol.getText() + "',"
-                        + "`berat_fnol`='" + txt_bk_nol.getText() + "',"
+                        + "`berat_fnol`='" + txt_bk_fnol.getText() + "',"
                         + "`pecah_f2`='" + txt_mk_pecah.getText() + "',"
                         + "`berat_pecah`='" + txt_bk_pecah.getText() + "',"
                         + "`flat_f2`='" + txt_flat.getText() + "',"
@@ -1283,7 +1320,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             float fbonus = Float.valueOf(txt_bk_fbonus.getText());
-            float fnol = Float.valueOf(txt_bk_nol.getText());
+            float fnol = Float.valueOf(txt_bk_fnol.getText());
             float pch = Float.valueOf(txt_bk_pecah.getText());
             float flat = Float.valueOf(txt_bk_flat.getText());
             float jidun = Float.valueOf(txt_bk_jidun.getText());
@@ -1389,7 +1426,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txt_fnolKeyTyped
 
-    private void txt_bk_nolKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bk_nolKeyTyped
+    private void txt_bk_fnolKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bk_fnolKeyTyped
         // TODO add your handling code here:
         if (!Character.isDigit(evt.getKeyChar())
                 && evt.getKeyChar() != '.'
@@ -1398,7 +1435,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                 && evt.getKeyCode() != KeyEvent.VK_DELETE) {
             evt.consume();
         }
-    }//GEN-LAST:event_txt_bk_nolKeyTyped
+    }//GEN-LAST:event_txt_bk_fnolKeyTyped
 
     private void txt_mk_pecahKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_mk_pecahKeyTyped
         // TODO add your handling code here:
@@ -1615,8 +1652,8 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
     private javax.swing.JTextField txt_admin;
     private javax.swing.JTextField txt_bk_fbonus;
     private javax.swing.JTextField txt_bk_flat;
+    private javax.swing.JTextField txt_bk_fnol;
     private javax.swing.JTextField txt_bk_jidun;
-    private javax.swing.JTextField txt_bk_nol;
     private javax.swing.JTextField txt_bk_pecah;
     private javax.swing.JTextField txt_bonggol;
     private javax.swing.JTextField txt_diserahkan;

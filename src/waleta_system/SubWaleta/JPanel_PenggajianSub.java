@@ -112,7 +112,6 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                         + "LEFT JOIN `tb_karyawan` ON `tb_detail_pencabut`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
                         + "WHERE `tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_nama.getText() + "%' "
                         + "AND `tb_detail_pencabut`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp.getText() + "%' "
-                        + "AND `tb_detail_pencabut`.`no_laporan_produksi` LIKE 'WL.%'"
                         + search_sub
                         + "AND (`tgl_setor_cabut` BETWEEN '" + dateFormat.format(Date_kinerja_borong1.getDate()) + "' AND '" + dateFormat.format(Date_kinerja_borong2.getDate()) + "') ";
                 rs = Utility.db_sub.getStatement().executeQuery(sql);
@@ -402,7 +401,6 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                     + "FROM `tb_laporan_produksi` "
                     + "LEFT JOIN `tb_tarif_upah` ON `tb_laporan_produksi`.`jenis_bulu_lp` = `tb_tarif_upah`.`bulu_upah` "
                     + "LEFT JOIN `tb_cabut` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi` "
-                    + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` LIKE 'WL.%' "
                     + "AND `tb_laporan_produksi`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp_bonusCabut.getText() + "%' "
                     + search_sub
                     + "AND (`tgl_setor_cabut` BETWEEN '" + dateFormat.format(tanggal_mulai) + "' AND '" + dateFormat.format(tanggal_selesai) + "') ";
@@ -714,7 +712,8 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
                     + "LEFT JOIN `tb_tarif_cabut` ON `tb_laporan_produksi`.`jenis_bulu_lp` = `tb_tarif_cabut`.`bulu_upah`\n"
-                    + "WHERE `tb_finishing_2`.`no_laporan_produksi` LIKE 'WL.%' "
+                    + "WHERE "
+                    + "LENGTH(`ruangan`) = 5 "
                     + "AND `tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp_bonusMKU.getText() + "%' "
                     + search_sub
                     + "AND (`tgl_setor_f2` BETWEEN '" + dateFormat.format(tanggal_mulai) + "' AND '" + dateFormat.format(tanggal_selesai) + "')"
@@ -805,7 +804,8 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
                     + "LEFT JOIN `tb_tarif_cabut` ON `tb_laporan_produksi`.`jenis_bulu_lp` = `tb_tarif_cabut`.`bulu_upah`\n"
-                    + "WHERE `tb_finishing_2`.`no_laporan_produksi` LIKE 'WL.%' "
+                    + "WHERE "
+                    + "LENGTH(`ruangan`) = 5 "
                     + "AND `tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp_bonusMKU.getText() + "%' "
                     + search_sub
                     + "AND (`tgl_setor_f2` BETWEEN '" + dateFormat.format(tanggal_mulai) + "' AND '" + dateFormat.format(tanggal_selesai) + "')"

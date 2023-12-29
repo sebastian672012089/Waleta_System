@@ -346,7 +346,7 @@ public class JDialog_Input_Sesekan_F2_v2 extends javax.swing.JDialog {
         if (isEdited) {
             int dialogResult = JOptionPane.showConfirmDialog(this, "Edit jumlah sesekan memerlukan otorisasi, lanjutkan?", "Warning", 0);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true);
+                JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "");
                 dialog.pack();
                 dialog.setLocationRelativeTo(this);
                 dialog.setVisible(true);

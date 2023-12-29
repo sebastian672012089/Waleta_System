@@ -432,7 +432,7 @@ public class JFrame_KPI_Waleta extends javax.swing.JFrame {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_data.getModel();
             decimalFormat.setMaximumFractionDigits(0);
-            sql = "SELECT `no_laporan_produksi`, MONTH(`tanggal_lp`) AS 'bulan', YEAR(`tanggal_lp`) AS 'tahun', `keping_upah`, `berat_basah` "
+            sql = "SELECT `no_laporan_produksi`, MONTH(`tanggal_lp`) AS 'bulan', YEAR(`tanggal_lp`) AS 'tahun', `keping_upah`, `berat_basah`, `ruangan` "
                     + "FROM `tb_laporan_produksi` "
                     + "WHERE `tanggal_lp` BETWEEN '" + tahun[jumlah_bulan - 1] + "-" + bulan[jumlah_bulan - 1] + "-01' AND '" + tahun[0] + "-" + bulan[0] + "-31'";
             rs = Utility.db.getStatement().executeQuery(sql);
@@ -445,10 +445,10 @@ public class JFrame_KPI_Waleta extends javax.swing.JFrame {
                         if (rs.getInt("keping_upah") == 0) {
                             keping = rs.getFloat("berat_basah") / 8f;
                         }
-                        if (rs.getString("no_laporan_produksi").substring(0, 3).equals("WL-")) {
-                            Cup_per_day_WLT[i] = Cup_per_day_WLT[i] + keping;
-                        } else if (rs.getString("no_laporan_produksi").substring(0, 3).equals("WL.")) {
+                        if (rs.getString("ruangan").length() == 5) {
                             Cup_per_day_SUB[i] = Cup_per_day_SUB[i] + keping;
+                        } else {
+                            Cup_per_day_WLT[i] = Cup_per_day_WLT[i] + keping;
                         }
                     }
                 }

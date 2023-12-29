@@ -17,10 +17,11 @@ public class JDialog_otorisasi_f2 extends javax.swing.JDialog {
     boolean akses = false;
     String nama_otorisasi, keterangan;
 
-    public JDialog_otorisasi_f2(java.awt.Frame parent, boolean modal) {
+    public JDialog_otorisasi_f2(java.awt.Frame parent, boolean modal, String keterangan) {
         super(parent, modal);
         initComponents();
         lock_image.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/Lock.png")), lock_image.getWidth(), lock_image.getHeight()));
+        txt_keterangan.setText(keterangan);
     }
 
     public boolean getAccess() {

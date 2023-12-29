@@ -141,11 +141,14 @@ public class JFrame_TV_Sub extends javax.swing.JFrame {
     public void refreshTable_kpi() {
         Utility.db_sub.connect();
         try {
-            String filter_tanggal_lp = "", filter_tanggal_grading = " AND `tanggal_grading` IS NOT NULL ", filter_tanggal_lp_sesekan = "1";
+            String 
+                    filter_tanggal_lp = "", 
+                    filter_tanggal_grading = " AND `tanggal_grading` IS NOT NULL ", 
+                    filter_tanggal_lp_sesekan = "1";
             if (DateChooser1.getDate() != null && DateChooser2.getDate() != null) {
-                filter_tanggal_lp = " AND `tanggal_lp` BETWEEN '" + dateFormat.format(DateChooser1.getDate()) + "' AND '" + dateFormat.format(DateChooser2.getDate()) + "'";
-                filter_tanggal_lp_sesekan = " `tanggal_lp` BETWEEN '" + dateFormat.format(DateChooser1.getDate()) + "' AND '" + dateFormat.format(DateChooser2.getDate()) + "'";
-                filter_tanggal_grading = " AND `tanggal_grading` BETWEEN '" + dateFormat.format(DateChooser1.getDate()) + "' AND '" + dateFormat.format(DateChooser2.getDate()) + "'";
+                filter_tanggal_lp = " AND `tanggal_lp` BETWEEN '" + dateFormat.format(DateChooser1.getDate()) + "' AND '" + dateFormat.format(DateChooser2.getDate()) + "' ";
+                filter_tanggal_lp_sesekan = " `tanggal_lp` BETWEEN '" + dateFormat.format(DateChooser1.getDate()) + "' AND '" + dateFormat.format(DateChooser2.getDate()) + "' ";
+                filter_tanggal_grading = " AND `tanggal_grading` BETWEEN '" + dateFormat.format(DateChooser1.getDate()) + "' AND '" + dateFormat.format(DateChooser2.getDate()) + "' ";
             }
             DefaultTableModel model = (DefaultTableModel) Table_kpi_sub.getModel();
             model.setRowCount(0);
@@ -161,8 +164,12 @@ public class JFrame_TV_Sub extends javax.swing.JFrame {
                 float total_baku = 0, rata2_baku_harian = 0;
                 String query1 = "SELECT `ruangan`, SUM(`berat_per_hari`) AS 'total_baku', AVG(`berat_per_hari`) AS 'rata2_baku_harian' "
                         + "FROM "
-                        + "(SELECT `ruangan`, `tanggal_lp`, SUM(`berat_basah`) AS 'berat_per_hari' FROM `tb_laporan_produksi` \n"
-                        + "WHERE `no_laporan_produksi` LIKE '%WL.%' " + filter_tanggal_lp + " GROUP BY `ruangan`, `tanggal_lp`) "
+                        + "(SELECT `ruangan`, `tanggal_lp`, SUM(`berat_basah`) AS 'berat_per_hari' "
+                        + "FROM `tb_laporan_produksi` \n"
+                        + "WHERE "
+                        + "LENGTH(`ruangan`) = 5 "
+                        + filter_tanggal_lp
+                        + "GROUP BY `ruangan`, `tanggal_lp`) "
                         + "A "
                         + "WHERE `ruangan` = '" + rs.getString("kode_sub") + "' "
                         + "GROUP BY `ruangan`";
@@ -175,9 +182,13 @@ public class JFrame_TV_Sub extends javax.swing.JFrame {
                 String query2 = "SELECT `ruangan`, SUM(`berat_per_hari`) AS 'total_bjd', "
                         + "AVG(`berat_per_hari`) AS 'rata2_bjd_harian' "
                         + "FROM "
-                        + "(SELECT `ruangan`, `tanggal_grading`, SUM(`berat`) AS 'berat_per_hari' FROM `tb_bahan_jadi_masuk` "
+                        + "(SELECT `ruangan`, `tanggal_grading`, SUM(`berat`) AS 'berat_per_hari' "
+                        + "FROM `tb_bahan_jadi_masuk` "
                         + "LEFT JOIN `tb_laporan_produksi` ON `tb_bahan_jadi_masuk`.`kode_asal` = `tb_laporan_produksi`.`no_laporan_produksi` "
-                        + "WHERE `kode_asal` LIKE '%WL.%' " + filter_tanggal_grading + " GROUP BY `ruangan`, `tanggal_grading`) "
+                        + "WHERE "
+                        + "LENGTH(`ruangan`) = 5 "
+                        + filter_tanggal_grading
+                        + "GROUP BY `ruangan`, `tanggal_grading`) "
                         + "A "
                         + "WHERE `ruangan` = '" + rs.getString("kode_sub") + "' "
                         + "GROUP BY `ruangan`";

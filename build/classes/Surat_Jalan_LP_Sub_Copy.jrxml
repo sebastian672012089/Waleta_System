@@ -100,7 +100,7 @@
 		<![CDATA[SELECT `no_laporan_produksi`, IF(`berat_basah`>0, CONCAT(`jumlah_keping`, '-', `berat_basah`), '') AS 'jumlah',
 'Sarang Walet' AS 'nama_barang', 'Keping - Gram' AS 'satuan'
 FROM `tb_laporan_produksi`
-WHERE `no_laporan_produksi` LIKE 'WL.%'
+WHERE LENGTH(`ruangan`) = 5
 AND `no_laporan_produksi` LIKE $P{NO_LP}
 AND `no_kartu_waleta` LIKE $P{NO_KARTU}
 AND `kode_grade` LIKE $P{GRADE}
@@ -122,8 +122,12 @@ LIMIT 10]]>
 	<field name="no_laporan_produksi" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="jumlah" class="java.lang.String"/>
-	<field name="nama_barang" class="java.lang.String"/>
+	<field name="jumlah" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_barang" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="satuan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
