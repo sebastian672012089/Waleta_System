@@ -75,7 +75,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         refreshTabel_jadwalKerja();
     }
 
-    public String cekHariKerja(Date tanggal, String posisi) {
+    private String cekHariKerja(Date tanggal, String posisi) {
         Connection con = Utility.db.getConnection();
         String return_value = "";
         try {
@@ -102,7 +102,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         return return_value;
     }
 
-    public Timestamp getAbsenMasuk(String pin, String jadwal_masuk) {
+    private Timestamp getAbsenMasuk(String pin, String jadwal_masuk) {
         Timestamp return_value = null;
         try {
             String get_absen_query = "SELECT `scan_date` FROM `att_log` "
@@ -121,7 +121,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         return return_value;
     }
 
-    public Timestamp getAbsenPulang(String pin, String jadwal_pulang) {
+    private Timestamp getAbsenPulang(String pin, String jadwal_pulang) {
         Timestamp return_value = null;
         try {
             String get_absen_query = "SELECT `scan_date` FROM `att_log` "
@@ -140,7 +140,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         return return_value;
     }
 
-    public String[] getSPLMasuk(String id, String tanggal) {
+    private String[] getSPLMasuk(String id, String tanggal) {
         String[] return_value = new String[2];
         try {
             String query_spl = "SELECT `mulai_lembur`, `tb_surat_lembur_detail`.`nomor_surat`, `tb_surat_lembur_detail`.`tanggal_lembur`, `tb_surat_lembur`.`disetujui`, `tb_surat_lembur`.`diketahui` "
@@ -163,7 +163,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         return return_value;
     }
 
-    public boolean is_pengampunan_terlambat(String tanggal) {
+    private boolean is_pengampunan_terlambat(String tanggal) {
         try {
             String query_pengampunan_terlambat = "SELECT * FROM `tb_pengampunan_terlambat` WHERE `tanggal_pengampunan` = '" + tanggal + "' ";
             ResultSet rs_pengampunan_terlambat = Utility.db.getStatement().executeQuery(query_pengampunan_terlambat);
@@ -174,7 +174,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         }
     }
 
-    public void refreshTabel_jadwalKerja() {
+    private void refreshTabel_jadwalKerja() {
         try {
             DefaultTableModel model = (DefaultTableModel) tabel_data_jadwal.getModel();
             model.setRowCount(0);
@@ -216,7 +216,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         }
     }
 
-    public void refreshData_lembur() {
+    private void refreshData_lembur() {
         boolean check = true;
         if (Date_penggajian.getDate() == null) {
             check = false;
@@ -634,7 +634,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     if (rs_bonus_pencapaian_produksi.next()) {
                         bonus_pencapaian_produksi = rs_bonus_pencapaian_produksi.getInt("bonus_pencapaian_produksi");
                     }
-                    
+
                     String sql_bonus_operator_atb = "SELECT SUM(`bonus_operator_atb`) AS 'bonus_operator_atb' "
                             + "FROM `tb_bonus_operator_atb` "
                             + "WHERE `id_pegawai` = '" + rs.getString("id_pegawai") + "' "
@@ -699,7 +699,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     row[28] = rs.getString("nama_bagian");
                     row[29] = rs.getString("level_gaji");
                     row[30] = rs.getString("jam_kerja");
-                    
+
                     total_lembur_all = total_lembur_all + total_upah_lembur;
                     total_premi_hadir_all = total_premi_hadir_all + premi_hadir;
                     total_transfer_all = total_transfer_all + Math.round(gaji * 1000.d) / 1000.d;
@@ -707,7 +707,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     nomor_urut++;
                 }
                 ColumnsAutoSizer.sizeColumnsToFit(Tabel_data_payslip);
-                
+
                 decimalFormat.setGroupingUsed(true);
                 label_total_upah_lembur.setText(decimalFormat.format(total_lembur_all));
                 label_total_tunjangan_hadir.setText(decimalFormat.format(total_premi_hadir_all));
@@ -716,6 +716,53 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, e);
                 Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, e);
             }
+        }
+    }
+
+    public void rekap_jam_kerja_kurang() {
+        try {
+            ArrayList<String> id_pegawai = new ArrayList<>();
+            ArrayList<String> tanggal = new ArrayList<>();
+
+            sql = "SELECT `tb_lembur_rekap`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, CONCAT(`divisi_bagian`, '-', `ruang_bagian`) AS 'nama_bagian',\n"
+                    + "DAYNAME(`tanggal`) AS 'hari', `tanggal`, `premi_hadir` \n"
+                    + "FROM `tb_lembur_rekap` \n"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_lembur_rekap`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
+                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
+                    + "WHERE `premi_hadir` = 0\n"
+                    + "AND `jam_kerja` = 'SHIFT_MALAM'\n"
+                    + "AND `tanggal` BETWEEN '" + tanggal_mulai + "' AND '" + tanggal_selesai + "'";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            while (rs.next()) {
+                id_pegawai.add(rs.getString("id_pegawai"));
+                tanggal.add(rs.getString("tanggal"));
+            }
+
+            if (id_pegawai.size() > 0) {
+                int dialogResult = JOptionPane.showConfirmDialog(this, id_pegawai.size() + " karyawan kurang jam kerja, input ke data cuti?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    int count = 0;
+                    for (int i = 0; i < id_pegawai.size(); i++) {
+                        String Query = "INSERT INTO `tb_cuti`(`id_pegawai`, `tanggal_cuti`, `jenis_cuti`, `kategori_cuti`, `keterangan`) "
+                                + "SELECT * FROM (SELECT '" + id_pegawai.get(i) + "','" + tanggal.get(i) + "', 'Absen', 'Jam Kerja Kurang', '-' AS 'keterangan') AS tmp\n"
+                                + "WHERE NOT EXISTS (SELECT `kode_cuti` FROM `tb_cuti` WHERE `id_pegawai` = '" + id_pegawai.get(i) + "' AND `tanggal_cuti` = '" + tanggal.get(i) + "')";
+                        Utility.db.getConnection().createStatement();
+                        if (Utility.db.getStatement().executeUpdate(Query) == 1) {
+                            count++;
+                        }
+                    }
+                    JOptionPane.showMessageDialog(this, count + " data berhasil di input ke data cuti/absen !");
+                }
+            }
+
+//        JDialog_Input_JamKerjaKurang dialog = new JDialog_Input_JamKerjaKurang(new javax.swing.JFrame(), true, tanggal_mulai, tanggal_selesai);
+//        dialog.setResizable(false);
+//        dialog.setLocationRelativeTo(this);
+//        dialog.setEnabled(true);
+//        dialog.setVisible(true);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -1525,7 +1572,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 String id = tabel_data_lembur_security.getValueAt(i, 0).toString();
                 String nama = tabel_data_lembur_security.getValueAt(i, 1).toString();
                 String tanggal = tabel_data_lembur_security.getValueAt(i, 7).toString();
-                String scan_terakhir = tabel_data_lembur_security.getValueAt(i, 13) == null? "Tidak ada absen masuk!" : tabel_data_lembur_security.getValueAt(i, 13).toString();
+                String scan_terakhir = tabel_data_lembur_security.getValueAt(i, 13) == null ? "Tidak ada absen masuk!" : tabel_data_lembur_security.getValueAt(i, 13).toString();
                 JDialog_adjustment_absen_pulang dialog = new JDialog_adjustment_absen_pulang(new javax.swing.JFrame(), true, id, nama, tanggal, scan_terakhir);
                 dialog.pack();
                 dialog.setLocationRelativeTo(this);
@@ -1803,9 +1850,11 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     }
                 }
                 Utility.db.getConnection().commit();
-                JOptionPane.showMessageDialog(this, "Jumlah Karyawan yang telah di potong BPJS = " + jumlah_karyawan_dipotong_bpjs + ", BPJS TK = " + jumlah_karyawan_dipotong_bpjs_tk);
-                JOptionPane.showMessageDialog(this, "Jumlah Karyawan yang telah di membayar piutang = " + jumlah_karyawan_membayar_piutang);
-                JOptionPane.showMessageDialog(this, "Data Payrol di simpan = " + saved_data_payroll);
+                JOptionPane.showMessageDialog(this, "Jumlah Karyawan yang telah:\n"
+                        + "1. Dipotong BPJS Kesehatan = " + jumlah_karyawan_dipotong_bpjs + "\n"
+                        + "2. Dipotong BPJS TK = " + jumlah_karyawan_dipotong_bpjs_tk + "\n"
+                        + "3. Membayar piutang = " + jumlah_karyawan_membayar_piutang + "\n"
+                        + "4. Data Payrol di simpan = " + saved_data_payroll);
             } catch (Exception ex) {
                 try {
                     Utility.db.getConnection().rollback();
@@ -1817,6 +1866,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
             } finally {
                 try {
                     Utility.db.getConnection().setAutoCommit(true);
+                    rekap_jam_kerja_kurang();
                 } catch (SQLException ex) {
                     Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
                 }

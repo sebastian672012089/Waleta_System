@@ -21,8 +21,10 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
     ResultSet rs;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DecimalFormat decimalFormat = new DecimalFormat();
+    String no_lp, status = "", ruangan_awal = "";
+    int berat_basah = 0, berat_kering = 0;
+    int jumlah_keping = 0, keping_upah = 0;
     float kadar_air_bahan_baku = 0;
-    String no_lp, status = "";
     float berat_per_keping_grading = 0, berat_per_keping_lp = 0;
     ArrayList<String> list_kode_sub = new ArrayList<>();
 
@@ -71,13 +73,11 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             label_title.setText("Edit Laporan Produksi");
             label_NO_LP.setVisible(true);
             label_NO_LP.setText(no_lp);
-            txt_jumlah_keping_lp.setEditable(true);
-            txt_berat_basah_lp.setEditable(true);
             getDataEdit(no_lp);//get data setelah isi combobox
         }
     }
 
-    public String generateCode(String status) {
+    public String no_LP_Baru(String status) {
         int LastNumber = 0;
         String kode = "";
         try {
@@ -151,22 +151,28 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 Label_kode_grade_lp.setText(rs.getString("kode_grade"));
                 ComboBox_jenisBulu.setSelectedItem(rs.getString("jenis_bulu_lp"));
                 if (rs.getString("ruangan").equals("CABUTO")) {
+                    ruangan_awal = "CABUTO";
                     ComboBox_ruangan.removeAllItems();
                     ComboBox_ruangan.addItem("CABUTO");
-                } else if (list_kode_sub.indexOf(rs.getString("ruangan")) > -1) {
-                    ComboBox_ruangan.setEnabled(false);
-                    ComboBox_ruangan.removeAllItems();
-                    for (String kode_sub : list_kode_sub) {
-                        ComboBox_ruangan.addItem(kode_sub);
-                    }
                 } else {
+                    if (list_kode_sub.indexOf(rs.getString("ruangan")) > -1) {//ruangan sub
+                        ruangan_awal = "SUB";
+                    } else {
+                        ruangan_awal = "WALETA";
+                    }
+
                     ComboBox_ruangan.removeAllItems();
                     ComboBox_ruangan.addItem("A");
                     ComboBox_ruangan.addItem("B");
                     ComboBox_ruangan.addItem("C");
                     ComboBox_ruangan.addItem("D");
                     ComboBox_ruangan.addItem("E");
+                    for (String kode_sub : list_kode_sub) {
+                        ComboBox_ruangan.addItem(kode_sub);
+                    }
+                    ComboBox_ruangan.removeItem("SUB00");
                 }
+
                 ComboBox_ruangan.setSelectedItem(rs.getString("ruangan"));
                 txt_jumlah_keping_lp.setText(rs.getString("jumlah_keping"));
                 txt_jumlah_keping_upah.setText(rs.getString("keping_upah"));
@@ -194,75 +200,62 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 }
                 txt_rontokan_gbm.setText(rs.getString("rontokan_gbm"));
             }
-
-            if (Label_kode_grade_lp.getText().equals("Ragam Serat")) {
-                txt_jumlah_keping_upah.setEditable(true);
-            } else {
-                txt_jumlah_keping_upah.setEditable(false);
-            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void countBK() {
-        try {
-            String query = "SELECT `kadar_air_bahan_baku` FROM `tb_bahan_baku_masuk` WHERE `no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "'";
-            ResultSet rs2 = Utility.db.getStatement().executeQuery(query);
-            if (rs2.next()) {
-                kadar_air_bahan_baku = rs2.getFloat("kadar_air_bahan_baku");
-                label_kadar_air_lp.setText(kadar_air_bahan_baku + "%");
-            }
-
-            int berat_basah = 0;
-            if (txt_berat_basah_lp.getText() != null && !txt_berat_basah_lp.getText().equals("")) {
-                berat_basah = Integer.valueOf(txt_berat_basah_lp.getText());
-            }
-
-            int jumlah_keping = 0;
-            if (txt_jumlah_keping_lp.getText() != null && !txt_jumlah_keping_lp.getText().equals("")) {
-                jumlah_keping = Integer.valueOf(txt_jumlah_keping_lp.getText());
-            }
-
-            int berat_kering = (int) (berat_basah * (1 - (kadar_air_bahan_baku / 100)));
-            float berat_per_kpg = 0;
-            if (jumlah_keping > 0) {
-                berat_per_kpg = (float) berat_basah / (float) jumlah_keping;
-            }
-            label_berat_kering_lp.setText(String.valueOf(berat_kering));
-            decimalFormat.setMaximumFractionDigits(2);
-            berat_per_keping_lp = berat_per_kpg;
-            txt_berat_per_kpg.setText(decimalFormat.format(berat_per_kpg));
-        } catch (SQLException | NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid Number");
-            Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
+    public void countBK() throws Exception {
+        String query = "SELECT `kadar_air_bahan_baku` FROM `tb_bahan_baku_masuk` WHERE `no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "'";
+        ResultSet rs2 = Utility.db.getStatement().executeQuery(query);
+        if (rs2.next()) {
+            kadar_air_bahan_baku = rs2.getFloat("kadar_air_bahan_baku");
+            label_kadar_air_lp.setText(kadar_air_bahan_baku + "%");
         }
+
+        if (txt_berat_basah_lp.getText() != null && !txt_berat_basah_lp.getText().equals("")) {
+            berat_basah = Integer.valueOf(txt_berat_basah_lp.getText());
+        }
+
+        if (txt_jumlah_keping_lp.getText() != null && !txt_jumlah_keping_lp.getText().equals("")) {
+            jumlah_keping = Integer.valueOf(txt_jumlah_keping_lp.getText());
+        }
+
+        berat_kering = (int) (berat_basah * (1 - (kadar_air_bahan_baku / 100)));
+        berat_per_keping_lp = 0;
+        if (jumlah_keping > 0) {
+            berat_per_keping_lp = (float) berat_basah / (float) jumlah_keping;
+        }
+        label_berat_kering_lp.setText(String.valueOf(berat_kering));
+
+        sql = "SELECT (`total_berat` / `jumlah_keping`) AS 'berat_kpg' FROM `tb_grading_bahan_baku` "
+                + "WHERE `no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "' AND `kode_grade` = '" + Label_kode_grade_lp.getText() + "'";
+        rs = Utility.db.getStatement().executeQuery(sql);
+        if (rs.next()) {
+            berat_per_keping_grading = rs.getFloat("berat_kpg");
+            label_berat_per_kpg_grading.setText(decimalFormat.format(rs.getFloat("berat_kpg")));
+        }
+
+        if (jumlah_keping > 0) {
+            keping_upah = jumlah_keping;
+        } else {
+            keping_upah = Math.round(Float.valueOf(berat_basah) / 8f);
+        }
+        txt_jumlah_keping_upah.setText(Integer.toString(keping_upah));
+
+        decimalFormat.setMaximumFractionDigits(2);
+        txt_berat_per_kpg.setText(decimalFormat.format(berat_per_keping_lp));
     }
 
-    public void insert_lp_waleta() {
-        countBK();
+    private void insert_lp_waleta() {
         try {
-            Date tgl_kartu = null;
             Utility.db.getConnection().setAutoCommit(false);
 
-            int berat_basah = Integer.valueOf(txt_berat_basah_lp.getText());
-            int berat_kering = (int) (berat_basah * (1 - (kadar_air_bahan_baku / 100)));
-
-            String upah_per_gram = "";
-            String get_upah_per_gram = "SELECT `tarif_sub` FROM `tb_tarif_cabut` WHERE `bulu_upah` = '" + ComboBox_jenisBulu.getSelectedItem().toString() + "'";
-            ResultSet result_upah_per_gram = Utility.db.getStatement().executeQuery(get_upah_per_gram);
-            if (result_upah_per_gram.next()) {
-                upah_per_gram = result_upah_per_gram.getString("tarif_sub");
-            }
-
-            String no_laporan_produksi = generateCode(status);
-            String pecah_lp = "NULL";
-            if (label_kode_pecah_lp.getText() != null && !label_kode_pecah_lp.getText().equals("") && !label_kode_pecah_lp.getText().equals("-")) {
-                pecah_lp = "'" + label_kode_pecah_lp.getText() + "'";
-            }
+            String no_laporan_produksi = no_LP_Baru(status);
             String insert_lp_local = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `kode_pecah_lp`, `rontokan_gbm`) "
-                    + "VALUES ('" + no_laporan_produksi + "',"
+                    + "VALUES ("
+                    + "'" + no_laporan_produksi + "',"
                     + "'" + Label_no_kartu_LP.getText() + "',"
                     + "'" + dateFormat.format(Date_LP.getDate()) + "',"
                     + "'" + ComboBox_ruangan.getSelectedItem() + "',"
@@ -287,15 +280,15 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_sobek_lepas_lp.getText() + "',"
                     + "'" + txt_gumpil_lp.getText() + "',"
                     + "'" + txt_grup_lp.getText() + "', "
-                    + "" + pecah_lp + ","
+                    + "'" + label_kode_pecah_lp.getText() + "',"
                     + "'" + txt_rontokan_gbm.getText() + "'"
                     + ")";
             if ((Utility.db.getStatement().executeUpdate(insert_lp_local)) == 1) {
                 JOptionPane.showMessageDialog(this, "Input LP berhasil");
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Input LP failed!");
             }
-            this.dispose();
         } catch (Exception e) {
             try {
                 Utility.db.getConnection().rollback();
@@ -313,15 +306,11 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         }
     }
 
-    public void insert_lp_sub() {
-        countBK();
+    private void insert_lp_sub() {
         try {
             Utility.db_sub.connect();
             Utility.db.getConnection().setAutoCommit(false);
             Utility.db_sub.getConnection().setAutoCommit(false);
-
-            int berat_basah = Integer.valueOf(txt_berat_basah_lp.getText());
-            int berat_kering = (int) (berat_basah * (1 - (kadar_air_bahan_baku / 100)));
 
             String upah_per_gram = "";
             String get_upah_per_gram = "SELECT `tarif_sub` FROM `tb_tarif_cabut` WHERE `bulu_upah` = '" + ComboBox_jenisBulu.getSelectedItem().toString() + "'";
@@ -330,9 +319,10 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 upah_per_gram = result_upah_per_gram.getString("tarif_sub");
             }
 
-            String no_laporan_produksi = generateCode(status);
+            String no_laporan_produksi = no_LP_Baru(status);
             String insert_lp_online = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `upah_per_gram`) "
-                    + "VALUES ('" + no_laporan_produksi + "',"
+                    + "VALUES ("
+                    + "'" + no_laporan_produksi + "',"
                     + "'" + Label_no_kartu_LP.getText() + "',"
                     + "'" + dateFormat.format(Date_LP.getDate()) + "',"
                     + "'" + ComboBox_ruangan.getSelectedItem() + "',"
@@ -358,12 +348,10 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_gumpil_lp.getText() + "',"
                     + "'" + txt_grup_lp.getText() + "', "
                     + "'" + upah_per_gram + "')";
-            String pecah_lp = "NULL";
-            if (label_kode_pecah_lp.getText() != null && !label_kode_pecah_lp.getText().equals("") && !label_kode_pecah_lp.getText().equals("-")) {
-                pecah_lp = "'" + label_kode_pecah_lp.getText() + "'";
-            }
+
             String insert_lp_local = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `kode_pecah_lp`) "
-                    + "VALUES ('" + no_laporan_produksi + "',"
+                    + "VALUES ("
+                    + "'" + no_laporan_produksi + "',"
                     + "'" + Label_no_kartu_LP.getText() + "',"
                     + "'" + dateFormat.format(Date_LP.getDate()) + "',"
                     + "'" + ComboBox_ruangan.getSelectedItem() + "',"
@@ -388,7 +376,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_sobek_lepas_lp.getText() + "',"
                     + "'" + txt_gumpil_lp.getText() + "',"
                     + "'" + txt_grup_lp.getText() + "', "
-                    + "" + pecah_lp + ")";
+                    + "'" + label_kode_pecah_lp.getText() + "')";
             Utility.db_sub.getStatement().executeUpdate(insert_lp_online);
             if (!ComboBox_ruangan.getSelectedItem().toString().equals("SUB00")) {
                 if ((Utility.db.getStatement().executeUpdate(insert_lp_local)) == 1) {
@@ -420,15 +408,11 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         }
     }
 
-    public void insert_lp_cabuto() {
-        countBK();
+    private void insert_lp_cabuto() {
         try {
             Utility.db_cabuto.connect();
             Utility.db.getConnection().setAutoCommit(false);
             Utility.db_cabuto.getConnection().setAutoCommit(false);
-
-            int berat_basah = Integer.valueOf(txt_berat_basah_lp.getText());
-            int berat_kering = (int) (berat_basah * (1 - (kadar_air_bahan_baku / 100)));
 
             int harga_gram_cabuto = 0;
             String Qry = "SELECT `harga_gram_cabuto` FROM `tb_grade_bahan_baku` "
@@ -442,7 +426,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
 //                throw new Exception("Harga Baku LP cabuto tidak boleh 0!\nsilahkan masukkan harga baku pada master grade baku!");
 //            }
 
-            String no_laporan_produksi = generateCode(status);
+            String no_laporan_produksi = no_LP_Baru(status);
             String insert_lp_cabuto = "INSERT INTO `tb_lp`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `harga_baku`) "
                     + "VALUES ('" + no_laporan_produksi + "',"
                     + "'" + Label_no_kartu_LP.getText() + "',"
@@ -456,10 +440,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_jumlah_keping_lp.getText() + "',"
                     + "'" + txt_jumlah_keping_upah.getText() + "',"
                     + "'" + harga_baku_lp + "')";
-            String pecah_lp = "NULL";
-            if (label_kode_pecah_lp.getText() != null && !label_kode_pecah_lp.getText().equals("") && !label_kode_pecah_lp.getText().equals("-")) {
-                pecah_lp = "'" + label_kode_pecah_lp.getText() + "'";
-            }
+
             String insert_lp_waleta = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `kode_pecah_lp`) "
                     + "VALUES ('" + no_laporan_produksi + "',"
                     + "'" + Label_no_kartu_LP.getText() + "',"
@@ -486,7 +467,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_sobek_lepas_lp.getText() + "',"
                     + "'" + txt_gumpil_lp.getText() + "',"
                     + "'" + txt_grup_lp.getText() + "', "
-                    + "" + pecah_lp + ")";
+                    + "'" + label_kode_pecah_lp.getText() + "')";
 
             Utility.db.getStatement().executeUpdate(insert_lp_waleta);
             Utility.db_cabuto.getStatement().executeUpdate(insert_lp_cabuto);
@@ -511,6 +492,180 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    private void edit_lp_waleta() throws Exception {
+        String Query = "UPDATE `tb_laporan_produksi` SET "
+                + "`no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "', "
+                + "`tanggal_lp` = '" + dateFormat.format(Date_LP.getDate()) + "', "
+                + "`ruangan` = '" + ComboBox_ruangan.getSelectedItem() + "', "
+                + "`kode_grade` = '" + Label_kode_grade_lp.getText() + "', "
+                + "`jenis_bulu_lp` = '" + ComboBox_jenisBulu.getSelectedItem() + "', "
+                + "`memo_lp` = '" + txt_memo.getText() + "', "
+                + "`berat_basah` = '" + txt_berat_basah_lp.getText() + "', "
+                + "`berat_kering` = '" + berat_kering + "', "
+                + "`jumlah_keping` = '" + txt_jumlah_keping_lp.getText() + "', "
+                + "`keping_upah` = '" + txt_jumlah_keping_upah.getText() + "', "
+                + "`kaki_besar_lp` = '" + txt_kaki_besar_lp.getText() + "', "
+                + "`kaki_kecil_lp` = '" + txt_kaki_kecil_lp.getText() + "', "
+                + "`hilang_kaki_lp` = '" + txt_hilang_kaki_lp.getText() + "', "
+                + "`ada_susur_lp` = '" + txt_ada_susur_lp.getText() + "', "
+                + "`ada_susur_besar_lp` = '" + txt_ada_susur_besar_lp.getText() + "', "
+                + "`tanpa_susur_lp` = '" + txt_tanpa_susur_lp.getText() + "', "
+                + "`utuh_lp` = '" + txt_utuh_lp.getText() + "', "
+                + "`hilang_ujung_lp` = '" + txt_hilang_ujung_lp.getText() + "', "
+                + "`pecah_1_lp` = '" + txt_pecah_1_lp.getText() + "', "
+                + "`pecah_2` = '" + txt_pecah_2_lp.getText() + "', "
+                + "`jumlah_sobek` = '" + txt_sobek_lp.getText() + "', "
+                + "`sobek_lepas` = '" + txt_sobek_lepas_lp.getText() + "', "
+                + "`jumlah_gumpil` = '" + txt_gumpil_lp.getText() + "', "
+                + "`grup_lp` = '" + txt_grup_lp.getText() + "', "
+                + "`kode_pecah_lp` = '" + label_kode_pecah_lp.getText() + "', "
+                + "`rontokan_gbm` = '" + txt_rontokan_gbm.getText() + "' "
+                + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + no_lp + "'";
+        Utility.db.getStatement().executeUpdate(Query);
+    }
+
+    private void edit_lp_sub() throws Exception {
+        String upah_per_gram = "";
+        String get_upah_per_gram = "SELECT `tarif_sub` FROM `tb_tarif_cabut` WHERE `bulu_upah` = '" + ComboBox_jenisBulu.getSelectedItem().toString() + "'";
+        ResultSet result_upah_per_gram = Utility.db.getStatement().executeQuery(get_upah_per_gram);
+        if (result_upah_per_gram.next()) {
+            upah_per_gram = "`upah_per_gram` = '" + result_upah_per_gram.getString("tarif_sub") + "' ";
+        }
+        String Query = "UPDATE `tb_laporan_produksi` SET "
+                + "`no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "', "
+                + "`tanggal_lp` = '" + dateFormat.format(Date_LP.getDate()) + "', "
+                + "`ruangan` = '" + ComboBox_ruangan.getSelectedItem().toString() + "', "
+                + "`kode_grade` = '" + Label_kode_grade_lp.getText() + "', "
+                + "`jenis_bulu_lp` = '" + ComboBox_jenisBulu.getSelectedItem() + "', "
+                + "`memo_lp` = '" + txt_memo.getText() + "', "
+                + "`berat_basah` = '" + txt_berat_basah_lp.getText() + "', "
+                + "`berat_kering` = '" + berat_kering + "', "
+                + "`jumlah_keping` = '" + txt_jumlah_keping_lp.getText() + "', "
+                + "`keping_upah` = '" + txt_jumlah_keping_upah.getText() + "', "
+                + "`kaki_besar_lp` = '" + txt_kaki_besar_lp.getText() + "', "
+                + "`kaki_kecil_lp` = '" + txt_kaki_kecil_lp.getText() + "', "
+                + "`hilang_kaki_lp` = '" + txt_hilang_kaki_lp.getText() + "', "
+                + "`ada_susur_lp` = '" + txt_ada_susur_lp.getText() + "', "
+                + "`ada_susur_besar_lp` = '" + txt_ada_susur_besar_lp.getText() + "', "
+                + "`tanpa_susur_lp` = '" + txt_tanpa_susur_lp.getText() + "', "
+                + "`utuh_lp` = '" + txt_utuh_lp.getText() + "', "
+                + "`hilang_ujung_lp` = '" + txt_hilang_ujung_lp.getText() + "', "
+                + "`pecah_1_lp` = '" + txt_pecah_1_lp.getText() + "', "
+                + "`pecah_2` = '" + txt_pecah_2_lp.getText() + "', "
+                + "`jumlah_sobek` = '" + txt_sobek_lp.getText() + "', "
+                + "`sobek_lepas` = '" + txt_sobek_lepas_lp.getText() + "', "
+                + "`jumlah_gumpil` = '" + txt_gumpil_lp.getText() + "', "
+                + "`grup_lp` = '" + txt_grup_lp.getText() + "', "
+                + upah_per_gram
+                + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + no_lp + "'";
+        Utility.db_sub.getStatement().executeUpdate(Query);
+    }
+
+    private void input_lp_sub() throws Exception {
+        String upah_per_gram = "";
+        String get_upah_per_gram = "SELECT `tarif_sub` FROM `tb_tarif_cabut` WHERE `bulu_upah` = '" + ComboBox_jenisBulu.getSelectedItem().toString() + "'";
+        ResultSet result_upah_per_gram = Utility.db.getStatement().executeQuery(get_upah_per_gram);
+        if (result_upah_per_gram.next()) {
+            upah_per_gram = result_upah_per_gram.getString("tarif_sub");
+        }
+        String insert_lp_online = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `upah_per_gram`) "
+                + "VALUES ("
+                + "'" + no_lp + "',"
+                + "'" + Label_no_kartu_LP.getText() + "',"
+                + "'" + dateFormat.format(Date_LP.getDate()) + "',"
+                + "'" + ComboBox_ruangan.getSelectedItem() + "',"
+                + "'" + Label_kode_grade_lp.getText() + "',"
+                + "'" + ComboBox_jenisBulu.getSelectedItem() + "',"
+                + "'" + txt_memo.getText() + "',"
+                + "'" + txt_berat_basah_lp.getText() + "',"
+                + "'" + berat_kering + "',"
+                + "'" + txt_jumlah_keping_lp.getText() + "',"
+                + "'" + txt_jumlah_keping_upah.getText() + "',"
+                + "'" + txt_kaki_besar_lp.getText() + "', "
+                + "'" + txt_kaki_kecil_lp.getText() + "', "
+                + "'" + txt_hilang_kaki_lp.getText() + "',"
+                + "'" + txt_ada_susur_lp.getText() + "', "
+                + "'" + txt_ada_susur_besar_lp.getText() + "', "
+                + "'" + txt_tanpa_susur_lp.getText() + "', "
+                + "'" + txt_utuh_lp.getText() + "',"
+                + "'" + txt_hilang_ujung_lp.getText() + "',"
+                + "'" + txt_pecah_1_lp.getText() + "',"
+                + "'" + txt_pecah_2_lp.getText() + "', "
+                + "'" + txt_sobek_lp.getText() + "',"
+                + "'" + txt_sobek_lepas_lp.getText() + "',"
+                + "'" + txt_gumpil_lp.getText() + "',"
+                + "'" + txt_grup_lp.getText() + "', "
+                + "'" + upah_per_gram + "')";
+        Utility.db_sub.getStatement().executeUpdate(insert_lp_online);
+    }
+
+    private void delete_lp_sub() throws Exception {
+        String Query = "DELETE FROM `tb_laporan_produksi` WHERE `no_laporan_produksi` = '" + no_lp + "'";
+        Utility.db_sub.getStatement().executeUpdate(Query);
+    }
+
+    private void edit_lp_cabuto() throws Exception {
+        int harga_gram_cabuto = 0;
+        String Qry = "SELECT `harga_gram_cabuto` FROM `tb_grade_bahan_baku` "
+                + "WHERE `kode_grade` = '" + Label_kode_grade_lp.getText() + "'";
+        ResultSet result = Utility.db.getStatement().executeQuery(Qry);
+        if (result.next()) {
+            harga_gram_cabuto = result.getInt("harga_gram_cabuto");
+        }
+        int harga_baku_lp = berat_basah * harga_gram_cabuto;
+//        if (harga_baku_lp == 0) {
+//            throw new Exception("Harga Baku LP cabuto tidak boleh 0!\nsilahkan masukkan harga baku pada master grade baku!");
+//        }
+        String Query = "UPDATE `tb_lp` SET "
+                + "`no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "', "
+                + "`tanggal_lp` = '" + dateFormat.format(Date_LP.getDate()) + "', "
+                + "`ruangan` = '" + ComboBox_ruangan.getSelectedItem() + "', "
+                + "`kode_grade` = '" + Label_kode_grade_lp.getText() + "', "
+                + "`jenis_bulu_lp` = '" + ComboBox_jenisBulu.getSelectedItem() + "', "
+                + "`memo_lp` = '" + txt_memo.getText() + "', "
+                + "`berat_basah` = '" + txt_berat_basah_lp.getText() + "', "
+                + "`berat_kering` = '" + berat_kering + "', "
+                + "`jumlah_keping` = '" + txt_jumlah_keping_lp.getText() + "', "
+                + "`keping_upah` = '" + txt_jumlah_keping_upah.getText() + "', "
+                + "`harga_baku` = '" + harga_baku_lp + "' "
+                + "WHERE `no_laporan_produksi` = '" + no_lp + "'";
+        Utility.db_cabuto.getStatement().executeUpdate(Query);
+    }
+
+    private void input_lp_cabuto() throws Exception {
+        int harga_gram_cabuto = 0;
+        String Qry = "SELECT `harga_gram_cabuto` FROM `tb_grade_bahan_baku` "
+                + "WHERE `kode_grade` = '" + Label_kode_grade_lp.getText() + "'";
+        ResultSet result = Utility.db.getStatement().executeQuery(Qry);
+        if (result.next()) {
+            harga_gram_cabuto = result.getInt("harga_gram_cabuto");
+        }
+        int harga_baku_lp = berat_basah * harga_gram_cabuto;
+//            if (harga_baku_lp == 0) {
+//                throw new Exception("Harga Baku LP cabuto tidak boleh 0!\nsilahkan masukkan harga baku pada master grade baku!");
+//            }
+
+        String insert_lp_cabuto = "INSERT INTO `tb_lp`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `harga_baku`) "
+                + "VALUES ('" + no_lp + "',"
+                + "'" + Label_no_kartu_LP.getText() + "',"
+                + "'" + dateFormat.format(Date_LP.getDate()) + "',"
+                + "'" + ComboBox_ruangan.getSelectedItem() + "',"
+                + "'" + Label_kode_grade_lp.getText() + "',"
+                + "'" + ComboBox_jenisBulu.getSelectedItem() + "',"
+                + "'" + txt_memo.getText() + "',"
+                + "'" + txt_berat_basah_lp.getText() + "',"
+                + "'" + berat_kering + "',"
+                + "'" + txt_jumlah_keping_lp.getText() + "',"
+                + "'" + txt_jumlah_keping_upah.getText() + "',"
+                + "'" + harga_baku_lp + "')";
+        Utility.db_cabuto.getStatement().executeUpdate(insert_lp_cabuto);
+    }
+
+    private void delete_lp_cabuto() throws Exception {
+        String Query = "DELETE FROM `tb_lp` WHERE `no_laporan_produksi` = '" + no_lp + "'";
+        Utility.db_cabuto.getStatement().executeUpdate(Query);
     }
 
     /**
@@ -655,6 +810,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         label_berat_kering_lp.setText("0");
 
         txt_jumlah_keping_lp.setEditable(false);
+        txt_jumlah_keping_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_jumlah_keping_lp.setText("0");
 
         label_jumlah_pecah_lp1.setBackground(new java.awt.Color(255, 255, 255));
@@ -699,12 +855,8 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         label_jumlah_kpg_lp.setText("0");
 
         txt_berat_basah_lp.setEditable(false);
+        txt_berat_basah_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_berat_basah_lp.setText("0");
-        txt_berat_basah_lp.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_berat_basah_lpFocusLost(evt);
-            }
-        });
 
         label_jumlah_keping_lp.setBackground(new java.awt.Color(255, 255, 255));
         label_jumlah_keping_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -732,17 +884,14 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         label_kode_grade_lp.setText("Kode Grade :");
 
         txt_jumlah_keping_upah.setEditable(false);
+        txt_jumlah_keping_upah.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_jumlah_keping_upah.setText("0");
 
         ComboBox_jenisBulu.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         txt_berat_per_kpg.setEditable(false);
+        txt_berat_per_kpg.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_berat_per_kpg.setText("0");
-        txt_berat_per_kpg.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txt_berat_per_kpgFocusLost(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -882,6 +1031,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         label_jumlah_pecah_lp6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_jumlah_pecah_lp6.setText("Grup :");
 
+        txt_memo.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_memo.setText("-");
 
         label_jumlah_pecah_lp2.setBackground(new java.awt.Color(255, 255, 255));
@@ -915,10 +1065,11 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         });
 
         label_jumlah_pecah_lp7.setBackground(new java.awt.Color(255, 255, 255));
-        label_jumlah_pecah_lp7.setFont(new java.awt.Font("Arial", 2, 10)); // NOI18N
+        label_jumlah_pecah_lp7.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_jumlah_pecah_lp7.setForeground(new java.awt.Color(255, 51, 51));
         label_jumlah_pecah_lp7.setText("Grup > 100 adalah LP tambahan");
 
+        txt_gumpil_lp.setEditable(false);
         txt_gumpil_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_gumpil_lp.setText("0");
         txt_gumpil_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -939,6 +1090,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         label_jumlah_gumpil_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_jumlah_gumpil_lp.setText("Gumpil :");
 
+        txt_ada_susur_lp.setEditable(false);
         txt_ada_susur_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_ada_susur_lp.setText("0");
         txt_ada_susur_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -963,6 +1115,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         label_jumlah_pecah_lp3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_jumlah_pecah_lp3.setText("Pecah 2 :");
 
+        txt_kaki_besar_lp.setEditable(false);
         txt_kaki_besar_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_kaki_besar_lp.setText("0");
         txt_kaki_besar_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -971,6 +1124,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         });
 
+        txt_tanpa_susur_lp.setEditable(false);
         txt_tanpa_susur_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_tanpa_susur_lp.setText("0");
         txt_tanpa_susur_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -999,6 +1153,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         label_jumlah_pecah_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_jumlah_pecah_lp.setText("Pecah 1 :");
 
+        txt_kaki_kecil_lp.setEditable(false);
         txt_kaki_kecil_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_kaki_kecil_lp.setText("0");
         txt_kaki_kecil_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1007,6 +1162,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         });
 
+        txt_pecah_1_lp.setEditable(false);
         txt_pecah_1_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_pecah_1_lp.setText("0");
         txt_pecah_1_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1015,6 +1171,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         });
 
+        txt_hilang_ujung_lp.setEditable(false);
         txt_hilang_ujung_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_hilang_ujung_lp.setText("0");
         txt_hilang_ujung_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1023,6 +1180,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         });
 
+        txt_sobek_lepas_lp.setEditable(false);
         txt_sobek_lepas_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_sobek_lepas_lp.setText("0");
         txt_sobek_lepas_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1031,6 +1189,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         });
 
+        txt_pecah_2_lp.setEditable(false);
         txt_pecah_2_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_pecah_2_lp.setText("0");
         txt_pecah_2_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1039,6 +1198,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         });
 
+        txt_sobek_lp.setEditable(false);
         txt_sobek_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_sobek_lp.setText("0");
         txt_sobek_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1047,6 +1207,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         });
 
+        txt_hilang_kaki_lp.setEditable(false);
         txt_hilang_kaki_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_hilang_kaki_lp.setText("0");
         txt_hilang_kaki_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1055,6 +1216,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         });
 
+        txt_utuh_lp.setEditable(false);
         txt_utuh_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_utuh_lp.setText("0");
         txt_utuh_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1067,6 +1229,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         label_jumlah_gumpil_lp2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_jumlah_gumpil_lp2.setText("Susur BESAR :");
 
+        txt_ada_susur_besar_lp.setEditable(false);
         txt_ada_susur_besar_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_ada_susur_besar_lp.setText("0");
         txt_ada_susur_besar_lp.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1099,24 +1262,30 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_jumlah_pecah_lp6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_tgl_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jumlah_pecah_lp2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jumlah_gumpil_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jumlah_hilang_kaki_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jumlah_pecah_lp8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jumlah_hilang_ujung_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jumlah_gumpil_lp2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jumlah_hilang_kaki_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jumlah_pecah_lp4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button_update_LP)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_insert_LP)
+                .addGap(10, 10, 10))
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Date_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_jumlah_pecah_lp6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_tgl_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_pecah_lp2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_gumpil_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_hilang_kaki_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_pecah_lp8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_hilang_ujung_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_gumpil_lp2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_hilang_kaki_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_pecah_lp4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Date_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(txt_ada_susur_besar_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1140,25 +1309,17 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(txt_grup_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_jumlah_pecah_lp7)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txt_memo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(button_update_LP)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_insert_LP)
-                .addGap(10, 10, 10))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_rontokan_gbm, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_ada_susur_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_tanpa_susur_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_hilang_kaki_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_kaki_kecil_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_kaki_besar_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(label_jumlah_pecah_lp7))
+                            .addComponent(txt_memo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_rontokan_gbm, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_ada_susur_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_tanpa_susur_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_hilang_kaki_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_kaki_kecil_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_kaki_besar_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -1305,7 +1466,6 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
         dialog.setEnabled(true);
-        countBK();
         if (Label_kode_grade_lp.getText().contains("BRS/BR")) {
             ComboBox_jenisBulu.setSelectedIndex(0);
         } else if (Label_kode_grade_lp.getText().contains("BR") && !Label_kode_grade_lp.getText().contains("BRT")) {
@@ -1323,56 +1483,28 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             txt_jumlah_keping_upah.setEditable(false);
         }
         try {
-            sql = "SELECT (`total_berat` / `jumlah_keping`) AS 'berat_kpg' FROM `tb_grading_bahan_baku` "
-                    + "WHERE `no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "' AND `kode_grade` = '" + Label_kode_grade_lp.getText() + "'";
-            rs = Utility.db.getStatement().executeQuery(sql);
-            if (rs.next()) {
-                berat_per_keping_grading = rs.getFloat("berat_kpg");
-                label_berat_per_kpg_grading.setText(decimalFormat.format(rs.getFloat("berat_kpg")));
-            }
             sql = "SELECT `memo_untuk_lp` FROM `tb_grade_bahan_baku` WHERE `kode_grade` = '" + Label_kode_grade_lp.getText() + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
                 txt_memo.setText(rs.getString("memo_untuk_lp"));
             }
-        } catch (SQLException e) {
+            countBK();
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_LP_select_kartuActionPerformed
 
     private void button_update_LPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_update_LPActionPerformed
-        //DefaultTableModel Table_lp = (DefaultTableModel)Table_laporan_produksi.getModel();
-        countBK();
-        String Query = "";
         Boolean Check = true;
         try {
+            countBK();
             Utility.db_sub.connect();
             Utility.db_cabuto.connect();
             Utility.db.getConnection().setAutoCommit(false);
             Utility.db_sub.getConnection().setAutoCommit(false);
             Utility.db_cabuto.getConnection().setAutoCommit(false);
-            //menghitung berat kering LP
-            int keping = Integer.valueOf(txt_jumlah_keping_lp.getText());
-            int keping_upah = Integer.valueOf(txt_jumlah_keping_upah.getText());
-            int berat_basah = Integer.valueOf(txt_berat_basah_lp.getText());
-            float kadar_air = 0;
 
-            if (!txt_jumlah_keping_upah.isEditable()) {
-                if (keping > 0) {
-                    keping_upah = keping;
-                } else {
-                    keping_upah = Math.round(Float.valueOf(berat_basah) / 8f);
-                }
-                txt_jumlah_keping_upah.setText(Integer.toString(keping_upah));
-            }
-
-            String query = "SELECT `kadar_air_bahan_baku` FROM `tb_bahan_baku_masuk` WHERE `no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "'";
-            ResultSet rs2 = Utility.db.getStatement().executeQuery(query);
-            if (rs2.next()) {
-                kadar_air = rs2.getFloat("kadar_air_bahan_baku");
-            }
-            int berat_kering = (int) (berat_basah * (1 - (kadar_air / 100)));
             if (berat_kering > berat_basah) {
                 JOptionPane.showMessageDialog(this, "Maaf Berat Kering tidak bisa lebih besar dari berat angin2");
                 Check = false;
@@ -1382,8 +1514,8 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             } else if (berat_basah <= 0) {
                 JOptionPane.showMessageDialog(this, "Maaf Berat tidak bisa kurang dari 1");
                 Check = false;
-            } else if (keping > 0 && keping != keping_upah) {
-                JOptionPane.showMessageDialog(this, "Maaf Jumlah keping dan keping upah harus sama");
+            } else if (label_kode_pecah_lp.getText() == null || label_kode_pecah_lp.getText().equals("") || label_kode_pecah_lp.getText().equals("-")) {
+                JOptionPane.showMessageDialog(this, "Kode Pecah belum dipilih!");
                 Check = false;
             }
 
@@ -1398,101 +1530,40 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
 
             if (Check) {
-                String pecah_lp = "NULL";
-                if (label_kode_pecah_lp.getText() != null && !label_kode_pecah_lp.getText().equals("") && !label_kode_pecah_lp.getText().equals("-")) {
-                    pecah_lp = "'" + label_kode_pecah_lp.getText() + "'";
-                }
-                Query = "UPDATE `tb_laporan_produksi` SET "
-                        + "`no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "', "
-                        + "`tanggal_lp` = '" + dateFormat.format(Date_LP.getDate()) + "', "
-                        + "`ruangan` = '" + ComboBox_ruangan.getSelectedItem() + "', "
-                        + "`kode_grade` = '" + Label_kode_grade_lp.getText() + "', "
-                        + "`jenis_bulu_lp` = '" + ComboBox_jenisBulu.getSelectedItem() + "', "
-                        + "`memo_lp` = '" + txt_memo.getText() + "', "
-                        + "`berat_basah` = '" + txt_berat_basah_lp.getText() + "', "
-                        + "`berat_kering` = '" + berat_kering + "', "
-                        + "`jumlah_keping` = '" + txt_jumlah_keping_lp.getText() + "', "
-                        + "`keping_upah` = '" + txt_jumlah_keping_upah.getText() + "', "
-                        + "`kaki_besar_lp` = '" + txt_kaki_besar_lp.getText() + "', "
-                        + "`kaki_kecil_lp` = '" + txt_kaki_kecil_lp.getText() + "', "
-                        + "`hilang_kaki_lp` = '" + txt_hilang_kaki_lp.getText() + "', "
-                        + "`ada_susur_lp` = '" + txt_ada_susur_lp.getText() + "', "
-                        + "`ada_susur_besar_lp` = '" + txt_ada_susur_besar_lp.getText() + "', "
-                        + "`tanpa_susur_lp` = '" + txt_tanpa_susur_lp.getText() + "', "
-                        + "`utuh_lp` = '" + txt_utuh_lp.getText() + "', "
-                        + "`hilang_ujung_lp` = '" + txt_hilang_ujung_lp.getText() + "', "
-                        + "`pecah_1_lp` = '" + txt_pecah_1_lp.getText() + "', "
-                        + "`pecah_2` = '" + txt_pecah_2_lp.getText() + "', "
-                        + "`jumlah_sobek` = '" + txt_sobek_lp.getText() + "', "
-                        + "`sobek_lepas` = '" + txt_sobek_lepas_lp.getText() + "', "
-                        + "`jumlah_gumpil` = '" + txt_gumpil_lp.getText() + "', "
-                        + "`grup_lp` = '" + txt_grup_lp.getText() + "', "
-                        + "`kode_pecah_lp` = " + pecah_lp + ", "
-                        + "`rontokan_gbm` = '" + txt_rontokan_gbm.getText() + "' "
-                        + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + no_lp + "'";
-                Utility.db.getStatement().executeUpdate(Query);
-
+                String ruangan_akhir = "";
                 if (list_kode_sub.indexOf(ComboBox_ruangan.getSelectedItem().toString()) > -1) {
-                    String upah_per_gram = "";
-                    String get_upah_per_gram = "SELECT `tarif_sub` FROM `tb_tarif_cabut` WHERE `bulu_upah` = '" + ComboBox_jenisBulu.getSelectedItem().toString() + "'";
-                    ResultSet result_upah_per_gram = Utility.db.getStatement().executeQuery(get_upah_per_gram);
-                    if (result_upah_per_gram.next()) {
-                        upah_per_gram = "`upah_per_gram` = '" + result_upah_per_gram.getString("tarif_sub") + "' ";
-                    }
-                    Query = "UPDATE `tb_laporan_produksi` SET "
-                            + "`no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "', "
-                            + "`tanggal_lp` = '" + dateFormat.format(Date_LP.getDate()) + "', "
-                            + "`ruangan` = '" + ComboBox_ruangan.getSelectedItem().toString() + "', "
-                            + "`kode_grade` = '" + Label_kode_grade_lp.getText() + "', "
-                            + "`jenis_bulu_lp` = '" + ComboBox_jenisBulu.getSelectedItem() + "', "
-                            + "`memo_lp` = '" + txt_memo.getText() + "', "
-                            + "`berat_basah` = '" + txt_berat_basah_lp.getText() + "', "
-                            + "`berat_kering` = '" + berat_kering + "', "
-                            + "`jumlah_keping` = '" + txt_jumlah_keping_lp.getText() + "', "
-                            + "`keping_upah` = '" + txt_jumlah_keping_upah.getText() + "', "
-                            + "`kaki_besar_lp` = '" + txt_kaki_besar_lp.getText() + "', "
-                            + "`kaki_kecil_lp` = '" + txt_kaki_kecil_lp.getText() + "', "
-                            + "`hilang_kaki_lp` = '" + txt_hilang_kaki_lp.getText() + "', "
-                            + "`ada_susur_lp` = '" + txt_ada_susur_lp.getText() + "', "
-                            + "`ada_susur_besar_lp` = '" + txt_ada_susur_besar_lp.getText() + "', "
-                            + "`tanpa_susur_lp` = '" + txt_tanpa_susur_lp.getText() + "', "
-                            + "`utuh_lp` = '" + txt_utuh_lp.getText() + "', "
-                            + "`hilang_ujung_lp` = '" + txt_hilang_ujung_lp.getText() + "', "
-                            + "`pecah_1_lp` = '" + txt_pecah_1_lp.getText() + "', "
-                            + "`pecah_2` = '" + txt_pecah_2_lp.getText() + "', "
-                            + "`jumlah_sobek` = '" + txt_sobek_lp.getText() + "', "
-                            + "`sobek_lepas` = '" + txt_sobek_lepas_lp.getText() + "', "
-                            + "`jumlah_gumpil` = '" + txt_gumpil_lp.getText() + "', "
-                            + "`grup_lp` = '" + txt_grup_lp.getText() + "', "
-                            + upah_per_gram
-                            + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + no_lp + "'";
-                    Utility.db_sub.getStatement().executeUpdate(Query);
+                    ruangan_akhir = "SUB";
+                } else if (ComboBox_ruangan.getSelectedItem().toString().length() == 1) {
+                    ruangan_akhir = "WALETA";
                 } else if (ComboBox_ruangan.getSelectedItem().toString().equals("CABUTO")) {
-                    int harga_gram_cabuto = 0;
-                    String Qry = "SELECT `harga_gram_cabuto` FROM `tb_grade_bahan_baku` "
-                            + "WHERE `kode_grade` = '" + Label_kode_grade_lp.getText() + "'";
-                    ResultSet result = Utility.db.getStatement().executeQuery(Qry);
-                    if (result.next()) {
-                        harga_gram_cabuto = result.getInt("harga_gram_cabuto");
-                    }
-                    int harga_baku_lp = berat_basah * harga_gram_cabuto;
-//                    if (harga_baku_lp == 0) {
-//                        throw new Exception("Harga Baku LP cabuto tidak boleh 0!\nsilahkan masukkan harga baku pada master grade baku!");
-//                    }
-                    Query = "UPDATE `tb_lp` SET "
-                            + "`no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "', "
-                            + "`tanggal_lp` = '" + dateFormat.format(Date_LP.getDate()) + "', "
-                            + "`ruangan` = '" + ComboBox_ruangan.getSelectedItem() + "', "
-                            + "`kode_grade` = '" + Label_kode_grade_lp.getText() + "', "
-                            + "`jenis_bulu_lp` = '" + ComboBox_jenisBulu.getSelectedItem() + "', "
-                            + "`memo_lp` = '" + txt_memo.getText() + "', "
-                            + "`berat_basah` = '" + txt_berat_basah_lp.getText() + "', "
-                            + "`berat_kering` = '" + berat_kering + "', "
-                            + "`jumlah_keping` = '" + txt_jumlah_keping_lp.getText() + "', "
-                            + "`keping_upah` = '" + txt_jumlah_keping_upah.getText() + "', "
-                            + "`harga_baku` = '" + harga_baku_lp + "' "
-                            + "WHERE `no_laporan_produksi` = '" + no_lp + "'";
-                    Utility.db_cabuto.getStatement().executeUpdate(Query);
+                    ruangan_akhir = "CABUTO";
+                }
+                if (ruangan_awal.equals("WALETA") && ruangan_akhir.equals("WALETA")) {
+                    edit_lp_waleta();
+                } else if (ruangan_awal.equals("SUB") && ruangan_akhir.equals("SUB")) {
+                    edit_lp_waleta();
+                    edit_lp_sub();
+                } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("CABUTO")) {
+                    edit_lp_waleta();
+                    edit_lp_cabuto();
+                } else if (ruangan_awal.equals("WALETA") && ruangan_akhir.equals("SUB")) {
+                    edit_lp_waleta();
+                    input_lp_sub();
+                } else if (ruangan_awal.equals("SUB") && ruangan_akhir.equals("WALETA")) {
+                    edit_lp_waleta();
+                    delete_lp_sub();
+                } else if (ruangan_awal.equals("WALETA") && ruangan_akhir.equals("CABUTO")) {
+                    edit_lp_waleta();
+                    input_lp_cabuto();
+                } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("WALETA")) {
+                    edit_lp_waleta();
+                    delete_lp_cabuto();
+                } else if (ruangan_awal.equals("SUB") && ruangan_akhir.equals("CABUTO")) {
+                    JOptionPane.showMessageDialog(this, "Tidak bisa memindahkan LP SUB ke CABUTO !");
+                } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("SUB")) {
+                    JOptionPane.showMessageDialog(this, "Tidak bisa memindahkan LP CABUTO ke SUB !");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ruangan tidak ditemukan, silahkan hubungi bagian IT");
                 }
 
                 Utility.db.getConnection().commit();
@@ -1524,11 +1595,6 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
 
     private void button_insert_LPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_insert_LPActionPerformed
         Boolean Check = true;
-        float batas_atas = 1;
-        float batas_bawah = 1;
-        int berat_basah = Integer.valueOf(txt_berat_basah_lp.getText());
-        int berat_kering = (int) (berat_basah * (1 - (kadar_air_bahan_baku / 100)));
-
         try {
             String get_tgl_kartu = "SELECT `tgl_masuk` FROM `tb_bahan_baku_masuk` WHERE `no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "'";
             ResultSet result = Utility.db.getStatement().executeQuery(get_tgl_kartu);
@@ -1553,12 +1619,12 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (berat_per_keping_lp > (berat_per_keping_grading + batas_atas)
-                || berat_per_keping_lp < (berat_per_keping_grading - batas_bawah)) {
+        if (berat_per_keping_lp > (berat_per_keping_grading + 1)
+                || berat_per_keping_lp < (berat_per_keping_grading - 1)) {
             JOptionPane.showMessageDialog(this, "Maaf Berat/Keping tidak wajar (± 1gr)");
             Check = false;
         } else if (berat_kering > berat_basah) {
-            JOptionPane.showMessageDialog(this, "Maaf Berat Kering tidak bisa lebih besar dari berat angin2");
+            JOptionPane.showMessageDialog(this, "Maaf Berat Kering tidak bisa lebih besar dari berat angin2\nSilahkan cek kadar air kartu baku");
             Check = false;
         }
         if (Check) {
@@ -1574,14 +1640,6 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_button_insert_LPActionPerformed
 
-    private void txt_berat_basah_lpFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_berat_basah_lpFocusLost
-        countBK();
-    }//GEN-LAST:event_txt_berat_basah_lpFocusLost
-
-    private void txt_berat_per_kpgFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_berat_per_kpgFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_berat_per_kpgFocusLost
-
     private void button_pilih_pecah_lpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_pilih_pecah_lpActionPerformed
         try {
             // TODO add your handling code here:
@@ -1591,10 +1649,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             dialog.setVisible(true);
             dialog.setEnabled(true);
 
-            if (label_kode_pecah_lp.isVisible()) {
-                System.out.println("a");
-                countBK();
-
+            if (label_kode_pecah_lp.getText() != null && !label_kode_pecah_lp.getText().equals("") && !label_kode_pecah_lp.getText().equals("-")) {
                 sql = "SELECT (`total_berat` / `jumlah_keping`) AS 'berat_kpg' FROM `tb_grading_bahan_baku` "
                         + "WHERE `no_kartu_waleta` = '" + Label_no_kartu_LP.getText() + "' AND `kode_grade` = '" + Label_kode_grade_lp.getText() + "'";
                 rs = Utility.db.getStatement().executeQuery(sql);
@@ -1610,8 +1665,9 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                         txt_memo.setText(rs.getString("memo_untuk_lp"));
                     }
                 }
+                countBK();
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }

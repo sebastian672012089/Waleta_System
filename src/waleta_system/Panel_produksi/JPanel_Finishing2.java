@@ -234,6 +234,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
     public void refreshTable_F2() {
         try {
             decimalFormat.setMaximumFractionDigits(2);
+            float total_kpg = 0, total_gram = 0;
             DefaultTableModel model = (DefaultTableModel) Table_Data_f2.getModel();
             model.setRowCount(0);
 
@@ -337,11 +338,15 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 row[44] = rs.getDate("tgl_input_sesekan");
                 row[45] = rs.getString("edited");
                 model.addRow(row);
+                total_kpg = total_kpg + rs.getInt("jumlah_keping");
+                total_gram = total_gram + rs.getInt("berat_basah");
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Data_f2);
 
             int rowData = Table_Data_f2.getRowCount();
-            label_total_data_f2.setText(Integer.toString(rowData));
+            label_total_data_f2.setText(decimalFormat.format(rowData));
+            label_total_kpg_f2.setText(decimalFormat.format(total_kpg));
+            label_total_gram_f2.setText(decimalFormat.format(total_gram));
         } catch (Exception ex) {
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1162,6 +1167,10 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         button_laporan_terima_SUB = new javax.swing.JButton();
         jLabel27 = new javax.swing.JLabel();
         txt_search_ruangan = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
+        label_total_kpg_f2 = new javax.swing.JLabel();
+        jLabel106 = new javax.swing.JLabel();
+        label_total_gram_f2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txt_search_LP_setoran = new javax.swing.JTextField();
@@ -1454,7 +1463,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         });
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel6.setText("Total Data :");
 
         label_total_data_f2.setBackground(new java.awt.Color(255, 255, 255));
@@ -1645,6 +1654,22 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
+        jLabel30.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel30.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel30.setText("Total Kpg :");
+
+        label_total_kpg_f2.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_kpg_f2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_kpg_f2.setText("TOTAL");
+
+        jLabel106.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel106.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel106.setText("Total Gram :");
+
+        label_total_gram_f2.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_gram_f2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_gram_f2.setText("TOTAL");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -1652,37 +1677,21 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(button_input_sesekan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_input_byproduct)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_f2_terima_lp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_input_koreksi)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_input_koreksi1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_input_f1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_input_f2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_input_kaki)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_f2_edit_kaki)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_f2_setor_lp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_f2_edit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_f2_delete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_data_f2))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_data_f2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel30)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_kpg_f2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel106)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_gram_f2))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel24)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1718,8 +1727,32 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_tv_reproses)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_export_f2)))
-                        .addGap(0, 158, Short.MAX_VALUE)))
+                                .addComponent(button_export_f2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(button_input_sesekan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_input_byproduct)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_f2_terima_lp)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_input_koreksi)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_input_koreksi1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_input_f1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_input_f2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_input_kaki)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_f2_edit_kaki)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_f2_setor_lp)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_f2_edit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_f2_delete)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -1754,11 +1787,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         .addComponent(button_laporan_terima_WLT, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_laporan_terima_SUB, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_total_data_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(button_f2_terima_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_input_sesekan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1772,6 +1801,16 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                     .addComponent(button_f2_setor_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_f2_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_f2_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_data_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_kpg_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel106, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_gram_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -4301,6 +4340,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel103;
     private javax.swing.JLabel jLabel104;
     private javax.swing.JLabel jLabel105;
+    private javax.swing.JLabel jLabel106;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -4322,6 +4362,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
@@ -4465,10 +4506,12 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
     private javax.swing.JLabel label_total_gram_akhir;
     private javax.swing.JLabel label_total_gram_asalBox_lpsuwir;
     private javax.swing.JLabel label_total_gram_awal;
+    private javax.swing.JLabel label_total_gram_f2;
     private javax.swing.JLabel label_total_keluar_f2;
     private javax.swing.JLabel label_total_keping_asalBox_lpsuwir;
     private javax.swing.JLabel label_total_kpg_akhir;
     private javax.swing.JLabel label_total_kpg_awal;
+    private javax.swing.JLabel label_total_kpg_f2;
     private javax.swing.JLabel label_total_lp;
     private javax.swing.JLabel label_total_lp_balen;
     private javax.swing.JLabel label_total_lpsuwir;

@@ -222,8 +222,8 @@
                     <Column editable="false" title="No LP" type="java.lang.String"/>
                     <Column editable="false" title="Grade" type="java.lang.String"/>
                     <Column editable="false" title="Ruang" type="java.lang.String"/>
-                    <Column editable="false" title="Total Keping" type="java.lang.Integer"/>
-                    <Column editable="false" title="Gram" type="java.lang.Integer"/>
+                    <Column editable="false" title="Total Keping" type="java.lang.Float"/>
+                    <Column editable="false" title="Gram" type="java.lang.Float"/>
                     <Column editable="false" title="Tgl Masuk" type="java.lang.Object"/>
                     <Column editable="false" title="Diterima" type="java.lang.String"/>
                     <Column editable="false" title="Pekerja Cetak 1" type="java.lang.String"/>
@@ -231,15 +231,15 @@
                     <Column editable="false" title="Pengoreksi" type="java.lang.String"/>
                     <Column editable="false" title="Diserahkan" type="java.lang.String"/>
                     <Column editable="false" title="Tgl Selesai" type="java.lang.Object"/>
-                    <Column editable="false" title="Mk (Kpg)" type="java.lang.Integer"/>
+                    <Column editable="false" title="Mk (Kpg)" type="java.lang.Float"/>
                     <Column editable="false" title="Mk (%)" type="java.lang.Float"/>
-                    <Column editable="false" title="Pecah (Kpg)" type="java.lang.Integer"/>
+                    <Column editable="false" title="Pecah (Kpg)" type="java.lang.Float"/>
                     <Column editable="false" title="Pecah (%)" type="java.lang.Float"/>
-                    <Column editable="false" title="Flat (Kpg)" type="java.lang.Integer"/>
+                    <Column editable="false" title="Flat (Kpg)" type="java.lang.Float"/>
                     <Column editable="false" title="Flat (%)" type="java.lang.Float"/>
-                    <Column editable="false" title="Jidun" type="java.lang.Integer"/>
+                    <Column editable="false" title="Jidun" type="java.lang.Float"/>
                     <Column editable="false" title="Jidun(%)" type="java.lang.Float"/>
-                    <Column editable="false" title="Jidun Real" type="java.lang.Integer"/>
+                    <Column editable="false" title="Jidun Real" type="java.lang.Float"/>
                     <Column editable="false" title="admin" type="java.lang.String"/>
                   </Table>
                 </Property>

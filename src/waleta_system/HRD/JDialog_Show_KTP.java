@@ -36,6 +36,8 @@ public class JDialog_Show_KTP extends javax.swing.JDialog {
 
     public void show_ktp_local(String id) {
         try {
+            button_rotate_left.setEnabled(true);
+            button_rotate_right.setEnabled(true);
             this.id = id;
             lbl_Image.setIcon(Utility.ResizeImage("\\\\192.168.10.2\\Shared Folder\\DOKUMEN SISTEM\\FC_KTP\\" + id + ".jpg", null, lbl_Image.getWidth(), lbl_Image.getHeight()));
 //            String query = "SELECT `ktp_image` FROM `tb_karyawan` WHERE `id_pegawai`='" + id + "'";
@@ -50,6 +52,8 @@ public class JDialog_Show_KTP extends javax.swing.JDialog {
 
     public void show_ktp_online(String id) {
         try {
+            button_rotate_left.setEnabled(false);
+            button_rotate_right.setEnabled(false);
             this.id = id;
             Utility.db_sub.connect();
             String query = "SELECT `foto_ktp` FROM `tb_karyawan` WHERE `id_pegawai`='" + id + "'";

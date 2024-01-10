@@ -982,7 +982,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                     .addComponent(Date_Search_LP_1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date_Search_LP_2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_search_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1)
                     .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
@@ -1226,10 +1226,6 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "LP sudah melewati proses cabut, tidak bisa melakukan edit");
                     check = false;
                 }
-//                if (Table_laporan_produksi.getValueAt(x, 9).toString().equals("CABUTO")) {
-//                    JOptionPane.showMessageDialog(this, "Maaf belum bisa edit LP CABUTO, mohon ke bagian IT untuk melakukan edit!");
-//                    check = false;
-//                }
 
                 if (check) {
                     JDialog_Edit_Insert_LP dialog = new JDialog_Edit_Insert_LP(new javax.swing.JFrame(), true, no_lp, "edit");
@@ -1237,9 +1233,9 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                     dialog.setLocationRelativeTo(this);
                     dialog.setVisible(true);
                     dialog.setEnabled(true);
-                    if (ruangan.length() == 5) {
+                    if (ruangan.length() == 5) {//ruangan sub
                         refresh_tabel_sub_online();
-                    } else if (Table_laporan_produksi.getValueAt(x, 9).toString().equals("CABUTO")) {
+                    } else if (ruangan.equals("CABUTO")) {
                         refresh_tabel_cabuto_online();
                     }
                     refreshTable();

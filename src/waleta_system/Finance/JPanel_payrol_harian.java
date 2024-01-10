@@ -138,7 +138,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                 if (txt_search_bagian.getText() == null || txt_search_bagian.getText().equals("") || txt_search_bagian.getText().equals("%%")) {
                     search_bagian = "";
                 }
-                
+
                 String search_level_gaji = "AND A.`level_gaji` LIKE '%" + txt_search_level_gaji.getText() + "%' ";
                 if (txt_search_level_gaji.getText() == null || txt_search_level_gaji.getText().equals("")) {
                     search_level_gaji = "";
@@ -765,10 +765,13 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                         jProgressBar1.setString((i + 1) + "/" + max_progress);
                     }
                     Utility.db.getConnection().commit();
-                    JOptionPane.showMessageDialog(this, "Jumlah Karyawan yang potong BPJS = " + jumlah_karyawan_dipotong_bpjs + ", BPJS TK = " + jumlah_karyawan_dipotong_bpjs_tk);
-                    JOptionPane.showMessageDialog(this, "Jumlah Karyawan yang membayar piutang = " + jumlah_karyawan_membayar_piutang);
-                    JOptionPane.showMessageDialog(this, "Jumlah Karyawan otomatis naik level = " + jumlah_karyawan_naik_level);
-                    JOptionPane.showMessageDialog(this, "Data Payrol di simpan = " + saved_data_payroll);
+
+                    JOptionPane.showMessageDialog(this, "Jumlah Karyawan yang telah:\n"
+                            + "1. Dipotong BPJS Kesehatan = " + jumlah_karyawan_dipotong_bpjs + "\n"
+                            + "2. Dipotong BPJS TK = " + jumlah_karyawan_dipotong_bpjs_tk + "\n"
+                            + "3. Membayar piutang = " + jumlah_karyawan_membayar_piutang + "\n"
+                            + "4. Karyawan otomatis naik level = " + jumlah_karyawan_naik_level + "\n"
+                            + "5. Data Payrol di simpan = " + saved_data_payroll);
                 } catch (SQLException ex) {
                     try {
                         Utility.db.getConnection().rollback();
@@ -1023,7 +1026,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
 
         txt_potongan_bpjs.setEditable(false);
         txt_potongan_bpjs.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_potongan_bpjs.setText("22842");
+        txt_potongan_bpjs.setText("23790");
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -1075,7 +1078,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
 
         txt_potongan_bpjs_tk.setEditable(false);
         txt_potongan_bpjs_tk.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_potongan_bpjs_tk.setText("68526");
+        txt_potongan_bpjs_tk.setText("71370");
 
         button_export.setBackground(new java.awt.Color(255, 255, 255));
         button_export.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N

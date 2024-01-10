@@ -265,7 +265,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) Table_pecah_lp.getModel();
             model.setRowCount(0);
 
-            sql = "SELECT PCH.`kode_pecah_kartu`, PCH.`no_grading`, `tb_grading_bahan_baku`.`no_kartu_waleta`, `tb_grading_bahan_baku`.`kode_grade`, PCH.`jumlah_keping`, PCH.`keping_upah`, PCH.`berat_basah`, PCH.`jenis_bulu_lp`, PCH.`memo_lp`, \n"
+            sql = "SELECT PCH.`kode_pecah_kartu`, PCH.`no_grading`, `tb_grading_bahan_baku`.`no_kartu_waleta`, `tb_grading_bahan_baku`.`kode_grade`, PCH.`jumlah_keping`, PCH.`keping_upah`, PCH.`berat_basah`, PCH.`berat_riil`, PCH.`jenis_bulu_lp`, PCH.`memo_lp`, \n"
                     + "PCH.`kaki_besar_lp`, PCH.`kaki_kecil_lp`, PCH.`hilang_kaki_lp`, PCH.`ada_susur_lp`, PCH.`ada_susur_besar_lp`, PCH.`tanpa_susur_lp`, PCH.`utuh_lp`, PCH.`hilang_ujung_lp`, PCH.`pecah_1_lp`, PCH.`pecah_2`, PCH.`jumlah_sobek`, PCH.`sobek_lepas`, PCH.`jumlah_gumpil`, "
                     + "`tb_laporan_produksi`.`no_laporan_produksi` \n"
                     + "FROM `tb_bahan_baku_pecah_kartu` PCH \n"
@@ -282,22 +282,23 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 row[4] = rs.getFloat("jumlah_keping");
                 row[5] = rs.getFloat("keping_upah");
                 row[6] = rs.getFloat("berat_basah");
-                row[7] = rs.getString("jenis_bulu_lp");
-                row[8] = rs.getString("memo_lp");
-                row[9] = rs.getInt("kaki_besar_lp");
-                row[10] = rs.getInt("kaki_kecil_lp");
-                row[11] = rs.getInt("hilang_kaki_lp");
-                row[12] = rs.getInt("ada_susur_besar_lp");
-                row[13] = rs.getInt("ada_susur_lp");
-                row[14] = rs.getInt("tanpa_susur_lp");
-                row[15] = rs.getInt("utuh_lp");
-                row[16] = rs.getInt("hilang_ujung_lp");
-                row[17] = rs.getInt("pecah_1_lp");
-                row[18] = rs.getInt("pecah_2");
-                row[19] = rs.getInt("jumlah_sobek");
-                row[20] = rs.getInt("sobek_lepas");
-                row[21] = rs.getInt("jumlah_gumpil");
-                row[22] = rs.getString("no_laporan_produksi");
+                row[7] = rs.getFloat("berat_riil");
+                row[8] = rs.getString("jenis_bulu_lp");
+                row[9] = rs.getString("memo_lp");
+                row[10] = rs.getInt("kaki_besar_lp");
+                row[11] = rs.getInt("kaki_kecil_lp");
+                row[12] = rs.getInt("hilang_kaki_lp");
+                row[13] = rs.getInt("ada_susur_besar_lp");
+                row[14] = rs.getInt("ada_susur_lp");
+                row[15] = rs.getInt("tanpa_susur_lp");
+                row[16] = rs.getInt("utuh_lp");
+                row[17] = rs.getInt("hilang_ujung_lp");
+                row[18] = rs.getInt("pecah_1_lp");
+                row[19] = rs.getInt("pecah_2");
+                row[20] = rs.getInt("jumlah_sobek");
+                row[21] = rs.getInt("sobek_lepas");
+                row[22] = rs.getInt("jumlah_gumpil");
+                row[23] = rs.getString("no_laporan_produksi");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_pecah_lp);
@@ -329,7 +330,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                     break;
             }
 
-            sql = "SELECT PCH.`kode_pecah_kartu`, PCH.`no_grading`, `tb_grading_bahan_baku`.`no_kartu_waleta`, `tb_grading_bahan_baku`.`kode_grade`, PCH.`jumlah_keping`, PCH.`keping_upah`, PCH.`berat_basah`, PCH.`jenis_bulu_lp`, PCH.`memo_lp`, \n"
+            sql = "SELECT PCH.`kode_pecah_kartu`, PCH.`no_grading`, `tb_grading_bahan_baku`.`no_kartu_waleta`, `tb_grading_bahan_baku`.`kode_grade`, PCH.`jumlah_keping`, PCH.`keping_upah`, PCH.`berat_basah`, PCH.`berat_riil`, PCH.`jenis_bulu_lp`, PCH.`memo_lp`, \n"
                     + "PCH.`kaki_besar_lp`, PCH.`kaki_kecil_lp`, PCH.`hilang_kaki_lp`, PCH.`ada_susur_lp`, PCH.`ada_susur_besar_lp`, PCH.`tanpa_susur_lp`, PCH.`utuh_lp`, PCH.`hilang_ujung_lp`, PCH.`pecah_1_lp`, PCH.`pecah_2`, PCH.`jumlah_sobek`, PCH.`sobek_lepas`, PCH.`jumlah_gumpil`, "
                     + "`tb_laporan_produksi`.`no_laporan_produksi` \n"
                     + "FROM `tb_bahan_baku_pecah_kartu` PCH \n"
@@ -349,22 +350,23 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 row[4] = rs.getFloat("jumlah_keping");
                 row[5] = rs.getFloat("keping_upah");
                 row[6] = rs.getFloat("berat_basah");
-                row[7] = rs.getString("jenis_bulu_lp");
-                row[8] = rs.getString("memo_lp");
-                row[9] = rs.getInt("kaki_besar_lp");
-                row[10] = rs.getInt("kaki_kecil_lp");
-                row[11] = rs.getInt("hilang_kaki_lp");
-                row[12] = rs.getInt("ada_susur_besar_lp");
-                row[13] = rs.getInt("ada_susur_lp");
-                row[14] = rs.getInt("tanpa_susur_lp");
-                row[15] = rs.getInt("utuh_lp");
-                row[16] = rs.getInt("hilang_ujung_lp");
-                row[17] = rs.getInt("pecah_1_lp");
-                row[18] = rs.getInt("pecah_2");
-                row[19] = rs.getInt("jumlah_sobek");
-                row[20] = rs.getInt("sobek_lepas");
-                row[21] = rs.getInt("jumlah_gumpil");
-                row[22] = rs.getString("no_laporan_produksi");
+                row[7] = rs.getFloat("berat_riil");
+                row[8] = rs.getString("jenis_bulu_lp");
+                row[9] = rs.getString("memo_lp");
+                row[10] = rs.getInt("kaki_besar_lp");
+                row[11] = rs.getInt("kaki_kecil_lp");
+                row[12] = rs.getInt("hilang_kaki_lp");
+                row[13] = rs.getInt("ada_susur_besar_lp");
+                row[14] = rs.getInt("ada_susur_lp");
+                row[15] = rs.getInt("tanpa_susur_lp");
+                row[16] = rs.getInt("utuh_lp");
+                row[17] = rs.getInt("hilang_ujung_lp");
+                row[18] = rs.getInt("pecah_1_lp");
+                row[19] = rs.getInt("pecah_2");
+                row[20] = rs.getInt("jumlah_sobek");
+                row[21] = rs.getInt("sobek_lepas");
+                row[22] = rs.getInt("jumlah_gumpil");
+                row[23] = rs.getString("no_laporan_produksi");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_stok_pecah_lp);
@@ -931,14 +933,14 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode", "No Grading", "No Kartu", "Grade", "Kpg", "Kpg Upah", "Gram", "Jenis Bulu", "Memo LP", "kk BESAR", "kk KECIL", "Tanpa kk", "Susur BESAR", "Susur KECIL", "Tanpa Susur", "Utuh", "Hlg Ujung", "Pch 1", "Pch 2", "Sobek", "Sobek Lepas", "Gumpil", "No LP"
+                "Kode", "No Grading", "No Kartu", "Grade", "Kpg", "Kpg Upah", "Gram", "Gram Riil", "Jenis Bulu", "Memo LP", "kk BESAR", "kk KECIL", "Tanpa kk", "Susur BESAR", "Susur KECIL", "Tanpa Susur", "Utuh", "Hlg Ujung", "Pch 1", "Pch 2", "Sobek", "Sobek Lepas", "Gumpil", "No LP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1145,14 +1147,14 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode", "No Grading", "No Kartu", "Grade", "Kpg", "Kpg Upah", "Gram", "Jenis Bulu", "Memo LP", "kk BESAR", "kk KECIL", "Tanpa kk", "Susur BESAR", "Susur KECIL", "Tanpa Susur", "Utuh", "Hlg Ujung", "Pch 1", "Pch 2", "Sobek", "Sobek Lepas", "Gumpil", "No LP"
+                "Kode", "No Grading", "No Kartu", "Grade", "Kpg", "Kpg Upah", "Gram", "Gram Riil", "Jenis Bulu", "Memo LP", "kk BESAR", "kk KECIL", "Tanpa kk", "Susur BESAR", "Susur KECIL", "Tanpa Susur", "Utuh", "Hlg Ujung", "Pch 1", "Pch 2", "Sobek", "Sobek Lepas", "Gumpil", "No LP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1658,7 +1660,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         if (j == -1) {
             JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di edit !");
         } else {
-            if (Table_pecah_lp.getValueAt(j, 22) == null || Table_pecah_lp.getValueAt(j, 22).toString().equals("")) {
+            if (Table_pecah_lp.getValueAt(j, 23) == null || Table_pecah_lp.getValueAt(j, 23).toString().equals("")) {
                 DefaultTableModel model = (DefaultTableModel) Table_pecah_lp.getModel();
                 JDialog_Edit_PecahLP dialog = new JDialog_Edit_PecahLP(new javax.swing.JFrame(), true, model, Table_pecah_lp.getSelectedRow());
                 dialog.pack();

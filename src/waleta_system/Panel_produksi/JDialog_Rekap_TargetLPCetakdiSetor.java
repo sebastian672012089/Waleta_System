@@ -23,6 +23,7 @@ public class JDialog_Rekap_TargetLPCetakdiSetor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setResizable(false);
+        Utility.db.connect();
     }
 
     public void loaddata() {
@@ -67,9 +68,11 @@ public class JDialog_Rekap_TargetLPCetakdiSetor extends javax.swing.JDialog {
                     + "LEFT JOIN `tb_tarif_cabut` ON `tb_laporan_produksi`.`jenis_bulu_lp` = `tb_tarif_cabut`.`bulu_upah`\n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_cetak`.`cetak_dikoreksi_id` = `tb_karyawan`.`id_pegawai`\n"
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
-                    + "WHERE `tgl_mulai_cetak` BETWEEN '" + dateFormat.format(Date_setor_cetak1.getDate()) + "' AND '" + dateFormat.format(Date_setor_cetak2.getDate()) + "'\n"
-                    + "AND `cetak_dikoreksi` IS NOT NULL AND `tb_cetak`.`no_laporan_produksi` LIKE 'WL-%'\n"
-                    + "GROUP BY `cetak_dikoreksi`"
+                    + "WHERE "
+                    + "`tgl_mulai_cetak` BETWEEN '" + dateFormat.format(Date_setor_cetak1.getDate()) + "' AND '" + dateFormat.format(Date_setor_cetak2.getDate()) + "'\n"
+                    + "AND `cetak_dikoreksi_id` IS NOT NULL "
+                    + "AND `tb_cetak`.`no_laporan_produksi` LIKE 'WL-%'\n"
+                    + "GROUP BY `cetak_dikoreksi_id`"
                     + "ORDER BY `tb_bagian`.`nama_bagian`";
             rs = Utility.db.getStatement().executeQuery(query2);
             Object[] row2 = new Object[5];

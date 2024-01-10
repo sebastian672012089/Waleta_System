@@ -265,7 +265,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
     public void refreshTable_keseluruhan() {
         try {
-            DefaultTableModel model = (DefaultTableModel) Table_Cuti_keseluruhan.getModel();
+            DefaultTableModel model = (DefaultTableModel) Table_Data_Cuti.getModel();
             model.setRowCount(0);
 
             String bagian = "";
@@ -336,8 +336,8 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     model.addRow(row);
                 }
             }
-            ColumnsAutoSizer.sizeColumnsToFit(Table_Cuti_keseluruhan);
-            String total_data = Integer.toString(Table_Cuti_keseluruhan.getRowCount());
+            ColumnsAutoSizer.sizeColumnsToFit(Table_Data_Cuti);
+            String total_data = Integer.toString(Table_Data_Cuti.getRowCount());
             label_total_data_absen_keseluruhan.setText(total_data);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -456,10 +456,10 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         button_diketahui_pengajuan = new javax.swing.JButton();
         button_disetujui_pengajuan = new javax.swing.JButton();
         button_export_pengajuan = new javax.swing.JButton();
+        button_add_ijin_cuti = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        Table_Cuti_keseluruhan = new javax.swing.JTable();
-        button_add_ijin_cuti = new javax.swing.JButton();
+        Table_Data_Cuti = new javax.swing.JTable();
         button_delete_ijin_cuti = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
         label_total_data_absen_keseluruhan = new javax.swing.JLabel();
@@ -753,6 +753,15 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
             }
         });
 
+        button_add_ijin_cuti.setBackground(new java.awt.Color(255, 255, 255));
+        button_add_ijin_cuti.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_add_ijin_cuti.setText("Tambah Pengajuan Cuti");
+        button_add_ijin_cuti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_add_ijin_cutiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -763,6 +772,8 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     .addComponent(jPanel_search_karyawan2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(button_add_ijin_cuti)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_disetujui_pengajuan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_diketahui_pengajuan)
@@ -786,7 +797,8 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     .addComponent(label_total_data_pengajuan)
                     .addComponent(button_diketahui_pengajuan)
                     .addComponent(button_disetujui_pengajuan)
-                    .addComponent(button_export_pengajuan))
+                    .addComponent(button_export_pengajuan)
+                    .addComponent(button_add_ijin_cuti))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
                 .addContainerGap())
@@ -796,9 +808,9 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
-        Table_Cuti_keseluruhan.setAutoCreateRowSorter(true);
-        Table_Cuti_keseluruhan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        Table_Cuti_keseluruhan.setModel(new javax.swing.table.DefaultTableModel(
+        Table_Data_Cuti.setAutoCreateRowSorter(true);
+        Table_Data_Cuti.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Table_Data_Cuti.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -821,22 +833,13 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        Table_Cuti_keseluruhan.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(Table_Cuti_keseluruhan);
-        if (Table_Cuti_keseluruhan.getColumnModel().getColumnCount() > 0) {
-            Table_Cuti_keseluruhan.getColumnModel().getColumn(0).setMinWidth(0);
-            Table_Cuti_keseluruhan.getColumnModel().getColumn(0).setPreferredWidth(0);
-            Table_Cuti_keseluruhan.getColumnModel().getColumn(0).setMaxWidth(0);
+        Table_Data_Cuti.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(Table_Data_Cuti);
+        if (Table_Data_Cuti.getColumnModel().getColumnCount() > 0) {
+            Table_Data_Cuti.getColumnModel().getColumn(0).setMinWidth(0);
+            Table_Data_Cuti.getColumnModel().getColumn(0).setPreferredWidth(0);
+            Table_Data_Cuti.getColumnModel().getColumn(0).setMaxWidth(0);
         }
-
-        button_add_ijin_cuti.setBackground(new java.awt.Color(255, 255, 255));
-        button_add_ijin_cuti.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_add_ijin_cuti.setText("Tambah Pengajuan Cuti");
-        button_add_ijin_cuti.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_add_ijin_cutiActionPerformed(evt);
-            }
-        });
 
         button_delete_ijin_cuti.setBackground(new java.awt.Color(255, 255, 255));
         button_delete_ijin_cuti.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -957,18 +960,6 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(button_add_ijin_cuti)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_edit_ijin_cuti)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_delete_ijin_cuti)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_export1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_data_absen_keseluruhan))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_search_karyawan1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -999,7 +990,17 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Date_Cuti_keseluruhan2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_refresh_data_keseluruhan)))
+                                .addComponent(button_refresh_data_keseluruhan))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(button_edit_ijin_cuti)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_delete_ijin_cuti)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_data_absen_keseluruhan)))
                         .addGap(0, 136, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -1028,7 +1029,6 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     .addComponent(Date_Cuti_keseluruhan2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(button_add_ijin_cuti)
                     .addComponent(button_delete_ijin_cuti)
                     .addComponent(jLabel21)
                     .addComponent(label_total_data_absen_keseluruhan)
@@ -1391,16 +1391,16 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
     private void button_delete_ijin_cutiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_ijin_cutiActionPerformed
         // TODO add your handling code here:
         try {
-            int row = Table_Cuti_keseluruhan.getSelectedRow();
+            int row = Table_Data_Cuti.getSelectedRow();
             if (row == -1) {
                 JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
             } else {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     // delete code here
-                    String Query = "DELETE FROM `tb_cuti` WHERE `kode_cuti` = '" + Table_Cuti_keseluruhan.getValueAt(row, 0) + "'";
+                    String Query = "DELETE FROM `tb_cuti` WHERE `kode_cuti` = '" + Table_Data_Cuti.getValueAt(row, 0) + "'";
                     Utility.db.getStatement().executeUpdate(Query);
-                    refreshTable_Cuti();
+                    refreshTable_keseluruhan();
                 }
             }
         } catch (Exception e) {
@@ -1423,17 +1423,17 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
     private void button_export1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export1ActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) Table_Cuti_keseluruhan.getModel();
+        DefaultTableModel model = (DefaultTableModel) Table_Data_Cuti.getModel();
         ExportToExcel.writeToExcel(model, jPanel1);
     }//GEN-LAST:event_button_export1ActionPerformed
 
     private void button_edit_ijin_cutiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_edit_ijin_cutiActionPerformed
         // TODO add your handling code here:
-        int row = Table_Cuti_keseluruhan.getSelectedRow();
+        int row = Table_Data_Cuti.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Silahkan pilih satu data yang akan di edit !");
         } else {
-            String no = Table_Cuti_keseluruhan.getValueAt(row, 0).toString();
+            String no = Table_Data_Cuti.getValueAt(row, 0).toString();
             JDialog_Edit_Cuti Add = new JDialog_Edit_Cuti(new javax.swing.JFrame(), true, no);
             Add.pack();
             Add.setLocationRelativeTo(this);
@@ -1569,8 +1569,8 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser Date_Ijin_absen2;
     private com.toedter.calendar.JDateChooser Date_pengajuan1;
     private com.toedter.calendar.JDateChooser Date_pengajuan2;
-    public javax.swing.JTable Table_Cuti_keseluruhan;
     public javax.swing.JTable Table_Cuti_per_karyawan;
+    public javax.swing.JTable Table_Data_Cuti;
     public static javax.swing.JTable Table_karyawan;
     public javax.swing.JTable Table_pengajuan;
     private javax.swing.JButton button_add_ijin_cuti;

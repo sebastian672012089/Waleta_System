@@ -541,7 +541,7 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
         if (x == -1) {
             JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
         } else {
-            if ((boolean) table_data_online.getValueAt(x, 16)) {
+            if ((boolean) table_data_online.getValueAt(x, 15)) {
                 String id = table_data_online.getValueAt(x, 0).toString();
                 String nama = table_data_online.getValueAt(x, 1).toString();
                 JDialog_Show_KTP dialog = new JDialog_Show_KTP(new javax.swing.JFrame(), true, null, nama);

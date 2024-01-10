@@ -79,7 +79,8 @@ public class JDialog_TambahDataTutupan extends javax.swing.JDialog {
         try {
             int number = 0;
             String new_number = null;
-            sql = "SELECT COUNT(`kode_tutupan`) AS 'last' FROM `tb_tutupan_grading` "
+            sql = "SELECT COUNT(`kode_tutupan`) AS 'last' "
+                    + "FROM `tb_tutupan_grading` "
                     + "WHERE YEAR(`tgl_mulai_tutupan`)='" + new SimpleDateFormat("yyyy").format(Date_Mulai_tutupan.getDate()) + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
@@ -462,7 +463,6 @@ public class JDialog_TambahDataTutupan extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel5.setText("Memo Tutupan :");
 
-        txt_memo_tutupan.setBackground(new java.awt.Color(255, 255, 255));
         txt_memo_tutupan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

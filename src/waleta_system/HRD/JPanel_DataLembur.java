@@ -454,16 +454,17 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         try {
             DefaultTableModel model = (DefaultTableModel) table_data_lembur_makan.getModel();
             model.setRowCount(0);
-            sql = "SELECT `nomor_lembur`, `tb_surat_lembur_detail`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `nama_bagian`, `tanggal_lembur`, `jenis_lembur`, `mulai_lembur`, `selesai_lembur`, `jumlah_jam`, `nomor_surat`, "
-                    + "`absen_masuk`, `absen_pulang`, IF(`jenis_lembur` = 'Masuk', TIMESTAMPDIFF(minute, `absen_masuk`, `selesai_lembur`), TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`)) AS 'menit_lembur' \n"
+            sql = "SELECT `nomor_lembur`, `tb_surat_lembur_detail`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `nama_bagian`, `tb_surat_lembur_detail`.`tanggal_lembur`, `jenis_hari`, `jenis_lembur`, `mulai_lembur`, `selesai_lembur`, `jumlah_jam`, "
+                    + "`absen_masuk`, `absen_pulang`, IF(`jenis_lembur` = 'Masuk' AND `jenis_hari` = 'Hari Kerja', TIMESTAMPDIFF(minute, `absen_masuk`, `selesai_lembur`), TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`)) AS 'menit_lembur' \n"
                     + "FROM `tb_surat_lembur_detail` "
                     + "LEFT JOIN `tb_karyawan` ON `tb_surat_lembur_detail`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
+                    + "LEFT JOIN `tb_surat_lembur` ON `tb_surat_lembur_detail`.`nomor_surat` = `tb_surat_lembur`.`nomor_surat`\n"
                     + "LEFT JOIN (SELECT `pin`, MIN(TIME(`scan_date`)) AS 'absen_masuk', MAX(TIME(`scan_date`)) AS 'absen_pulang' FROM `att_log` WHERE DATE(`scan_date`) = '" + dateFormat.format(Date_lembur_makan.getDate()) + "' GROUP BY `pin`) attlog ON `tb_karyawan`.`pin_finger` = attlog.`pin`\n"
                     + "WHERE "
                     + "`jumlah_jam`+`menit_istirahat_lembur` >= 3 "
                     + "AND `tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_nama.getText() + "%' "
-                    + "AND `tanggal_lembur` = '" + dateFormat.format(Date_lembur_makan.getDate()) + "' "
+                    + "AND `tb_surat_lembur_detail`.`tanggal_lembur` = '" + dateFormat.format(Date_lembur_makan.getDate()) + "' "
                     + "AND `nama_bagian` <> 'DRIVER' "
                     + "GROUP BY `tb_surat_lembur_detail`.`id_pegawai`";
 //            System.out.println(sql);
@@ -477,7 +478,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 row[4] = rs.getString("mulai_lembur");
                 row[5] = rs.getString("selesai_lembur");
                 row[6] = rs.getFloat("jumlah_jam");
-                if (rs.getString("jenis_lembur").equals("Masuk")) {
+                if (rs.getString("jenis_lembur").equals("Masuk") && rs.getString("jenis_hari").equals("Hari Kerja")) {
                     row[7] = rs.getString("absen_masuk");
                     row[8] = rs.getString("selesai_lembur");
                 } else {

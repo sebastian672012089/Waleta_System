@@ -1209,15 +1209,15 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
             } else if (persen_sh < 0f || persen_sh > 20f) {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Susut hilang(" + Math.round(sh) + "gr " + Math.round(persen_sh) + "%) diluar batas yang ditentukan (0-15%), apakah ingin melanjutkan?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {
-                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Susut hilang diluar batas yang ditentukan (0-15%)");
-                    dialog.pack();
-                    dialog.setLocationRelativeTo(this);
-                    dialog.setVisible(true);
-                    dialog.setEnabled(true);
-//                    System.out.println(dialog.akses());
-                    check = dialog.akses();
-                    nama_otorisasi = dialog.getNama();
-                    keterangan = dialog.getKeterangan();
+//                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Susut hilang diluar batas yang ditentukan (0-15%)");
+//                    dialog.pack();
+//                    dialog.setLocationRelativeTo(this);
+//                    dialog.setVisible(true);
+//                    dialog.setEnabled(true);
+////                    System.out.println(dialog.akses());
+//                    check = dialog.akses();
+//                    nama_otorisasi = dialog.getNama();
+//                    keterangan = dialog.getKeterangan();
                 } else {
                     check = false;
                 }

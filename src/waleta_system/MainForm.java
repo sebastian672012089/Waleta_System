@@ -61,7 +61,6 @@ public class MainForm extends javax.swing.JFrame {
         Refresh_StokBaku_Unworkable();
         Refresh_StokQC_Hold();
         refreshTable_detailLP_WIP();
-        jPanel_ultah.setVisible(false);
         if (!MainForm.Login_Posisi.contains("STAFF")) {
             jMenuItem_Pengajuan_naikLevel.setVisible(false);
             jMenuItem_DataKaryawanViewOnly.setVisible(false);
@@ -69,19 +68,24 @@ public class MainForm extends javax.swing.JFrame {
             jMenuItem_Pengajuan_naikLevel.setVisible(true);
             jMenuItem_DataKaryawanViewOnly.setVisible(true);
         }
-        
+
+        if (MainForm.Login_namaBagian.contains("KADEP") || MainForm.Login_namaBagian.contains("OPERATIONAL MANAGER") || MainForm.Login_idPegawai.equals("20180102221")) {
+            jPanel_Butuh_Acc.setVisible(true);
+            refresh_Butuh_Acc();
+        } else {
+            jPanel_Butuh_Acc.setVisible(false);
+        }
+
         if (MainForm.Login_idPegawai.equals("20180102221")) {//SEBASTIAN
-            jPanel_ultah.setVisible(true);
-            refresh_TabelUltah();
             jMenuItem_Keu_LemburStaff.setVisible(true);
-        } 
-        
+        }
+
         if (label_warning_stok_baku.isVisible() || label_warning_stok_reproses.isVisible() || label_warning_stok_qchold.isVisible()) {
             jPanel_need_attention.setVisible(true);
         } else {
             jPanel_need_attention.setVisible(false);
         }
-        
+
     }
 
     public void refresh_StokReproses() {
@@ -199,35 +203,118 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
-    public void refresh_TabelUltah() {
+    public void refresh_Butuh_Acc() {
+        String filter_departemen = MainForm.Login_Departemen == null ? "" : MainForm.Login_Departemen;
         try {
-            DefaultTableModel model = (DefaultTableModel) Tabel_ultah.getModel();
+            DefaultTableModel model = (DefaultTableModel) Tabel_butuh_Acc_Lembur.getModel();
             model.setRowCount(0);
-            String sql = "SELECT `nama_pegawai`,`tanggal_lahir`, `tb_bagian`.`nama_bagian`, `posisi`, \n"
-                    + " FLOOR(DATEDIFF(DATE(NOW()),`tanggal_lahir`) / 365.25) AS age_now,\n"
-                    + " FLOOR(DATEDIFF(DATE_ADD(DATE(NOW()),INTERVAL 7 DAY),`tanggal_lahir`) / 365.25) AS age_future \n"
-                    + "FROM `tb_karyawan`\n"
-                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian` \n"
-                    + "WHERE 1 = (FLOOR(DATEDIFF(DATE_ADD(DATE(NOW()),INTERVAL 7 DAY),`tanggal_lahir`) / 365.25)) - (FLOOR(DATEDIFF(DATE(NOW()),`tanggal_lahir`) / 365.25))\n"
-                    + "AND `status` = 'IN'  \n"
-                    + "ORDER BY MONTH(`tanggal_lahir`), DAY(`tanggal_lahir`)";
+            String sql = "SELECT `tanggal_lembur`, `jenis_spl`, `kode_departemen`, `disetujui`, `diketahui` \n"
+                    + "FROM `tb_surat_lembur` \n"
+                    + "WHERE \n"
+                    + "`tanggal_surat` > '2023-11-01'\n"
+                    + "AND `kode_departemen` LIKE '%" + filter_departemen + "%'\n"
+                    + "AND \n"
+                    + "(`disetujui` IS NULL OR `diketahui` IS NULL)  \n"
+                    + "ORDER BY `tb_surat_lembur`.`tanggal_lembur` DESC";
             ResultSet rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[5];
             while (rs.next()) {
-                row[0] = rs.getString("nama_pegawai");
-                row[1] = new SimpleDateFormat("dd-MMM").format(rs.getDate("tanggal_lahir"));
-                row[2] = rs.getString("nama_bagian");
-                row[3] = rs.getString("posisi");
-                row[4] = rs.getInt("age_future");
+                row[0] = rs.getDate("tanggal_lembur");
+                row[1] = rs.getString("jenis_spl");
+                row[2] = rs.getString("kode_departemen");
+                row[3] = rs.getString("disetujui") != null;
+                row[4] = rs.getString("diketahui") != null;
                 model.addRow(row);
             }
-            ColumnsAutoSizer.sizeColumnsToFit(Tabel_ultah);
+            ColumnsAutoSizer.sizeColumnsToFit(Tabel_butuh_Acc_Lembur);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            DefaultTableModel model = (DefaultTableModel) Tabel_butuh_Acc_PindahBagian.getModel();
+            model.setRowCount(0);
+            String sql = "SELECT `tanggal_input`, `tb_karyawan`.`nama_pegawai`, `tb_bagian`.`kode_departemen`, `jam_disetujui` \n"
+                    + "FROM `tb_form_pindah_grup` \n"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_form_pindah_grup`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
+                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
+                    + "WHERE "
+                    + "`jam_disetujui` IS NULL\n"
+                    + "AND `kode_departemen` LIKE '%" + filter_departemen + "%'\n"
+                    + "ORDER BY `tanggal_input` DESC";
+            ResultSet rs = Utility.db.getStatement().executeQuery(sql);
+            Object[] row = new Object[5];
+            while (rs.next()) {
+                row[0] = rs.getDate("tanggal_input");
+                row[1] = rs.getString("nama_pegawai");
+                row[2] = rs.getString("kode_departemen");
+                row[3] = rs.getString("jam_disetujui") != null;
+                model.addRow(row);
+            }
+            ColumnsAutoSizer.sizeColumnsToFit(Tabel_butuh_Acc_PindahBagian);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            DefaultTableModel model = (DefaultTableModel) Tabel_butuh_Acc_PengajuanAlat.getModel();
+            model.setRowCount(0);
+            String sql = "SELECT `tanggal_pengajuan`, `nama_barang`, `departemen`, `diketahui_kadep`, `diketahui`\n"
+                    + "FROM `tb_aset_pengajuan` \n"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_aset_pengajuan`.`diajukan` = `tb_karyawan`.`id_pegawai`\n"
+                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
+                    + "WHERE \n"
+                    + "(`diketahui_kadep` IS NULL OR `diketahui` IS NULL)\n"
+                    + "AND `disetujui` IS NULL \n"
+                    + "AND `tb_bagian`.`kode_departemen` LIKE '%" + filter_departemen + "%'\n"
+                    + "ORDER BY `tanggal_pengajuan` DESC";
+            ResultSet rs = Utility.db.getStatement().executeQuery(sql);
+            Object[] row = new Object[5];
+            while (rs.next()) {
+                row[0] = rs.getDate("tanggal_pengajuan");
+                row[1] = rs.getString("nama_barang");
+                row[2] = rs.getString("departemen");
+                row[3] = rs.getString("diketahui_kadep") != null;
+                row[4] = rs.getString("diketahui") != null;
+                model.addRow(row);
+            }
+            ColumnsAutoSizer.sizeColumnsToFit(Tabel_butuh_Acc_PengajuanAlat);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+//    public void refresh_TabelUltah() {
+//        try {
+//            DefaultTableModel model = (DefaultTableModel) Tabel_ultah.getModel();
+//            model.setRowCount(0);
+//            String sql = "SELECT `nama_pegawai`,`tanggal_lahir`, `tb_bagian`.`nama_bagian`, `posisi`, \n"
+//                    + " FLOOR(DATEDIFF(DATE(NOW()),`tanggal_lahir`) / 365.25) AS age_now,\n"
+//                    + " FLOOR(DATEDIFF(DATE_ADD(DATE(NOW()),INTERVAL 7 DAY),`tanggal_lahir`) / 365.25) AS age_future \n"
+//                    + "FROM `tb_karyawan`\n"
+//                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian` \n"
+//                    + "WHERE 1 = (FLOOR(DATEDIFF(DATE_ADD(DATE(NOW()),INTERVAL 7 DAY),`tanggal_lahir`) / 365.25)) - (FLOOR(DATEDIFF(DATE(NOW()),`tanggal_lahir`) / 365.25))\n"
+//                    + "AND `status` = 'IN'  \n"
+//                    + "ORDER BY MONTH(`tanggal_lahir`), DAY(`tanggal_lahir`)";
+//            ResultSet rs = Utility.db.getStatement().executeQuery(sql);
+//            Object[] row = new Object[5];
+//            while (rs.next()) {
+//                row[0] = rs.getString("nama_pegawai");
+//                row[1] = new SimpleDateFormat("dd-MMM").format(rs.getDate("tanggal_lahir"));
+//                row[2] = rs.getString("nama_bagian");
+//                row[3] = rs.getString("posisi");
+//                row[4] = rs.getInt("age_future");
+//                model.addRow(row);
+//            }
+//            ColumnsAutoSizer.sizeColumnsToFit(Tabel_ultah);
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, ex);
+//            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
     public void refreshTable_detailLP_WIP() {
         try {
             DecimalFormat decimalFormat = new DecimalFormat();
@@ -317,10 +404,15 @@ public class MainForm extends javax.swing.JFrame {
         label_warning_stok_reproses = new javax.swing.JLabel();
         label_warning_stok_baku = new javax.swing.JLabel();
         label_warning_stok_qchold = new javax.swing.JLabel();
-        jPanel_ultah = new javax.swing.JPanel();
-        label_bulan_ultah = new javax.swing.JLabel();
+        jPanel_Butuh_Acc = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Tabel_ultah = new javax.swing.JTable();
+        Tabel_butuh_Acc_Lembur = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        Tabel_butuh_Acc_PindahBagian = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        Tabel_butuh_Acc_PengajuanAlat = new javax.swing.JTable();
+        Button_refresh_butuh_Acc = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabel_data_LP_percobaan = new javax.swing.JTable();
@@ -724,7 +816,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.262");
+        jLabel19.setText("2.2.271");
 
         jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");
@@ -754,7 +846,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(label_warning_stok_baku)
                     .addComponent(label_warning_stok_reproses)
                     .addComponent(label_warning_stok_qchold))
-                .addContainerGap(329, Short.MAX_VALUE))
+                .addContainerGap(331, Short.MAX_VALUE))
         );
         jPanel_need_attentionLayout.setVerticalGroup(
             jPanel_need_attentionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -768,25 +860,24 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel_ultah.setBackground(new java.awt.Color(162, 155, 254));
-        jPanel_ultah.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Upcoming Birthday !!", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bahnschrift", 0, 24))); // NOI18N
+        jPanel_Butuh_Acc.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Butuh_Acc.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Approval Required", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bahnschrift", 0, 24), new java.awt.Color(255, 0, 0))); // NOI18N
 
-        label_bulan_ultah.setBackground(new java.awt.Color(255, 255, 255));
-        label_bulan_ultah.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        label_bulan_ultah.setText("7 DAYS FROM TODAY");
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
-        Tabel_ultah.setAutoCreateRowSorter(true);
-        Tabel_ultah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        Tabel_ultah.setModel(new javax.swing.table.DefaultTableModel(
+        Tabel_butuh_Acc_Lembur.setAutoCreateRowSorter(true);
+        Tabel_butuh_Acc_Lembur.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Tabel_butuh_Acc_Lembur.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nama", "Ultah", "Bagian", "Posisi", "Tahun ke"
+                "Tgl Lembur", "Jenis SPL", "Departemen", "Disetujui", "Diketahui"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -800,29 +891,96 @@ public class MainForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(Tabel_ultah);
+        jScrollPane1.setViewportView(Tabel_butuh_Acc_Lembur);
+        if (Tabel_butuh_Acc_Lembur.getColumnModel().getColumnCount() > 0) {
+            Tabel_butuh_Acc_Lembur.getColumnModel().getColumn(4).setHeaderValue("Diketahui");
+        }
 
-        javax.swing.GroupLayout jPanel_ultahLayout = new javax.swing.GroupLayout(jPanel_ultah);
-        jPanel_ultah.setLayout(jPanel_ultahLayout);
-        jPanel_ultahLayout.setHorizontalGroup(
-            jPanel_ultahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_ultahLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_ultahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_ultahLayout.createSequentialGroup()
-                        .addComponent(label_bulan_ultah)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+        jTabbedPane1.addTab("Lembur", jScrollPane1);
+
+        Tabel_butuh_Acc_PindahBagian.setAutoCreateRowSorter(true);
+        Tabel_butuh_Acc_PindahBagian.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Tabel_butuh_Acc_PindahBagian.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tgl Input", "Nama", "Departemen", "Disetujui"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(Tabel_butuh_Acc_PindahBagian);
+
+        jTabbedPane1.addTab("Pindah Bagian", jScrollPane4);
+
+        Tabel_butuh_Acc_PengajuanAlat.setAutoCreateRowSorter(true);
+        Tabel_butuh_Acc_PengajuanAlat.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Tabel_butuh_Acc_PengajuanAlat.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tgl Pengajuan", "Nama Barang", "Departemen", "Diket Kadep", "Diket MO"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane5.setViewportView(Tabel_butuh_Acc_PengajuanAlat);
+
+        jTabbedPane1.addTab("Pengajuan Alat", jScrollPane5);
+
+        Button_refresh_butuh_Acc.setBackground(new java.awt.Color(255, 255, 255));
+        Button_refresh_butuh_Acc.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        Button_refresh_butuh_Acc.setText("Refresh");
+        Button_refresh_butuh_Acc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_refresh_butuh_AccActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_Butuh_AccLayout = new javax.swing.GroupLayout(jPanel_Butuh_Acc);
+        jPanel_Butuh_Acc.setLayout(jPanel_Butuh_AccLayout);
+        jPanel_Butuh_AccLayout.setHorizontalGroup(
+            jPanel_Butuh_AccLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Butuh_AccLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Button_refresh_butuh_Acc)
                 .addContainerGap())
         );
-        jPanel_ultahLayout.setVerticalGroup(
-            jPanel_ultahLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_ultahLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(label_bulan_ultah)
+        jPanel_Butuh_AccLayout.setVerticalGroup(
+            jPanel_Butuh_AccLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Butuh_AccLayout.createSequentialGroup()
+                .addComponent(Button_refresh_butuh_Acc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -887,7 +1045,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -915,7 +1073,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(label_total_gram_lp_percobaan)
                     .addComponent(label_total_lp_percobaan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -940,7 +1098,7 @@ public class MainForm extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel_need_attention, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel_ultah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel_Butuh_Acc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -958,8 +1116,8 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_HomeLayout.createSequentialGroup()
                         .addComponent(jPanel_need_attention, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel_ultah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel_Butuh_Acc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -5375,7 +5533,7 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.repaint();
         main_panel.revalidate();
         jPanel_Laporan_Produksi_Sesekan1.init();
-        
+
         if ('0' == dataMenu.get(AksesMenu.searchMenuByName(dataMenu, AksesMenu.MENU_ITEM_LAPORAN_PRODUKSI_SESEKAN)).akses.charAt(1)) {
             jPanel_Laporan_Produksi_Sesekan1.button_create_lp_sesekan.setEnabled(false);
         } else {
@@ -5495,7 +5653,7 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.repaint();
         main_panel.revalidate();
         jPanel_Laporan_Produksi_Sapon1.init();
-        
+
         if ('0' == dataMenu.get(AksesMenu.searchMenuByName(dataMenu, AksesMenu.MENU_ITEM_LAPORAN_PRODUKSI_SAPON)).akses.charAt(1)) {
             jPanel_Laporan_Produksi_Sapon1.button_create_lp_Sapon.setEnabled(false);
         } else {
@@ -6082,7 +6240,7 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.repaint();
         main_panel.revalidate();
         jPanel_Laporan_Produksi_Sesekan1.init();
-        
+
         if ('0' == dataMenu.get(AksesMenu.searchMenuByName(dataMenu, AksesMenu.MENU_ITEM_LAPORAN_PRODUKSI_SESEKAN)).akses.charAt(1)) {
             jPanel_Laporan_Produksi_Sesekan1.button_create_lp_sesekan.setEnabled(false);
         } else {
@@ -6111,7 +6269,7 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.repaint();
         main_panel.revalidate();
         jPanel_Laporan_Produksi_Sapon1.init();
-        
+
         if ('0' == dataMenu.get(AksesMenu.searchMenuByName(dataMenu, AksesMenu.MENU_ITEM_LAPORAN_PRODUKSI_SAPON)).akses.charAt(1)) {
             jPanel_Laporan_Produksi_Sapon1.button_create_lp_Sapon.setEnabled(false);
         } else {
@@ -6272,13 +6430,21 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_GajiCABUTO1.init();
     }//GEN-LAST:event_jMenuItem_perhitungan_upahActionPerformed
 
+    private void Button_refresh_butuh_AccActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_refresh_butuh_AccActionPerformed
+        // TODO add your handling code here:
+        refresh_Butuh_Acc();
+    }//GEN-LAST:event_Button_refresh_butuh_AccActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Button_refresh_butuh_Acc;
     public static javax.swing.JMenuItem JMenuItem_DataPacking;
     private javax.swing.JMenuItem MenuItem_Keu_BakuKeluar;
     private javax.swing.JMenuItem MenuItem_Penilaian_BuluUpah;
     private javax.swing.JMenuItem MenuItem_hrd_ijinToilet;
-    private javax.swing.JTable Tabel_ultah;
+    private javax.swing.JTable Tabel_butuh_Acc_Lembur;
+    private javax.swing.JTable Tabel_butuh_Acc_PengajuanAlat;
+    private javax.swing.JTable Tabel_butuh_Acc_PindahBagian;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -6530,6 +6696,7 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.Manajemen.JPanel_BonusPetikRSB jPanel_BonusPetikRSB1;
     private waleta_system.BahanJadi.JPanel_BoxBahanJadi jPanel_BoxBahanJadi1;
     private waleta_system.Finance.JPanel_BoxBahanJadi_Keuangan jPanel_BoxBahanJadi_Keuangan1;
+    private javax.swing.JPanel jPanel_Butuh_Acc;
     private waleta_system.BahanBaku.JPanel_Customer jPanel_Customer1;
     private waleta_system.BahanBaku.JPanel_DataBahanBaku jPanel_DataBahanBaku1;
     private waleta_system.Finance.JPanel_DataBahanBaku_Finance jPanel_DataBahanBaku_Finance1;
@@ -6662,12 +6829,13 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.Finance.JPanel_payrol_data jPanel_payrol_data1;
     private waleta_system.Finance.JPanel_payrol_harian jPanel_payrol_harian1;
     private waleta_system.Packing.JPanel_pengiriman jPanel_pengiriman1;
-    private javax.swing.JPanel jPanel_ultah;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JLabel label_bulan_ultah;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel label_total_gram_lp_percobaan;
     private javax.swing.JLabel label_total_keping_lp_percobaan;
     private javax.swing.JLabel label_total_lp_percobaan;

@@ -401,7 +401,8 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                     + "FROM `tb_laporan_produksi` "
                     + "LEFT JOIN `tb_tarif_upah` ON `tb_laporan_produksi`.`jenis_bulu_lp` = `tb_tarif_upah`.`bulu_upah` "
                     + "LEFT JOIN `tb_cabut` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi` "
-                    + "AND `tb_laporan_produksi`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp_bonusCabut.getText() + "%' "
+                    + "WHERE "
+                    + "`tb_laporan_produksi`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp_bonusCabut.getText() + "%' "
                     + search_sub
                     + "AND (`tgl_setor_cabut` BETWEEN '" + dateFormat.format(tanggal_mulai) + "' AND '" + dateFormat.format(tanggal_selesai) + "') ";
             rs = Utility.db_sub.getStatement().executeQuery(sql);
@@ -1111,7 +1112,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                         row[15] = jumlah_hari_masuk_kerja;//hari kerja
                         row[16] = kpg_cabut_dikerjakan;//Kpg dikerjakan
                         row[17] = Math.round(upah_borong_cabut);//Gaji Cabut
-                        row[18] = Math.round(upah_borong_kk_kulit);//Gaji Cabut
+                        row[18] = Math.round(upah_borong_kk_kulit);//Gaji Kaki kulit
                         row[19] = Math.round(upah_borong_sesekan);//Gaji Borong Sesekan
                         row[20] = Math.round(upah_borong_sapon);//Gaji Borong Sapon
                         row[21] = Math.round(upah_borong_cabut + upah_borong_kk_kulit + upah_borong_sesekan + upah_borong_sapon);//Total Upah
