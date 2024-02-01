@@ -34,14 +34,14 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting() && Table_pelanggaran_ph_rekap.getSelectedRow() != -1) {
                     int i = Table_pelanggaran_ph_rekap.getSelectedRow();
-                    refreshTable_rekap_Pelanggaran_hp_detail(Table_pelanggaran_ph_rekap.getValueAt(i, 0).toString());
+                    refreshTable_rekap_Pelanggaran_PH_detail(Table_pelanggaran_ph_rekap.getValueAt(i, 0).toString());
                 }
             }
         });
-        refreshTable_Pelanggaran_hp();
+        refreshTable_Pelanggaran_PH();
     }
 
-    public void refreshTable_Pelanggaran_hp() {
+    public void refreshTable_Pelanggaran_PH() {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_pelanggaran_ph.getModel();
             model.setRowCount(0);
@@ -76,7 +76,7 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
         }
     }
 
-    public void refreshTable_rekap_Pelanggaran_hp() {
+    public void refreshTable_rekap_Pelanggaran_PH() {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_pelanggaran_ph_rekap.getModel();
             model.setRowCount(0);
@@ -111,8 +111,8 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
             Logger.getLogger(JPanel_Data_personalHygiene.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void refreshTable_rekap_Pelanggaran_hp_detail(String id) {
+
+    public void refreshTable_rekap_Pelanggaran_PH_detail(String id) {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_pelanggaran_ph_rekap_detail.getModel();
             model.setRowCount(0);
@@ -158,6 +158,7 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
         Date2 = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         button_export_tdkMasuk = new javax.swing.JButton();
+        button_delete = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         Table_pelanggaran_ph_rekap = new javax.swing.JTable();
@@ -225,7 +226,7 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
 
         label_total_data.setBackground(new java.awt.Color(255, 255, 255));
         label_total_data.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        label_total_data.setText("Total data :");
+        label_total_data.setText("Total data : 0");
 
         txt_search_keyword.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txt_search_keyword.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -261,6 +262,15 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
             }
         });
 
+        button_delete.setBackground(new java.awt.Color(255, 255, 255));
+        button_delete.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_delete.setText("Delete");
+        button_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_deleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -282,9 +292,12 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_refresh)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_delete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 641, Short.MAX_VALUE)
+                        .addComponent(button_export_tdkMasuk))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(label_total_data)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 652, Short.MAX_VALUE)
-                        .addComponent(button_export_tdkMasuk)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -293,15 +306,17 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txt_search_keyword, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export_tdkMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_export_tdkMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
+                .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -508,13 +523,13 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
 
     private void button_refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refreshActionPerformed
         // TODO add your handling code here:
-        refreshTable_Pelanggaran_hp();
+        refreshTable_Pelanggaran_PH();
     }//GEN-LAST:event_button_refreshActionPerformed
 
     private void txt_search_keywordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_keywordKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            refreshTable_Pelanggaran_hp();
+            refreshTable_Pelanggaran_PH();
         }
     }//GEN-LAST:event_txt_search_keywordKeyPressed
 
@@ -526,13 +541,13 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
 
     private void button_refresh_rekapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refresh_rekapActionPerformed
         // TODO add your handling code here:
-        refreshTable_rekap_Pelanggaran_hp();
+        refreshTable_rekap_Pelanggaran_PH();
     }//GEN-LAST:event_button_refresh_rekapActionPerformed
 
     private void txt_search_nama_rekapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_nama_rekapKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            refreshTable_rekap_Pelanggaran_hp();
+            refreshTable_rekap_Pelanggaran_PH();
         }
     }//GEN-LAST:event_txt_search_nama_rekapKeyPressed
 
@@ -541,6 +556,32 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
         DefaultTableModel table = (DefaultTableModel) Table_pelanggaran_ph_rekap.getModel();
         ExportToExcel.writeToExcel(table, this);
     }//GEN-LAST:event_button_export_pelanggaranph_rekapActionPerformed
+
+    private void button_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_deleteActionPerformed
+        // TODO add your handling code here:
+        try {
+            int j = Table_pelanggaran_ph.getSelectedRow();
+            if (j == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
+            } else {
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    // delete code here
+                    String no = Table_pelanggaran_ph.getValueAt(j, 0).toString();
+                    String Query = "DELETE FROM `tb_pelanggaran_personal_hygiene` WHERE `nomor_pelanggaran` = '" + no + "'";
+                    if (Utility.db.getStatement().executeUpdate(Query) == 1) {
+                        JOptionPane.showMessageDialog(this, "Sukses hapus data!");
+                        refreshTable_rekap_Pelanggaran_PH();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Hapus data gagal!");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "ERROR : " + e);
+            Logger.getLogger(JPanel_Data_personalHygiene.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_button_deleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -551,6 +592,7 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
     private javax.swing.JTable Table_pelanggaran_ph;
     private javax.swing.JTable Table_pelanggaran_ph_rekap;
     private javax.swing.JTable Table_pelanggaran_ph_rekap_detail;
+    private javax.swing.JButton button_delete;
     private javax.swing.JButton button_export_pelanggaranph_rekap;
     private javax.swing.JButton button_export_tdkMasuk;
     private javax.swing.JButton button_refresh;

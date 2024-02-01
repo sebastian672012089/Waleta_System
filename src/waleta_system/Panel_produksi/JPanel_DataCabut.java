@@ -1040,7 +1040,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
         try {
             int j = Table_Data_Cabut.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to change !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di edit !");
             } else {
                 String no_lp = Table_Data_Cabut.getValueAt(j, 0).toString();
                 JDialog_Edit_Data_Cabut edit_cabut = new JDialog_Edit_Data_Cabut(new javax.swing.JFrame(), true, no_lp);

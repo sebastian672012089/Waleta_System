@@ -64,11 +64,6 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
 
     public JFrame_TV_WIP() {
         initComponents();
-        try {
-            Utility.db.connect();
-        } catch (Exception ex) {
-            Logger.getLogger(JFrame_TV_WIP.class.getName()).log(Level.SEVERE, null, ex);
-        }
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -222,10 +217,10 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
             String Filter_jenis_LP = "";
             switch (ComboBox_jenis_lp.getSelectedIndex()) {
                 case 1:
-                    Filter_jenis_LP = "AND `tb_laporan_produksi`.`ruangan` IN ('A', 'B', 'C', 'D', 'E') ";
+                    Filter_jenis_LP = "AND `tb_laporan_produksi`.`ruangan` IN ('A', 'B', 'C', 'D', 'E', 'CABUTO') ";
                     break;
                 case 2:
-                    Filter_jenis_LP = "AND `tb_laporan_produksi`.`ruangan` NOT IN ('A', 'B', 'C', 'D', 'E') ";
+                    Filter_jenis_LP = "AND `tb_laporan_produksi`.`ruangan` NOT IN ('A', 'B', 'C', 'D', 'E', 'CABUTO') ";
                     break;
                 default:
                     break;
@@ -649,7 +644,7 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
                 sql = "SELECT AVG(cabutan) AS 'avg' FROM ("
                         + "SELECT SUM(IF(`jumlah_cabut`>0, `jumlah_cabut`, `jumlah_gram`/8)) AS 'cabutan' "
                         + "FROM `tb_detail_pencabut` \n"
-                        + "LEFT JOIN `tb_laporan_produksi`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
+                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
                         + "WHERE "
                         + "LENGTH(`ruangan`) <> 5 "
                         + "AND YEAR(`tanggal_cabut`) = '" + (tahun - i) + "'"

@@ -53,13 +53,6 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
     Thread thread;
 
     public JFrame_SistemPrintSlip() {
-        try {
-            Utility.db.connect();
-        } catch (Exception ex) {
-            exceptionList.add(ex);
-            Logger.getLogger(JFrame_SistemPrintSlip.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         // Create a new JPanel with a centered layout
@@ -1245,7 +1238,7 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
 
         txt_potongan_bpjs.setEditable(false);
         txt_potongan_bpjs.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_potongan_bpjs.setText("22842");
+        txt_potongan_bpjs.setText("23790");
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -1261,7 +1254,7 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
 
         txt_potongan_bpjs_tk.setEditable(false);
         txt_potongan_bpjs_tk.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_potongan_bpjs_tk.setText("68526");
+        txt_potongan_bpjs_tk.setText("71370");
 
         txt_jumlah_karyawan_terlambat.setEditable(false);
         txt_jumlah_karyawan_terlambat.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N

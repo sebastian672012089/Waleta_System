@@ -29,6 +29,7 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         label_jenis_spl.setText(jenis_spl);
+        label_tanggal_spl.setText(new SimpleDateFormat("dd MMM yyyy").format(date));
         label_diajukan.setText(MainForm.Login_NamaPegawai);
         button_add.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/add_green.png")), button_add.getWidth(), button_add.getHeight()));
         button_delete.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/delete-icon.png")), button_delete.getWidth(), button_delete.getHeight()));
@@ -54,7 +55,7 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
                 label_no_surat.setText(rs.getString("nomor_surat"));
-                Date_tgl_surat.setDate(rs.getDate("tanggal_surat"));
+                label_tanggal_spl.setText(new SimpleDateFormat("dd MMM yyyy").format(rs.getDate("tanggal_surat")));
                 label_jenis_spl.setText(rs.getString("jenis_spl"));
                 label_departemen.setText(rs.getString("kode_departemen"));
                 Date_tgl_lembur.setDate(rs.getDate("tanggal_lembur"));
@@ -99,7 +100,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
             String Query_surat = null, Query_pegawai = null;
             //variabel for input surat lembur
             String nomor_surat = label_no_surat.getText();
-            String tanggal_surat = dateFormat.format(Date_tgl_surat.getDate());
             String departemen = label_departemen.getText();
             String tanggal_lembur = dateFormat.format(Date_tgl_lembur.getDate());
             String jenis_hari = ComboBox_jenis_hari.getSelectedItem().toString();
@@ -110,7 +110,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
             Utility.db.getStatement().executeUpdate(sql);
 
             Query_surat = "UPDATE `tb_surat_lembur` SET "
-                    + "`tanggal_surat`='" + tanggal_surat + "',"
                     + "`kode_departemen`='" + departemen + "',"
                     + "`jenis_hari`='" + jenis_hari + "',"
                     + "`tanggal_lembur`='" + tanggal_lembur + "',"
@@ -166,7 +165,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
             }
             //variabel for input surat lembur
             String nomor_surat = label_no_surat.getText();
-            String tanggal_surat = dateFormat.format(Date_tgl_surat.getDate());
             String departemen = label_departemen.getText();
             String tanggal_lembur = dateFormat.format(Date_tgl_lembur.getDate());
             String jenis_hari = ComboBox_jenis_hari.getSelectedItem().toString();
@@ -174,7 +172,7 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
             String uraian_tugas = txt_tugas.getText();
 
             Query_surat = "INSERT INTO `tb_surat_lembur`(`nomor_surat`, `tanggal_surat`, `jenis_spl`, `kode_departemen`, `jenis_hari`, `tanggal_lembur`, `uraian_tugas`, `diajukan`) "
-                    + "VALUES ('" + nomor_surat + "','" + tanggal_surat + "','" + label_jenis_spl.getText() + "','" + departemen + "','" + jenis_hari + "','" + tanggal_lembur + "','" + uraian_tugas + "','" + label_diajukan.getText() + "')";
+                    + "VALUES ('" + nomor_surat + "',NOW(),'" + label_jenis_spl.getText() + "','" + departemen + "','" + jenis_hari + "','" + tanggal_lembur + "','" + uraian_tugas + "','" + label_diajukan.getText() + "')";
             if ((Utility.db.getStatement().executeUpdate(Query_surat)) > 0) {
                 int x = Table_pegawai_lembur.getRowCount();
                 for (int i = 0; i < x; i++) {
@@ -223,7 +221,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         label_no_surat = new javax.swing.JLabel();
-        Date_tgl_surat = new com.toedter.calendar.JDateChooser();
         ComboBox_jenis_hari = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         Date_tgl_lembur = new com.toedter.calendar.JDateChooser();
@@ -243,6 +240,7 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
         label_jenis_spl = new javax.swing.JLabel();
         label_departemen = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        label_tanggal_spl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Surat Perintah Lembur");
@@ -269,11 +267,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
         label_no_surat.setBackground(new java.awt.Color(255, 255, 255));
         label_no_surat.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_no_surat.setText("XXXX");
-
-        Date_tgl_surat.setBackground(new java.awt.Color(255, 255, 255));
-        Date_tgl_surat.setDate(date);
-        Date_tgl_surat.setDateFormatString("dd MMMM yyyy");
-        Date_tgl_surat.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         ComboBox_jenis_hari.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         ComboBox_jenis_hari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hari Kerja", "Hari Libur" }));
@@ -384,6 +377,10 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel10.setText("Jenis Lembur :");
 
+        label_tanggal_spl.setBackground(new java.awt.Color(255, 255, 255));
+        label_tanggal_spl.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        label_tanggal_spl.setText("XXXX");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -398,14 +395,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
                         .addComponent(button_add, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_no_surat, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_tgl_surat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -428,16 +417,24 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ComboBox_jenis_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_diajukan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_simpan))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(label_title)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_jenis_spl)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_diajukan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(label_tanggal_spl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_simpan)))
+                        .addComponent(label_no_surat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -448,12 +445,13 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
                     .addComponent(label_title)
                     .addComponent(label_jenis_spl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label_no_surat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Date_tgl_surat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_no_surat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_tanggal_spl, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -620,7 +618,6 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> ComboBox_jenis_hari;
     private javax.swing.JComboBox<String> ComboBox_jenis_lembur;
     private com.toedter.calendar.JDateChooser Date_tgl_lembur;
-    private com.toedter.calendar.JDateChooser Date_tgl_surat;
     public static javax.swing.JTable Table_pegawai_lembur;
     private javax.swing.JButton button_add;
     private javax.swing.JButton button_delete;
@@ -641,6 +638,7 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
     private javax.swing.JLabel label_diajukan;
     public static javax.swing.JLabel label_jenis_spl;
     private javax.swing.JLabel label_no_surat;
+    private javax.swing.JLabel label_tanggal_spl;
     public static javax.swing.JLabel label_title;
     private javax.swing.JTextArea txt_tugas;
     // End of variables declaration//GEN-END:variables

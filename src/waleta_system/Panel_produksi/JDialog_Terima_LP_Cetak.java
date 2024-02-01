@@ -16,7 +16,7 @@ import waleta_system.MainForm;
 public class JDialog_Terima_LP_Cetak extends javax.swing.JDialog {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    
+
     Date date = new Date();
     PreparedStatement pst;
     String sql = null;
@@ -26,8 +26,7 @@ public class JDialog_Terima_LP_Cetak extends javax.swing.JDialog {
     public JDialog_Terima_LP_Cetak(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         try {
-            
-            
+
             initComponents();
             this.setResizable(false);
         } catch (Exception ex) {
@@ -42,12 +41,18 @@ public class JDialog_Terima_LP_Cetak extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Masukan No Laporan Produksi !!");
                 Check = false;
             } else {
-                sql = "SELECT `no_laporan_produksi` FROM `tb_cetak` WHERE `no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
-                rs = Utility.db.getStatement().executeQuery(sql);
-                if (rs.next()) {
+                String query = "SELECT `tb_laporan_produksi`.`ruangan`, `tb_cetak`.`no_laporan_produksi`\n"
+                        + "FROM `tb_laporan_produksi`\n"
+                        + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
+                        + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
+                ResultSet result = Utility.db.getStatement().executeQuery(query);
+                if (!result.next()) {
+                    JOptionPane.showMessageDialog(this, "No LP salah, " + txt_no_lp.getText() + " tidak ditemukan di data LP !");
+                    Check = false;
+                } else if (result.getString("no_laporan_produksi") != null) {
                     JOptionPane.showMessageDialog(this, "LP sudah masuk Cetak!");
                     Check = false;
-                } else if (txt_no_lp.getText().toUpperCase().contains("WL-")) {
+                } else if (result.getString("ruangan").length() != 5) {
                     Date tgl_setor_cabut = null;
                     String cabut_diserahkan = null, no_lp = null;
                     sql = "SELECT `no_laporan_produksi`, `tgl_setor_cabut`, `cabut_diserahkan` FROM `tb_cabut` WHERE `no_laporan_produksi` = '" + txt_no_lp.getText() + "'";

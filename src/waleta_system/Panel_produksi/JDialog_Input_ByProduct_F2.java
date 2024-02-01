@@ -18,7 +18,7 @@ import waleta_system.MainForm;
 public class JDialog_Input_ByProduct_F2 extends javax.swing.JDialog {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    
+
     Date date = new Date();
     PreparedStatement pst;
     String sql = null;
@@ -27,8 +27,7 @@ public class JDialog_Input_ByProduct_F2 extends javax.swing.JDialog {
     public JDialog_Input_ByProduct_F2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         try {
-            
-            
+
             initComponents();
             label_title_terima_lp.setText("Input By Product F2");
             this.setResizable(false);
@@ -55,10 +54,18 @@ public class JDialog_Input_ByProduct_F2 extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "anda belum melengkapi data");
                 Check = false;
             } else {
-                sql = "SELECT `no_laporan_produksi` FROM `tb_cetak` WHERE `no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
-                rs = Utility.db.getStatement().executeQuery(sql);
-                if (!rs.next() && txt_no_lp.getText().toUpperCase().contains("WL-")) {
-                    JOptionPane.showMessageDialog(this, "LP belum Masuk Cetak !!");
+                boolean check_no_LP = true;
+                String query = "SELECT `tb_laporan_produksi`.`ruangan`, `tb_cetak`.`no_laporan_produksi`\n"
+                        + "FROM `tb_laporan_produksi`\n"
+                        + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
+                        + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
+                ResultSet result = Utility.db.getStatement().executeQuery(query);
+                check_no_LP = !result.next();
+                if (check_no_LP) {
+                    JOptionPane.showMessageDialog(this, "No LP salah, " + txt_no_lp.getText() + " tidak ditemukan di data LP !");
+                    Check = false;
+                } else if (result.getString("ruangan").length() != 5 && result.getString("no_laporan_produksi") == null) {
+                    JOptionPane.showMessageDialog(this, "No LP (" + txt_no_lp.getText() + ") belum masuk Cetak !");
                     Check = false;
                 }
             }

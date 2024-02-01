@@ -107,9 +107,13 @@
                                   <EmptySpace min="-2" max="-2" attributes="0"/>
                                   <Component id="button_refresh" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="label_total_data" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="652" max="32767" attributes="0"/>
+                                  <Component id="button_delete" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="641" max="32767" attributes="0"/>
                                   <Component id="button_export_tdkMasuk" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="label_total_data" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -122,16 +126,18 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="2" attributes="0">
                               <Component id="txt_search_keyword" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
-                              <Component id="label_total_data" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="Date2" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="button_refresh" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="Date1" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="button_export_tdkMasuk" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="button_delete" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="594" max="32767" attributes="0"/>
+                          <Component id="label_total_data" min="-2" pref="23" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" pref="565" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -230,7 +236,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="12" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Total data :"/>
+                    <Property name="text" type="java.lang.String" value="Total data : 0"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt_search_keyword">
@@ -305,6 +311,20 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_export_tdkMasukActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="button_delete">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Arial" size="12" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Delete"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_deleteActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

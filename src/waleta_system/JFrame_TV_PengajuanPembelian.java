@@ -48,7 +48,6 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
 
     public void refreshTable() {
         try {
-            Utility.db.connect();
             DefaultTableModel model = (DefaultTableModel) table_pengajuan.getModel();
             model.setRowCount(0);
             sql = "SELECT `no`, `tanggal_pengajuan`, `tb_aset_pengajuan`.`departemen`, `keperluan`, `nama_barang`, `jumlah`, `link_pembelian`, `dibutuhkan_tanggal`, `nama_pegawai` AS 'diajukan', `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `jenis_pembelian`, `tb_aset_pengajuan`.`status`, `tb_aset_pengajuan`.`keterangan`, "

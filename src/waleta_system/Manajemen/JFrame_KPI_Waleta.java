@@ -42,11 +42,6 @@ public class JFrame_KPI_Waleta extends javax.swing.JFrame {
 
     public JFrame_KPI_Waleta() {
         initComponents();
-        try {
-            Utility.db.connect();
-        } catch (Exception ex) {
-            Logger.getLogger(JFrame_KPI_Waleta.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void init() {
@@ -222,7 +217,7 @@ public class JFrame_KPI_Waleta extends javax.swing.JFrame {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_data.getModel();
 
-            sql = "SELECT `tb_finishing_2`.`no_laporan_produksi`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `berat_fbonus`,  `berat_fnol`, `berat_pecah`, `berat_flat`, `berat_jidun`, `sesekan`, `hancuran`, `rontokan`, `bonggol`, `serabut`, `tambahan_kaki1`, `tambahan_kaki2` \n"
+            sql = "SELECT `tb_finishing_2`.`no_laporan_produksi`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `berat_fbonus`,  `berat_fnol`, `berat_pecah`, `berat_flat`, `berat_jidun`, `sesekan`, `hancuran`, `rontokan`, `bonggol`, `serabut`, `tambahan_kaki1`, `tambahan_kaki2` \n"
                     + ", MONTH(`tgl_setor_f2`) AS 'bulan', YEAR(`tgl_setor_f2`) AS 'tahun'"
                     + "FROM `tb_finishing_2` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`"
@@ -244,7 +239,7 @@ public class JFrame_KPI_Waleta extends javax.swing.JFrame {
                 float ByProduct = rs.getInt("sesekan") + rs.getInt("hancuran") + rs.getInt("rontokan") + rs.getInt("bonggol") + rs.getInt("serabut");
                 for (int i = 0; i < jumlah_bulan; i++) {
                     if (rs.getInt("bulan") == bulan[i]) {
-                        if (rs.getString("no_laporan_produksi").substring(0, 3).equals("WL-")) {
+                        if (rs.getString("ruangan").length() != 5) {
                             if (utuh >= jidun) {
                                 MK[i] = MK[i] + (utuh - kaki);
                             } else {

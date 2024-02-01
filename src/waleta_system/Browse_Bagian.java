@@ -38,7 +38,6 @@ public class Browse_Bagian extends javax.swing.JDialog {
         });
 
         try {
-            Utility.db.connect();
             ComboBox_posisi.removeAllItems();
             ComboBox_posisi.addItem("All");
             sql = "SELECT DISTINCT(`posisi_bagian`) AS 'posisi_bagian' "

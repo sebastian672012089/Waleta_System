@@ -122,7 +122,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                 if (ComboBox_SearchPekerja.getSelectedIndex() == 0) {
                     search_pekerja = "AND `tb_cabut`.`ketua_regu` LIKE '%" + txt_search_pekerja.getText() + "%' ";
                 } else if (ComboBox_SearchPekerja.getSelectedIndex() == 1) {
-                    search_pekerja = "AND `tb_cetak`.`cetak_dikerjakan` LIKE '%" + txt_search_pekerja.getText() + "%' ";
+                    search_pekerja = "AND `tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_pekerja.getText() + "%' ";
                 }
             }
 
@@ -146,7 +146,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_finishing_2` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`"
                     + "LEFT JOIN `tb_cabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`"
                     + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`"
-                    + "LEFT JOIN `tb_karyawan` ON `tb_cetak`.`cetak_dikerjakan` = `tb_karyawan`.`id_pegawai`"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_cetak`.`cetak_dikerjakan` = `tb_karyawan`.`id_pegawai` "
                     + "WHERE (`kode_tutupan` <> 'SALDO_AWAL2018' OR `kode_tutupan` IS NULL) "
                     + "AND `kode_asal` LIKE '%" + txt_search_no_lp.getText() + "%' "
                     + "AND `tb_laporan_produksi`.`no_kartu_waleta` LIKE '%" + txt_search_no_kartu.getText() + "%' "

@@ -33,7 +33,6 @@ public class JPanel_DataLPSesekanSub extends javax.swing.JPanel {
 
     public void init() {
         try {
-            Utility.db.connect();
             Utility.db_sub.connect();
             ComboBox_sub_lp_sesekan.removeAllItems();
             ComboBox_sub_lp_sesekan.addItem("All");

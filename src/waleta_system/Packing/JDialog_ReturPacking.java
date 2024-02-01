@@ -13,12 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.Class.ColumnsAutoSizer;
-
 import waleta_system.Class.Utility;
 
 public class JDialog_ReturPacking extends javax.swing.JDialog {
 
-     
     String sql = null;
     ResultSet rs;
     Date date = new Date();

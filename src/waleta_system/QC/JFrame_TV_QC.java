@@ -40,11 +40,6 @@ public class JFrame_TV_QC extends javax.swing.JFrame {
     int spk = 0, baris = -1, check = 0;
 
     public JFrame_TV_QC() {
-        try {
-            Utility.db.connect();
-        } catch (Exception ex) {
-            Logger.getLogger(JFrame_TV_QC.class.getName()).log(Level.SEVERE, null, ex);
-        }
         initComponents();
         init();
     }

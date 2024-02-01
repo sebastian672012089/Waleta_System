@@ -26,7 +26,6 @@ public class JDialog_Input_Rendemen_LP_Sapon extends javax.swing.JDialog {
 
     public void getdata() {
         try {
-            Utility.db.connect();
             String query = "SELECT `no_lp_sapon`, `gram_sapon`, `tanggal_timbang`, `rendemen_bersih`, `hancuran`, `rontokan_kotor`, `rontokan_kuning` "
                     + "FROM `tb_laporan_produksi_sapon` "
                     + "WHERE `no_lp_sapon` = '" + label_no_lp.getText() + "' ";
@@ -327,7 +326,6 @@ public class JDialog_Input_Rendemen_LP_Sapon extends javax.swing.JDialog {
                         + "`rontokan_kotor`='" + rontokan_kotor + "', "
                         + "`rontokan_kuning`='" + rontokan_kuning + "' "
                         + "WHERE `no_lp_sapon`='" + label_no_lp.getText() + "'";
-                Utility.db.connect();
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
                     JOptionPane.showMessageDialog(this, "sukses input data rendemen");

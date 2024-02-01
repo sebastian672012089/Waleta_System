@@ -15,22 +15,27 @@ public class JDialog_otorisasi_QC extends javax.swing.JDialog {
     ResultSet rs;
     PreparedStatement pst;
     boolean akses = false;
+    String filter_otoritas;
 
-    public JDialog_otorisasi_QC(java.awt.Frame parent, boolean modal) {
+    public JDialog_otorisasi_QC(java.awt.Frame parent, boolean modal, String otoritas, String filter_otoritas) {
         super(parent, modal);
         initComponents();
+        this.filter_otoritas = filter_otoritas;
+        label_otoritas.setText("otoritas");
         lock_image.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/Lock.png")), lock_image.getWidth(), lock_image.getHeight()));
     }
 
     public boolean getAccess() {
         boolean Access = false;
         try {
-            
             Connection con = Utility.db.getConnection();
             sql = "SELECT * FROM `tb_login` "
                     + "JOIN `tb_karyawan` ON `tb_login`.`id_pegawai` = `tb_karyawan`.`id_pegawai` "
                     + "JOIN `tb_bagian` ON `tb_bagian`.`kode_bagian` = `tb_karyawan`.`kode_bagian` "
-                    + "WHERE `user`=? AND `pass`=? AND `tb_karyawan`.`status` = 'IN' AND (`tb_karyawan`.`posisi` LIKE 'STAFF%' OR `tb_karyawan`.`posisi` = 'MANAGER') ";
+                    + "WHERE "
+                    + "`user`=? AND `pass`=? "
+                    + "AND `tb_karyawan`.`status` = 'IN' "
+                    + filter_otoritas;
             pst = con.prepareStatement(sql);
             pst.setString(1, txt_username.getText());
             pst.setString(2, txt_password.getText());
@@ -73,7 +78,7 @@ public class JDialog_otorisasi_QC extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         txt_password = new javax.swing.JPasswordField();
         button_login = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
+        label_otoritas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Otorisasi Repacking");
@@ -119,10 +124,10 @@ public class JDialog_otorisasi_QC extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Arial", 2, 10)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel3.setText("*Staff");
+        label_otoritas.setBackground(new java.awt.Color(255, 255, 255));
+        label_otoritas.setFont(new java.awt.Font("Arial", 2, 10)); // NOI18N
+        label_otoritas.setForeground(new java.awt.Color(153, 153, 153));
+        label_otoritas.setText("*Staff");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,7 +149,7 @@ public class JDialog_otorisasi_QC extends javax.swing.JDialog {
                             .addComponent(txt_username)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(label_otoritas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -163,7 +168,7 @@ public class JDialog_otorisasi_QC extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button_login)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(label_otoritas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -204,8 +209,8 @@ public class JDialog_otorisasi_QC extends javax.swing.JDialog {
     private javax.swing.JButton button_login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel label_otoritas;
     private javax.swing.JLabel lock_image;
     private javax.swing.JPasswordField txt_password;
     private javax.swing.JTextField txt_username;

@@ -43,7 +43,6 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
     int detik = 0, tab = 0;
 
     public JFrame_TV_GradingBaku() {
-        Utility.db.connect();
         initComponents();
         Table_Data_Nitrit_baku1.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
         Table_Data_Nitrit_baku2.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));

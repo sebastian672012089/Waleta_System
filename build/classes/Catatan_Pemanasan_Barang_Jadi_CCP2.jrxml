@@ -163,14 +163,438 @@ WHERE 1]]>
 	<field name="tanggal_pengiriman" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<group name="grup" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{tanggal_pengiriman}
++ $F{operator_heat_treatment}
++ $F{suhu_ruang}
++ $F{suhu_preheat}
++ $F{waktu_preheat}]]></groupExpression>
+		<groupHeader>
+			<band height="110">
+				<staticText>
+					<reportElement style="Column header" x="0" y="60" width="30" height="50" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="50" y="60" width="120" height="50" forecolor="#000000" uuid="2602871b-0fdc-4779-a1f5-2e898c732f51"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="250" y="60" width="30" height="50" forecolor="#000000" uuid="7d58113d-34af-46b3-a9b9-873d3408275a"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="280" y="60" width="40" height="50" forecolor="#000000" uuid="221c7059-edd3-4768-8ff7-e9b6c91c2bf9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="320" y="60" width="50" height="50" forecolor="#000000" uuid="976ed8fb-6618-45eb-9fd1-0c95330511dd"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="450" y="60" width="30" height="50" forecolor="#000000" uuid="a19e9542-632b-4407-8c45-98a1d222a650"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="515" y="60" width="40" height="50" forecolor="#000000" uuid="96fbb336-7c6c-4ed7-81ec-ea68ea93bfe1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="170" y="60" width="80" height="50" forecolor="#000000" uuid="9bfdca42-72c8-429c-b071-133bfc1fd109"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="30" y="60" width="20" height="50" forecolor="#000000" uuid="a1052280-ab37-48a2-8ac8-56c17de0e5aa"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="480" y="60" width="35" height="50" forecolor="#000000" uuid="0553b7f8-4d3b-4b16-b01b-a5a03fb30190"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="250" y="60" width="30" height="30" forecolor="#000000" uuid="16c35e88-8e15-4565-a0cc-0c99398f4285"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Biji]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="50" y="60" width="120" height="30" forecolor="#000000" uuid="b2ef1f99-6d6c-4ea8-8f8d-a4d873b30a33"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[No. Box]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="320" y="60" width="50" height="30" forecolor="#000000" uuid="c29046e3-6ffb-4215-a387-8b457c9c8879"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="8" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Suhu Sarang Walet]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="515" y="60" width="40" height="30" forecolor="#000000" uuid="56bbd7da-c084-4276-978c-81818209f3a8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Ket.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="280" y="60" width="40" height="30" forecolor="#000000" uuid="f15ecbd8-71bf-4537-830b-0de5f6d872df"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Berat (gr)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="450" y="60" width="30" height="30" forecolor="#000000" uuid="cb79a232-2441-4803-a503-4b2b49dc1d16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Ttot]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="60" width="30" height="30" forecolor="#000000" uuid="8622b4b5-5a6a-4f97-8cf4-e7ebd2609277"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Tgl]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="250" y="90" width="30" height="20" forecolor="#000000" uuid="24bedf7e-8b14-4f0f-8bb4-77248897d893"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Pcs]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="50" y="90" width="120" height="20" forecolor="#000000" uuid="22674b59-63fb-40e6-8a4e-cea0f3481ddf"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Box Number]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="280" y="90" width="40" height="20" forecolor="#000000" uuid="10564bd2-451d-4862-9cd4-4ee535cdc8d6"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isBold="false" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Weight (gr)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="450" y="90" width="30" height="20" forecolor="#000000" uuid="d7745462-9124-4223-9dbb-e7f8b8853cdf"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="10" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[(°C)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="90" width="30" height="20" forecolor="#000000" uuid="485283c5-4f6d-4005-a699-c9b8957130e4"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="320" y="90" width="50" height="20" forecolor="#000000" uuid="91dd1691-9760-4557-931c-322737ffe9f7"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Bird Nest Temperature]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="170" y="60" width="80" height="30" forecolor="#000000" uuid="dad0eb63-4d4a-41c1-b3f2-bd1d0b30cb77"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Grade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="170" y="90" width="80" height="20" forecolor="#000000" uuid="d261fff1-a6d2-41ff-9a60-843c352323fb"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Grade]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="30" y="60" width="20" height="30" forecolor="#000000" uuid="52492545-03ff-4c3b-8693-7516efcb5ea6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[No. Tray]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="30" y="90" width="20" height="20" forecolor="#000000" uuid="b2e2d566-d2aa-47ba-abe9-fdf30de37c98"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Tray No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="480" y="60" width="35" height="30" forecolor="#000000" uuid="b6ecf87a-4217-49dd-ab3e-6d4bab413a93"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[time-tot]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="480" y="90" width="35" height="20" forecolor="#000000" uuid="7e900169-25f2-4f46-8938-4740e8e74386"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Minutes]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="515" y="90" width="40" height="20" forecolor="#000000" uuid="0ecb59a8-d453-46ef-8709-8f53521a7c49"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Notes]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="370" y="60" width="80" height="50" forecolor="#000000" uuid="160f52bf-ae26-430c-9eb2-eba16a66dc56"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="370" y="90" width="80" height="20" forecolor="#000000" uuid="f930e9c6-5786-4544-aed0-3d06a69b61e5"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Batch Number]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="370" y="60" width="80" height="30" forecolor="#000000" uuid="063d7dbc-0065-45e9-8800-29a7e947fff0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[No Batch]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="170" height="15" forecolor="#000000" uuid="7deffdd0-c9a2-40ef-b91b-560a7a17edd2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Tanggal Pengiriman /]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="30" width="170" height="15" forecolor="#000000" uuid="35c556fb-38fc-445d-b6ed-5d481f4e5aa9"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Suhu Preheating /]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="15" width="170" height="15" forecolor="#000000" uuid="027edbf7-779a-4540-ac6e-a2ddc2b54525"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Suhu Ruang /]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="305" y="30" width="140" height="15" forecolor="#000000" uuid="6fa3949c-39f5-4d05-9ae1-7910035530c7"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Penambahan Air /]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="80" y="0" width="90" height="15" forecolor="#000000" uuid="e54f6e68-866b-4e83-8040-bd181fc4b641"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Shipment Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="70" y="30" width="100" height="15" forecolor="#000000" uuid="86430639-374e-455f-9ec9-23c800ed3007"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Preheating Temperature]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="55" y="15" width="115" height="15" forecolor="#000000" uuid="b2454e41-9116-466a-8a0b-f6fdfe6bffaa"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Room Temperature]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="370" y="30" width="75" height="15" forecolor="#000000" uuid="3766a1b5-677e-4a39-8c98-f0b16572e953"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Addition of Water]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="170" y="0" width="15" height="15" forecolor="#000000" uuid="4a560d26-8178-449a-8143-7b45bd2d472f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[=]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="170" y="30" width="15" height="15" forecolor="#000000" uuid="91c4c6c4-0ca7-4666-9631-cd1f36933719"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[=]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="170" y="15" width="15" height="15" forecolor="#000000" uuid="453b10fa-d1fc-4af7-8a34-57f3c4b20195"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[=]]></text>
+				</staticText>
+				<textField pattern="">
+					<reportElement x="185" y="15" width="120" height="15" forecolor="#000000" uuid="5c2e486f-e155-4ce8-9f02-61a8830627a1"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{suhu_ruang} + " °C"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="445" y="30" width="110" height="15" forecolor="#000000" uuid="569c6304-6b72-43aa-b780-4c49ba4137e3"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[= Otomatis /]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="495" y="30" width="60" height="15" forecolor="#000000" uuid="84f7b1cd-0680-4835-959b-c2a6320ca15b"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Automatic]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="305" y="15" width="140" height="15" forecolor="#000000" uuid="0f06f158-da94-466f-8ccb-1124075028e3"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Mode Alat /]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="350" y="15" width="95" height="15" forecolor="#000000" uuid="dbac51c3-13b9-4963-89a0-c4eabee2b433"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Tool Mode]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="445" y="15" width="110" height="15" forecolor="#000000" uuid="ff8203d5-6158-4c5e-a54a-7cbbdaa4ede1"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[= Electric Steamer]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="305" y="0" width="140" height="15" forecolor="#000000" uuid="2558d458-b143-4e5d-b09c-af771505e6e9"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Nama Operator /]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="370" y="0" width="75" height="15" forecolor="#000000" uuid="402ab433-7049-4f87-a483-96a45b98b198"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Operator Name]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="445" y="0" width="110" height="15" forecolor="#000000" uuid="6b1bd211-0643-4ddf-a606-ab330e6eb4bc"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA["= " + $F{nama_pegawai}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="185" y="0" width="120" height="15" forecolor="#000000" uuid="f58fce53-cc18-430c-9cbc-d2ac3a61880b"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy").format($F{tanggal_pengiriman})]]></textFieldExpression>
+				</textField>
+				<textField pattern="">
+					<reportElement x="185" y="30" width="120" height="15" forecolor="#000000" uuid="66f6c825-80d8-44e1-8b3b-f46fcaabe8b6"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{suhu_preheat} + " °C"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="170" y="45" width="15" height="15" forecolor="#000000" uuid="54dd6822-e388-461a-9a9c-cbc26dc8e8b1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[=]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="45" width="170" height="15" forecolor="#000000" uuid="5f85c0f7-158c-4e19-bc64-96a273b71468"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Waktu Preheating /]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="70" y="45" width="100" height="15" forecolor="#000000" uuid="fde0d627-0309-4436-b567-30dd41e0c3ae"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Preheating Time]]></text>
+				</staticText>
+				<textField pattern="">
+					<reportElement x="185" y="45" width="120" height="15" forecolor="#000000" uuid="055bdecc-feb2-4b41-97b6-d97f8dd53676"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("mm:ss").format($F{waktu_preheat}) + " Menit"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band splitType="Stretch"/>
-	</title>
 	<pageHeader>
-		<band height="140" splitType="Stretch">
+		<band height="75" splitType="Stretch">
 			<staticText>
 				<reportElement style="Title" x="130" y="0" width="245" height="75" uuid="40e54398-17de-47a4-8a8c-a7090df84273"/>
 				<textElement verticalAlignment="Top">
@@ -219,14 +643,14 @@ WHERE 1]]>
 				<textElement markup="none">
 					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[14]]></text>
+				<text><![CDATA[15]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="455" y="30" width="100" height="15" uuid="3edbdc73-b4a8-43ee-81ce-df979f66e0ad"/>
 				<textElement markup="none">
 					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[18 November 2023]]></text>
+				<text><![CDATA[8 Januari 2024]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="455" y="45" width="100" height="30" uuid="a78c8515-3a42-4be1-9ad0-77a2f6ad657c"/>
@@ -284,424 +708,10 @@ WHERE 1]]>
 				</textElement>
 				<text><![CDATA[RECORD OF FINISHED GOODS HEAT TREATMENT - STEAMER (CCP 2)]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="0" y="75" width="230" height="15" forecolor="#000000" uuid="7deffdd0-c9a2-40ef-b91b-560a7a17edd2"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Tanggal Pengiriman /]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="105" width="230" height="15" forecolor="#000000" uuid="35c556fb-38fc-445d-b6ed-5d481f4e5aa9"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Suhu Preheating /]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="90" width="230" height="15" forecolor="#000000" uuid="027edbf7-779a-4540-ac6e-a2ddc2b54525"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Suhu Ruang /]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="120" width="230" height="15" forecolor="#000000" uuid="6fa3949c-39f5-4d05-9ae1-7910035530c7"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Penambahan Air /]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="80" y="75" width="150" height="15" forecolor="#000000" uuid="e54f6e68-866b-4e83-8040-bd181fc4b641"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Shipment Date]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="100" y="105" width="130" height="15" forecolor="#000000" uuid="86430639-374e-455f-9ec9-23c800ed3007"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Preheating Temperature]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="55" y="90" width="175" height="15" forecolor="#000000" uuid="b2454e41-9116-466a-8a0b-f6fdfe6bffaa"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Room Temperature]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="70" y="120" width="160" height="15" forecolor="#000000" uuid="3766a1b5-677e-4a39-8c98-f0b16572e953"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Addition of Water]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="230" y="75" width="15" height="15" forecolor="#000000" uuid="4a560d26-8178-449a-8143-7b45bd2d472f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[=]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="230" y="105" width="15" height="15" forecolor="#000000" uuid="91c4c6c4-0ca7-4666-9631-cd1f36933719"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[=]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="230" y="90" width="15" height="15" forecolor="#000000" uuid="453b10fa-d1fc-4af7-8a34-57f3c4b20195"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[=]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="230" y="120" width="15" height="15" forecolor="#000000" uuid="65d2548f-dd04-4c9f-b020-8353549b2c26"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[=]]></text>
-			</staticText>
-			<textField isBlankWhenNull="true">
-				<reportElement x="245" y="75" width="80" height="15" forecolor="#000000" uuid="f58fce53-cc18-430c-9cbc-d2ac3a61880b"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy").format($F{tanggal_pengiriman})]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.##;-#,##0.##">
-				<reportElement x="245" y="105" width="80" height="15" forecolor="#000000" uuid="66f6c825-80d8-44e1-8b3b-f46fcaabe8b6"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{suhu_preheat}]]></textFieldExpression>
-			</textField>
-			<textField pattern="#,##0.##;-#,##0.##">
-				<reportElement x="245" y="90" width="80" height="15" forecolor="#000000" uuid="5c2e486f-e155-4ce8-9f02-61a8830627a1"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{suhu_ruang}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="245" y="120" width="80" height="15" forecolor="#000000" uuid="569c6304-6b72-43aa-b780-4c49ba4137e3"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Otomatis /]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="285" y="120" width="40" height="15" forecolor="#000000" uuid="84f7b1cd-0680-4835-959b-c2a6320ca15b"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Automatic]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="325" y="90" width="230" height="15" forecolor="#000000" uuid="0f06f158-da94-466f-8ccb-1124075028e3"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Mode Alat /]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="370" y="90" width="40" height="15" forecolor="#000000" uuid="dbac51c3-13b9-4963-89a0-c4eabee2b433"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Tool Mode]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="410" y="90" width="145" height="15" forecolor="#000000" uuid="ff8203d5-6158-4c5e-a54a-7cbbdaa4ede1"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[ = Electric Steamer]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="325" y="75" width="230" height="15" forecolor="#000000" uuid="2558d458-b143-4e5d-b09c-af771505e6e9"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Nama Operator /]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="390" y="75" width="55" height="15" forecolor="#000000" uuid="402ab433-7049-4f87-a483-96a45b98b198"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Operator Name]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="445" y="75" width="110" height="15" forecolor="#000000" uuid="6b1bd211-0643-4ddf-a606-ab330e6eb4bc"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["= " + $F{nama_pegawai}]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="50" splitType="Stretch">
-			<staticText>
-				<reportElement style="Column header" x="0" y="0" width="30" height="50" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="50" y="0" width="120" height="50" forecolor="#000000" uuid="2602871b-0fdc-4779-a1f5-2e898c732f51"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="250" y="0" width="30" height="50" forecolor="#000000" uuid="7d58113d-34af-46b3-a9b9-873d3408275a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="280" y="0" width="40" height="50" forecolor="#000000" uuid="221c7059-edd3-4768-8ff7-e9b6c91c2bf9"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="320" y="0" width="50" height="50" forecolor="#000000" uuid="976ed8fb-6618-45eb-9fd1-0c95330511dd"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="420" y="0" width="30" height="50" forecolor="#000000" uuid="a19e9542-632b-4407-8c45-98a1d222a650"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="485" y="0" width="40" height="50" forecolor="#000000" uuid="96fbb336-7c6c-4ed7-81ec-ea68ea93bfe1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="170" y="0" width="80" height="50" forecolor="#000000" uuid="9bfdca42-72c8-429c-b071-133bfc1fd109"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="30" y="0" width="20" height="50" forecolor="#000000" uuid="a1052280-ab37-48a2-8ac8-56c17de0e5aa"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="450" y="0" width="35" height="50" forecolor="#000000" uuid="0553b7f8-4d3b-4b16-b01b-a5a03fb30190"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="525" y="0" width="30" height="50" forecolor="#000000" uuid="de5a7aa0-61fc-4a42-8716-a7bc1819e464"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="250" y="0" width="30" height="30" forecolor="#000000" uuid="16c35e88-8e15-4565-a0cc-0c99398f4285"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Biji]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="50" y="0" width="120" height="30" forecolor="#000000" uuid="b2ef1f99-6d6c-4ea8-8f8d-a4d873b30a33"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[No. Box]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="320" y="0" width="50" height="30" forecolor="#000000" uuid="c29046e3-6ffb-4215-a387-8b457c9c8879"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Tpreheating]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="485" y="0" width="40" height="30" forecolor="#000000" uuid="56bbd7da-c084-4276-978c-81818209f3a8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Ket.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="280" y="0" width="40" height="30" forecolor="#000000" uuid="f15ecbd8-71bf-4537-830b-0de5f6d872df"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Berat (gr)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="420" y="0" width="30" height="30" forecolor="#000000" uuid="cb79a232-2441-4803-a503-4b2b49dc1d16"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Ttot]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="0" width="30" height="30" forecolor="#000000" uuid="8622b4b5-5a6a-4f97-8cf4-e7ebd2609277"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Tgl]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="250" y="30" width="30" height="20" forecolor="#000000" uuid="24bedf7e-8b14-4f0f-8bb4-77248897d893"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Pcs]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="50" y="30" width="120" height="20" forecolor="#000000" uuid="22674b59-63fb-40e6-8a4e-cea0f3481ddf"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Box Number]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="280" y="30" width="40" height="20" forecolor="#000000" uuid="10564bd2-451d-4862-9cd4-4ee535cdc8d6"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isBold="false" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Weight (gr)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="420" y="30" width="30" height="20" forecolor="#000000" uuid="d7745462-9124-4223-9dbb-e7f8b8853cdf"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="10" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[(°C)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="30" width="30" height="20" forecolor="#000000" uuid="485283c5-4f6d-4005-a699-c9b8957130e4"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Date]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="320" y="30" width="50" height="20" forecolor="#000000" uuid="91dd1691-9760-4557-931c-322737ffe9f7"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="10" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[(°C)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="170" y="0" width="80" height="30" forecolor="#000000" uuid="dad0eb63-4d4a-41c1-b3f2-bd1d0b30cb77"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Grade]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="170" y="30" width="80" height="20" forecolor="#000000" uuid="d261fff1-a6d2-41ff-9a60-843c352323fb"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Grade]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="30" y="0" width="20" height="30" forecolor="#000000" uuid="52492545-03ff-4c3b-8693-7516efcb5ea6"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[No. Tray]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="30" y="30" width="20" height="20" forecolor="#000000" uuid="b2e2d566-d2aa-47ba-abe9-fdf30de37c98"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Tray No.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="450" y="0" width="35" height="30" forecolor="#000000" uuid="b6ecf87a-4217-49dd-ab3e-6d4bab413a93"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[time-tot]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="450" y="30" width="35" height="20" forecolor="#000000" uuid="7e900169-25f2-4f46-8938-4740e8e74386"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Minutes]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="525" y="0" width="30" height="30" forecolor="#000000" uuid="503033e0-daee-457f-bd10-224657020b22"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Paraf]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="485" y="30" width="40" height="20" forecolor="#000000" uuid="0ecb59a8-d453-46ef-8709-8f53521a7c49"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Notes]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="525" y="30" width="30" height="20" forecolor="#000000" uuid="b7964299-2e50-45f0-bc68-56f3e0e4064e"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Sign]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="370" y="0" width="50" height="50" forecolor="#000000" uuid="160f52bf-ae26-430c-9eb2-eba16a66dc56"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="370" y="30" width="50" height="20" forecolor="#000000" uuid="f930e9c6-5786-4544-aed0-3d06a69b61e5"/>
-				<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[(mnt)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="370" y="0" width="50" height="30" forecolor="#000000" uuid="063d7dbc-0065-45e9-8800-29a7e947fff0"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10" isBold="true" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[tpreheating]]></text>
-			</staticText>
-		</band>
+		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
@@ -725,10 +735,10 @@ WHERE 1]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{suhu_preheat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{suhu_sarang_awal}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.##;-#,##0.##">
-				<reportElement style="Detail" x="420" y="0" width="30" height="15" uuid="483ae050-6146-4f0b-9492-338e794d0d15"/>
+				<reportElement style="Detail" x="450" y="0" width="30" height="15" uuid="483ae050-6146-4f0b-9492-338e794d0d15"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isPdfEmbedded="true"/>
 				</textElement>
@@ -765,33 +775,26 @@ WHERE 1]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no_tray}]]></textFieldExpression>
 			</textField>
-			<textField pattern="mm.ss">
-				<reportElement style="Detail" x="450" y="0" width="35" height="15" uuid="9511049e-0abf-4a2e-8fc0-823c7f2c819f"/>
+			<textField pattern="mm:ss">
+				<reportElement style="Detail" x="480" y="0" width="35" height="15" uuid="9511049e-0abf-4a2e-8fc0-823c7f2c819f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{waktu_heat_treatment}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Detail" x="525" y="0" width="30" height="15" uuid="318cf5d1-9d4a-45d3-ab0b-249e6bd53e15"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="Detail" x="485" y="0" width="40" height="15" uuid="0e07991b-346a-4b0d-b1cd-d153eb2864e7"/>
+				<reportElement style="Detail" x="515" y="0" width="40" height="15" uuid="0e07991b-346a-4b0d-b1cd-d153eb2864e7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{keterangan}]]></textFieldExpression>
 			</textField>
 			<textField pattern="mm.ss">
-				<reportElement style="Detail" x="370" y="0" width="50" height="15" uuid="705b2025-ae62-433a-8113-fb30972e5ad8"/>
+				<reportElement style="Detail" x="370" y="0" width="80" height="15" uuid="705b2025-ae62-433a-8113-fb30972e5ad8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{waktu_preheat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{kode_rsb} + "-" + new SimpleDateFormat("YYMMDD").format($F{tgl_heat_treatment})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -946,7 +949,4 @@ WHERE 1]]>
 			</staticText>
 		</band>
 	</pageFooter>
-	<summary>
-		<band splitType="Stretch"/>
-	</summary>
 </jasperReport>

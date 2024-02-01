@@ -534,7 +534,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Undian21 = new waleta_system.JPanel_Undian2();
         jPanel_Data_personalHygiene1 = new waleta_system.HRD.JPanel_Data_personalHygiene();
         jPanel_ijinToilet1 = new waleta_system.HRD.JPanel_ijinToilet();
-        jPanel_Peramalan_barangjadi1 = new waleta_system.Packing.JPanel_Peramalan_barangjadi();
         jPanel_DataTRSela1 = new waleta_system.Panel_produksi.JPanel_DataTRSela();
         jPanel_Data_Aset1 = new waleta_system.Maintenance.JPanel_Data_Aset();
         jPanel_SistemPenilaian_Karyawan1 = new waleta_system.HRD.JPanel_SistemPenilaian_Karyawan();
@@ -543,7 +542,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_ProduksiATB1 = new waleta_system.RND.JPanel_ProduksiATB();
         jPanel_DataSaponSub1 = new waleta_system.SubWaleta.JPanel_DataSaponSub();
         jPanel_BonusCabut21 = new waleta_system.Finance.JPanel_BonusCabut2();
-        jPanel_Lembur_ShiftMalam1 = new waleta_system.Finance.JPanel_Lembur_ShiftMalam();
         jPanel_ProgressSPKPengiriman1 = new waleta_system.Packing.JPanel_ProgressSPKPengiriman();
         jPanel_Peramalan_gradingBaku1 = new waleta_system.BahanBaku.JPanel_Peramalan_gradingBaku();
         jPanel_LevelGaji1 = new waleta_system.Finance.JPanel_LevelGaji();
@@ -559,7 +557,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Absensi_Karyawan1 = new waleta_system.HRD.JPanel_Absensi_Karyawan();
         jPanel_DataPindahBagian1 = new waleta_system.HRD.JPanel_DataPindahBagian();
         jPanel_DataKinerjaCabut1 = new waleta_system.Finance.JPanel_DataKinerjaCabut();
-        jPanel_DataKinerjaCetak1 = new waleta_system.Finance.JPanel_DataKinerjaCetak();
         jPanel_Aset_PengajuanPembelian1 = new waleta_system.Finance.JPanel_Aset_PengajuanPembelian();
         jPanel_Kinerja_Operator_ATB1 = new waleta_system.RND.JPanel_Kinerja_Operator_ATB();
         jPanel_Penilaian_BuluUpah_LP1 = new waleta_system.Panel_produksi.JPanel_Penilaian_BuluUpah_LP();
@@ -578,6 +575,9 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Laporan_Produksi_Cabuto1 = new waleta_system.Cabuto.JPanel_Laporan_Produksi_Cabuto();
         jPanel_Data_Order1 = new waleta_system.Cabuto.JPanel_Data_Order();
         jPanel_GradeBarangJadi_Cabuto1 = new waleta_system.Cabuto.JPanel_GradeBarangJadi_Cabuto();
+        jPanel_Lembur_ShiftMalam1 = new waleta_system.Finance.JPanel_Lembur_ShiftMalam();
+        jPanel_DataKinerjaCetak1 = new waleta_system.Finance.JPanel_DataKinerjaCetak();
+        jPanel_Pengiriman_PickUp1 = new waleta_system.Packing.JPanel_Pengiriman_PickUp();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_File = new javax.swing.JMenu();
         jMenu_Home = new javax.swing.JMenuItem();
@@ -689,6 +689,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem_kinerja_karyawan_packing = new javax.swing.JMenuItem();
         jMenuItem_pack_ProgressPengiriman = new javax.swing.JMenuItem();
         jMenuItem_peramalan_barangjadi = new javax.swing.JMenuItem();
+        jMenuItem_Shipment_Pickup_Request = new javax.swing.JMenuItem();
         jMenu_QC = new javax.swing.JMenu();
         jMenu_qc_bahanbaku = new javax.swing.JMenuItem();
         jMenu_qc_lp = new javax.swing.JMenuItem();
@@ -816,7 +817,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.271");
+        jLabel19.setText("2.2.285");
 
         jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");
@@ -1236,7 +1237,6 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Undian21, "card118");
         main_panel.add(jPanel_Data_personalHygiene1, "card119");
         main_panel.add(jPanel_ijinToilet1, "card120");
-        main_panel.add(jPanel_Peramalan_barangjadi1, "card120");
         main_panel.add(jPanel_DataTRSela1, "card121");
         main_panel.add(jPanel_Data_Aset1, "card122");
         main_panel.add(jPanel_SistemPenilaian_Karyawan1, "card123");
@@ -1245,7 +1245,6 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_ProduksiATB1, "card126");
         main_panel.add(jPanel_DataSaponSub1, "card127");
         main_panel.add(jPanel_BonusCabut21, "card128");
-        main_panel.add(jPanel_Lembur_ShiftMalam1, "card129");
         main_panel.add(jPanel_ProgressSPKPengiriman1, "card130");
         main_panel.add(jPanel_Peramalan_gradingBaku1, "card131");
         main_panel.add(jPanel_LevelGaji1, "card132");
@@ -1261,7 +1260,6 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Absensi_Karyawan1, "card139");
         main_panel.add(jPanel_DataPindahBagian1, "card140");
         main_panel.add(jPanel_DataKinerjaCabut1, "card141");
-        main_panel.add(jPanel_DataKinerjaCetak1, "card142");
         main_panel.add(jPanel_Aset_PengajuanPembelian1, "card143");
         main_panel.add(jPanel_Kinerja_Operator_ATB1, "card145");
         main_panel.add(jPanel_Penilaian_BuluUpah_LP1, "card146");
@@ -1280,6 +1278,9 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Laporan_Produksi_Cabuto1, "card155");
         main_panel.add(jPanel_Data_Order1, "card156");
         main_panel.add(jPanel_GradeBarangJadi_Cabuto1, "card157");
+        main_panel.add(jPanel_Lembur_ShiftMalam1, "card157");
+        main_panel.add(jPanel_DataKinerjaCetak1, "card157");
+        main_panel.add(jPanel_Pengiriman_PickUp1, "card158");
 
         jScrollPane2.setViewportView(main_panel);
 
@@ -2333,6 +2334,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu_packing.add(jMenuItem_peramalan_barangjadi);
+
+        jMenuItem_Shipment_Pickup_Request.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem_Shipment_Pickup_Request.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem_Shipment_Pickup_Request.setText("Shipment Pickup Request");
+        jMenuItem_Shipment_Pickup_Request.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_Shipment_Pickup_RequestActionPerformed(evt);
+            }
+        });
+        jMenu_packing.add(jMenuItem_Shipment_Pickup_Request);
 
         jMenuBar1.add(jMenu_packing);
 
@@ -5736,15 +5747,15 @@ public class MainForm extends javax.swing.JFrame {
     private void jMenuItem_peramalan_barangjadiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_peramalan_barangjadiActionPerformed
         // TODO add your handling code here:
 
-        main_panel.removeAll();
-        main_panel.repaint();
-        main_panel.revalidate();
-
-        //add panel
-        jPanel_Peramalan_barangjadi1.init();
-        main_panel.add(jPanel_Peramalan_barangjadi1);
-        main_panel.repaint();
-        main_panel.revalidate();
+//        main_panel.removeAll();
+//        main_panel.repaint();
+//        main_panel.revalidate();
+//
+//        //add panel
+//        jPanel_Peramalan_barangjadi1.init();
+//        main_panel.add(jPanel_Peramalan_barangjadi1);
+//        main_panel.repaint();
+//        main_panel.revalidate();
     }//GEN-LAST:event_jMenuItem_peramalan_barangjadiActionPerformed
 
     private void jMenuItem_MaintenanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_MaintenanceActionPerformed
@@ -6435,6 +6446,19 @@ public class MainForm extends javax.swing.JFrame {
         refresh_Butuh_Acc();
     }//GEN-LAST:event_Button_refresh_butuh_AccActionPerformed
 
+    private void jMenuItem_Shipment_Pickup_RequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_Shipment_Pickup_RequestActionPerformed
+        // TODO add your handling code here:
+        main_panel.removeAll();
+        main_panel.repaint();
+        main_panel.revalidate();
+
+        //add panel
+        main_panel.add(jPanel_Pengiriman_PickUp1);
+        main_panel.repaint();
+        main_panel.revalidate();
+        jPanel_Pengiriman_PickUp1.init();
+    }//GEN-LAST:event_jMenuItem_Shipment_Pickup_RequestActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_refresh_butuh_Acc;
@@ -6532,6 +6556,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_Pengajuan_naikLevel;
     public static javax.swing.JMenuItem jMenuItem_PriceList;
     public static javax.swing.JMenuItem jMenuItem_SPK;
+    private javax.swing.JMenuItem jMenuItem_Shipment_Pickup_Request;
     private javax.swing.JMenuItem jMenuItem_SistemPrintSlip;
     private javax.swing.JMenuItem jMenuItem_Stock_Opname;
     private javax.swing.JMenuItem jMenuItem_aset_maintenance;
@@ -6791,8 +6816,8 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.Finance.JPanel_PengajuanKenaikanLevelGaji jPanel_PengajuanKenaikanLevelGaji1;
     private waleta_system.JPanel_PengajuanKenaikanLevelGaji_ViewOnly jPanel_PengajuanKenaikanLevelGaji_ViewOnly1;
     private waleta_system.SubWaleta.JPanel_PenggajianSub jPanel_PenggajianSub1;
+    private waleta_system.Packing.JPanel_Pengiriman_PickUp jPanel_Pengiriman_PickUp1;
     private waleta_system.Panel_produksi.JPanel_Penilaian_BuluUpah_LP jPanel_Penilaian_BuluUpah_LP1;
-    private waleta_system.Packing.JPanel_Peramalan_barangjadi jPanel_Peramalan_barangjadi1;
     private waleta_system.BahanBaku.JPanel_Peramalan_gradingBaku jPanel_Peramalan_gradingBaku1;
     private waleta_system.Finance.JPanel_PiutangKaryawan jPanel_PiutangKaryawan1;
     private waleta_system.SubWaleta.JPanel_PiutangKaryawan_sub jPanel_PiutangKaryawan_sub1;

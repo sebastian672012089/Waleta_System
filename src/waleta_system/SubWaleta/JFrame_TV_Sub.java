@@ -58,7 +58,6 @@ public class JFrame_TV_Sub extends javax.swing.JFrame {
     public JFrame_TV_Sub() {
         initComponents();
         try {
-            Utility.db.connect();
             Utility.db_sub.connect();
             int year = Year.now().getValue();
             DateChooser1.setDate(dateFormat.parse(year + "-01-01"));

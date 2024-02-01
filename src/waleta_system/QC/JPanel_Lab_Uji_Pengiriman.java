@@ -489,7 +489,7 @@ public class JPanel_Lab_Uji_Pengiriman extends javax.swing.JPanel {
         if (j == -1) {
             JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di hapus !");
         } else {
-            int dialogResult = JOptionPane.showConfirmDialog(this, "Are Sure You Want to Delete?", "Warning", 0);
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Hapus data?", "Warning", 0);
             if (dialogResult == JOptionPane.YES_OPTION) {
                 // delete code here
                 try {

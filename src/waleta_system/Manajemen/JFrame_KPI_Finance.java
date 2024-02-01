@@ -48,11 +48,6 @@ public class JFrame_KPI_Finance extends javax.swing.JFrame {
 
     public JFrame_KPI_Finance() {
         initComponents();
-        try {
-            Utility.db.connect();
-        } catch (Exception ex) {
-            Logger.getLogger(JFrame_KPI_Finance.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void init() {

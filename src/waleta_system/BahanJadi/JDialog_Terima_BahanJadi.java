@@ -31,9 +31,7 @@ public class JDialog_Terima_BahanJadi extends javax.swing.JDialog {
         super(parent, modal);
         try {
             initComponents();
-
             refreshTable();
-
             tabel_belum_terimaGBJ.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent event) {

@@ -80,7 +80,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
             if (txt_search_grade.getText() == null || txt_search_grade.getText().equals("")) {
                 search_grade = "";
             }
-            
+
             sql = "SELECT `tb_pengiriman`.`invoice_no`, `tb_spk_detail`.`kode_spk`, `tb_spk`.`tanggal_awb`, "
                     + "`operator_heat_treatment`, `nama_pegawai`, `suhu_ruang`, `suhu_sarang_awal`, "
                     + "`tb_heat_treatment_pengiriman`.`no`, `tgl_heat_treatment`, `no_tray`, "
@@ -126,6 +126,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                 row[16] = rs.getFloat("suhu_akhir");
                 row[17] = rs.getTime("waktu_heat_treatment");
                 row[18] = rs.getString("keterangan");
+                String batch = new SimpleDateFormat("YYMMDD").format(rs.getDate("tgl_heat_treatment"));
                 model.addRow(row);
             }
 
@@ -168,6 +169,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         Date_Heat_Treatment1 = new com.toedter.calendar.JDateChooser();
         Date_Heat_Treatment2 = new com.toedter.calendar.JDateChooser();
+        button_delete_all = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -320,6 +322,15 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
         Date_Heat_Treatment2.setDateFormatString("dd MMM yyyy");
         Date_Heat_Treatment2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
+        button_delete_all.setBackground(new java.awt.Color(255, 255, 255));
+        button_delete_all.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_delete_all.setText("Delete All");
+        button_delete_all.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_delete_allActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -332,6 +343,8 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                         .addComponent(button_edit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_delete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_delete_all)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_input_data_csv)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -397,7 +410,8 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(label_total_data)
                     .addComponent(button_input_data_csv)
-                    .addComponent(button_catatan_pemanasan_barang_jadi))
+                    .addComponent(button_catatan_pemanasan_barang_jadi)
+                    .addComponent(button_delete_all))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
                 .addContainerGap())
@@ -470,7 +484,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
         if (j == -1) {
             JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di hapus !");
         } else {
-            int dialogResult = JOptionPane.showConfirmDialog(this, "Are Sure You Want to Delete?", "Warning", 0);
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Hapus data", "Warning", 0);
             if (dialogResult == JOptionPane.YES_OPTION) {
                 // delete code here
                 try {
@@ -517,7 +531,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                     + "WHERE "
                     + "`tb_heat_treatment_pengiriman`.`no` IN (" + no + ") "
                     + "ORDER BY "
-                    + "`tb_heat_treatment_pengiriman`.`tanggal_pengiriman`, `operator_heat_treatment`, `suhu_ruang`, `suhu_preheat`, `waktu_preheat`, `tgl_heat_treatment`";
+                    + "`tb_heat_treatment_pengiriman`.`tanggal_pengiriman`, `operator_heat_treatment`, `suhu_ruang`, `suhu_preheat`, `waktu_preheat`, `tgl_heat_treatment`, `tb_heat_treatment_pengiriman`.`no`";
             JRDesignQuery newQuery = new JRDesignQuery();
             newQuery.setText(Query);
             JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Catatan_Pemanasan_Barang_Jadi_CCP2.jrxml");
@@ -616,6 +630,39 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_input_data_csvActionPerformed
 
+    private void button_delete_allActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_allActionPerformed
+        // TODO add your handling code here:
+        int j = Table_data.getSelectedRow();
+        if (j == -1) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di hapus !");
+        } else {
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Hapus data?", "Warning", 0);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                // delete code here
+                try {
+                    String no = "";
+                    for (int i = 0; i < Table_data.getRowCount(); i++) {
+                        if (i != 0) {
+                            no = no + ", ";
+                        }
+                        no = no + "'" + Table_data.getValueAt(i, 0).toString() + "'";
+                    }
+
+                    String Query = "DELETE FROM `tb_heat_treatment_pengiriman` WHERE `no` IN (" + no + ")";
+                    Utility.db.getConnection().createStatement();
+                    if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
+                        JOptionPane.showMessageDialog(this, "deleted !");
+                        refreshTable();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Failed !");
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e);
+                }
+            }
+        }
+    }//GEN-LAST:event_button_delete_allActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_Heat_Treatment1;
@@ -624,6 +671,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
     public static javax.swing.JButton button_Refresh;
     private javax.swing.JButton button_catatan_pemanasan_barang_jadi;
     public static javax.swing.JButton button_delete;
+    public static javax.swing.JButton button_delete_all;
     public static javax.swing.JButton button_edit;
     public static javax.swing.JButton button_export_dataTreatment;
     public static javax.swing.JButton button_input_data_csv;

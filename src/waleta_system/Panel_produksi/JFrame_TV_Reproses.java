@@ -44,13 +44,8 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
     int spk = 0, baris = -1, check = 0;
 
     public JFrame_TV_Reproses() {
-        try {
-            Utility.db.connect();
-            initComponents();
-            init();
-        } catch (Exception ex) {
-            Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        initComponents();
+        init();
     }
 
     public void init() {

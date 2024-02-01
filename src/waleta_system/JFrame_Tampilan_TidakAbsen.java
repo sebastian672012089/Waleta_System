@@ -50,7 +50,6 @@ public class JFrame_Tampilan_TidakAbsen extends javax.swing.JFrame {
 
     public void init() {
         try {
-            Utility.db.connect();
             init_chart();
             tabel_data_TidakMasuk1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                 @Override

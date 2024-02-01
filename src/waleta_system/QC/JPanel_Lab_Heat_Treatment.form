@@ -60,6 +60,8 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="button_delete" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="button_delete_all" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="button_input_data_csv" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="button_catatan_pemanasan_barang_jadi" min="-2" max="-2" attributes="0"/>
@@ -134,6 +136,7 @@
                       <Component id="label_total_data" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="button_input_data_csv" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="button_catatan_pemanasan_barang_jadi" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="button_delete_all" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="599" max="32767" attributes="0"/>
@@ -522,6 +525,23 @@
               <Font name="Arial" size="11" style="0"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="button_delete_all">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Delete All"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_delete_allActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

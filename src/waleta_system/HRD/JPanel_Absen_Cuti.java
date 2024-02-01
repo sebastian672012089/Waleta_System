@@ -3,10 +3,12 @@ package waleta_system.HRD;
 import waleta_system.Class.Utility;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -1482,58 +1484,80 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
     private void button_diketahui_pengajuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_diketahui_pengajuanActionPerformed
         // TODO add your handling code here:
-        String nama_cuti = Table_pengajuan.getValueAt(Table_pengajuan.getSelectedRow(), 1).toString();
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Mengetahui pengajuan cuti " + nama_cuti + "?", "Warning", 0);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            try {
-                String login_departemen = "";
-                sql = "SELECT `kode_departemen` FROM `tb_bagian` WHERE `kode_bagian` = '" + MainForm.Login_kodeBagian + "'";
-                rs = Utility.db.getStatement().executeQuery(sql);
-                if (rs.next()) {
-                    login_departemen = rs.getString("kode_departemen");
-                }
-
-                if (login_departemen.equals("HRGA")) {
-                    String kode_pengajuan = Table_pengajuan.getValueAt(Table_pengajuan.getSelectedRow(), 0).toString();
-                    sql = "UPDATE `tb_cuti_pengajuan` SET `diketahui`='DIKETAHUI OLEH: " + MainForm.Login_NamaPegawai + "' WHERE `kode_pengajuan`='" + kode_pengajuan + "'";
-                    if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                        refreshTable_pengajuan_cuti();
-                        JOptionPane.showMessageDialog(this, "DIKETAHUI OLEH: " + MainForm.Login_NamaPegawai);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Failed!");
+        int row = Table_pengajuan.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih satu data pada tabel !");
+        } else {
+            String nama_cuti = Table_pengajuan.getValueAt(row, 1).toString();
+            String kode_pengajuan = Table_pengajuan.getValueAt(row, 0).toString();
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Mengetahui pengajuan cuti " + nama_cuti + "?", "Warning", 0);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                try {
+                    String login_departemen = "";
+                    sql = "SELECT `kode_departemen` FROM `tb_bagian` WHERE `kode_bagian` = '" + MainForm.Login_kodeBagian + "'";
+                    rs = Utility.db.getStatement().executeQuery(sql);
+                    if (rs.next()) {
+                        login_departemen = rs.getString("kode_departemen");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Maaf hanya login user HRD yang dapat mengetahui pengajuan Cuti!");
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
-                Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
+                    if (login_departemen.equals("HRGA")) {
+                        sql = "UPDATE `tb_cuti_pengajuan` SET "
+                                + "`diketahui`='DIKETAHUI OLEH: " + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
+                                + "WHERE `kode_pengajuan`='" + kode_pengajuan + "'";
+                        if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
+                            refreshTable_pengajuan_cuti();
+                            JOptionPane.showMessageDialog(this, "DIKETAHUI OLEH: " + MainForm.Login_NamaPegawai);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Failed!");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Maaf hanya login user HRD yang dapat mengetahui pengajuan Cuti!");
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, ex);
+                    Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_button_diketahui_pengajuanActionPerformed
 
     private void button_disetujui_pengajuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_disetujui_pengajuanActionPerformed
         // TODO add your handling code here:
-        String nama_cuti = Table_pengajuan.getValueAt(Table_pengajuan.getSelectedRow(), 1).toString();
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Menyetujui pengajuan cuti " + nama_cuti + "?", "Warning", 0);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            try {
-                if (MainForm.Login_Posisi.equals("STAFF 5") || MainForm.Login_Posisi.equals("STAFF 6")) {
-                    String kode_pengajuan = Table_pengajuan.getValueAt(Table_pengajuan.getSelectedRow(), 0).toString();
-                    sql = "UPDATE `tb_cuti_pengajuan` SET `disetujui`='DISETUJUI OLEH: " + MainForm.Login_NamaPegawai + "' WHERE `kode_pengajuan`='" + kode_pengajuan + "'";
-                    if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                        refreshTable_pengajuan_cuti();
-                        JOptionPane.showMessageDialog(this, "DISETUJUI OLEH: " + MainForm.Login_NamaPegawai);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Failed!");
+        int row = Table_pengajuan.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih satu data pada tabel !");
+        } else {
+            String kode_pengajuan = Table_pengajuan.getValueAt(row, 0).toString();
+            String nama_cuti = Table_pengajuan.getValueAt(row, 1).toString();
+            String nama_bagian = Table_pengajuan.getValueAt(row, 2).toString();
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Menyetujui pengajuan cuti " + nama_cuti + "?", "Warning", 0);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                try {
+                    String kode_bagian = "";
+                    String query = "SELECT `kode_bagian` FROM `tb_bagian` WHERE `nama_bagian` = '" + nama_bagian + "'";
+                    PreparedStatement preparedStatement = Utility.db.getConnection().prepareStatement(query);
+                    ResultSet result = preparedStatement.executeQuery();
+                    if (result.next()) {
+                        kode_bagian = result.getString("kode_bagian");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Maaf hanya login user STAFF 5 / STAFF 6 yang dapat menyetujui pengajuan Cuti!");
+                    ArrayList<String> Atasan = Utility.GetListAtasanFromKodeBagian(kode_bagian);
+                    if (Atasan.contains(Integer.toString(MainForm.Login_kodeBagian))) {
+                        sql = "UPDATE `tb_cuti_pengajuan` SET "
+                                + "`disetujui`='DISETUJUI OLEH: " + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
+                                + "WHERE `kode_pengajuan`='" + kode_pengajuan + "'";
+                        if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
+                            refreshTable_pengajuan_cuti();
+                            JOptionPane.showMessageDialog(this, "DISETUJUI OLEH: " + MainForm.Login_NamaPegawai);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Failed!");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Maaf hanya atasan dari " + nama_cuti + " yang dapat menyetujui pengajuan Cuti!");
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, ex);
+                    Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
-                Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_button_disetujui_pengajuanActionPerformed
@@ -1547,6 +1571,9 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
     private void txt_search_bagian_rekapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_bagian_rekapKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_keseluruhan();
+        }
     }//GEN-LAST:event_txt_search_bagian_rekapKeyPressed
 
 

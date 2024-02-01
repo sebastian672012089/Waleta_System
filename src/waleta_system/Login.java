@@ -752,9 +752,10 @@ public class Login extends javax.swing.JFrame {
                     }
                     MainForm main = new MainForm(user, idPegawai, nama, kode_bagian, nama_bagian, departemen, posisi, dataMenu);
                     getAccess(dataMenu);
-                    if (!nama_bagian.toUpperCase().contains("KADEP-" + departemen) 
+                    if (!nama_bagian.toUpperCase().contains("KADEP-" + departemen)
                             && kode_bagian != 244
                             && !idPegawai.equals("20180102221")
+                            && !idPegawai.equals("20240107935")
                             ) {
                         MainForm.jMenu_Cabuto.setVisible(false);
                     } else {
@@ -859,7 +860,7 @@ public class Login extends javax.swing.JFrame {
                 Utility.db.getConnection();
                 File file = chooser.getSelectedFile();
                 String filename1 = file.getAbsolutePath();
-                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                try ( BufferedReader br = new BufferedReader(new FileReader(filename1))) {
                     String line;
                     String Query = null;
                     try {
@@ -930,7 +931,7 @@ public class Login extends javax.swing.JFrame {
                 Utility.db_sub.getConnection();
                 File file = chooser.getSelectedFile();
                 String filename1 = file.getAbsolutePath();
-                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                try ( BufferedReader br = new BufferedReader(new FileReader(filename1))) {
                     String line;
                     String Query = null;
                     try {
@@ -971,7 +972,7 @@ public class Login extends javax.swing.JFrame {
                 Utility.db_cabuto.getConnection();
                 File file = chooser.getSelectedFile();
                 String filename1 = file.getAbsolutePath();
-                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                try ( BufferedReader br = new BufferedReader(new FileReader(filename1))) {
                     String line;
                     String Query = null;
                     try {
@@ -1021,6 +1022,11 @@ public class Login extends javax.swing.JFrame {
     }
 
     public Login() {
+//        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//            System.out.println("Name: " + info.getName());
+//            System.out.println("Class: " + info.getClassName());
+//            System.out.println();
+//        }
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -1172,7 +1178,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.271");
+        label_version.setText("2.2.285");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N

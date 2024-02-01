@@ -260,7 +260,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             Object[] row = new Object[15];
             while (rs.next()) {
                 row[0] = rs.getString("nomor_surat");
-                row[1] = rs.getDate("tanggal_surat");
+                row[1] = rs.getTimestamp("tanggal_surat");
                 row[2] = rs.getString("kode_departemen");
                 row[3] = rs.getString("jenis_hari");
                 row[4] = rs.getDate("tanggal_lembur");
@@ -307,7 +307,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             Object[] row = new Object[15];
             while (rs.next()) {
                 row[0] = rs.getString("nomor_surat");
-                row[1] = rs.getDate("tanggal_surat");
+                row[1] = rs.getTimestamp("tanggal_surat");
                 row[2] = rs.getString("kode_departemen");
                 row[3] = rs.getString("jenis_hari");
                 row[4] = rs.getDate("tanggal_lembur");
@@ -333,11 +333,13 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         try {
             DefaultTableModel model = (DefaultTableModel) Table.getModel();
             model.setRowCount(0);
-            sql = "SELECT `nomor_lembur`, `tb_surat_lembur_detail`.`id_pegawai`, `tanggal_lembur`,`mulai_lembur`, `selesai_lembur`, `jumlah_jam`, `menit_istirahat_lembur`, `nama_pegawai`, `nama_bagian` "
+            sql = "SELECT `nomor_lembur`, `tb_surat_lembur_detail`.`id_pegawai`, `tanggal_lembur`, `mulai_lembur`, `selesai_lembur`, `jumlah_jam`, `menit_istirahat_lembur`, `nama_pegawai`, `nama_bagian`, MAX(`scan_date`) AS 'absen_terakhir' "
                     + "FROM `tb_surat_lembur_detail` "
                     + "LEFT JOIN `tb_karyawan` ON `tb_surat_lembur_detail`.`id_pegawai` = `tb_karyawan`.`id_pegawai` "
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`"
-                    + "WHERE `nomor_surat` = '" + nomor_surat + "'";
+                    + "LEFT JOIN `att_log` ON `tb_karyawan`.`pin_finger` = `att_log`.`pin` AND `tb_surat_lembur_detail`.`tanggal_lembur` = DATE(`att_log`.`scan_date`) "
+                    + "WHERE `nomor_surat` = '" + nomor_surat + "'"
+                    + "GROUP BY `nomor_lembur`";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[10];
             while (rs.next()) {
@@ -350,6 +352,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 row[6] = rs.getString("selesai_lembur");
                 row[7] = rs.getFloat("jumlah_jam");
                 row[8] = rs.getFloat("menit_istirahat_lembur");
+                row[9] = rs.getTime("absen_terakhir");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table);
@@ -1044,14 +1047,14 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "ID Pegawai", "Nama", "Bagian", "Tgl Lembur", "Jam Mulai", "Jam Selesai", "Jam", "Istirahat"
+                "No", "ID Pegawai", "Nama", "Bagian", "Tgl Lembur", "Jam Mulai", "Jam Selesai", "Jam", "Istirahat", "Absen Terakhir"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -2176,7 +2179,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di kirim !");
         } else {
             boolean check = true;
-            if (!MainForm.Login_Posisi.equals("MANAGER") && !MainForm.Login_Posisi.equals("STAFF 5") && !MainForm.Login_Posisi.equals("STAFF 6")) {
+            if (!MainForm.Login_Posisi.equals("DIREKTUR") && !MainForm.Login_Posisi.equals("MANAGER") && !MainForm.Login_Posisi.equals("STAFF 5") && !MainForm.Login_Posisi.equals("STAFF 6")) {
                 JOptionPane.showMessageDialog(this, "Hanya STAFF / MANAGER yang bisa menyetujui lembur !");
                 check = false;
             } else if (Table_SPL_STAFF.getValueAt(i, 8) != null) {//sudah diketahui hr
@@ -2221,7 +2224,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                             + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
                             + "WHERE `nomor_surat` = '" + Table_SPL_STAFF.getValueAt(i, 0).toString() + "'";
                     Utility.db.getStatement().executeUpdate(sql);
-                    refreshTable_SPL_PEJUANG();
+                    refreshTable_SPL_STAFF();
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(this, ex);
                     Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);

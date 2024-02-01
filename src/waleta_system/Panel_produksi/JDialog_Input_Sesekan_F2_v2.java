@@ -365,12 +365,17 @@ public class JDialog_Input_Sesekan_F2_v2 extends javax.swing.JDialog {
     private void button_insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_insertActionPerformed
         // TODO add your handling code here:
         try {
-            boolean checkCetak = true;
-            String sql1 = "SELECT `no_laporan_produksi` FROM `tb_cetak` WHERE `no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
-            ResultSet rs1 = Utility.db.getStatement().executeQuery(sql1);
-            checkCetak = !rs1.next();
+            boolean check_no_LP = true;
+            String query = "SELECT `tb_laporan_produksi`.`ruangan`, `tb_cetak`.`no_laporan_produksi`\n"
+                    + "FROM `tb_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
+                    + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
+            ResultSet result = Utility.db.getStatement().executeQuery(query);
+            check_no_LP = !result.next();
 
-            if (checkCetak && txt_no_lp.getText().toUpperCase().contains("WL-")) {
+            if (check_no_LP) {
+                JOptionPane.showMessageDialog(this, "No LP salah, " + txt_no_lp.getText() + " tidak ditemukan di data LP !");
+            } else if (result.getString("ruangan").length() != 5 && result.getString("no_laporan_produksi") == null) {
                 JOptionPane.showMessageDialog(this, "No LP (" + txt_no_lp.getText() + ") belum masuk Cetak !");
             } else if (CheckDuplicateLP(txt_no_lp.getText())) {
                 JOptionPane.showMessageDialog(this, "No LP " + txt_no_lp.getText() + " sudah Masuk di Tabel");

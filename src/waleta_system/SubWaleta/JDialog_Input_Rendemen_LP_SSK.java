@@ -26,7 +26,6 @@ public class JDialog_Input_Rendemen_LP_SSK extends javax.swing.JDialog {
 
     public void getdata() {
         try {
-            Utility.db.connect();
             String query = "SELECT `tb_laporan_produksi_sesekan`.`no_lp_sesekan`, `tanggal_timbang`, `rendemen_bersih`, `hancuran`, `rontokan_kotor`, `rontokan_kuning`, SUM(`gram_sesekan_lp`) AS 'gram_sesekan_lp' "
                     + "FROM `tb_laporan_produksi_sesekan` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_laporan_produksi_sesekan`.`no_lp_sesekan` = `tb_laporan_produksi`.`no_lp_sesekan` "
@@ -333,7 +332,6 @@ public class JDialog_Input_Rendemen_LP_SSK extends javax.swing.JDialog {
                         + "`rontokan_kotor`='" + rontokan_kotor + "', "
                         + "`rontokan_kuning`='" + rontokan_kuning + "' "
                         + "WHERE `no_lp_sesekan`='" + label_no_lp.getText() + "'";
-                Utility.db.connect();
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
                     JOptionPane.showMessageDialog(this, "sukses input data rendemen");

@@ -374,7 +374,7 @@ public class JPanel_DataTRSela extends javax.swing.JPanel {
         try {
             int j = Table_Data_tr_sela.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to change !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di edit !");
             } else {
                 JDialog_Edit_Data_Cetak edit_cetak = new JDialog_Edit_Data_Cetak(new javax.swing.JFrame(), true);
                 edit_cetak.pack();

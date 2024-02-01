@@ -28,7 +28,6 @@ public class JDialog_new_SPK_Expor extends javax.swing.JDialog {
     public JDialog_new_SPK_Expor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         try {
-            Utility.db.connect();
             initComponents();
             button_tambah1.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/add_green.png")), button_hapus1.getWidth(), button_hapus1.getHeight()));
             button_hapus1.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/delete-icon.png")), button_hapus1.getWidth(), button_hapus1.getHeight()));

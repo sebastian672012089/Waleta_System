@@ -31,7 +31,8 @@ public class JDialog_EditSetor_boxTreatment extends javax.swing.JDialog {
             button_save.setText("SETOR");
             jLabel1.setVisible(false);
             txt_nitrit_awal.setVisible(false);
-            txt_nitrit_akhir.setText(nitrit1);
+            jLabel3.setVisible(false);
+            txt_nitrit_akhir.setVisible(false);
             txt_keping_akhir.setText(kpg_akhir);
             txt_gram_akhir.setText(gram_akhir);
         } else if (operand.equals("edit")) {
@@ -170,13 +171,13 @@ public class JDialog_EditSetor_boxTreatment extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_keping_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,7 +277,6 @@ public class JDialog_EditSetor_boxTreatment extends javax.swing.JDialog {
                 } else if (operand.equals("setor")) {
                     sql = "UPDATE `tb_lab_barang_jadi` SET "
                             + "`tgl_selesai`='" + dateFormat.format(Date_selesai.getDate()) + "',"
-                            + "`nitrit_akhir`='" + txt_nitrit_akhir.getText() + "',"
                             + "`kpg_akhir`='" + txt_keping_akhir.getText() + "',"
                             + "`gram_akhir`='" + txt_gram_akhir.getText() + "'"
                             + "WHERE `kode`='" + label_kode.getText() + "'";
@@ -317,28 +317,6 @@ public class JDialog_EditSetor_boxTreatment extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_button_saveActionPerformed
 
-    private void txt_nitrit_awalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_awalKeyTyped
-        // TODO add your handling code here:
-        if (!Character.isDigit(evt.getKeyChar())
-                && evt.getKeyChar() != '.'
-                && evt.getKeyCode() != KeyEvent.VK_ENTER
-                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
-                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txt_nitrit_awalKeyTyped
-
-    private void txt_nitrit_akhirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_akhirKeyTyped
-        // TODO add your handling code here:
-        if (!Character.isDigit(evt.getKeyChar())
-                && evt.getKeyChar() != '.'
-                && evt.getKeyCode() != KeyEvent.VK_ENTER
-                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
-                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_txt_nitrit_akhirKeyTyped
-
     private void txt_keping_akhirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_keping_akhirKeyTyped
         // TODO add your handling code here:
         if (!Character.isDigit(evt.getKeyChar())
@@ -360,6 +338,28 @@ public class JDialog_EditSetor_boxTreatment extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txt_gram_akhirKeyTyped
+
+    private void txt_nitrit_awalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_awalKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+            && evt.getKeyChar() != '.'
+            && evt.getKeyCode() != KeyEvent.VK_ENTER
+            && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+            && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nitrit_awalKeyTyped
+
+    private void txt_nitrit_akhirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_akhirKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+            && evt.getKeyChar() != '.'
+            && evt.getKeyCode() != KeyEvent.VK_ENTER
+            && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+            && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nitrit_akhirKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

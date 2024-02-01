@@ -59,7 +59,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
     }
 
     public void init() {
-
 //        decimalFormat = Utility.DecimalFormatUS(decimalFormat);
         refreshTable_F2();
 //        refreshTable_Setoran();
@@ -156,6 +155,21 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 }
                             }
                         }
+                    }
+                }
+            }
+        });
+        
+        table_data_LPsuwir.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting() && table_data_LPsuwir.getSelectedRow() != -1) {
+                    if (table_data_LPsuwir.getSelectedRow() != -1) {
+                        int i = table_data_LPsuwir.getSelectedRow();
+                        String lp_kaki = table_data_LPsuwir.getValueAt(i, 0).toString();
+                        refreshTable_LaporanProduksi_LPsuwir(lp_kaki);
+                        refreshTable_BoxReproses_LPsuwir(lp_kaki);
+                        refreshTable_asalBox_LPSuwir(lp_kaki);
                     }
                 }
             }
@@ -990,9 +1004,11 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 baris[5] = rs.getInt("jumlah_box");
                 String lp_kaki = rs.getString("no_lp_suwir");
                 float keluar_f2 = 0;
-                String sql1 = "SELECT SUM(IF(`lp_kaki1` = '" + lp_kaki + "', `tambahan_kaki1`, 0)) AS 'tambahan_kaki1', "
+                String sql1 = "SELECT "
+                        + "SUM(IF(`lp_kaki1` = '" + lp_kaki + "', `tambahan_kaki1`, 0)) AS 'tambahan_kaki1', "
                         + "SUM(IF(`lp_kaki2` = '" + lp_kaki + "', `tambahan_kaki2`, 0)) AS 'tambahan_kaki2' "
-                        + "FROM `tb_finishing_2` WHERE `lp_kaki1` = '" + lp_kaki + "' OR `lp_kaki2` = '" + lp_kaki + "'";
+                        + "FROM `tb_finishing_2` "
+                        + "WHERE `lp_kaki1` = '" + lp_kaki + "' OR `lp_kaki2` = '" + lp_kaki + "'";
                 pst = Utility.db.getConnection().prepareStatement(sql1);
                 ResultSet rs_keluar1 = pst.executeQuery();
                 if (rs_keluar1.next()) {
@@ -1000,9 +1016,11 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                     total_keluar_f2 = total_keluar_f2 + keluar_f2;
                 }
                 float keluar_reproses = 0;
-                String sql2 = "SELECT SUM(IF(`no_lp_suwir` = '" + lp_kaki + "', `gram_kaki`, 0)) AS 'keluar_reproses1', "
+                String sql2 = "SELECT "
+                        + "SUM(IF(`no_lp_suwir` = '" + lp_kaki + "', `gram_kaki`, 0)) AS 'keluar_reproses1', "
                         + "SUM(IF(`no_lp_suwir2` = '" + lp_kaki + "', `gram_kaki2`, 0)) AS 'keluar_reproses2' "
-                        + "FROM `tb_reproses` WHERE `no_lp_suwir` = '" + lp_kaki + "' OR `no_lp_suwir2` = '" + lp_kaki + "'";
+                        + "FROM `tb_reproses` "
+                        + "WHERE `no_lp_suwir` = '" + lp_kaki + "' OR `no_lp_suwir2` = '" + lp_kaki + "'";
                 pst = Utility.db.getConnection().prepareStatement(sql2);
                 ResultSet rs_keluar2 = pst.executeQuery();
                 if (rs_keluar2.next()) {
@@ -1094,7 +1112,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         }
     }
 
-    public void refreshTable_asalBox_LPSuwir(String no_lp_kaki) {
+    public void refreshTable_asalBox_LPSuwir(String lp_kaki) {
         try {
             int total_keping = 0;
             float total_gram = 0;
@@ -1103,7 +1121,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             sql = "SELECT `tb_lp_suwir_detail`.`no_box`, `tanggal_box`, `tb_grade_bahan_jadi`.`kode_grade`, `keping`, `berat`, `no_tutupan` FROM `tb_lp_suwir_detail` "
                     + "LEFT JOIN `tb_box_bahan_jadi` ON `tb_lp_suwir_detail`.`no_box` = `tb_box_bahan_jadi`.`no_box` "
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode` "
-                    + "WHERE `tb_lp_suwir_detail`.`no_lp_suwir` = '" + no_lp_kaki + "'";
+                    + "WHERE `tb_lp_suwir_detail`.`no_lp_suwir` = '" + lp_kaki + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[6];
             while (rs.next()) {
@@ -4115,7 +4133,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         try {
             int j = Table_Data_f2.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to change !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di edit !");
             } else {
                 JDialog_Edit_Data_Kaki_F2 edit_kaki = new JDialog_Edit_Data_Kaki_F2(new javax.swing.JFrame(), true);
                 edit_kaki.pack();

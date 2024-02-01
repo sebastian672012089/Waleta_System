@@ -6,9 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -20,7 +24,6 @@ import waleta_system.Class.ExportToExcel;
 
 public class JPanel_BonusGrading extends javax.swing.JPanel {
 
-    
     String sql = null;
     ResultSet rs;
     Date date = new Date();
@@ -29,7 +32,7 @@ public class JPanel_BonusGrading extends javax.swing.JPanel {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DefaultTableCellRenderer TableAlignment = new DefaultTableCellRenderer();
     int row = 0;
-    int jmb = 0, jmb_r = 0, spr = 0, spr_r = 0, prem = 0, prem_r = 0, std = 0, ovl1 = 0, ovl2 = 0, sgtg_bsr = 0, sgtg1 = 0, sgtg2 = 0, 
+    int jmb = 0, jmb_r = 0, spr = 0, spr_r = 0, prem = 0, prem_r = 0, std = 0, ovl1 = 0, ovl2 = 0, sgtg_bsr = 0, sgtg1 = 0, sgtg2 = 0,
             flat_mk_pch = 0, flat_mk_pch1 = 0, flat_mk_pch2 = 0, flat_swr = 0, flat_zt = 0, flat_ztb = 0, flat_yt_kcl = 0, flat_yt_sdg = 0, flat_yt_bsr = 0, flat_srt_kcl = 0, total_bonus = 0;
 
     public JPanel_BonusGrading() {
@@ -38,8 +41,7 @@ public class JPanel_BonusGrading extends javax.swing.JPanel {
 
     public void init() {
         try {
-            
-            
+
             refreshTable_harga();
             refreshTable_bonusLP();
             tabel_bonus_grading.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -109,8 +111,29 @@ public class JPanel_BonusGrading extends javax.swing.JPanel {
 
     public void CountBonus(String lp, String grade) {
         try {
-            jmb = 0; jmb_r = 0; spr = 0; spr_r = 0; prem = 0; prem_r = 0; std = 0; ovl1 = 0; ovl2 = 0; sgtg_bsr = 0; sgtg1 = 0; sgtg2 = 0; 
-            flat_mk_pch = 0; flat_mk_pch1 = 0; flat_mk_pch2 = 0; flat_swr = 0; flat_zt = 0; flat_ztb = 0; flat_yt_kcl = 0; flat_yt_sdg = 0; flat_yt_bsr = 0; flat_srt_kcl = 0; total_bonus = 0;
+            jmb = 0;
+            jmb_r = 0;
+            spr = 0;
+            spr_r = 0;
+            prem = 0;
+            prem_r = 0;
+            std = 0;
+            ovl1 = 0;
+            ovl2 = 0;
+            sgtg_bsr = 0;
+            sgtg1 = 0;
+            sgtg2 = 0;
+            flat_mk_pch = 0;
+            flat_mk_pch1 = 0;
+            flat_mk_pch2 = 0;
+            flat_swr = 0;
+            flat_zt = 0;
+            flat_ztb = 0;
+            flat_yt_kcl = 0;
+            flat_yt_sdg = 0;
+            flat_yt_bsr = 0;
+            flat_srt_kcl = 0;
+            total_bonus = 0;
             int bonus_jmb = 0, bonus_jmb_r = 0, bonus_spr = 0, bonus_spr_r = 0, bonus_prem = 0, bonus_prem_r = 0, bonus_std = 0,
                     bonus_ovl1 = 0, bonus_ovl2 = 0, bonus_sgtg_bsr = 0, bonus_sgtg1 = 0, bonus_sgtg2 = 0, bonus_flat = 0, bonus_total_bonus = 0;
 
@@ -228,7 +251,7 @@ public class JPanel_BonusGrading extends javax.swing.JPanel {
                     + "JOIN `tb_laporan_produksi` ON `tb_bahan_jadi_masuk`.`kode_asal` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_cabut` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_karyawan` ON `tb_karyawan`.`id_pegawai` = `tb_cetak`.`cetak_dikerjakan`\n"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_karyawan`.`id_pegawai` = `tb_cetak`.`cetak_dikerjakan`\n"
                     + "WHERE `tb_bahan_jadi_masuk`.`kode_asal` LIKE '%" + txt_search_no_lp.getText() + "%' AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruangan + "%' AND `tb_bahan_jadi_masuk`.`tanggal_grading` IS NOT NULL \n"
                     + "ORDER BY `tb_bahan_jadi_masuk`.`tanggal_grading` DESC";
             if (Date_filter1.getDate() != null && Date_filter2.getDate() != null) {
@@ -533,6 +556,11 @@ public class JPanel_BonusGrading extends javax.swing.JPanel {
         button_edit.setBackground(new java.awt.Color(255, 255, 255));
         button_edit.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_edit.setText("Edit");
+        button_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_editActionPerformed(evt);
+            }
+        });
 
         button_exportHarga.setBackground(new java.awt.Color(255, 255, 255));
         button_exportHarga.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -611,6 +639,26 @@ public class JPanel_BonusGrading extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) Tabel_harga_bonus.getModel();
         ExportToExcel.writeToExcel(model, jPanel1);
     }//GEN-LAST:event_button_exportHargaActionPerformed
+
+    private void button_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_editActionPerformed
+        // TODO add your handling code here:
+        try {
+            int j = Tabel_harga_bonus.getSelectedRow();
+            if (j == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di edit !");
+            } else {
+                JDialog_Edit_Data_BonusGrading dialog = new JDialog_Edit_Data_BonusGrading(new javax.swing.JFrame(), true, Tabel_harga_bonus.getValueAt(j, 0).toString());
+                dialog.pack();
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);
+                dialog.setEnabled(true);
+                refreshTable_harga();
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e);
+            Logger.getLogger(JPanel_BonusGrading.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }//GEN-LAST:event_button_editActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

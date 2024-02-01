@@ -42,11 +42,6 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
     }
 
     public void init(int show_value) {
-        try {
-            Utility.db.connect();
-        } catch (Exception ex) {
-            Logger.getLogger(JFrame_KategoriStokJualTV.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         PieChart();
         refreshTable_DataStok();

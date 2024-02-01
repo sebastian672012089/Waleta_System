@@ -15,11 +15,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class JDialog_Input_ByProduct_F2_v2 extends javax.swing.JDialog {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    
+
     Date date = new Date();
     PreparedStatement pst;
     String sql = null;
@@ -27,15 +26,9 @@ public class JDialog_Input_ByProduct_F2_v2 extends javax.swing.JDialog {
 
     public JDialog_Input_ByProduct_F2_v2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        try {
-            
-            
-            initComponents();
-            label_title_terima_lp.setText("Input By Product F2");
-            this.setResizable(false);
-        } catch (Exception ex) {
-            Logger.getLogger(JDialog_Input_ByProduct_F2_v2.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        initComponents();
+        label_title_terima_lp.setText("Input By Product F2");
+        this.setResizable(false);
     }
 
     public void input_f2() {
@@ -101,9 +94,9 @@ public class JDialog_Input_ByProduct_F2_v2 extends javax.swing.JDialog {
         float total_gram_serabut = 0;
         for (int i = 0; i < a; i++) {
             try {
-                float hancuran = Float.valueOf(Tabel_data.getValueAt(i, 2).toString());
+                float hancuran = Tabel_data.getValueAt(i, 2) == null ? 0f : Float.valueOf(Tabel_data.getValueAt(i, 2).toString());
                 total_gram_hancuran = total_gram_hancuran + hancuran;
-                float serabut = Float.valueOf(Tabel_data.getValueAt(i, 3).toString());
+                float serabut = Tabel_data.getValueAt(i, 3) == null ? 0f : Float.valueOf(Tabel_data.getValueAt(i, 3).toString());
                 total_gram_serabut = total_gram_serabut + serabut;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "Maaf Format Angka salah pada baris ke-" + i);
@@ -388,14 +381,17 @@ public class JDialog_Input_ByProduct_F2_v2 extends javax.swing.JDialog {
     private void button_insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_insertActionPerformed
         // TODO add your handling code here:
         try {
-            boolean checkCetak = true;
-            String sql1 = "SELECT * FROM `tb_cetak` WHERE `no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
-            ResultSet rs1 = Utility.db.getStatement().executeQuery(sql1);
-            checkCetak = !rs1.next();
-            System.out.println(txt_no_lp.getText().toUpperCase().contains("WL-"));
-            System.out.println(txt_no_lp.getText().toUpperCase());
+            boolean check_no_LP = true;
+            String query = "SELECT `tb_laporan_produksi`.`ruangan`, `tb_cetak`.`no_laporan_produksi`\n"
+                    + "FROM `tb_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
+                    + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
+            ResultSet result = Utility.db.getStatement().executeQuery(query);
+            check_no_LP = !result.next();
 
-            if (checkCetak && txt_no_lp.getText().toUpperCase().contains("WL-")) {
+            if (check_no_LP) {
+                JOptionPane.showMessageDialog(this, "No LP salah, " + txt_no_lp.getText() + " tidak ditemukan di data LP !");
+            } else if (result.getString("ruangan").length() != 5 && result.getString("no_laporan_produksi") == null) {
                 JOptionPane.showMessageDialog(this, "No LP (" + txt_no_lp.getText() + ") belum masuk Cetak !");
             } else if (CheckDuplicateLP(txt_no_lp.getText())) {
                 JOptionPane.showMessageDialog(this, "No LP " + txt_no_lp.getText() + " sudah Masuk di Tabel");
@@ -416,12 +412,17 @@ public class JDialog_Input_ByProduct_F2_v2 extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                boolean checkCetak = true;
-                String sql1 = "SELECT * FROM `tb_cetak` WHERE `no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
-                ResultSet rs1 = Utility.db.getStatement().executeQuery(sql1);
-                checkCetak = !rs1.next();
+                boolean check_no_LP = true;
+                String query = "SELECT `tb_laporan_produksi`.`ruangan`, `tb_cetak`.`no_laporan_produksi`\n"
+                        + "FROM `tb_laporan_produksi`\n"
+                        + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
+                        + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
+                ResultSet result = Utility.db.getStatement().executeQuery(query);
+                check_no_LP = !result.next();
 
-                if (checkCetak && txt_no_lp.getText().toUpperCase().contains("WL-")) {
+                if (check_no_LP) {
+                    JOptionPane.showMessageDialog(this, "No LP salah, " + txt_no_lp.getText() + " tidak ditemukan di data LP !");
+                } else if (result.getString("ruangan").length() != 5 && result.getString("no_laporan_produksi") == null) {
                     JOptionPane.showMessageDialog(this, "No LP (" + txt_no_lp.getText() + ") belum masuk Cetak !");
                 } else if (CheckDuplicateLP(txt_no_lp.getText())) {
                     JOptionPane.showMessageDialog(this, "No LP " + txt_no_lp.getText() + " sudah Masuk di Tabel");

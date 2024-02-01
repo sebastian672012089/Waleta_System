@@ -12,12 +12,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.Class.ColumnsAutoSizer;
-
 import waleta_system.Class.Utility;
 
 public class JDialog_reProcess extends javax.swing.JDialog {
 
-    
     String sql = null;
     ResultSet rs;
     Date date = new Date();

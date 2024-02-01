@@ -78,6 +78,12 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
             if (Date1_cuci.getDate() != null && Date2_cuci.getDate() != null) {
                 filter_tanggal_cuci = "AND (`tb_cuci`.`tgl_masuk_cuci` BETWEEN '" + dateFormat.format(Date1_cuci.getDate()) + "' AND '" + dateFormat.format(Date2_cuci.getDate()) + "') \n";
             }
+            String filter_ruangan = "";
+            if (ComboBox_ruangan.getSelectedIndex() == 1) {
+                filter_ruangan = "AND `tb_laporan_produksi`.`ruangan` IN ('A', 'B', 'C', 'D', 'E') \n";
+            } else if (ComboBox_ruangan.getSelectedIndex() == 2) {
+                filter_ruangan = "AND `tb_laporan_produksi`.`ruangan` NOT IN ('A', 'B', 'C', 'D', 'E') \n";
+            }
 
             sql = "SELECT `tb_cuci`.`no_laporan_produksi`, `cheat_rsb`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`kode_grade`, `jumlah_keping`, `tgl_masuk_cuci`, `cuci_diterima`, `cuci_diserahkan`, "
                     + "`cuci_kaki_besar`, `cuci_kaki_kecil`, `cuci_hilang_kaki`, \n"
@@ -96,6 +102,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
                     + "AND `tb_laporan_produksi`.`no_kartu_waleta` " + ComboBox_no_kartu_like.getSelectedItem().toString() + " '%" + txt_search_no_kartu.getText() + "%' \n"
                     + "AND `tb_laporan_produksi`.`memo_lp` LIKE '%" + txt_search_memo.getText() + "%' \n"
                     + filter_tanggal_cuci
+                    + filter_ruangan
                     + "ORDER BY `tb_cuci`.`tgl_masuk_cuci` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[30];
@@ -201,6 +208,8 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
         jLabel4 = new javax.swing.JLabel();
         txt_search_no_kartu = new javax.swing.JTextField();
         ComboBox_no_kartu_like = new javax.swing.JComboBox<>();
+        jLabel8 = new javax.swing.JLabel();
+        ComboBox_ruangan = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Cuci", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -392,6 +401,13 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
         ComboBox_no_kartu_like.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         ComboBox_no_kartu_like.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LIKE", "NOT LIKE" }));
 
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel8.setText("Ruangan :");
+
+        ComboBox_ruangan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_ruangan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALL", "WALETA", "EKSTERNAL" }));
+
         javax.swing.GroupLayout jPanel_Data_CuciLayout = new javax.swing.GroupLayout(jPanel_Data_Cuci);
         jPanel_Data_Cuci.setLayout(jPanel_Data_CuciLayout);
         jPanel_Data_CuciLayout.setHorizontalGroup(
@@ -414,6 +430,10 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_search_memo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ComboBox_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -467,7 +487,9 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
                     .addComponent(button_search_cuci, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_no_kartu, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_search_no_kartu, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -588,7 +610,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
         try {
             int j = Table_Data_Cuci.getSelectedRow();
             if (j == -1) {
-                JOptionPane.showMessageDialog(this, "Please Select Row Data that you want to change !");
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di edit !");
             } else {
                 String no_lp = Table_Data_Cuci.getValueAt(j, 0).toString();
                 JDialog_Edit_Data_Cuci edit_cuci = new JDialog_Edit_Data_Cuci(new javax.swing.JFrame(), true, no_lp);
@@ -675,6 +697,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_no_kartu_like;
+    private javax.swing.JComboBox<String> ComboBox_ruangan;
     private com.toedter.calendar.JDateChooser Date1_cuci;
     private com.toedter.calendar.JDateChooser Date2_cuci;
     public static javax.swing.JTable Table_Data_Cuci;
@@ -694,6 +717,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel_Data_Cuci;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel label_total_data_cuci;

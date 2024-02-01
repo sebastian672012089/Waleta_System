@@ -110,7 +110,9 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                     total_nitrit_akhir = total_nitrit_akhir + rs.getFloat("nitrit_akhir");
                     jumlah_data_nitrit_akhir++;
                 }
-                if (rs.getFloat("nitrit_akhir") > Float.valueOf(txt_max_nitrit.getText())) {
+                if (rs.getFloat("nitrit_akhir") == 0) {
+                    row[11] = "";
+                } else if (rs.getFloat("nitrit_akhir") > Float.valueOf(txt_max_nitrit.getText())) {
                     row[11] = "NON NS";
                 } else {
                     row[11] = "PASSED";
@@ -509,18 +511,39 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
         // TODO add your handling code here:
         int i = Table_data_treatment.getSelectedRow();
         if (i > -1) {
-            String kode = Table_data_treatment.getValueAt(i, 0).toString();
-            String no_box = Table_data_treatment.getValueAt(i, 1).toString();
-            String kpg1 = Table_data_treatment.getValueAt(i, 4).toString();
-            String gram1 = Table_data_treatment.getValueAt(i, 5).toString();
-            String nitrit1 = Table_data_treatment.getValueAt(i, 6).toString();
-            JDialog_EditSetor_boxTreatment dialog = new JDialog_EditSetor_boxTreatment(new javax.swing.JFrame(), true, kode, no_box, "", nitrit1, "", kpg1, gram1, "setor");
-            dialog.pack();
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);
-            dialog.setEnabled(true);
-            dialog.setResizable(false);
-            refreshTable();
+            if (Table_data_treatment.getValueAt(i, 0).toString().equals("NON NS")) {
+                JOptionPane.showMessageDialog(this, "Untuk setor box NON NS memerlukan otorisasi kadep QCQA, lanjutkan?");
+                JDialog_otorisasi_QC dialog_otorisasi = new JDialog_otorisasi_QC(new javax.swing.JFrame(), true, "Kadep QCQA", "AND `tb_bagian`.`nama_bagian` LIKE 'KADEP-QCQA%'");
+                dialog_otorisasi.pack();
+                dialog_otorisasi.setLocationRelativeTo(this);
+                dialog_otorisasi.setVisible(true);
+                dialog_otorisasi.setEnabled(true);
+                if (dialog_otorisasi.akses()) {
+                    String kode = Table_data_treatment.getValueAt(i, 0).toString();
+                    String no_box = Table_data_treatment.getValueAt(i, 1).toString();
+                    String kpg1 = Table_data_treatment.getValueAt(i, 4).toString();
+                    String gram1 = Table_data_treatment.getValueAt(i, 5).toString();
+                    JDialog_EditSetor_boxTreatment dialog = new JDialog_EditSetor_boxTreatment(new javax.swing.JFrame(), true, kode, no_box, "", "", "", kpg1, gram1, "setor");
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+                    dialog.setEnabled(true);
+                    dialog.setResizable(false);
+                    refreshTable();
+                }
+            } else {
+                String kode = Table_data_treatment.getValueAt(i, 0).toString();
+                String no_box = Table_data_treatment.getValueAt(i, 1).toString();
+                String kpg1 = Table_data_treatment.getValueAt(i, 4).toString();
+                String gram1 = Table_data_treatment.getValueAt(i, 5).toString();
+                JDialog_EditSetor_boxTreatment dialog = new JDialog_EditSetor_boxTreatment(new javax.swing.JFrame(), true, kode, no_box, "", "", "", kpg1, gram1, "setor");
+                dialog.pack();
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);
+                dialog.setEnabled(true);
+                dialog.setResizable(false);
+                refreshTable();
+            }
         }
     }//GEN-LAST:event_button_setorActionPerformed
 
@@ -531,6 +554,8 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
         int i = Table_data_treatment.getSelectedRow();
         if (i == -1) {
             JOptionPane.showMessageDialog(this, "Belum memilih data");
+        } else if (Table_data_treatment.getValueAt(i, 7) != null) {
+            JOptionPane.showMessageDialog(this, "Box sudah disetor tidak bisa input nitrit awal");
         } else {
             String kode = Table_data_treatment.getValueAt(i, 0).toString();
             if ((float) Table_data_treatment.getValueAt(i, 6) > 0) {
@@ -539,9 +564,18 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
             try {
                 String input = JOptionPane.showInputDialog("Masukkan Nitrit Awal : ");
                 if (input != null && !input.equals("")) {
-                    float NITRIT_A = Float.valueOf(input);
+                    float NITRIT_AWAL = Float.valueOf(input);
                     decimalFormat = Utility.DecimalFormatUS(decimalFormat);
-                    sql = "UPDATE `tb_lab_barang_jadi` SET `nitrit_awal`='" + decimalFormat.format(NITRIT_A) + "' WHERE `kode`='" + kode + "'";
+                    if (NITRIT_AWAL > Float.valueOf(txt_max_nitrit.getText())) {
+                        sql = "UPDATE `tb_lab_barang_jadi` SET "
+                                + "`nitrit_awal`='" + decimalFormat.format(NITRIT_AWAL) + "' "
+                                + "WHERE `kode`='" + kode + "'";
+                    } else {
+                        sql = "UPDATE `tb_lab_barang_jadi` SET "
+                                + "`nitrit_awal`='" + decimalFormat.format(NITRIT_AWAL) + "', "
+                                + "`nitrit_akhir`='" + decimalFormat.format(NITRIT_AWAL) + "' "
+                                + "WHERE `kode`='" + kode + "'";
+                    }
                     Utility.db.getConnection().createStatement();
                     if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
                         refreshTable();
@@ -670,6 +704,48 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
 
     private void button_input_nitrit_akhirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_nitrit_akhirActionPerformed
         // TODO add your handling code here:
+        decimalFormat.setMaximumFractionDigits(2);
+        decimalFormat.setGroupingUsed(false);
+        int i = Table_data_treatment.getSelectedRow();
+        if (i == -1) {
+            JOptionPane.showMessageDialog(this, "Belum memilih data");
+        } else if (Table_data_treatment.getValueAt(i, 7) != null) {
+            JOptionPane.showMessageDialog(this, "Box sudah disetor tidak bisa input nitrit akhir");
+        } else {
+            String kode = Table_data_treatment.getValueAt(i, 0).toString();
+            if ((float) Table_data_treatment.getValueAt(i, 8) > 0) {
+                JOptionPane.showMessageDialog(this, "nitrit akhir sudah di input, input ulang untuk melakukan edit data");
+            }
+            try {
+                String input = JOptionPane.showInputDialog("Masukkan Nitrit Awal : ");
+                if (input != null && !input.equals("")) {
+                    float NITRIT_AWAL = Float.valueOf(input);
+                    decimalFormat = Utility.DecimalFormatUS(decimalFormat);
+                    if (NITRIT_AWAL > Float.valueOf(txt_max_nitrit.getText())) {
+                        sql = "UPDATE `tb_lab_barang_jadi` SET "
+                                + "`nitrit_awal`='" + decimalFormat.format(NITRIT_AWAL) + "' "
+                                + "WHERE `kode`='" + kode + "'";
+                    } else {
+                        sql = "UPDATE `tb_lab_barang_jadi` SET "
+                                + "`nitrit_awal`='" + decimalFormat.format(NITRIT_AWAL) + "', "
+                                + "`nitrit_akhir`='" + decimalFormat.format(NITRIT_AWAL) + "' "
+                                + "WHERE `kode`='" + kode + "'";
+                    }
+                    Utility.db.getConnection().createStatement();
+                    if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
+                        refreshTable();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Input failed!");
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_Lab_BarangJadi.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Input must be number!");
+                Logger.getLogger(JPanel_Lab_BarangJadi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_button_input_nitrit_akhirActionPerformed
 
 

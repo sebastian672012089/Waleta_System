@@ -723,15 +723,15 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         try {
             ArrayList<String> id_pegawai = new ArrayList<>();
             ArrayList<String> tanggal = new ArrayList<>();
-
             sql = "SELECT `tb_lembur_rekap`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, CONCAT(`divisi_bagian`, '-', `ruang_bagian`) AS 'nama_bagian',\n"
                     + "DAYNAME(`tanggal`) AS 'hari', `tanggal`, `premi_hadir` \n"
                     + "FROM `tb_lembur_rekap` \n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_lembur_rekap`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
-                    + "WHERE `premi_hadir` = 0\n"
-                    + "AND `jam_kerja` = 'SHIFT_MALAM'\n"
-                    + "AND `tanggal` BETWEEN '" + tanggal_mulai + "' AND '" + tanggal_selesai + "'";
+                    + "WHERE "
+                    + "`tb_lembur_rekap`.`premi_hadir` = 0\n"
+                    + "AND `tb_lembur_rekap`.`jam_kerja` = 'SHIFT_MALAM'\n"
+                    + "AND `tb_lembur_rekap`.`tanggal` BETWEEN '" + dateFormat.format(tanggal_mulai) + "' AND '" + dateFormat.format(tanggal_selesai) + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
                 id_pegawai.add(rs.getString("id_pegawai"));
@@ -739,27 +739,23 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
             }
 
             if (id_pegawai.size() > 0) {
-                int dialogResult = JOptionPane.showConfirmDialog(this, id_pegawai.size() + " karyawan kurang jam kerja, input ke data cuti?", "Warning", 0);
+                int dialogResult = JOptionPane.showConfirmDialog(this, id_pegawai.size() + " data kurang jam kerja, input ke data cuti?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     int count = 0;
+                    String Query = "INSERT INTO `tb_cuti`(`id_pegawai`, `tanggal_cuti`, `jenis_cuti`, `kategori_cuti`, `keterangan`) "
+                            + "SELECT * FROM (SELECT ?, ?, 'Absen', 'Jam Kerja Kurang', '-' AS 'keterangan') AS tmp\n"
+                            + "WHERE NOT EXISTS (SELECT `kode_cuti` FROM `tb_cuti` WHERE `id_pegawai` = ? AND `tanggal_cuti` = ?)";
+                    PreparedStatement statementInsert = Utility.db.getConnection().prepareStatement(Query);
                     for (int i = 0; i < id_pegawai.size(); i++) {
-                        String Query = "INSERT INTO `tb_cuti`(`id_pegawai`, `tanggal_cuti`, `jenis_cuti`, `kategori_cuti`, `keterangan`) "
-                                + "SELECT * FROM (SELECT '" + id_pegawai.get(i) + "','" + tanggal.get(i) + "', 'Absen', 'Jam Kerja Kurang', '-' AS 'keterangan') AS tmp\n"
-                                + "WHERE NOT EXISTS (SELECT `kode_cuti` FROM `tb_cuti` WHERE `id_pegawai` = '" + id_pegawai.get(i) + "' AND `tanggal_cuti` = '" + tanggal.get(i) + "')";
-                        Utility.db.getConnection().createStatement();
-                        if (Utility.db.getStatement().executeUpdate(Query) == 1) {
-                            count++;
-                        }
+                        statementInsert.setString(1, id_pegawai.get(i));
+                        statementInsert.setString(2, tanggal.get(i));
+                        statementInsert.setString(3, id_pegawai.get(i));
+                        statementInsert.setString(4, tanggal.get(i));
+                        count += statementInsert.executeUpdate();
                     }
                     JOptionPane.showMessageDialog(this, count + " data berhasil di input ke data cuti/absen !");
                 }
             }
-
-//        JDialog_Input_JamKerjaKurang dialog = new JDialog_Input_JamKerjaKurang(new javax.swing.JFrame(), true, tanggal_mulai, tanggal_selesai);
-//        dialog.setResizable(false);
-//        dialog.setLocationRelativeTo(this);
-//        dialog.setEnabled(true);
-//        dialog.setVisible(true);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
@@ -1195,7 +1191,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
 
         txt_potongan_bpjs.setEditable(false);
         txt_potongan_bpjs.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_potongan_bpjs.setText("22842");
+        txt_potongan_bpjs.setText("23790");
 
         jLabel16.setBackground(new java.awt.Color(255, 255, 255));
         jLabel16.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -1217,7 +1213,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
 
         txt_potongan_bpjs_tk.setEditable(false);
         txt_potongan_bpjs_tk.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_potongan_bpjs_tk.setText("68526");
+        txt_potongan_bpjs_tk.setText("71370");
 
         button_export.setText("Export to Excel");
         button_export.addActionListener(new java.awt.event.ActionListener() {
@@ -1975,7 +1971,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
             try {
                 Utility.db.getConnection().setAutoCommit(false);
                 for (int i = 0; i < tabel_data_lembur_security.getRowCount(); i++) {
-                    if (tabel_data_lembur_security.getValueAt(i, 27) != null && (double) tabel_data_lembur_security.getValueAt(i, 27) > 0) {//gaji tidak null dan lebih dari 0
+                    if (tabel_data_lembur_security.getValueAt(i, 27) != null) {//gaji tidak null dan lebih dari 0
 
                         String bagian = "NULL";
                         String jam_kerja = "NULL";

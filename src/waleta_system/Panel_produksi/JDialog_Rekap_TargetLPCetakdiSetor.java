@@ -23,7 +23,6 @@ public class JDialog_Rekap_TargetLPCetakdiSetor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setResizable(false);
-        Utility.db.connect();
     }
 
     public void loaddata() {

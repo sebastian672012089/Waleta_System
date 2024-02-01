@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -13,7 +12,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.Class.ColumnsAutoSizer;
-import waleta_system.Class.DataBagian;
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Class.Utility;
 
@@ -24,46 +22,22 @@ public class JPanel_Absensi_Karyawan_ViewOnly extends javax.swing.JPanel {
     PreparedStatement pst;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date today = new Date();
-    List<Integer> Subordinates = null;
+    List<String> Subordinates = null;
 
     public JPanel_Absensi_Karyawan_ViewOnly() {
         initComponents();
     }
 
     public void init() {
-        ArrayList<DataBagian> dataBagian = LoadDataBagian();
-        Subordinates = DataBagian.getSubordinates(dataBagian, MainForm.Login_kodeBagian);
-        refreshTable_absen();
-    }
-
-    private ArrayList<DataBagian> LoadDataBagian() {
         try {
-            ArrayList<DataBagian> bagianList = new ArrayList<>();
-            sql = "SELECT `kode_bagian`, `nama_bagian`, `posisi_bagian`, `kode_departemen`, `divisi_bagian`, `bagian_bagian`, `ruang_bagian`, `grup`, `status_bagian`, `kepala_bagian` FROM `tb_bagian` WHERE `status_bagian` = 1";
-            rs = Utility.db.getStatement().executeQuery(sql);
-            DataBagian Bagian;
-            while (rs.next()) {
-                Bagian = new DataBagian(
-                        rs.getInt("kode_bagian"),
-                        rs.getString("nama_bagian"),
-                        rs.getString("posisi_bagian"),
-                        rs.getString("kode_departemen"),
-                        rs.getString("divisi_bagian"),
-                        rs.getString("bagian_bagian"),
-                        rs.getString("ruang_bagian"),
-                        rs.getString("grup"),
-                        rs.getInt("status_bagian"),
-                        rs.getInt("kepala_bagian"));
-                bagianList.add(Bagian);
-            }
-            return bagianList;
-        } catch (SQLException ex) {
+            Subordinates = Utility.GetListBawahanFromKodeBagian(Integer.toString(MainForm.Login_kodeBagian));
+            refreshTable_absen();
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Absensi_Karyawan_ViewOnly.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
         }
     }
-
+    
     public void refreshTable_absen() {
         try {
             DefaultTableModel model = (DefaultTableModel) tabel_data_absen.getModel();
@@ -78,12 +52,12 @@ public class JPanel_Absensi_Karyawan_ViewOnly extends javax.swing.JPanel {
             }
             String filter_Subordinates = "";
             if (Subordinates.isEmpty()) {
-                filter_Subordinates = "AND `tb_karyawan`.`id_pegawai` = '"+MainForm.Login_idPegawai+"' \n";
+                filter_Subordinates = "AND `tb_karyawan`.`id_pegawai` = '" + MainForm.Login_idPegawai + "' \n";
                 txt_search_NamaKaryawan.setEnabled(false);
                 txt_search_pin.setEnabled(false);
                 txt_search_bagian.setEnabled(false);
             } else {
-                filter_Subordinates = "AND (`tb_karyawan`.`kode_bagian` IN (" + kodeBagian + ") OR `tb_karyawan`.`id_pegawai` = '"+MainForm.Login_idPegawai+"') \n";
+                filter_Subordinates = "AND (`tb_karyawan`.`kode_bagian` IN (" + kodeBagian + ") OR `tb_karyawan`.`id_pegawai` = '" + MainForm.Login_idPegawai + "') \n";
                 txt_search_NamaKaryawan.setEnabled(true);
                 txt_search_pin.setEnabled(true);
                 txt_search_bagian.setEnabled(true);

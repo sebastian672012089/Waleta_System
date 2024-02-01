@@ -94,37 +94,29 @@
 	<parameter name="NO_LP_SUWIR" class="java.lang.String"/>
 	<parameter name="STOK" class="java.lang.Float"/>
 	<queryString>
-		<![CDATA[SELECT *
-FROM
+		<![CDATA[SELECT `tb_lp_suwir`.`no_lp_suwir`, `gram`, `gram_akhir`, `no_lp_no_box`, `gram_ambil`, `no_lp_swr`
+FROM `tb_lp_suwir`
+LEFT JOIN
 (SELECT `no_laporan_produksi` AS 'no_lp_no_box', `tambahan_kaki1` AS 'gram_ambil', `lp_kaki1` AS 'no_lp_swr'
 FROM `tb_finishing_2`
 WHERE `lp_kaki1` = $P{NO_LP_SUWIR} AND `tgl_f1` = CURRENT_DATE
 UNION ALL
-SELECT `no_laporan_produksi`, `tambahan_kaki2`, `lp_kaki2`
+SELECT `no_laporan_produksi` AS 'no_lp_no_box', `tambahan_kaki2` AS 'gram_ambil', `lp_kaki2` AS 'no_lp_swr'
 FROM `tb_finishing_2`
 WHERE `lp_kaki2` = $P{NO_LP_SUWIR} AND `tgl_f1` = CURRENT_DATE
 UNION ALL
-SELECT `no_box`, `gram_kaki`, `no_lp_suwir`
+SELECT `no_box` AS 'no_lp_no_box', `gram_kaki` AS 'gram_ambil', `no_lp_suwir` AS 'no_lp_swr'
 FROM `tb_reproses`
 WHERE `no_lp_suwir` = $P{NO_LP_SUWIR} AND `tgl_f1` = CURRENT_DATE
 UNION ALL
-SELECT `no_box`, `gram_kaki2`, `no_lp_suwir2`
+SELECT `no_box` AS 'no_lp_no_box', `gram_kaki2` AS 'gram_ambil', `no_lp_suwir2` AS 'no_lp_swr'
 FROM `tb_reproses`
-WHERE `no_lp_suwir2` = $P{NO_LP_SUWIR} AND `tgl_f1` = CURRENT_DATE
+WHERE `no_lp_suwir2` = 'SWR-24010001' AND `tgl_f1` = CURRENT_DATE
 ) AS DATA
-LEFT JOIN `tb_lp_suwir` ON DATA.`no_lp_swr` = `tb_lp_suwir`.`no_lp_suwir`
+ON `tb_lp_suwir`.`no_lp_suwir` = DATA.`no_lp_swr`
 WHERE `tb_lp_suwir`.`no_lp_suwir` = $P{NO_LP_SUWIR}]]>
 	</queryString>
-	<field name="no_lp_no_box" class="java.lang.String"/>
-	<field name="gram_ambil" class="java.lang.Float"/>
-	<field name="no_lp_swr" class="java.lang.String"/>
 	<field name="no_lp_suwir" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="tgl_lp_suwir" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="keping" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="gram" class="java.lang.Float">
@@ -133,6 +125,9 @@ WHERE `tb_lp_suwir`.`no_lp_suwir` = $P{NO_LP_SUWIR}]]>
 	<field name="gram_akhir" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="no_lp_no_box" class="java.lang.String"/>
+	<field name="gram_ambil" class="java.lang.Float"/>
+	<field name="no_lp_swr" class="java.lang.String"/>
 	<variable name="TotalGram" class="java.lang.Float" calculation="Sum">
 		<variableExpression><![CDATA[$F{gram_ambil}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -153,7 +148,7 @@ WHERE `tb_lp_suwir`.`no_lp_suwir` = $P{NO_LP_SUWIR}]]>
 				<reportElement x="0" y="30" width="80" height="80" uuid="8ea23141-88d9-4ea3-9c3e-53e0da3bc846"/>
 				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
     new com.google.zxing.qrcode.QRCodeWriter().encode(
-        $F{no_lp_suwir}.toString(),
+        $P{NO_LP_SUWIR}.toString(),
         com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
     )
 )]]></imageExpression>
@@ -163,7 +158,7 @@ WHERE `tb_lp_suwir`.`no_lp_suwir` = $P{NO_LP_SUWIR}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="11" isBold="true" isUnderline="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{no_lp_suwir}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{NO_LP_SUWIR}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Page header" x="0" y="110" width="200" height="15" uuid="e43b5325-372b-4203-8365-3555cf23c67a"/>
@@ -257,14 +252,14 @@ WHERE `tb_lp_suwir`.`no_lp_suwir` = $P{NO_LP_SUWIR}]]>
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement style="Column header" x="0" y="0" width="140" height="15" forecolor="#000000" uuid="16b7201b-ed9d-4926-9ab9-e45db7fade43"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no_lp_no_box}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement style="Column header" x="140" y="0" width="60" height="15" forecolor="#000000" uuid="5b6710ad-9074-49c1-8f9a-7902b08af036"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
@@ -282,7 +277,7 @@ WHERE `tb_lp_suwir`.`no_lp_suwir` = $P{NO_LP_SUWIR}]]>
 				</textElement>
 				<text><![CDATA[Total Penggunaan ]]></text>
 			</staticText>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0" isBlankWhenNull="true">
 				<reportElement style="Column header" x="140" y="0" width="60" height="15" forecolor="#000000" uuid="f23871b7-f889-4935-849a-e9a9bacb4fc3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="9" isBold="true"/>

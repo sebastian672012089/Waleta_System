@@ -29,7 +29,6 @@ import net.sf.jasperreports.view.JasperViewer;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.ExportToExcel;
 import waleta_system.MainForm;
-import waleta_system.Panel_produksi.JPanel_DataCabut;
 
 public class JPanel_DataPindahBagian extends javax.swing.JPanel {
 
@@ -1494,7 +1493,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
             }
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JPanel_DataCabut.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_laporanActionPerformed
 
