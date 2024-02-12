@@ -465,11 +465,12 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_surat_lembur` ON `tb_surat_lembur_detail`.`nomor_surat` = `tb_surat_lembur`.`nomor_surat`\n"
                     + "LEFT JOIN (SELECT `pin`, MIN(TIME(`scan_date`)) AS 'absen_masuk', MAX(TIME(`scan_date`)) AS 'absen_pulang' FROM `att_log` WHERE DATE(`scan_date`) = '" + dateFormat.format(Date_lembur_makan.getDate()) + "' GROUP BY `pin`) attlog ON `tb_karyawan`.`pin_finger` = attlog.`pin`\n"
                     + "WHERE "
-                    + "`jumlah_jam`+`menit_istirahat_lembur` >= 3 "
+                    + "((`jumlah_jam`+`menit_istirahat_lembur` >= 3 AND `nama_bagian` NOT LIKE '%SECURITY%') OR (`jumlah_jam`+`menit_istirahat_lembur` >= 6 AND `nama_bagian` LIKE '%SECURITY%'))"
                     + "AND `tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_nama.getText() + "%' "
                     + "AND `tb_surat_lembur_detail`.`tanggal_lembur` = '" + dateFormat.format(Date_lembur_makan.getDate()) + "' "
-                    + "AND `nama_bagian` <> 'DRIVER' "
-                    + "GROUP BY `tb_surat_lembur_detail`.`id_pegawai`";
+                    + "AND `nama_bagian` NOT LIKE '%DRIVER%' "
+                    + "AND `tb_surat_lembur_detail`.`id_pegawai` <> '20170600001' "
+                    + "GROUP BY `tb_surat_lembur_detail`.`id_pegawai`"; 
 //            System.out.println(sql);
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[15];
@@ -499,21 +500,41 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 @Override
                 public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                     Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                    if ((int) table_data_lembur_makan.getValueAt(row, 9) < 180) {
-                        if (isSelected) {
-                            comp.setBackground(table_data_lembur_makan.getSelectionBackground());
-                            comp.setForeground(table_data_lembur_makan.getSelectionForeground());
+                    if (table_data_lembur_makan.getValueAt(row, 2).toString().contains("SECURITY")) {
+                        if ((int) table_data_lembur_makan.getValueAt(row, 9) < 360) {
+                            if (isSelected) {
+                                comp.setBackground(table_data_lembur_makan.getSelectionBackground());
+                                comp.setForeground(table_data_lembur_makan.getSelectionForeground());
+                            } else {
+                                comp.setBackground(Color.red);
+                                comp.setForeground(Color.WHITE);
+                            }
                         } else {
-                            comp.setBackground(Color.red);
-                            comp.setForeground(Color.WHITE);
+                            if (isSelected) {
+                                comp.setBackground(table_data_lembur_makan.getSelectionBackground());
+                                comp.setForeground(table_data_lembur_makan.getSelectionForeground());
+                            } else {
+                                comp.setBackground(table_data_lembur_makan.getBackground());
+                                comp.setForeground(table_data_lembur_makan.getForeground());
+                            }
                         }
                     } else {
-                        if (isSelected) {
-                            comp.setBackground(table_data_lembur_makan.getSelectionBackground());
-                            comp.setForeground(table_data_lembur_makan.getSelectionForeground());
+                        if ((int) table_data_lembur_makan.getValueAt(row, 9) < 180) {
+                            if (isSelected) {
+                                comp.setBackground(table_data_lembur_makan.getSelectionBackground());
+                                comp.setForeground(table_data_lembur_makan.getSelectionForeground());
+                            } else {
+                                comp.setBackground(Color.red);
+                                comp.setForeground(Color.WHITE);
+                            }
                         } else {
-                            comp.setBackground(table_data_lembur_makan.getBackground());
-                            comp.setForeground(table_data_lembur_makan.getForeground());
+                            if (isSelected) {
+                                comp.setBackground(table_data_lembur_makan.getSelectionBackground());
+                                comp.setForeground(table_data_lembur_makan.getSelectionForeground());
+                            } else {
+                                comp.setBackground(table_data_lembur_makan.getBackground());
+                                comp.setForeground(table_data_lembur_makan.getForeground());
+                            }
                         }
                     }
                     return comp;
@@ -1531,7 +1552,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         });
 
         jLabel12.setFont(new java.awt.Font("Arial", 2, 11)); // NOI18N
-        jLabel12.setText("NB : Syarat untuk mendapatkan makan adalah jam lembur + istirahat >= 3 jam dan bukan driver.");
+        jLabel12.setText("NB : Syarat untuk mendapatkan makan adalah jam lembur + istirahat >= 3 jam dan bukan driver, dan bukan Trio Marsidi");
 
         button_print_laporan.setBackground(new java.awt.Color(255, 255, 255));
         button_print_laporan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N

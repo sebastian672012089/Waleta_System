@@ -1,6 +1,5 @@
 package waleta_system.BahanJadi;
 
-import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,13 +14,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.BahanBaku.JPanel_GradeBahanBaku;
+import waleta_system.Class.AksesMenu;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
 import waleta_system.Class.ExportToExcel;
+import waleta_system.MainForm;
 
 public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
 
-    
     String sql = null;
     ResultSet rs;
     Date date = new Date();
@@ -35,6 +35,28 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
 
     public void init() {
         try {
+            if ('0' == MainForm.dataMenu.get(AksesMenu.searchMenuByName(MainForm.dataMenu, AksesMenu.MENU_ITEM_GRADE_BAKU)).akses.charAt(1)) {
+                button_TambahGrade.setEnabled(false);
+                button_TambahGrade.setVisible(false);
+            } else {
+                button_TambahGrade.setEnabled(true);
+                button_TambahGrade.setVisible(true);
+            }
+            if ('0' == MainForm.dataMenu.get(AksesMenu.searchMenuByName(MainForm.dataMenu, AksesMenu.MENU_ITEM_GRADE_BAKU)).akses.charAt(2)) {
+                button_EditGrade.setEnabled(false);
+                button_EditGrade.setVisible(false);
+            } else {
+                button_EditGrade.setEnabled(true);
+                button_EditGrade.setVisible(true);
+            }
+            if ('0' == MainForm.dataMenu.get(AksesMenu.searchMenuByName(MainForm.dataMenu, AksesMenu.MENU_ITEM_GRADE_BAKU)).akses.charAt(3)) {
+                button_delete.setEnabled(false);
+                button_delete.setVisible(false);
+            } else {
+                button_delete.setEnabled(true);
+                button_delete.setVisible(true);
+            }
+
             ComboBox_bentuk.removeAllItems();
             ComboBox_bentuk.addItem("All");
             sql = "SELECT DISTINCT(`bentuk_grade`) AS 'item' FROM `tb_grade_bahan_jadi` WHERE 1";
@@ -56,8 +78,7 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
             while (rs.next()) {
                 ComboBox_kategori_jual.addItem(rs.getString("item"));
             }
-            
-            
+
             refreshTable();
 
             Table_GradeGNS.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -120,7 +141,7 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
             sql = "SELECT * FROM `tb_grade_bahan_jadi` WHERE "
                     + "(`kode` LIKE '%" + txt_search_keywords.getText() + "%' OR "
                     + "`kode_grade` LIKE '%" + txt_search_keywords.getText() + "%' OR "
-                    + "`nama_grade` LIKE '%" + txt_search_keywords.getText() + "%')" 
+                    + "`nama_grade` LIKE '%" + txt_search_keywords.getText() + "%')"
                     + filter_bentuk + filter_kategori + filter_kategori_jual;
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[15];

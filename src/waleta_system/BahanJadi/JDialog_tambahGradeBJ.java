@@ -1,5 +1,6 @@
 package waleta_system.BahanJadi;
 
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -61,24 +62,12 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
     public void getNewCode_GNS() {
         try {
             int last_number = 0;
-            String zero = "";
-            String new_code;
-            sql = "SELECT `kode` FROM `tb_grade_bahan_jadi` WHERE `kode_grade` LIKE 'GNS%'";
+            sql = "SELECT MAX(`kode`)+1 AS 'last_code' FROM `tb_grade_bahan_jadi` WHERE `kode_grade` LIKE 'GNS%'";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
-                if (last_number < rs.getInt("kode")) {
-                    last_number = rs.getInt("kode");
-                }
+                    last_number = rs.getInt("last_code");
             }
-            if (last_number > 99) {
-                zero = "";
-            } else if (last_number > 9) {
-                zero = "0";
-            } else {
-                zero = "00";
-            }
-            new_code = zero + Integer.toString(last_number + 1);
-            label_kode.setText(new_code);
+            label_kode.setText(String.format("%03d", last_number));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,16 +76,12 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
 
     public void getNewCode_NS() {
         try {
-            int last_number = 0;
-            String new_code;
-            sql = "SELECT `kode` FROM `tb_grade_bahan_jadi` WHERE `kode_grade` LIKE 'Non NS%'";
+            String new_code = null;
+            sql = "SELECT MAX(`kode`)+1 AS 'last_code' FROM `tb_grade_bahan_jadi` WHERE `kode_grade` LIKE 'Non NS%'";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
-                if (last_number < rs.getInt("kode")) {
-                    last_number = rs.getInt("kode");
-                }
+                new_code = rs.getString("kode");
             }
-            new_code = Integer.toString(last_number + 1);
             label_kode.setText(new_code);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -117,7 +102,7 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
                     + "WHERE `kode`='" + label_kode.getText() + "'";
             Utility.db.getConnection().createStatement();
             Utility.db.getStatement().executeUpdate(update);
-            JOptionPane.showMessageDialog(this, "Data Updated successfull !");
+            JOptionPane.showMessageDialog(this, "Perubahan data berhasil disimpan !");
             this.dispose();
         } catch (SQLException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -127,11 +112,20 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
 
     public void insert() {
         try {
-            String insert = "INSERT INTO `tb_grade_bahan_jadi`(`kode`, `kode_grade`, `nama_grade`, `bentuk_grade`, `Kategori1`, `kategori_jual`, `upah_reproses`, `kategori_subbagian_gradebarangjadi`) "
-                    + "VALUES ('" + label_kode.getText() + "','" + label_grade.getText() + txt_grade.getText() + "','" + label_nama.getText() + txt_namaGrade.getText() + "', '" + ComboBox_bentukGrade.getSelectedItem().toString() + "', '" + ComboBox_kategori1.getSelectedItem().toString() + "', '" + ComboBox_kategoriJual.getSelectedItem().toString() + "','" + txt_upah_reproses.getText() + "', '" + txt_kategori_subbagian.getText() + "')";
+            String insert = "INSERT INTO `tb_grade_bahan_jadi`(`kode`, `kode_grade`, `nama_grade`, `bentuk_grade`, `Kategori1`, `kategori_jual`, `upah_reproses`, `kategori_subbagian_gradebarangjadi`, `harga`) "
+                    + "VALUES ("
+                    + "'" + label_kode.getText() + "',"
+                    + "'" + label_grade.getText() + txt_grade.getText() + "',"
+                    + "'" + label_nama.getText() + txt_namaGrade.getText() + "', "
+                    + "'" + ComboBox_bentukGrade.getSelectedItem().toString() + "', "
+                    + "'" + ComboBox_kategori1.getSelectedItem().toString() + "', "
+                    + "'" + ComboBox_kategoriJual.getSelectedItem().toString() + "',"
+                    + "'" + txt_upah_reproses.getText() + "', "
+                    + "'" + txt_kategori_subbagian.getText() + "', "
+                    + "'" + txt_harga_jual.getText() + "')";
             Utility.db.getConnection().createStatement();
             Utility.db.getStatement().executeUpdate(insert);
-            JOptionPane.showMessageDialog(this, "Data Inserted successfull !");
+            JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
             this.dispose();
         } catch (SQLException | NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -167,6 +161,10 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
         ComboBox_kategori1 = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         txt_kategori_subbagian = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txt_harga_jual = new javax.swing.JTextField();
+        label_grade3 = new javax.swing.JLabel();
+        label_grade4 = new javax.swing.JLabel();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -235,6 +233,11 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
         jLabel7.setText("Upah Reproses :");
 
         txt_upah_reproses.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_upah_reproses.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_upah_reprosesKeyTyped(evt);
+            }
+        });
 
         label_grade1.setBackground(new java.awt.Color(255, 255, 255));
         label_grade1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -256,6 +259,25 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
 
         txt_kategori_subbagian.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel10.setText("Harga Jual :");
+
+        txt_harga_jual.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_harga_jual.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_harga_jualKeyTyped(evt);
+            }
+        });
+
+        label_grade3.setBackground(new java.awt.Color(255, 255, 255));
+        label_grade3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_grade3.setText("/ Kg");
+
+        label_grade4.setBackground(new java.awt.Color(255, 255, 255));
+        label_grade4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_grade4.setText("CNY");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -263,47 +285,53 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(label_kode)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                        .addComponent(ComboBox_jenis_grade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(label_grade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_grade))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(label_nama)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_namaGrade))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(label_grade2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_upah_reproses)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_grade1))
+                    .addComponent(txt_kategori_subbagian)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ComboBox_bentukGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComboBox_kategoriJual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComboBox_kategori1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(label_grade4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(label_kode)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
-                                .addComponent(ComboBox_jenis_grade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(label_grade)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_grade))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(label_nama)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_namaGrade))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(label_grade2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_upah_reproses)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_grade1))
-                            .addComponent(txt_kategori_subbagian)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ComboBox_bentukGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ComboBox_kategoriJual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ComboBox_kategori1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(button_ok)))
+                        .addComponent(txt_harga_jual)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_grade3)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(308, Short.MAX_VALUE)
+                .addComponent(button_ok)
+                .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,6 +378,12 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
                             .addComponent(txt_kategori_subbagian, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(txt_namaGrade, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_harga_jual, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_grade3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_grade4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(button_ok, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -393,6 +427,26 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_ComboBox_jenis_gradeItemStateChanged
 
+    private void txt_upah_reprosesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_upah_reprosesKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_upah_reprosesKeyTyped
+
+    private void txt_harga_jualKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_harga_jualKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_harga_jualKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_bentukGrade;
@@ -401,6 +455,7 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> ComboBox_kategoriJual;
     private javax.swing.JButton button_ok;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -413,9 +468,12 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
     private javax.swing.JLabel label_grade;
     private javax.swing.JLabel label_grade1;
     private javax.swing.JLabel label_grade2;
+    private javax.swing.JLabel label_grade3;
+    private javax.swing.JLabel label_grade4;
     private javax.swing.JLabel label_kode;
     private javax.swing.JLabel label_nama;
     private javax.swing.JTextField txt_grade;
+    private javax.swing.JTextField txt_harga_jual;
     private javax.swing.JTextField txt_kategori_subbagian;
     private javax.swing.JTextField txt_namaGrade;
     private javax.swing.JTextField txt_upah_reproses;

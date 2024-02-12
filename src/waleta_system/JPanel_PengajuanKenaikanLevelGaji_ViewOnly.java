@@ -90,7 +90,7 @@ public class JPanel_PengajuanKenaikanLevelGaji_ViewOnly extends javax.swing.JPan
                 filter_departemen  = "AND `tb_bagian`.`kode_departemen` = '" + txt_departemen.getText() + "' ";
             }
             String filter_divisi_hrga = "";
-            if (MainForm.Login_Departemen.equals("HRGA") && !MainForm.Login_namaBagian.split("-")[2].equals("")) {
+            if (MainForm.Login_Departemen != null && MainForm.Login_Departemen.equals("HRGA") && !MainForm.Login_namaBagian.split("-")[2].equals("")) {
                 filter_divisi_hrga = "AND `tb_bagian`.`divisi_bagian` = '" + MainForm.Login_namaBagian.split("-")[2] + "'";
             }
 

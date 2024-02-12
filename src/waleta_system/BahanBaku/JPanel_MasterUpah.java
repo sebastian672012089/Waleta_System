@@ -781,7 +781,7 @@ public class JPanel_MasterUpah extends javax.swing.JPanel {
                             + "`bonus_mk_utuh_cetak_sub`='" + txt_bonus_mk_utuh_ctk_sub.getText() + "' "
                             + "WHERE `bulu_upah`='" + tabel_data_bulu_upah.getValueAt(j, 0).toString() + "'";
                     if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                        JOptionPane.showMessageDialog(this, "data updated Successfully");
+                        JOptionPane.showMessageDialog(this, "Perubahan data berhasil disimpan");
                         refresh_tarif_cabut();
                     } else {
                         JOptionPane.showMessageDialog(this, "update failed");

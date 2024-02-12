@@ -112,7 +112,7 @@ public class JDialog_Edit_Data_Cetak_Detail extends javax.swing.JDialog {
                         + ")";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
-                    JOptionPane.showMessageDialog(this, "data inserted Successfully");
+                    JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "insert failed!");
@@ -148,7 +148,7 @@ public class JDialog_Edit_Data_Cetak_Detail extends javax.swing.JDialog {
                     + "WHERE `nomor`='" + nomor + "'";
             Utility.db.getConnection().createStatement();
             if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
-                JOptionPane.showMessageDialog(this, "data UPDATED Successfully");
+                JOptionPane.showMessageDialog(this, "Perubahan data berhasil disimpan");
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Tidak ada perubahan data!");

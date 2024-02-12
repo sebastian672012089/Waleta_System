@@ -1381,7 +1381,7 @@ public class JPanel_BahanBakuMasuk_Cheat extends javax.swing.JPanel {
                 Utility.db.getConnection().commit();
                 button_clear.doClick();
                 refreshTable();
-                JOptionPane.showMessageDialog(this, "data inserted Successfully");
+                JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
             }
         } catch (SQLException e) {
             try {

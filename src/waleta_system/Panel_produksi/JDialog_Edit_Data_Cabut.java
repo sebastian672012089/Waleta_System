@@ -488,7 +488,7 @@ public class JDialog_Edit_Data_Cabut extends javax.swing.JDialog {
         try {
             Utility.db.getConnection().createStatement();
             if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
-                JOptionPane.showMessageDialog(this, "data updated Successfully");
+                JOptionPane.showMessageDialog(this, "Perubahan data berhasil disimpan");
                 this.dispose();
                 JPanel_DataCabut.button_search_cabut.doClick();
             } else {

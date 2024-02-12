@@ -710,6 +710,16 @@ public class Utility {
     public static void main(String[] args) {
         try {
             Utility.db.connect();
+            for (int i = 0; i < 10; i++) {
+                System.out.println(i);
+                try {
+                    // Add a delay of 1 second (1000 milliseconds)
+                    Thread.sleep(1000); // You can adjust the delay time as needed
+                } catch (InterruptedException e) {
+                    // Handle the InterruptedException if needed
+                    e.printStackTrace();
+                }
+            }
         } catch (Exception ex) {
             Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
         }

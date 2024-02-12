@@ -1355,12 +1355,16 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Silahkan pilih data yang akan di edit !");
         } else {
             String no_kartu = Table_Bahan_Baku_Masuk.getValueAt(j, 0).toString();
-            JDialog_Edit_Insert_KartuBaku dialog = new JDialog_Edit_Insert_KartuBaku(new javax.swing.JFrame(), true, "update", no_kartu);
-            dialog.pack();
-            dialog.setLocationRelativeTo(this);
-            dialog.setVisible(true);
-            dialog.setEnabled(true);
-            refreshTable();
+            if (no_kartu.contains("CMP")) {
+                JOptionPane.showMessageDialog(this, "Maaf tidak bisa edit kartu CMP");
+            } else {
+                JDialog_Edit_Insert_KartuBaku dialog = new JDialog_Edit_Insert_KartuBaku(new javax.swing.JFrame(), true, "update", no_kartu);
+                dialog.pack();
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);
+                dialog.setEnabled(true);
+                refreshTable();
+            }
         }
     }//GEN-LAST:event_button_update_bahan_baku_masukActionPerformed
 

@@ -2,6 +2,7 @@ package waleta_system.Finance;
 
 import waleta_system.Class.Utility;
 import java.awt.event.KeyEvent;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -9,8 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.Class.ColumnsAutoSizer;
@@ -529,24 +530,62 @@ public class JPanel_Harga_LaporanProduksi extends javax.swing.JPanel {
         try {
             int dialogResult = JOptionPane.showConfirmDialog(this, "Input biaya LP untuk yang data biaya sudah masuk, Lanjutkan??", "Warning", 0);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                for (int i = 0; i < Table_laporan_produksi.getRowCount(); i++) {
-                    String no_lp = Table_laporan_produksi.getValueAt(i, 0).toString();
-                    double berat_basah_lp = (double) Table_laporan_produksi.getValueAt(i, 7);
-                    double biaya_baku_tambahan = (double) Table_laporan_produksi.getValueAt(i, 10) * berat_basah_lp;
-                    double biaya_tk = (double) Table_laporan_produksi.getValueAt(i, 12) * berat_basah_lp;
-                    double biaya_overhead = (double) Table_laporan_produksi.getValueAt(i, 14) * berat_basah_lp;
-                    String Query = "UPDATE `tb_laporan_produksi` SET "
-                            + "`biaya_baku_tambahan_lp` = '" + biaya_baku_tambahan + "', "
-                            + "`biaya_tenaga_kerja_lp` = '" + biaya_tk + "', "
-                            + "`biaya_overhead_lp` = '" + biaya_overhead + "' "
-                            + "WHERE `no_laporan_produksi` = '" + no_lp + "'";
-                    Utility.db.getConnection().createStatement();
-                    Utility.db.getStatement().executeUpdate(Query);
-                    JOptionPane.showMessageDialog(this, "Data berhasil di ubah");
-                    refreshTable();
-                }
+                int rowCount = Table_laporan_produksi.getRowCount();
+                final JDialog_ProgressDialog dialog = new JDialog_ProgressDialog();
+                dialog.pack();
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);
+                dialog.setEnabled(true);
+                dialog.Label_title.setText("Mohon tunggu sebentar");
+                dialog.jProgressBar.setMinimum(0);
+                dialog.jProgressBar.setMaximum(rowCount);
+
+                Thread updateThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            for (int i = 0; i < Table_laporan_produksi.getRowCount(); i++) {
+                                String noLP = Table_laporan_produksi.getValueAt(i, 0).toString();
+                                double beratBasahLP = (double) Table_laporan_produksi.getValueAt(i, 7);
+                                double biayaBakuTambahan = (double) Table_laporan_produksi.getValueAt(i, 10) * beratBasahLP;
+                                double biayaTK = (double) Table_laporan_produksi.getValueAt(i, 12) * beratBasahLP;
+                                double biayaOverhead = (double) Table_laporan_produksi.getValueAt(i, 14) * beratBasahLP;
+
+                                String query = "UPDATE `tb_laporan_produksi` SET "
+                                        + "`biaya_baku_tambahan_lp` = ?, "
+                                        + "`biaya_tenaga_kerja_lp` = ?, "
+                                        + "`biaya_overhead_lp` = ? "
+                                        + "WHERE `no_laporan_produksi` = ?";
+
+                                PreparedStatement statement = Utility.db.getConnection().prepareStatement(query);
+                                statement.setDouble(1, biayaBakuTambahan);
+                                statement.setDouble(2, biayaTK);
+                                statement.setDouble(3, biayaOverhead);
+                                statement.setString(4, noLP);
+
+                                statement.executeUpdate();
+                                dialog.jProgressBar.setValue(i);
+//                                Thread.sleep(30);
+                            }
+
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dialog.dispose();
+                                    refreshTable();
+                                    JOptionPane.showMessageDialog(jPanel_laporan_produksi, "Data berhasil diubah");
+                                }
+                            });
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(jPanel_laporan_produksi, ex);
+                            Logger.getLogger(JPanel_Harga_LaporanProduksi.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+
+                updateThread.start();
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(JPanel_Harga_LaporanProduksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_input_biaya_lpActionPerformed

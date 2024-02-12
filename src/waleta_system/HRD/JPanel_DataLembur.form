@@ -2029,7 +2029,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Arial" size="11" style="2"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="NB : Syarat untuk mendapatkan makan adalah jam lembur + istirahat &gt;= 3 jam dan bukan driver."/>
+                    <Property name="text" type="java.lang.String" value="NB : Syarat untuk mendapatkan makan adalah jam lembur + istirahat &gt;= 3 jam dan bukan driver, dan bukan Trio Marsidi"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="button_print_laporan">

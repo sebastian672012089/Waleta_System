@@ -63,14 +63,11 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                     lihat_absen_staf = "";
                 }
 
-                ComboBox_departemen_karyawan.removeAllItems();
                 ComboBox_departemen_karyawan1.removeAllItems();
-                ComboBox_departemen_karyawan.addItem("All");
                 ComboBox_departemen_karyawan1.addItem("All");
                 sql = "SELECT `kode_dep` FROM `tb_departemen` ORDER BY `kode_dep`";
                 rs = Utility.db.getStatement().executeQuery(sql);
                 while (rs.next()) {
-                    ComboBox_departemen_karyawan.addItem(rs.getString("kode_dep"));
                     ComboBox_departemen_karyawan1.addItem(rs.getString("kode_dep"));
                 }
 
@@ -120,9 +117,9 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             if (txt_search_bagian.getText() == null || txt_search_bagian.getText().equals("")) {
                 bagian = "";
             }
-            String departemen = "AND `tb_bagian`.`kode_departemen` = '" + ComboBox_departemen_karyawan.getSelectedItem().toString() + "' \n";
-            if ("All".equals(ComboBox_departemen_karyawan.getSelectedItem().toString())) {
-                departemen = "";
+            String filter_mesin = "AND `att_mesin_finger`.`nama_mesin` LIKE '%" + txt_search_mesin_absen.getText() + "%' \n";
+            if (txt_search_mesin_absen.getText() == null || txt_search_mesin_absen.getText().equals("")) {
+                filter_mesin = "";
             }
             String posisi = "AND `posisi` = '" + ComboBox_posisi.getSelectedItem().toString() + "' \n";
             if ("All".equals(ComboBox_posisi.getSelectedItem().toString())) {
@@ -142,7 +139,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                     + "WHERE `pin` LIKE '%" + txt_search_pin.getText() + "%' "
                     + nama_pegawai
                     + lihat_absen_staf
-                    + bagian + departemen + posisi
+                    + bagian + filter_mesin + posisi
                     + filter_tanggal
                     + " ORDER BY `tb_karyawan`.`nama_pegawai` ASC, `scan_date` ASC";
             rs = Utility.db.getStatement().executeQuery(sql);
@@ -649,8 +646,6 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
         tabel_data_absen = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         label_total_data_absen = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        ComboBox_departemen_karyawan = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         button_export_mentah = new javax.swing.JButton();
         button_mesin = new javax.swing.JButton();
@@ -661,6 +656,8 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
         txt_search_bagian = new javax.swing.JTextField();
         button_export_rekap_ct = new javax.swing.JButton();
         button_jumlah_absen_karyawan_CBT_CTK = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        txt_search_mesin_absen = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txt_search_NamaKaryawan1 = new javax.swing.JTextField();
@@ -810,13 +807,6 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
         label_total_data_absen.setBackground(new java.awt.Color(255, 255, 255));
         label_total_data_absen.setText("0");
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel1.setText("Departemen :");
-
-        ComboBox_departemen_karyawan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_departemen_karyawan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
-
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel6.setText("Bagian :");
@@ -832,7 +822,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
 
         button_mesin.setBackground(new java.awt.Color(255, 255, 255));
         button_mesin.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_mesin.setText("Mesin Absen");
+        button_mesin.setText("Data Mesin Absen");
         button_mesin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_mesinActionPerformed(evt);
@@ -889,6 +879,17 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             }
         });
 
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel11.setText("Mesin Absen :");
+
+        txt_search_mesin_absen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_mesin_absen.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_mesin_absenKeyPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -909,8 +910,12 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_export_rekap_ct)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_jumlah_absen_karyawan_CBT_CTK)))
-                        .addGap(0, 661, Short.MAX_VALUE))
+                                .addComponent(button_jumlah_absen_karyawan_CBT_CTK)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_mesin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_mentah)))
+                        .addGap(0, 465, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1)
@@ -930,9 +935,9 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(Date_Search2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(ComboBox_departemen_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_search_mesin_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -943,11 +948,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(ComboBox_posisi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(button_refresh)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(button_export_mentah)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(button_mesin)))
+                                        .addComponent(button_refresh)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
@@ -956,30 +957,30 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_search_mesin_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_Search2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_posisi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_bagian, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_search_NamaKaryawan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_search_pin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date_Search1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date_Search2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_departemen_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export_mentah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_mesin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_posisi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_bagian, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(button_export_rekap_ct, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CheckBox_hanya_absen_mesin)
                     .addComponent(button_export_rekap, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_jumlah_absen_karyawan_CBT_CTK, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_jumlah_absen_karyawan_CBT_CTK, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_mesin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_export_mentah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1692,9 +1693,9 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             if (txt_search_bagian.getText() == null || txt_search_bagian.getText().equals("")) {
                 bagian = "";
             }
-            String departemen = "AND `tb_bagian`.`kode_departemen` = '" + ComboBox_departemen_karyawan.getSelectedItem().toString() + "' ";
-            if ("All".equals(ComboBox_departemen_karyawan.getSelectedItem().toString())) {
-                departemen = "";
+            String filter_mesin = "AND `att_mesin_finger`.`nama_mesin` LIKE '%" + txt_search_mesin_absen.getText() + "%' \n";
+            if (txt_search_mesin_absen.getText() == null || txt_search_mesin_absen.getText().equals("")) {
+                filter_mesin = "";
             }
             String posisi = "AND `posisi` = '" + ComboBox_posisi.getSelectedItem().toString() + "' ";
             if ("All".equals(ComboBox_posisi.getSelectedItem().toString())) {
@@ -1706,7 +1707,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`"
                     //                  + "WHERE YEAR(`scan_date`) = 2021 AND MONTH(`scan_date`) = 7 "
                     + "WHERE `pin` LIKE '%" + txt_search_pin.getText() + "%' "
-                    + karyawan + bagian + departemen + posisi
+                    + karyawan + bagian + filter_mesin + posisi
                     + "AND (DATE(`scan_date`) BETWEEN '" + dateFormat.format(Date_Search1.getDate()) + "' AND '" + dateFormat.format(Date_Search2.getDate()) + "')"
                     + "GROUP BY DATE_FORMAT(`scan_date`, '%d'), `pin` "
                     + "ORDER BY `nama_pegawai`, DATE_FORMAT(`scan_date`, '%d')";
@@ -2188,9 +2189,9 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             if (txt_search_bagian.getText() == null || txt_search_bagian.getText().equals("")) {
                 bagian = "";
             }
-            String departemen = "AND `tb_bagian`.`kode_departemen` = '" + ComboBox_departemen_karyawan.getSelectedItem().toString() + "' ";
-            if ("All".equals(ComboBox_departemen_karyawan.getSelectedItem().toString())) {
-                departemen = "";
+            String filter_mesin = "AND `att_mesin_finger`.`nama_mesin` LIKE '%" + txt_search_mesin_absen.getText() + "%' \n";
+            if (txt_search_mesin_absen.getText() == null || txt_search_mesin_absen.getText().equals("")) {
+                filter_mesin = "";
             }
             String posisi = "AND `posisi` = '" + ComboBox_posisi.getSelectedItem().toString() + "' ";
             if ("All".equals(ComboBox_posisi.getSelectedItem().toString())) {
@@ -2202,7 +2203,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`"
                     //                  + "WHERE YEAR(`scan_date`) = 2021 AND MONTH(`scan_date`) = 7 "
                     + "WHERE `pin` LIKE '%" + txt_search_pin.getText() + "%' "
-                    + karyawan + bagian + departemen + posisi
+                    + karyawan + bagian + filter_mesin + posisi
                     + "AND (DATE(`scan_date`) BETWEEN '" + dateFormat.format(Date_Search1.getDate()) + "' AND '" + dateFormat.format(Date_Search2.getDate()) + "')"
                     + "GROUP BY DATE_FORMAT(`scan_date`, '%d'), `pin` "
                     + "ORDER BY `pin`, DATE_FORMAT(`scan_date`, '%d')";
@@ -2460,13 +2461,22 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
 
     private void txt_search_bagian_data_tidak_masukKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_bagian_data_tidak_masukKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_TidakMasuk();
+        }
     }//GEN-LAST:event_txt_search_bagian_data_tidak_masukKeyPressed
+
+    private void txt_search_mesin_absenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_mesin_absenKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_absen();
+        }
+    }//GEN-LAST:event_txt_search_mesin_absenKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CheckBox_hanya_absen_mesin;
     private javax.swing.JComboBox<String> ComboBox_bagian_karyawan1;
-    private javax.swing.JComboBox<String> ComboBox_departemen_karyawan;
     private javax.swing.JComboBox<String> ComboBox_departemen_karyawan1;
     private javax.swing.JComboBox<String> ComboBox_filter_absen;
     private javax.swing.JComboBox<String> ComboBox_filter_jenis_hari;
@@ -2495,8 +2505,8 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
     private javax.swing.JButton button_refresh1;
     private javax.swing.JButton button_refresh_data_TidakMasuk;
     private javax.swing.JButton button_rekap;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -2544,6 +2554,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
     private javax.swing.JTextField txt_search_NamaKaryawan2;
     private javax.swing.JTextField txt_search_bagian;
     private javax.swing.JTextField txt_search_bagian_data_tidak_masuk;
+    private javax.swing.JTextField txt_search_mesin_absen;
     private javax.swing.JTextField txt_search_pin;
     private javax.swing.JTextField txt_search_pin1;
     private javax.swing.JTextField txt_search_pin2;

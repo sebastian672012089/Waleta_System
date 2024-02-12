@@ -506,6 +506,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
         Date_filter_pindahGrup2.setBackground(new java.awt.Color(255, 255, 255));
         Date_filter_pindahGrup2.setDateFormatString("dd MMM yyyy");
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jTextArea1.setRows(5);
@@ -659,7 +660,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                     .addComponent(Button_pindahGrup_diketahuiHR_semua, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Button_pindahGrup_diketahuiKeu_semua, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

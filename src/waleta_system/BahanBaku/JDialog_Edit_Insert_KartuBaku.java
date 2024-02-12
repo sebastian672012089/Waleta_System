@@ -137,7 +137,7 @@ public class JDialog_Edit_Insert_KartuBaku extends javax.swing.JDialog {
             Utility.db.getStatement().executeUpdate(Query2);
             Utility.db.getConnection().commit();
             this.dispose();
-            JOptionPane.showMessageDialog(this, "data inserted Successfully");
+            JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
         } catch (Exception e) {
             try {
                 Utility.db.getConnection().rollback();

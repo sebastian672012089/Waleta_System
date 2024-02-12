@@ -608,7 +608,7 @@ public class JDialog_Edit_Data_Cuci extends javax.swing.JDialog {
                         + "WHERE `no_laporan_produksi`='" + label_no_lp.getText() + "'";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
-                    JOptionPane.showMessageDialog(this, "data updated Successfully");
+                    JOptionPane.showMessageDialog(this, "Perubahan data berhasil disimpan");
                     this.dispose();
                     JPanel_DataCuci.button_search_cuci.doClick();
                 }

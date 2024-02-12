@@ -407,7 +407,7 @@ public class JDialog_Insert_Edit_kinerjaGBJ extends javax.swing.JDialog {
                         + "WHERE `no` = '" + label_no.getText() + "'";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                    JOptionPane.showMessageDialog(this, "data inserted Successfully");
+                    JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
                 } else {
                     JOptionPane.showMessageDialog(this, "insert failed!");
                 }
@@ -460,7 +460,7 @@ public class JDialog_Insert_Edit_kinerjaGBJ extends javax.swing.JDialog {
                         + "'" + txt_catatan.getText() + "')";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                    JOptionPane.showMessageDialog(this, "data inserted Successfully");
+                    JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
                 } else {
                     JOptionPane.showMessageDialog(this, "insert failed!");
                 }

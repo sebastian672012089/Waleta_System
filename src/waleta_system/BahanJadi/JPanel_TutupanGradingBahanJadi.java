@@ -1308,7 +1308,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Maaf Status tutupan " + kode_tutupan + " belum selesai");
                     }
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {

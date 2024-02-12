@@ -774,7 +774,7 @@ public class Login extends javax.swing.JFrame {
                     main.setVisible(true);
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Pegawai untuk Username " + txt_username.getText() + " sudah keluar!\nharap menghubungi administrator untuk Login! !", "Access Denied !", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Pegawai untuk Username " + txt_username.getText() + " sudah keluar!\nharap menghubungi administrator untuk Login!", "Access Denied !", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password !", "Access Denied !", JOptionPane.ERROR_MESSAGE);
@@ -1178,7 +1178,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.285");
+        label_version.setText("2.2.290");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N

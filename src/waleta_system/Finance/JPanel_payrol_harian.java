@@ -1121,12 +1121,14 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             }
         });
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea1.setRows(5);
         jTextArea1.setText("1. jika potongan tidak lebih dari 60 menit, maka terhitung masuk dan dapat premi.\n2. premi hadir diberikan tambahan jika masuk di hari libur lebih dari 4 jam.\n3. JIKA Gaji < 0, maka potongan BPJS di 0 kan, dan akan di potong minggu depan.\n4. jika level gaji mengandung BORONG, maka lembur = 0\n5. Untuk bagian \"SECURITY\",  upah lembur 10.000/jam\n6. Potongan ijin / terlambat = 1/7 x upah/hari x jam terlambat.\n7. jika hari tsb TIDAK terlambat maka premi kedisiplinan diberikan (dihitung harian).");
         jScrollPane2.setViewportView(jTextArea1);
 
+        jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
         jTextArea2.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea2.setRows(5);
@@ -1167,6 +1169,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
         label_total_upah_non_cabut.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_total_upah_non_cabut.setText("0");
 
+        jTextArea3.setEditable(false);
         jTextArea3.setColumns(20);
         jTextArea3.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea3.setRows(5);

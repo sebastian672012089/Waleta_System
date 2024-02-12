@@ -77,49 +77,29 @@ public class JDialog_AddBox extends javax.swing.JDialog {
         label_total_gram.setText(decimalFormat.format(tot_gram));
     }
 
-    public String newBox(String grade) {
+    public String newBox(String grade) throws SQLException {
         String no_box_baru = null;
-        try {
-            String kode_grade = null;
-            String nomor_box = null;
-            int total_box = 0;
-            sql = "SELECT MAX(RIGHT(`no_box`, 5)+0) AS 'total_box', `tb_grade_bahan_jadi`.`kode` "
-                    + "FROM `tb_box_bahan_jadi` "
-                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`"
-                    + "WHERE "
-                    + "YEAR(`tanggal_box`) = '" + new SimpleDateFormat("yyyy").format(new Date()) + "' "
-                    + "AND `tb_grade_bahan_jadi`.`kode_grade` = '" + grade + "'";
-            rs = Utility.db.getStatement().executeQuery(sql);
-            if (rs.next()) {
-                total_box = rs.getInt("total_box") + 1;
-                kode_grade = rs.getString("kode");
-            }
-
-            if (total_box < 10) {
-                nomor_box = "0000" + Integer.toString(total_box);
-            } else if (total_box < 100) {
-                nomor_box = "000" + Integer.toString(total_box);
-            } else if (total_box < 1000) {
-                nomor_box = "00" + Integer.toString(total_box);
-            } else if (total_box < 10000) {
-                nomor_box = "0" + Integer.toString(total_box);
-            } else if (total_box < 100000) {
-                nomor_box = Integer.toString(total_box);
-            }
-
-            no_box_baru = "BOX" + kode_grade + "-" + new SimpleDateFormat("yyMM").format(new Date()) + nomor_box;
-
-        } catch (Exception ex) {
-            Logger.getLogger(JDialog_AddBox.class.getName()).log(Level.SEVERE, null, ex);
+        String kode = null;
+        int total_box = 0;
+        sql = "SELECT MAX(RIGHT(`no_box`, 5)+0) AS 'total_box', `tb_grade_bahan_jadi`.`kode` "
+                + "FROM `tb_box_bahan_jadi` "
+                + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`"
+                + "WHERE "
+                + "YEAR(`tanggal_box`) = '" + new SimpleDateFormat("yyyy").format(new Date()) + "' "
+                + "AND `tb_grade_bahan_jadi`.`kode_grade` = '" + grade + "'";
+        rs = Utility.db.getStatement().executeQuery(sql);
+        if (rs.next()) {
+            total_box = rs.getInt("total_box") + 1;
+            kode = rs.getString("kode");
         }
+
+        no_box_baru = "BOX" + kode + "-" + new SimpleDateFormat("yyMM").format(new Date()) + String.format("%05d", total_box);
         return no_box_baru;
     }
 
     public void insert() {
         try {
             Utility.db.getConnection().setAutoCommit(false);
-            
-
             for (int i = 0; i < table_daftar_box.getRowCount(); i++) {
                 sql = "INSERT INTO `tb_box_bahan_jadi`(`no_box`, `tanggal_box`, `kode_grade_bahan_jadi`, `keping`, `berat`, `no_tutupan`, `status_terakhir`, `lokasi_terakhir`, `tgl_proses_terakhir`, `kode_rsb`) "
                         + "VALUES ("
@@ -127,7 +107,7 @@ public class JDialog_AddBox extends javax.swing.JDialog {
                         + "'" + dateFormat.format(date) + "',"
                         + "'" + kode_grade + "',"
                         + "'" + table_daftar_box.getValueAt(i, 1) + "',"
-                        + "'" +  table_daftar_box.getValueAt(i, 2) + "',"
+                        + "'" + table_daftar_box.getValueAt(i, 2) + "',"
                         + "'" + kode_tutupan + "', "
                         + "'NEW BOX', "
                         + "'GRADING', "

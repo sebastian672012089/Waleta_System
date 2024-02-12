@@ -44,8 +44,8 @@ public class JDialog_Input_ByProduct_F2_v2 extends javax.swing.JDialog {
             try {
                 Utility.db.getConnection().setAutoCommit(false);
                 for (int i = 0; i < total_baris; i++) {
-                    int hancuran = Math.round(Float.valueOf(Tabel_data.getValueAt(i, 2).toString()));
-                    int serabut = Math.round(Float.valueOf(Tabel_data.getValueAt(i, 3).toString()));
+                    float hancuran = (float) Tabel_data.getValueAt(i, 2);
+                    float serabut = (float) Tabel_data.getValueAt(i, 3);
                     String Query = "INSERT INTO `tb_finishing_2`(`no_laporan_produksi`, `tgl_input_byProduct`, `hancuran`, `serabut`) "
                             + "VALUES ("
                             + "'" + Tabel_data.getValueAt(i, 1) + "',"
