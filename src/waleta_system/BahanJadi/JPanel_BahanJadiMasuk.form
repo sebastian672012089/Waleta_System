@@ -343,9 +343,11 @@
                   <Font name="Arial" size="11" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="19" rowCount="0">
+                  <Table columnCount="21" rowCount="0">
                     <Column editable="false" title="Kode Asal" type="java.lang.String"/>
                     <Column editable="false" title="No Kartu" type="java.lang.String"/>
+                    <Column editable="false" title="RSB" type="java.lang.String"/>
+                    <Column editable="false" title="Ruangan" type="java.lang.String"/>
                     <Column editable="false" title="Memo LP" type="java.lang.String"/>
                     <Column editable="false" title="Tgl Masuk" type="java.lang.Object"/>
                     <Column editable="false" title="Diterima Oleh" type="java.lang.String"/>
@@ -367,6 +369,16 @@
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>

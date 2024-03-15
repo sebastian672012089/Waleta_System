@@ -1744,7 +1744,7 @@ public class JPanel_GajiCetak extends javax.swing.JPanel {
         jLabel20.setText("Bonus Kecepatan / LP (Rp.) :");
 
         txt_bonus_koreksi.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bonus_koreksi.setText("3000");
+        txt_bonus_koreksi.setText("4500");
         txt_bonus_koreksi.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_bonus_koreksiKeyPressed(evt);

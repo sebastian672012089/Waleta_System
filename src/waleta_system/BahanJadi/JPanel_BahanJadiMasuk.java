@@ -54,7 +54,7 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
                             button_delete_lp.setEnabled(false);
                             button_kembali_qc.setEnabled(false);
                             button_edit_grading.setEnabled(true);
-                            if (Table_GudangBahanJadi.getValueAt(i, 14) == null) {
+                            if (Table_GudangBahanJadi.getValueAt(i, 16) == null) {
                                 button_delete_grading.setEnabled(true);
                             } else {
                                 button_delete_grading.setEnabled(false);
@@ -102,13 +102,15 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
                     filter_tanggal = "AND `tanggal_grading` BETWEEN '" + dateFormat.format(Date_Filter1.getDate()) + "' AND '" + dateFormat.format(Date_Filter2.getDate()) + "' ";
                 }
             }
-            sql = "SELECT `tb_bahan_jadi_masuk`.`kode_asal`, `tb_laporan_produksi`.`no_kartu_waleta`, `memo_lp`, `berat_basah`, `tanggal_masuk`, `diterima_oleh`, `pekerja_grading`, `tb_bahan_jadi_masuk`.`keping`, `berat`, `tanggal_grading`, `kode_tutupan`, "
+            sql = "SELECT `tb_bahan_jadi_masuk`.`kode_asal`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk`.`no_registrasi`, `nama_rumah_burung`, `ruangan`, `memo_lp`, `berat_basah`, `tanggal_masuk`, `diterima_oleh`, `pekerja_grading`, `tb_bahan_jadi_masuk`.`keping`, `berat`, `tanggal_grading`, `kode_tutupan`, "
                     + "`sesekan`, `hancuran`, `rontokan`, `bonggol`, `serabut`, "
                     + "SUM(`tb_grading_bahan_jadi`.`gram`) AS 'total_gram_grading', SUM(`tb_grading_bahan_jadi`.`keping`) AS 'total_kpg_grading', `tb_lab_laporan_produksi`.`status_akhir` "
                     + "FROM `tb_bahan_jadi_masuk` "
                     + "LEFT JOIN `tb_grading_bahan_jadi` ON `tb_bahan_jadi_masuk`.`kode_asal` = `tb_grading_bahan_jadi`.`kode_asal_bahan_jadi`"
                     + "LEFT JOIN `tb_finishing_2` ON `tb_bahan_jadi_masuk`.`kode_asal` = `tb_finishing_2`.`no_laporan_produksi`"
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_bahan_jadi_masuk`.`kode_asal` = `tb_laporan_produksi`.`no_laporan_produksi`"
+                    + "LEFT JOIN `tb_bahan_baku_masuk` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk`.`no_kartu_waleta`"
+                    + "LEFT JOIN `tb_rumah_burung` ON `tb_bahan_baku_masuk`.`no_registrasi` = `tb_rumah_burung`.`no_registrasi`"
                     + "LEFT JOIN `tb_lab_laporan_produksi` ON `tb_bahan_jadi_masuk`.`kode_asal` = `tb_lab_laporan_produksi`.`no_laporan_produksi`"
                     + "WHERE `tb_bahan_jadi_masuk`.`kode_asal` LIKE '%" + txt_search_kodeAsal.getText() + "%' "
                     + filter_status
@@ -119,23 +121,25 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
             while (rs.next()) {
                 row[0] = rs.getString("kode_asal");
                 row[1] = rs.getString("no_kartu_waleta");
-                row[2] = rs.getString("memo_lp");
-                row[3] = rs.getDate("tanggal_masuk");
-                row[4] = rs.getString("diterima_oleh");
-                row[5] = rs.getString("pekerja_grading");
-                row[6] = rs.getInt("keping");
-                row[7] = rs.getFloat("berat");
-                row[8] = rs.getInt("sesekan");
-                row[9] = rs.getInt("hancuran");
-                row[10] = rs.getInt("rontokan");
-                row[11] = rs.getInt("bonggol");
-                row[12] = rs.getInt("serabut");
-                row[13] = rs.getDate("tanggal_grading");
-                row[14] = rs.getString("kode_tutupan");
-                row[15] = rs.getInt("total_kpg_grading");
-                row[16] = rs.getFloat("total_gram_grading");
-                row[17] = rs.getString("status_akhir");
-                row[18] = rs.getFloat("berat_basah");
+                row[2] = rs.getString("no_registrasi") + " - " + rs.getString("nama_rumah_burung");
+                row[3] = rs.getString("ruangan");
+                row[4] = rs.getString("memo_lp");
+                row[5] = rs.getDate("tanggal_masuk");
+                row[6] = rs.getString("diterima_oleh");
+                row[7] = rs.getString("pekerja_grading");
+                row[8] = rs.getInt("keping");
+                row[9] = rs.getFloat("berat");
+                row[10] = rs.getInt("sesekan");
+                row[11] = rs.getInt("hancuran");
+                row[12] = rs.getInt("rontokan");
+                row[13] = rs.getInt("bonggol");
+                row[14] = rs.getInt("serabut");
+                row[15] = rs.getDate("tanggal_grading");
+                row[16] = rs.getString("kode_tutupan");
+                row[17] = rs.getInt("total_kpg_grading");
+                row[18] = rs.getFloat("total_gram_grading");
+                row[19] = rs.getString("status_akhir");
+                row[20] = rs.getFloat("berat_basah");
                 model.addRow(row);
                 total_kpg = total_kpg + rs.getInt("keping");
                 total_gram = total_gram + rs.getFloat("berat");
@@ -293,14 +297,14 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode Asal", "No Kartu", "Memo LP", "Tgl Masuk", "Diterima Oleh", "Pekerja", "Kpg", "Berat", "Sesekan", "Hancuran", "Ront", "Bonggol", "Serabut", "Tgl Grading", "No Tutupan", "Kpg Grading", "Gram Grading", "Status QC", "Berat Angin LP"
+                "Kode Asal", "No Kartu", "RSB", "Ruangan", "Memo LP", "Tgl Masuk", "Diterima Oleh", "Pekerja", "Kpg", "Berat", "Sesekan", "Hancuran", "Ront", "Bonggol", "Serabut", "Tgl Grading", "No Tutupan", "Kpg Grading", "Gram Grading", "Status QC", "Berat Angin LP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -755,8 +759,8 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (Table_GudangBahanJadi.getSelectedRow() > -1) {
             try {
-                Date tgl_masuk = dateFormat.parse(Table_GudangBahanJadi.getValueAt(Table_GudangBahanJadi.getSelectedRow(), 3).toString());
-                int keping_awal = (int) Table_GudangBahanJadi.getValueAt(Table_GudangBahanJadi.getSelectedRow(), 6);
+                Date tgl_masuk = dateFormat.parse(Table_GudangBahanJadi.getValueAt(Table_GudangBahanJadi.getSelectedRow(), 5).toString());
+                int keping_awal = (int) Table_GudangBahanJadi.getValueAt(Table_GudangBahanJadi.getSelectedRow(), 8);
                 JDialog_GradingBahanJadi dialog = new JDialog_GradingBahanJadi(new javax.swing.JFrame(), true, label_kode_asal.getText(), keping_awal, "insert", tgl_masuk);
                 dialog.pack();
                 dialog.setLocationRelativeTo(this);
@@ -775,7 +779,7 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
         try {
             int hari = 0, count = 0;
             int x = Table_GudangBahanJadi.getSelectedRow();
-            Date tgl_grading = dateFormat.parse(Table_GudangBahanJadi.getValueAt(x, 13).toString());
+            Date tgl_grading = dateFormat.parse(Table_GudangBahanJadi.getValueAt(x, 15).toString());
             while (hari < 2) {
                 count++;
                 sql = "SELECT `tanggal_libur` FROM `tb_libur` WHERE `tanggal_libur` = '" + dateFormat.format(new Date(tgl_grading.getTime() + (count * 24 * 60 * 60 * 1000))) + "'";
@@ -788,8 +792,8 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
 //            if (date.after(new Date(tgl_grading.getTime() + (count * 24 * 60 * 60 * 1000)))) {
 //                JOptionPane.showMessageDialog(this, "Maaf, Batas tgl Edit anda : " + new SimpleDateFormat("dd MMMM yyyy").format(new Date(tgl_grading.getTime() + (count * 24 * 60 * 60 * 1000))));
 //            } else {
-            Date tgl_masuk = dateFormat.parse(Table_GudangBahanJadi.getValueAt(Table_GudangBahanJadi.getSelectedRow(), 3).toString());
-            int keping_awal = (int) Table_GudangBahanJadi.getValueAt(x, 6);
+            Date tgl_masuk = dateFormat.parse(Table_GudangBahanJadi.getValueAt(Table_GudangBahanJadi.getSelectedRow(), 5).toString());
+            int keping_awal = (int) Table_GudangBahanJadi.getValueAt(x, 8);
             JDialog_GradingBahanJadi dialog = new JDialog_GradingBahanJadi(new javax.swing.JFrame(), true, label_kode_asal.getText(), keping_awal, "edit", tgl_masuk);
             dialog.pack();
             dialog.setLocationRelativeTo(this);

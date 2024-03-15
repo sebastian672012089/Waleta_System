@@ -168,7 +168,8 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                         + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' "
                         + filter_tanggal_masuk
                         + "AND `posisi` IN ('PEJUANG') "
-                        + "AND (A.`jam_kerja` <> 'SHIFT_MALAM' OR A.`jam_kerja` IS NULL) "
+                        + "AND A.`jam_kerja` IS NOT NULL "
+                        + "AND A.`jam_kerja` <> 'SHIFT_MALAM'"
                         + "AND `kode_departemen` <> 'SUB' "
                         + "AND `status` IN ('IN', 'OUT', 'ABSEN')"
                         + "AND (A.`id_pegawai` IS NOT NULL OR B.`id_pegawai` IS NOT NULL OR C.`id_pegawai` IS NOT NULL) "
@@ -703,9 +704,50 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                 level_gaji_new = "OM";
                             }
 
+                            String bagian_lama = Tabel_data.getValueAt(i, 28).toString();
+                            String bagian_baru = "";
+                            if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING HIJAU-A")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING KUNING-A";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING KUNING-A")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING ORANYE-A";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING ORANYE-A")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING MERAH-A";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING MERAH-A")) {
+                                bagian_baru = "";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING HIJAU-B")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING KUNING-B";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING KUNING-B")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING ORANYE-B";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING ORANYE-B")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING MERAH-B";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING MERAH-B")) {
+                                bagian_baru = "";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING HIJAU-C")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING KUNING-C";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING KUNING-C")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING ORANYE-C";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING ORANYE-C")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING MERAH-C";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING MERAH-C")) {
+                                bagian_baru = "";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING HIJAU-D")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING KUNING-D";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING KUNING-D")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING ORANYE-D";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING ORANYE-D")) {
+                                bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING MERAH-D";
+                            } else if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING MERAH-D")) {
+                                bagian_baru = "";
+                            }
+
                             if (!level_gaji_new.equals("")) {
+                                String pindah_bagian = "";
+                                if (!bagian_baru.equals("")) {
+                                    pindah_bagian = ", `kode_bagian`=(SELECT `kode_bagian` FROM `tb_bagian` WHERE `nama_bagian` = '" + bagian_baru + "') ";
+                                }
                                 sql = "UPDATE `tb_karyawan` SET "
-                                        + "`level_gaji`='" + level_gaji_new + "' "
+                                        + "`level_gaji`='" + level_gaji_new + "' \n"
+                                        + pindah_bagian
                                         + "WHERE `id_pegawai`='" + Tabel_data.getValueAt(i, 1).toString() + "'";
                                 Utility.db.getConnection().createStatement();
                                 if (Utility.db.getStatement().executeUpdate(sql) == 1) {
@@ -1173,7 +1215,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
         jTextArea3.setColumns(20);
         jTextArea3.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea3.setRows(5);
-        jTextArea3.setText("Otomatis naik level gaji ketika save data:\nTraining Borong Hijau -> Training Borong Kuning\nTraining Borong Kuning -> Training Borong Oranye\nTraining Borong Oranye -> Training Borong Merah\nTraining Borong Merah -> BORONG HIJAU\nBORONG HIJAU -> BORONG KUNING\nBORONG KUNING -> BORONG ORANYE\nBORONG ORANYE -> BORONG MERAH\nBORONG MERAH -> BORONG");
+        jTextArea3.setText("Otomatis naik level gaji dan bagian ketika save data:\nTraining Borong Hijau -> Training Borong Kuning\nTraining Borong Kuning -> Training Borong Oranye\nTraining Borong Oranye -> Training Borong Merah\nTraining Borong Merah -> BORONG HIJAU\nBORONG HIJAU -> BORONG KUNING\nBORONG KUNING -> BORONG ORANYE\nBORONG ORANYE -> BORONG MERAH\nBORONG MERAH -> BORONG");
         jScrollPane4.setViewportView(jTextArea3);
 
         jProgressBar1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N

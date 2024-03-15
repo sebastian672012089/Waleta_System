@@ -794,7 +794,7 @@ WHERE 1]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{kode_rsb} + "-" + new SimpleDateFormat("YYMMDD").format($F{tgl_heat_treatment})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{kode_rsb} + "-" + new SimpleDateFormat("yyMMdd").format($F{tgl_heat_treatment})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

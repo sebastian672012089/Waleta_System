@@ -15,13 +15,14 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
     ResultSet rs;
     List<Integer> kode_atasan = new ArrayList<>();
     String kode_bagian = null;
+    String namaBagianLama = null;
 
     public JDialog_TambahEditBagian(java.awt.Frame parent, boolean modal, String kode_bagian) {
         super(parent, modal);
         try {
             initComponents();
             ComboBox_departemen.removeAllItems();
-            sql = "SELECT `kode_dep` AS 'value' FROM `tb_departemen` WHERE `kode_dep` <> 'PIMPINAN'";
+            sql = "SELECT `kode_dep` AS 'value' FROM `tb_departemen` WHERE 1";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
                 ComboBox_departemen.addItem(rs.getString("value"));
@@ -49,6 +50,7 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
                     + "FROM `tb_bagian` WHERE `kode_bagian` = '" + kode_bagian + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
+                namaBagianLama = rs.getString("nama_bagian");
                 label_nama_bagian.setText(rs.getString("nama_bagian"));
                 txt_posisi.setText(rs.getString("posisi_bagian"));
                 ComboBox_departemen.setSelectedItem(rs.getString("kode_departemen"));
@@ -70,7 +72,7 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
         txt_bagian.setText(txt_bagian.getText().toUpperCase());
         txt_ruang.setText(txt_ruang.getText().toUpperCase());
         String posisi = txt_posisi.getText();
-        String departemen = ComboBox_departemen.getSelectedItem().toString();
+        String departemen = ComboBox_departemen.getSelectedItem() == null ? "" : ComboBox_departemen.getSelectedItem().toString();
         String divisi = txt_divisi.getText();
         String bagian = txt_bagian.getText();
         String ruang = txt_ruang.getText();
@@ -114,7 +116,9 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
 
     private void edit() {
         try {
+            Utility.db.getConnection().setAutoCommit(false);
             NamaBagian();
+            String departemen = ComboBox_departemen.getSelectedItem() == null ? "NULL" : "'" + ComboBox_departemen.getSelectedItem().toString() + "'";
             String divisi = txt_divisi.getText() == null || txt_divisi.getText().equals("") ? "NULL" : "'" + txt_divisi.getText() + "'";
             String bagian = txt_bagian.getText() == null || txt_bagian.getText().equals("") ? "NULL" : "'" + txt_bagian.getText() + "'";
             String grup = txt_Grup.getText() == null || txt_Grup.getText().equals("") ? "-" : txt_Grup.getText();
@@ -122,20 +126,35 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
             sql = "UPDATE `tb_bagian` SET "
                     + "`nama_bagian` = '" + label_nama_bagian.getText() + "', "
                     + "`posisi_bagian` = '" + txt_posisi.getText() + "', "
-                    + "`kode_departemen` = '" + ComboBox_departemen.getSelectedItem().toString() + "', "
+                    + "`kode_departemen` = " + departemen + ", "
                     + "`divisi_bagian` = " + divisi + ", "
                     + "`bagian_bagian` = " + bagian + ", "
                     + "`ruang_bagian` = '" + txt_ruang.getText() + "', "
                     + "`grup` = '" + grup + "', "
                     + "`kepala_bagian` = '" + kode_atasan.get(ComboBox_atasan.getSelectedIndex()) + "' "
                     + "WHERE `tb_bagian`.`kode_bagian` = '" + kode_bagian + "'";
-            if ((Utility.db.getStatement().executeUpdate(sql)) > 0) {
-                JOptionPane.showMessageDialog(this, "Data berhasil disimpan !");
-                this.dispose();
-            }
+            Utility.db.getStatement().executeUpdate(sql);
+            
+            String insert = "INSERT INTO `tb_bagian_edit_log`(`nama_bagian_lama`, `nama_bagian_baru`) VALUES ('" + namaBagianLama + "','" + label_nama_bagian.getText() + "')";
+            Utility.db.getStatement().executeUpdate(insert);
+
+            Utility.db.getConnection().commit();
+            JOptionPane.showMessageDialog(this, "Data berhasil disimpan !");
+            this.dispose();
         } catch (Exception ex) {
+            try {
+                Utility.db.getConnection().rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(JDialog_TambahEditBagian.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JDialog_TambahEditBagian.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                Utility.db.getConnection().setAutoCommit(false);
+            } catch (SQLException ex) {
+                Logger.getLogger(JDialog_TambahEditBagian.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import static jdk.nashorn.internal.runtime.Debug.id;
+import javax.swing.JOptionPane;
 
 public class JDialog_Show_KTP extends javax.swing.JDialog {
 
@@ -31,7 +31,6 @@ public class JDialog_Show_KTP extends javax.swing.JDialog {
         button_rotate_right.setIcon(Utility.ResizeImageIcon(new ImageIcon(getClass().getResource("/waleta_system/Images/rotate_page_clockwise_50px.png")), button_rotate_right.getWidth(), button_rotate_right.getHeight()));
         label_nik.setText(nik);
         label_nama.setText(nama);
-//        show_ktp_local("20181203206");
     }
 
     public void show_ktp_local(String id) {
@@ -46,6 +45,7 @@ public class JDialog_Show_KTP extends javax.swing.JDialog {
 //                lbl_Image.setIcon(Utility.ResizeImage(null, rs.getBytes("ktp_image"), lbl_Image.getWidth(), lbl_Image.getHeight()));
 //            }
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JDialog_Show_KTP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -59,7 +59,7 @@ public class JDialog_Show_KTP extends javax.swing.JDialog {
             String query = "SELECT `foto_ktp` FROM `tb_karyawan` WHERE `id_pegawai`='" + id + "'";
             ResultSet result = Utility.db_sub.getStatement().executeQuery(query);
             if (result.next()) {
-                String path = result.getString("foto_ktp").replace("194.163.41.51", "waleta019.com");
+                String path = result.getString("foto_ktp").replace("194.163.41.103", "waleta019.com");
                 URL url = new URL(path);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.connect();
@@ -79,6 +79,7 @@ public class JDialog_Show_KTP extends javax.swing.JDialog {
                 lbl_Image.setIcon(Utility.ResizeImage(null, data, lbl_Image.getWidth(), lbl_Image.getHeight()));
             }
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JDialog_Show_KTP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -107,6 +108,7 @@ public class JDialog_Show_KTP extends javax.swing.JDialog {
 
         lbl_Image.setBackground(new java.awt.Color(255, 255, 255));
         lbl_Image.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        lbl_Image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_Image.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));

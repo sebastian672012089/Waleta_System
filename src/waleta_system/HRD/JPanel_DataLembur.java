@@ -470,7 +470,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                     + "AND `tb_surat_lembur_detail`.`tanggal_lembur` = '" + dateFormat.format(Date_lembur_makan.getDate()) + "' "
                     + "AND `nama_bagian` NOT LIKE '%DRIVER%' "
                     + "AND `tb_surat_lembur_detail`.`id_pegawai` <> '20170600001' "
-                    + "GROUP BY `tb_surat_lembur_detail`.`id_pegawai`"; 
+                    + "GROUP BY `tb_surat_lembur_detail`.`id_pegawai`";
 //            System.out.println(sql);
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[15];
@@ -780,7 +780,6 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         button_delete_SPL_PEJUANG.setBackground(new java.awt.Color(255, 255, 255));
         button_delete_SPL_PEJUANG.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_delete_SPL_PEJUANG.setText("Delete");
-        button_delete_SPL_PEJUANG.setEnabled(false);
         button_delete_SPL_PEJUANG.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_delete_SPL_PEJUANGActionPerformed(evt);
@@ -1036,7 +1035,6 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         button_delete_SPL_STAFF.setBackground(new java.awt.Color(255, 255, 255));
         button_delete_SPL_STAFF.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_delete_SPL_STAFF.setText("Delete");
-        button_delete_SPL_STAFF.setEnabled(false);
         button_delete_SPL_STAFF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_delete_SPL_STAFFActionPerformed(evt);
@@ -1918,28 +1916,38 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 
     private void button_delete_SPL_PEJUANGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_SPL_PEJUANGActionPerformed
         // TODO add your handling code here:
-//        try {
-//            int row = Table_surat_lembur.getSelectedRow();
-//            if (row == -1) {
-//                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
-//            } else {
-//                int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
-//                if (dialogResult == JOptionPane.YES_OPTION) {
-//                    // delete code here
-//                    String Query = "DELETE FROM `tb_surat_lembur` WHERE `nomor_surat` = '" + Table_surat_lembur.getValueAt(row, 0) + "'";
-//                    Utility.db.getConnection().createStatement();
-//                    if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
-//                        refreshTable_SPL_PEJUANG();
-//                        JOptionPane.showMessageDialog(this, "SUKSES!");
-//                    } else {
-//                        JOptionPane.showMessageDialog(this, "FAILED!");
-//                    }
-//                }
-//            }
-//        } catch (HeadlessException | SQLException e) {
-//            JOptionPane.showMessageDialog(this, e);
-//            Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, e);
-//        }
+        try {
+            int row = Table_SPL_PEJUANG.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
+            } else {
+                if (Table_SPL_PEJUANG.getValueAt(row, 9) != null) {
+                    JOptionPane.showMessageDialog(this, "Maaf, SPL yang sudah diketahui tidak bisa dihapus.");
+                } else if (!(MainForm.Login_namaBagian.contains("KADEP") || MainForm.Login_namaBagian.contains("MANAGER") || MainForm.Login_namaBagian.contains("DIREKTUR"))) {
+                    JOptionPane.showMessageDialog(this, "Maaf, hanya pada posisi KADEP / MANAGER yang dapat menghapus data lembur.");
+                } else {
+                    if (!MainForm.Login_Departemen.equals(Table_SPL_PEJUANG.getValueAt(row, 2).toString())) {
+                        JOptionPane.showMessageDialog(this, "Maaf, hanya KADEP " + Table_SPL_PEJUANG.getValueAt(row, 2).toString() + " yang dapat menghapus SPL ini.");
+                    } else {
+                        int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
+                        if (dialogResult == JOptionPane.YES_OPTION) {
+                            // delete code here
+                            String Query = "DELETE FROM `tb_surat_lembur` WHERE `nomor_surat` = '" + Table_SPL_PEJUANG.getValueAt(row, 0) + "'";
+                            Utility.db.getConnection().createStatement();
+                            if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
+                                refreshTable_SPL_PEJUANG();
+                                JOptionPane.showMessageDialog(this, "Hapus data berhasil!");
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Hapus data GAGAL!");
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(this, e);
+            Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, e);
+        }
     }//GEN-LAST:event_button_delete_SPL_PEJUANGActionPerformed
 
     private void txt_search_karyawan_rekapKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_karyawan_rekapKeyPressed
@@ -2191,6 +2199,38 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 
     private void button_delete_SPL_STAFFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_SPL_STAFFActionPerformed
         // TODO add your handling code here:
+        try {
+            int row = Table_SPL_STAFF.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan pilih data yang ingin di hapus !");
+            } else {
+                if (Table_SPL_STAFF.getValueAt(row, 9) != null) {
+                    JOptionPane.showMessageDialog(this, "Maaf, SPL yang sudah diketahui tidak bisa dihapus.");
+                } else if (!(MainForm.Login_namaBagian.contains("KADEP") || MainForm.Login_namaBagian.contains("MANAGER") || MainForm.Login_namaBagian.contains("DIREKTUR"))) {
+                    JOptionPane.showMessageDialog(this, "Maaf, hanya pada posisi KADEP / MANAGER yang dapat menghapus data lembur.");
+                } else {
+                    if (!MainForm.Login_Departemen.equals(Table_SPL_STAFF.getValueAt(row, 2).toString())) {
+                        JOptionPane.showMessageDialog(this, "Maaf, hanya KADEP " + Table_SPL_STAFF.getValueAt(row, 2).toString() + " yang dapat menghapus SPL ini.");
+                    } else {
+                        int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
+                        if (dialogResult == JOptionPane.YES_OPTION) {
+                            // delete code here
+                            String Query = "DELETE FROM `tb_surat_lembur` WHERE `nomor_surat` = '" + Table_SPL_STAFF.getValueAt(row, 0) + "'";
+                            Utility.db.getConnection().createStatement();
+                            if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
+                                refreshTable_SPL_PEJUANG();
+                                JOptionPane.showMessageDialog(this, "Hapus data berhasil!");
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Hapus data GAGAL!");
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(this, e);
+            Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, e);
+        }
     }//GEN-LAST:event_button_delete_SPL_STAFFActionPerformed
 
     private void button_disetujui_SPL_STAFFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_disetujui_SPL_STAFFActionPerformed

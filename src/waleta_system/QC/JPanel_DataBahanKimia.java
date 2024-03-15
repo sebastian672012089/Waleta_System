@@ -255,6 +255,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         label_total_data_PemakaianBahanKimia = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         label_total_PemakaianBahanKimia = new javax.swing.JLabel();
+        button_export_PemakaianBahanKimia = new javax.swing.JButton();
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -749,6 +750,15 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         label_total_PemakaianBahanKimia.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_total_PemakaianBahanKimia.setText("000,000,000");
 
+        button_export_PemakaianBahanKimia.setBackground(new java.awt.Color(255, 255, 255));
+        button_export_PemakaianBahanKimia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_export_PemakaianBahanKimia.setText("Export To Excel");
+        button_export_PemakaianBahanKimia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_export_PemakaianBahanKimiaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_PemakaianBahanKimiaLayout = new javax.swing.GroupLayout(jPanel_PemakaianBahanKimia);
         jPanel_PemakaianBahanKimia.setLayout(jPanel_PemakaianBahanKimiaLayout);
         jPanel_PemakaianBahanKimiaLayout.setHorizontalGroup(
@@ -777,7 +787,8 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                         .addComponent(jLabel20)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_PemakaianBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button_export_PemakaianBahanKimia)))
                 .addContainerGap())
         );
         jPanel_PemakaianBahanKimiaLayout.setVerticalGroup(
@@ -794,7 +805,8 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                     .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_total_PemakaianBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_search_PemakaianBahanKimia, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(button_search_PemakaianBahanKimia, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(button_export_PemakaianBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane12, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
                 .addContainerGap())
@@ -909,6 +921,12 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_search_PemakaianBahanKimia_NamaBahanKimiaKeyPressed
 
+    private void button_export_PemakaianBahanKimiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_PemakaianBahanKimiaActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) table_PemakaianBahanKimia.getModel();
+        ExportToExcel.writeToExcel(model, jPanel_PembelianBahanKimia);
+    }//GEN-LAST:event_button_export_PemakaianBahanKimiaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_KadaluarsaBahanKimia1;
@@ -922,6 +940,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
     private javax.swing.JButton button_PembelianBahanKimia;
     public javax.swing.JButton button_delete_MasterBahanKimia;
     public javax.swing.JButton button_edit_MasterBahanKimia;
+    private javax.swing.JButton button_export_PemakaianBahanKimia;
     private javax.swing.JButton button_export_PembelianBahanKimia;
     private javax.swing.JButton button_search_MasterBahanKimia;
     private javax.swing.JButton button_search_PemakaianBahanKimia;

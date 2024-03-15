@@ -45,7 +45,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
             @Override
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting() && Table_Bahan_Baku.getSelectedRow() != -1) {
-                    refreshTable_harga(Table_Bahan_Baku.getSelectedRow());
+                    refreshTable_hasilGrading(Table_Bahan_Baku.getSelectedRow());
                 }
             }
         });
@@ -114,12 +114,12 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
         }
     }
 
-    public void refreshTable_harga(int SelectedRow) {
+    public void refreshTable_hasilGrading(int SelectedRow) {
         try {
             double berat, keping, harga, sub_tot_harga, tot_harga = 0, total_gram = 0, total_keping = 0;
             decimalFormat.setMaximumFractionDigits(5);
             decimalFormat.setGroupingUsed(true);
-            DefaultTableModel model = (DefaultTableModel) Table_Harga_Bahan_Baku.getModel();
+            DefaultTableModel model = (DefaultTableModel) Table_Grading_Bahan_Baku.getModel();
             model.setRowCount(0);
             sql = "SELECT `kode_grade`, `jumlah_keping`, `total_berat`, `harga_bahanbaku` "
                     + "FROM `tb_grading_bahan_baku` WHERE `no_kartu_waleta`='" + Table_Bahan_Baku.getValueAt(SelectedRow, 0).toString() + "'";
@@ -142,7 +142,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
 
                 tot_harga = tot_harga + sub_tot_harga;
             }
-            ColumnsAutoSizer.sizeColumnsToFit(Table_Harga_Bahan_Baku);
+            ColumnsAutoSizer.sizeColumnsToFit(Table_Grading_Bahan_Baku);
 
             label_total_berat.setText(Double.toString(total_gram) + " Grams");
             label_total_kpg.setText(Double.toString(total_keping) + " Keping");
@@ -166,7 +166,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
         jScrollPane5 = new javax.swing.JScrollPane();
         Table_Bahan_Baku = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Table_Harga_Bahan_Baku = new javax.swing.JTable();
+        Table_Grading_Bahan_Baku = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         label_total_harga = new javax.swing.JLabel();
         label_total_berat = new javax.swing.JLabel();
@@ -230,9 +230,9 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
         Table_Bahan_Baku.getTableHeader().setReorderingAllowed(false);
         jScrollPane5.setViewportView(Table_Bahan_Baku);
 
-        Table_Harga_Bahan_Baku.setAutoCreateRowSorter(true);
-        Table_Harga_Bahan_Baku.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        Table_Harga_Bahan_Baku.setModel(new javax.swing.table.DefaultTableModel(
+        Table_Grading_Bahan_Baku.setAutoCreateRowSorter(true);
+        Table_Grading_Bahan_Baku.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        Table_Grading_Bahan_Baku.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -255,14 +255,14 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
                 return canEdit [columnIndex];
             }
         });
-        Table_Harga_Bahan_Baku.setMaximumSize(new java.awt.Dimension(420, 0));
-        Table_Harga_Bahan_Baku.getTableHeader().setReorderingAllowed(false);
-        Table_Harga_Bahan_Baku.addMouseListener(new java.awt.event.MouseAdapter() {
+        Table_Grading_Bahan_Baku.setMaximumSize(new java.awt.Dimension(420, 0));
+        Table_Grading_Bahan_Baku.getTableHeader().setReorderingAllowed(false);
+        Table_Grading_Bahan_Baku.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Table_Harga_Bahan_BakuMouseClicked(evt);
+                Table_Grading_Bahan_BakuMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(Table_Harga_Bahan_Baku);
+        jScrollPane1.setViewportView(Table_Grading_Bahan_Baku);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -562,7 +562,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
 
     private void button_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_exportActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) Table_Harga_Bahan_Baku.getModel();
+        DefaultTableModel model = (DefaultTableModel) Table_Grading_Bahan_Baku.getModel();
         ExportToExcel.writeToExcel(model, jPanel1);
     }//GEN-LAST:event_button_exportActionPerformed
 
@@ -702,15 +702,15 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
         }
     }//GEN-LAST:event_button_selesaiActionPerformed
 
-    private void Table_Harga_Bahan_BakuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Harga_Bahan_BakuMouseClicked
+    private void Table_Grading_Bahan_BakuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_Grading_Bahan_BakuMouseClicked
         // TODO add your handling code here:
         decimalFormat.setMaximumFractionDigits(5);
         decimalFormat.setGroupingUsed(false);
-        int i = Table_Harga_Bahan_Baku.getSelectedRow();
+        int i = Table_Grading_Bahan_Baku.getSelectedRow();
         int j = Table_Bahan_Baku.getSelectedRow();
         if (evt.getClickCount() == 2) {
             try {
-                String old_price = Table_Harga_Bahan_Baku.getValueAt(i, 3).toString();
+                String old_price = Table_Grading_Bahan_Baku.getValueAt(i, 3).toString();
                 String price1 = "";
                 price1 = old_price.replace(",", "");
                 //                try {
@@ -724,9 +724,9 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
                 String harga = JOptionPane.showInputDialog("Masukkan Harga : ", price1);
                 double HARGA_F = Double.valueOf(harga);
                 decimalFormat = Utility.DecimalFormatUS(decimalFormat);
-                sql = "UPDATE `tb_grading_bahan_baku` SET `harga_bahanbaku`='" + decimalFormat.format(HARGA_F) + "' WHERE `no_kartu_waleta`='" + Table_Bahan_Baku.getValueAt(j, 0).toString() + "' AND `kode_grade`='" + Table_Harga_Bahan_Baku.getValueAt(i, 0).toString() + "'";
+                sql = "UPDATE `tb_grading_bahan_baku` SET `harga_bahanbaku`='" + decimalFormat.format(HARGA_F) + "' WHERE `no_kartu_waleta`='" + Table_Bahan_Baku.getValueAt(j, 0).toString() + "' AND `kode_grade`='" + Table_Grading_Bahan_Baku.getValueAt(i, 0).toString() + "'";
                 if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                    refreshTable_harga(i);
+                    refreshTable_hasilGrading(j);
                     JOptionPane.showMessageDialog(this, "Update success!");
                 } else {
                     JOptionPane.showMessageDialog(this, "Update failed!");
@@ -739,14 +739,14 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
                 Logger.getLogger(JPanel_Harga_BahanBaku.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }//GEN-LAST:event_Table_Harga_Bahan_BakuMouseClicked
+    }//GEN-LAST:event_Table_Grading_Bahan_BakuMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_search1;
     private com.toedter.calendar.JDateChooser Date_search2;
     public static javax.swing.JTable Table_Bahan_Baku;
-    private javax.swing.JTable Table_Harga_Bahan_Baku;
+    private javax.swing.JTable Table_Grading_Bahan_Baku;
     public static javax.swing.JButton button_edit_csv;
     private javax.swing.JButton button_edit_harga_cmp;
     private javax.swing.JButton button_export;

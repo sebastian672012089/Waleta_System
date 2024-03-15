@@ -25,7 +25,7 @@ public class JDialog_PindahGrup_disetujui extends javax.swing.JDialog {
         try {
             ComboBox_bagian_baru.removeAllItems();
             ComboBox_bagian_baru.addItem(null);
-            sql = "SELECT `nama_bagian`, `kode_bagian` FROM `tb_bagian` WHERE `status_bagian` = 1 AND `kode_departemen` NOT IN ('SUB', 'PIMPINAN')"
+            sql = "SELECT `nama_bagian`, `kode_bagian` FROM `tb_bagian` WHERE `status_bagian` = 1 AND `kode_departemen` <> 'SUB' AND `nama_bagian` <> 'DIREKTUR'"
                     + "ORDER BY `nama_bagian`";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {

@@ -5,6 +5,7 @@ import waleta_system.Class.Utility;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -23,17 +24,11 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         initComponents();
         this.setResizable(false);
         try {
-            ComboBox_departemen.removeAllItems();
-            sql = "SELECT `kode_dep` FROM `tb_departemen` WHERE 1";
-            rs = Utility.db.getStatement().executeQuery(sql);
-            while (rs.next()) {
-                ComboBox_departemen.addItem(rs.getString("kode_dep"));
-            }
-
             if (no == null) {
                 this.operand = "tambah";
                 txt_diajukan_id.setText(MainForm.Login_idPegawai);
                 txt_diajukan_nama.setText(MainForm.Login_NamaPegawai);
+                txt_departemen.setText(MainForm.Login_Departemen);
             } else {
                 this.operand = "edit";
                 txt_no.setText(no);
@@ -46,7 +41,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                 if (rs.next()) {
                     txt_no.setText(rs.getString("no"));
                     Date_pengajuan.setDate(rs.getDate("tanggal_pengajuan"));
-                    ComboBox_departemen.setSelectedItem(rs.getString("departemen"));
+                    txt_departemen.setText(rs.getString("departemen"));
                     txt_keperluan.setText(rs.getString("keperluan"));
                     txt_nama_barang.setText(rs.getString("nama_barang"));
                     Spinner_jumlah.setValue(rs.getInt("jumlah"));
@@ -83,7 +78,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
             sql = "INSERT INTO `tb_aset_pengajuan`(`tanggal_pengajuan`, `departemen`, `keperluan`, `nama_barang`, `jumlah`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `diajukan`, `status`, `keterangan`) "
                     + "VALUES ("
                     + "'" + dateFormat.format(Date_pengajuan.getDate()) + "', "
-                    + "'" + ComboBox_departemen.getSelectedItem().toString() + "', "
+                    + "'" + txt_departemen.getText() + "', "
                     + "'" + txt_keperluan.getText() + "', "
                     + "'" + txt_nama_barang.getText() + "', "
                     + "'" + Spinner_jumlah.getValue().toString() + "', "
@@ -111,7 +106,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
             String harga = txt_estimasi_harga_satuan.getText() == null || txt_estimasi_harga_satuan.getText().equals("") ? "0" : txt_estimasi_harga_satuan.getText();
             sql = "UPDATE `tb_aset_pengajuan` SET "
                     + "`tanggal_pengajuan`='" + dateFormat.format(Date_pengajuan.getDate()) + "',"
-                    + "`departemen`='" + ComboBox_departemen.getSelectedItem().toString() + "',"
+                    + "`departemen`='" + txt_departemen.getText() + "',"
                     + "`keperluan`='" + txt_keperluan.getText() + "',"
                     + "`nama_barang`='" + txt_nama_barang.getText() + "',"
                     + "`jumlah`='" + Spinner_jumlah.getValue().toString() + "',"
@@ -153,7 +148,6 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         Date_pengajuan = new com.toedter.calendar.JDateChooser();
-        ComboBox_departemen = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -172,6 +166,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         txt_estimasi_harga_satuan = new javax.swing.JTextField();
         txt_estimasi_harga_total = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
+        txt_departemen = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -224,9 +219,10 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         jLabel11.setText("Keterangan* :");
 
         Date_pengajuan.setBackground(new java.awt.Color(255, 255, 255));
+        Date_pengajuan.setDate(new Date());
         Date_pengajuan.setDateFormatString("dd MMM yyyy");
-
-        ComboBox_departemen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Date_pengajuan.setEnabled(false);
+        Date_pengajuan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -242,6 +238,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
 
         Date_dibutuhkan.setBackground(new java.awt.Color(255, 255, 255));
         Date_dibutuhkan.setDateFormatString("dd MMM yyyy");
+        Date_dibutuhkan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -300,6 +297,9 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         jLabel16.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel16.setText("Estimasi Harga Total :");
 
+        txt_departemen.setEditable(false);
+        txt_departemen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -333,7 +333,6 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                             .addComponent(Date_pengajuan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                            .addComponent(ComboBox_departemen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                             .addComponent(txt_nama_barang)
                             .addComponent(txt_diajukan_nama)
@@ -341,7 +340,8 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                                 .addComponent(Spinner_jumlah, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txt_estimasi_harga_satuan)
-                            .addComponent(txt_estimasi_harga_total)))
+                            .addComponent(txt_estimasi_harga_total)
+                            .addComponent(txt_departemen)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(label_title)))
@@ -367,7 +367,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_departemen, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_departemen, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -464,7 +464,6 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboBox_departemen;
     private com.toedter.calendar.JDateChooser Date_dibutuhkan;
     private com.toedter.calendar.JDateChooser Date_pengajuan;
     private javax.swing.JSpinner Spinner_jumlah;
@@ -487,6 +486,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel label_title;
+    private javax.swing.JTextField txt_departemen;
     private javax.swing.JTextField txt_diajukan_id;
     private javax.swing.JTextField txt_diajukan_nama;
     private javax.swing.JTextField txt_estimasi_harga_satuan;

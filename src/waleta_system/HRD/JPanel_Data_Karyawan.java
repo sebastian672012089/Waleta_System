@@ -815,6 +815,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         button_PrintIDCARD1 = new javax.swing.JButton();
         button_PrintIDCARD2 = new javax.swing.JButton();
         button_unduh_ktp = new javax.swing.JButton();
+        button_view_kk = new javax.swing.JButton();
         jPanel_Data_Berkas_Karyawan = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         table_data_berkas = new javax.swing.JTable();
@@ -1146,7 +1147,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
 
         button_view_ktp.setBackground(new java.awt.Color(255, 255, 255));
         button_view_ktp.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
-        button_view_ktp.setText("View KTP");
+        button_view_ktp.setText("Lihat KTP");
         button_view_ktp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_view_ktpActionPerformed(evt);
@@ -1334,6 +1335,15 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
         });
 
+        button_view_kk.setBackground(new java.awt.Color(255, 255, 255));
+        button_view_kk.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+        button_view_kk.setText("Lihat KK");
+        button_view_kk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_view_kkActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_Data_KTP_KaryawanLayout = new javax.swing.GroupLayout(jPanel_Data_KTP_Karyawan);
         jPanel_Data_KTP_Karyawan.setLayout(jPanel_Data_KTP_KaryawanLayout);
         jPanel_Data_KTP_KaryawanLayout.setHorizontalGroup(
@@ -1342,55 +1352,59 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Data_KTP_KaryawanLayout.createSequentialGroup()
-                        .addGap(0, 79, Short.MAX_VALUE)
-                        .addComponent(button_tes_finger1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_tes_finger2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_finger1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_finger2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_set_JamKerja)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_PrintIDCARD_Semua)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_PrintIDCARD)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_import_edit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_import)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_export_data_karyawan_ktp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_view_ktp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_input_foto))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Data_KTP_KaryawanLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_nama_pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_Pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_evaluasi_Pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print_daftar_hadir_pelatihan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print_evaluasi_pelatihan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_PrintIDCARD1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_PrintIDCARD2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_unduh_ktp)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_set_jemputan)))
+                    .addGroup(jPanel_Data_KTP_KaryawanLayout.createSequentialGroup()
+                        .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_Data_KTP_KaryawanLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_nama_pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_Pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_evaluasi_Pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_print_daftar_hadir_pelatihan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_print_evaluasi_pelatihan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_PrintIDCARD1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_PrintIDCARD2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_unduh_ktp)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_set_jemputan))
+                            .addGroup(jPanel_Data_KTP_KaryawanLayout.createSequentialGroup()
+                                .addComponent(button_tes_finger1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_tes_finger2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_finger1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_finger2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_set_JamKerja)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_PrintIDCARD_Semua)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_PrintIDCARD)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_import_edit)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_import)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_data_karyawan_ktp)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_view_ktp)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_view_kk)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_input_foto)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_Data_KTP_KaryawanLayout.setVerticalGroup(
@@ -1409,7 +1423,8 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                     .addComponent(button_finger1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_finger2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_set_JamKerja, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_PrintIDCARD_Semua, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_PrintIDCARD_Semua, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_view_kk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(Date_evaluasi_Pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2562,6 +2577,25 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         refreshTable_data_berkas_karyawan();
     }//GEN-LAST:event_button_data_berkas_karyawanActionPerformed
 
+    private void button_view_kkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_view_kkActionPerformed
+        // TODO add your handling code here:
+        int x = table_data_ktp.getSelectedRow();
+        if (x == -1) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
+        } else {
+            String id = table_data_ktp.getValueAt(x, 0).toString();
+            String nik = table_data_ktp.getValueAt(x, 2).toString();
+            String nama = table_data_ktp.getValueAt(x, 3).toString();
+            JDialog_Show_KK dialog = new JDialog_Show_KK(new javax.swing.JFrame(), true, nik, nama);
+            dialog.show_data_local(id);
+            dialog.pack();
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
+            dialog.setEnabled(true);
+            dialog.setResizable(false);
+        }
+    }//GEN-LAST:event_button_view_kkActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_filter_bagian;
@@ -2610,6 +2644,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
     public javax.swing.JButton button_tes_finger1;
     public javax.swing.JButton button_tes_finger2;
     private javax.swing.JButton button_unduh_ktp;
+    private javax.swing.JButton button_view_kk;
     private javax.swing.JButton button_view_ktp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

@@ -187,12 +187,12 @@ public class JDialog_rePacking extends javax.swing.JDialog {
         String no_box_baru = null;
         try {
             String kode_grade = null;
-            String nomor_box = null;
             int total_box = 0;
             sql = "SELECT MAX(RIGHT(`no_box`, 5)+0) AS 'total_box', `tb_grade_bahan_jadi`.`kode` "
                     + "FROM `tb_box_bahan_jadi` "
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`"
-                    + "WHERE YEAR(`tanggal_box`) = '" + new SimpleDateFormat("yyyy").format(repacking) + "' "
+                    + "WHERE "
+                    + "YEAR(`tanggal_box`) = '" + new SimpleDateFormat("yyyy").format(repacking) + "' "
                     + "AND `tb_grade_bahan_jadi`.`kode_grade` = '" + grade + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
@@ -200,19 +200,7 @@ public class JDialog_rePacking extends javax.swing.JDialog {
                 kode_grade = rs.getString("kode");
             }
 
-            if (total_box < 10) {
-                nomor_box = "0000" + Integer.toString(total_box);
-            } else if (total_box < 100) {
-                nomor_box = "000" + Integer.toString(total_box);
-            } else if (total_box < 1000) {
-                nomor_box = "00" + Integer.toString(total_box);
-            } else if (total_box < 10000) {
-                nomor_box = "0" + Integer.toString(total_box);
-            } else if (total_box < 100000) {
-                nomor_box = Integer.toString(total_box);
-            }
-
-            no_box_baru = "BOX" + kode_grade + "-" + new SimpleDateFormat("yyMM").format(repacking) + nomor_box;
+            no_box_baru = "BOX" + kode_grade + "-" + new SimpleDateFormat("yyMM").format(repacking) + String.format("%05d", total_box);
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -296,16 +284,20 @@ public class JDialog_rePacking extends javax.swing.JDialog {
                 String kode_repacking = ComboBox_kodeRepacking.getSelectedItem() + label_kode_repacking.getText();
 
                 for (int i = 0; i < table_hasil.getRowCount(); i++) {
-                    String no_box = newBox(table_hasil.getValueAt(i, 1).toString(), Date_repacking.getDate());
-                    String insert = "INSERT INTO `tb_box_bahan_jadi`(`no_box`, `tanggal_box`, `kode_grade_bahan_jadi`, `keping`, `berat`, `no_tutupan`, `status_terakhir`, `lokasi_terakhir`, `tgl_proses_terakhir`, `kode_rsb`) "
-                            + "VALUES (TRIM('" + no_box + "'),'" + dateFormat.format(Date_repacking.getDate()) + "',(SELECT `kode` FROM `tb_grade_bahan_jadi` WHERE `kode_grade` = '" + table_hasil.getValueAt(i, 1) + "'),'" + table_hasil.getValueAt(i, 2) + "','" + table_hasil.getValueAt(i, 3) + "', '" + ComboBox_kodeRepacking.getSelectedItem() + label_kode_repacking.getText() + "', 'NEW BOX', 'GRADING', '" + dateFormat.format(Date_repacking.getDate()) + "', '" + ComboBox_kodeRSB.getSelectedItem().toString() + "')";
-                    Utility.db.getConnection().createStatement();
-                    Utility.db.getStatement().executeUpdate(insert);
+                    String no_box_baru = newBox(table_hasil.getValueAt(i, 1).toString(), Date_repacking.getDate());
+                    if (no_box_baru != null && !no_box_baru.equals("") && !no_box_baru.equals("null")) {
+                        String insert = "INSERT INTO `tb_box_bahan_jadi`(`no_box`, `tanggal_box`, `kode_grade_bahan_jadi`, `keping`, `berat`, `no_tutupan`, `status_terakhir`, `lokasi_terakhir`, `tgl_proses_terakhir`, `kode_rsb`) "
+                                + "VALUES (TRIM('" + no_box_baru + "'),'" + dateFormat.format(Date_repacking.getDate()) + "',(SELECT `kode` FROM `tb_grade_bahan_jadi` WHERE `kode_grade` = '" + table_hasil.getValueAt(i, 1) + "'),'" + table_hasil.getValueAt(i, 2) + "','" + table_hasil.getValueAt(i, 3) + "', '" + ComboBox_kodeRepacking.getSelectedItem() + label_kode_repacking.getText() + "', 'NEW BOX', 'GRADING', '" + dateFormat.format(Date_repacking.getDate()) + "', '" + ComboBox_kodeRSB.getSelectedItem().toString() + "')";
+                        Utility.db.getConnection().createStatement();
+                        Utility.db.getStatement().executeUpdate(insert);
 
-                    String repacking = "INSERT INTO `tb_repacking`(`kode_repacking`, `tanggal_repacking`, `keterangan_repacking`, `pekerja_repacking`, `no_box`, `keping`, `gram`, `status`, `kode_rsb`) "
-                            + "VALUES ('" + kode_repacking + "','" + dateFormat.format(Date_repacking.getDate()) + "','" + txt_keterangan.getText() + "', '" + txt_pekerja_id.getText() + "','" + no_box + "','" + table_hasil.getValueAt(i, 2) + "','" + table_hasil.getValueAt(i, 3) + "','HASIL', '" + ComboBox_kodeRSB.getSelectedItem().toString() + "')";
-                    Utility.db.getConnection().createStatement();
-                    Utility.db.getStatement().executeUpdate(repacking);
+                        String repacking = "INSERT INTO `tb_repacking`(`kode_repacking`, `tanggal_repacking`, `keterangan_repacking`, `pekerja_repacking`, `no_box`, `keping`, `gram`, `status`, `kode_rsb`) "
+                                + "VALUES ('" + kode_repacking + "','" + dateFormat.format(Date_repacking.getDate()) + "','" + txt_keterangan.getText() + "', '" + txt_pekerja_id.getText() + "','" + no_box_baru + "','" + table_hasil.getValueAt(i, 2) + "','" + table_hasil.getValueAt(i, 3) + "','HASIL', '" + ComboBox_kodeRSB.getSelectedItem().toString() + "')";
+                        Utility.db.getConnection().createStatement();
+                        Utility.db.getStatement().executeUpdate(repacking);
+                    } else {
+                        throw new Exception("No box baru gagal dibuat, silahkan coba lagi");
+                    }
                 }
 
                 for (int i = 0; i < Table_asal.getRowCount(); i++) {

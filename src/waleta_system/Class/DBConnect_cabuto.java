@@ -17,7 +17,7 @@ public class DBConnect_cabuto {
     public DBConnect_cabuto()
     {
         System.out.println("connecting .. ");
-        ds.setServerName("194.163.41.76");
+        ds.setServerName("194.163.41.103");
         ds.setPort(3306);
         ds.setDatabaseName("u1607207_cabuto");
         ds.setUser("u1607207_admin_cabuto");
@@ -61,8 +61,22 @@ public class DBConnect_cabuto {
     
     public static void main(String[] args) {
         try {
-            new DBConnect_cabuto().connect();
+            DBConnect_cabuto db_cabuto = new DBConnect_cabuto();
+            db_cabuto.connect();
             System.out.println("berhasil");
+            String query = "SELECT * FROM `tb_pricelist` WHERE 1";
+            System.out.println(query);
+            
+            Connection con = db_cabuto.getConnection();
+            PreparedStatement pst = con.prepareStatement(query);
+            ResultSet result = pst.executeQuery();
+            
+            int i = 0;
+            while (result.next()) {
+                i++;
+//                System.out.println(i + " = " + result.getString("waktu_order"));
+            }
+            System.out.println("Total records retrieved: " + i);
         } catch (Exception ex) {
             Logger.getLogger(DBConnect_cabuto.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -242,7 +242,6 @@ public class JPanel_GajiCABUTO extends javax.swing.JPanel {
         label_total_nilai_hasil = new javax.swing.JLabel();
         label_total_selisih = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        button_saveData = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jPanel10 = new javax.swing.JPanel();
@@ -358,15 +357,6 @@ public class JPanel_GajiCABUTO extends javax.swing.JPanel {
         jLabel27.setBackground(new java.awt.Color(255, 255, 255));
         jLabel27.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel27.setText("Total Selisih :");
-
-        button_saveData.setBackground(new java.awt.Color(255, 255, 255));
-        button_saveData.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_saveData.setText("Save Data");
-        button_saveData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_saveDataActionPerformed(evt);
-            }
-        });
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
@@ -664,8 +654,6 @@ public class JPanel_GajiCABUTO extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_search)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_saveData)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -701,9 +689,7 @@ public class JPanel_GajiCABUTO extends javax.swing.JPanel {
                     .addComponent(DateFilter_Setor2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_search, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(button_saveData, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -786,58 +772,6 @@ public class JPanel_GajiCABUTO extends javax.swing.JPanel {
         ExportToExcel.writeToExcel(model, jPanel2);
     }//GEN-LAST:event_button_exportActionPerformed
 
-    private void button_saveDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saveDataActionPerformed
-        // TODO add your handling code here:
-        boolean check = true;
-        for (int i = 0; i < table_penggajian_cabuto_rekap_harian.getRowCount(); i++) {
-            if (table_penggajian_cabuto_rekap_harian.getValueAt(i, 2) == null) {
-                JOptionPane.showMessageDialog(this, "Ada ID karyawan yang tidak di temukan di database Waleta!\nHarap menghubungi bagian IT");
-                check = false;
-                break;
-            }
-        }
-        if (check) {
-            int dialogResult = JOptionPane.showConfirmDialog(this, "Save " + table_penggajian_cabuto_rekap_harian.getRowCount() + " data ?", "Warning", 0);
-            if (dialogResult == JOptionPane.YES_OPTION) {
-                try {
-                    Utility.db_cabuto.getConnection().setAutoCommit(false);
-                    for (int i = 0; i < table_penggajian_cabuto_rekap_harian.getRowCount(); i++) {
-                        String update = "UPDATE `tb_lembur_rekap` SET `gaji_borong`=0 "
-                                + "WHERE `id_pegawai`='" + table_penggajian_cabuto_rekap_harian.getValueAt(i, 1).toString() + "' "
-                                + "AND `tanggal` BETWEEN '" + dateFormat.format(DateFilter_Setor1.getDate()) + "' AND '" + dateFormat.format(DateFilter_Setor2.getDate()) + "'";
-                        Utility.db_cabuto.getConnection().createStatement();
-                        Utility.db_cabuto.getStatement().executeUpdate(update);
-                        String Query = "INSERT INTO `tb_lembur_rekap`(`id_pegawai`, `tanggal`, `gaji_borong`) "
-                                + "VALUES ("
-                                + "'" + table_penggajian_cabuto_rekap_harian.getValueAt(i, 1).toString() + "',"
-                                + "'" + dateFormat.format(DateFilter_Setor2.getDate()) + "',"
-                                + table_penggajian_cabuto_rekap_harian.getValueAt(i, 10).toString() + ") "
-                                + "ON DUPLICATE KEY UPDATE "
-                                + "`gaji_borong`=" + table_penggajian_cabuto_rekap_harian.getValueAt(i, 10).toString() + " ";
-                        Utility.db_cabuto.getConnection().createStatement();
-                        Utility.db_cabuto.getStatement().executeUpdate(Query);
-                    }
-                    Utility.db_cabuto.getConnection().commit();
-                    JOptionPane.showMessageDialog(this, "Data Saved Successfully");
-                } catch (Exception e) {
-                    try {
-                        Utility.db_cabuto.getConnection().rollback();
-                    } catch (SQLException ex) {
-                        Logger.getLogger(JPanel_DataPencabut.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    JOptionPane.showMessageDialog(this, "Save Failed !" + e);
-                    Logger.getLogger(JPanel_DataPencabut.class.getName()).log(Level.SEVERE, null, e);
-                } finally {
-                    try {
-                        Utility.db_cabuto.getConnection().setAutoCommit(true);
-                    } catch (SQLException ex) {
-                        Logger.getLogger(JPanel_DataPencabut.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }
-        }
-    }//GEN-LAST:event_button_saveDataActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser DateFilter_Setor1;
@@ -845,7 +779,6 @@ public class JPanel_GajiCABUTO extends javax.swing.JPanel {
     private javax.swing.JTable Tabel_detail_Evaluasi;
     private javax.swing.JTable Tabel_detail_LP_Asal;
     private javax.swing.JButton button_export;
-    public static javax.swing.JButton button_saveData;
     public static javax.swing.JButton button_search;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

@@ -35,26 +35,34 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
 
     public void init() {
         try {
-            if ('0' == MainForm.dataMenu.get(AksesMenu.searchMenuByName(MainForm.dataMenu, AksesMenu.MENU_ITEM_GRADE_BAKU)).akses.charAt(1)) {
+            if ('0' == MainForm.dataMenu.get(AksesMenu.searchMenuByName(MainForm.dataMenu, AksesMenu.MENU_ITEM_MASTER_GRADE_BAHAN_JADI)).akses.charAt(1)) {
                 button_TambahGrade.setEnabled(false);
                 button_TambahGrade.setVisible(false);
             } else {
                 button_TambahGrade.setEnabled(true);
                 button_TambahGrade.setVisible(true);
             }
-            if ('0' == MainForm.dataMenu.get(AksesMenu.searchMenuByName(MainForm.dataMenu, AksesMenu.MENU_ITEM_GRADE_BAKU)).akses.charAt(2)) {
+            if ('0' == MainForm.dataMenu.get(AksesMenu.searchMenuByName(MainForm.dataMenu, AksesMenu.MENU_ITEM_MASTER_GRADE_BAHAN_JADI)).akses.charAt(2)) {
                 button_EditGrade.setEnabled(false);
                 button_EditGrade.setVisible(false);
+                button_EditGrade_NS.setEnabled(false);
+                button_EditGrade_NS.setVisible(false);
             } else {
                 button_EditGrade.setEnabled(true);
                 button_EditGrade.setVisible(true);
+                button_EditGrade_NS.setEnabled(true);
+                button_EditGrade_NS.setVisible(true);
             }
-            if ('0' == MainForm.dataMenu.get(AksesMenu.searchMenuByName(MainForm.dataMenu, AksesMenu.MENU_ITEM_GRADE_BAKU)).akses.charAt(3)) {
+            if ('0' == MainForm.dataMenu.get(AksesMenu.searchMenuByName(MainForm.dataMenu, AksesMenu.MENU_ITEM_MASTER_GRADE_BAHAN_JADI)).akses.charAt(3)) {
                 button_delete.setEnabled(false);
                 button_delete.setVisible(false);
+                button_delete_NS.setEnabled(false);
+                button_delete_NS.setVisible(false);
             } else {
                 button_delete.setEnabled(true);
                 button_delete.setVisible(true);
+                button_delete_NS.setEnabled(true);
+                button_delete_NS.setVisible(true);
             }
 
             ComboBox_bentuk.removeAllItems();

@@ -861,7 +861,8 @@
                               <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="label_total_PemakaianBahanKimia" min="-2" pref="80" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="button_export_PemakaianBahanKimia" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -883,6 +884,7 @@
                           <Component id="jLabel20" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                           <Component id="label_total_PemakaianBahanKimia" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                           <Component id="button_search_PemakaianBahanKimia" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="button_export_PemakaianBahanKimia" alignment="2" min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane12" pref="618" max="32767" attributes="0"/>
@@ -1062,6 +1064,20 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="000,000,000"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="button_export_PemakaianBahanKimia">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="12" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Export To Excel"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_export_PemakaianBahanKimiaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

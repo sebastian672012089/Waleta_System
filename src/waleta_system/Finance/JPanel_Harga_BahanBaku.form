@@ -288,7 +288,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="Table_Harga_Bahan_Baku">
+            <Component class="javax.swing.JTable" name="Table_Grading_Bahan_Baku">
               <Properties>
                 <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -340,7 +340,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Table_Harga_Bahan_BakuMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Table_Grading_Bahan_BakuMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>

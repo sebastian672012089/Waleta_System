@@ -414,7 +414,7 @@ public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements Inter
 
         txt_bonus_kk.setEditable(false);
         txt_bonus_kk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bonus_kk.setText("1750");
+        txt_bonus_kk.setText("1250");
 
         label_total_bonus_KK.setBackground(new java.awt.Color(255, 255, 255));
         label_total_bonus_KK.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -432,7 +432,7 @@ public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements Inter
 
         txt_bonus_f1.setEditable(false);
         txt_bonus_f1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bonus_f1.setText("1000");
+        txt_bonus_f1.setText("1750");
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -440,7 +440,7 @@ public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements Inter
 
         txt_bonus_f2.setEditable(false);
         txt_bonus_f2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bonus_f2.setText("1000");
+        txt_bonus_f2.setText("1750");
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -448,7 +448,7 @@ public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements Inter
 
         txt_bonus_fc.setEditable(false);
         txt_bonus_fc.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_bonus_fc.setText("500");
+        txt_bonus_fc.setText("250");
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N

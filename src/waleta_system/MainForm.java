@@ -578,6 +578,8 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Lembur_ShiftMalam1 = new waleta_system.Finance.JPanel_Lembur_ShiftMalam();
         jPanel_DataKinerjaCetak1 = new waleta_system.Finance.JPanel_DataKinerjaCetak();
         jPanel_Pengiriman_PickUp1 = new waleta_system.Packing.JPanel_Pengiriman_PickUp();
+        jPanel_Peramalan_barangjadi21 = new waleta_system.Packing.JPanel_Peramalan_barangjadi2();
+        jPanel_DataKinerjaCuci_HC_Kopyok1 = new waleta_system.Panel_produksi.JPanel_DataKinerjaCuci_HC_Kopyok();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_File = new javax.swing.JMenu();
         jMenu_Home = new javax.swing.JMenuItem();
@@ -635,6 +637,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenu_produksi_stokOpname_LP_WIP = new javax.swing.JMenuItem();
         jMenuItem_tv_wip2 = new javax.swing.JMenuItem();
         MenuItem_Penilaian_BuluUpah = new javax.swing.JMenuItem();
+        jMenu_produksi_data_kinerja_hc_kopyok = new javax.swing.JMenuItem();
         jMenu_atb = new javax.swing.JMenu();
         jMenuItem_atb_dataKaryawan = new javax.swing.JMenuItem();
         jMenuItem_atb_dataProduksi = new javax.swing.JMenuItem();
@@ -817,7 +820,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.290");
+        jLabel19.setText("2.2.306");
 
         jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");
@@ -1281,6 +1284,8 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Lembur_ShiftMalam1, "card157");
         main_panel.add(jPanel_DataKinerjaCetak1, "card157");
         main_panel.add(jPanel_Pengiriman_PickUp1, "card158");
+        main_panel.add(jPanel_Peramalan_barangjadi21, "card158");
+        main_panel.add(jPanel_DataKinerjaCuci_HC_Kopyok1, "card159");
 
         jScrollPane2.setViewportView(main_panel);
 
@@ -1819,6 +1824,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu_produksi.add(MenuItem_Penilaian_BuluUpah);
+
+        jMenu_produksi_data_kinerja_hc_kopyok.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu_produksi_data_kinerja_hc_kopyok.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenu_produksi_data_kinerja_hc_kopyok.setText("Data Kinerja HC Kopyok");
+        jMenu_produksi_data_kinerja_hc_kopyok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_produksi_data_kinerja_hc_kopyokActionPerformed(evt);
+            }
+        });
+        jMenu_produksi.add(jMenu_produksi_data_kinerja_hc_kopyok);
 
         jMenuBar1.add(jMenu_produksi);
 
@@ -5747,15 +5762,15 @@ public class MainForm extends javax.swing.JFrame {
     private void jMenuItem_peramalan_barangjadiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_peramalan_barangjadiActionPerformed
         // TODO add your handling code here:
 
-//        main_panel.removeAll();
-//        main_panel.repaint();
-//        main_panel.revalidate();
-//
-//        //add panel
-//        jPanel_Peramalan_barangjadi1.init();
-//        main_panel.add(jPanel_Peramalan_barangjadi1);
-//        main_panel.repaint();
-//        main_panel.revalidate();
+        main_panel.removeAll();
+        main_panel.repaint();
+        main_panel.revalidate();
+
+        //add panel
+        jPanel_Peramalan_barangjadi21.init();
+        main_panel.add(jPanel_Peramalan_barangjadi21);
+        main_panel.repaint();
+        main_panel.revalidate();
     }//GEN-LAST:event_jMenuItem_peramalan_barangjadiActionPerformed
 
     private void jMenuItem_MaintenanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_MaintenanceActionPerformed
@@ -6459,6 +6474,19 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Pengiriman_PickUp1.init();
     }//GEN-LAST:event_jMenuItem_Shipment_Pickup_RequestActionPerformed
 
+    private void jMenu_produksi_data_kinerja_hc_kopyokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_produksi_data_kinerja_hc_kopyokActionPerformed
+        // TODO add your handling code here:
+        main_panel.removeAll();
+        main_panel.repaint();
+        main_panel.revalidate();
+
+        //add panel
+        main_panel.add(jPanel_DataKinerjaCuci_HC_Kopyok1);
+        main_panel.repaint();
+        main_panel.revalidate();
+        jPanel_DataKinerjaCuci_HC_Kopyok1.init();
+    }//GEN-LAST:event_jMenu_produksi_data_kinerja_hc_kopyokActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_refresh_butuh_Acc;
@@ -6680,6 +6708,7 @@ public class MainForm extends javax.swing.JFrame {
     public static javax.swing.JMenuItem jMenu_produksi_data_cabutan;
     private javax.swing.JMenuItem jMenu_produksi_data_kinerja_cetak;
     private javax.swing.JMenuItem jMenu_produksi_data_kinerja_f2;
+    private javax.swing.JMenuItem jMenu_produksi_data_kinerja_hc_kopyok;
     public static javax.swing.JMenuItem jMenu_produksi_f2;
     public static javax.swing.JMenuItem jMenu_produksi_isu;
     public static javax.swing.JMenuItem jMenu_produksi_progress;
@@ -6739,6 +6768,7 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.RND.JPanel_DataKaryawanATB jPanel_DataKaryawanATB1;
     private waleta_system.Finance.JPanel_DataKinerjaCabut jPanel_DataKinerjaCabut1;
     private waleta_system.Finance.JPanel_DataKinerjaCetak jPanel_DataKinerjaCetak1;
+    private waleta_system.Panel_produksi.JPanel_DataKinerjaCuci_HC_Kopyok jPanel_DataKinerjaCuci_HC_Kopyok1;
     private waleta_system.Panel_produksi.JPanel_DataKinerjaF2 jPanel_DataKinerjaF21;
     private waleta_system.Packing.JPanel_DataKinerjaPacking jPanel_DataKinerjaPacking1;
     private waleta_system.SubWaleta.JPanel_DataLPSesekanSub jPanel_DataLPSesekanSub1;
@@ -6818,6 +6848,7 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.SubWaleta.JPanel_PenggajianSub jPanel_PenggajianSub1;
     private waleta_system.Packing.JPanel_Pengiriman_PickUp jPanel_Pengiriman_PickUp1;
     private waleta_system.Panel_produksi.JPanel_Penilaian_BuluUpah_LP jPanel_Penilaian_BuluUpah_LP1;
+    private waleta_system.Packing.JPanel_Peramalan_barangjadi2 jPanel_Peramalan_barangjadi21;
     private waleta_system.BahanBaku.JPanel_Peramalan_gradingBaku jPanel_Peramalan_gradingBaku1;
     private waleta_system.Finance.JPanel_PiutangKaryawan jPanel_PiutangKaryawan1;
     private waleta_system.SubWaleta.JPanel_PiutangKaryawan_sub jPanel_PiutangKaryawan_sub1;

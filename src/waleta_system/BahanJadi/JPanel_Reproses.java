@@ -14,13 +14,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import waleta_system.BahanBaku.JPanel_GradeBahanBaku;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
 
 public class JPanel_Reproses extends javax.swing.JPanel {
 
-    
     String sql = null;
     ResultSet rs;
     Date date = new Date();
@@ -29,18 +27,11 @@ public class JPanel_Reproses extends javax.swing.JPanel {
     DefaultTableCellRenderer TableAlignment = new DefaultTableCellRenderer();
 
     public JPanel_Reproses() {
-        try {
-            
-            
-            initComponents();
-        } catch (Exception ex) {
-            Logger.getLogger(JPanel_Reproses.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        initComponents();
     }
 
     public void init() {
         try {
-
             table_data_reproses.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
                 @Override
                 public void valueChanged(ListSelectionEvent event) {
@@ -90,6 +81,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
 
             ComboBox_tujuan_reproses.removeAllItems();
             ComboBox_tujuan_reproses.addItem("All");
+            ComboBox_tujuan_reproses.addItem("Eksternal");
             String tujuan = "SELECT DISTINCT(`bagian`) AS 'tujuan' FROM `tb_reproses`";
             ResultSet rs_tujuan = Utility.db.getStatement().executeQuery(tujuan);
             while (rs_tujuan.next()) {
@@ -117,9 +109,13 @@ public class JPanel_Reproses extends javax.swing.JPanel {
                 status = "";
             }
 
-            String tujuan = ComboBox_tujuan_reproses.getSelectedItem().toString();
+            String tujuan = "";
             if (ComboBox_tujuan_reproses.getSelectedItem().equals("All")) {
                 tujuan = "";
+            } else if (ComboBox_tujuan_reproses.getSelectedItem().equals("Eksternal")) {
+                tujuan = "AND LENGTH(`bagian`) = 5 ";
+            } else {
+                tujuan = "AND `bagian` = '" + ComboBox_tujuan_reproses.getSelectedItem().toString() + "'";
             }
 
             String filter_tanggal = "";
@@ -148,7 +144,11 @@ public class JPanel_Reproses extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_karyawan` f2 ON `tb_reproses`.`pekerja_f2` = f2.`id_pegawai`"
                     + "LEFT JOIN `tb_karyawan` pt ON `tb_reproses`.`pekerja_timbang` = pt.`id_pegawai`"
                     + "LEFT JOIN `tb_karyawan` pc ON `tb_reproses`.`pekerja_cetak` = pc.`id_pegawai`"
-                    + "WHERE `tb_reproses`.`status` LIKE '%" + status + "%' " + filter_tanggal + " AND `tb_reproses`.`no_box` LIKE '%" + txt_search_box_reproses.getText() + "%' AND `bagian` LIKE '%" + tujuan + "%'";
+                    + "WHERE "
+                    + "`tb_reproses`.`status` LIKE '%" + status + "%' " 
+                    + filter_tanggal
+                    + "AND `tb_reproses`.`no_box` LIKE '%" + txt_search_box_reproses.getText() + "%' "
+                    + tujuan;
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[32];
             while (rs.next()) {
@@ -387,12 +387,14 @@ public class JPanel_Reproses extends javax.swing.JPanel {
         jLabel59.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel59.setText("Status :");
 
+        ComboBox_status_reproses.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         ComboBox_status_reproses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "IN PROSES", "FINISHED" }));
 
         jLabel62.setBackground(new java.awt.Color(255, 255, 255));
         jLabel62.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel62.setText("Tujuan :");
 
+        ComboBox_tujuan_reproses.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         ComboBox_tujuan_reproses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
 
         ComboBox_Filter_Tgl_reproses.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N

@@ -459,6 +459,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         button_disetujui_pengajuan = new javax.swing.JButton();
         button_export_pengajuan = new javax.swing.JButton();
         button_add_ijin_cuti = new javax.swing.JButton();
+        button_dibatalkan_pengajuan = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         Table_Data_Cuti = new javax.swing.JTable();
@@ -764,6 +765,15 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
             }
         });
 
+        button_dibatalkan_pengajuan.setBackground(new java.awt.Color(255, 255, 255));
+        button_dibatalkan_pengajuan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_dibatalkan_pengajuan.setText("Dibatalkan");
+        button_dibatalkan_pengajuan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_dibatalkan_pengajuanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -779,6 +789,8 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                         .addComponent(button_disetujui_pengajuan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_diketahui_pengajuan)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_dibatalkan_pengajuan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export_pengajuan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -800,7 +812,8 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     .addComponent(button_diketahui_pengajuan)
                     .addComponent(button_disetujui_pengajuan)
                     .addComponent(button_export_pengajuan)
-                    .addComponent(button_add_ijin_cuti))
+                    .addComponent(button_add_ijin_cuti)
+                    .addComponent(button_dibatalkan_pengajuan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 646, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1523,25 +1536,26 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
     private void button_disetujui_pengajuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_disetujui_pengajuanActionPerformed
         // TODO add your handling code here:
-        int row = Table_pengajuan.getSelectedRow();
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Silahkan pilih satu data pada tabel !");
-        } else {
-            String kode_pengajuan = Table_pengajuan.getValueAt(row, 0).toString();
-            String nama_cuti = Table_pengajuan.getValueAt(row, 1).toString();
-            String nama_bagian = Table_pengajuan.getValueAt(row, 2).toString();
-            int dialogResult = JOptionPane.showConfirmDialog(this, "Menyetujui pengajuan cuti " + nama_cuti + "?", "Warning", 0);
-            if (dialogResult == JOptionPane.YES_OPTION) {
-                try {
-                    String kode_bagian = "";
-                    String query = "SELECT `kode_bagian` FROM `tb_bagian` WHERE `nama_bagian` = '" + nama_bagian + "'";
-                    PreparedStatement preparedStatement = Utility.db.getConnection().prepareStatement(query);
-                    ResultSet result = preparedStatement.executeQuery();
-                    if (result.next()) {
-                        kode_bagian = result.getString("kode_bagian");
-                    }
-                    ArrayList<String> Atasan = Utility.GetListAtasanFromKodeBagian(kode_bagian);
-                    if (Atasan.contains(Integer.toString(MainForm.Login_kodeBagian))) {
+        try {
+            int row = Table_pengajuan.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan pilih satu data pada tabel !");
+            } else {
+                String kode_pengajuan = Table_pengajuan.getValueAt(row, 0).toString();
+                String nama_cuti = Table_pengajuan.getValueAt(row, 1).toString();
+                String nama_bagian = Table_pengajuan.getValueAt(row, 2).toString();
+                String kode_bagian = "";
+                String query = "SELECT `kode_bagian` FROM `tb_bagian` WHERE `nama_bagian` = '" + nama_bagian + "'";
+                PreparedStatement preparedStatement = Utility.db.getConnection().prepareStatement(query);
+                ResultSet result = preparedStatement.executeQuery();
+                if (result.next()) {
+                    kode_bagian = result.getString("kode_bagian");
+                }
+                ArrayList<String> Atasan = Utility.GetListAtasanFromKodeBagian(kode_bagian);
+
+                if (Atasan.contains(Integer.toString(MainForm.Login_kodeBagian))) {
+                    int dialogResult = JOptionPane.showConfirmDialog(this, "Menyetujui pengajuan cuti " + nama_cuti + "?", "Warning", 0);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
                         sql = "UPDATE `tb_cuti_pengajuan` SET "
                                 + "`disetujui`='DISETUJUI OLEH: " + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
                                 + "WHERE `kode_pengajuan`='" + kode_pengajuan + "'";
@@ -1551,14 +1565,14 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                         } else {
                             JOptionPane.showMessageDialog(this, "Failed!");
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Maaf hanya atasan dari " + nama_cuti + " yang dapat menyetujui pengajuan Cuti!");
                     }
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, ex);
-                    Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Maaf hanya atasan dari " + nama_cuti + " yang dapat menyetujui pengajuan Cuti!");
                 }
             }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_disetujui_pengajuanActionPerformed
 
@@ -1575,6 +1589,57 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
             refreshTable_keseluruhan();
         }
     }//GEN-LAST:event_txt_search_bagian_rekapKeyPressed
+
+    private void button_dibatalkan_pengajuanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_dibatalkan_pengajuanActionPerformed
+        // TODO add your handling code here:
+        try {
+            int row = Table_pengajuan.getSelectedRow();
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan pilih satu data pada tabel !");
+            } else {
+                String kode_pengajuan = Table_pengajuan.getValueAt(row, 0).toString();
+                String nama_cuti = Table_pengajuan.getValueAt(row, 1).toString();
+                String nama_bagian = Table_pengajuan.getValueAt(row, 2).toString();
+
+                String kode_bagian = "";
+                String query = "SELECT `kode_bagian` FROM `tb_bagian` WHERE `nama_bagian` = '" + nama_bagian + "'";
+                PreparedStatement preparedStatement = Utility.db.getConnection().prepareStatement(query);
+                ResultSet result = preparedStatement.executeQuery();
+                if (result.next()) {
+                    kode_bagian = result.getString("kode_bagian");
+                }
+                ArrayList<String> Atasan = Utility.GetListAtasanFromKodeBagian(kode_bagian);
+
+                if (Atasan.contains(Integer.toString(MainForm.Login_kodeBagian))) {
+                    int dialogResult = JOptionPane.showConfirmDialog(this, "MEMBATALKAN pengajuan cuti " + nama_cuti + "?", "Warning", 0);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        String keterangan_batal = JOptionPane.showInputDialog(this, "Keterangan batal :");
+                        if (keterangan_batal != null) {
+                            if (keterangan_batal.equals("")) {
+                                JOptionPane.showMessageDialog(this, "Keterangan / Alasan batal harus diisi!");
+                                button_dibatalkan_pengajuan.doClick();
+                            } else {
+                                sql = "UPDATE `tb_cuti_pengajuan` SET "
+                                        + "`dibatalkan`='DIBATALKAN OLEH: " + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date()) + "' "
+                                        + "WHERE `kode_pengajuan`='" + kode_pengajuan + "'";
+                                if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
+                                    refreshTable_pengajuan_cuti();
+                                    JOptionPane.showMessageDialog(this, "DISETUJUI OLEH: " + MainForm.Login_NamaPegawai);
+                                } else {
+                                    JOptionPane.showMessageDialog(this, "Failed!");
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Maaf hanya atasan dari " + nama_cuti + " yang dapat membatalkan pengajuan Cuti!");
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_dibatalkan_pengajuanActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1602,6 +1667,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
     public javax.swing.JTable Table_pengajuan;
     private javax.swing.JButton button_add_ijin_cuti;
     private javax.swing.JButton button_delete_ijin_cuti;
+    private javax.swing.JButton button_dibatalkan_pengajuan;
     private javax.swing.JButton button_diketahui_pengajuan;
     private javax.swing.JButton button_disetujui_pengajuan;
     private javax.swing.JButton button_edit_ijin_cuti;

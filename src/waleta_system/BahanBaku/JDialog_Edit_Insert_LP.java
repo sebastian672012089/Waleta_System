@@ -427,13 +427,21 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
 //            }
 
             String no_laporan_produksi = no_LP_Baru(status);
+            String jenis_bulu = ComboBox_jenisBulu.getSelectedItem().toString();
+            if (jenis_bulu.length() < 2) {
+                jenis_bulu = "-";
+            } else if (!jenis_bulu.substring(0, 2).equals("BR") && !jenis_bulu.substring(0, 2).equals("BS") && !jenis_bulu.substring(0, 2).equals("BB")) {
+                jenis_bulu = "-";
+            } else {
+                jenis_bulu = ComboBox_jenisBulu.getSelectedItem().toString().substring(0, 2);
+            }
             String insert_lp_cabuto = "INSERT INTO `tb_lp`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `harga_baku`) "
                     + "VALUES ('" + no_laporan_produksi + "',"
                     + "'" + Label_no_kartu_LP.getText() + "',"
                     + "'" + dateFormat.format(Date_LP.getDate()) + "',"
                     + "'" + ComboBox_ruangan.getSelectedItem() + "',"
                     + "'" + Label_kode_grade_lp.getText() + "',"
-                    + "'" + ComboBox_jenisBulu.getSelectedItem() + "',"
+                    + "'" + jenis_bulu + "',"
                     + "'" + txt_memo.getText() + "',"
                     + "'" + txt_berat_basah_lp.getText() + "',"
                     + "'" + berat_kering + "',"
@@ -1041,6 +1049,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         Date_LP.setBackground(new java.awt.Color(255, 255, 255));
         Date_LP.setDate(new Date());
         Date_LP.setDateFormatString("dd MMMM yyyy");
+        Date_LP.setMinSelectableDate(new java.util.Date(1704045662000L));
 
         label_tgl_lp.setBackground(new java.awt.Color(255, 255, 255));
         label_tgl_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N

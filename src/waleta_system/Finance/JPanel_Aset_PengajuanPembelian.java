@@ -673,16 +673,21 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
                 if (Check) {
                     String no = table_pengajuan.getValueAt(j, 0).toString();
-                    String Query = "UPDATE `tb_aset_pengajuan` SET "
-                            + "`status`='Diketahui', \n"
-                            + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "' "
-                            + "WHERE `no` = '" + no + "'";
-                    Utility.db.getConnection().createStatement();
-                    Utility.db.getStatement().executeUpdate(Query);
+                    String keterangan_lama = table_pengajuan.getValueAt(j, 16).toString();
+                    String keterangan = JOptionPane.showInputDialog(this, "Keterangan :", keterangan_lama);
+                    if (keterangan != null) {
+                        String Query = "UPDATE `tb_aset_pengajuan` SET "
+                                + "`status`='Diketahui', \n"
+                                + "`keterangan`='" + keterangan + "', \n"
+                                + "`diketahui`='" + MainForm.Login_NamaPegawai + " " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "' "
+                                + "WHERE `no` = '" + no + "'";
+                        Utility.db.getConnection().createStatement();
+                        Utility.db.getStatement().executeUpdate(Query);
 
-                    Utility.db.getConnection().commit();
-                    JOptionPane.showMessageDialog(this, "Status pengajuan : Diketahui");
-                    refreshTable();
+                        Utility.db.getConnection().commit();
+                        JOptionPane.showMessageDialog(this, "Status pengajuan : Diketahui");
+                        refreshTable();
+                    }
                 }
             }
         } catch (Exception ex) {
@@ -718,7 +723,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah disetujui");
                     Check = false;
                 } else if (!MainForm.Login_idPegawai.equals("1") && !MainForm.Login_idPegawai.equals("2")) {
-//                } else if (!MainForm.Login_Posisi.equals("STAFF 5")) {
                     JOptionPane.showMessageDialog(this, "hanya bu Fifi / pak Djoko yang bisa menyetujui pengajuan pembelian alat");
                     Check = false;
                 }
@@ -1078,13 +1082,13 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
 
                 // Create a DecimalFormat object with custom symbols
                 DecimalFormat FormatHarga = new DecimalFormat("###,###", symbols);
-                
+
                 String harga_satuan = FormatHarga.format(table_pengajuan.getValueAt(j, 18));
                 String subtotal = FormatHarga.format((int) table_pengajuan.getValueAt(j, 5) * (int) table_pengajuan.getValueAt(j, 18));
                 String ppn = FormatHarga.format(table_pengajuan.getValueAt(j, 20));
                 String biaya_lain = FormatHarga.format(table_pengajuan.getValueAt(j, 21));
                 String total = FormatHarga.format(table_pengajuan.getValueAt(j, 23));
-                
+
                 JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Form_Pengajuan_Pembelian.jrxml");
                 Map<String, Object> params = new HashMap<>();
                 params.put("NO_PENGAJUAN", table_pengajuan.getValueAt(j, 0).toString());

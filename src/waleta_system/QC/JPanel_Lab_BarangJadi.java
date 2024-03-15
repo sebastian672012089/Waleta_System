@@ -562,7 +562,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "nitrit awal sudah di input, input ulang untuk melakukan edit data");
             }
             try {
-                String input = JOptionPane.showInputDialog("Masukkan Nitrit Awal : ");
+                String input = JOptionPane.showInputDialog(this, "Masukkan Nitrit Awal : ");
                 if (input != null && !input.equals("")) {
                     float NITRIT_AWAL = Float.valueOf(input);
                     decimalFormat = Utility.DecimalFormatUS(decimalFormat);
@@ -717,7 +717,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "nitrit akhir sudah di input, input ulang untuk melakukan edit data");
             }
             try {
-                String input = JOptionPane.showInputDialog("Masukkan Nitrit Awal : ");
+                String input = JOptionPane.showInputDialog(this, "Masukkan Nitrit Akhir : ");
                 if (input != null && !input.equals("")) {
                     float NITRIT_AWAL = Float.valueOf(input);
                     decimalFormat = Utility.DecimalFormatUS(decimalFormat);

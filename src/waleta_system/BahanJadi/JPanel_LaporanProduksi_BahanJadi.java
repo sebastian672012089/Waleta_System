@@ -94,7 +94,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
             tot_kaki = 0;
             decimalFormat.setMaximumFractionDigits(2);
             float bk, bk12, utuh, fbonus, fnol, jidun, flat, sh, sh12, sp, kaki = 0, netto;
-            float rend_utuh, rend_flat, rend_sh, rend_sp, rend_jidun;
+            float rend_utuh, rend_flat, rend_sh, rend_sp, rend_jidun, rend_koef;
             float rend_utuh12, rend_flat12, rend_sh12, rend_sp12, rend_jidun12;
             float tot_berat_basah = 0, tot_netto_utuh = 0, tot_utuh = 0, tot_jidun = 0, tot_pecah = 0, tot_flat = 0, tot_kpg_jidun = 0, tot_bk = 0, tot_sh = 0;
             float tot_sesekan = 0, tot_hancuran = 0, tot_rontokan = 0, tot_bonggol = 0, tot_serabut = 0;
@@ -158,7 +158,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                     + tgl;
 //            PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql);
             rs = Utility.db.getConnection().prepareStatement(sql).executeQuery();
-            Object[] row = new Object[27];
+            Object[] row = new Object[30];
             while (rs.next()) {
                 String query_cek_jidun = "SELECT `kode_asal_bahan_jadi`, `grade_bahan_jadi` FROM `tb_grading_bahan_jadi` \n"
                         + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_grading_bahan_jadi`.`grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`\n"
@@ -186,6 +186,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                     rend_flat = (flat / bk) * 100;
                     rend_sp = (sp / bk) * 100;
                     rend_sh = (sh / bk) * 100;
+                    rend_koef = rend_utuh + rend_jidun + rend_flat + (rend_sp / 3f);
 
                     rend_utuh12 = (netto / bk12) * 100;
                     rend_jidun12 = (jidun / bk12) * 100;
@@ -218,8 +219,9 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                     row[22] = (double) Math.round(rend_flat * 100) / 100;
                     row[23] = (double) Math.round(rend_sp * 100) / 100;
                     row[24] = (double) Math.round(rend_sh * 100) / 100;
-                    row[25] = rs.getString("ketua_regu");
-                    row[26] = rs.getString("nama_pegawai");
+                    row[25] = (double) Math.round(rend_koef * 100) / 100;
+                    row[26] = rs.getString("ketua_regu");
+                    row[27] = rs.getString("nama_pegawai");
 
                     tot_kpg = tot_kpg + rs.getInt("jumlah_keping");
                     tot_kpg_jidun = rs.getInt("jidun_utuh_f2") + rs.getInt("jidun_pecah_f2");
@@ -261,6 +263,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
             rata2_rend_flat = ((tot_pecah + tot_flat) / tot_bk) * 100;
             rata2_rend_sp = ((tot_sesekan + tot_hancuran + tot_rontokan + tot_bonggol + tot_serabut) / tot_bk) * 100;
             rata2_rend_sh = (tot_sh / tot_bk) * 100;
+            double rata2_koefisien = rata2_rend_utuh + rata2_rend_jidun + rata2_rend_flat + (rata2_rend_sp / 3f);
 
             rata2_rend_utuh12 = rata2_rend_utuh12 / tabel_LaporanProduksi.getRowCount();
             rata2_rend_jidun12 = rata2_rend_jidun12 / tabel_LaporanProduksi.getRowCount();
@@ -286,6 +289,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
             label_rata2_rend_flat.setText(decimalFormat.format(rata2_rend_flat));
             label_rata2_rend_sp.setText(decimalFormat.format(rata2_rend_sp));
             label_rata2_rend_sh.setText(decimalFormat.format(rata2_rend_sh));
+            label_rata2_koefisien.setText(decimalFormat.format(rata2_koefisien));
 //            label_rata2_rend_utuh12.setText(decimalFormat.format(rata2_rend_utuh12));
 //            label_rata2_rend_jidun12.setText(decimalFormat.format(rata2_rend_jidun12));
 //            label_rata2_rend_flat12.setText(decimalFormat.format(rata2_rend_flat12));
@@ -537,6 +541,9 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
         label_total_gram_pch = new javax.swing.JLabel();
         label_total_gram_utuh = new javax.swing.JLabel();
         label_total_gram_kaki = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
+        label_rata2_koefisien = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         label_total_kpg_grading = new javax.swing.JLabel();
@@ -568,14 +575,14 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No Kartu", "No LP", "Tgl LP", "Memo", "Grade", "Ruang", "Tgl Grading", "Kpg", "Berat Angin", "Berat 0%", "BK 12%", "Real Utuh", "Pch", "Flat", "Jidun", "Sskn", "Hncr", "Ront", "Bgl", "Srbt", "Berat Kaki", "% Utuh", "% Flat", "% SP", "% SH", "Ketua Cabut", "Pekerja Cetak"
+                "No Kartu", "No LP", "Tgl LP", "Memo", "Grade", "Ruang", "Tgl Grading", "Kpg", "Berat Angin", "Berat 0%", "BK 12%", "Real Utuh", "Pch", "Flat", "Jidun", "Sskn", "Hncr", "Ront", "Bgl", "Srbt", "Berat Kaki", "% Utuh", "% Flat", "% SP", "% SH", "% Koef", "Ketua Cabut", "Pekerja Cetak"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1028,6 +1035,18 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
         label_total_gram_kaki.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_gram_kaki.setText("0");
 
+        jLabel45.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel45.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel45.setText("Koefisien :");
+
+        label_rata2_koefisien.setBackground(new java.awt.Color(255, 255, 255));
+        label_rata2_koefisien.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        label_rata2_koefisien.setText("0");
+
+        jLabel46.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel46.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabel46.setText("%");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -1126,7 +1145,13 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_rata2_rend_jidun)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel60)))
+                        .addComponent(jLabel60))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel45)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_rata2_koefisien)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel46)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1264,7 +1289,12 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(label_rata2_rend_sh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
+                                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(label_rata2_koefisien, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))))))
                 .addContainerGap())
         );
 
@@ -1536,7 +1566,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
@@ -1776,6 +1806,8 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
@@ -1803,6 +1835,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
     private javax.swing.JLabel label_persen_SH;
     private javax.swing.JLabel label_persen_gram;
     private javax.swing.JLabel label_persen_real;
+    private javax.swing.JLabel label_rata2_koefisien;
     private javax.swing.JLabel label_rata2_rend_flat;
     private javax.swing.JLabel label_rata2_rend_jidun;
     private javax.swing.JLabel label_rata2_rend_sh;

@@ -101,26 +101,31 @@ public class JDialog_AddBox extends javax.swing.JDialog {
         try {
             Utility.db.getConnection().setAutoCommit(false);
             for (int i = 0; i < table_daftar_box.getRowCount(); i++) {
-                sql = "INSERT INTO `tb_box_bahan_jadi`(`no_box`, `tanggal_box`, `kode_grade_bahan_jadi`, `keping`, `berat`, `no_tutupan`, `status_terakhir`, `lokasi_terakhir`, `tgl_proses_terakhir`, `kode_rsb`) "
-                        + "VALUES ("
-                        + "'" + newBox(grade) + "',"
-                        + "'" + dateFormat.format(date) + "',"
-                        + "'" + kode_grade + "',"
-                        + "'" + table_daftar_box.getValueAt(i, 1) + "',"
-                        + "'" + table_daftar_box.getValueAt(i, 2) + "',"
-                        + "'" + kode_tutupan + "', "
-                        + "'NEW BOX', "
-                        + "'GRADING', "
-                        + "'" + dateFormat.format(date) + "', "
-                        + "'" + label_kode_rsb.getText() + "' "
-                        + ")";
-                Utility.db.getConnection().createStatement();
-                Utility.db.getStatement().executeUpdate(sql);
+                String no_box_baru = newBox(grade);
+                if (no_box_baru != null && !no_box_baru.equals("") && !no_box_baru.equals("null")) {
+                    sql = "INSERT INTO `tb_box_bahan_jadi`(`no_box`, `tanggal_box`, `kode_grade_bahan_jadi`, `keping`, `berat`, `no_tutupan`, `status_terakhir`, `lokasi_terakhir`, `tgl_proses_terakhir`, `kode_rsb`) "
+                            + "VALUES ("
+                            + "'" + no_box_baru + "',"
+                            + "'" + dateFormat.format(date) + "',"
+                            + "'" + kode_grade + "',"
+                            + "'" + table_daftar_box.getValueAt(i, 1) + "',"
+                            + "'" + table_daftar_box.getValueAt(i, 2) + "',"
+                            + "'" + kode_tutupan + "', "
+                            + "'NEW BOX', "
+                            + "'GRADING', "
+                            + "'" + dateFormat.format(date) + "', "
+                            + "'" + label_kode_rsb.getText() + "' "
+                            + ")";
+                    Utility.db.getConnection().createStatement();
+                    Utility.db.getStatement().executeUpdate(sql);
+                } else {
+                    throw new Exception("No box baru gagal dibuat, silahkan coba lagi");
+                }
             }
             Utility.db.getConnection().commit();
             JOptionPane.showMessageDialog(this, "Data BOX berhasil Ditambahkan");
             this.dispose();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             try {
                 Utility.db.getConnection().rollback();
             } catch (SQLException ex) {

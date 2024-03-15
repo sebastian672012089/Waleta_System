@@ -38,6 +38,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
         FillComboBox_dept();
         refreshTable_dept();
         refreshTable_bagian();
+        refreshTable_edit_log();
         table_bagian.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
@@ -126,6 +127,27 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
         }
     }
 
+    public void refreshTable_edit_log() {
+        try {
+            DefaultTableModel model = (DefaultTableModel) table_bagian_edit_log.getModel();
+            model.setRowCount(0);
+            sql = "SELECT `no`, `nama_bagian_lama`, `nama_bagian_baru`, `created_at` FROM `tb_bagian_edit_log` WHERE 1";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            while (rs.next()) {
+                Object[] row = new Object[5];
+                row[0] = rs.getInt("no");
+                row[1] = rs.getString("nama_bagian_lama");
+                row[2] = rs.getString("nama_bagian_baru");
+                row[3] = rs.getTimestamp("created_at");
+                model.addRow(row);
+            }
+            ColumnsAutoSizer.sizeColumnsToFit(table_bagian_edit_log);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e);
+            Logger.getLogger(JPanel_DataDepartemen.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
     public void FillComboBox_dept() {
         try {
             ComboBox_departemen.removeAllItems();
@@ -158,6 +180,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
         table_departemen = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         label_jumlah_departemen = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         ComboBox_departemen = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
@@ -175,6 +198,10 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
         button_bagian_new = new javax.swing.JButton();
         button_bagian_edit = new javax.swing.JButton();
         button_bagian_delete = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        table_bagian_edit_log = new javax.swing.JTable();
+        button_refresh_edit_log = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -183,7 +210,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
         jPanel1.setPreferredSize(new java.awt.Dimension(1366, 652));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), "Departemen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Schoolbook", 1, 12), new java.awt.Color(102, 102, 102))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), "Departemen", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12), new java.awt.Color(102, 102, 102))); // NOI18N
 
         button_dept_new.setBackground(new java.awt.Color(255, 255, 255));
         button_dept_new.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -277,8 +304,10 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jTabbedPane1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), "Bagian", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Schoolbook", 1, 12), new java.awt.Color(102, 102, 102))); // NOI18N
 
         ComboBox_departemen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         ComboBox_departemen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
@@ -315,6 +344,13 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
         jScrollPane1.setViewportView(table_bagian);
         if (table_bagian.getColumnModel().getColumnCount() > 0) {
             table_bagian.getColumnModel().getColumn(0).setResizable(false);
+            table_bagian.getColumnModel().getColumn(4).setHeaderValue("Divisi");
+            table_bagian.getColumnModel().getColumn(5).setHeaderValue("Bagian");
+            table_bagian.getColumnModel().getColumn(6).setHeaderValue("Ruang");
+            table_bagian.getColumnModel().getColumn(7).setHeaderValue("Grup");
+            table_bagian.getColumnModel().getColumn(8).setHeaderValue("Atasan");
+            table_bagian.getColumnModel().getColumn(9).setHeaderValue("Atasan");
+            table_bagian.getColumnModel().getColumn(10).setHeaderValue("Status");
         }
 
         label_jumlah_bagian.setBackground(new java.awt.Color(255, 255, 255));
@@ -437,7 +473,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label_jumlah_bagian)
-                                .addGap(0, 152, Short.MAX_VALUE)))
+                                .addGap(0, 157, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
@@ -462,9 +498,77 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
                     .addComponent(button_bagian_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_bagian_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 574, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jTabbedPane1.addTab("Bagian", jPanel3);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        table_bagian_edit_log.setAutoCreateRowSorter(true);
+        table_bagian_edit_log.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No", "Nama Bagian Lama", "Nama Bagian Baru", "Waktu"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table_bagian_edit_log.getTableHeader().setReorderingAllowed(false);
+        jScrollPane3.setViewportView(table_bagian_edit_log);
+        if (table_bagian_edit_log.getColumnModel().getColumnCount() > 0) {
+            table_bagian_edit_log.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        button_refresh_edit_log.setBackground(new java.awt.Color(255, 255, 255));
+        button_refresh_edit_log.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_refresh_edit_log.setText("Refresh");
+        button_refresh_edit_log.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_refresh_edit_logActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 993, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(button_refresh_edit_log)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(button_refresh_edit_log, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Edit Log", jPanel4);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -473,12 +577,12 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -578,6 +682,8 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
                     String Query = "DELETE FROM `tb_bagian` WHERE `tb_bagian`.`kode_bagian` = '" + table_bagian.getValueAt(j, 0).toString() + "'";
                     Utility.db.getConnection().createStatement();
                     if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
+                        String insert = "INSERT INTO `tb_bagian_edit_log`(`nama_bagian_lama`, `nama_bagian_baru`) VALUES ('" + table_bagian.getValueAt(j, 1).toString() + "','DELETED')";
+                        Utility.db.getStatement().executeUpdate(insert);
                         JOptionPane.showMessageDialog(this, "data DELETED Successfully");
                     } else {
                         JOptionPane.showMessageDialog(this, "Delete FAILED");
@@ -649,6 +755,11 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_search_bagianKeyPressed
 
+    private void button_refresh_edit_logActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_refresh_edit_logActionPerformed
+        // TODO add your handling code here:
+        refreshTable_edit_log();
+    }//GEN-LAST:event_button_refresh_edit_logActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_departemen;
@@ -661,6 +772,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
     private javax.swing.JButton button_dept_delete;
     private javax.swing.JButton button_dept_new;
     private javax.swing.JButton button_refresh_bagian;
+    private javax.swing.JButton button_refresh_edit_log;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
@@ -669,11 +781,15 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel label_jumlah_bagian;
     private javax.swing.JLabel label_jumlah_departemen;
     private javax.swing.JTable table_bagian;
+    private javax.swing.JTable table_bagian_edit_log;
     private javax.swing.JTable table_departemen;
     private javax.swing.JTextField txt_search_bagian;
     // End of variables declaration//GEN-END:variables

@@ -17,7 +17,7 @@ public class DBConnect_maklun {
     public DBConnect_maklun()
     {
         System.out.println("connecting .. ");
-        ds.setServerName("194.163.41.76");
+        ds.setServerName("194.163.41.103");
         ds.setPort(3306);
         ds.setDatabaseName("u1607207_maklun");
         ds.setUser("u1607207_maklun");

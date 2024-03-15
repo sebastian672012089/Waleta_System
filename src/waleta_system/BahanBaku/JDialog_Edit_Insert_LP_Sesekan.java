@@ -60,17 +60,23 @@ public class JDialog_Edit_Insert_LP_Sesekan extends javax.swing.JDialog {
             model.setRowCount(0);
             sql = "SELECT `no_laporan_produksi`, `kode_grade`, `jenis_bulu_lp`, `jumlah_keping`, `gram_sesekan_lp` "
                     + "FROM `tb_laporan_produksi` "
-                    + "WHERE `no_lp_sesekan` IS NULL AND `gram_sesekan_lp` > 0 "
-                    + "AND `tanggal_lp` > '2021-01-01' "
-                    + "AND `no_kartu_waleta` LIKE '%" + txt_search_no_lp.getText() + "%' "
+                    + "WHERE `no_lp_sesekan` IS NULL "
+                    + "AND `gram_sesekan_lp` > 0 "
+                    + "AND `tanggal_lp` >= '2024-01-01' "
+                    + "AND `no_laporan_produksi` LIKE '%" + txt_search_no_lp.getText() + "%' "
                     + "ORDER BY `no_laporan_produksi` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
-                model.addRow(new Object[]{rs.getString("no_laporan_produksi"), rs.getString("kode_grade"), rs.getString("jenis_bulu_lp"), rs.getFloat("gram_sesekan_lp")});
+                model.addRow(new Object[]{
+                    rs.getString("no_laporan_produksi"), 
+                    rs.getString("kode_grade"), 
+                    rs.getString("jenis_bulu_lp"), 
+                    rs.getFloat("gram_sesekan_lp")
+                });
                 tot_gram = tot_gram + rs.getFloat("gram_sesekan_lp");
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_daftarLP);
-            label_total_daftarLP.setText(Integer.toString(Table_daftarLP.getRowCount()));
+            label_total_daftarLP.setText(decimalFormat.format(Table_daftarLP.getRowCount()));
             label_total_gram_daftarLP.setText(decimalFormat.format(tot_gram));
         } catch (SQLException ex) {
             Logger.getLogger(JDialog_Edit_Insert_LP_Sesekan.class.getName()).log(Level.SEVERE, null, ex);

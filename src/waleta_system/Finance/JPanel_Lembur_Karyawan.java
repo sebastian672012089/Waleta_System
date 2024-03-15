@@ -71,7 +71,7 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
                         + "AND `tb_karyawan`.`kode_bagian` IS NOT NULL "
                         + "AND `tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_NamaKaryawan1.getText() + "%' "
                         + "AND `tb_bagian`.`nama_bagian` LIKE '%" + txt_search_bagian.getText() + "%' \n"
-                        + "AND (`posisi` = 'PEJUANG' OR `tb_bagian`.`nama_bagian` LIKE '%-SECURITY-%') \n"
+                        + "AND `posisi` = 'PEJUANG' \n"
                         + "AND `tb_karyawan`.`jam_kerja` <> 'SHIFT_MALAM' "
                         + "AND `tb_karyawan`.`level_gaji` IS NOT NULL "
                         + "AND (DATE(`scan_date`) BETWEEN '" + dateFormat.format(Date_Search_Lembur1.getDate()) + "' AND '" + dateFormat.format(Date_Search_Lembur2.getDate()) + "')"
@@ -79,8 +79,8 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
                         + "ORDER BY `scan_date` DESC, `tb_karyawan`.`nama_pegawai` ASC";
                 pst = Utility.db.getConnection().prepareStatement(sql);
                 rs = pst.executeQuery();
-                Object[] row = new Object[35];
                 while (rs.next()) {
+                    Object[] row = new Object[35];
                     String jenis_kelamin = rs.getString("jenis_kelamin");
                     String hari = rs.getString("Hari");
                     row[0] = hari;
@@ -172,7 +172,8 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
                             + "FROM `tb_surat_lembur_detail` "
                             + "LEFT JOIN `tb_surat_lembur` ON `tb_surat_lembur_detail`.`nomor_surat` = `tb_surat_lembur`.`nomor_surat`"
                             + "LEFT JOIN `tb_libur` ON `tb_surat_lembur_detail`.`tanggal_lembur` = `tb_libur`.`tanggal_libur`"
-                            + "WHERE `id_pegawai` = '" + rs.getString("id_pegawai") + "' "
+                            + "WHERE "
+                            + "`id_pegawai` = '" + rs.getString("id_pegawai") + "' "
                             + "AND `tb_surat_lembur_detail`.`tanggal_lembur` = '" + rs.getDate("tanggal") + "' "
                             + "AND `jenis_lembur` = 'Masuk' "
                             + "AND `tb_surat_lembur`.`disetujui` IS NOT NULL ";
@@ -260,6 +261,34 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
                         menit_lembur = 0;
                     }
 
+                    if (rs.getString("nama_bagian").contains("SECURITY")) {
+                        if (total_menit_lembur >= 480) {//lembur lebih dari 8 jam
+                            total_menit_lembur = total_menit_lembur - 60;
+                        }
+                        
+                        if (total_menit_lembur > 120) {//kelipatan 30 menit di hitung setelah jam ke 2
+                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
+                        } else if (total_menit_lembur > 0) {
+                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 60) * 60;
+                        } else {
+                            total_menit_lembur = 0;
+                        }
+                    } else { //selain bagian security
+                        if (total_menit_lembur >= 510) {//lembur lebih dari 8.5 jam
+                            total_menit_lembur = total_menit_lembur - 60;
+                        } else if (total_menit_lembur >= 210) {//lembur lebih dari 3.5 jam
+                            total_menit_lembur = total_menit_lembur - 30;
+                        }
+                        
+                        if (total_menit_lembur > 120) {//kelipatan 30 menit di hitung setelah jam ke 2
+                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
+                        } else if (total_menit_lembur > 0) {
+                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 60) * 60;
+                        } else {
+                            total_menit_lembur = 0;
+                        }
+                    }
+
                     if (total_menit_kerja < menit_jatah_ijin) {
                         premi_hadir = 0;
                     } else if (tidak_absen_masuk) {
@@ -331,42 +360,8 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
                     if (menit_ijin_pulang > 0) {
                         potongan_ijin_pulang = (float) menit_ijin_pulang * upah_per_menit;
                     }
-
-                    if (rs.getString("nama_bagian").contains("SECURITY")) {
-                        if (total_menit_lembur >= 480) {//lembur lebih dari 8 jam
-                            total_menit_lembur = total_menit_lembur - 60;
-                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
-                            output_lembur = ((int) total_menit_lembur * lembur_kali * upah_lembur_per_menit);
-                        } else if (total_menit_lembur > 120) {//kelipatan 30 menit di hitung setelah jam ke 2
-                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
-                            output_lembur = ((int) total_menit_lembur * lembur_kali * upah_lembur_per_menit);
-                        } else if (total_menit_lembur > 0) {
-                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 60) * 60;
-                            output_lembur = ((int) total_menit_lembur * lembur_kali * upah_lembur_per_menit);
-                        } else {
-                            total_menit_lembur = 0;
-                            output_lembur = 0;
-                        }
-                    } else { //selain bagian security
-                        if (total_menit_lembur >= 510) {//lembur lebih dari 8.5 jam
-                            total_menit_lembur = total_menit_lembur - 60;
-                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
-                            output_lembur = ((int) total_menit_lembur * lembur_kali * upah_lembur_per_menit);
-                        } else if (total_menit_lembur >= 210) {//lembur lebih dari 3.5 jam
-                            total_menit_lembur = total_menit_lembur - 30;
-                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
-                            output_lembur = ((int) total_menit_lembur * lembur_kali * upah_lembur_per_menit);
-                        } else if (total_menit_lembur > 120) {//kelipatan 30 menit di hitung setelah jam ke 2
-                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 30) * 30;
-                            output_lembur = ((int) total_menit_lembur * lembur_kali * upah_lembur_per_menit);
-                        } else if (total_menit_lembur > 0) {
-                            total_menit_lembur = (int) Math.floor(total_menit_lembur / 60) * 60;
-                            output_lembur = ((int) total_menit_lembur * lembur_kali * upah_per_menit);
-                        } else {
-                            total_menit_lembur = 0;
-                            output_lembur = 0;
-                        }
-                    }
+                    
+                    output_lembur = ((int) total_menit_lembur * lembur_kali * upah_lembur_per_menit);
 
                     if (level_gaji != null && level_gaji.toUpperCase().contains("BORONG")) {
                         output_lembur = 0;
@@ -631,7 +626,7 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
 
         jLabel25.setBackground(new java.awt.Color(255, 255, 255));
         jLabel25.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        jLabel25.setText("PEJUANG + SECURITY");
+        jLabel25.setText("PEJUANG");
 
         txt_search_bagian.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_search_bagian.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -899,7 +894,7 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
                 String id = tabel_data_lembur.getValueAt(i, 2).toString();
                 String nama = tabel_data_lembur.getValueAt(i, 3).toString();
                 String tanggal = tabel_data_lembur.getValueAt(i, 1).toString();
-                String scan_terakhir = tabel_data_lembur.getValueAt(i, 11) == null? "Tidak ada absen masuk!" : tabel_data_lembur.getValueAt(i, 11).toString();
+                String scan_terakhir = tabel_data_lembur.getValueAt(i, 11) == null ? "Tidak ada absen masuk!" : tabel_data_lembur.getValueAt(i, 11).toString();
                 JDialog_adjustment_absen_pulang dialog = new JDialog_adjustment_absen_pulang(new javax.swing.JFrame(), true, id, nama, tanggal, scan_terakhir);
                 dialog.pack();
                 dialog.setLocationRelativeTo(this);

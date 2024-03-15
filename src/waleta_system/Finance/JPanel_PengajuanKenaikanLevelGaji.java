@@ -132,7 +132,7 @@ public class JPanel_PengajuanKenaikanLevelGaji extends javax.swing.JPanel {
             }
             DefaultTableModel model = (DefaultTableModel) Table_pengajuan_kenaikan_gaji.getModel();
             model.setRowCount(0);
-            sql = "SELECT `no`, `tanggal_pengajuan`, `catatan`, `tb_level_gaji_pengajuan_kenaikan`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `nama_bagian`, `level_gaji_lama`, `level_gaji_baru`, `diketahui_kadep`, `diketahui_manager`, `disetujui_direktur`, `diketahui_keuangan`, `dibatalkan`, `admin`,"
+            sql = "SELECT `no`, `tanggal_pengajuan`, `catatan`, `tb_level_gaji_pengajuan_kenaikan`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `nama_bagian`, `level_gaji_lama`, `level_gaji_baru`, `diketahui_kadep`, `diketahui_manager`, `disetujui_direktur`, `diketahui_keuangan`, `dibatalkan`, `admin`, `tb_karyawan`.`status`,"
                     + "`tanggal_masuk`, `tanggal_keluar` "
                     + "FROM `tb_level_gaji_pengajuan_kenaikan` "
                     + "LEFT JOIN `tb_karyawan` ON `tb_level_gaji_pengajuan_kenaikan`.`id_pegawai` = `tb_karyawan`.`id_pegawai` "
@@ -175,6 +175,7 @@ public class JPanel_PengajuanKenaikanLevelGaji extends javax.swing.JPanel {
                 row[14] = TimeUnit.MILLISECONDS.toDays(lama_bekerja) / 365 + " Tahun "
                         + (TimeUnit.MILLISECONDS.toDays(lama_bekerja) % 365) / 30 + " Bulan "
                         + (TimeUnit.MILLISECONDS.toDays(lama_bekerja) % 365) % 30 + " Hari";
+                row[15] = rs.getString("status");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_pengajuan_kenaikan_gaji);
@@ -237,14 +238,14 @@ public class JPanel_PengajuanKenaikanLevelGaji extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Admin", "Tgl Pengajuan", "ID Pegawai", "Nama", "Bagian", "Level Gaji Lama", "Level Gaji Baru", "Diketahui Kadep", "Diketahui Manager", "Disetujui Direktur", "Diketahui Keuangan", "Dibatalkan", "Catatan", "Masa Kerja"
+                "No", "Admin", "Tgl Pengajuan", "ID Pegawai", "Nama", "Bagian", "Level Gaji Lama", "Level Gaji Baru", "Diketahui Kadep", "Diketahui Manager", "Disetujui Direktur", "Diketahui Keuangan", "Dibatalkan", "Catatan", "Masa Kerja", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

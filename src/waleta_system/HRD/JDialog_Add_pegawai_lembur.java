@@ -355,31 +355,6 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
             double jumlah_menit_lembur = (double) menit_jarak_waktu - menit_istirahat;
             double jumlah_jam_lembur = (double) jumlah_menit_lembur / 60d;
 
-//            System.out.println("menit_jarak_waktu = " + menit_jarak_waktu);
-//            System.out.println("menit_istirahat = " + menit_istirahat);
-//            System.out.println("jumlah_menit_lembur = " + jumlah_menit_lembur);
-//            System.out.println("jumlah_jam_lembur = " + jumlah_jam_lembur);
-            if (date1.after(date2) && !label_jam_kerja.getText().equals("SHIFT_MALAM")) {
-                check = false;
-                JOptionPane.showMessageDialog(this, "jam selesai tidak bisa lebih awal dari jam mulai lembur!");
-            } else if (menit_jarak_waktu == 0) {
-                check = false;
-                JOptionPane.showMessageDialog(this, "jam mulai dan jam selesai tidak bisa sama !!");
-            } else if (menit_istirahat >= menit_jarak_waktu) {
-                check = false;
-                JOptionPane.showMessageDialog(this, "jumlah jam lembur tidak boleh lebih sedikit / sama dengan jam istirahat !!");
-            }
-//            else if (jumlah_jam_lembur < 1) {
-//                check = false;
-//                JOptionPane.showMessageDialog(this, "jumlah jam lembur tidak boleh kurang dari 1 jam / 60 menit !!");
-//            } else if (label_jenis_spl.getText().equals("PEJUANG") && jumlah_jam_lembur % 0.5d != 0d) {
-//                check = false;
-//                JOptionPane.showMessageDialog(this, "jumlah jam lembur HARUS kelipatan 0.5 jam / 30 menit !!");
-//            } else if (label_jenis_spl.getText().equals("STAFF") && jumlah_jam_lembur % 1d != 0d) {
-//                check = false;
-//                JOptionPane.showMessageDialog(this, "jumlah jam lembur STAFF HARUS kelipatan 1 jam / 60 menit !!");
-//            }
-
             if ("-".equals(id_pegawai)) {
                 check = false;
                 JOptionPane.showMessageDialog(this, "Anda belum memilih Pegawai yang akan lembur");
@@ -392,6 +367,44 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
                     }
                 }
             }
+
+//            System.out.println("menit_jarak_waktu = " + menit_jarak_waktu);
+//            System.out.println("menit_istirahat = " + menit_istirahat);
+//            System.out.println("jumlah_menit_lembur = " + jumlah_menit_lembur);
+//            System.out.println("jumlah_jam_lembur = " + jumlah_jam_lembur);
+            if (date1.after(date2) && !label_jam_kerja.getText().equals("SHIFT_MALAM")) {
+                check = false;
+                JOptionPane.showMessageDialog(this, "jam selesai tidak bisa lebih awal dari jam mulai lembur!");
+            } else if (menit_jarak_waktu == 0) {
+                check = false;
+                JOptionPane.showMessageDialog(this, "jam mulai dan jam selesai tidak bisa sama !!");
+            } else if (menit_istirahat >= menit_jarak_waktu) {
+                check = false;
+                JOptionPane.showMessageDialog(this, "jumlah jam lembur tidak bisa lebih sedikit / sama dengan jam istirahat !!");
+            } else if (label_bagian.getText().contains("SECURITY")) {
+                if (menit_jarak_waktu >= 480 && menit_istirahat < 60) {//lembur lebih dari 8 jam, minimal istirahat 60 menit
+                    check = false;
+                    JOptionPane.showMessageDialog(this, "Lembur diatas 8 jam, minimal istirahat 60 menit !!");
+                }
+            } else {
+                if (menit_jarak_waktu >= 510 && menit_istirahat < 60) {//lembur lebih dari 3.5 jam, minimal istirahat 30 menit
+                    check = false;
+                    JOptionPane.showMessageDialog(this, "Lembur diatas 8.5 jam, minimal istirahat 60 menit !!");
+                } else if (menit_jarak_waktu >= 210 && menit_istirahat < 30) {//lembur lebih dari 3.5 jam, minimal istirahat 30 menit
+                    check = false;
+                    JOptionPane.showMessageDialog(this, "Lembur diatas 3.5 jam, minimal istirahat 30 menit !!");
+                }
+            }
+//            else if (jumlah_jam_lembur < 1) {
+//                check = false;
+//                JOptionPane.showMessageDialog(this, "jumlah jam lembur tidak boleh kurang dari 1 jam / 60 menit !!");
+//            } else if (label_jenis_spl.getText().equals("PEJUANG") && jumlah_jam_lembur % 0.5d != 0d) {
+//                check = false;
+//                JOptionPane.showMessageDialog(this, "jumlah jam lembur HARUS kelipatan 0.5 jam / 30 menit !!");
+//            } else if (label_jenis_spl.getText().equals("STAFF") && jumlah_jam_lembur % 1d != 0d) {
+//                check = false;
+//                JOptionPane.showMessageDialog(this, "jumlah jam lembur STAFF HARUS kelipatan 1 jam / 60 menit !!");
+//            }
 
             if (check) {
                 DefaultTableModel model = (DefaultTableModel) JDialog_Add_SuratPerintahLembur.Table_pegawai_lembur.getModel();

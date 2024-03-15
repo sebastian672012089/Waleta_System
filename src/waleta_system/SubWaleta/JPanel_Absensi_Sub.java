@@ -65,21 +65,21 @@ public class JPanel_Absensi_Sub extends javax.swing.JPanel {
                         + "AND `bagian` LIKE '%" + txt_search_bagian1.getText() + "%' \n"
                         + posisi
                         + "AND DATE(`scan_date`) BETWEEN '" + dateFormat.format(Date_absen_sub1.getDate()) + "' AND '" + dateFormat.format(Date_absen_sub2.getDate()) + "'";
-                rs = Utility.db_sub.getStatement().executeQuery(sql);
+                ResultSet result = Utility.db_sub.getStatement().executeQuery(sql);
                 Object[] row = new Object[15];
-                while (rs.next()) {
-                    row[0] = rs.getString("pin");
-                    row[1] = rs.getString("id_pegawai");
-                    row[2] = rs.getString("nama_pegawai");
-                    row[3] = rs.getString("bagian");
-                    row[4] = rs.getString("jenis_pegawai");
-                    row[5] = rs.getDate("tgl_absen");
-                    row[6] = rs.getTime("waktu_absen");
-                    row[7] = rs.getString("sn");
-                    row[8] = rs.getString("verifymode");
-                    row[9] = rs.getString("inoutmode");
-                    row[10] = rs.getString("device_ip");
-                    row[11] = rs.getString("status");
+                while (result.next()) {
+                    row[0] = result.getString("pin");
+                    row[1] = result.getString("id_pegawai");
+                    row[2] = result.getString("nama_pegawai");
+                    row[3] = result.getString("bagian");
+                    row[4] = result.getString("jenis_pegawai");
+                    row[5] = result.getDate("tgl_absen");
+                    row[6] = result.getTime("waktu_absen");
+                    row[7] = result.getString("sn");
+                    row[8] = result.getString("verifymode");
+                    row[9] = result.getString("inoutmode");
+                    row[10] = result.getString("device_ip");
+                    row[11] = result.getString("status");
                     model.addRow(row);
                 }
                 label_total_data_absen_sub.setText(Integer.toString(tabel_data_absen_sub.getRowCount()));

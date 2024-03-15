@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -22,7 +23,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class Test {
 
-    DBConnect db = new DBConnect();
+    public static DBConnect db = new DBConnect();
 
     public Test() {
 
@@ -54,7 +55,7 @@ public class Test {
             ex.printStackTrace();
         }
     }
-    
+
     private void UploadFileToServer() {
 //        String serverUrl = "http://192.168.10.2:5050/waleta/documents/laporan"; // Replace with your server URL
         String serverUrl = "https://waleta019.com/dokumen_laporan"; // Replace with your server URL
@@ -119,9 +120,7 @@ public class Test {
 
     public static void main(String[] args) {
         try {
-//            new Test().print();
-            new Test().UploadFileToServer();
-            System.out.println("berhasil");
+
         } catch (Exception ex) {
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -1,5 +1,6 @@
 package waleta_system.Panel_produksi;
 
+import java.awt.event.KeyEvent;
 import waleta_system.Class.Utility;
 
 import java.sql.PreparedStatement;
@@ -15,13 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.Class.ColumnsAutoSizer;
-
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Interface.InterfacePanel;
 
 public class JPanel_DataKinerjaF2 extends javax.swing.JPanel implements InterfacePanel {
 
-    
     String sql = null;
     ResultSet rs;
     PreparedStatement pst;
@@ -269,6 +268,11 @@ public class JPanel_DataKinerjaF2 extends javax.swing.JPanel implements Interfac
         jLabel5.setText("Search Nama :");
 
         txt_search_nama.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_nama.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_namaKeyPressed(evt);
+            }
+        });
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -379,6 +383,13 @@ public class JPanel_DataKinerjaF2 extends javax.swing.JPanel implements Interfac
         // TODO add your handling code here:
         refreshTable();
     }//GEN-LAST:event_button_searchActionPerformed
+
+    private void txt_search_namaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_namaKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable();
+        }
+    }//GEN-LAST:event_txt_search_namaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
