@@ -33,6 +33,7 @@ public class JDialog_total_cucian_hari_ini extends javax.swing.JDialog {
 
     public void Load_Data() {
         try {
+            Utility.db.connect();
             String tanggal_cuci = new SimpleDateFormat("EEEEE, dd/MM/yyyy").format(date);
             String tanggal_cabut = new SimpleDateFormat("EEEEE, dd/MM/yyyy").format(Utility.addDaysSkippingFreeDays(date, 1));
             label_tgl_cuci.setText("Tgl Cuci : " + tanggal_cuci);
@@ -156,7 +157,7 @@ public class JDialog_total_cucian_hari_ini extends javax.swing.JDialog {
                     + "GROUP BY `ruangan`, `tb_grade_bahan_baku`.`kategori`";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
-                if (rs.getString("ruangan").length() == 5) {
+                if (rs.getString("ruangan").length() != 5) {
                     if (rs.getString("kategori").contains("MK A") 
                             || rs.getString("kategori").contains("MK B") 
                             || rs.getString("kategori").contains("OVL") 

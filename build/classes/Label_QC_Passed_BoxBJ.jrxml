@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="158" pageHeight="64" columnWidth="150" leftMargin="6" rightMargin="2" topMargin="2" bottomMargin="2" uuid="e0de41bb-dda0-416e-8431-523483ab0b6c">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="158" pageHeight="76" columnWidth="150" leftMargin="6" rightMargin="2" topMargin="2" bottomMargin="2" uuid="e0de41bb-dda0-416e-8431-523483ab0b6c">
 	<property name="ireport.zoom" value="2.6573415000000016"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -16,7 +16,8 @@
 		</conditionalStyle>
 	</style>
 	<queryString>
-		<![CDATA[SELECT `no_box`, '' AS 'no_box_rsb', '' AS 'kode_grade', `tgl_selesai`, `nitrit_akhir`, 'PASSED' AS `status` FROM `tb_lab_barang_jadi` WHERE `tgl_selesai` IS NOT NULL AND `no_box` = 'BOX033-210100034']]>
+		<![CDATA[SELECT `no_box`, '' AS 'no_box_rsb', '' AS 'kode_grade', `tgl_selesai`, `nitrit_akhir`, 'PASSED' AS `status`, `kadar_aluminium_bj` FROM `tb_lab_barang_jadi`
+WHERE `tgl_selesai` IS NOT NULL AND `no_box` = 'BOX033-210100034']]>
 	</queryString>
 	<field name="no_box" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -34,10 +35,13 @@
 	<field name="status" class="java.lang.String">
 		<fieldDescription><![CDATA[0:penerima pribadi; 1:penerima group]]></fieldDescription>
 	</field>
+	<field name="kadar_aluminium_bj" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<detail>
-		<band height="60" splitType="Stretch">
+		<band height="72" splitType="Stretch">
 			<rectangle>
-				<reportElement style="background" x="1" y="1" width="148" height="58" uuid="4ad496f1-86bb-4082-ad41-6a3088386c5e"/>
+				<reportElement style="background" x="1" y="1" width="148" height="70" uuid="4ad496f1-86bb-4082-ad41-6a3088386c5e"/>
 			</rectangle>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 				<reportElement x="2" y="2" width="49" height="56" backcolor="#66FFFF" uuid="d36956af-3621-45aa-a970-b46d4defd09a"/>
@@ -83,6 +87,13 @@
 					<font fontName="Arial Narrow" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Nitrit (ppm) : " + $F{nitrit_akhir}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0">
+				<reportElement style="style_fontColor" x="52" y="60" width="98" height="12" uuid="5c2172ec-5ce4-4061-b377-ca97671a644d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Aluminium : " + $F{kadar_aluminium_bj}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

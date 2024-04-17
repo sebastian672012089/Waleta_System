@@ -580,6 +580,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Pengiriman_PickUp1 = new waleta_system.Packing.JPanel_Pengiriman_PickUp();
         jPanel_Peramalan_barangjadi21 = new waleta_system.Packing.JPanel_Peramalan_barangjadi2();
         jPanel_DataKinerjaCuci_HC_Kopyok1 = new waleta_system.Panel_produksi.JPanel_DataKinerjaCuci_HC_Kopyok();
+        jPanel_Reproses_Sub1 = new waleta_system.SubWaleta.JPanel_Reproses_Sub();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_File = new javax.swing.JMenu();
         jMenu_Home = new javax.swing.JMenuItem();
@@ -657,6 +658,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenu_Sub_penggajian = new javax.swing.JMenuItem();
         jMenu_Sub_Piutang_sub = new javax.swing.JMenuItem();
         jMenu_Sub_tarif_upah = new javax.swing.JMenuItem();
+        jMenu_Sub_Reproses = new javax.swing.JMenuItem();
         jMenu_Cabuto = new javax.swing.JMenu();
         jMenuItem_Data_Mitra = new javax.swing.JMenuItem();
         jMenuItem_Data_LP_Cabuto = new javax.swing.JMenuItem();
@@ -820,7 +822,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.306");
+        jLabel19.setText("2.2.325");
 
         jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");
@@ -1286,6 +1288,7 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Pengiriman_PickUp1, "card158");
         main_panel.add(jPanel_Peramalan_barangjadi21, "card158");
         main_panel.add(jPanel_DataKinerjaCuci_HC_Kopyok1, "card159");
+        main_panel.add(jPanel_Reproses_Sub1, "card160");
 
         jScrollPane2.setViewportView(main_panel);
 
@@ -2016,6 +2019,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu_sub.add(jMenu_Sub_tarif_upah);
+
+        jMenu_Sub_Reproses.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu_Sub_Reproses.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenu_Sub_Reproses.setText("Reproses Sub");
+        jMenu_Sub_Reproses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_Sub_ReprosesActionPerformed(evt);
+            }
+        });
+        jMenu_sub.add(jMenu_Sub_Reproses);
 
         jMenuBar1.add(jMenu_sub);
 
@@ -6487,6 +6500,19 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_DataKinerjaCuci_HC_Kopyok1.init();
     }//GEN-LAST:event_jMenu_produksi_data_kinerja_hc_kopyokActionPerformed
 
+    private void jMenu_Sub_ReprosesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Sub_ReprosesActionPerformed
+        // TODO add your handling code here:
+        main_panel.removeAll();
+        main_panel.repaint();
+        main_panel.revalidate();
+
+        //add panel
+        main_panel.add(jPanel_Reproses_Sub1);
+        main_panel.repaint();
+        main_panel.revalidate();
+        jPanel_Reproses_Sub1.init();
+    }//GEN-LAST:event_jMenu_Sub_ReprosesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_refresh_butuh_Acc;
@@ -6641,6 +6667,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenu_SistemUndian;
     private javax.swing.JMenuItem jMenu_SistemUndian2;
     public static javax.swing.JMenuItem jMenu_Sub_Piutang_sub;
+    private javax.swing.JMenuItem jMenu_Sub_Reproses;
     public static javax.swing.JMenuItem jMenu_Sub_dataSub;
     public static javax.swing.JMenuItem jMenu_Sub_penggajian;
     public static javax.swing.JMenuItem jMenu_Sub_tarif_upah;
@@ -6860,6 +6887,7 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.Manajemen.JPanel_Rekap_BiayaLP jPanel_Rekap_BiayaLP1;
     private waleta_system.Manajemen.JPanel_Rekap_Biaya_per_KartuBaku jPanel_Rekap_Biaya_per_KartuBaku1;
     private waleta_system.BahanJadi.JPanel_Reproses jPanel_Reproses1;
+    private waleta_system.SubWaleta.JPanel_Reproses_Sub jPanel_Reproses_Sub1;
     private waleta_system.BahanBaku.JPanel_RumahBurung jPanel_RumahBurung1;
     private waleta_system.Packing.JPanel_SPK jPanel_SPK1;
     private waleta_system.HRD.JPanel_SistemPenilaian_Karyawan jPanel_SistemPenilaian_Karyawan1;

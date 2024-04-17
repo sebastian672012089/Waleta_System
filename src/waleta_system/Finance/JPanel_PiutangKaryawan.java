@@ -587,7 +587,9 @@ public class JPanel_PiutangKaryawan extends javax.swing.JPanel {
         try {
             int n = 0;
             JFileChooser chooser = new JFileChooser();
-            chooser.setDialogTitle("Select CSV file to import!\nID, Tanggal, Nominal, Keterangan");
+            chooser.setDialogTitle("Select CSV file to import!\n"
+                    + "ID, Tanggal, Nominal, Keterangan\n"
+                    + "Format csv dengan pemisah kolom tanda koma (,)");
             int result = chooser.showOpenDialog(this);
             if (result == JFileChooser.APPROVE_OPTION) {
                 File file = chooser.getSelectedFile();

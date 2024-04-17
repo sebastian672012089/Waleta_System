@@ -3,12 +3,17 @@ package waleta_system.SubWaleta;
 import waleta_system.Class.Utility;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -38,7 +43,7 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
                 ComboBox_status_karyawan.addItem(rs.getString("status"));
             }
             ComboBox_status_karyawan.setSelectedItem("IN-SUB");
-            
+
             ComboBox_bagian.removeAllItems();
             ComboBox_bagian.addItem("All");
             sql = "SELECT `kode_sub` FROM `tb_sub_waleta` WHERE 1";
@@ -59,12 +64,12 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
             if ("All".equals(ComboBox_bagian.getSelectedItem().toString())) {
                 bagian = "";
             }
-            
+
             String Status = "AND `tb_karyawan`.`status` = '" + ComboBox_status_karyawan.getSelectedItem().toString() + "' ";
             if ("All".equals(ComboBox_status_karyawan.getSelectedItem().toString())) {
                 Status = "";
             }
-            
+
             DefaultTableModel model = (DefaultTableModel) Table_PiutangKaryawan.getModel();
             model.setRowCount(0);
             sql = "SELECT `no_piutang`, `tb_piutang_karyawan`.`id_pegawai`, `tanggal_piutang`, `tanggal_input`, `nominal_piutang`, `tb_piutang_karyawan`.`status` AS 'status_piutang', `tgl_lunas`, `tb_piutang_karyawan`.`keterangan`, "
@@ -94,12 +99,13 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_PiutangKaryawan);
+
+            int rowData = Table_PiutangKaryawan.getRowCount();
+            label_total_data.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_PiutangKaryawan_sub.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int rowData = Table_PiutangKaryawan.getRowCount();
-        label_total_data.setText(Integer.toString(rowData));
     }
 
     /**
@@ -132,6 +138,7 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
         button_export = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         label_total_data = new javax.swing.JLabel();
+        button_input_csv = new javax.swing.JButton();
 
         jPanel_Customer_baku.setBackground(new java.awt.Color(255, 255, 255));
         jPanel_Customer_baku.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Piutang Karyawan Sub", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -310,6 +317,15 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
         label_total_data.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_total_data.setText("TOTAL");
 
+        button_input_csv.setBackground(new java.awt.Color(255, 255, 255));
+        button_input_csv.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_input_csv.setText("Input .CSV");
+        button_input_csv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_input_csvActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_Customer_bakuLayout = new javax.swing.GroupLayout(jPanel_Customer_baku);
         jPanel_Customer_baku.setLayout(jPanel_Customer_bakuLayout);
         jPanel_Customer_bakuLayout.setHorizontalGroup(
@@ -326,6 +342,8 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_input_csv)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_data)
@@ -338,15 +356,13 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jPanel_search_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_Customer_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_Customer_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(button_insert_customer_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_delete_customer_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel_Customer_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel_Customer_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel_Customer_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(button_input_csv, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_delete_customer_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_insert_customer_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
                 .addContainerGap())
@@ -401,6 +417,7 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
             }
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this, e);
+            Logger.getLogger(JPanel_PiutangKaryawan_sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_customer_bakuActionPerformed
 
@@ -429,6 +446,62 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_idKeyPressed
 
+    private void button_input_csvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_csvActionPerformed
+        // TODO add your handling code here:
+        try {
+            int n = 0;
+            JFileChooser chooser = new JFileChooser();
+            chooser.setDialogTitle("Select CSV file to import!\n"
+                    + "ID, Nama, Bagian, Tanggal, Nominal, Keterangan\n"
+                    + "Pemisah kolom (koma ,)");
+            int result = chooser.showOpenDialog(this);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File file = chooser.getSelectedFile();
+                String filename1 = file.getAbsolutePath();
+                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                    String line;
+                    String Query = null;
+                    try {
+                        Utility.db_sub.connect();
+                        Utility.db_sub.getConnection().setAutoCommit(false);
+                        while ((line = br.readLine()) != null) {
+                            String[] value = line.split(",");
+                            Query = "INSERT INTO `tb_piutang_karyawan`(`id_pegawai`, `tanggal_piutang`, `tanggal_input`, `nominal_piutang`, `keterangan`) "
+                                    + "VALUES ('" + Utility.removeAnonymousCharacters(value[0]) + "','" + value[3] + "',CURRENT_DATE(),'" + value[4] + "','" + value[5] + "')";
+                            System.out.println(Query);
+                            Utility.db_sub.getConnection().prepareStatement(Query);
+                            if ((Utility.db_sub.getStatement().executeUpdate(Query)) == 1) {
+                                n++;
+                            } else {
+                                JOptionPane.showMessageDialog(this, "Failed insert " + value[0]);
+                            }
+                        }
+                        Utility.db_sub.getConnection().commit();
+                        JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
+                    } catch (Exception ex) {
+                        try {
+                            Utility.db_sub.getConnection().rollback();
+                        } catch (SQLException ex1) {
+                            Logger.getLogger(JPanel_PiutangKaryawan_sub.class.getName()).log(Level.SEVERE, null, ex1);
+                        }
+                        JOptionPane.showMessageDialog(this, ex);
+                        Logger.getLogger(JPanel_PiutangKaryawan_sub.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        try {
+                            Utility.db_sub.getConnection().setAutoCommit(true);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(JPanel_PiutangKaryawan_sub.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        refreshTable();
+                    }
+                }
+            }
+        } catch (HeadlessException | IOException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_PiutangKaryawan_sub.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_input_csvActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_bagian;
@@ -436,6 +509,7 @@ public class JPanel_PiutangKaryawan_sub extends javax.swing.JPanel {
     private javax.swing.JTable Table_PiutangKaryawan;
     public javax.swing.JButton button_delete_customer_baku;
     private javax.swing.JButton button_export;
+    private javax.swing.JButton button_input_csv;
     public javax.swing.JButton button_insert_customer_baku;
     public static javax.swing.JButton button_search;
     private com.toedter.calendar.JDateChooser jDateChooser1;

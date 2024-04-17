@@ -160,7 +160,7 @@ WHERE 1]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Catatan Packing Sarang Burung Jadi]]></text>
+				<text><![CDATA[Catatan Packing Barang Jadi]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="45" y="112" width="48" height="20" uuid="c8465a60-8b40-4a5b-a1a6-1eeddd43bdb9"/>
@@ -194,7 +194,7 @@ WHERE 1]]>
 				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
-				<text><![CDATA[FR/WAJ/BJ/03/c]]></text>
+				<text><![CDATA[FR/WAJ/BJ/03/a/3]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="39" width="45" height="8" forecolor="#000000" uuid="7818bb23-6b3f-49ed-9738-2372c64ae56e"/>
@@ -241,7 +241,7 @@ WHERE 1]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="6" isBold="false" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Packing Record of Finished Goods Bird Nest]]></text>
+				<text><![CDATA[Packing Record of Finished Goods]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="45" y="47" width="100" height="15" uuid="56b49dd3-dacd-4376-97fd-15566b05726c"/>

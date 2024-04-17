@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan_Produksi_subreportPembentukan" pageWidth="96" pageHeight="510" whenNoDataType="AllSectionsNoDetail" columnWidth="96" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="98585139-60dd-497d-b830-adb7d6db58b7">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="330"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Page header" forecolor="#000000" fontName="Arial" isBold="false">
 		<box>
 			<pen lineWidth="0.0"/>

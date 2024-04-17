@@ -442,7 +442,7 @@ ORDER BY `tb_finishing_2`.`tgl_masuk_f2` DESC]]>
 		<band height="134" splitType="Stretch">
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 				<reportElement x="157" y="5" width="120" height="125" uuid="a22248a0-acc6-41e8-9ae4-565e824489ac"/>
-				<imageExpression><![CDATA["Report\\ReportImages\\TTD_SIGIH_CUCI.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD_SIGIH_CUCI.png"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 				<reportElement x="280" y="30" width="120" height="75" uuid="34829c5a-7c24-4262-9565-50d10fc0a31f"/>

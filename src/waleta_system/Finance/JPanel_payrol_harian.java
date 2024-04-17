@@ -98,8 +98,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                 check = false;
                 JOptionPane.showMessageDialog(this, "Tanggal penggajian seharusnya hari kamis");
             }
-//            System.out.println(new SimpleDateFormat("EEEEE").format(Date_penggajian.getDate()).toUpperCase());
-//            System.out.println(!new SimpleDateFormat("EEEEE").format(Date_penggajian.getDate()).toUpperCase().equals("THURSDAY"));
 
             if (check) {
                 Date tanggal_mulai = new Date(Date_penggajian.getDate().getTime() - (7 * 24 * 60 * 60 * 1000));
@@ -167,10 +165,10 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                         + "C ON `tb_karyawan`.`id_pegawai` = C.`id_pegawai` "
                         + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' "
                         + filter_tanggal_masuk
-                        + "AND `posisi` IN ('PEJUANG') "
-                        + "AND A.`jam_kerja` IS NOT NULL "
-                        + "AND A.`jam_kerja` <> 'SHIFT_MALAM'"
-                        + "AND `kode_departemen` <> 'SUB' "
+                        + "AND `tb_karyawan`.`posisi` IN ('PEJUANG') "
+                        + "AND `tb_bagian`.`kode_departemen` <> 'SUB' "
+                        + "AND `tb_karyawan`.`jam_kerja` IS NOT NULL "
+                        + "AND `tb_karyawan`.`jam_kerja` <> 'SHIFT_MALAM'"
                         + "AND `status` IN ('IN', 'OUT', 'ABSEN')"
                         + "AND (A.`id_pegawai` IS NOT NULL OR B.`id_pegawai` IS NOT NULL OR C.`id_pegawai` IS NOT NULL) "
                         + search_bagian
@@ -324,13 +322,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                             if (rs1.getString("grup") != null) {
                                 kode_grup = rs1.getString("grup");
                             }
-
-//                            if (rs1.getInt("potongan_bpjs") == 1) {
-//                                potongan_bpjs = Integer.valueOf(txt_potongan_bpjs.getText());
-//                            }
-//                            if (rs1.getInt("potongan_bpjs_tk") == 1) {
-//                                potongan_bpjs_tk = Integer.valueOf(txt_potongan_bpjs_tk.getText());
-//                            }
                             double menit_terlambat = 0;
                             if (rs1.getInt("menit_terlambat") > 0) {
                                 menit_terlambat = rs1.getInt("menit_terlambat");
@@ -349,6 +340,12 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                             }
                             if (rs1.getDouble("bonus2") > 0) {
                                 total_bonus2 = total_bonus2 + rs1.getDouble("bonus2");
+                            }
+                            if (rs1.getInt("potongan_bpjs") == 1) {
+                                potongan_bpjs = Integer.valueOf(txt_potongan_bpjs.getText());
+                            }
+                            if (rs1.getInt("potongan_bpjs_tk") == 1) {
+                                potongan_bpjs_tk = Integer.valueOf(txt_potongan_bpjs_tk.getText());
                             }
 
                             double lembur_jam = 0, jumlah_lembur_menit = rs1.getDouble("jumlah_lembur_menit");
@@ -704,7 +701,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                                 level_gaji_new = "OM";
                             }
 
-                            String bagian_lama = Tabel_data.getValueAt(i, 28).toString();
+                            String bagian_lama = "PEJUANG-PRODUKSI-" + Tabel_data.getValueAt(i, 28).toString();
                             String bagian_baru = "";
                             if (bagian_lama.equalsIgnoreCase("PEJUANG-PRODUKSI-CABUT-TRAINING HIJAU-A")) {
                                 bagian_baru = "PEJUANG-PRODUKSI-CABUT-TRAINING KUNING-A";

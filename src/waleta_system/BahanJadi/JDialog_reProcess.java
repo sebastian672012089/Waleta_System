@@ -32,11 +32,11 @@ public class JDialog_reProcess extends javax.swing.JDialog {
             button_hapus_boxAsal.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/delete-icon.png")), button_hapus_boxAsal.getWidth(), button_hapus_boxAsal.getHeight()));
             this.setResizable(false);
             Utility.db_sub.connect();
-            sql = "SELECT `kode_sub` FROM `tb_sub_waleta` WHERE `tanggal_tutup` IS NULL";
-            rs = Utility.db_sub.getStatement().executeQuery(sql);
-            while (rs.next()) {
-                ComboBox_tujuan.addItem(rs.getString("kode_sub"));
-            }
+//            sql = "SELECT `kode_sub` FROM `tb_sub_waleta` WHERE `tanggal_tutup` IS NULL";
+//            rs = Utility.db_sub.getStatement().executeQuery(sql);
+//            while (rs.next()) {
+//                ComboBox_tujuan.addItem(rs.getString("kode_sub"));
+//            }
             refresh_TabelDaftarBox();
         } catch (Exception ex) {
             Logger.getLogger(JDialog_reProcess.class.getName()).log(Level.SEVERE, null, ex);
@@ -215,7 +215,7 @@ public class JDialog_reProcess extends javax.swing.JDialog {
         jLabel1.setText("Grup tujuan :");
 
         ComboBox_tujuan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_tujuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RND", "F2 - MLem", "F2 - Jidun", "F2 - Kakian", "F2 - Mess" }));
+        ComboBox_tujuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "RND", "F2 - MLem", "F2 - Jidun", "F2 - Kakian", "F2 - Mess", "Eksternal" }));
 
         txt_search_box.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_search_box.addKeyListener(new java.awt.event.KeyAdapter() {

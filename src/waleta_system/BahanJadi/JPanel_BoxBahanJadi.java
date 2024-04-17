@@ -3188,7 +3188,6 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
 
     private void button_print_label1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_print_label1ActionPerformed
         // TODO add your handling code here:
-        refreshTable_DataBox();
         try {
             String no_box = "";
             for (int i = 0; i < table_dataBox.getRowCount(); i++) {

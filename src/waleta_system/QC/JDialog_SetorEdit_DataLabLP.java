@@ -1,6 +1,7 @@
 package waleta_system.QC;
 
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -37,13 +38,14 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
         }
 
         if ("edit".equals(status)) {
+            label_judul.setText("Edit Data Lab Laporan Produksi");
             label_tanggal_masuk.setVisible(true);
             Date_masuk.setVisible(true);
-            label_judul.setText("Edit Data Lab Laporan Produksi");
-            getDataEdit(no_lp);
             status_akhir_qc = getStatusAkhir(status_awal, no_lp);
             ComboBox_status_Akhir.setSelectedItem(status_akhir_qc);
+            getDataEdit(no_lp);
         } else if ("setor".equals(status)) {
+            label_judul.setText("Setor Laporan Produksi");
             label_tanggal_masuk.setVisible(false);
             Date_masuk.setVisible(false);
             label_tgl_uji.setVisible(false);
@@ -56,13 +58,15 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
             txt_nitrit_jidun.setEditable(false);
             label_ka.setVisible(false);
             txt_kadar_air.setVisible(false);
+            label_kadar_aluminium.setVisible(false);
+            txt_kadar_aluminium.setVisible(false);
             label_status.setVisible(false);
             label_status_awal.setVisible(false);
-            label_judul.setText("Setor Laporan Produksi");
             getDataSetor();
             status_akhir_qc = getStatusAkhir(status_awal, no_lp);
             ComboBox_status_Akhir.setSelectedItem(status_akhir_qc);
         } else if ("input".equals(status)) {
+            label_judul.setText("Input Data Lab Laporan Produksi");
             label_tanggal_masuk.setVisible(false);
             Date_masuk.setVisible(false);
             label_tgl_selesai.setVisible(false);
@@ -79,14 +83,14 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
             txt_gram_akhir.setVisible(false);
             label_status_akhir.setVisible(false);
             ComboBox_status_Akhir.setVisible(false);
-            label_judul.setText("Input Data Lab Laporan Produksi");
         }
     }
 
     public void getDataEdit(String no_lp) {
         try {
-            sql = "SELECT `no_laporan_produksi`, `tgl_masuk`, `tgl_uji`, `tgl_selesai`, `nitrit_utuh`, `nitrit_flat`, `jidun`, `kadar_air_bahan_jadi`, `utuh`, `pecah`, `flat`, `kpg_akhir`, `gram_akhir`, `status`, `status_akhir` "
-                    + "FROM `tb_lab_laporan_produksi` WHERE `no_laporan_produksi` = '" + no_lp + "'";
+            sql = "SELECT `no_laporan_produksi`, `tgl_masuk`, `tgl_uji`, `tgl_selesai`, `nitrit_utuh`, `nitrit_flat`, `jidun`, `kadar_air_bahan_jadi`, `utuh`, `pecah`, `flat`, `kpg_akhir`, `gram_akhir`, `status`, `status_akhir`, `kadar_aluminium` "
+                    + "FROM `tb_lab_laporan_produksi` "
+                    + "WHERE `no_laporan_produksi` = '" + no_lp + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
                 Date_masuk.setDate(rs.getDate("tgl_masuk"));
@@ -103,8 +107,26 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
                 txt_gram_akhir.setText(rs.getString("gram_akhir"));
                 label_status_awal.setText(rs.getString("status"));
                 ComboBox_status_Akhir.setSelectedItem(rs.getString("status_akhir"));
+                txt_kadar_aluminium.setText(rs.getString("kadar_aluminium"));
+                if (rs.getDate("tgl_selesai") == null) {
+                    label_tgl_selesai.setVisible(false);
+                    Date_selesai.setVisible(false);
+                    label_utuh.setVisible(false);
+                    txt_utuh.setVisible(false);
+                    label_pecah.setVisible(false);
+                    txt_pecah.setVisible(false);
+                    label_flat.setVisible(false);
+                    txt_flat.setVisible(false);
+                    label_kpg_akhir.setVisible(false);
+                    txt_kpg_akhir.setVisible(false);
+                    label_gram_akhir.setVisible(false);
+                    txt_gram_akhir.setVisible(false);
+                    label_status_akhir.setVisible(false);
+                    ComboBox_status_Akhir.setVisible(false);
+                }
             }
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JDialog_SetorEdit_DataLabLP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -134,6 +156,7 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
             }
 //            }
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JDialog_SetorEdit_DataLabLP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -197,8 +220,7 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
             float gram_akhir = Float.valueOf(txt_gram_akhir.getText());
             if (Date_selesai.getDate() == null
                     || txt_kpg_akhir.getText() == null || txt_kpg_akhir.getText().equals("")
-                    || txt_gram_akhir.getText() == null || txt_gram_akhir.getText().equals("")
-                    ) {
+                    || txt_gram_akhir.getText() == null || txt_gram_akhir.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Silahkan lengkapi data diatas!");
                 check = false;
             } else if (Integer.valueOf(txt_kpg_akhir.getText()) > Float.valueOf(txt_gram_akhir.getText())) {
@@ -245,6 +267,7 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
             String nitrit_flat = txt_nitrit_flat.getText();
             String kadar_air = txt_kadar_air.getText();
             String jidun = txt_nitrit_jidun.getText();
+            String kadar_aluminium = txt_kadar_aluminium.getText();
             if ("".equals(txt_nitrit_utuh.getText()) || txt_nitrit_utuh.getText() == null || txt_nitrit_utuh.getText().equals("0")) {
                 nitrit_utuh = "NULL";
             }
@@ -257,13 +280,17 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
             if ("".equals(txt_nitrit_jidun.getText()) || txt_nitrit_jidun.getText() == null || txt_nitrit_jidun.getText().equals("0")) {
                 jidun = "NULL";
             }
+            if (txt_kadar_aluminium.getText() == null || "".equals(txt_kadar_aluminium.getText())) {
+                kadar_aluminium = "0";
+            }
             Query = "UPDATE `tb_lab_laporan_produksi` SET "
                     + "`tgl_uji`='" + tgl_uji + "',"
                     + "`nitrit_utuh`=" + nitrit_utuh + ","
                     + "`nitrit_flat`=" + nitrit_flat + ","
                     + "`kadar_air_bahan_jadi`=" + kadar_air + ","
                     + "`jidun`=" + jidun + ","
-                    + "`status`='" + label_status_awal.getText() + "'"
+                    + "`status`='" + label_status_awal.getText() + "',"
+                    + "`kadar_aluminium`=" + kadar_aluminium + ""
                     + "WHERE `no_laporan_produksi`='" + label_lp.getText() + "'";
 
             Utility.db.getConnection().createStatement();
@@ -280,86 +307,105 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
     public void edit() {
         try {
             boolean check = true;
-            if (Date_uji.getDate() == null || Date_masuk.getDate() == null || Date_selesai.getDate() == null
-                    || txt_kpg_akhir.getText() == null || txt_kpg_akhir.getText().equals("")
-                    || txt_gram_akhir.getText() == null || txt_gram_akhir.getText().equals("")
-                    ) {
-                JOptionPane.showMessageDialog(this, "Silahkan lengkapi data diatas!");
-                check = false;
-            } else if (Integer.valueOf(txt_kpg_akhir.getText()) > Float.valueOf(txt_gram_akhir.getText())) {
-                JOptionPane.showMessageDialog(this, "inputan keping dan gram salah, silahkan cek kembali");
-                check = false;
-            } else if (!ComboBox_status_Akhir.getSelectedItem().toString().equals(status_akhir_qc)) {
-                JOptionPane.showMessageDialog(this, "Mengganti manual status akhir memerlukan otorisasi!");
-                JDialog_otorisasi_QC dialog = new JDialog_otorisasi_QC(new javax.swing.JFrame(), true, "Staff / Manager", "AND (`tb_karyawan`.`posisi` LIKE 'STAFF%' OR `tb_karyawan`.`posisi` = 'MANAGER') ");
-                dialog.pack();
-                dialog.setLocationRelativeTo(this);
-                dialog.setVisible(true);
-                dialog.setEnabled(true);
-                check = dialog.akses();
+
+            String tgl_masuk = dateFormat.format(Date_masuk.getDate());
+            String tgl_uji = dateFormat.format(Date_uji.getDate());
+
+            String tgl_selesai = "";
+            if (Date_selesai.getDate() != null) {
+                tgl_selesai = "`tgl_selesai`='" + dateFormat.format(Date_selesai.getDate()) + "',";
+            }
+            String utuh = "";
+            if (txt_utuh.getText() != null && !"".equals(txt_utuh.getText())) {
+                utuh = "`utuh`=" + Float.valueOf(txt_utuh.getText()) + ",";
+            }
+            String flat = "";
+            if (txt_flat.getText() != null && !"".equals(txt_flat.getText())) {
+                flat = "`flat`=" + Float.valueOf(txt_flat.getText()) + ",";
+            }
+            String pecah = "";
+            if (txt_pecah.getText() != null && !"".equals(txt_pecah.getText())) {
+                pecah = "`pecah`=" + Float.valueOf(txt_pecah.getText()) + ",";
+            }
+            String kpg_akhir = "";
+            if (txt_kpg_akhir.getText() != null && !"".equals(txt_kpg_akhir.getText())) {
+                kpg_akhir = "`kpg_akhir`=" + Integer.valueOf(txt_kpg_akhir.getText()) + ",";
+            }
+            String gram_akhir = "";
+            if (txt_gram_akhir.getText() != null && !"".equals(txt_gram_akhir.getText())) {
+                gram_akhir = "`gram_akhir`=" + Float.valueOf(txt_gram_akhir.getText()) + ",";
+            }
+
+            String nitrit_utuh = txt_nitrit_utuh.getText();
+            if ("".equals(txt_nitrit_utuh.getText()) || txt_nitrit_utuh.getText() == null || "-".equals(txt_nitrit_utuh.getText())) {
+                nitrit_utuh = "NULL";
+            }
+            String nitrit_flat = txt_nitrit_flat.getText();
+            if ("".equals(txt_nitrit_flat.getText()) || txt_nitrit_flat.getText() == null || "-".equals(txt_nitrit_flat.getText())) {
+                nitrit_flat = "NULL";
+            }
+            String nitrit_jidun = txt_nitrit_jidun.getText();
+            if ("".equals(txt_nitrit_jidun.getText()) || txt_nitrit_jidun.getText() == null || "-".equals(txt_nitrit_jidun.getText())) {
+                nitrit_jidun = "NULL";
+            }
+            String kadar_air = txt_kadar_air.getText();
+            if ("".equals(txt_kadar_air.getText()) || txt_kadar_air.getText() == null || "-".equals(txt_kadar_air.getText())) {
+                kadar_air = "NULL";
+            }
+            String kadar_aluminium = txt_kadar_aluminium.getText();
+            if (txt_kadar_aluminium.getText() == null || "".equals(txt_kadar_aluminium.getText())) {
+                kadar_aluminium = "0";
+            }
+
+            String status_Akhir = "";
+            if (!Date_selesai.isVisible()) {
+                tgl_selesai = "";
+                utuh = "";
+                flat = "";
+                pecah = "";
+                kpg_akhir = "";
+                gram_akhir = "";
+                status_Akhir = "";
+                if (Date_uji.getDate() == null || Date_masuk.getDate() == null) {
+                    JOptionPane.showMessageDialog(this, "Silahkan lengkapi data diatas!");
+                    check = false;
+                }
+            } else {
+                status_Akhir = "`status_akhir`='" + ComboBox_status_Akhir.getSelectedItem().toString() + "',";
+                if (Date_uji.getDate() == null || Date_masuk.getDate() == null) {
+                    JOptionPane.showMessageDialog(this, "Silahkan lengkapi data diatas!");
+                    check = false;
+                } else if (!ComboBox_status_Akhir.getSelectedItem().toString().equals(status_akhir_qc)) {
+                    JOptionPane.showMessageDialog(this, "Mengganti manual status akhir memerlukan otorisasi!");
+                    JDialog_otorisasi_QC dialog = new JDialog_otorisasi_QC(new javax.swing.JFrame(), true, "Staff / Manager", "AND (`tb_karyawan`.`posisi` LIKE 'STAFF%' OR `tb_karyawan`.`posisi` = 'MANAGER') ");
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
+                    dialog.setEnabled(true);
+                    check = dialog.akses();
+                }
             }
 
             if (check) {
                 String Query = null;
-                String tgl_masuk = dateFormat.format(Date_masuk.getDate());
-                String tgl_uji = dateFormat.format(Date_uji.getDate());
-                String tgl_selesai = dateFormat.format(Date_selesai.getDate());
-                String nitrit_utuh = txt_nitrit_utuh.getText();
-                String nitrit_flat = txt_nitrit_flat.getText();
-                String nitrit_jidun = txt_nitrit_jidun.getText();
-                String kadar_air = txt_kadar_air.getText();
-                float utuh = Float.valueOf(txt_utuh.getText());
-                float flat = Float.valueOf(txt_flat.getText());
-                float pecah = Float.valueOf(txt_pecah.getText());
-                int kpg_akhir = Integer.valueOf(txt_kpg_akhir.getText());
-                float gram_akhir = Float.valueOf(txt_gram_akhir.getText());
-                if ("".equals(txt_nitrit_utuh.getText()) || txt_nitrit_utuh.getText() == null || "-".equals(txt_nitrit_utuh.getText())) {
-                    nitrit_utuh = "NULL";
-                }
-                if ("".equals(txt_nitrit_flat.getText()) || txt_nitrit_flat.getText() == null || "-".equals(txt_nitrit_flat.getText())) {
-                    nitrit_flat = "NULL";
-                }
-                if ("".equals(txt_nitrit_jidun.getText()) || txt_nitrit_jidun.getText() == null || "-".equals(txt_nitrit_jidun.getText())) {
-                    nitrit_jidun = "NULL";
-                }
-                if ("".equals(txt_kadar_air.getText()) || txt_kadar_air.getText() == null || "-".equals(txt_kadar_air.getText())) {
-                    kadar_air = "NULL";
-                }
-                if (!"".equals(txt_kadar_air.getText()) || txt_kadar_air.getText() != null) {
-                    Query = "UPDATE `tb_lab_laporan_produksi` SET "
-                            + "`tgl_masuk`='" + tgl_masuk + "',"
-                            + "`tgl_uji`='" + tgl_uji + "',"
-                            + "`tgl_selesai`='" + tgl_selesai + "',"
-                            + "`nitrit_utuh`=" + nitrit_utuh + ","
-                            + "`nitrit_flat`=" + nitrit_flat + ","
-                            + "`jidun`=" + nitrit_jidun + ","
-                            + "`kadar_air_bahan_jadi`=" + kadar_air + ","
-                            + "`utuh`=" + utuh + ","
-                            + "`flat`=" + flat + ","
-                            + "`pecah`=" + pecah + ","
-                            + "`kpg_akhir`=" + kpg_akhir + ","
-                            + "`gram_akhir`=" + gram_akhir + ","
-                            + "`status`='" + label_status_awal.getText() + "',"
-                            + "`status_akhir`='" + ComboBox_status_Akhir.getSelectedItem().toString() + "'"
-                            + "WHERE `no_laporan_produksi`='" + label_lp.getText() + "'";
-                } else {
-                    Query = "UPDATE `tb_lab_laporan_produksi` SET "
-                            + "`tgl_masuk`='" + tgl_masuk + "',"
-                            + "`tgl_uji`='" + tgl_uji + "',"
-                            + "`tgl_selesai`='" + tgl_selesai + "',"
-                            + "`nitrit_utuh`=" + nitrit_utuh + ","
-                            + "`nitrit_flat`=" + nitrit_flat + ","
-                            + "`jidun`=" + nitrit_jidun + ","
-                            + "`kadar_air_bahan_jadi`= NULL,"
-                            + "`utuh`=" + utuh + ","
-                            + "`flat`=" + flat + ","
-                            + "`pecah`=" + pecah + ","
-                            + "`kpg_akhir`=" + kpg_akhir + ","
-                            + "`gram_akhir`=" + gram_akhir + ","
-                            + "`status`='" + label_status_awal.getText() + "',"
-                            + "`status_akhir`='" + ComboBox_status_Akhir.getSelectedItem().toString() + "'"
-                            + "WHERE `no_laporan_produksi`='" + label_lp.getText() + "'";
-                }
+
+                Query = "UPDATE `tb_lab_laporan_produksi` SET "
+                        + "`tgl_masuk`='" + tgl_masuk + "',"
+                        + "`tgl_uji`='" + tgl_uji + "',"
+                        + tgl_selesai
+                        + "`nitrit_utuh`=" + nitrit_utuh + ","
+                        + "`nitrit_flat`=" + nitrit_flat + ","
+                        + "`jidun`=" + nitrit_jidun + ","
+                        + "`kadar_air_bahan_jadi`=" + kadar_air + ","
+                        + utuh
+                        + flat
+                        + pecah
+                        + kpg_akhir
+                        + gram_akhir
+                        + "`status`='" + label_status_awal.getText() + "',"
+                        + status_Akhir
+                        + "`kadar_aluminium`=" + kadar_aluminium + " "
+                        + "WHERE `no_laporan_produksi`='" + label_lp.getText() + "'";
 
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
@@ -412,6 +458,8 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
         txt_gram_akhir = new javax.swing.JTextField();
         txt_nitrit_jidun = new javax.swing.JTextField();
         label_judul = new javax.swing.JLabel();
+        label_kadar_aluminium = new javax.swing.JLabel();
+        txt_kadar_aluminium = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Bagian Lab");
@@ -441,6 +489,11 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
         label_pecah.setText("Keping Pecah :");
 
         txt_utuh.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_utuh.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_utuhKeyTyped(evt);
+            }
+        });
 
         label_status_awal1.setBackground(new java.awt.Color(255, 255, 255));
         label_status_awal1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -463,8 +516,18 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
                 txt_nitrit_utuhFocusLost(evt);
             }
         });
+        txt_nitrit_utuh.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nitrit_utuhKeyTyped(evt);
+            }
+        });
 
         txt_kpg_akhir.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_kpg_akhir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_kpg_akhirKeyTyped(evt);
+            }
+        });
 
         label_status_awal.setBackground(new java.awt.Color(255, 255, 255));
         label_status_awal.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -492,8 +555,18 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
         label_ka.setText("Kadar air bahan jadi :");
 
         txt_pecah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_pecah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_pecahKeyTyped(evt);
+            }
+        });
 
         txt_flat.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_flat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_flatKeyTyped(evt);
+            }
+        });
 
         label_nitrit_flat.setBackground(new java.awt.Color(255, 255, 255));
         label_nitrit_flat.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -507,6 +580,11 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
         txt_nitrit_flat.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txt_nitrit_flatFocusLost(evt);
+            }
+        });
+        txt_nitrit_flat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nitrit_flatKeyTyped(evt);
             }
         });
 
@@ -523,6 +601,11 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
         label_flat.setText("Keping Flat :");
 
         txt_kadar_air.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_kadar_air.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_kadar_airKeyTyped(evt);
+            }
+        });
 
         label_status.setBackground(new java.awt.Color(255, 255, 255));
         label_status.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -545,6 +628,11 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
         label_tanggal_masuk.setText("Tanggal Masuk :");
 
         txt_gram_akhir.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_gram_akhir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_gram_akhirKeyTyped(evt);
+            }
+        });
 
         txt_nitrit_jidun.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txt_nitrit_jidun.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -552,10 +640,26 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
                 txt_nitrit_jidunFocusLost(evt);
             }
         });
+        txt_nitrit_jidun.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nitrit_jidunKeyTyped(evt);
+            }
+        });
 
         label_judul.setBackground(new java.awt.Color(255, 255, 255));
         label_judul.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_judul.setText("Setor Laporan Produksi ke Bagian Grading");
+
+        label_kadar_aluminium.setBackground(new java.awt.Color(255, 255, 255));
+        label_kadar_aluminium.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_kadar_aluminium.setText("Kadar Aluminium :");
+
+        txt_kadar_aluminium.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_kadar_aluminium.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_kadar_aluminiumKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -565,45 +669,53 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_gram_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_tgl_uji, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_nitrit_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_ka, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_tgl_selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jidun, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_nitrit_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_status, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_status_akhir1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_status_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_tanggal_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_kpg_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_nitrit_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ComboBox_status_Akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_uji, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_nitrit_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_kadar_air, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_status_awal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_kpg_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_nitrit_jidun, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_gram_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(label_judul)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(182, 182, 182)
-                        .addComponent(label_status_awal1)
+                        .addComponent(label_kadar_aluminium, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_kadar_aluminium, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_gram_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_tgl_uji, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_nitrit_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_ka, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_tgl_selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_jidun, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_nitrit_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_status, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_status_akhir1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_status_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_tanggal_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_kpg_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_nitrit_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ComboBox_status_Akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Date_uji, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Date_selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_nitrit_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Date_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_kadar_air, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(label_status_awal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_kpg_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_nitrit_jidun, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_gram_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(label_judul)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(182, 182, 182)
+                                .addComponent(label_status_awal1)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(button_save, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -674,10 +786,15 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
                     .addComponent(label_status_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(button_save, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_status_awal1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_status_akhir1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_kadar_aluminium, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_kadar_aluminium, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_save, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -772,6 +889,112 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txt_nitrit_jidunFocusLost
 
+    private void txt_nitrit_utuhKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_utuhKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nitrit_utuhKeyTyped
+
+    private void txt_nitrit_flatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_flatKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nitrit_flatKeyTyped
+
+    private void txt_kadar_airKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kadar_airKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_kadar_airKeyTyped
+
+    private void txt_nitrit_jidunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_jidunKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nitrit_jidunKeyTyped
+
+    private void txt_utuhKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_utuhKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_utuhKeyTyped
+
+    private void txt_pecahKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_pecahKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_pecahKeyTyped
+
+    private void txt_flatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_flatKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_flatKeyTyped
+
+    private void txt_kpg_akhirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kpg_akhirKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_kpg_akhirKeyTyped
+
+    private void txt_gram_akhirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_gram_akhirKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_gram_akhirKeyTyped
+
+    private void txt_kadar_aluminiumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kadar_aluminiumKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_kadar_aluminiumKeyTyped
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_status_Akhir;
     private com.toedter.calendar.JDateChooser Date_masuk;
@@ -785,6 +1008,7 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
     private javax.swing.JLabel label_jidun;
     private javax.swing.JLabel label_judul;
     private javax.swing.JLabel label_ka;
+    private javax.swing.JLabel label_kadar_aluminium;
     private javax.swing.JLabel label_kpg_akhir;
     private javax.swing.JLabel label_lp;
     private javax.swing.JLabel label_nitrit_flat;
@@ -802,6 +1026,7 @@ public class JDialog_SetorEdit_DataLabLP extends javax.swing.JDialog {
     private javax.swing.JTextField txt_flat;
     private javax.swing.JTextField txt_gram_akhir;
     private javax.swing.JTextField txt_kadar_air;
+    private javax.swing.JTextField txt_kadar_aluminium;
     private javax.swing.JTextField txt_kpg_akhir;
     private javax.swing.JTextField txt_nitrit_flat;
     private javax.swing.JTextField txt_nitrit_jidun;

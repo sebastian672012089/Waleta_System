@@ -292,13 +292,6 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
                         if (rs1.getString("grup") != null) {
                             kode_grup = rs1.getString("grup");
                         }
-
-//                            if (rs1.getInt("potongan_bpjs") == 1) {
-//                                potongan_bpjs = Integer.valueOf(txt_potongan_bpjs.getText());
-//                            }
-//                            if (rs1.getInt("potongan_bpjs_tk") == 1) {
-//                                potongan_bpjs_tk = Integer.valueOf(txt_potongan_bpjs_tk.getText());
-//                            }
                         double menit_terlambat = 0;
                         if (rs1.getInt("menit_terlambat") > 0) {
                             menit_terlambat = rs1.getInt("menit_terlambat");
@@ -317,6 +310,12 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
                         }
                         if (rs1.getDouble("bonus2") > 0) {
                             total_bonus2 = total_bonus2 + rs1.getDouble("bonus2");
+                        }
+                        if (rs1.getInt("potongan_bpjs") == 1) {
+                            potongan_bpjs = Integer.valueOf(txt_potongan_bpjs.getText());
+                        }
+                        if (rs1.getInt("potongan_bpjs_tk") == 1) {
+                            potongan_bpjs_tk = Integer.valueOf(txt_potongan_bpjs_tk.getText());
                         }
 
                         double lembur_jam = 0, jumlah_lembur_menit = rs1.getDouble("jumlah_lembur_menit");
@@ -397,7 +396,6 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
                         + "AND DATEDIFF(IF(C.`tanggal_keluar` IS NULL, '" + dateFormat.format(tanggal_penggajian) + "', C.`tanggal_keluar`), C.`tanggal_masuk`) > 20 "
                         + "AND DATEDIFF(IF(C.`tanggal_keluar` IS NULL, '" + dateFormat.format(tanggal_penggajian) + "', C.`tanggal_keluar`), C.`tanggal_masuk`) < 28 "
                         + "AND (C.`tanggal_keluar` IS NULL OR C.`tanggal_keluar` BETWEEN '" + dateFormat.format(tanggal_mulai) + "' AND '" + dateFormat.format(tanggal_selesai) + "')";
-//                    System.out.println(sql_tbt);
                 PreparedStatement pst_tbt = Utility.db.getConnection().prepareStatement(sql_tbt);
                 ResultSet rs_tbt = pst_tbt.executeQuery();
                 int jumlah_teman = 0;
@@ -424,7 +422,7 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
                         - potongan_transport //potongan transport
                         - total_potongan_terlambat //potongan terlambat
                         - total_potongan_ijin; //potongan ijin
-                if (gaji < (potongan_bpjs + potongan_bpjs_tk)) {
+                if (gaji < 0) {
                     gaji = total_upah_harian //gaji harian
                             + premi_hadir //premi
                             + upah_lembur_seminggu //upah lembur
@@ -937,6 +935,8 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
                     if (dapat_premi > 0 && hari_masuk_premi >= hari_kerja_normal) {
                         premi_hadir = (hari_masuk_premi + libur_dapat_premi) * nominal_premi_per_hari;
                     }
+                    System.out.println("potongan_bpjs : " + rs.getInt("potongan_bpjs"));
+                    System.out.println("potongan_bpjs_tk : " + rs.getInt("potongan_bpjs_tk"));
                     if (rs.getInt("potongan_bpjs") == 1) {
                         potongan_bpjs = Integer.valueOf(txt_potongan_bpjs.getText());
                     }
@@ -982,6 +982,9 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
                             - potongan_transport //potongan transport
                             - total_pot_terlambat //potongan terlambat
                             - total_pot_ijin; //potongan ijin
+                    System.out.println("potongan_bpjs : " + potongan_bpjs);
+                    System.out.println("potongan_bpjs_tk : " + potongan_bpjs_tk);
+                    System.out.println("gaji : " + gaji);
                     if (gaji < (potongan_bpjs + potongan_bpjs_tk)) {
                         gaji = total_upah_harian //gaji harian
                                 + premi_hadir //premi hadir

@@ -11,7 +11,6 @@ public class Waleta_System {
                 in.pack();        
                 in.setLocationRelativeTo(null);
                 in.setVisible(true);
-//                new MainForm().setVisible(true);
             }
         });
     }

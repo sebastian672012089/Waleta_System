@@ -32,7 +32,7 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
     public JPanel_Lab_BahanBaku() {
         initComponents();
     }
-    
+
     public void init() {
         refreshTable();
         Table_Data_Lab_BahanBaku.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -50,6 +50,8 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
                         txt_nitrit_w2.setText(Table_Data_Lab_BahanBaku.getValueAt(i, 3).toString());
                         txt_nitrit_w3.setText(Table_Data_Lab_BahanBaku.getValueAt(i, 4).toString());
                         txt_kadar_air.setText(Table_Data_Lab_BahanBaku.getValueAt(i, 5).toString());
+                        txt_kadar_aluminium.setText(Table_Data_Lab_BahanBaku.getValueAt(i, 6).toString());
+                        txt_kadar_PH.setText(Table_Data_Lab_BahanBaku.getValueAt(i, 7).toString());
                     } catch (ParseException ex) {
                         Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -62,13 +64,17 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_Data_Lab_BahanBaku.getModel();
             model.setRowCount(0);
-            if (Date_1.getDate() == null || Date_2.getDate() == null) {
-                sql = "SELECT * FROM `tb_lab_bahan_baku` WHERE `no_kartu_waleta` LIKE '%" + txt_search_Lab_BahanBaku.getText() + "%' ";
-            } else {
-                sql = "SELECT * FROM `tb_lab_bahan_baku` WHERE `no_kartu_waleta` LIKE '%" + txt_search_Lab_BahanBaku.getText() + "%' AND `tgl_uji_lab_bahan` BETWEEN '" + dateFormat.format(Date_1.getDate()) + "' AND '" + dateFormat.format(Date_2.getDate()) + "'";
+            String filter_tanggal = "";
+            if (Date_1.getDate() != null && Date_2.getDate() != null) {
+                filter_tanggal = "AND `tgl_uji_lab_bahan` BETWEEN '" + dateFormat.format(Date_1.getDate()) + "' AND '" + dateFormat.format(Date_2.getDate()) + "'";
             }
+            sql = "SELECT `no_kartu_waleta`, `tgl_uji_lab_bahan`, `nitrit_bm`, `nitrit_bm_w2`, `nitrit_bm_w3`, `kadar_air_bm`, `kadar_aluminium_baku`, `kadar_ph_baku` "
+                    + "FROM `tb_lab_bahan_baku` "
+                    + "WHERE "
+                    + "`no_kartu_waleta` LIKE '%" + txt_search_Lab_BahanBaku.getText() + "%' "
+                    + filter_tanggal;
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[6];
+            Object[] row = new Object[8];
             while (rs.next()) {
                 row[0] = rs.getString("no_kartu_waleta");
                 row[1] = rs.getDate("tgl_uji_lab_bahan");
@@ -76,17 +82,13 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
                 row[3] = rs.getFloat("nitrit_bm_w2");
                 row[4] = rs.getFloat("nitrit_bm_w3");
                 row[5] = rs.getFloat("kadar_air_bm");
+                row[6] = rs.getFloat("kadar_aluminium_baku");
+                row[7] = rs.getFloat("kadar_ph_baku");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Data_Lab_BahanBaku);
             int rowData = Table_Data_Lab_BahanBaku.getRowCount();
             label_total_data_lab_bahan_baku.setText(Integer.toString(rowData));
-
-            TableAlignment.setHorizontalAlignment(JLabel.CENTER);
-            //tabel Data Bahan Baku
-            for (int i = 0; i < Table_Data_Lab_BahanBaku.getColumnCount(); i++) {
-                Table_Data_Lab_BahanBaku.getColumnModel().getColumn(i).setCellRenderer(TableAlignment);
-            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Lab_BahanBaku.class.getName()).log(Level.SEVERE, null, ex);
@@ -126,6 +128,11 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         txt_nitrit_w3 = new javax.swing.JTextField();
         label_jumlah_koli8 = new javax.swing.JLabel();
+        label_jumlah_koli9 = new javax.swing.JLabel();
+        txt_kadar_aluminium = new javax.swing.JTextField();
+        label_jumlah_koli10 = new javax.swing.JLabel();
+        txt_kadar_PH = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         label_total_data_lab_bahan_baku = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -147,14 +154,14 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No Kartu Waleta", "Tanggal Uji", "Nitrit W1", "Nitrit W2", "Nitrit W3", "Kadar Air (%)"
+                "No Kartu Waleta", "Tanggal Uji", "Nitrit W1", "Nitrit W2", "Nitrit W3", "Kadar Air (%)", "Aluminium", "PH"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -220,11 +227,21 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
         label_jumlah_koli5.setText("Nitrit Bahan Baku w1 :");
 
         txt_nitrit_w1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        txt_nitrit_w1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nitrit_w1KeyTyped(evt);
+            }
+        });
 
         label_jumlah_koli6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_jumlah_koli6.setText("Kadar Air Bahan Baku :");
 
         txt_kadar_air.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        txt_kadar_air.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_kadar_airKeyTyped(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel12.setText("%");
@@ -236,6 +253,11 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
         label_jumlah_koli7.setText("Nitrit Bahan Baku w2 :");
 
         txt_nitrit_w2.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        txt_nitrit_w2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nitrit_w2KeyTyped(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel15.setText("mg/Kg");
@@ -244,9 +266,37 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
         jLabel16.setText("mg/Kg");
 
         txt_nitrit_w3.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        txt_nitrit_w3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_nitrit_w3KeyTyped(evt);
+            }
+        });
 
         label_jumlah_koli8.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_jumlah_koli8.setText("Nitrit Bahan Baku w3 :");
+
+        label_jumlah_koli9.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_jumlah_koli9.setText("Kadar Aluminium :");
+
+        txt_kadar_aluminium.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        txt_kadar_aluminium.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_kadar_aluminiumKeyTyped(evt);
+            }
+        });
+
+        label_jumlah_koli10.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_jumlah_koli10.setText("Kadar PH :");
+
+        txt_kadar_PH.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        txt_kadar_PH.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_kadar_PHKeyTyped(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel17.setText("mg/Kg");
 
         javax.swing.GroupLayout jPanel_operation_lab_bahanBakuLayout = new javax.swing.GroupLayout(jPanel_operation_lab_bahanBaku);
         jPanel_operation_lab_bahanBaku.setLayout(jPanel_operation_lab_bahanBakuLayout);
@@ -260,7 +310,9 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
                     .addComponent(label_jumlah_koli5, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_jumlah_koli7, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_jumlah_koli8, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_jumlah_koli6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label_jumlah_koli6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_jumlah_koli9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_jumlah_koli10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_operation_lab_bahanBakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_operation_lab_bahanBakuLayout.createSequentialGroup()
@@ -268,13 +320,16 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
                             .addComponent(txt_kadar_air, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_nitrit_w3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_nitrit_w2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_nitrit_w1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_nitrit_w1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_kadar_aluminium, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_kadar_PH, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel_operation_lab_bahanBakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
                             .addComponent(jLabel15)
                             .addComponent(jLabel16)
-                            .addComponent(jLabel12))
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel17))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(Date_uji_bahanBaku, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_no_kartu_waleta))
@@ -320,6 +375,15 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
                     .addComponent(label_jumlah_koli6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_kadar_air, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_lab_bahanBakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_jumlah_koli9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_kadar_aluminium, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_lab_bahanBakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_jumlah_koli10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_kadar_PH, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_operation_lab_bahanBakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_update_lab_bm, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -461,8 +525,25 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
             if (tgl_masuk_baku.after(Date_uji_bahanBaku.getDate())) {
                 JOptionPane.showMessageDialog(this, "Maaf tanggal Uji harus setelah tanggal masuk Kartu Bahan Baku");
             } else {
-                sql = "INSERT INTO `tb_lab_bahan_baku`(`no_kartu_waleta`, `tgl_uji_lab_bahan`, `nitrit_bm`, `nitrit_bm_w2`, `nitrit_bm_w3`, `kadar_air_bm`) "
-                        + "VALUES ('" + txt_no_kartu_waleta.getText() + "','" + dateFormat.format(Date_uji_bahanBaku.getDate()) + "','" + txt_nitrit_w1.getText() + "','" + txt_nitrit_w2.getText() + "','" + txt_nitrit_w3.getText() + "','" + txt_kadar_air.getText() + "')";
+                String kadar_AL = txt_kadar_aluminium.getText();
+                if (txt_kadar_aluminium.getText() == null || txt_kadar_aluminium.getText().equals("")) {
+                    kadar_AL = "0";
+                }
+                String kadar_PH = txt_kadar_PH.getText();
+                if (txt_kadar_PH.getText() == null || txt_kadar_PH.getText().equals("")) {
+                    kadar_PH = "0";
+                }
+                sql = "INSERT INTO `tb_lab_bahan_baku`(`no_kartu_waleta`, `tgl_uji_lab_bahan`, `nitrit_bm`, `nitrit_bm_w2`, `nitrit_bm_w3`, `kadar_air_bm`, `kadar_aluminium_baku`, `kadar_ph_baku`) "
+                        + "VALUES ("
+                        + "'" + txt_no_kartu_waleta.getText() + "',"
+                        + "'" + dateFormat.format(Date_uji_bahanBaku.getDate()) + "',"
+                        + "'" + txt_nitrit_w1.getText() + "',"
+                        + "'" + txt_nitrit_w2.getText() + "',"
+                        + "'" + txt_nitrit_w3.getText() + "',"
+                        + "'" + txt_kadar_air.getText() + "',"
+                        + "'" + kadar_AL + "',"
+                        + "'" + kadar_PH + "'"
+                        + ")";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
                     refreshTable();
@@ -487,12 +568,14 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
             } else {
                 sql = "UPDATE `tb_lab_bahan_baku` SET "
-                        + "`no_kartu_waleta`='" + txt_no_kartu_waleta.getText() + "',"
                         + "`tgl_uji_lab_bahan`='" + dateFormat.format(Date_uji_bahanBaku.getDate()) + "',"
                         + "`nitrit_bm`='" + txt_nitrit_w1.getText() + "',"
                         + "`nitrit_bm_w2`='" + txt_nitrit_w2.getText() + "',"
                         + "`nitrit_bm_w3`='" + txt_nitrit_w3.getText() + "',"
-                        + "`kadar_air_bm`='" + txt_kadar_air.getText() + "'";
+                        + "`kadar_air_bm`='" + txt_kadar_air.getText() + "',"
+                        + "`kadar_aluminium_baku`='" + txt_kadar_aluminium.getText() + "',"
+                        + "`kadar_ph_baku`='" + txt_kadar_PH.getText() + "'"
+                        + "WHERE `no_kartu_waleta`='" + txt_no_kartu_waleta.getText() + "'";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
                     refreshTable();
@@ -562,6 +645,72 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
         ExportToExcel.writeToExcel(model, this);
     }//GEN-LAST:event_button_exportActionPerformed
 
+    private void txt_nitrit_w1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_w1KeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nitrit_w1KeyTyped
+
+    private void txt_nitrit_w2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_w2KeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nitrit_w2KeyTyped
+
+    private void txt_nitrit_w3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_nitrit_w3KeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_nitrit_w3KeyTyped
+
+    private void txt_kadar_airKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kadar_airKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_kadar_airKeyTyped
+
+    private void txt_kadar_aluminiumKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kadar_aluminiumKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_kadar_aluminiumKeyTyped
+
+    private void txt_kadar_PHKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_kadar_PHKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyChar() != '.'
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_kadar_PHKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_1;
@@ -580,18 +729,23 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel_operation_lab_bahanBaku;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JLabel label_jumlah_koli10;
     private javax.swing.JLabel label_jumlah_koli5;
     private javax.swing.JLabel label_jumlah_koli6;
     private javax.swing.JLabel label_jumlah_koli7;
     private javax.swing.JLabel label_jumlah_koli8;
+    private javax.swing.JLabel label_jumlah_koli9;
     private javax.swing.JLabel label_no_kartu_pengirim;
     private javax.swing.JLabel label_tgl_kh;
     private javax.swing.JLabel label_total_data_lab_bahan_baku;
+    private javax.swing.JTextField txt_kadar_PH;
     private javax.swing.JTextField txt_kadar_air;
+    private javax.swing.JTextField txt_kadar_aluminium;
     private javax.swing.JTextField txt_nitrit_w1;
     private javax.swing.JTextField txt_nitrit_w2;
     private javax.swing.JTextField txt_nitrit_w3;

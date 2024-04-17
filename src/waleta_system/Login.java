@@ -873,12 +873,18 @@ public class Login extends javax.swing.JFrame {
 //                                    + "`jumlah_keping` = '" + value[2] + "',\n"
 //                                    + "`total_berat` = '" + value[3] + "',\n"
 //                                    + "`harga_bahanbaku` = '" + value[4] + "';";
-                            Query = "UPDATE `tb_laporan_produksi` SET \n"
-                                    + "`berat_kering` = '" + value[1] + "'\n"
+//                            Query = "UPDATE `tb_laporan_produksi` SET \n"
+//                                    + "`berat_kering` = '" + value[1] + "'\n"
+//                                    + "WHERE `no_laporan_produksi` = '" + value[0] + "'";
+                            Query = "UPDATE `tb_rendam` SET \n"
+                                    + "`waktu_mulai_pengeringan` = '" + value[1] + "',\n"
+                                    + "`waktu_selesai_pengeringan` = '" + value[2] + "',\n"
+                                    + "`waktu_mulai_rendam` = '" + value[3] + "',\n"
+                                    + "`waktu_selesai_rendam` = '" + value[4] + "'\n"
                                     + "WHERE `no_laporan_produksi` = '" + value[0] + "'";
 //                            Query = "UPDATE `tb_rendam` SET \n"
-//                                    + "`waktu_mulai_pengeringan` = '" + value[1] + "',\n"
-//                                    + "`waktu_selesai_pengeringan` = '" + value[2] + "'\n"
+//                                    + "`waktu_mulai_rendam` = '" + value[1] + "',\n"
+//                                    + "`waktu_selesai_rendam` = '" + value[2] + "'\n"
 //                                    + "WHERE `no_laporan_produksi` = '" + value[0] + "'";
 //                            Query = "UPDATE `tb_cetak` SET \n"
 //                                    + "`waktu_mulai_pengeringan` = '" + value[1] + "',\n"
@@ -1048,12 +1054,8 @@ public class Login extends javax.swing.JFrame {
         lock_image.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/Lock.png")), lock_image.getWidth(), lock_image.getHeight()));
         waleta_image.setIcon(Utility.ResizeImageIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/logo_waleta.jpg")), waleta_image.getWidth(), waleta_image.getHeight()));
 
-        try {
-            Utility.db.connect();
-            checkVersion();
-        } catch (Exception ex) {
-            Logger.getLogger(Waleta_System.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Utility.db.connect();
+        checkVersion();
 //        ImportDataEdit();
 //        ImportDataEdit_sub();
 //        ImportDataEdit_cabuto();
@@ -1178,7 +1180,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.306");
+        label_version.setText("2.2.325");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N

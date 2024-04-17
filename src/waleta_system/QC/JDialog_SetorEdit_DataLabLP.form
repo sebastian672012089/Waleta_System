@@ -48,48 +48,60 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="label_pecah" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="jLabel9" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_gram_akhir" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_tgl_uji" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_nitrit_flat" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_ka" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_tgl_selesai" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_utuh" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_jidun" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_nitrit_utuh" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_status" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_flat" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_status_akhir1" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_status_akhir" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_tanggal_masuk" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                              <Component id="label_kpg_akhir" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_nitrit_utuh" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="ComboBox_status_Akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="txt_utuh" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="Date_uji" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="label_lp" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="Date_selesai" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="txt_nitrit_flat" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="txt_flat" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="txt_pecah" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="Date_masuk" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="txt_kadar_air" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="label_status_awal" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="txt_kpg_akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="txt_nitrit_jidun" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="txt_gram_akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Component id="label_judul" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="182" pref="182" max="-2" attributes="0"/>
-                          <Component id="label_status_awal1" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_kadar_aluminium" min="-2" pref="176" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
+                          <Component id="txt_kadar_aluminium" min="-2" pref="200" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="label_pecah" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="jLabel9" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_gram_akhir" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_tgl_uji" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_nitrit_flat" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_ka" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_tgl_selesai" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_utuh" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_jidun" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_nitrit_utuh" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_status" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_flat" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_status_akhir1" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_status_akhir" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_tanggal_masuk" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                      <Component id="label_kpg_akhir" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txt_nitrit_utuh" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="ComboBox_status_Akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="txt_utuh" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="Date_uji" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="label_lp" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="Date_selesai" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="txt_nitrit_flat" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="txt_flat" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="txt_pecah" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="Date_masuk" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="txt_kadar_air" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="label_status_awal" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="txt_kpg_akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="txt_nitrit_jidun" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="txt_gram_akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="label_judul" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="182" pref="182" max="-2" attributes="0"/>
+                                  <Component id="label_status_awal1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="button_save" min="-2" pref="57" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -179,11 +191,17 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="button_save" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="label_status_awal1" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="label_status_akhir1" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="label_kadar_aluminium" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="txt_kadar_aluminium" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="button_save" min="-2" pref="20" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -256,6 +274,9 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_utuhKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="label_status_awal1">
           <Properties>
@@ -303,6 +324,7 @@
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_nitrit_utuhFocusLost"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_nitrit_utuhKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_kpg_akhir">
@@ -311,6 +333,9 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_kpg_akhirKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="label_status_awal">
           <Properties>
@@ -387,6 +412,9 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_pecahKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_flat">
           <Properties>
@@ -394,6 +422,9 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_flatKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="label_nitrit_flat">
           <Properties>
@@ -425,6 +456,7 @@
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_nitrit_flatFocusLost"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_nitrit_flatKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="label_gram_akhir">
@@ -466,6 +498,9 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_kadar_airKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="label_status">
           <Properties>
@@ -528,6 +563,9 @@
               <Font name="Arial" size="12" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_gram_akhirKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_nitrit_jidun">
           <Properties>
@@ -537,6 +575,7 @@
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txt_nitrit_jidunFocusLost"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_nitrit_jidunKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="label_judul">
@@ -549,6 +588,27 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Setor Laporan Produksi ke Bagian Grading"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="label_kadar_aluminium">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Kadar Aluminium :"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txt_kadar_aluminium">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txt_kadar_aluminiumKeyTyped"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

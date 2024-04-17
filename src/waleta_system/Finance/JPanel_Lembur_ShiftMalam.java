@@ -2006,7 +2006,17 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                             menit_terlambat = "0";
                             menit_ijin = "0";
                         }
-                        String Query = "INSERT INTO `tb_lembur_rekap`(`id_pegawai`, `tanggal`, `jumlah_lembur_menit`, `menit_terlambat`, `menit_ijin`, `premi_hadir`, `level_gaji`, `grup`, `jalur_jemputan`, `jam_kerja`, `jam_masuk`, `jam_pulang`) "
+                        int potongan_bpjs = 0, potongan_bpjs_tk = 0;
+                        String sql1 = "`potongan_bpjs`, `potongan_bpjs_tk` "
+                            + "FROM `tb_karyawan` \n"
+                            + "WHERE `id_pegawai` = '" + tabel_data_lembur_security.getValueAt(i, 0) + "' ";
+                        PreparedStatement pst1 = Utility.db.getConnection().prepareStatement(sql1);
+                        ResultSet rs1 = pst1.executeQuery();
+                        if (rs1.next()) {
+                            potongan_bpjs = rs1.getInt("potongan_bpjs");
+                            potongan_bpjs_tk = rs1.getInt("potongan_bpjs_tk");
+                        }
+                        String Query = "INSERT INTO `tb_lembur_rekap`(`id_pegawai`, `tanggal`, `jumlah_lembur_menit`, `menit_terlambat`, `menit_ijin`, `premi_hadir`, `level_gaji`, `grup`, `jalur_jemputan`, `jam_kerja`, `jam_masuk`, `jam_pulang`, `potongan_bpjs`, `potongan_bpjs_tk`) "
                                 + "VALUES ("
                                 + "'" + tabel_data_lembur_security.getValueAt(i, 0) + "',"
                                 + "'" + tabel_data_lembur_security.getValueAt(i, 7) + "',"
@@ -2019,7 +2029,9 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                                 + jalur_jemputan + ","
                                 + jam_kerja + ","
                                 + jam_masuk + ","
-                                + jam_pulang + ")"
+                                + jam_pulang + ","
+                                + potongan_bpjs + ","
+                                + potongan_bpjs_tk + ")"
                                 + "ON DUPLICATE KEY UPDATE "
                                 + "`jumlah_lembur_menit`='" + jumlah_lembur_menit + "',"
                                 + "`menit_terlambat`='" + menit_terlambat + "',"
@@ -2030,7 +2042,9 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                                 + "`jalur_jemputan`=" + jalur_jemputan + ","
                                 + "`jam_kerja`=" + jam_kerja + ","
                                 + "`jam_masuk`=" + jam_masuk + ","
-                                + "`jam_pulang`=" + jam_pulang;
+                                + "`jam_pulang`=" + jam_pulang + ","
+                                + "`potongan_bpjs`=" + potongan_bpjs + ","
+                                + "`potongan_bpjs_tk`=" + potongan_bpjs_tk;
                         Utility.db.getConnection().createStatement();
                         Utility.db.getStatement().executeUpdate(Query);
                     }

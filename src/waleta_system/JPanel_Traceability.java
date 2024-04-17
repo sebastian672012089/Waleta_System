@@ -1843,13 +1843,15 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                 }
                 no_lp = no_lp + "'" + Table_traceability.getValueAt(i, 5).toString() + "'";
             }
-            String Query = "SELECT `tb_lab_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `tb_lab_laporan_produksi`.`tgl_masuk`, `tgl_uji`, `tgl_selesai`, `tanggal_rendam`, GREATEST(`nitrit_utuh`,`jidun`, `nitrit_flat`) AS 'nitrit', `status`, `tb_laporan_produksi`.`cheat_rsb`, `cheat_no_kartu`\n"
+            String Query = "SELECT `tb_lab_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `tb_lab_laporan_produksi`.`tgl_masuk`, `tgl_uji`, `tgl_selesai`, `tanggal_rendam`, GREATEST(`nitrit_utuh`,`jidun`, `nitrit_flat`) AS 'nitrit', `status`, "
+                    + "`tb_laporan_produksi`.`cheat_rsb`, `cheat_no_kartu`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`no_kartu_waleta`\n"
                     + "FROM `tb_lab_laporan_produksi` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_lab_laporan_produksi`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi` "
                     + "LEFT JOIN `tb_rendam` ON `tb_lab_laporan_produksi`.`no_laporan_produksi` = `tb_rendam`.`no_laporan_produksi` "
                     + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta` "
                     + "LEFT JOIN `tb_lab_bahan_baku` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_lab_bahan_baku`.`no_kartu_waleta`\n"
-                    + "WHERE `tb_lab_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") "
+                    + "WHERE "
+                    + "`tb_lab_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") "
                     + "ORDER BY `tgl_uji` DESC, `tb_lab_laporan_produksi`.`no_laporan_produksi` ASC";
 //            System.out.println(Query);
             JRDesignQuery newQuery = new JRDesignQuery();

@@ -1,12 +1,8 @@
 package waleta_system.SubWaleta;
 
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,9 +14,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Class.Utility;
@@ -106,7 +99,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                 filter_tanggal = "`tb_cabut`.`tgl_setor_cabut`";
                 filter_tanggal = " AND (" + filter_tanggal + " BETWEEN '" + dateFormat.format(Date1_cabut.getDate()) + "' and '" + dateFormat.format(Date2_cabut.getDate()) + "')";
             }
-            sql = "SELECT `tb_cabut`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `keping_upah`, `berat_basah`, `pekerja_sesek`, `pekerja_hancuran`, `pekerja_kopyok`, `cabut_diterima`, `tgl_mulai_cabut`, `cabut_diserahkan`, `tgl_setor_cabut`, `sobek_cabut`, `cabut_sobek_lepas`, `gumpil_cabut`, `pecah_cabut`, `cabut_pecah_2`, `cabut_lubang`, `cabut_hilang_kaki`, `cabut_hilang_ujung`, `cabut_kaki_besar`, `cabut_kaki_kecil`, `cabut_hilang_bawah`, `admin_cabut`, `ketua_regu`, `tgl_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'tanggal_cabut'"
+            sql = "SELECT `tb_cabut`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `keping_upah`, `berat_basah`, `pekerja_sesek`, `pekerja_hancuran`, `pekerja_kopyok`, `cabut_diterima`, `tgl_mulai_cabut`, `cabut_diserahkan`, `tgl_setor_cabut`, `sobek_cabut`, `cabut_sobek_lepas`, `gumpil_cabut`, `pecah_cabut`, `cabut_pecah_2`, `cabut_lubang`, `cabut_hilang_kaki`, `cabut_hilang_ujung`, `cabut_kaki_besar`, `cabut_kaki_kecil`, `cabut_hilang_bawah`, `admin_cabut`, `ketua_regu`, `tgl_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'tanggal_cabut', `penilaian_waleta` "
                     + "FROM `tb_cabut` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_detail_pencabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
@@ -135,6 +128,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                 row[16] = rs.getString("admin_cabut");
                 row[17] = rs.getString("ketua_regu");
                 row[18] = rs.getDate("tgl_cabut");
+                row[19] = rs.getObject("penilaian_waleta") == null ? null : rs.getInt("penilaian_waleta");
                 model.addRow(row);
                 total_kpg_upah = total_kpg_upah + rs.getInt("keping_upah");
                 total_gram = total_gram + rs.getInt("berat_basah");
@@ -219,9 +213,6 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
         label_total_gram = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         label_total_kpg = new javax.swing.JLabel();
-        button_download = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jLabel3 = new javax.swing.JLabel();
         button_edit_cabut_online = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -244,6 +235,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
         txt_no = new javax.swing.JTextField();
         label_total_gram_cabutan = new javax.swing.JLabel();
         label_total_cabutan3 = new javax.swing.JLabel();
+        button_Input_PenilaianLP = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Cabut Online Sub", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -287,14 +279,14 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
 
             },
             new String [] {
-                "No LP", "Grade", "Kpg upah", "Berat", "Tgl Masuk", "Diterima", "Pekerja Ssk", "Pekerja Hc", "Pekerja Kopyok", "Tgl Selesai", "Diserahkan", "Pecah", "Sobek", "Gumpil", "Hilang Kaki", "Hilang Ujung", "admin", "Ketua Regu", "Tgl Cabut"
+                "No LP", "Grade", "Kpg upah", "Berat", "Tgl Masuk", "Diterima", "Pekerja Ssk", "Pekerja Hc", "Pekerja Kopyok", "Tgl Selesai", "Diserahkan", "Pecah", "Sobek", "Gumpil", "Hilang Kaki", "Hilang Ujung", "admin", "Ketua Regu", "Tgl Cabut", "Nilai LP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -397,21 +389,6 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
         label_total_kpg.setBackground(new java.awt.Color(255, 255, 255));
         label_total_kpg.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_total_kpg.setText("TOTAL");
-
-        button_download.setBackground(new java.awt.Color(255, 255, 255));
-        button_download.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_download.setText("Download data to Waleta");
-        button_download.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_downloadActionPerformed(evt);
-            }
-        });
-
-        jProgressBar1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel3.setText("Note : yang di download hanya data yang sudah di setorkan dari Sub");
 
         button_edit_cabut_online.setBackground(new java.awt.Color(255, 255, 255));
         button_edit_cabut_online.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -607,6 +584,15 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
         label_total_cabutan3.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_cabutan3.setText("Gram");
 
+        button_Input_PenilaianLP.setBackground(new java.awt.Color(255, 255, 255));
+        button_Input_PenilaianLP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_Input_PenilaianLP.setText("Input Penilaian LP");
+        button_Input_PenilaianLP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_Input_PenilaianLPActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -614,6 +600,30 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_lp)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_data_cabut)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_kpg)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_gram))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -641,43 +651,14 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                                 .addGap(18, 18, 18)
                                 .addComponent(label_total_gram_cabutan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_cabutan3)))
-                        .addGap(0, 578, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4)
+                                .addComponent(label_total_cabutan3))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_lp)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_data_cabut)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel15)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_kpg)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_gram))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(button_export_data_cabut)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_edit_cabut_online)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_download)
+                                .addComponent(button_export_data_cabut)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
+                                .addComponent(button_Input_PenilaianLP)))
+                        .addGap(0, 578, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -693,14 +674,10 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                     .addComponent(Date2_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboBox_filterDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(button_export_data_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_edit_cabut_online, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(button_download, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_export_data_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_edit_cabut_online, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_Input_PenilaianLP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -761,155 +738,6 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
         DefaultTableModel model = (DefaultTableModel) Table_Data_Cabut_Online.getModel();
         ExportToExcel.writeToExcel(model, jPanel2);
     }//GEN-LAST:event_button_export_data_cabutActionPerformed
-
-    private void button_downloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_downloadActionPerformed
-        // TODO add your handling code here:
-        int dialogResult = JOptionPane.showConfirmDialog(this, "Download data sub online into waleta database?", "Warning", 0);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            try {
-                refresh_cabut_sub_online();
-                URL url = new URL("http://waleta019.com/subwaleta/select_cabut_ke_pc.php?sql=" + URLEncoder.encode(sql, "UTF-8"));
-                URLConnection conn = url.openConnection();
-                BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String json = rd.readLine();
-                JSONObject obj = (JSONObject) JSONValue.parse(json);
-                final JSONArray tb_cabut = (JSONArray) obj.get("tb_cabut");
-
-                int panjang = tb_cabut.size();
-                jProgressBar1.setMinimum(0);
-                jProgressBar1.setMaximum(panjang);
-                jProgressBar1.setValue(0);
-                jProgressBar1.setStringPainted(true);
-                Thread thread = new Thread() {
-                    @Override
-                    public void run() {
-                        int jumlah_berhasil = 0, jumlah_gagal = 0;
-                        for (int i = 0; i < tb_cabut.size(); i++) {
-                            JSONObject rb = (JSONObject) tb_cabut.get(i);
-                            String insert_pencabut = "";
-                            try {
-                                if (rb.get("tgl_setor_cabut") != null && !rb.get("tgl_setor_cabut").toString().equals("")) {
-                                    String insert = "INSERT INTO `tb_cabut`(`no_laporan_produksi`, `pekerja_hancuran`, `pekerja_kopyok`, `cabut_diterima`, `tgl_mulai_cabut`, `cabut_diserahkan`, `tgl_setor_cabut`, `sobek_cabut`, `cabut_sobek_lepas`, `gumpil_cabut`, `pecah_cabut`, `cabut_pecah_2`, `cabut_lubang`, `cabut_hilang_kaki`, `cabut_hilang_ujung`, `cabut_kaki_besar`, `cabut_kaki_kecil`, `cabut_hilang_bawah`, `admin_cabut`, `ketua_regu`, `tgl_cabut`) "
-                                            + "VALUES ('" + rb.get("no_laporan_produksi") + "',"
-                                            + "'" + rb.get("pekerja_hancuran") + "',"
-                                            + "'" + rb.get("pekerja_kopyok") + "',"
-                                            + "'" + rb.get("cabut_diterima") + "',"
-                                            + "'" + rb.get("tgl_mulai_cabut") + "',"
-                                            + "'" + rb.get("cabut_diserahkan") + "',"
-                                            + "'" + rb.get("tgl_setor_cabut") + "',"
-                                            + "'" + rb.get("sobek_cabut") + "',"
-                                            + "'" + rb.get("cabut_sobek_lepas") + "',"
-                                            + "'" + rb.get("gumpil_cabut") + "',"
-                                            + "'" + rb.get("pecah_cabut") + "',"
-                                            + "'" + rb.get("cabut_pecah_2") + "',"
-                                            + "'" + rb.get("cabut_lubang") + "',"
-                                            + "'" + rb.get("cabut_hilang_kaki") + "',"
-                                            + "'" + rb.get("cabut_hilang_ujung") + "',"
-                                            + "'" + rb.get("cabut_kaki_besar") + "',"
-                                            + "'" + rb.get("cabut_kaki_kecil") + "',"
-                                            + "'" + rb.get("cabut_hilang_bawah") + "',"
-                                            + "'" + rb.get("admin_cabut") + "',"
-                                            + "'" + rb.get("ketua_regu") + "',"
-                                            + "'" + rb.get("tgl_cabut") + "'"
-                                            + ") "
-                                            + "ON DUPLICATE KEY UPDATE "
-                                            + "`pekerja_hancuran`='" + rb.get("pekerja_hancuran") + "',"
-                                            + "`pekerja_kopyok`='" + rb.get("pekerja_kopyok") + "',"
-                                            + "`cabut_diterima`='" + rb.get("cabut_diterima") + "',"
-                                            + "`tgl_mulai_cabut`='" + rb.get("tgl_mulai_cabut") + "',"
-                                            + "`cabut_diserahkan`='" + rb.get("cabut_diserahkan") + "',"
-                                            + "`tgl_setor_cabut`='" + rb.get("tgl_setor_cabut") + "',"
-                                            + "`sobek_cabut`='" + rb.get("sobek_cabut") + "',"
-                                            + "`cabut_sobek_lepas`='" + rb.get("cabut_sobek_lepas") + "',"
-                                            + "`gumpil_cabut`='" + rb.get("gumpil_cabut") + "',"
-                                            + "`pecah_cabut`='" + rb.get("pecah_cabut") + "',"
-                                            + "`cabut_pecah_2`='" + rb.get("cabut_pecah_2") + "',"
-                                            + "`cabut_lubang`='" + rb.get("cabut_lubang") + "',"
-                                            + "`cabut_hilang_kaki`='" + rb.get("cabut_hilang_kaki") + "',"
-                                            + "`cabut_hilang_ujung`='" + rb.get("cabut_hilang_ujung") + "',"
-                                            + "`cabut_kaki_besar`='" + rb.get("cabut_kaki_besar") + "',"
-                                            + "`cabut_kaki_kecil`='" + rb.get("cabut_kaki_kecil") + "',"
-                                            + "`cabut_hilang_bawah`='" + rb.get("cabut_hilang_bawah") + "',"
-                                            + "`admin_cabut`='" + rb.get("admin_cabut") + "',"
-                                            + "`ketua_regu`='" + rb.get("ketua_regu") + "',"
-                                            + "`tgl_cabut`='" + rb.get("tgl_cabut") + "'";
-                                    Utility.db.getConnection().createStatement();
-                                    if ((Utility.db.getStatement().executeUpdate(insert)) > 0) {
-                                        jumlah_berhasil++;
-//                                    String select = "SELECT `no_laporan_produksi` FROM `tb_cabut` "
-//                                            + "WHERE `no_laporan_produksi` = '" + rb.get("no_laporan_produksi") + "' ";
-//                                    ResultSet result = Utility.db.getStatement().executeQuery(select);
-//                                    if (result.next()) {
-//                                        System.out.println("sudah masuk");
-//                                    } else {
-//                                        System.out.println("belum masuk");
-//                                    }
-                                    } else {
-                                        jumlah_gagal++;
-                                    }
-                                    jProgressBar1.setValue(jProgressBar1.getValue() + 1);
-
-                                    String query = "SELECT `nomor`, `grup_cabut`, `no_laporan_produksi`, `tb_detail_pencabut`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `bagian`, `tanggal_cabut`, `jumlah_cabut`, `jumlah_gram` \n"
-                                            + "FROM `tb_detail_pencabut` \n"
-                                            + "LEFT JOIN `tb_karyawan` ON `tb_detail_pencabut`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
-                                            + "WHERE `no_laporan_produksi` = '" + rb.get("no_laporan_produksi") + "'";
-                                    System.out.println(query);
-                                    URL url2 = new URL("http://waleta019.com/subwaleta/select_pencabut_ke_pc.php?sql=" + URLEncoder.encode(query, "UTF-8"));
-                                    URLConnection conn2 = url2.openConnection();
-                                    BufferedReader rd2 = new BufferedReader(new InputStreamReader(conn2.getInputStream()));
-                                    String json2 = rd2.readLine();
-                                    JSONObject obj2 = (JSONObject) JSONValue.parse(json2);
-                                    JSONArray detail_pencabut = (JSONArray) obj2.get("detail_pencabut");
-                                    System.out.println(detail_pencabut.size());
-                                    for (int j = 0; j < detail_pencabut.size(); j++) {
-                                        JSONObject rb2 = (JSONObject) detail_pencabut.get(j);
-                                        String select = "SELECT `nomor` FROM `tb_detail_pencabut` "
-                                                + "WHERE `id_pegawai` = '" + rb2.get("id_pegawai") + "' "
-                                                + "AND `tanggal_cabut` = '" + rb2.get("tanggal_cabut") + "' "
-                                                + "AND `no_laporan_produksi`='" + rb2.get("no_laporan_produksi") + "'";
-                                        ResultSet result = Utility.db.getStatement().executeQuery(select);
-                                        if (result.next()) {
-                                            String update_pencabut = "UPDATE `tb_detail_pencabut` SET "
-                                                    + "`jumlah_cabut`='" + rb2.get("jumlah_cabut") + "',"
-                                                    + "`jumlah_gram`='" + rb2.get("jumlah_gram") + "',"
-                                                    + "`grup_cabut`='" + rb2.get("grup_cabut") + "' "
-                                                    + "WHERE "
-                                                    + "`nomor`='" + result.getString("nomor") + "' ";
-                                            Utility.db.getConnection().createStatement();
-                                            Utility.db.getStatement().executeUpdate(update_pencabut);
-                                        } else {
-                                            insert_pencabut = "INSERT INTO `tb_detail_pencabut`(`no_laporan_produksi`, `id_pegawai`, `tanggal_cabut`, `jumlah_cabut`, `jumlah_gram`, `grup_cabut`) "
-                                                    + "VALUE ('" + rb2.get("no_laporan_produksi") + "',"
-                                                    + "'" + rb2.get("id_pegawai") + "',"
-                                                    + "'" + rb2.get("tanggal_cabut") + "',"
-                                                    + "'" + rb2.get("jumlah_cabut") + "',"
-                                                    + "'" + rb2.get("jumlah_gram") + "',"
-                                                    + "'" + rb2.get("grup_cabut") + "')";
-                                            Utility.db.getConnection().createStatement();
-                                            Utility.db.getStatement().executeUpdate(insert_pencabut);
-                                        }
-                                    }
-                                }
-                            } catch (Exception ex) {
-                                System.out.println(insert_pencabut);
-                                JOptionPane.showMessageDialog(null, ex);
-                                Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                        jProgressBar1.setValue(jProgressBar1.getMaximum());
-                        JOptionPane.showMessageDialog(null, "Data download : " + jumlah_berhasil + ", gagal : " + jumlah_gagal);
-                    }
-                };
-                thread.start();
-                long success = (long) obj.get("success");
-                System.out.println("success = " + success);
-                rd.close();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
-                Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, e);
-            }
-        }
-    }//GEN-LAST:event_button_downloadActionPerformed
 
     private void button_edit_cabut_onlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_edit_cabut_onlineActionPerformed
         // TODO add your handling code here:
@@ -1090,6 +918,43 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
         txt_jmlh_keping.setText(null);
     }//GEN-LAST:event_button_clear_pencabutActionPerformed
 
+    private void button_Input_PenilaianLPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_Input_PenilaianLPActionPerformed
+        // TODO add your handling code here:
+        int i = Table_Data_Cabut_Online.getSelectedRow();
+        if (i > -1) {
+            try {
+                String no_lp = Table_Data_Cabut_Online.getValueAt(i, 0).toString();
+                String nilai_lama = Table_Data_Cabut_Online.getValueAt(i, 19) == null ? "" : Table_Data_Cabut_Online.getValueAt(i, 19).toString();
+                String nilai_baru = JOptionPane.showInputDialog("Masukkan Nilai LP (0-100) : ", nilai_lama);
+                if (nilai_baru != null) {
+                    int nilai = Integer.valueOf(nilai_baru);
+                    if (nilai_baru.equals("")) {
+                        throw new NumberFormatException("Nilai tidak bisa kosong!");
+                    } else if (nilai < 0 || nilai > 100) {
+                        throw new NumberFormatException("Nilai tidak boleh di luar range 0 - 100!");
+                    }
+                    Utility.db_sub.connect();
+                    sql = "UPDATE `tb_laporan_produksi` SET `penilaian_waleta`='" + nilai + "' "
+                            + "WHERE `no_laporan_produksi`='" + no_lp + "' ";
+                    if ((Utility.db_sub.getStatement().executeUpdate(sql)) == 1) {
+                        refresh_cabut_sub_online();
+                        JOptionPane.showMessageDialog(this, "Update success!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Update failed!");
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Nilai yang dimasukkan salah! \n" + ex);
+                Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih LP pada tabel!");
+        }
+    }//GEN-LAST:event_button_Input_PenilaianLPActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_filterDate;
@@ -1098,8 +963,8 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
     private com.toedter.calendar.JDateChooser Date2_cabut;
     private com.toedter.calendar.JDateChooser Date_pencabut;
     public static javax.swing.JTable Table_Data_Cabut_Online;
+    private javax.swing.JButton button_Input_PenilaianLP;
     private javax.swing.JButton button_clear_pencabut;
-    private javax.swing.JButton button_download;
     public static javax.swing.JButton button_edit_cabut_online;
     public static javax.swing.JButton button_edit_pencabut_online;
     private javax.swing.JButton button_export_data_cabut;
@@ -1115,7 +980,6 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1124,7 +988,6 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel label_lp;

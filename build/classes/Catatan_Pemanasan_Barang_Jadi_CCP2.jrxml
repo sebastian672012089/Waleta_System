@@ -632,34 +632,6 @@ WHERE 1]]>
 				<text><![CDATA[Menggantikan dokumen no.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="SubTitle" x="455" y="0" width="100" height="15" uuid="e0b2c8d3-6162-4fd2-b35f-39af4e6a5772"/>
-				<textElement markup="none">
-					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[FR/WAJ/BJ/02/a/1]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="455" y="15" width="100" height="15" uuid="3d4de066-495a-4f12-8a31-a1d24d5c63d9"/>
-				<textElement markup="none">
-					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[15]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="455" y="30" width="100" height="15" uuid="3edbdc73-b4a8-43ee-81ce-df979f66e0ad"/>
-				<textElement markup="none">
-					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[8 Januari 2024]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="SubTitle" x="455" y="45" width="100" height="30" uuid="a78c8515-3a42-4be1-9ad0-77a2f6ad657c"/>
-				<textElement markup="none">
-					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[FR/WAJ/BJ/002/f]]></text>
-			</staticText>
-			<staticText>
 				<reportElement style="Title" x="0" y="30" width="130" height="45" uuid="5b0e0bfd-eddc-4644-bc1a-8ee4256cf5a0"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
@@ -707,6 +679,34 @@ WHERE 1]]>
 					<font size="8" isBold="true" isItalic="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[RECORD OF FINISHED GOODS HEAT TREATMENT - STEAMER (CCP 2)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="455" y="0" width="100" height="15" uuid="f2d30db2-4a71-419f-8356-929231385472"/>
+				<textElement markup="none">
+					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[FR/WAJ/BJ/02/a/1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="455" y="30" width="100" height="15" uuid="333ab82d-712b-43ae-b1e0-635fdda54c38"/>
+				<textElement markup="none">
+					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[13 Maret 2024]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="455" y="45" width="100" height="30" uuid="e556a2d1-6638-43e2-a2ce-2ec1397c416b"/>
+				<textElement markup="none">
+					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[FR/WAJ/BJ/002/f]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="455" y="15" width="100" height="15" uuid="786c4d20-d4b4-4ab4-a2af-0f9828924a8e"/>
+				<textElement markup="none">
+					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[16]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -802,150 +802,164 @@ WHERE 1]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="192" splitType="Stretch">
+		<band height="215" splitType="Stretch">
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-				<reportElement x="285" y="130" width="120" height="55" uuid="d7e62d22-e8b8-4324-8b76-8e18167e6ad5"/>
-				<imageExpression><![CDATA["Report\\ReportImages\\TTD_TITAN.png"]]></imageExpression>
-			</image>
-			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-				<reportElement x="165" y="130" width="120" height="55" uuid="6593fa4f-d418-49b8-85ae-f6971beee869"/>
+				<reportElement x="165" y="155" width="120" height="55" uuid="fd75b3a9-775d-4b96-9a45-897286e12cb8"/>
 				<imageExpression><![CDATA["Report\\ReportImages\\TTD_DENY_PRASETYO.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="TTD" x="165" y="110" width="120" height="25" uuid="edc21156-a64b-4b4e-9bdd-a4beedd6aaf3"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial Narrow" size="11"/>
-				</textElement>
-				<text><![CDATA[Dilaporkan Oleh:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="TTD" x="165" y="135" width="120" height="50" uuid="0ab24a25-bae5-4e3d-992c-e9a60984b676"/>
-				<textElement verticalAlignment="Bottom"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="TTD" x="285" y="110" width="120" height="25" uuid="1d56e4f4-e0bf-4024-8344-47ef446e87a4"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial Narrow" size="11"/>
-				</textElement>
-				<text><![CDATA[Disetujui Oleh:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="TTD" x="285" y="135" width="120" height="50" uuid="475ed394-6846-49b7-87c4-44b26c001711"/>
-				<textElement verticalAlignment="Bottom"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="30" y="15" width="150" height="15" forecolor="#000000" uuid="8dfb1035-66be-4c74-9d0d-2a3dd2970734"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Standar Ttot dan ttot pemanasan]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="30" y="0" width="150" height="15" forecolor="#000000" uuid="451d6003-6f61-4aa8-a191-1d3bbe9e1f29"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Standar Tpre-heating]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="180" y="15" width="150" height="15" forecolor="#000000" uuid="b1d176cf-1cdd-4a81-8d80-6fbcad7a25cd"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="180" y="0" width="150" height="15" forecolor="#000000" uuid="5cc67aa1-7eb9-40a8-a199-eac39c141690"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[> 91,5 °C ( 8 menit 9 detik )]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="180" y="30" width="150" height="15" forecolor="#000000" uuid="b302340c-dfae-427f-90b8-1e1400483dba"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[≥ 89,4 °C ( 1 menit 27 detik )]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="180" y="45" width="150" height="15" forecolor="#000000" uuid="05ae2d4d-c83d-4161-a23e-df4f73a6675d"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[≥ 90,5 °C ( 1 menit 33 detik )]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="180" y="75" width="150" height="15" forecolor="#000000" uuid="2ea34be3-b317-466c-8cd7-8778355cfaa1"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[≥ 92,8 °C ( 2 menit 28 detik )]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="180" y="60" width="150" height="15" forecolor="#000000" uuid="0b75b0f0-3166-499c-b5d5-d902d736d1b9"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[≥ 92,3 °C ( 2 menit 40 detik )]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="180" y="90" width="150" height="15" forecolor="#000000" uuid="5aca1738-05df-4ba3-a798-d236a018de48"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[≥ 90,7 °C ( 1 menit 30 detik )]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="165" y="120" width="120" height="15" forecolor="#000000" uuid="a845b672-fc82-4651-9d73-52de800a05c3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Reported by :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="285" y="120" width="120" height="15" forecolor="#000000" uuid="e9287f0f-1e76-44f5-ace5-1e1f27a7ab37"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Approved by :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="30" y="30" width="150" height="15" forecolor="#000000" uuid="0342c28a-c75a-45de-83e0-1f1b3914b47d"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[• Mangkok, segitiga, oval (Cup)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="30" y="45" width="150" height="15" forecolor="#000000" uuid="9f84a221-7431-47a4-a341-b59c097d33d6"/>
+				<reportElement x="30" y="70" width="150" height="15" forecolor="#000000" uuid="00fe6d14-5602-4274-9642-497dfc4d1707"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[• Patahan (Flat)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="30" y="60" width="150" height="15" forecolor="#000000" uuid="32ce6b72-0b0c-4e1d-ae43-4b1813ab2ade"/>
+				<reportElement x="180" y="70" width="150" height="15" forecolor="#000000" uuid="3a12747d-6fba-4d21-bc49-fea73b313a56"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[=  87 °C ( 1 menit 36 detik )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="100" width="150" height="15" forecolor="#000000" uuid="5a046f39-3e2a-4765-ba0c-5755e7b45379"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[= 100 °C ( 4 menit 8 detik )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="115" width="150" height="15" forecolor="#000000" uuid="20e50626-eeba-4e02-8b97-366a91940d7a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[• Jidun (Jidun)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="40" width="150" height="15" forecolor="#000000" uuid="58b3a97e-040f-4e3d-8e32-9f70276fbd7b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Standar Ttot dan ttot pemanasan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="145" width="120" height="15" forecolor="#000000" uuid="b755b6c1-2d12-47e9-bddd-a70f81ec277b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reported by :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="285" y="135" width="120" height="25" uuid="f43201ff-1d55-4ff4-9dd6-698fa7809042"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<text><![CDATA[Disetujui Oleh:]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+				<reportElement x="285" y="155" width="120" height="55" uuid="fa1751ba-2df5-4759-8240-d63ae1aa8a98"/>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD_TITAN.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="180" y="55" width="150" height="15" forecolor="#000000" uuid="7e6975dd-eecc-4b12-a04d-1908fcb9740d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[= 100 °C ( 1 menit 30 detik )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="115" width="150" height="15" forecolor="#000000" uuid="a1ceb291-b8c0-4778-8d65-84be7951faa8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[= 100 °C ( 1 menit 15 detik )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="285" y="160" width="120" height="50" uuid="6a07ae5f-434b-4ff5-90d9-eda6b8f4e84f"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="TTD" x="165" y="135" width="120" height="25" uuid="81e388ab-6a59-4de8-bb71-f547f7d02f35"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="11"/>
+				</textElement>
+				<text><![CDATA[Dilaporkan Oleh:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="0" width="150" height="15" forecolor="#000000" uuid="8d012eb0-317e-4ed2-a6aa-42b60d3a2433"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Standar Tpre-heating]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="85" width="150" height="15" forecolor="#000000" uuid="567d35fa-2b58-429f-b233-cc80ceb2a9f6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[= 100 °C ( 2 menit 40 detik )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="15" width="445" height="25" forecolor="#000000" uuid="5197a648-fc69-4953-a47a-54de06ded118"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Pre-heating dilakukan pada awal proses heat treatment dan jika proses heat treatment berhenti dalam waktu yang cukup lama maka tpreheating dicatat kembali sesuai standar.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="0" width="150" height="15" forecolor="#000000" uuid="e72c2328-ef1b-4a20-867f-0f4553207e3f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[> 92 °C ( 3 menit 10 detik )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="15" width="40" height="15" forecolor="#000000" uuid="c99c4217-c6f8-4401-8121-848d1b105044"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isBold="true" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Catatan :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="40" width="150" height="15" forecolor="#000000" uuid="2f6eb39c-04cb-4785-9712-0b31037bb184"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="85" width="150" height="15" forecolor="#000000" uuid="55077559-4a7d-4d99-b0cd-f0f69c995498"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[• Kaki (Feet)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="30" y="75" width="150" height="15" forecolor="#000000" uuid="864f2c15-afd2-4e87-b6a8-12dd114ba860"/>
+				<reportElement x="285" y="145" width="120" height="15" forecolor="#000000" uuid="904f78b3-7b41-4a95-9b1f-6ae0a1fa964d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Approved by :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="100" width="150" height="15" forecolor="#000000" uuid="7a5ffd41-6bca-479e-8e13-f8c3da3a8eab"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[• Mess (Mess)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="30" y="90" width="150" height="15" forecolor="#000000" uuid="31b81d53-731a-4876-b7c1-6dc0da97f6f0"/>
+				<reportElement style="TTD" x="165" y="160" width="120" height="50" uuid="3a7da4a6-ea0c-45ff-ae9c-27f65a090bb9"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="55" width="150" height="15" forecolor="#000000" uuid="3fc9ee16-6d62-4ee9-8c53-014029a5f5df"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="9" isItalic="false" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[• Jidun (Jidun)]]></text>
+				<text><![CDATA[• Mangkok, segitiga, oval (Cup)]]></text>
 			</staticText>
 		</band>
 	</pageFooter>

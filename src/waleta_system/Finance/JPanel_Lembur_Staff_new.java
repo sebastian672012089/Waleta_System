@@ -48,6 +48,8 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
 
     public void refreshTable_Lembur() {
         try {
+            id_pegawai_jam_kerja_kurang = new ArrayList<>();
+            tanggal_jam_kerja_kurang = new ArrayList<>();
             label_data_ijin_tidak_valid.setVisible(false);
             label_data_lembur_tidak_valid.setVisible(false);
             DefaultTableModel model = (DefaultTableModel) tabel_data_lembur.getModel();
@@ -422,7 +424,7 @@ public class JPanel_Lembur_Staff_new extends javax.swing.JPanel {
 
     public void rekap_jam_kerja_kurang() {
         try {
-            int dialogResult = JOptionPane.showConfirmDialog(this, id_pegawai_jam_kerja_kurang.size() + " karyawan kurang jam kerja, input ke data cuti?", "Warning", 0);
+            int dialogResult = JOptionPane.showConfirmDialog(this, id_pegawai_jam_kerja_kurang.size() + " data karyawan kurang jam kerja, input ke data cuti?", "Warning", 0);
             if (dialogResult == JOptionPane.YES_OPTION) {
                 int count = 0;
                 for (int i = 0; i < id_pegawai_jam_kerja_kurang.size(); i++) {

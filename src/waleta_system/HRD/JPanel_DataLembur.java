@@ -132,18 +132,15 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 
             ComboBox_departemen_SPL_PEJUANG.removeAllItems();
             ComboBox_departemen_SPL_STAFF.removeAllItems();
-            ComboBox_departemen_data_lembur.removeAllItems();
             ComboBox_departemen_rekap.removeAllItems();
             ComboBox_departemen_SPL_PEJUANG.addItem("All");
             ComboBox_departemen_SPL_STAFF.addItem("All");
-            ComboBox_departemen_data_lembur.addItem("All");
             ComboBox_departemen_rekap.addItem("All");
             sql = "SELECT `kode_dep` FROM `tb_departemen`";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
                 ComboBox_departemen_SPL_PEJUANG.addItem(rs.getString("kode_dep"));
                 ComboBox_departemen_SPL_STAFF.addItem(rs.getString("kode_dep"));
-                ComboBox_departemen_data_lembur.addItem(rs.getString("kode_dep"));
                 ComboBox_departemen_rekap.addItem(rs.getString("kode_dep"));
             }
 
@@ -172,18 +169,14 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 
     public void refreshTable_All() {
         try {
-            String bagian = "AND `nama_bagian` LIKE '%" + ComboBox_bagian_data_lembur.getSelectedItem().toString() + "%' ";
-            String departemen = "AND `kode_departemen` LIKE '%" + ComboBox_departemen_data_lembur.getSelectedItem().toString() + "%' ";
+            String bagian = "AND `nama_bagian` LIKE '%" + txt_search_bagian_data_lembur.getText() + "%' ";
             String kelamin = "AND `jenis_kelamin` LIKE '%" + ComboBox_kelamin_data_lembur.getSelectedItem().toString() + "%' ";
             String status = "AND `status` LIKE '%" + ComboBox_status_karyawan_data_lembur.getSelectedItem().toString() + "%' ";
             String jenis_lembur = "AND `jenis_lembur` = '" + ComboBox_jenis_lembur_data_lembur.getSelectedItem().toString() + "' ";
             String posisi = "AND `posisi` = '" + ComboBox_posisi_data_lembur.getSelectedItem().toString() + "' ";
             String tgl = "";
-            if ("All".equals(ComboBox_bagian_data_lembur.getSelectedItem().toString())) {
+            if (txt_search_bagian_data_lembur.getText() == null || txt_search_bagian_data_lembur.getText().equals("")) {
                 bagian = "";
-            }
-            if ("All".equals(ComboBox_departemen_data_lembur.getSelectedItem().toString())) {
-                departemen = "";
             }
             if ("All".equals(ComboBox_kelamin_data_lembur.getSelectedItem().toString())) {
                 kelamin = "";
@@ -197,25 +190,32 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             if ("All".equals(ComboBox_posisi_data_lembur.getSelectedItem().toString())) {
                 posisi = "";
             }
+            String status_SPL = "AND `tb_surat_lembur`.`diketahui` IS NOT NULL ";
+            if (ComboBox_status_SPL_DataAll.getSelectedIndex() == 0) {
+                status_SPL = "";
+            }
             if (Date_data_lembur1.getDate() != null && Date_data_lembur2.getDate() != null) {
-                tgl = "AND `tanggal_lembur` BETWEEN '" + dateFormat.format(Date_data_lembur1.getDate()) + "' AND '" + dateFormat.format(Date_data_lembur2.getDate()) + "' ";
+                tgl = "AND `tb_surat_lembur_detail`.`tanggal_lembur` BETWEEN '" + dateFormat.format(Date_data_lembur1.getDate()) + "' AND '" + dateFormat.format(Date_data_lembur2.getDate()) + "' ";
             }
             DefaultTableModel model = (DefaultTableModel) tabel_data_lembur.getModel();
             model.setRowCount(0);
-            sql = "SELECT `nomor_lembur`, `tb_surat_lembur_detail`.`id_pegawai`, `tanggal_lembur`,`mulai_lembur`, `selesai_lembur`, `jumlah_jam`, `nama_pegawai`, `nama_bagian`, `jenis_lembur` "
+            sql = "SELECT `nomor_lembur`, `tb_surat_lembur_detail`.`id_pegawai`, `tb_surat_lembur_detail`.`tanggal_lembur`,`mulai_lembur`, `selesai_lembur`, `jumlah_jam`, `nama_pegawai`, `nama_bagian`, `jenis_lembur`, "
+                    + "`tb_surat_lembur_detail`.`nomor_surat`, `tb_surat_lembur`.`diketahui` "
                     + "FROM `tb_surat_lembur_detail` "
                     + "LEFT JOIN `tb_karyawan` ON `tb_surat_lembur_detail`.`id_pegawai` = `tb_karyawan`.`id_pegawai` "
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`"
-                    + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan_data_lembur.getText() + "%' "
+                    + "LEFT JOIN `tb_surat_lembur` ON `tb_surat_lembur_detail`.`nomor_surat` = `tb_surat_lembur`.`nomor_surat`"
+                    + "WHERE "
+                    + "`nama_pegawai` LIKE '%" + txt_search_karyawan_data_lembur.getText() + "%' "
                     + bagian
-                    + departemen
                     + kelamin
                     + posisi
                     + status
                     + jenis_lembur
+                    + status_SPL
                     + tgl;
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[9];
+            Object[] row = new Object[15];
             while (rs.next()) {
                 row[0] = rs.getString("nomor_lembur");
                 row[1] = rs.getString("id_pegawai");
@@ -226,6 +226,8 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 row[6] = rs.getString("selesai_lembur");
                 row[7] = rs.getFloat("jumlah_jam");
                 row[8] = rs.getString("jenis_lembur");
+                row[9] = rs.getInt("nomor_surat");
+                row[10] = rs.getString("diketahui");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_lembur);
@@ -249,7 +251,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 departemen = "";
             }
 
-            sql = "SELECT `tb_surat_lembur`.`nomor_surat`, `tanggal_surat`, `jenis_spl`, `kode_departemen`, `jenis_hari`, `tb_surat_lembur`.`tanggal_lembur`, `uraian_tugas`, `diajukan`, `disetujui`, `diketahui`, `tb_surat_lembur_detail`.`jenis_lembur`, COUNT(`tb_surat_lembur_detail`.`id_pegawai`) AS 'jumlah_anak' "
+            sql = "SELECT `tb_surat_lembur`.`nomor_surat`, `tanggal_surat`, `jenis_spl`, `kode_departemen`, `jenis_hari`, `tb_surat_lembur`.`tanggal_lembur`, `uraian_tugas`, `diajukan`, `disetujui`, `diketahui`, `tb_surat_lembur_detail`.`jenis_lembur`, COUNT(`tb_surat_lembur_detail`.`id_pegawai`) AS 'jumlah_anak', `tb_surat_lembur`.`updated_at` "
                     + "FROM `tb_surat_lembur` "
                     + "LEFT JOIN `tb_surat_lembur_detail` ON `tb_surat_lembur`.`nomor_surat` = `tb_surat_lembur_detail`.`nomor_surat`"
                     + "WHERE kode_departemen LIKE '%" + departemen + "%' \n"
@@ -270,6 +272,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 row[8] = rs.getString("disetujui");
                 row[9] = rs.getString("diketahui");
                 row[10] = rs.getString("uraian_tugas");
+                row[11] = rs.getTimestamp("updated_at");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_SPL_PEJUANG);
@@ -296,7 +299,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 departemen = "";
             }
 
-            sql = "SELECT `tb_surat_lembur`.`nomor_surat`, `tanggal_surat`, `jenis_spl`, `kode_departemen`, `jenis_hari`, `tb_surat_lembur`.`tanggal_lembur`, `uraian_tugas`, `diajukan`, `disetujui`, `diketahui`, `tb_surat_lembur_detail`.`jenis_lembur`, COUNT(`tb_surat_lembur_detail`.`id_pegawai`) AS 'jumlah_anak' "
+            sql = "SELECT `tb_surat_lembur`.`nomor_surat`, `tanggal_surat`, `jenis_spl`, `kode_departemen`, `jenis_hari`, `tb_surat_lembur`.`tanggal_lembur`, `uraian_tugas`, `diajukan`, `disetujui`, `diketahui`, `tb_surat_lembur_detail`.`jenis_lembur`, COUNT(`tb_surat_lembur_detail`.`id_pegawai`) AS 'jumlah_anak', `tb_surat_lembur`.`updated_at` "
                     + "FROM `tb_surat_lembur` "
                     + "LEFT JOIN `tb_surat_lembur_detail` ON `tb_surat_lembur`.`nomor_surat` = `tb_surat_lembur_detail`.`nomor_surat`"
                     + "WHERE kode_departemen LIKE '%" + departemen + "%' \n"
@@ -317,6 +320,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 row[8] = rs.getString("disetujui");
                 row[9] = rs.getString("diketahui");
                 row[10] = rs.getString("uraian_tugas");
+                row[11] = rs.getTimestamp("updated_at");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_SPL_STAFF);
@@ -605,32 +609,29 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         button_diketahui_semua_SPL_STAFF = new javax.swing.JButton();
         button_buat_SPL_STAFF = new javax.swing.JButton();
         jPanel_data_lembur = new javax.swing.JPanel();
-        jPanel_search_karyawan2 = new javax.swing.JPanel();
-        txt_search_karyawan_data_lembur = new javax.swing.JTextField();
-        button_search_karyawan_data_lembur = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel39 = new javax.swing.JLabel();
-        jLabel40 = new javax.swing.JLabel();
-        ComboBox_departemen_data_lembur = new javax.swing.JComboBox<>();
-        ComboBox_bagian_data_lembur = new javax.swing.JComboBox<>();
-        Date_data_lembur1 = new com.toedter.calendar.JDateChooser();
-        Date_data_lembur2 = new com.toedter.calendar.JDateChooser();
-        jLabel14 = new javax.swing.JLabel();
-        ComboBox_kelamin_data_lembur = new javax.swing.JComboBox<>();
-        ComboBox_status_karyawan_data_lembur = new javax.swing.JComboBox<>();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        ComboBox_jenis_lembur_data_lembur = new javax.swing.JComboBox<>();
-        ComboBox_posisi_data_lembur = new javax.swing.JComboBox<>();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
         button_export_data_lembur = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         tabel_data_lembur = new javax.swing.JTable();
         label_total_data_lembur = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
+        ComboBox_kelamin_data_lembur = new javax.swing.JComboBox<>();
+        Date_data_lembur1 = new com.toedter.calendar.JDateChooser();
+        txt_search_karyawan_data_lembur = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        Date_data_lembur2 = new com.toedter.calendar.JDateChooser();
+        ComboBox_jenis_lembur_data_lembur = new javax.swing.JComboBox<>();
+        ComboBox_posisi_data_lembur = new javax.swing.JComboBox<>();
+        ComboBox_status_karyawan_data_lembur = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        txt_search_bagian_data_lembur = new javax.swing.JTextField();
+        button_search_karyawan_data_lembur = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
+        ComboBox_status_SPL_DataAll = new javax.swing.JComboBox<>();
         jPanel_data_lembur_makan = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         txt_search_nama = new javax.swing.JTextField();
@@ -729,14 +730,14 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Tgl Surat", "Departemen", "Hari", "Tgl Lembur", "Jenis Lembur", "Jumlah anak", "Diajukan", "Disetujui", "Diketahui", "Uraian Tugas"
+                "No", "Tgl Surat", "Departemen", "Hari", "Tgl Lembur", "Jenis Lembur", "Jumlah anak", "Diajukan", "Disetujui", "Diketahui", "Uraian Tugas", "Updated At"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -861,7 +862,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel_SPL_pejuangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 1334, Short.MAX_VALUE)
                     .addGroup(jPanel_SPL_pejuangLayout.createSequentialGroup()
                         .addGroup(jPanel_SPL_pejuangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_SPL_pejuangLayout.createSequentialGroup()
@@ -1125,7 +1126,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel_SPL_staffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane8)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 1334, Short.MAX_VALUE)
                     .addGroup(jPanel_SPL_staffLayout.createSequentialGroup()
                         .addGroup(jPanel_SPL_staffLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_SPL_staffLayout.createSequentialGroup()
@@ -1207,187 +1208,6 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         jPanel_data_lembur.setBackground(new java.awt.Color(255, 255, 255));
         jPanel_data_lembur.setPreferredSize(new java.awt.Dimension(1366, 652));
 
-        jPanel_search_karyawan2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_search_karyawan2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-
-        txt_search_karyawan_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_search_karyawan_data_lembur.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_search_karyawan_data_lemburKeyPressed(evt);
-            }
-        });
-
-        button_search_karyawan_data_lembur.setBackground(new java.awt.Color(255, 255, 255));
-        button_search_karyawan_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_search_karyawan_data_lembur.setText("Search");
-        button_search_karyawan_data_lembur.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_search_karyawan_data_lemburActionPerformed(evt);
-            }
-        });
-
-        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel10.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel10.setText("Nama Karyawan :");
-
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel11.setText("Departemen :");
-
-        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel13.setText("Bagian :");
-
-        jLabel39.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel39.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
-        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel39.setText("-");
-
-        jLabel40.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel40.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
-        jLabel40.setText("Date Filter (by Tanggal lembur) :");
-
-        ComboBox_departemen_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_departemen_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
-        ComboBox_departemen_data_lembur.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComboBox_departemen_data_lemburActionPerformed(evt);
-            }
-        });
-
-        ComboBox_bagian_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_bagian_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
-
-        Date_data_lembur1.setBackground(new java.awt.Color(255, 255, 255));
-        Date_data_lembur1.setToolTipText("");
-        Date_data_lembur1.setDate(new Date());
-        Date_data_lembur1.setDateFormatString("dd MMMM yyyy");
-        Date_data_lembur1.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
-        Date_data_lembur1.setMinSelectableDate(new java.util.Date(1483207315000L));
-
-        Date_data_lembur2.setBackground(new java.awt.Color(255, 255, 255));
-        Date_data_lembur2.setDate(new Date());
-        Date_data_lembur2.setDateFormatString("dd MMMM yyyy");
-        Date_data_lembur2.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
-
-        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel14.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel14.setText("Jenis Kelamin  :");
-
-        ComboBox_kelamin_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_kelamin_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Laki-Laki", "Perempuan" }));
-
-        ComboBox_status_karyawan_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_status_karyawan_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "IN", "OUT" }));
-        ComboBox_status_karyawan_data_lembur.setSelectedIndex(1);
-
-        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel15.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel15.setText("Status :");
-
-        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel16.setText("Jenis lembur :");
-
-        ComboBox_jenis_lembur_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_jenis_lembur_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Masuk", "Pulang" }));
-
-        ComboBox_posisi_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_posisi_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
-
-        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel17.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel17.setText("Posisi :");
-
-        javax.swing.GroupLayout jPanel_search_karyawan2Layout = new javax.swing.GroupLayout(jPanel_search_karyawan2);
-        jPanel_search_karyawan2.setLayout(jPanel_search_karyawan2Layout);
-        jPanel_search_karyawan2Layout.setHorizontalGroup(
-            jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_search_karyawan2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txt_search_karyawan_data_lembur)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(ComboBox_departemen_data_lembur, 0, 150, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(ComboBox_bagian_data_lembur, 0, 150, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14)
-                    .addComponent(ComboBox_kelamin_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel15)
-                    .addComponent(ComboBox_status_karyawan_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ComboBox_jenis_lembur_data_lembur, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
-                    .addGroup(jPanel_search_karyawan2Layout.createSequentialGroup()
-                        .addComponent(ComboBox_posisi_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_search_karyawan_data_lembur)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel40)
-                    .addGroup(jPanel_search_karyawan2Layout.createSequentialGroup()
-                        .addComponent(Date_data_lembur1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_data_lembur2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jPanel_search_karyawan2Layout.setVerticalGroup(
-            jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_search_karyawan2Layout.createSequentialGroup()
-                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel_search_karyawan2Layout.createSequentialGroup()
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(ComboBox_jenis_lembur_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(button_search_karyawan_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(ComboBox_posisi_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel_search_karyawan2Layout.createSequentialGroup()
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(ComboBox_status_karyawan_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel_search_karyawan2Layout.createSequentialGroup()
-                            .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel_search_karyawan2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(ComboBox_bagian_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ComboBox_kelamin_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(ComboBox_departemen_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Date_data_lembur1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel39, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(Date_data_lembur2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_search_karyawan_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 13, Short.MAX_VALUE))
-        );
-
-        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel19.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jLabel19.setText("DATA LEMBUR");
-
         button_export_data_lembur.setBackground(new java.awt.Color(255, 255, 255));
         button_export_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_export_data_lembur.setText("Export to Excel");
@@ -1403,14 +1223,14 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "ID Pegawai", "Nama", "Bagian", "Tgl Lembur", "Jam Mulai", "Jam Selesai", "Jam", "Jenis Lembur"
+                "No", "ID Pegawai", "Nama", "Bagian", "Tgl Lembur", "Jam Mulai", "Jam Selesai", "Jam", "Jenis Lembur", "No SPL", "Diketahui"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1425,12 +1245,95 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         jScrollPane7.setViewportView(tabel_data_lembur);
 
         label_total_data_lembur.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_data_lembur.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_data_lembur.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_data_lembur.setText("0");
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel21.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel21.setText("TOTAL :");
+
+        ComboBox_kelamin_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_kelamin_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Laki-Laki", "Perempuan" }));
+
+        Date_data_lembur1.setBackground(new java.awt.Color(255, 255, 255));
+        Date_data_lembur1.setToolTipText("");
+        Date_data_lembur1.setDate(new Date());
+        Date_data_lembur1.setDateFormatString("dd MMMM yyyy");
+        Date_data_lembur1.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+        Date_data_lembur1.setMinSelectableDate(new java.util.Date(1483207315000L));
+
+        txt_search_karyawan_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_karyawan_data_lembur.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_karyawan_data_lemburKeyPressed(evt);
+            }
+        });
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel17.setText("Posisi :");
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel15.setText("Status :");
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel14.setText("Jenis Kelamin  :");
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel13.setText("Bagian :");
+
+        jLabel40.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel40.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+        jLabel40.setText("Tanggal Lembur :");
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel16.setText("Jenis lembur :");
+
+        Date_data_lembur2.setBackground(new java.awt.Color(255, 255, 255));
+        Date_data_lembur2.setDate(new Date());
+        Date_data_lembur2.setDateFormatString("dd MMMM yyyy");
+        Date_data_lembur2.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+
+        ComboBox_jenis_lembur_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_jenis_lembur_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Masuk", "Pulang" }));
+
+        ComboBox_posisi_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_posisi_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
+
+        ComboBox_status_karyawan_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_status_karyawan_data_lembur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "IN", "OUT" }));
+        ComboBox_status_karyawan_data_lembur.setSelectedIndex(1);
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel10.setText("Nama :");
+
+        txt_search_bagian_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_bagian_data_lembur.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_bagian_data_lemburKeyPressed(evt);
+            }
+        });
+
+        button_search_karyawan_data_lembur.setBackground(new java.awt.Color(255, 255, 255));
+        button_search_karyawan_data_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_search_karyawan_data_lembur.setText("Search");
+        button_search_karyawan_data_lembur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_search_karyawan_data_lemburActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel19.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel19.setText("Status SPL :");
+
+        ComboBox_status_SPL_DataAll.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_status_SPL_DataAll.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Sudah Diketahui" }));
 
         javax.swing.GroupLayout jPanel_data_lemburLayout = new javax.swing.GroupLayout(jPanel_data_lembur);
         jPanel_data_lembur.setLayout(jPanel_data_lemburLayout);
@@ -1439,31 +1342,91 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             .addGroup(jPanel_data_lemburLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel_search_karyawan2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 1334, Short.MAX_VALUE)
                     .addGroup(jPanel_data_lemburLayout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_data_lembur)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_export_data_lembur))
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE))
+                        .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_data_lemburLayout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_karyawan_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_bagian_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_posisi_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_kelamin_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_status_karyawan_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel_data_lemburLayout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_data_lembur))
+                            .addGroup(jPanel_data_lemburLayout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_jenis_lembur_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel40)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_data_lembur1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_data_lembur2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel19)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_status_SPL_DataAll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_search_karyawan_data_lembur)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_data_lembur)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_data_lemburLayout.setVerticalGroup(
             jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_data_lemburLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel_search_karyawan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_export_data_lembur)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_karyawan_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_bagian_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_posisi_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_kelamin_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_status_karyawan_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Date_data_lembur1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Date_data_lembur2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ComboBox_jenis_lembur_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ComboBox_status_SPL_DataAll, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(button_search_karyawan_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_export_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_data_lemburLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(label_total_data_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1583,7 +1546,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                         .addComponent(jLabel28)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_reproses)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 508, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 511, Short.MAX_VALUE)
                         .addComponent(button_print_laporan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export_lembur_makan))
@@ -1781,7 +1744,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label_total_SPL, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)))
                     .addGroup(jPanel_rekap_per_karyawanLayout.createSequentialGroup()
                         .addGroup(jPanel_rekap_per_karyawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
@@ -1851,7 +1814,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1359, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1862,7 +1825,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1369, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2072,25 +2035,6 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         // TODO add your handling code here:
         refreshTable_All();
     }//GEN-LAST:event_button_search_karyawan_data_lemburActionPerformed
-
-    private void ComboBox_departemen_data_lemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBox_departemen_data_lemburActionPerformed
-        // TODO add your handling code here:
-        try {
-            ComboBox_bagian_data_lembur.removeAllItems();
-            String query = "SELECT `nama_bagian` FROM `tb_bagian` ORDER BY `nama_bagian`";
-            if (ComboBox_departemen_data_lembur.getSelectedItem() != "All") {
-                query = "SELECT `nama_bagian` FROM `tb_bagian` WHERE `kode_departemen`='" + ComboBox_departemen_data_lembur.getSelectedItem() + "'";
-            }
-            rs = Utility.db.getStatement().executeQuery(query);
-            ComboBox_bagian_data_lembur.addItem("All");
-            while (rs.next()) {
-                ComboBox_bagian_data_lembur.addItem(rs.getString("nama_bagian"));
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_ComboBox_departemen_data_lemburActionPerformed
 
     private void button_export_data_lemburActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_data_lemburActionPerformed
         // TODO add your handling code here:
@@ -2351,17 +2295,23 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
         refreshTable_SPL_STAFF();
     }//GEN-LAST:event_button_buat_SPL_STAFFActionPerformed
 
+    private void txt_search_bagian_data_lemburKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_bagian_data_lemburKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_All();
+        }
+    }//GEN-LAST:event_txt_search_bagian_data_lemburKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> ComboBox_bagian_data_lembur;
     private javax.swing.JComboBox<String> ComboBox_bagian_rekap;
     private javax.swing.JComboBox<String> ComboBox_departemen_SPL_PEJUANG;
     private javax.swing.JComboBox<String> ComboBox_departemen_SPL_STAFF;
-    private javax.swing.JComboBox<String> ComboBox_departemen_data_lembur;
     private javax.swing.JComboBox<String> ComboBox_departemen_rekap;
     private javax.swing.JComboBox<String> ComboBox_jenis_lembur_data_lembur;
     private javax.swing.JComboBox<String> ComboBox_kelamin_data_lembur;
     private javax.swing.JComboBox<String> ComboBox_posisi_data_lembur;
+    private javax.swing.JComboBox<String> ComboBox_status_SPL_DataAll;
     private javax.swing.JComboBox<String> ComboBox_status_karyawan_data_lembur;
     private com.toedter.calendar.JDateChooser Date_SPL_PEJUANG1;
     private com.toedter.calendar.JDateChooser Date_SPL_PEJUANG2;
@@ -2399,7 +2349,6 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
     public static javax.swing.JButton button_search_rekap;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -2421,7 +2370,6 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
-    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel41;
@@ -2436,7 +2384,6 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel_data_lembur;
     private javax.swing.JPanel jPanel_data_lembur_makan;
     private javax.swing.JPanel jPanel_rekap_per_karyawan;
-    private javax.swing.JPanel jPanel_search_karyawan2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -2460,6 +2407,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
     private javax.swing.JTable tabel_pegawai_lembur_SPL_STAFF;
     private javax.swing.JTable tabel_rekap_pegawai;
     private javax.swing.JTable table_data_lembur_makan;
+    private javax.swing.JTextField txt_search_bagian_data_lembur;
     private javax.swing.JTextField txt_search_karyawan_data_lembur;
     private javax.swing.JTextField txt_search_karyawan_rekap;
     private javax.swing.JTextField txt_search_nama;

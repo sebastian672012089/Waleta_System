@@ -575,10 +575,11 @@ public class JPanel_DataTreatment extends javax.swing.JPanel {
                 }
                 kode_treatment = kode_treatment + "'" + Table_data_treatment.getValueAt(i, 0).toString() + "'";
             }
-            String Query = "SELECT CONCAT(A.`no_laporan_produksi`, IF(`cheat_rsb` IS NULL, CONCAT('-', `no_registrasi`), CONCAT('-', `cheat_rsb`))) AS 'no_lp_rsb', A.`no_laporan_produksi`, `tgl_treatment` AS 'tanggal', `status`, "
-                    + "CONCAT(' ', `jenis_barang`, '(T):', `nitrit_akhir`) AS 'nitrit' \n"
+            String Query = "SELECT CONCAT(A.`no_laporan_produksi`, IF(`cheat_rsb` IS NULL, CONCAT('-', `no_registrasi`), CONCAT('-', `cheat_rsb`))) AS 'no_lp_rsb', A.`no_laporan_produksi`, `tgl_treatment` AS 'tanggal', A.`status`, "
+                    + "CONCAT(' ', `jenis_barang`, '(T):', `nitrit_akhir`) AS 'nitrit', `tb_lab_laporan_produksi`.`kadar_aluminium` \n"
                     + "FROM `tb_lab_treatment_lp` A "
                     + "LEFT JOIN `tb_laporan_produksi` ON A.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi` "
+                    + "LEFT JOIN `tb_lab_laporan_produksi` ON A.`no_laporan_produksi` = `tb_lab_laporan_produksi`.`no_laporan_produksi` "
                     + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`"
                     + "WHERE A.`kode_treatment` IN (" + kode_treatment + ") ";
 //                    + "AND `print_label` = 0";

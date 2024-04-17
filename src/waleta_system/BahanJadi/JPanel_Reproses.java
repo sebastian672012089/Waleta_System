@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -14,6 +16,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
 
@@ -79,15 +90,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
             calendar.set(Integer.valueOf(this_year), new Date().getMonth(), 1);
             Date first_date = calendar.getTime();
 
-            ComboBox_tujuan_reproses.removeAllItems();
-            ComboBox_tujuan_reproses.addItem("All");
-            ComboBox_tujuan_reproses.addItem("Eksternal");
-            String tujuan = "SELECT DISTINCT(`bagian`) AS 'tujuan' FROM `tb_reproses`";
-            ResultSet rs_tujuan = Utility.db.getStatement().executeQuery(tujuan);
-            while (rs_tujuan.next()) {
-                ComboBox_tujuan_reproses.addItem(rs_tujuan.getString("tujuan"));
-            }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(JPanel_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -112,8 +115,6 @@ public class JPanel_Reproses extends javax.swing.JPanel {
             String tujuan = "";
             if (ComboBox_tujuan_reproses.getSelectedItem().equals("All")) {
                 tujuan = "";
-            } else if (ComboBox_tujuan_reproses.getSelectedItem().equals("Eksternal")) {
-                tujuan = "AND LENGTH(`bagian`) = 5 ";
             } else {
                 tujuan = "AND `bagian` = '" + ComboBox_tujuan_reproses.getSelectedItem().toString() + "'";
             }
@@ -145,7 +146,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_karyawan` pt ON `tb_reproses`.`pekerja_timbang` = pt.`id_pegawai`"
                     + "LEFT JOIN `tb_karyawan` pc ON `tb_reproses`.`pekerja_cetak` = pc.`id_pegawai`"
                     + "WHERE "
-                    + "`tb_reproses`.`status` LIKE '%" + status + "%' " 
+                    + "`tb_reproses`.`status` LIKE '%" + status + "%' "
                     + filter_tanggal
                     + "AND `tb_reproses`.`no_box` LIKE '%" + txt_search_box_reproses.getText() + "%' "
                     + tujuan;
@@ -274,6 +275,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
             label_total_data_pencabut.setText(Integer.toString(total_data));
             label_total_gram_cabutan.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -319,6 +321,8 @@ public class JPanel_Reproses extends javax.swing.JPanel {
         button_edit_reproses = new javax.swing.JButton();
         button_selesai_reproses_GBJ = new javax.swing.JButton();
         button_selesai_reproses_QC = new javax.swing.JButton();
+        button_LP_Reproses_Sub = new javax.swing.JButton();
+        button_LP_Reproses = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
         table_data_reproses_cabut = new javax.swing.JTable();
@@ -395,7 +399,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
         jLabel62.setText("Tujuan :");
 
         ComboBox_tujuan_reproses.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_tujuan_reproses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
+        ComboBox_tujuan_reproses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "RND", "F2 - MLem", "F2 - Jidun", "F2 - Kakian", "F2 - Mess", "Eksternal" }));
 
         ComboBox_Filter_Tgl_reproses.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         ComboBox_Filter_Tgl_reproses.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tanggal Reproses", "Tanggal Cetak", "Tanggal F1", "Tanggal F2", "Tanggal Selesai" }));
@@ -587,6 +591,22 @@ public class JPanel_Reproses extends javax.swing.JPanel {
             }
         });
 
+        button_LP_Reproses_Sub.setBackground(new java.awt.Color(255, 255, 255));
+        button_LP_Reproses_Sub.setText("Cetak LP Reproses Sub");
+        button_LP_Reproses_Sub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_LP_Reproses_SubActionPerformed(evt);
+            }
+        });
+
+        button_LP_Reproses.setBackground(new java.awt.Color(255, 255, 255));
+        button_LP_Reproses.setText("Cetak LP Reproses");
+        button_LP_Reproses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_LP_ReprosesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -606,7 +626,11 @@ public class JPanel_Reproses extends javax.swing.JPanel {
                         .addComponent(button_selesai_reproses_GBJ)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_selesai_reproses_QC)
-                        .addGap(0, 831, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_LP_Reproses_Sub)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_LP_Reproses)
+                        .addGap(0, 553, Short.MAX_VALUE))
                     .addComponent(jScrollPane9)
                     .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -621,7 +645,9 @@ public class JPanel_Reproses extends javax.swing.JPanel {
                     .addComponent(button_input_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_edit_reproses, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_selesai_reproses_GBJ, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_selesai_reproses_QC, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_selesai_reproses_QC, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_LP_Reproses_Sub, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_LP_Reproses, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1172,6 +1198,65 @@ public class JPanel_Reproses extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_edit_pekerja_cabutActionPerformed
 
+    private void button_LP_Reproses_SubActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_LP_Reproses_SubActionPerformed
+        // TODO add your handling code here:
+        try {
+            String no_reproses = "";
+            for (int i = 0; i < table_data_reproses.getRowCount(); i++) {
+                if (i != 0) {
+                    no_reproses = no_reproses + ", ";
+                }
+                no_reproses = no_reproses + "'" + table_data_reproses.getValueAt(i, 0).toString() + "'";
+            }
+            String query = "SELECT `tanggal_proses`, `no_reproses`, `tb_reproses`.`no_box`, `tb_grade_bahan_jadi`.`kode_grade`, `tb_reproses`.`keping`, `tb_reproses`.`gram` \n"
+                    + "FROM `tb_reproses` \n"
+                    + "LEFT JOIN `tb_box_bahan_jadi` ON `tb_reproses`.`no_box` = `tb_box_bahan_jadi`.`no_box`\n"
+                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`\n"
+                    + "WHERE `no_reproses` IN (" + no_reproses + ")";
+            JRDesignQuery newQuery = new JRDesignQuery();
+            newQuery.setText(query);
+            JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Label_Reproses_Sub.jrxml");
+            JASP_DESIGN.setQuery(newQuery);
+            JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+            Map<String, Object> params = new HashMap<String, Object>();
+            JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
+            JasperViewer.viewReport(JASP_PRINT, false);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_LP_Reproses_SubActionPerformed
+
+    private void button_LP_ReprosesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_LP_ReprosesActionPerformed
+        // TODO add your handling code here:
+        try {
+            String no_box = "";
+            for (int i = 0; i < table_data_reproses.getRowCount(); i++) {
+                if (i != 0) {
+                    no_box = no_box + ", ";
+                }
+                no_box = no_box + "'" + table_data_reproses.getValueAt(i, 1).toString() + "'";
+            }
+            String query = "SELECT `no_box`, `tanggal_box`, `keping`, `berat`, `kode_grade`, `tb_box_bahan_jadi`.`kode_rsb`,\n"
+                    + "(SELECT `no_kartu_waleta` FROM `tb_bahan_baku_masuk_cheat` WHERE `kode_kh` = `tb_dokumen_kh`.`kode_kh` AND `no_kartu_waleta` NOT LIKE '%CMP%' ORDER BY `no_kartu_waleta` LIMIT 1) AS 'no_kartu_waleta'\n"
+                    + "FROM `tb_box_bahan_jadi`\n"
+                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`\n"
+                    + "LEFT JOIN `tb_dokumen_kh` ON `tb_box_bahan_jadi`.`kode_kh` = `tb_dokumen_kh`.`kode_kh`\n"
+                    + "WHERE `no_box` IN (" + no_box + ")";
+            JRDesignQuery newQuery = new JRDesignQuery();
+            newQuery.setText(query);
+            JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Label_Reproses.jrxml");
+            JASP_DESIGN.setQuery(newQuery);
+            JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+            Map<String, Object> params = new HashMap<String, Object>();
+            JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
+            JasperViewer.viewReport(JASP_PRINT, false);
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_LP_ReprosesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_Filter_Tgl_reproses;
@@ -1179,6 +1264,8 @@ public class JPanel_Reproses extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> ComboBox_tujuan_reproses;
     private com.toedter.calendar.JDateChooser Date_Search_reproses1;
     private com.toedter.calendar.JDateChooser Date_Search_reproses2;
+    public javax.swing.JButton button_LP_Reproses;
+    public javax.swing.JButton button_LP_Reproses_Sub;
     public javax.swing.JButton button_delete_pekerja_cabut;
     public javax.swing.JButton button_edit_pekerja_cabut;
     public javax.swing.JButton button_edit_reproses;

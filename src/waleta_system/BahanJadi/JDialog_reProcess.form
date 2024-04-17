@@ -304,12 +304,13 @@
               <Font name="Arial" size="11" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
+              <StringArray count="6">
                 <StringItem index="0" value="RND"/>
                 <StringItem index="1" value="F2 - MLem"/>
                 <StringItem index="2" value="F2 - Jidun"/>
                 <StringItem index="3" value="F2 - Kakian"/>
                 <StringItem index="4" value="F2 - Mess"/>
+                <StringItem index="5" value="Eksternal"/>
               </StringArray>
             </Property>
           </Properties>

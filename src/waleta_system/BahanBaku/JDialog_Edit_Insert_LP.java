@@ -150,23 +150,24 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 Label_no_kartu_LP.setText(rs.getString("no_kartu_waleta"));
                 Label_kode_grade_lp.setText(rs.getString("kode_grade"));
                 ComboBox_jenisBulu.setSelectedItem(rs.getString("jenis_bulu_lp"));
+
+                ComboBox_ruangan.removeAllItems();
+                ComboBox_ruangan.addItem("A");
+                ComboBox_ruangan.addItem("B");
+                ComboBox_ruangan.addItem("C");
+                ComboBox_ruangan.addItem("D");
+                ComboBox_ruangan.addItem("E");
                 if (rs.getString("ruangan").equals("CABUTO")) {
                     ruangan_awal = "CABUTO";
-                    ComboBox_ruangan.removeAllItems();
                     ComboBox_ruangan.addItem("CABUTO");
-                } else {
-                    if (list_kode_sub.indexOf(rs.getString("ruangan")) > -1) {//ruangan sub
-                        ruangan_awal = "SUB";
-                    } else {
-                        ruangan_awal = "WALETA";
+                } else if (list_kode_sub.indexOf(rs.getString("ruangan")) > -1) {//ruangan sub
+                    ruangan_awal = "SUB";
+                    for (String kode_sub : list_kode_sub) {
+                        ComboBox_ruangan.addItem(kode_sub);
                     }
-
-                    ComboBox_ruangan.removeAllItems();
-                    ComboBox_ruangan.addItem("A");
-                    ComboBox_ruangan.addItem("B");
-                    ComboBox_ruangan.addItem("C");
-                    ComboBox_ruangan.addItem("D");
-                    ComboBox_ruangan.addItem("E");
+                    ComboBox_ruangan.removeItem("SUB00");
+                } else {
+                    ruangan_awal = "WALETA";
                     for (String kode_sub : list_kode_sub) {
                         ComboBox_ruangan.addItem(kode_sub);
                     }
@@ -1552,21 +1553,22 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 } else if (ruangan_awal.equals("SUB") && ruangan_akhir.equals("SUB")) {
                     edit_lp_waleta();
                     edit_lp_sub();
-                } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("CABUTO")) {
-                    edit_lp_waleta();
-                    edit_lp_cabuto();
                 } else if (ruangan_awal.equals("WALETA") && ruangan_akhir.equals("SUB")) {
                     edit_lp_waleta();
                     input_lp_sub();
                 } else if (ruangan_awal.equals("SUB") && ruangan_akhir.equals("WALETA")) {
                     edit_lp_waleta();
                     delete_lp_sub();
-                } else if (ruangan_awal.equals("WALETA") && ruangan_akhir.equals("CABUTO")) {
+                } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("CABUTO")) {
                     edit_lp_waleta();
-                    input_lp_cabuto();
+                    edit_lp_cabuto();
                 } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("WALETA")) {
                     edit_lp_waleta();
                     delete_lp_cabuto();
+                } else if (ruangan_awal.equals("WALETA") && ruangan_akhir.equals("CABUTO")) {
+                    JOptionPane.showMessageDialog(this, "Tidak bisa memindahkan LP WALETA ke CABUTO !");
+//                    edit_lp_waleta();
+//                    input_lp_cabuto();
                 } else if (ruangan_awal.equals("SUB") && ruangan_akhir.equals("CABUTO")) {
                     JOptionPane.showMessageDialog(this, "Tidak bisa memindahkan LP SUB ke CABUTO !");
                 } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("SUB")) {

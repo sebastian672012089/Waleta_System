@@ -165,7 +165,7 @@ public class JPanel_Lab_LaporanProduksi extends javax.swing.JPanel {
                 }
             }
 
-            sql = "SELECT `tb_lab_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `ruangan`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`memo_lp`, `tb_lab_laporan_produksi`.`tgl_masuk`, `tgl_sampling`, `pekerja_sampling`, `tb_karyawan`.`nama_pegawai` AS 'nama_pekerja_sampling', `tgl_uji`, `tgl_selesai`, `tb_rumah_burung`.`nama_rumah_burung`, `status_akhir`, `print_label`, `print_label_setor`, `tb_lab_laporan_produksi`.`keterangan`, "
+            sql = "SELECT `tb_lab_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `ruangan`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`memo_lp`, `tb_lab_laporan_produksi`.`tgl_masuk`, `tgl_sampling`, `pekerja_sampling`, `tb_karyawan`.`nama_pegawai` AS 'nama_pekerja_sampling', `tgl_uji`, `tgl_selesai`, `tb_rumah_burung`.`nama_rumah_burung`, `status_akhir`, `print_label`, `print_label_setor`, `tb_lab_laporan_produksi`.`keterangan`, `kadar_aluminium`, "
                     + "GREATEST(`nitrit_bm`, `nitrit_bm_w2`, `nitrit_bm_w3`) AS 'nitrit_bm', `nitrit_utuh`, `nitrit_flat`, `jidun`, `kadar_air_bahan_jadi`, `tb_lab_laporan_produksi`.`status`, `utuh`, `pecah`, `flat`, `kpg_akhir`, `gram_akhir`, `jenis_treatment`, CONCAT(`suhu_awal_steam`, '-', `suhu_akhir_steam`, '°C / ', TIME_FORMAT(`waktu_steam`, '%i:%s')) AS 'waktu_suhu_steam', \n"
                     + "`tanggal_rendam` "
                     + "FROM `tb_lab_laporan_produksi` "
@@ -221,6 +221,7 @@ public class JPanel_Lab_LaporanProduksi extends javax.swing.JPanel {
                 row[23] = rs.getString("keterangan");
                 row[24] = rs.getBoolean("print_label");
                 row[25] = rs.getBoolean("print_label_setor");
+                row[26] = rs.getFloat("kadar_aluminium");
                 if (CheckBox_utuh.isSelected() && rs.getFloat("nitrit_utuh") > 0) {
                     model.addRow(row);
                 } else if (CheckBox_flat.isSelected() && rs.getFloat("nitrit_flat") > 0) {
@@ -536,14 +537,14 @@ public class JPanel_Lab_LaporanProduksi extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No LP", "Grade", "kartu", "RSB", "Memo", "Treatment", "Tgl Masuk", "Tgl Sampling", "Pekerja Sampling", "Tgl Uji", "Tgl Selesai", "NO2 Baku", "NO2 Utuh", "NO2 Flat", "NO2 Jdn", "Moist", "Utuh", "Pecah", "Flat", "Kpg Akhir", "Gram Akhir", "Status", "Status Akhir", "Keterangan", "Print 1", "Print 2"
+                "No LP", "Grade", "kartu", "RSB", "Memo", "Treatment", "Tgl Masuk", "Tgl Sampling", "Pekerja Sampling", "Tgl Uji", "Tgl Selesai", "NO2 Baku", "NO2 Utuh", "NO2 Flat", "NO2 Jdn", "Moist", "Utuh", "Pecah", "Flat", "Kpg Akhir", "Gram Akhir", "Status", "Status Akhir", "Keterangan", "Print 1", "Print 2", "Kadar Al"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1294,10 +1295,9 @@ public class JPanel_Lab_LaporanProduksi extends javax.swing.JPanel {
                     .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_search_Memo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(txt_search_Ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_search_lab_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txt_search_Ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_search_lab_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(Date_1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1577,15 +1577,17 @@ public class JPanel_Lab_LaporanProduksi extends javax.swing.JPanel {
                 }
                 no_lp = no_lp + "'" + Table_Data_Lab_LP.getValueAt(i, 0).toString() + "'";
             }
-            sql = "SELECT `tb_lab_laporan_produksi`.`no_laporan_produksi`, `cheat_rsb`, `cheat_no_kartu`, `tb_laporan_produksi`.`kode_grade`, `no_registrasi`, `tb_lab_laporan_produksi`.`tgl_masuk`, `tgl_uji`, `tanggal_rendam`, `tgl_selesai`, "
+            sql = "SELECT `tb_lab_laporan_produksi`.`no_laporan_produksi`, `cheat_rsb`, `cheat_no_kartu`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`no_kartu_waleta`, `no_registrasi`, `tb_lab_laporan_produksi`.`tgl_masuk`, `tgl_uji`, `tanggal_rendam`, `tgl_selesai`, "
                     + "`tb_lab_bahan_baku`.`nitrit_bm_w3`, `nitrit_utuh`, `nitrit_flat`, `jidun`, GREATEST(`nitrit_utuh`,`jidun`, `nitrit_flat`) AS 'nitrit', `kadar_air_bahan_jadi`, `status`, `utuh`, `pecah`, `flat`, `kpg_akhir`, `gram_akhir`\n"
                     + "FROM `tb_lab_laporan_produksi` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_lab_laporan_produksi`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi` "
                     + "LEFT JOIN `tb_rendam` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_rendam`.`no_laporan_produksi` "
                     + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta` "
                     + "LEFT JOIN `tb_lab_bahan_baku` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_lab_bahan_baku`.`no_kartu_waleta`\n"
-                    + "WHERE `tb_lab_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") AND `tgl_uji` IS NOT NULL "
-                    + "ORDER BY `tb_lab_laporan_produksi`.`no_laporan_produksi` ASC";
+                    + "WHERE "
+                    + "`tb_lab_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") "
+                    + "AND `tgl_uji` IS NOT NULL "
+                    + "ORDER BY `tgl_uji` ASC";
             JRDesignQuery newQuery = new JRDesignQuery();
             newQuery.setText(sql);
             JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Sodium_Nitrit_Catatan_Pengujian_Grading_Bahan_Jadi.jrxml");
@@ -1661,7 +1663,7 @@ public class JPanel_Lab_LaporanProduksi extends javax.swing.JPanel {
                 no_lp = no_lp + "'" + Table_Data_Lab_LP.getValueAt(i, 0).toString() + "'";
             }
             String Query = "SELECT CONCAT(A.`no_laporan_produksi`, IF(`cheat_rsb` IS NULL, CONCAT('-', `no_registrasi`), CONCAT('-', `cheat_rsb`))) AS 'no_lp_rsb', A.`no_laporan_produksi`, `tgl_uji` AS 'tanggal', `status`, "
-                    + "CONCAT(IF(`nitrit_utuh`>0, CONCAT('Utuh:',`nitrit_utuh`), ''), IF(`nitrit_flat`>0, CONCAT(' Flat:',`nitrit_flat`), ''), IF(`jidun`>0, CONCAT(' Jdn:',`jidun`), '')) AS 'nitrit' \n"
+                    + "CONCAT(IF(`nitrit_utuh`>0, CONCAT('Utuh:',`nitrit_utuh`), ''), IF(`nitrit_flat`>0, CONCAT(' Flat:',`nitrit_flat`), ''), IF(`jidun`>0, CONCAT(' Jdn:',`jidun`), '')) AS 'nitrit', `kadar_aluminium` \n"
                     + "FROM `tb_lab_laporan_produksi` A "
                     + "LEFT JOIN `tb_laporan_produksi` ON A.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi` "
                     + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`"
@@ -1698,7 +1700,7 @@ public class JPanel_Lab_LaporanProduksi extends javax.swing.JPanel {
                 no_lp = no_lp + "'" + Table_Data_Lab_LP.getValueAt(i, 0).toString() + "'";
             }
             int max_nitrit = Integer.valueOf(txt_max_nitrit.getText());
-            String Query = "SELECT CONCAT(A.`no_laporan_produksi`, IF(`cheat_rsb` IS NULL, CONCAT('-', `no_registrasi`), CONCAT('-', `cheat_rsb`))) AS 'no_lp_rsb', A.`no_laporan_produksi`, `tgl_selesai` AS 'tanggal', `status_akhir` AS 'status', "
+            String Query = "SELECT CONCAT(A.`no_laporan_produksi`, IF(`cheat_rsb` IS NULL, CONCAT('-', `no_registrasi`), CONCAT('-', `cheat_rsb`))) AS 'no_lp_rsb', A.`no_laporan_produksi`, `tgl_selesai` AS 'tanggal', `status_akhir` AS 'status', `kadar_aluminium`, "
                     + "CONCAT("
                     + "IF(`nitrit_utuh`>0, IF(`nitrit_utuh`>" + max_nitrit + ",CONCAT('Utuh(T):',ROUND((SELECT `nitrit_akhir` FROM `tb_lab_treatment_lp` WHERE `no_laporan_produksi` = A.`no_laporan_produksi` AND `jenis_barang` = 'Utuh' ORDER BY `nitrit_akhir` LIMIT 1), 1)),CONCAT('Utuh:',`nitrit_utuh`)), ''), "
                     + "IF(`nitrit_flat`>0, IF(`nitrit_flat`>" + max_nitrit + ",CONCAT(' Flat(T):',ROUND((SELECT `nitrit_akhir` FROM `tb_lab_treatment_lp` WHERE `no_laporan_produksi` = A.`no_laporan_produksi` AND `jenis_barang` = 'Flat' ORDER BY `nitrit_akhir` LIMIT 1), 1)),CONCAT(' Flat:',`nitrit_flat`)), ''), "

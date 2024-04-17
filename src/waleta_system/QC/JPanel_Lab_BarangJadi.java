@@ -84,7 +84,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                 status_print = " AND `print_label` = 0 ";
             }
 
-            sql = "SELECT `tb_lab_barang_jadi`.`kode`, `tb_lab_barang_jadi`.`no_box`, `tb_grade_bahan_jadi`.`kode_grade`, `tb_box_bahan_jadi`.`keping`, `tb_box_bahan_jadi`.`berat`, `tgl_masuk`, `nitrit_awal`, `tgl_selesai`, `nitrit_akhir`, `kpg_akhir`, `gram_akhir`, `print_label` \n"
+            sql = "SELECT `tb_lab_barang_jadi`.`kode`, `tb_lab_barang_jadi`.`no_box`, `tb_grade_bahan_jadi`.`kode_grade`, `tb_box_bahan_jadi`.`keping`, `tb_box_bahan_jadi`.`berat`, `tgl_masuk`, `nitrit_awal`, `tgl_selesai`, `nitrit_akhir`, `kpg_akhir`, `gram_akhir`, `print_label`, `kadar_aluminium_bj` \n"
                     + "FROM `tb_lab_barang_jadi` "
                     + "LEFT JOIN `tb_box_bahan_jadi` ON `tb_lab_barang_jadi`.`no_box` = `tb_box_bahan_jadi`.`no_box`\n"
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`"
@@ -118,6 +118,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                     row[11] = "PASSED";
                 }
                 row[12] = rs.getBoolean("print_label");
+                row[13] = rs.getFloat("kadar_aluminium_bj");
                 model.addRow(row);
             }
             rata2_nitrit_awal = total_nitrit_awal / Table_data_treatment.getRowCount();
@@ -172,6 +173,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
         button_input_nitrit_akhir = new javax.swing.JButton();
         jLabel21 = new javax.swing.JLabel();
         ComboBox_status_print = new javax.swing.JComboBox<>();
+        button_input_kadar_aluminium = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -185,14 +187,14 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode", "No Box", "Grade", "Tgl Masuk", "Kpg Awal", "Gram Awal", "Nitrit Awal", "Tgl Selesai", "Nitrit Akhir", "Keping Akhir", "Gram Akhir", "Status", "Print Label"
+                "Kode", "No Box", "Grade", "Tgl Masuk", "Kpg Awal", "Gram Awal", "Nitrit Awal", "Tgl Selesai", "Nitrit Akhir", "Keping Akhir", "Gram Akhir", "Status", "Print Label", "Kadar Aluminium"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.Boolean.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Float.class, java.lang.Integer.class, java.lang.Float.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -358,6 +360,15 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
         ComboBox_status_print.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         ComboBox_status_print.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Sudah Print", "Belum Print" }));
 
+        button_input_kadar_aluminium.setBackground(new java.awt.Color(255, 255, 255));
+        button_input_kadar_aluminium.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_input_kadar_aluminium.setText("Input Kadar Aluminium");
+        button_input_kadar_aluminium.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_input_kadar_aluminiumActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -366,28 +377,6 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1336, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_search_no_box, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_search_grade, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBox_filter_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBox_status_print, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_Refresh)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_export_dataTreatment))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -415,6 +404,8 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_input_nitrit_akhir)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_input_kadar_aluminium)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_edit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_print_label_passed)
@@ -423,7 +414,29 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_max_nitrit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txt_max_nitrit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_no_box, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_grade, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_filter_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel21)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_status_print, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_Refresh)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_dataTreatment)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -431,21 +444,20 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button_export_dataTreatment, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_search_no_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_search_grade, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Date_2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Date_1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ComboBox_filter_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(ComboBox_status_print, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(button_Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_no_box, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_grade, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_filter_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ComboBox_status_print, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_Refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_export_dataTreatment, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -454,7 +466,8 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                         .addComponent(button_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_print_label_passed, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_print_label_passed1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_input_nitrit_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(button_input_nitrit_akhir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_input_kadar_aluminium, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txt_max_nitrit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -646,7 +659,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                 kode = kode + "'" + Table_data_treatment.getValueAt(i, 0).toString() + "'";
             }
             String Query = "SELECT IF(`kode_rsb` IS NULL, `tb_lab_barang_jadi`.`no_box`, CONCAT(`tb_lab_barang_jadi`.`no_box`, '-', `kode_rsb`)) AS 'no_box_rsb', `tb_lab_barang_jadi`.`no_box`, `tb_grade_bahan_jadi`.`kode_grade`, `tgl_selesai`, IF(`tgl_selesai` IS NULL, `nitrit_awal`, `nitrit_akhir`) AS 'nitrit_akhir', "
-                    + "IF(IF(`tgl_selesai` IS NULL, `nitrit_awal`, `nitrit_akhir`) > " + txt_max_nitrit.getText() + ", 'HOLD/NON GNS', 'PASSED') AS `status` \n"
+                    + "IF(IF(`tgl_selesai` IS NULL, `nitrit_awal`, `nitrit_akhir`) > " + txt_max_nitrit.getText() + ", 'HOLD/NON GNS', 'PASSED') AS `status`, `kadar_aluminium_bj` \n"
                     + "FROM `tb_lab_barang_jadi` \n"
                     + "LEFT JOIN `tb_box_bahan_jadi` ON `tb_lab_barang_jadi`.`no_box` = `tb_box_bahan_jadi`.`no_box` "
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode` "
@@ -676,7 +689,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
             try {
                 String kode = "'" + Table_data_treatment.getValueAt(i, 0).toString() + "'";
                 String Query = "SELECT IF(`kode_rsb` IS NULL, `tb_lab_barang_jadi`.`no_box`, CONCAT(`tb_lab_barang_jadi`.`no_box`, '-', `kode_rsb`)) AS 'no_box_rsb', `tb_lab_barang_jadi`.`no_box`, `tb_grade_bahan_jadi`.`kode_grade`, `tgl_selesai`, IF(`tgl_selesai` IS NULL, `nitrit_awal`, `nitrit_akhir`) AS 'nitrit_akhir', "
-                        + "IF(IF(`tgl_selesai` IS NULL, `nitrit_awal`, `nitrit_akhir`) > " + txt_max_nitrit.getText() + ", 'HOLD/NON GNS', 'PASSED') AS `status` \n"
+                        + "IF(IF(`tgl_selesai` IS NULL, `nitrit_awal`, `nitrit_akhir`) > " + txt_max_nitrit.getText() + ", 'HOLD/NON GNS', 'PASSED') AS `status`, `kadar_aluminium_bj` \n"
                         + "FROM `tb_lab_barang_jadi` \n"
                         + "LEFT JOIN `tb_box_bahan_jadi` ON `tb_lab_barang_jadi`.`no_box` = `tb_box_bahan_jadi`.`no_box` "
                         + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode` "
@@ -748,6 +761,42 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_input_nitrit_akhirActionPerformed
 
+    private void button_input_kadar_aluminiumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_kadar_aluminiumActionPerformed
+        // TODO add your handling code here:
+        decimalFormat.setMaximumFractionDigits(2);
+        decimalFormat.setGroupingUsed(false);
+        int i = Table_data_treatment.getSelectedRow();
+        if (i == -1) {
+            JOptionPane.showMessageDialog(this, "Belum memilih data");
+        } else if (Table_data_treatment.getValueAt(i, 7) != null) {
+            JOptionPane.showMessageDialog(this, "Box sudah disetor tidak bisa input Kadar Aluminium");
+        } else {
+            String kode = Table_data_treatment.getValueAt(i, 0).toString();
+            try {
+                String input = JOptionPane.showInputDialog(this, "Masukkan Kadar Aluminium : ");
+                if (input != null && !input.equals("")) {
+                    float kadar_AL_inputan = Float.valueOf(input);
+                    decimalFormat = Utility.DecimalFormatUS(decimalFormat);
+                    sql = "UPDATE `tb_lab_barang_jadi` SET "
+                            + "`kadar_aluminium_bj`='" + decimalFormat.format(kadar_AL_inputan) + "' "
+                            + "WHERE `kode`='" + kode + "'";
+                    Utility.db.getConnection().createStatement();
+                    if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
+                        refreshTable();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Input failed!");
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_Lab_BarangJadi.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Input must be number!");
+                Logger.getLogger(JPanel_Lab_BarangJadi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_button_input_kadar_aluminiumActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_filter_tanggal;
@@ -758,6 +807,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
     public static javax.swing.JButton button_Refresh;
     public static javax.swing.JButton button_edit;
     public static javax.swing.JButton button_export_dataTreatment;
+    public static javax.swing.JButton button_input_kadar_aluminium;
     public static javax.swing.JButton button_input_nitrit;
     public static javax.swing.JButton button_input_nitrit_akhir;
     public static javax.swing.JButton button_print_label_passed;

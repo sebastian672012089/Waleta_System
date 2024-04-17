@@ -65,6 +65,28 @@ public class Utility {
     public static final int ROTATE_LEFT = 1;
     public static final int ROTATE_RIGHT = -1;
     public static int ROTATE = 1;
+    
+    public static void detectAnonymousCharacters(String str) {
+        // Regular expression to detect non-printable characters
+        String regex = "[^\\p{Print}]";
+
+        // Find anonymous characters using regular expression
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
+        java.util.regex.Matcher matcher = pattern.matcher(str);
+
+        // Print the anonymous characters found
+        while (matcher.find()) {
+            System.out.println("Anonymous character detected: " + java.util.Arrays.toString(matcher.group().getBytes()));
+        }
+    }
+    
+    public static String removeAnonymousCharacters(String str) {
+        // Regular expression to remove non-printable characters
+        String regex = "[^\\p{Print}]";
+
+        // Remove anonymous characters using regular expression
+        return str.replaceAll(regex, "");
+    }
 
     public static DecimalFormat DecimalFormatUS(DecimalFormat decimalFormat) {
         Locale currentLocale = Locale.getDefault();

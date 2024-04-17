@@ -392,7 +392,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                 search_sub = "";
             }
             sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`, `kode_grade`, `ruangan`, `jenis_bulu_lp`, `tb_cabut`.`tgl_setor_cabut`, `tb_laporan_produksi`.`jumlah_keping`, "
-                    + "`keping_upah`, `berat_basah`, "
+                    + "`keping_upah`, `berat_basah`, `penilaian_waleta`, "
                     + "IF(`kode_grade` = 'KK/KULIT', (`berat_basah` / `bobot_gram_lp`), (`keping_upah` / `bobot_1_lp`)) AS 'bobot_lp', "
                     + "IF(`kode_grade` = 'KK/KULIT', (`berat_basah` * `bonus_sesekan`), (`berat_basah` * `bonus_cabut`)) AS 'bonus_cabut', "
                     + "(`berat_basah` * `upah_cabut`) AS 'upah_cabut', "
@@ -424,6 +424,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                 row[8] = bobot_Lp;
                 row[9] = rs.getFloat("upah_cabut");//upah cabut 1 lp
                 row[10] = rs.getFloat("bonus_cabut");
+                row[11] = rs.getObject("penilaian_waleta") == null ? null : rs.getInt("penilaian_waleta");
                 model.addRow(row);
                 total_gram_lp = total_gram_lp + rs.getInt("berat_basah");
                 total_bobot_lp = total_bobot_lp + Math.round(rs.getDouble("bobot_lp") * 100d) / 100d;
@@ -1212,7 +1213,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                     Tabel_data_perhitungan_upah.setValueAt(update_total_gaji, i, 29);//update total gaji transfer
                     Tabel_data_perhitungan_upah.setValueAt(Math.floor(update_total_gaji / 500d) * 500d, i, 30);
                     total_gaji_karyawan_per_sub.put(sub, total_gaji_karyawan_per_sub.get(sub) + Math.round(bonus_cabut_karyawan + bonus_lp_sesekan + bonus_lp_sapon));
-                    
+
                 }
 
                 ColumnsAutoSizer.sizeColumnsToFit(Tabel_data_perhitungan_upah);
@@ -1435,6 +1436,8 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
         jLabel30 = new javax.swing.JLabel();
         label_bonusCabut_total_nilaiLP = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
+        button_Input_PenilaianLP = new javax.swing.JButton();
+        jLabel60 = new javax.swing.JLabel();
         jPanel_bonus_LP_BP = new javax.swing.JPanel();
         label_bonusCabut_total_bobotLP_BP = new javax.swing.JLabel();
         label_bonusCabut_total_LP_BP = new javax.swing.JLabel();
@@ -2317,14 +2320,14 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No LP", "Grade", "Ruangan", "Jenis Blu Upah", "Setor Cabut", "Kpg", "Kpg Upah", "Gram", "Bobot LP", "Upah Cabut", "Bonus Cabut"
+                "No LP", "Grade", "Ruangan", "Jenis Blu Upah", "Setor Cabut", "Kpg", "Kpg Upah", "Gram", "Bobot LP", "Upah Cabut", "Bonus Cabut", "Nilai LP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -2336,6 +2339,11 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
             }
         });
         table_data_Bonus_LP_WL.getTableHeader().setReorderingAllowed(false);
+        table_data_Bonus_LP_WL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_data_Bonus_LP_WLMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(table_data_Bonus_LP_WL);
 
         label_bonusCabut_total_gramLP.setBackground(new java.awt.Color(255, 255, 255));
@@ -2379,6 +2387,19 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
         jLabel29.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel29.setText("Total Gram :");
 
+        button_Input_PenilaianLP.setBackground(new java.awt.Color(255, 255, 255));
+        button_Input_PenilaianLP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_Input_PenilaianLP.setText("Input Penilaian LP");
+        button_Input_PenilaianLP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_Input_PenilaianLPActionPerformed(evt);
+            }
+        });
+
+        jLabel60.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel60.setFont(new java.awt.Font("Arial", 2, 11)); // NOI18N
+        jLabel60.setText("Input penilaian LP oleh Waleta bisa dengan klik 2x pada tabel atau pilih salah satu data dan klik tombol \"Input penilaian\" pada pojok kanan atas.");
+
         javax.swing.GroupLayout jPanel_bonus_LP_WLLayout = new javax.swing.GroupLayout(jPanel_bonus_LP_WL);
         jPanel_bonus_LP_WL.setLayout(jPanel_bonus_LP_WLLayout);
         jPanel_bonus_LP_WLLayout.setHorizontalGroup(
@@ -2407,8 +2428,13 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_bonusCabut_total_bonusLP)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button_Input_PenilaianLP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export_bonus_LP_WL))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1336, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1336, Short.MAX_VALUE)
+                    .addGroup(jPanel_bonus_LP_WLLayout.createSequentialGroup()
+                        .addComponent(jLabel60)
+                        .addGap(0, 631, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_bonus_LP_WLLayout.setVerticalGroup(
@@ -2426,9 +2452,12 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                     .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_bonusCabut_total_bobotLP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_bonusCabut_total_gramLP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label_bonusCabut_total_gramLP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_Input_PenilaianLP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel60, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -3956,6 +3985,8 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
 
     private void button_export_bonus_LP_SPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_bonus_LP_SPActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel table = (DefaultTableModel) table_data_Bonus_LP_SP.getModel();
+        ExportToExcel.writeToExcel(table, this);
     }//GEN-LAST:event_button_export_bonus_LP_SPActionPerformed
 
     private void button_naik_level_gajiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_naik_level_gajiActionPerformed
@@ -4014,6 +4045,8 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
 
     private void button_export_bonusMKU_CetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_bonusMKU_CetakActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel table = (DefaultTableModel) table_bonusMKU_Cetak.getModel();
+        ExportToExcel.writeToExcel(table, this);
     }//GEN-LAST:event_button_export_bonusMKU_CetakActionPerformed
 
     private void button_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_exportActionPerformed
@@ -4041,6 +4074,78 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
         refreshTable_data_tersimpan();
     }//GEN-LAST:event_button_searchActionPerformed
 
+    private void button_Input_PenilaianLPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_Input_PenilaianLPActionPerformed
+        // TODO add your handling code here:
+        int i = table_data_Bonus_LP_WL.getSelectedRow();
+        if (i > -1) {
+            try {
+                String no_lp = table_data_Bonus_LP_WL.getValueAt(i, 0).toString();
+                String nilai_lama = table_data_Bonus_LP_WL.getValueAt(i, 11) == null ? "" : table_data_Bonus_LP_WL.getValueAt(i, 11).toString();
+                String nilai_baru = JOptionPane.showInputDialog("Masukkan Nilai LP (0-100) : ", nilai_lama);
+                if (nilai_baru != null) {
+                    int nilai = Integer.valueOf(nilai_baru);
+                    if (nilai_baru.equals("")) {
+                        throw new NumberFormatException("Nilai tidak bisa kosong!");
+                    } else if (nilai < 0 || nilai > 100) {
+                        throw new NumberFormatException("Nilai tidak boleh di luar range 0 - 100!");
+                    }
+                    Utility.db_sub.connect();
+                    sql = "UPDATE `tb_laporan_produksi` SET `penilaian_waleta`='" + nilai + "' "
+                            + "WHERE `no_laporan_produksi`='" + no_lp + "' ";
+                    if ((Utility.db_sub.getStatement().executeUpdate(sql)) == 1) {
+                        refresh_BonusCabut_Sub();
+                        JOptionPane.showMessageDialog(this, "Update success!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Update failed!");
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Nilai yang dimasukkan salah! \n" + ex);
+                Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih LP pada tabel!");
+        }
+    }//GEN-LAST:event_button_Input_PenilaianLPActionPerformed
+
+    private void table_data_Bonus_LP_WLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_data_Bonus_LP_WLMouseClicked
+        // TODO add your handling code here:
+        int i = table_data_Bonus_LP_WL.getSelectedRow();
+        if (evt.getClickCount() == 2) {
+            try {
+                String no_lp = table_data_Bonus_LP_WL.getValueAt(i, 0).toString();
+                String nilai_lama = table_data_Bonus_LP_WL.getValueAt(i, 11) == null ? "" : table_data_Bonus_LP_WL.getValueAt(i, 11).toString();
+                String nilai_baru = JOptionPane.showInputDialog("Masukkan Nilai LP (0-100) : ", nilai_lama);
+                if (nilai_baru != null) {
+                    int nilai = Integer.valueOf(nilai_baru);
+                    if (nilai_baru.equals("")) {
+                        throw new NumberFormatException("Nilai tidak bisa kosong!");
+                    } else if (nilai < 0 || nilai > 100) {
+                        throw new NumberFormatException("Nilai tidak boleh di luar range 0 - 100!");
+                    }
+                    Utility.db_sub.connect();
+                    sql = "UPDATE `tb_laporan_produksi` SET `penilaian_waleta`='" + nilai + "' "
+                            + "WHERE `no_laporan_produksi`='" + no_lp + "' ";
+                    if ((Utility.db_sub.getStatement().executeUpdate(sql)) == 1) {
+                        refresh_BonusCabut_Sub();
+                        JOptionPane.showMessageDialog(this, "Update success!");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Update failed!");
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Nilai yang dimasukkan salah! \n" + ex);
+                Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_table_data_Bonus_LP_WLMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_bagian;
@@ -4058,6 +4163,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
     private javax.swing.JTable Tabel_data_perhitungan_upah_total;
     private javax.swing.JTable Tabel_data_rekap_transfer_sub;
     private javax.swing.JTable Tabel_data_tersimpan;
+    private javax.swing.JButton button_Input_PenilaianLP;
     private javax.swing.JButton button_export;
     private javax.swing.JButton button_export2;
     private javax.swing.JButton button_export5;
@@ -4138,6 +4244,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

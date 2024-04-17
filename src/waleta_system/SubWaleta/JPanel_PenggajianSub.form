@@ -1696,9 +1696,15 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="label_bonusCabut_total_bonusLP" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="button_Input_PenilaianLP" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
                                       <Component id="button_export_bonus_LP_WL" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jScrollPane4" alignment="0" pref="1336" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="0" pref="631" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -1720,9 +1726,12 @@
                                   <Component id="label_bonusCabut_total_bobotLP" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                   <Component id="jLabel29" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                                   <Component id="label_bonusCabut_total_gramLP" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                  <Component id="button_Input_PenilaianLP" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="jScrollPane4" pref="484" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jScrollPane4" pref="490" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel60" min="-2" pref="20" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -1765,7 +1774,7 @@
                               <Font name="Arial" size="11" style="0"/>
                             </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="11" rowCount="0">
+                              <Table columnCount="12" rowCount="0">
                                 <Column editable="false" title="No LP" type="java.lang.String"/>
                                 <Column editable="false" title="Grade" type="java.lang.String"/>
                                 <Column editable="false" title="Ruangan" type="java.lang.String"/>
@@ -1777,10 +1786,16 @@
                                 <Column editable="false" title="Bobot LP" type="java.lang.Float"/>
                                 <Column editable="false" title="Upah Cabut" type="java.lang.Float"/>
                                 <Column editable="false" title="Bonus Cabut" type="java.lang.Float"/>
+                                <Column editable="false" title="Nilai LP" type="java.lang.Integer"/>
                               </Table>
                             </Property>
                             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                               <TableColumnModel selectionModel="0">
+                                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                                  <Title/>
+                                  <Editor/>
+                                  <Renderer/>
+                                </Column>
                                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                                   <Title/>
                                   <Editor/>
@@ -1842,6 +1857,9 @@
                               <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="table_data_Bonus_LP_WLMouseClicked"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -1945,6 +1963,31 @@
                           <Font name="Arial" size="11" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Total Gram :"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="button_Input_PenilaianLP">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Arial" size="11" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Input Penilaian LP"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_Input_PenilaianLPActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel60">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Arial" size="11" style="2"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="Input penilaian LP oleh Waleta bisa dengan klik 2x pada tabel atau pilih salah satu data dan klik tombol &quot;Input penilaian&quot; pada pojok kanan atas."/>
                       </Properties>
                     </Component>
                   </SubComponents>

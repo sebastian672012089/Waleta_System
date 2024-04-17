@@ -84,7 +84,7 @@
 	</style>
 	<queryString>
 		<![CDATA[SELECT `tb_lab_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `tb_lab_laporan_produksi`.`tgl_masuk`, `tgl_uji`, `tanggal_rendam`, `tgl_selesai`, GREATEST(`nitrit_utuh`,`jidun`, `nitrit_flat`) AS 'nitrit', `status`, `cheat_rsb`,
-`cheat_no_kartu`
+`cheat_no_kartu`, `tb_laporan_produksi`.`no_kartu_waleta`, `no_registrasi`
 FROM `tb_lab_laporan_produksi`
 LEFT JOIN `tb_laporan_produksi` ON `tb_lab_laporan_produksi`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`
 LEFT JOIN `tb_rendam` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_rendam`.`no_laporan_produksi`
@@ -119,6 +119,12 @@ LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta`
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="cheat_no_kartu" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_kartu_waleta" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_registrasi" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
@@ -344,14 +350,15 @@ LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta`
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy").format($F{tanggal_rendam})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMM yyyy").format($F{tgl_uji})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Detail" x="0" y="0" width="130" height="15" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + $F{cheat_rsb}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" +
+($F{cheat_rsb} == null ? $F{no_registrasi} : $F{cheat_rsb})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Detail" x="232" y="0" width="106" height="15" uuid="6ef51509-e02f-4603-896e-30441ba40ace"/>
@@ -365,7 +372,9 @@ LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta`
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cheat_no_kartu} + "-" + $F{cheat_rsb}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{cheat_no_kartu} == null ? $F{no_kartu_waleta} : $F{no_registrasi})
++ "-" +
+($F{cheat_rsb} == null ? $F{no_registrasi} : $F{cheat_rsb})]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
