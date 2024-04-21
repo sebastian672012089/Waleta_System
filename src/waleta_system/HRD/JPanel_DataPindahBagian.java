@@ -96,15 +96,12 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                 jTabbedPane1.setSelectedIndex(0);
                 jTabbedPane1.setEnabled(true);
                 button_subsidi.setVisible(true);
-            } else {
+            } else if (otorisasi.equals("View Only")) {
                 if (MainForm.Login_Posisi.equals("STAFF 5")) {
-                    jTabbedPane1.setSelectedIndex(1);
-                    jTabbedPane1.setEnabled(true);
+                    button_subsidi.setEnabled(true);
                 } else {
-                    jTabbedPane1.setSelectedIndex(0);
-                    jTabbedPane1.setEnabled(false);
+                    button_subsidi.setEnabled(false);
                 }
-                button_subsidi.setVisible(false);
             }
             refreshTable_Grup();
             refreshTable_dataKaryawan();

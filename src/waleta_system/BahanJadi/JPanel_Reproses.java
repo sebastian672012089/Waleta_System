@@ -81,6 +81,15 @@ public class JPanel_Reproses extends javax.swing.JPanel {
                         } else {
                             button_tgl_selesai_cabut.setEnabled(true);
                         }
+                        if (table_data_reproses_cabut.getValueAt(i, 6) == null) {//tanggal selesai
+                            button_input_pekerja_cabut.setEnabled(true);
+                            button_edit_pekerja_cabut.setEnabled(true);
+                            button_delete_pekerja_cabut.setEnabled(true);
+                        } else {
+                            button_input_pekerja_cabut.setEnabled(false);
+                            button_edit_pekerja_cabut.setEnabled(false);
+                            button_delete_pekerja_cabut.setEnabled(false);
+                        }
                     }
                 }
             });
@@ -1112,7 +1121,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
                     if (rs.next()) {
                         total_gram_cabutan = rs.getDouble("total_gram_cabutan");
                     }
-                    if (total_gram_cabutan == gram_box) {
+                    if (Math.round(total_gram_cabutan) == gram_box) {
                         sql = "UPDATE `tb_reproses` SET `tgl_cabut_selesai`=CURRENT_DATE() WHERE `no_reproses` = '" + no_reproses + "'";
                         Utility.db.getConnection().createStatement();
                         if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {

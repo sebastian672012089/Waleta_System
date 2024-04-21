@@ -2007,7 +2007,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                             menit_ijin = "0";
                         }
                         int potongan_bpjs = 0, potongan_bpjs_tk = 0;
-                        String sql1 = "`potongan_bpjs`, `potongan_bpjs_tk` "
+                        String sql1 = "SELECT `potongan_bpjs`, `potongan_bpjs_tk` "
                             + "FROM `tb_karyawan` \n"
                             + "WHERE `id_pegawai` = '" + tabel_data_lembur_security.getValueAt(i, 0) + "' ";
                         PreparedStatement pst1 = Utility.db.getConnection().prepareStatement(sql1);

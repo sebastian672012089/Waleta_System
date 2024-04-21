@@ -133,7 +133,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 filter_tanggal = "`tb_cabut`.`tgl_setor_cabut`";
                 filter_tanggal = " AND (" + filter_tanggal + " BETWEEN '" + dateFormat.format(Date1_cabut.getDate()) + "' and '" + dateFormat.format(Date2_cabut.getDate()) + "')";
             }
-            sql = "SELECT `tb_cabut`.`no_laporan_produksi`, `ruangan`, `tb_laporan_produksi`.`kode_grade`, `keping_upah`, `berat_basah`, `tb_laporan_produksi`.`pekerja_sesekan`, `pekerja_hancuran`, `pekerja_kopyok`, `cabut_diterima`, `tgl_mulai_cabut`, `cabut_diserahkan`, `tgl_setor_cabut`, `sobek_cabut`, `cabut_sobek_lepas`, `gumpil_cabut`, `pecah_cabut`, `cabut_pecah_2`, `cabut_lubang`, `cabut_hilang_kaki`, `cabut_hilang_ujung`, `cabut_kaki_besar`, `cabut_kaki_kecil`, `cabut_hilang_bawah`, `admin_cabut`, `ketua_regu`, `tgl_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'tanggal_cabut'"
+            sql = "SELECT `tb_cabut`.`no_laporan_produksi`, `ruangan`, `tb_laporan_produksi`.`kode_grade`, `keping_upah`, `berat_basah`, `tb_laporan_produksi`.`pekerja_sesekan`, `pekerja_hancuran`, `pekerja_kopyok`, `cabut_diterima`, `tgl_mulai_cabut`, `cabut_diserahkan`, `tgl_setor_cabut`, `sobek_cabut`, `cabut_sobek_lepas`, `gumpil_cabut`, `pecah_cabut`, `cabut_pecah_2`, `cabut_lubang`, `cabut_hilang_kaki`, `cabut_hilang_ujung`, `cabut_kaki_besar`, `cabut_kaki_kecil`, `cabut_hilang_bawah`, `admin_cabut`, `ketua_regu`, `tgl_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'tanggal_cabut', `jenis_bulu_cabut`"
                     + "FROM `tb_cabut` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_cuci` ON `tb_cuci`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`\n"
@@ -166,6 +166,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 row[17] = rs.getString("admin_cabut");
                 row[18] = rs.getString("ketua_regu");
                 row[19] = rs.getDate("tgl_cabut");
+                row[20] = rs.getString("jenis_bulu_cabut");
                 if (ComboBox_filterDate.getSelectedIndex() == 2 && Date1_cabut.getDate() != null && Date2_cabut.getDate() != null) {
                     if (rs.getDate("tanggal_cabut") != null
                             && rs.getDate("tanggal_cabut").after(new Date(Date1_cabut.getDate().getTime() - (1000 * 60 * 60 * 24)))
@@ -467,14 +468,14 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
 
             },
             new String [] {
-                "No LP", "Ruangan", "Grade", "Tgl Masuk", "Tgl Cabut", "Diterima", "Pekerja Ssk", "Pekerja Hc", "Pekerja Kopyok", "Kpg upah", "Tgl Selesai", "Diserahkan", "Pecah", "Sobek", "Gumpil", "Hilang Kaki", "Hilang Ujung", "admin", "Ketua Regu", "Tgl Cabut"
+                "No LP", "Ruangan", "Grade", "Tgl Masuk", "Tgl Cabut", "Diterima", "Pekerja Ssk", "Pekerja Hc", "Pekerja Kopyok", "Kpg upah", "Tgl Selesai", "Diserahkan", "Pecah", "Sobek", "Gumpil", "Hilang Kaki", "Hilang Ujung", "admin", "Ketua Regu", "Tgl Cabut", "Jenis Bulu"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

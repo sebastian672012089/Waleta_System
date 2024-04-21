@@ -834,7 +834,7 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
                         }
                         
                         int potongan_bpjs = 0, potongan_bpjs_tk = 0;
-                        String sql1 = "`potongan_bpjs`, `potongan_bpjs_tk` "
+                        String sql1 = "SELECT `potongan_bpjs`, `potongan_bpjs_tk` "
                             + "FROM `tb_karyawan` \n"
                             + "WHERE `id_pegawai` = '" + tabel_data_lembur.getValueAt(i, 2) + "' ";
                         PreparedStatement pst1 = Utility.db.getConnection().prepareStatement(sql1);

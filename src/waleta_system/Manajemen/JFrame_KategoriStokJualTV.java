@@ -34,6 +34,8 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
     DecimalFormat decimalFormat = new DecimalFormat();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public DefaultPieDataset PieChart_dataset;
+    float total_jual_mk = 0, total_jual_flat = 0, total_jual_bp = 0, total_jual_pch = 0, total_jual_jdn = 0,
+            total_serabut = 0, total_susah_jual = 0, total_residu = 0, total_non_ns = 0, total_non_aktif = 0, total_no_kategori = 0;
     float total_reproses_bp = 0, total_reproses = 0, total_reproses_swr = 0, total_gram_StokRepacking = 0;
 //    JFreeChart chart1;
 
@@ -42,11 +44,11 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
     }
 
     public void init(int show_value) {
-
         PieChart();
         refreshTable_DataStok();
         refreshTable_StockRepacking();
         refreshTable_MLEM();
+        refreshTable_WIP_Reproses();
         refresh_JAM();
         if (show_value == 0) {
             jLabel4.setVisible(false);
@@ -77,8 +79,6 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
         try {
             int total_gram_NonBox = 0;
             float total_gram_StokBox = 0, total_nilai_bjd = 0;
-            float total_jual_mk = 0, total_jual_flat = 0, total_jual_bp = 0, total_jual_pch = 0, total_jual_jdn = 0,
-                    total_serabut = 0, total_susah_jual = 0, total_residu = 0, total_non_ns = 0, total_non_aktif = 0, total_no_kategori = 0;
             total_reproses_bp = 0;
             total_reproses = 0;
             total_reproses_swr = 0;
@@ -259,6 +259,51 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
                 model.addRow(row);
 
                 switch (rs.getString("kategori_jual")) {
+                    case "JUAL-MK":
+                        for (int i = 0; i < tabel_JUAL_MK.getRowCount(); i++) {
+                            if (tabel_JUAL_MK.getValueAt(i, 0).toString().equals(rs.getString("kode_grade").substring(4))) {
+                                float sisa = (float) tabel_JUAL_MK.getValueAt(i, 2) - rs.getFloat("berat");
+                                tabel_JUAL_MK.setValueAt(sisa, i, 2);
+                                total_jual_mk = total_jual_mk - rs.getFloat("berat");
+                            }
+                        }
+                        break;
+                    case "JUAL-FLAT":
+                        for (int i = 0; i < tabel_JUAL_FLAT.getRowCount(); i++) {
+                            if (tabel_JUAL_FLAT.getValueAt(i, 0).toString().equals(rs.getString("kode_grade").substring(4))) {
+                                float sisa = (float) tabel_JUAL_FLAT.getValueAt(i, 2) - rs.getFloat("berat");
+                                tabel_JUAL_FLAT.setValueAt(sisa, i, 2);
+                                total_jual_flat = total_jual_flat - rs.getFloat("berat");
+                            }
+                        }
+                        break;
+                    case "JUAL-BP":
+                        for (int i = 0; i < tabel_JUAL_BP.getRowCount(); i++) {
+                            if (tabel_JUAL_BP.getValueAt(i, 0).toString().equals(rs.getString("kode_grade").substring(4))) {
+                                float sisa = (float) tabel_JUAL_BP.getValueAt(i, 2) - rs.getFloat("berat");
+                                tabel_JUAL_BP.setValueAt(sisa, i, 2);
+                                total_jual_bp = total_jual_bp - rs.getFloat("berat");
+                            }
+                        }
+                        break;
+                    case "JUAL-PECAH":
+                        for (int i = 0; i < tabel_JUAL_PCH.getRowCount(); i++) {
+                            if (tabel_JUAL_PCH.getValueAt(i, 0).toString().equals(rs.getString("kode_grade").substring(4))) {
+                                float sisa = (float) tabel_JUAL_PCH.getValueAt(i, 2) - rs.getFloat("berat");
+                                tabel_JUAL_PCH.setValueAt(sisa, i, 2);
+                                total_jual_pch = total_jual_pch - rs.getFloat("berat");
+                            }
+                        }
+                        break;
+                    case "JUAL-JDN":
+                        for (int i = 0; i < tabel_JUAL_JDN.getRowCount(); i++) {
+                            if (tabel_JUAL_JDN.getValueAt(i, 0).toString().equals(rs.getString("kode_grade").substring(4))) {
+                                float sisa = (float) tabel_JUAL_JDN.getValueAt(i, 2) - rs.getFloat("berat");
+                                tabel_JUAL_JDN.setValueAt(sisa, i, 2);
+                                total_jual_jdn = total_jual_jdn - rs.getFloat("berat");
+                            }
+                        }
+                        break;
                     case "REPROSES BP":
                         for (int i = 0; i < tabel_REPROSES_BP.getRowCount(); i++) {
                             if (tabel_REPROSES_BP.getValueAt(i, 0).toString().equals(rs.getString("kode_grade").substring(4))) {
@@ -286,15 +331,52 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
                             }
                         }
                         break;
+                    case "RESIDU":
+                        for (int i = 0; i < tabel_RESIDU.getRowCount(); i++) {
+                            if (tabel_RESIDU.getValueAt(i, 0).toString().equals(rs.getString("kode_grade").substring(4))) {
+                                float sisa = (float) tabel_RESIDU.getValueAt(i, 2) - rs.getFloat("berat");
+                                tabel_RESIDU.setValueAt(sisa, i, 2);
+                                total_residu = total_residu - rs.getFloat("berat");
+                            }
+                        }
+                        break;
+                    case "SUSAH JUAL":
+                        for (int i = 0; i < tabel_SUSAH_JUAL.getRowCount(); i++) {
+                            if (tabel_SUSAH_JUAL.getValueAt(i, 0).toString().equals(rs.getString("kode_grade").substring(4))) {
+                                float sisa = (float) tabel_SUSAH_JUAL.getValueAt(i, 2) - rs.getFloat("berat");
+                                tabel_SUSAH_JUAL.setValueAt(sisa, i, 2);
+                                total_susah_jual = total_susah_jual - rs.getFloat("berat");
+                            }
+                        }
+                        break;
+                    case "SERABUT":
+                        for (int i = 0; i < tabel_SERABUT.getRowCount(); i++) {
+                            if (tabel_SERABUT.getValueAt(i, 0).toString().equals(rs.getString("kode_grade").substring(4))) {
+                                float sisa = (float) tabel_SERABUT.getValueAt(i, 2) - rs.getFloat("berat");
+                                tabel_SERABUT.setValueAt(sisa, i, 2);
+                                total_serabut = total_serabut - rs.getFloat("berat");
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
             }
 
-            label_total_repacking.setText(decimalFormat.format(total_gram_StokRepacking / 1000.f) + " Kg");
+            label_total_jual_mk.setText(decimalFormat.format(total_jual_mk / 1000.f) + " Kg");
+            label_total_jual_flat.setText(decimalFormat.format(total_jual_flat / 1000.f) + " Kg");
+            label_total_jual_bp.setText(decimalFormat.format(total_jual_bp / 1000.f) + " Kg");
+            label_total_jual_pch.setText(decimalFormat.format(total_jual_pch / 1000.f) + " Kg");
+            label_total_jual_jdn.setText(decimalFormat.format(total_jual_jdn / 1000.f) + " Kg");
             label_total_reproses_bp.setText(decimalFormat.format(total_reproses_bp / 1000.f) + " Kg");
             label_total_reproses.setText(decimalFormat.format(total_reproses / 1000.f) + " Kg");
             label_total_reproses_swr.setText(decimalFormat.format(total_reproses_swr / 1000.f) + " Kg");
+            label_total_residu.setText(decimalFormat.format(total_residu / 1000.f) + " Kg");
+            label_total_susah_jual.setText(decimalFormat.format(total_susah_jual / 1000.f) + " Kg");
+            label_total_serabut.setText(decimalFormat.format(total_serabut / 1000.f) + " Kg");
+            label_total_non_ns.setText(decimalFormat.format(total_non_ns / 1000.f) + " Kg");
+            label_total_non_aktif.setText(decimalFormat.format(total_non_aktif / 1000.f) + " Kg");
+            label_total_repacking.setText(decimalFormat.format(total_gram_StokRepacking / 1000.f) + " Kg");
             PieChart_dataset.setValue("REPROSES", (total_reproses_bp + total_reproses + total_reproses_swr));
 
         } catch (SQLException ex) {
@@ -328,6 +410,36 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
             }
             decimalFormat.setMaximumFractionDigits(0);
             label_total_mlem.setText(decimalFormat.format(total_gram_mlem / 1000.f) + " Kg");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JFrame_KategoriStokJualTV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void refreshTable_WIP_Reproses() {
+        try {
+            double total_gram_wip_reproses = 0;
+            DefaultTableModel model = (DefaultTableModel) tabel_WIP_REPROSES.getModel();
+            model.setRowCount(0);
+            Object[] row = new Object[3];
+            sql = "SELECT `kode_grade`, `kategori_jual`, SUM(`tb_box_bahan_jadi`.`berat`) AS 'berat' "
+                    + "FROM `tb_box_bahan_jadi` "
+                    + "LEFT JOIN `tb_reproses` ON `tb_reproses`.`no_box` = `tb_box_bahan_jadi`.`no_box`\n"
+                    + "LEFT JOIN `tb_lab_barang_jadi` ON `tb_lab_barang_jadi`.`no_box` = `tb_box_bahan_jadi`.`no_box`\n"
+                    + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`"
+                    + "WHERE `lokasi_terakhir` = 'RE-PROSES' "
+                    + "GROUP BY `kode_grade` "
+                    + "ORDER BY `kategori_jual` DESC";
+            pst = Utility.db.getConnection().prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+                row[0] = rs.getString("kode_grade").substring(4);
+                row[1] = rs.getString("kategori_jual");
+                row[2] = rs.getFloat("berat");
+                total_gram_wip_reproses = total_gram_wip_reproses + rs.getInt("berat");
+                model.addRow(row);
+            }
+            label_total_wip_reproses.setText(decimalFormat.format(total_gram_wip_reproses / 1000.f) + " Kg");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JFrame_KategoriStokJualTV.class.getName()).log(Level.SEVERE, null, ex);
@@ -446,6 +558,10 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
         label_total_reproses = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         label_total_reproses_swr = new javax.swing.JLabel();
+        label_total_wip_reproses = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jScrollPane15 = new javax.swing.JScrollPane();
+        tabel_WIP_REPROSES = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1166,6 +1282,57 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
         label_total_reproses_swr.setForeground(new java.awt.Color(255, 0, 0));
         label_total_reproses_swr.setText("0");
 
+        label_total_wip_reproses.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_wip_reproses.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_total_wip_reproses.setForeground(new java.awt.Color(255, 0, 0));
+        label_total_wip_reproses.setText("0");
+
+        jLabel22.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel22.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel22.setText("Total WIP REPROSES :");
+
+        tabel_WIP_REPROSES.setAutoCreateRowSorter(true);
+        tabel_WIP_REPROSES.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        tabel_WIP_REPROSES.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "REPACKING", "Kategori", "Box"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabel_WIP_REPROSES.setRequestFocusEnabled(false);
+        tabel_WIP_REPROSES.setRowSelectionAllowed(false);
+        tabel_WIP_REPROSES.getTableHeader().setReorderingAllowed(false);
+        jScrollPane15.setViewportView(tabel_WIP_REPROSES);
+        if (tabel_WIP_REPROSES.getColumnModel().getColumnCount() > 0) {
+            tabel_WIP_REPROSES.getColumnModel().getColumn(0).setMinWidth(80);
+        }
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -1262,7 +1429,12 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_reproses_swr)))
+                                .addComponent(label_total_reproses_swr))
+                            .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_wip_reproses)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Panel_Pie_Chart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1361,57 +1533,62 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jScrollPane1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(7, 7, 7)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                                             .addComponent(label_total_jual_flat)
                                             .addComponent(jLabel7))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                                    .addComponent(label_total_jual_pch)
-                                                    .addComponent(jLabel9))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(13, 13, 13)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                                    .addComponent(label_total_jual_jdn)
-                                                    .addComponent(jLabel10))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                                    .addComponent(label_total_serabut)
-                                                    .addComponent(jLabel13))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                                    .addComponent(label_total_mlem)
-                                                    .addComponent(jLabel19))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(192, 192, 192)
-                                                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                                    .addComponent(label_total_repacking)
-                                                    .addComponent(jLabel16))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(290, 290, 290)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                                    .addComponent(label_total_reproses_swr)
-                                                    .addComponent(jLabel21))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addContainerGap())))))))
+                                        .addGap(192, 192, 192)
+                                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                            .addComponent(label_total_repacking)
+                                            .addComponent(jLabel16))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                            .addComponent(label_total_jual_pch)
+                                            .addComponent(jLabel9))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(13, 13, 13)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                            .addComponent(label_total_jual_jdn)
+                                            .addComponent(jLabel10))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                            .addComponent(label_total_serabut)
+                                            .addComponent(jLabel13))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                            .addComponent(label_total_mlem)
+                                            .addComponent(jLabel19))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane12, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(290, 290, 290)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                            .addComponent(label_total_reproses_swr)
+                                            .addComponent(jLabel21))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                            .addComponent(label_total_wip_reproses)
+                                            .addComponent(jLabel22))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jScrollPane15, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                                .addContainerGap())))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1436,6 +1613,21 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
 
     private void Button_RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_RefreshActionPerformed
         // TODO add your handling code here:
+        total_jual_mk = 0;
+        total_jual_flat = 0;
+        total_jual_bp = 0;
+        total_jual_pch = 0;
+        total_jual_jdn = 0;
+        total_serabut = 0;
+        total_susah_jual = 0;
+        total_residu = 0;
+        total_non_ns = 0;
+        total_non_aktif = 0;
+        total_no_kategori = 0;
+        total_reproses_bp = 0;
+        total_reproses = 0;
+        total_reproses_swr = 0;
+        total_gram_StokRepacking = 0;
         refreshTable_DataStok();
         refreshTable_StockRepacking();
         refreshTable_MLEM();
@@ -1486,6 +1678,7 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1500,6 +1693,7 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane13;
     private javax.swing.JScrollPane jScrollPane14;
+    private javax.swing.JScrollPane jScrollPane15;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
@@ -1528,6 +1722,7 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
     private javax.swing.JLabel label_total_residu;
     private javax.swing.JLabel label_total_serabut;
     private javax.swing.JLabel label_total_susah_jual;
+    private javax.swing.JLabel label_total_wip_reproses;
     private javax.swing.JTable tabel_JUAL_BP;
     private javax.swing.JTable tabel_JUAL_FLAT;
     private javax.swing.JTable tabel_JUAL_JDN;
@@ -1541,5 +1736,6 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
     private javax.swing.JTable tabel_RESIDU;
     private javax.swing.JTable tabel_SERABUT;
     private javax.swing.JTable tabel_SUSAH_JUAL;
+    private javax.swing.JTable tabel_WIP_REPROSES;
     // End of variables declaration//GEN-END:variables
 }

@@ -41,8 +41,14 @@ public class JPanel_Reproses_Sub extends javax.swing.JPanel {
                         refreshTable_reProses_pencabut();
                         if (table_data_reproses_cabut.getValueAt(i, 6) == null) {
                             button_selesai_reproses.setEnabled(true);
+                            button_input_pekerja_cabut.setEnabled(true);
+                            button_edit_pekerja_cabut.setEnabled(true);
+                            button_delete_pekerja_cabut.setEnabled(true);
                         } else {
                             button_selesai_reproses.setEnabled(false);
+                            button_input_pekerja_cabut.setEnabled(false);
+                            button_edit_pekerja_cabut.setEnabled(false);
+                            button_delete_pekerja_cabut.setEnabled(false);
                         }
                     }
                 }
