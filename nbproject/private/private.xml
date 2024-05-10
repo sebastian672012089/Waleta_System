@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Panel_produksi/JDialog_Terima_LP_Cabut.java</file>
-            <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Manajemen/JFrame_KategoriStokJualTV.java</file>
             <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/MainForm.java</file>
-            <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Panel_produksi/JPanel_DataCabut.java</file>
-            <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/SubWaleta/JPanel_PenggajianSub.java</file>
             <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Login.java</file>
+            <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/HRD/JPanel_Data_Karyawan.java</file>
+            <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/BahanBaku/JDialog_PecahLP_GabungPecah.java</file>
+            <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/BahanBaku/JPanel_BahanBakuMasuk.java</file>
+            <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Finance/JPanel_DataKaryawan.java</file>
+            <file>file:/C:/Users/PT.%20Waleta%20new%20PC%201/Documents/NetBeansProjects/Waleta_System/src/waleta_system/SubWaleta/JPanel_DataCabutSub.java</file>
         </group>
     </open-files>
 </project-private>

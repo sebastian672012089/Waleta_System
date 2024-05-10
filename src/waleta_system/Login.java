@@ -876,16 +876,16 @@ public class Login extends javax.swing.JFrame {
 //                            Query = "UPDATE `tb_laporan_produksi` SET \n"
 //                                    + "`berat_kering` = '" + value[1] + "'\n"
 //                                    + "WHERE `no_laporan_produksi` = '" + value[0] + "'";
-                            Query = "UPDATE `tb_rendam` SET \n"
-                                    + "`waktu_mulai_pengeringan` = '" + value[1] + "',\n"
-                                    + "`waktu_selesai_pengeringan` = '" + value[2] + "',\n"
-                                    + "`waktu_mulai_rendam` = '" + value[3] + "',\n"
-                                    + "`waktu_selesai_rendam` = '" + value[4] + "'\n"
-                                    + "WHERE `no_laporan_produksi` = '" + value[0] + "'";
 //                            Query = "UPDATE `tb_rendam` SET \n"
-//                                    + "`waktu_mulai_rendam` = '" + value[1] + "',\n"
-//                                    + "`waktu_selesai_rendam` = '" + value[2] + "'\n"
+//                                    + "`waktu_mulai_pengeringan` = '" + value[1] + "',\n"
+//                                    + "`waktu_selesai_pengeringan` = '" + value[2] + "',\n"
+//                                    + "`waktu_mulai_rendam` = '" + value[3] + "',\n"
+//                                    + "`waktu_selesai_rendam` = '" + value[4] + "'\n"
 //                                    + "WHERE `no_laporan_produksi` = '" + value[0] + "'";
+                            Query = "UPDATE `tb_rendam` SET \n"
+                                    + "`waktu_mulai_rendam` = '" + value[1] + "',\n"
+                                    + "`waktu_selesai_rendam` = '" + value[2] + "'\n"
+                                    + "WHERE `no_laporan_produksi` = '" + value[0] + "'";
 //                            Query = "UPDATE `tb_cetak` SET \n"
 //                                    + "`waktu_mulai_pengeringan` = '" + value[1] + "',\n"
 //                                    + "`waktu_selesai_pengeringan` = '" + value[2] + "'\n"
@@ -1180,7 +1180,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.329");
+        label_version.setText("2.2.340");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N

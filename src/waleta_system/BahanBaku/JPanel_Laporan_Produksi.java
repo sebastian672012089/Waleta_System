@@ -1312,7 +1312,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
 
-        } catch (JRException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(DetailGradingBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1349,7 +1349,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
-        } catch (JRException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1719,7 +1719,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             }
 
-        } catch (JRException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1777,7 +1777,8 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
 
-        } catch (JRException ex) {
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(DetailGradingBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_report_lp_subActionPerformed
@@ -1971,7 +1972,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             }
 
-        } catch (JRException ex) {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -404,6 +404,7 @@ public class MainForm extends javax.swing.JFrame {
         label_warning_stok_reproses = new javax.swing.JLabel();
         label_warning_stok_baku = new javax.swing.JLabel();
         label_warning_stok_qchold = new javax.swing.JLabel();
+        label_need_attention = new javax.swing.JLabel();
         jPanel_Butuh_Acc = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -822,25 +823,34 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.329");
+        jLabel19.setText("2.2.340");
 
+        jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");
 
         jPanel_need_attention.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_need_attention.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Need Attention !!", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bahnschrift", 0, 24), new java.awt.Color(255, 0, 0))); // NOI18N
+        jPanel_need_attention.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        label_warning_stok_reproses.setBackground(new java.awt.Color(255, 255, 255));
         label_warning_stok_reproses.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         label_warning_stok_reproses.setForeground(new java.awt.Color(255, 0, 0));
         label_warning_stok_reproses.setText("Stok Reproses Barang Jadi : 0 Kg");
 
+        label_warning_stok_baku.setBackground(new java.awt.Color(255, 255, 255));
         label_warning_stok_baku.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         label_warning_stok_baku.setForeground(new java.awt.Color(255, 0, 0));
         label_warning_stok_baku.setText("Stok Unworkable Raw Material : 0 Kg");
 
+        label_warning_stok_qchold.setBackground(new java.awt.Color(255, 255, 255));
         label_warning_stok_qchold.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         label_warning_stok_qchold.setForeground(new java.awt.Color(255, 0, 0));
         label_warning_stok_qchold.setText("Stok QC Hold : 0 Kg");
+
+        label_need_attention.setBackground(new java.awt.Color(255, 255, 255));
+        label_need_attention.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        label_need_attention.setForeground(new java.awt.Color(255, 0, 0));
+        label_need_attention.setText("Need Attention");
 
         javax.swing.GroupLayout jPanel_need_attentionLayout = new javax.swing.GroupLayout(jPanel_need_attention);
         jPanel_need_attention.setLayout(jPanel_need_attentionLayout);
@@ -851,13 +861,16 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(jPanel_need_attentionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label_warning_stok_baku)
                     .addComponent(label_warning_stok_reproses)
-                    .addComponent(label_warning_stok_qchold))
-                .addContainerGap(331, Short.MAX_VALUE))
+                    .addComponent(label_warning_stok_qchold)
+                    .addComponent(label_need_attention))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel_need_attentionLayout.setVerticalGroup(
             jPanel_need_attentionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_need_attentionLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_need_attentionLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(label_need_attention)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_warning_stok_baku)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_warning_stok_reproses)
@@ -867,7 +880,7 @@ public class MainForm extends javax.swing.JFrame {
         );
 
         jPanel_Butuh_Acc.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_Butuh_Acc.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Approval Required", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bahnschrift", 0, 24), new java.awt.Color(255, 0, 0))); // NOI18N
+        jPanel_Butuh_Acc.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Approval Required", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Bahnschrift", 0, 24), new java.awt.Color(255, 0, 0))); // NOI18N
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -975,7 +988,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Butuh_Acc.setLayout(jPanel_Butuh_AccLayout);
         jPanel_Butuh_AccLayout.setHorizontalGroup(
             jPanel_Butuh_AccLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Butuh_AccLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Button_refresh_butuh_Acc)
@@ -990,7 +1003,7 @@ public class MainForm extends javax.swing.JFrame {
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Posisi LP Percobaan", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Posisi LP Percobaan", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 0, 11))); // NOI18N
 
         tabel_data_LP_percobaan.setAutoCreateRowSorter(true);
         tabel_data_LP_percobaan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -1051,7 +1064,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1079,7 +1092,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(label_total_gram_lp_percobaan)
                     .addComponent(label_total_lp_percobaan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1093,20 +1106,21 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jPanel_HomeLayout.createSequentialGroup()
                 .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_HomeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel_need_attention, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel_Butuh_Acc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel_HomeLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel21)
                             .addGroup(jPanel_HomeLayout.createSequentialGroup()
                                 .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel19))))
-                    .addGroup(jPanel_HomeLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel_need_attention, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel_Butuh_Acc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(jLabel19)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_HomeLayout.setVerticalGroup(
@@ -1118,7 +1132,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jLabel20))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel21)
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_HomeLayout.createSequentialGroup()
                         .addComponent(jPanel_need_attention, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -6920,6 +6934,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel label_need_attention;
     private javax.swing.JLabel label_total_gram_lp_percobaan;
     private javax.swing.JLabel label_total_keping_lp_percobaan;
     private javax.swing.JLabel label_total_lp_percobaan;

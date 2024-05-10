@@ -40,6 +40,7 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
     static Timer t;
     TimerTask timer;
     Thread clock;
+    boolean clock_thread = true;
     int detik = 0, tab = 0;
 
     public JFrame_TV_GradingBaku() {
@@ -48,11 +49,12 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
         Table_Data_Nitrit_baku2.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
         Table_Data_Nitrit_baku_oren.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
         Table_Data_Nitrit_baku_merah.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
+        clock_thread = true;
         clock = new Thread() {
             @Override
             public void run() {
                 try {
-                    while (true) {
+                    while (clock_thread) {
                         refresh_JAM();
                         sleep(1000);
                     }
@@ -237,8 +239,6 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
                 refresh_TabelKetahanan();
                 Load_Ketahanan_Waleta();
                 Refresh_grading_on_proses();
-                this.stop();
-                this.destroy();
             }
         };
         thread.start();
@@ -1239,10 +1239,10 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
         table_stok_for_waleta1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         table_stok_for_waleta1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"MANGKOK",  new Float(0.0),  new Float(0.0),  new Float(0.0)},
-                {"PECAH",  new Float(0.0),  new Float(0.0),  new Float(0.0)},
-                {"OVAL",  new Float(0.0),  new Float(0.0),  new Float(0.0)},
-                {"SEGITIGA",  new Float(0.0),  new Float(0.0),  new Float(0.0)}
+                {"MANGKOK", null, null, null},
+                {"PECAH", null, null, null},
+                {"OVAL", null, null, null},
+                {"SEGITIGA", null, null, null}
             },
             new String [] {
                 "Jenis Bentuk", "Stok Keping", "Stok Gram", "%"
@@ -1604,10 +1604,10 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
         table_stok_for_sub1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         table_stok_for_sub1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"MANGKOK",  new Float(0.0),  new Float(0.0),  new Float(0.0)},
-                {"PECAH",  new Float(0.0),  new Float(0.0),  new Float(0.0)},
-                {"OVAL",  new Float(0.0),  new Float(0.0),  new Float(0.0)},
-                {"SEGITIGA",  new Float(0.0),  new Float(0.0),  new Float(0.0)}
+                {"MANGKOK", null, null, null},
+                {"PECAH", null, null, null},
+                {"OVAL", null, null, null},
+                {"SEGITIGA", null, null, null}
             },
             new String [] {
                 "Jenis Bentuk", "Stok Keping", "Stok Gram", "%"
@@ -2730,7 +2730,7 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        clock.stop();
+        clock_thread = false;
         t.cancel();
         detik = 0;
     }//GEN-LAST:event_formWindowClosed

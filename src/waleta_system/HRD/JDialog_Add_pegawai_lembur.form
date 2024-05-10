@@ -537,7 +537,7 @@
               <Font name="Arial" size="11" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="17">
+              <StringArray count="25">
                 <StringItem index="0" value="0 (Tidak ada istirahat)"/>
                 <StringItem index="1" value="15 Menit"/>
                 <StringItem index="2" value="30 Menit"/>
@@ -555,6 +555,14 @@
                 <StringItem index="14" value="210 Menit (3 Jam 30 Menit)"/>
                 <StringItem index="15" value="225 Menit (3 Jam 45 Menit)"/>
                 <StringItem index="16" value="240 Menit (4 Jam)"/>
+                <StringItem index="17" value="255 Menit (4 Jam 15 Menit)"/>
+                <StringItem index="18" value="270 Menit (4 Jam 30 Menit)"/>
+                <StringItem index="19" value="285 Menit (4 Jam 45 Menit)"/>
+                <StringItem index="20" value="300 Menit (5 Jam)"/>
+                <StringItem index="21" value="315 Menit (5 Jam 15 Menit)"/>
+                <StringItem index="22" value="330 Menit (5 Jam 30 Menit)"/>
+                <StringItem index="23" value="345 Menit (5 Jam 45 Menit)"/>
+                <StringItem index="24" value="360 Menit (6 Jam)"/>
               </StringArray>
             </Property>
           </Properties>

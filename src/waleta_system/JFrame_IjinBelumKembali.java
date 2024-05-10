@@ -19,20 +19,18 @@ public class JFrame_IjinBelumKembali extends javax.swing.JFrame {
     String sql;
     ResultSet rs;
     Thread thread;
+    boolean time_thread = true;
 
     public JFrame_IjinBelumKembali() {
         this.setUndecorated(true);
         initComponents();
-        try {
-
-        } catch (Exception e) {
-        }
         refreshTable();
 
+        time_thread = true;
         thread = new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (time_thread) {
                     try {
                         refreshTable();
                         Thread.sleep(1000);
@@ -254,7 +252,7 @@ public class JFrame_IjinBelumKembali extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        thread.stop();
+        time_thread = false;
     }//GEN-LAST:event_formWindowClosed
 
     private void Button_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_closeActionPerformed

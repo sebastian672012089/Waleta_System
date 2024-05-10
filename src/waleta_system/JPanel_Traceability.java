@@ -1852,6 +1852,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_lab_bahan_baku` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_lab_bahan_baku`.`no_kartu_waleta`\n"
                     + "WHERE "
                     + "`tb_lab_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") "
+                    + "AND `status` = 'PASSED' \n"
                     + "ORDER BY `tgl_uji` DESC, `tb_lab_laporan_produksi`.`no_laporan_produksi` ASC";
 //            System.out.println(Query);
             JRDesignQuery newQuery = new JRDesignQuery();

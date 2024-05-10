@@ -7,6 +7,8 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -14,6 +16,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Class.Utility;
@@ -236,6 +247,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
         label_total_gram_cabutan = new javax.swing.JLabel();
         label_total_cabutan3 = new javax.swing.JLabel();
         button_Input_PenilaianLP = new javax.swing.JButton();
+        button_laporan_terima_cabut_sub = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Cabut Online Sub", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -593,6 +605,15 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
             }
         });
 
+        button_laporan_terima_cabut_sub.setBackground(new java.awt.Color(255, 255, 255));
+        button_laporan_terima_cabut_sub.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_laporan_terima_cabut_sub.setText("Laporan Terima Cabut SUB");
+        button_laporan_terima_cabut_sub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_laporan_terima_cabut_subActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -657,7 +678,9 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_export_data_cabut)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_Input_PenilaianLP)))
+                                .addComponent(button_Input_PenilaianLP)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_laporan_terima_cabut_sub)))
                         .addGap(0, 578, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -677,7 +700,8 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_export_data_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_edit_cabut_online, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_Input_PenilaianLP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_Input_PenilaianLP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_laporan_terima_cabut_sub, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -945,15 +969,38 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, ex);
-                Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Nilai yang dimasukkan salah! \n" + ex);
-                Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Silahkan pilih LP pada tabel!");
         }
     }//GEN-LAST:event_button_Input_PenilaianLPActionPerformed
+
+    private void button_laporan_terima_cabut_subActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_laporan_terima_cabut_subActionPerformed
+        // TODO add your handling code here:
+        try {
+            String query = "SELECT `tb_cabut`.`no_laporan_produksi`, `no_kartu_waleta`, `memo_lp`, `tgl_mulai_cabut`, `ruangan`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`kode_grade`\n"
+                    + "FROM `tb_cabut` \n"
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "WHERE `tgl_mulai_cabut` = CURRENT_DATE \n"
+                    + "ORDER BY `ruangan` ";
+            JRDesignQuery newQuery = new JRDesignQuery();
+            newQuery.setText(query);
+            JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Laporan_Terima_Sub.jrxml");
+            JASP_DESIGN.setQuery(newQuery);
+            Map<String, Object> map = new HashMap<>();
+            map.put("SUBREPORT_DIR", "Report\\");
+            JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+            JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db_sub.getConnection());
+            JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_laporan_terima_cabut_subActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -969,6 +1016,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
     public static javax.swing.JButton button_edit_pencabut_online;
     private javax.swing.JButton button_export_data_cabut;
     public static javax.swing.JButton button_hapus_pencabut_online;
+    private javax.swing.JButton button_laporan_terima_cabut_sub;
     private javax.swing.JButton button_pick_pencabut;
     public static javax.swing.JButton button_search_cabut;
     public static javax.swing.JButton button_tambah_pencabut_online;

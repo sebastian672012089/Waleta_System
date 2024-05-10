@@ -414,6 +414,8 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                         premi_hadir = (hari_masuk_premi + libur_dapat_premi) * premi_hadir_per_hari;
                         premi_hadir = premi_hadir - denda_terlambat;
                     }
+                    
+                    
 
                     String sql_tbt = "SELECT A.`id_pegawai` AS 'id1', B.`nama_pegawai` AS 'nama1', D.`nama_bagian` AS 'bagian1', "
                             + "A.`id_teman` AS 'id2', C.`nama_pegawai` AS 'nama2', E.`nama_bagian` AS 'bagian2', "
@@ -1527,9 +1529,6 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             @Override
             public void run() {
                 saveDataPenggajian();
-                this.stop();
-                this.destroy();
-
                 Date_penggajian.setEnabled(true);
                 txt_search_karyawan.setEnabled(true);
                 txt_search_bagian.setEnabled(true);

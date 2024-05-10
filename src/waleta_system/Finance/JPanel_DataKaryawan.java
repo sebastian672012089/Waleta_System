@@ -828,7 +828,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
             JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
         } else {
             String id = table_data.getValueAt(x, 0).toString();
-            String nik = table_data.getValueAt(x, 2).toString();
+            String nik = table_data.getValueAt(x, 1).toString();
             String nama = table_data.getValueAt(x, 3).toString();
             JDialog_Show_KTP dialog = new JDialog_Show_KTP(new javax.swing.JFrame(), true, nik, nama);
             dialog.show_ktp_local(id);

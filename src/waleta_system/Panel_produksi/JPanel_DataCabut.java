@@ -138,8 +138,8 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_cuci` ON `tb_cuci`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_detail_pencabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
-                    + "WHERE `tb_cabut`.`no_laporan_produksi` LIKE '%" + txt_search_cabut.getText() + "%' " 
-                    + ruang 
+                    + "WHERE `tb_cabut`.`no_laporan_produksi` LIKE '%" + txt_search_cabut.getText() + "%' "
+                    + ruang
                     + filter_tanggal
                     + "GROUP BY `tb_cabut`.`no_laporan_produksi`\n"
                     + "ORDER BY `tb_cabut`.`tgl_mulai_cabut` DESC";
@@ -1217,7 +1217,9 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
             } else if (gram_awal != gram_akhir) {
                 JOptionPane.showMessageDialog(this, "Maaf, data Gram LP dan Gram Cabutan tidak sesuai\nSilahkan Cek Kembali !");
             } else {
-                JDialog_Setor_LP_Cabut setor_lp = new JDialog_Setor_LP_Cabut(new javax.swing.JFrame(), true);
+                int i = Table_Data_Cabut.getSelectedRow();
+                String no_lp = Table_Data_Cabut.getValueAt(i, 0).toString();
+                JDialog_Setor_LP_Cabut setor_lp = new JDialog_Setor_LP_Cabut(new javax.swing.JFrame(), true, no_lp);
                 setor_lp.pack();
                 setor_lp.setLocationRelativeTo(this);
                 setor_lp.setVisible(true);
@@ -1282,7 +1284,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
     private com.toedter.calendar.JDateChooser Date1_cabut;
     private com.toedter.calendar.JDateChooser Date2_cabut;
     private com.toedter.calendar.JDateChooser Date_pencabut;
-    public static javax.swing.JTable Table_Data_Cabut;
+    private javax.swing.JTable Table_Data_Cabut;
     public javax.swing.JButton button_add_pencabut;
     private javax.swing.JButton button_clear_pencabut;
     public javax.swing.JButton button_delete_cabut;

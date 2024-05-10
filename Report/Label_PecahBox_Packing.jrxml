@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="158" pageHeight="141" columnWidth="145" leftMargin="11" rightMargin="2" topMargin="2" bottomMargin="2" uuid="e0de41bb-dda0-416e-8431-523483ab0b6c">
-	<property name="ireport.zoom" value="3.543122000000002"/>
+	<property name="ireport.zoom" value="2.4200000000000013"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="NO_GRADE_SPK" class="java.lang.String"/>

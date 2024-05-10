@@ -21,7 +21,7 @@ public class TableColumnHider {
         int index = ColumnModel.getColumnIndex(columnName);
         TableColumn column = ColumnModel.getColumn(index);
         hiddenColumns.put(columnName, column);
-        hiddenColumns.put(":" + columnName, new Integer(index));
+        hiddenColumns.put(":" + columnName, index);
         ColumnModel.removeColumn(column);
     }
 

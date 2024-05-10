@@ -389,6 +389,37 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         }
     }
 
+    public void refreshTable_grading_conveyor() {
+        try {
+            decimalFormat.setMaximumFractionDigits(0);
+            decimalFormat.setGroupingUsed(true);
+            DefaultTableModel model = (DefaultTableModel) Table_grading_conveyor.getModel();
+            model.setRowCount(0);
+
+            sql = "SELECT `no_grading`, `no_kartu_waleta`, `kode_grade`, `jumlah_keping`, `created_at`, `updated_at` "
+                    + "FROM `tb_grading_bahan_baku_conveyor` "
+                    + "WHERE "
+                    + "`tb_grading_bahan_baku_conveyor`.`no_kartu_waleta` LIKE '%" + txt_search_no_kartu_grading_conveyor.getText() + "%' \n"
+                    + "AND `tb_grading_bahan_baku_conveyor`.`kode_grade` LIKE '%" + txt_search_grade_grading_conveyor.getText() + "%' \n";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            Object[] row = new Object[10];
+            while (rs.next()) {
+                row[0] = rs.getInt("no_grading");
+                row[1] = rs.getString("no_kartu_waleta");
+                row[2] = rs.getString("kode_grade");
+                row[3] = rs.getFloat("jumlah_keping");
+                row[4] = rs.getTimestamp("created_at");
+                model.addRow(row);
+            }
+            ColumnsAutoSizer.sizeColumnsToFit(Table_grading_conveyor);
+            int rowData = Table_grading_conveyor.getRowCount();
+            label_total_data_grading_conveyor.setText(decimalFormat.format(rowData));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void executeSQLQuery(String query, String message) {
         Utility.db.getConnection();
         try {
@@ -472,6 +503,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         button_export_pecah = new javax.swing.JButton();
         button_edit_pecah = new javax.swing.JButton();
+        button_gabung_pecah = new javax.swing.JButton();
         jPanel_StokPecah = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         Table_stok_pecah_lp = new javax.swing.JTable();
@@ -488,6 +520,17 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tabel_rekap_grade = new javax.swing.JTable();
+        jPanel_GradingConveyor = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        Table_grading_conveyor = new javax.swing.JTable();
+        button_export_grading_conveyor = new javax.swing.JButton();
+        jLabel25 = new javax.swing.JLabel();
+        label_total_data_grading_conveyor = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        txt_search_no_kartu_grading_conveyor = new javax.swing.JTextField();
+        button_search_grading_conveyor = new javax.swing.JButton();
+        txt_search_grade_grading_conveyor = new javax.swing.JTextField();
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -1105,6 +1148,15 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             }
         });
 
+        button_gabung_pecah.setBackground(new java.awt.Color(255, 255, 255));
+        button_gabung_pecah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_gabung_pecah.setText("Gabung Pecah");
+        button_gabung_pecah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_gabung_pecahActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_gradingLayout = new javax.swing.GroupLayout(jPanel_grading);
         jPanel_grading.setLayout(jPanel_gradingLayout);
         jPanel_gradingLayout.setHorizontalGroup(
@@ -1117,6 +1169,8 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                     .addGroup(jPanel_gradingLayout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button_gabung_pecah)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_edit_pecah)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export_pecah)))
@@ -1128,8 +1182,9 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel_gradingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_edit_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_export_pecah)
+                    .addComponent(button_edit_pecah)
+                    .addComponent(button_gabung_pecah))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2)
                 .addContainerGap())
@@ -1325,6 +1380,135 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         );
 
         jTabbedPane1.addTab("Stok Pecah LP", jPanel_StokPecah);
+
+        jPanel_GradingConveyor.setBackground(new java.awt.Color(255, 255, 255));
+
+        Table_grading_conveyor.setAutoCreateRowSorter(true);
+        Table_grading_conveyor.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Table_grading_conveyor.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No Grading", "No Kartu", "Grade", "Kpg", "Created At"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Table_grading_conveyor.getTableHeader().setReorderingAllowed(false);
+        jScrollPane6.setViewportView(Table_grading_conveyor);
+
+        button_export_grading_conveyor.setBackground(new java.awt.Color(255, 255, 255));
+        button_export_grading_conveyor.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_export_grading_conveyor.setText("Export");
+        button_export_grading_conveyor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_export_grading_conveyorActionPerformed(evt);
+            }
+        });
+
+        jLabel25.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel25.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel25.setText("Total Data :");
+
+        label_total_data_grading_conveyor.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_data_grading_conveyor.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_data_grading_conveyor.setText("0");
+
+        jLabel26.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel26.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel26.setText("No Kartu :");
+
+        jLabel27.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel27.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel27.setText("Grade :");
+
+        txt_search_no_kartu_grading_conveyor.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_search_no_kartu_grading_conveyor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_no_kartu_grading_conveyorKeyPressed(evt);
+            }
+        });
+
+        button_search_grading_conveyor.setBackground(new java.awt.Color(255, 255, 255));
+        button_search_grading_conveyor.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_search_grading_conveyor.setText("Search");
+        button_search_grading_conveyor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_search_grading_conveyorActionPerformed(evt);
+            }
+        });
+
+        txt_search_grade_grading_conveyor.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_search_grade_grading_conveyor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_grade_grading_conveyorKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_GradingConveyorLayout = new javax.swing.GroupLayout(jPanel_GradingConveyor);
+        jPanel_GradingConveyor.setLayout(jPanel_GradingConveyorLayout);
+        jPanel_GradingConveyorLayout.setHorizontalGroup(
+            jPanel_GradingConveyorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_GradingConveyorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_GradingConveyorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6)
+                    .addGroup(jPanel_GradingConveyorLayout.createSequentialGroup()
+                        .addGroup(jPanel_GradingConveyorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_GradingConveyorLayout.createSequentialGroup()
+                                .addComponent(jLabel25)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_data_grading_conveyor))
+                            .addGroup(jPanel_GradingConveyorLayout.createSequentialGroup()
+                                .addComponent(jLabel26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_no_kartu_grading_conveyor, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel27)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_grade_grading_conveyor, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_search_grading_conveyor)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_grading_conveyor)))
+                        .addGap(0, 906, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel_GradingConveyorLayout.setVerticalGroup(
+            jPanel_GradingConveyorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_GradingConveyorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_GradingConveyorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txt_search_grade_grading_conveyor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_search_grading_conveyor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_no_kartu_grading_conveyor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_export_grading_conveyor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_GradingConveyorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_total_data_grading_conveyor, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Data Grading Conveyor", jPanel_GradingConveyor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -1706,6 +1890,47 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_search_grade_stok_pecahKeyPressed
 
+    private void button_gabung_pecahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_gabung_pecahActionPerformed
+        // TODO add your handling code here:
+        int j = Table_Grading_Bahan_Baku.getSelectedRow();
+        if (j == -1) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih data pada tabel kiri !");
+        } else {
+            String no_grading = Table_Grading_Bahan_Baku.getValueAt(j, 0).toString();
+            JDialog_PecahLP_GabungPecah dialog = new JDialog_PecahLP_GabungPecah(new javax.swing.JFrame(), true, no_grading);
+            dialog.pack();
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
+            dialog.setEnabled(true);
+            refreshTable_pecah_lp(no_grading);
+        }
+    }//GEN-LAST:event_button_gabung_pecahActionPerformed
+
+    private void button_export_grading_conveyorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_grading_conveyorActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) Table_grading_conveyor.getModel();
+        ExportToExcel.writeToExcel(model, jPanel_grading);
+    }//GEN-LAST:event_button_export_grading_conveyorActionPerformed
+
+    private void txt_search_no_kartu_grading_conveyorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_no_kartu_grading_conveyorKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_grading_conveyor();
+        }
+    }//GEN-LAST:event_txt_search_no_kartu_grading_conveyorKeyPressed
+
+    private void button_search_grading_conveyorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_search_grading_conveyorActionPerformed
+        // TODO add your handling code here:
+        refreshTable_grading_conveyor();
+    }//GEN-LAST:event_button_search_grading_conveyorActionPerformed
+
+    private void txt_search_grade_grading_conveyorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_grade_grading_conveyorKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            refreshTable_grading_conveyor();
+        }
+    }//GEN-LAST:event_txt_search_grade_grading_conveyorKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CheckBox_showCMP;
@@ -1720,6 +1945,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser Date_timbang;
     public static javax.swing.JTable Table_Bahan_Baku_Masuk;
     private javax.swing.JTable Table_Grading_Bahan_Baku;
+    private javax.swing.JTable Table_grading_conveyor;
     private javax.swing.JTable Table_pecah_lp;
     private javax.swing.JTable Table_stok_pecah_lp;
     private javax.swing.JButton button_Catatan_Penimbangan_Sarang_Burung_Mentah;
@@ -1729,13 +1955,16 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
     public javax.swing.JButton button_edit_pecah;
     private javax.swing.JButton button_export_BahanBakuMasuk;
     public javax.swing.JButton button_export_grading;
+    public javax.swing.JButton button_export_grading_conveyor;
     public javax.swing.JButton button_export_pecah;
     public javax.swing.JButton button_export_stok_pecah;
+    public javax.swing.JButton button_gabung_pecah;
     public javax.swing.JButton button_insert_bahan_baku_masuk;
     public javax.swing.JButton button_save_timbang_bahan_baku;
     public javax.swing.JButton button_save_uji_kemasan;
     public static javax.swing.JButton button_search;
     public static javax.swing.JButton button_search_grading;
+    public static javax.swing.JButton button_search_grading_conveyor;
     public static javax.swing.JButton button_search_stok_pecah;
     private javax.swing.JButton button_selesai;
     private javax.swing.JButton button_tv_grading_baku;
@@ -1753,10 +1982,14 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel_Bahan_Baku_Masuk;
+    private javax.swing.JPanel jPanel_GradingConveyor;
     private javax.swing.JPanel jPanel_StokPecah;
     private javax.swing.JPanel jPanel_grading;
     private javax.swing.JPanel jPanel_operation_grading;
@@ -1766,19 +1999,23 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel label_tgl_grading;
     private javax.swing.JLabel label_tgl_grading1;
     private javax.swing.JLabel label_total_data_bahan_baku_masuk;
     private javax.swing.JLabel label_total_data_grading;
+    private javax.swing.JLabel label_total_data_grading_conveyor;
     private javax.swing.JLabel label_total_data_stok_pecah;
     private javax.swing.JLabel label_total_gram_grading;
     private javax.swing.JLabel label_total_keping_grading;
     private javax.swing.JTable tabel_rekap_grade;
     private javax.swing.JTextField txt_search_bahan_masuk;
+    private javax.swing.JTextField txt_search_grade_grading_conveyor;
     private javax.swing.JTextField txt_search_grade_stok_pecah;
     private javax.swing.JTextField txt_search_grading_grade;
     private javax.swing.JTextField txt_search_grading_no_kartu;
+    private javax.swing.JTextField txt_search_no_kartu_grading_conveyor;
     private javax.swing.JTextField txt_search_no_kartu_stok_pecah;
     private javax.swing.JTextField txt_search_rb;
     private javax.swing.JTextField txt_search_supplier;

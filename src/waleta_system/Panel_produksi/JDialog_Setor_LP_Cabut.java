@@ -11,41 +11,35 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import static org.apache.commons.lang.StringUtils.containsIgnoreCase;
 import waleta_system.Browse_Karyawan;
-
 import waleta_system.MainForm;
 
 public class JDialog_Setor_LP_Cabut extends javax.swing.JDialog {
 
-     
     String sql = null;
     ResultSet rs;
     Date date = new Date();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public JDialog_Setor_LP_Cabut(java.awt.Frame parent, boolean modal) {
+    public JDialog_Setor_LP_Cabut(java.awt.Frame parent, boolean modal, String no_lp) {
         super(parent, modal);
         this.setResizable(false);
         initComponents();
+        label_no_lp.setText(no_lp);
         getData();
     }
 
     public void getData() {
         try {
             label_tanggal_selesai.setText(new SimpleDateFormat("dd MMMM yyyy").format(date));
-            int i = JPanel_DataCabut.Table_Data_Cabut.getSelectedRow();
-            label_no_lp.setText(JPanel_DataCabut.Table_Data_Cabut.getValueAt(i, 0).toString());
-
             txt_admin.setText(MainForm.Login_NamaPegawai);
-
             sql = "SELECT MIN(`tanggal_cabut`) AS 'mulai_cabut' FROM `tb_detail_pencabut` WHERE `no_laporan_produksi` = '" + label_no_lp.getText() + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
                 Date_Setor.setMinSelectableDate(rs.getDate("mulai_cabut"));
             }
-
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JDialog_Setor_LP_Cabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

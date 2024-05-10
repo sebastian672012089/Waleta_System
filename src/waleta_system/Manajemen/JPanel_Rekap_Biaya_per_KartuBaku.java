@@ -121,11 +121,14 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
                     + "GROUP BY `no_kartu_waleta` "
                     + "ORDER BY `no_kartu_waleta`";
 //            System.out.println(sql);
-            PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql);
+            PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = pst.executeQuery();
             Object[] row = new Object[20];
-            rs.last();
-            jProgressBar1.setMaximum(rs.getRow());
+            int total_data = 0;
+            while (rs.next()) {
+                total_data++;
+            }
+            jProgressBar1.setMaximum(total_data);
             rs.beforeFirst();
             while (rs.next()) {
                 jProgressBar1.setValue(jProgressBar1.getValue() + 1);
@@ -180,7 +183,6 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
                 total_margin = total_margin + gross_margin;
             }
 
-            int total_data = Table_KartuBaku.getRowCount();
             label_total_Lengkap.setText(decimalFormat.format(total_data));
             label_total_baku.setText(decimalFormat.format(total_nilai_baku));
             label_total_produksi.setText(decimalFormat.format(total_biaya_produksi));

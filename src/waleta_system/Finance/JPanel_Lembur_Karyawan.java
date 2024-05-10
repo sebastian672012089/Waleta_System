@@ -581,6 +581,7 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea1.setRows(5);
@@ -618,6 +619,7 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
 
         jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTextArea2.setEditable(false);
         jTextArea2.setColumns(20);
         jTextArea2.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea2.setRows(5);

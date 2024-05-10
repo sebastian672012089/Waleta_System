@@ -31,6 +31,7 @@ public class JFrame_TV_SPK2 extends javax.swing.JFrame {
     Date date = new Date();
     DecimalFormat decimalFormat = new DecimalFormat();
     Thread clock, refreshTable_SPK;
+    boolean clock_thread, refreshTable_SPK_thread;
 
     int[] R = new int[]{102, 153, 153, 204, 255, 255, 255, 255, 255, 204, 153, 102};
     int[] G = new int[]{255, 255, 255, 255, 255, 204, 153, 153, 153, 153, 204, 204};
@@ -42,6 +43,9 @@ public class JFrame_TV_SPK2 extends javax.swing.JFrame {
     }
 
     public void init() {
+        Utility.db.connect();
+        clock_thread = true;
+        refreshTable_SPK_thread = true;
         clock = new Thread() {
             @Override
             public void run() {
@@ -396,8 +400,8 @@ public class JFrame_TV_SPK2 extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        clock.stop();
-        refreshTable_SPK.stop();
+        clock_thread = false;
+        refreshTable_SPK_thread = false;
     }//GEN-LAST:event_formWindowClosed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

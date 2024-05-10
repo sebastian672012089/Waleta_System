@@ -96,7 +96,7 @@ GROUP BY `pin`) attlog ON `tb_karyawan`.`pin_finger` = attlog.`pin`
 WHERE
 ((`jumlah_jam`+`menit_istirahat_lembur` >= 3 AND `nama_bagian` NOT LIKE '%SECURITY%') OR (`jumlah_jam`+`menit_istirahat_lembur` >= 6 AND `nama_bagian` LIKE '%SECURITY%'))
  AND `tanggal_lembur` =$P{tgl_lembur_absen}
- AND `nama_bagian` <> 'DRIVER'
+ AND `nama_bagian` NOT LIKE '%DRIVER%'
 AND `tb_surat_lembur_detail`.`id_pegawai` <> '20170600001'
 AND IF(`jenis_lembur` = 'Masuk', TIMESTAMPDIFF(minute, `absen_masuk`, `selesai_lembur`), TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`)) >= 180
 GROUP BY `tb_surat_lembur_detail`.`id_pegawai`

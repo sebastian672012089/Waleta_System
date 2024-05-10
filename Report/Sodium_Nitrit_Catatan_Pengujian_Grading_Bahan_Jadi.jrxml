@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Pengiriman" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
-	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.zoom" value="1.3310000000000008"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
@@ -265,67 +265,87 @@ LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta`
 	<columnHeader>
 		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement style="Column header" x="0" y="0" width="130" height="30" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement style="Column header" x="232" y="0" width="106" height="30" forecolor="#000000" uuid="de0471f3-d72d-4b2d-9954-04df508305ef"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial Narrow" size="10"/>
-				</textElement>
-				<text><![CDATA[LP]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="423" y="0" width="62" height="30" forecolor="#000000" uuid="ad494922-3502-46e2-bcf6-0d184df5ed9d"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10"/>
-				</textElement>
-				<text><![CDATA[SODIUM NITRIT (ppm)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="232" y="0" width="106" height="30" forecolor="#000000" uuid="196b0d1d-ac23-45a8-bba3-4cec217da749"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10"/>
+					<paragraph spacingBefore="2"/>
 				</textElement>
 				<text><![CDATA[GRADE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="338" y="0" width="85" height="30" forecolor="#000000" uuid="a3677676-d5c8-4ff6-9184-d89e746284d1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10"/>
+				<reportElement x="130" y="18" width="102" height="12" forecolor="#000000" uuid="825b8802-3fd3-4d2e-961a-610771214f3b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[TANGGAL UJI]]></text>
+				<text><![CDATA[Raw Material Card Number]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="485" y="0" width="70" height="30" forecolor="#000000" uuid="e2956ec5-788d-462f-be5a-5102806eea05"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="10"/>
+				<reportElement x="485" y="18" width="70" height="12" forecolor="#000000" uuid="46d7ade2-1f5b-471e-b85f-7f7b14b79d80"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial Narrow" size="8" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[STATUS]]></text>
+				<text><![CDATA[Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="338" y="20" width="85" height="10" forecolor="#000000" uuid="23e72d94-f17c-4b56-bba5-73fe0e786074"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+				<reportElement x="338" y="18" width="85" height="12" forecolor="#000000" uuid="8c532b8c-3b06-467b-9142-a28e9028442c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="8" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Date of test]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="20" width="130" height="10" forecolor="#000000" uuid="8c9fd145-c447-45ed-98f2-b59a56a30e44"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+				<reportElement x="232" y="18" width="106" height="12" forecolor="#000000" uuid="c0eda601-0135-4627-b2e7-562fa414e76c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="8" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Production Report]]></text>
+				<text><![CDATA[Grade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="130" y="0" width="102" height="30" forecolor="#000000" uuid="d57cbe88-e705-4c83-9cb1-185c74aa59b8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
+				<reportElement style="Column header" x="0" y="0" width="130" height="30" forecolor="#000000" uuid="03387470-05ba-4e29-b0f2-415084dbfd85"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial Narrow" size="10"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[LP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="130" y="0" width="102" height="30" forecolor="#000000" uuid="255a6b99-2b0d-4b0f-be5c-906a18926fcc"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="10"/>
+					<paragraph spacingBefore="2"/>
 				</textElement>
 				<text><![CDATA[No Kartu Baku]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="130" y="20" width="102" height="10" forecolor="#000000" uuid="62e3930e-98e7-4b92-b99d-d720dfd6c86c"/>
-				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+				<reportElement style="Column header" x="338" y="0" width="85" height="30" forecolor="#000000" uuid="01d9c265-66d8-4fba-9b9d-f760eb828dfd"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="10"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[TANGGAL UJI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="423" y="0" width="62" height="30" forecolor="#000000" uuid="de822c20-9650-49fe-bcb5-dc0a7d2f0a82"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="8"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[SODIUM NITRIT (ppm)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="485" y="0" width="70" height="30" forecolor="#000000" uuid="9f9d2bc2-8077-4499-8f78-42bd96a93844"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial Narrow" size="10"/>
+					<paragraph spacingBefore="2"/>
+				</textElement>
+				<text><![CDATA[STATUS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="18" width="130" height="12" forecolor="#000000" uuid="43f8e88c-4648-4e1a-8a0a-fb47f836910d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="8" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[Raw Material Card Number]]></text>
+				<text><![CDATA[Production Report]]></text>
 			</staticText>
 		</band>
 	</columnHeader>

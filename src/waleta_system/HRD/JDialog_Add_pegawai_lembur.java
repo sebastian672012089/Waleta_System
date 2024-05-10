@@ -233,7 +233,7 @@ public class JDialog_Add_pegawai_lembur extends javax.swing.JDialog {
         jLabel16.setText("Menit Istirahat :");
 
         ComboBox_istirahat.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_istirahat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 (Tidak ada istirahat)", "15 Menit", "30 Menit", "45 Menit", "60 Menit (1 Jam)", "75 Menit (1 Jam 15 Menit)", "90 Menit (1 Jam 30 Menit)", "105 Menit (1 Jam 45 Menit)", "120 Menit (2 Jam)", "135 Menit (2 Jam 15 Menit)", "150 Menit (2 Jam 30 Menit)", "165 Menit (2 Jam 45 Menit)", "180 Menit (3 Jam)", "195 Menit (3 Jam 15 Menit)", "210 Menit (3 Jam 30 Menit)", "225 Menit (3 Jam 45 Menit)", "240 Menit (4 Jam)" }));
+        ComboBox_istirahat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0 (Tidak ada istirahat)", "15 Menit", "30 Menit", "45 Menit", "60 Menit (1 Jam)", "75 Menit (1 Jam 15 Menit)", "90 Menit (1 Jam 30 Menit)", "105 Menit (1 Jam 45 Menit)", "120 Menit (2 Jam)", "135 Menit (2 Jam 15 Menit)", "150 Menit (2 Jam 30 Menit)", "165 Menit (2 Jam 45 Menit)", "180 Menit (3 Jam)", "195 Menit (3 Jam 15 Menit)", "210 Menit (3 Jam 30 Menit)", "225 Menit (3 Jam 45 Menit)", "240 Menit (4 Jam)", "255 Menit (4 Jam 15 Menit)", "270 Menit (4 Jam 30 Menit)", "285 Menit (4 Jam 45 Menit)", "300 Menit (5 Jam)", "315 Menit (5 Jam 15 Menit)", "330 Menit (5 Jam 30 Menit)", "345 Menit (5 Jam 45 Menit)", "360 Menit (6 Jam)" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

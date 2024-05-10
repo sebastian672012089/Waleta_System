@@ -824,7 +824,7 @@ public class JDialog_ScanQR extends javax.swing.JFrame {
                 }
                 grade = rs.getString("grade_waleta");
             }
-            String no_urut_barcode = label_no_urut_barcode.getText();
+            String no_urut_barcode = label_no_urut_barcode.getText(); 
             String kode_packing = txt_kode_packing.getText();
             if (kode_packing != null && !kode_packing.equals("")) {
                 sql = "SELECT `kode_rsb` FROM `tb_box_bahan_jadi` WHERE `no_box` = '" + kode_packing + "' ";

@@ -1,7 +1,6 @@
 package waleta_system.Panel_produksi;
 
 import waleta_system.Class.Utility;
-
 import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,13 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import waleta_system.Browse_Karyawan;
-
 import waleta_system.MainForm;
 
 public class JDialog_Input_F1 extends javax.swing.JDialog {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    
     Date date = new Date();
     PreparedStatement pst;
     String sql = null;
@@ -28,8 +25,6 @@ public class JDialog_Input_F1 extends javax.swing.JDialog {
     public JDialog_Input_F1(java.awt.Frame parent, boolean modal, String lp) {
         super(parent, modal);
         try {
-            
-            
             this.lp=lp;
             initComponents();
             txt_no_lp.setText(lp);

@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -405,13 +406,16 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                     + "`tb_laporan_produksi`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp_bonusCabut.getText() + "%' "
                     + search_sub
                     + "AND (`tgl_setor_cabut` BETWEEN '" + dateFormat.format(tanggal_mulai) + "' AND '" + dateFormat.format(tanggal_selesai) + "') ";
-            rs = Utility.db_sub.getStatement().executeQuery(sql);
-            rs.last();
-            int total_data = rs.getRow();
+            pst = Utility.db_sub.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rs = pst.executeQuery(sql);
+            int total_data = 0;
+            while (rs.next()) {
+                total_data++;
+            }
             rs.beforeFirst();
             while (rs.next()) {
                 Object[] row = new Object[15];
-                jProgressBar1.setValue((rs.getRow() / total_data) * 100 * (1 / 3));
+                jProgressBar1.setValue(Math.round(((float) rs.getRow() / (float) total_data) * 100f));
                 row[0] = rs.getString("no_laporan_produksi");
                 row[1] = rs.getString("kode_grade");
                 row[2] = rs.getString("ruangan");
@@ -751,7 +755,8 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                         + "LEFT JOIN `tb_cabut` ON `tb_detail_pencabut`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`\n"
                         + "LEFT JOIN `tb_karyawan` ON `tb_detail_pencabut`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
                         + "WHERE `tb_detail_pencabut`.`no_laporan_produksi` = '" + rs.getString("no_laporan_produksi") + "' ";
-                ResultSet result = Utility.db_sub.getStatement().executeQuery(qry);
+                pst = Utility.db_sub.getConnection().prepareStatement(qry, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                ResultSet result = pst.executeQuery(qry);
                 if (result.next()) {
                     result.beforeFirst();
                     while (result.next()) {

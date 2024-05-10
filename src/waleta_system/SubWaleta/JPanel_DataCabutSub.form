@@ -118,6 +118,8 @@
                                   <Component id="button_export_data_cabut" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="button_Input_PenilaianLP" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="button_laporan_terima_cabut_sub" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="578" max="32767" attributes="0"/>
@@ -145,6 +147,7 @@
                       <Component id="button_export_data_cabut" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="button_edit_cabut_online" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="button_Input_PenilaianLP" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="button_laporan_terima_cabut_sub" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane4" pref="358" max="32767" attributes="0"/>
@@ -1046,6 +1049,20 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_Input_PenilaianLPActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="button_laporan_terima_cabut_sub">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="11" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Laporan Terima Cabut SUB"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_laporan_terima_cabut_subActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

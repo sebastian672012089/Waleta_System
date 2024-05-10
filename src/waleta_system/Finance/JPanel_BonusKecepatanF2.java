@@ -17,7 +17,6 @@ import waleta_system.Interface.InterfacePanel;
 
 public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements InterfacePanel {
 
-    
     String sql = null;
     ResultSet rs;
     Date date = new Date();
@@ -32,8 +31,7 @@ public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements Inter
     @Override
     public void init() {
         try {
-            
-            
+
         } catch (Exception ex) {
             Logger.getLogger(JPanel_BonusKecepatanF2.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -80,19 +78,22 @@ public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements Inter
                     + "WHERE "
                     + "`tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_lp.getText() + "%' "
                     + "AND `tb_cetak`.`cetak_mangkok` > 0 "
-                    + "AND (`pekerja_koreksi_kering` LIKE '%"+txt_search_nama.getText()+"%' OR `pekerja_f1` LIKE '%"+txt_search_nama.getText()+"%' OR  "
-                    + "`pekerja_f2` LIKE '%"+txt_search_nama.getText()+"%' OR `f2_disetor` LIKE '%"+txt_search_nama.getText()+"%') "
+                    + "AND (`pekerja_koreksi_kering` LIKE '%" + txt_search_nama.getText() + "%' OR `pekerja_f1` LIKE '%" + txt_search_nama.getText() + "%' OR  "
+                    + "`pekerja_f2` LIKE '%" + txt_search_nama.getText() + "%' OR `f2_disetor` LIKE '%" + txt_search_nama.getText() + "%') "
                     + "AND (`tgl_dikerjakan_f2` BETWEEN DATE_ADD('" + tgl_penggajian + "', INTERVAL -7 DAY) AND DATE_ADD('" + tgl_penggajian + "', INTERVAL -1 DAY) OR "
                     + "`tgl_f1` BETWEEN DATE_ADD('" + tgl_penggajian + "', INTERVAL -7 DAY) AND DATE_ADD('" + tgl_penggajian + "', INTERVAL -1 DAY) OR "
                     + "`tgl_f2` BETWEEN DATE_ADD('" + tgl_penggajian + "', INTERVAL -7 DAY) AND DATE_ADD('" + tgl_penggajian + "', INTERVAL -1 DAY) OR "
                     + "`tgl_setor_f2` BETWEEN DATE_ADD('" + tgl_penggajian + "', INTERVAL -7 DAY) AND DATE_ADD('" + tgl_penggajian + "', INTERVAL -1 DAY))"
                     + "ORDER BY `tb_finishing_2`.`tgl_masuk_f2` DESC";
 //            System.out.println(sql);
-            PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql);
+            PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = pst.executeQuery();
             Object[] row = new Object[25];
-            rs.last();
-            jProgressBar1.setMaximum(rs.getRow());
+            int total_data = 0;
+            while (rs.next()) {
+                total_data++;
+            }
+            jProgressBar1.setMaximum(total_data);
             rs.beforeFirst();
             while (rs.next()) {
                 jProgressBar1.setValue(jProgressBar1.getValue() + 1);
@@ -274,11 +275,14 @@ public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements Inter
                     + "WHERE `hari` <= 3 AND `id_pegawai` IS NOT NULL \n"
                     + "GROUP BY `id_pegawai`";
 //            System.out.println(sql);
-            PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql);
+            PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             rs = pst.executeQuery();
             Object[] row = new Object[10];
-            rs.last();
-            jProgressBar_rekap.setMaximum(rs.getRow());
+            int total_data = 0;
+            while (rs.next()) {
+                total_data++;
+            }
+            jProgressBar_rekap.setMaximum(total_data);
             rs.beforeFirst();
             int no = 0;
             while (rs.next()) {

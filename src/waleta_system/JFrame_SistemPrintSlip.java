@@ -51,8 +51,10 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     ACR122U_ReaderHelper reader;
     Thread thread;
+    boolean run_thread = true;
 
     public JFrame_SistemPrintSlip() {
+        Utility.db.connect();
         initComponents();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         // Create a new JPanel with a centered layout
@@ -73,11 +75,12 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
         // Add centerPanel to jPanel1, your main container
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(centerPanel, BorderLayout.CENTER);
+        run_thread = true;
 
         thread = new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (run_thread) {
                     try {
                         reader = ACR122U_ReaderHelper.getInstance();
                         if (reader.connectReader()) {
@@ -1443,7 +1446,7 @@ public class JFrame_SistemPrintSlip extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        thread.stop();
+        run_thread = false;
     }//GEN-LAST:event_formWindowClosed
 
     public static void main(String args[]) {

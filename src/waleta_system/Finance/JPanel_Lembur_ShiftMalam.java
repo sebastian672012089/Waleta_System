@@ -365,7 +365,8 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 String query_ijin = "SELECT `tanggal_keluar`, `jam_keluar`, `jam_kembali` "
                         + "FROM `tb_ijin_keluar` "
                         + "WHERE `id_pegawai` = '" + id_Pegawai + "' "
-                        + "AND `tanggal_keluar` BETWEEN '" + tanggal_jadwal + "' AND DATE_ADD('" + tanggal_jadwal + "', INTERVAL 1 DAY)";
+                        + "AND `tanggal_keluar` BETWEEN '" + dateFormat.format(jadwal_masuk) + "' AND '" + dateFormat.format(jadwal_pulang) + "' "
+                        + "AND `jam_keluar` BETWEEN '" + Timeformat.format(jadwal_masuk) + "' AND '" + Timeformat.format(jadwal_pulang) + "'";
                 ResultSet rs_ijin = Utility.db.getStatement().executeQuery(query_ijin);
                 while (rs_ijin.next()) {
                     if (rs_ijin.getString("jam_keluar") == null) {
@@ -457,7 +458,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
 
 //                System.out.println("menit_jam_kerja_normal:" + menit_jam_kerja_normal + ", menit_jatah_ijin:" + menit_jatah_ijin + "");
                 double minimal_jam_kerja = menit_jam_kerja_normal - menit_jatah_ijin;
-                double menit_durasi_kerja_real = menit_durasi_kerja - (menit_terlambat + menit_ijin_keluar);
+                double menit_durasi_kerja_real = menit_durasi_kerja - (menit_terlambat + menit_ijin_pulang + menit_ijin_keluar);
                 if (menit_durasi_kerja_real < minimal_jam_kerja) {
                     premi_hadir = 0;
                     keterangan = tanggal_jadwal + "(Jam Kerja Kurang); ";

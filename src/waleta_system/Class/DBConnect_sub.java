@@ -1,6 +1,6 @@
 package waleta_system.Class;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,25 +9,27 @@ import javax.swing.JOptionPane;
 public class DBConnect_sub {
 
     MysqlDataSource ds = new MysqlDataSource();
-    final String DRIVER = "com.mysql.jdbc.Driver";
+    final String DRIVER = "com.mysql.cj.jdbc.Driver";
     Connection conn = null;
     Statement state = null;
     private Statement stmt;
 
     public DBConnect_sub() {
-        System.out.println("connecting .. ");
-        ds.setServerName("194.163.41.103");
-        ds.setPort(3306);
-        ds.setDatabaseName("u1607207_sub");
-        ds.setUser("u1607207_admin_sub");
-        ds.setPassword("waletasub_2022");
-
-        ds.setAutoReconnect(true);
         try {
+            System.out.println("connecting .. ");
+            ds.setServerName("194.163.41.103");
+            ds.setPort(3306);
+            ds.setDatabaseName("u1607207_sub");
+            ds.setUser("u1607207_admin_sub");
+            ds.setPassword("waletasub_2022");
+
+            ds.setAutoReconnect(true);
+
             ds.setLoginTimeout(6000); // 60 seconds
             ds.setConnectTimeout(6000); // 60 seconds
             ds.setSocketTimeout(6000); // 60 seconds
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex, "Access Denied !", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(DBConnect_sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

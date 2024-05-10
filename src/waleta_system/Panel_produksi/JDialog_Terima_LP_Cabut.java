@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import waleta_system.Browse_Karyawan;
-import waleta_system.MainForm;
 
 public class JDialog_Terima_LP_Cabut extends javax.swing.JDialog {
 
@@ -29,7 +28,7 @@ public class JDialog_Terima_LP_Cabut extends javax.swing.JDialog {
         try {
             initComponents();
             this.setResizable(false);
-            
+
             sql = "SELECT `bulu_upah` FROM `tb_tarif_cabut` WHERE `status` = 'AKTIF'";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
@@ -43,31 +42,48 @@ public class JDialog_Terima_LP_Cabut extends javax.swing.JDialog {
 
     public void input_cabut() {
         try {
-            int total_baris = JPanel_DataCabut.Table_Data_Cabut.getRowCount();
-            for (int i = 0; i < total_baris; i++) {
-                if (txt_no_lp.getText().equals(JPanel_DataCabut.Table_Data_Cabut.getValueAt(i, 0))) {
-                    JOptionPane.showMessageDialog(this, "No Laporan Produksi (" + txt_no_lp.getText() + ") sudah masuk !");
+            boolean is_ruangan_sub = true;
+            String jenis_bulu_lp = "", jenis_bulu_cabut = "";
+            if (txt_no_lp.getText() == null || "".equals(txt_no_lp.getText())) {
+                JOptionPane.showMessageDialog(this, "Silahkan masukan No Laporan Produksi !!");
+                Check = false;
+            } else if (txt_diterima.getText() == null || "".equals(txt_diterima.getText())) {
+                JOptionPane.showMessageDialog(this, "Silahkan pilih penerima LP !!");
+                Check = false;
+            } else {
+                sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`, `tb_laporan_produksi`.`ruangan`, `jenis_bulu_lp`, `tb_cabut`.`no_laporan_produksi` AS 'lp_cabut' \n"
+                        + "FROM `tb_laporan_produksi` \n"
+                        + "LEFT JOIN `tb_cabut` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi` \n"
+                        + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
+                rs = Utility.db.getStatement().executeQuery(sql);
+                if (rs.next()) {
+                    jenis_bulu_lp = rs.getString("jenis_bulu_lp");
+                    if (rs.getString("lp_cabut") != null) {
+                        JOptionPane.showMessageDialog(this, "No Laporan Produksi (" + txt_no_lp.getText() + ") sudah masuk !");
+                        Check = false;
+                    } else if (rs.getString("ruangan").length() == 5) {//LP SUB
+                        is_ruangan_sub = false;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "No Laporan Produksi (" + txt_no_lp.getText() + ") tidak ditemukan !");
                     Check = false;
                 }
             }
 
-            if ("".equals(txt_no_lp.getText())) {
-                JOptionPane.showMessageDialog(this, "Masukan No Laporan Produksi !!");
-                Check = false;
-            }
-
             if (Check) {
-                System.out.println(txt_tgl_masuk.getText());
-                String Query = "INSERT INTO `tb_cabut`(`no_laporan_produksi`, `cabut_diterima`, `tgl_mulai_cabut`) "
-                        + "VALUES ('" + txt_no_lp.getText() + "','" + txt_diterima.getText() + "','" + dateFormat.format(tgl_masuk) + "')";
+                if (is_ruangan_sub) {
+                    jenis_bulu_cabut = ComboBox_jenisBulu.getSelectedItem().toString();
+                } else {
+                    jenis_bulu_cabut = jenis_bulu_lp;
+                }
+                String Query = "INSERT INTO `tb_cabut`(`no_laporan_produksi`, `cabut_diterima`, `tgl_mulai_cabut`, `jenis_bulu_cabut`) "
+                        + "VALUES ('" + txt_no_lp.getText() + "','" + txt_diterima.getText() + "','" + dateFormat.format(tgl_masuk) + "', '" + jenis_bulu_cabut + "')";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
                     JPanel_DataCabut.button_search_cabut.doClick();
                     this.dispose();
                     JOptionPane.showMessageDialog(this, "Data Inserted !");
                 }
-            } else {
-                System.out.println("false");
             }
         } catch (HeadlessException | SQLException e) {
             JOptionPane.showMessageDialog(this, e);
@@ -285,13 +301,14 @@ public class JDialog_Terima_LP_Cabut extends javax.swing.JDialog {
         try {
             // TODO add your handling code here:
             String id = null, cuci_diserahkan = null, no_lp = null;
-            sql = "SELECT `no_laporan_produksi`, `id_pegawai`, `cuci_diserahkan`, `tgl_masuk_cuci` "
-                    + "FROM `tb_cuci` WHERE `no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
-//            System.out.println(sql);
+            sql = "SELECT `tb_laporan_produksi`.`no_laporan_produksi`, `jenis_bulu_lp`, `id_pegawai`, `cuci_diserahkan`, `tgl_masuk_cuci`, `tb_cuci`.`no_laporan_produksi` AS 'lp_cuci' "
+                    + "FROM `tb_laporan_produksi` "
+                    + "LEFT JOIN `tb_cuci` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cuci`.`no_laporan_produksi` \n"
+                    + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
-//                System.out.println(rs.getString("no_laporan_produksi"));
-                no_lp = rs.getString("no_laporan_produksi");
+                ComboBox_jenisBulu.setSelectedItem(rs.getString("jenis_bulu_lp"));
+                no_lp = rs.getString("lp_cuci");
                 id = rs.getString("id_pegawai");
                 cuci_diserahkan = rs.getString("cuci_diserahkan");
                 txt_tgl_masuk.setText(new SimpleDateFormat("dd MMMM yyyy").format(rs.getDate("tgl_masuk_cuci")));

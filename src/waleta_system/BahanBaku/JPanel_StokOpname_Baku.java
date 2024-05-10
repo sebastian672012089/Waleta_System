@@ -56,8 +56,6 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
                                     refreshTable_detail_Stok(tabel_stockOpname.getValueAt(x, 0).toString());
                                     refreshTable_detail_SCAN(tabel_stockOpname.getValueAt(x, 0).toString());
                                 }
-                                this.stop();
-                                this.destroy();
                             }
                         };
                         thread.start();
@@ -742,8 +740,6 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
             @Override
             public void run() {
                 refreshTable_detail_Stok(label_tanggal_SO.getText());
-                this.stop();
-                this.destroy();
             }
         };
         thread.start();
@@ -823,8 +819,6 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
                 @Override
                 public void run() {
                     refreshTable_detail_SCAN(label_tanggal_SO1.getText());
-                    this.stop();
-                    this.destroy();
                 }
             };
             thread.start();
@@ -837,8 +831,6 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
             @Override
             public void run() {
                 refreshTable_detail_SCAN(label_tanggal_SO1.getText());
-                this.stop();
-                this.destroy();
             }
         };
         thread.start();

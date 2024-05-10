@@ -56,8 +56,6 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
                                     refreshTable_detailLP_WIP(tabel_stockOpname.getValueAt(x, 0).toString());
                                     refreshTable_detailLP_SCAN(tabel_stockOpname.getValueAt(x, 0).toString());
                                 }
-                                this.stop();
-                                this.destroy();
                             }
                         };
                         thread.start();
@@ -871,8 +869,6 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
             @Override
             public void run() {
                 refreshTable_detailLP_WIP(label_tanggal_SO.getText());
-                this.stop();
-                this.destroy();
             }
         };
         thread.start();
@@ -891,8 +887,6 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
                 @Override
                 public void run() {
                     refreshTable_detailLP_WIP(label_tanggal_SO.getText());
-                    this.stop();
-                    this.destroy();
                 }
             };
             thread.start();
@@ -917,8 +911,6 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
                 @Override
                 public void run() {
                     refreshTable_detailLP_SCAN(label_tanggal_SO1.getText());
-                    this.stop();
-                    this.destroy();
                 }
             };
             thread.start();
@@ -931,8 +923,6 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
             @Override
             public void run() {
                 refreshTable_detailLP_SCAN(label_tanggal_SO1.getText());
-                this.stop();
-                this.destroy();
             }
         };
         thread.start();

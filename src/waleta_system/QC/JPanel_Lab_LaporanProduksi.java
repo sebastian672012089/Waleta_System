@@ -1585,7 +1585,8 @@ public class JPanel_Lab_LaporanProduksi extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta` "
                     + "LEFT JOIN `tb_lab_bahan_baku` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_lab_bahan_baku`.`no_kartu_waleta`\n"
                     + "WHERE "
-                    + "`tb_lab_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") "
+                    + "`tb_lab_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") \n"
+                    + "AND `status` = 'PASSED' \n"
                     + "AND `tgl_uji` IS NOT NULL "
                     + "ORDER BY `tgl_uji` ASC";
             JRDesignQuery newQuery = new JRDesignQuery();

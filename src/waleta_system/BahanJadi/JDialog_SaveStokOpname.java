@@ -289,19 +289,17 @@ public class JDialog_SaveStokOpname extends javax.swing.JDialog {
                         + "LEFT JOIN `tb_tutupan_grading` ON `tb_box_bahan_jadi`.`no_tutupan` = `tb_tutupan_grading`.`kode_tutupan`\n"
                         + "WHERE `lokasi_terakhir` IN ('GRADING', 'PACKING', 'RE-PROSES', 'TREATMENT', 'DIPINJAM') AND (`tb_box_packing`.`status` IN ('PENDING', 'STOK', 'RETUR') OR `tb_box_packing`.`status` IS NULL) \n"
                         + "AND (`tb_tutupan_grading`.`status_box` = 'SELESAI' OR `tb_tutupan_grading`.`status_box` IS NULL) ";
-                pst = con.prepareStatement(sql);
+                pst = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 rs = pst.executeQuery();
 
-                int panjang = 0;
-                try {
-                    rs.last();
-                    panjang = rs.getRow();
-                    rs.beforeFirst();
-                } catch (Exception ex) {
+                int total_data = 0;
+                while (rs.next()) {
+                    total_data++;
                 }
+                rs.beforeFirst();
 
                 jProgressBar1.setMinimum(0);
-                jProgressBar1.setMaximum(panjang);
+                jProgressBar1.setMaximum(total_data);
                 jProgressBar1.setValue(0);
                 jProgressBar1.setStringPainted(true);
 

@@ -1,7 +1,6 @@
 package waleta_system.Panel_produksi;
 
 import waleta_system.Class.Utility;
-
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -18,7 +17,6 @@ import javax.swing.table.DefaultTableModel;
 public class JDialog_Input_ByProduct_F2_v2 extends javax.swing.JDialog {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
     Date date = new Date();
     PreparedStatement pst;
     String sql = null;

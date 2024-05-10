@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -80,7 +81,8 @@ public class JPanel_DataCetakSub extends javax.swing.JPanel implements Interface
                     + "LEFT JOIN `tb_karyawan` ON `tb_cetak`.`cetak_dikerjakan` = `tb_karyawan`.`id_pegawai`\n"
                     + "WHERE `tb_cetak`.`no_laporan_produksi` LIKE '%" + txt_search_cetak.getText() + "%' " + ruang + filter_tanggal
                     + "ORDER BY `tb_cetak`.`tgl_mulai_cetak` DESC";
-            rs = Utility.db_sub.getStatement().executeQuery(sql);
+            PreparedStatement pst = Utility.db_sub.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rs = pst.executeQuery(sql);
             Object[] row = new Object[25];
             while (rs.next()) {
                 float mk = rs.getFloat("cetak_mangkok");

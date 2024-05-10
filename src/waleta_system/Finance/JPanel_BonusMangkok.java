@@ -2,6 +2,7 @@ package waleta_system.Finance;
 
 import waleta_system.Class.Utility;
 import java.awt.event.KeyEvent;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -454,18 +455,20 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) table_pegawai_bonus.getModel();
             model.setRowCount(0);
             int Row = Table_LP_Bonus.getSelectedRow();
-            int size = 0;
+            int total_data = 0;
             float bonus_cabut = Float.valueOf(Table_LP_Bonus.getValueAt(Row, 17).toString());
             sql = "SELECT `nomor`,`grup_cabut`, `no_laporan_produksi`, `tb_detail_pencabut`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `tb_bagian`.`nama_bagian`, `tanggal_cabut`, `jumlah_cabut`, `jumlah_gram` \n"
                     + "FROM `tb_detail_pencabut` \n"
                     + "JOIN `tb_karyawan` ON `tb_detail_pencabut`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
                     + "JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
                     + "WHERE `no_laporan_produksi` = '" + Table_LP_Bonus.getValueAt(Row, 0) + "'";
-            rs = Utility.db.getStatement().executeQuery(sql);
+            PreparedStatement pst = Utility.db.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            rs = pst.executeQuery(sql);
             Object[] row = new Object[5];
             if (rs != null) {
-                rs.last();    // moves cursor to the last row
-                size = rs.getRow(); // get row id
+                while (rs.next()) {
+                    total_data++;
+                }
                 rs.beforeFirst();
             }
             while (rs.next()) {
@@ -473,7 +476,7 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                 row[1] = rs.getString("nama_pegawai");
                 row[2] = rs.getString("grup_cabut");
                 row[3] = rs.getInt("jumlah_cabut");
-                row[4] = Math.round(bonus_cabut / size);
+                row[4] = Math.round(bonus_cabut / total_data);
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_pegawai_bonus);
