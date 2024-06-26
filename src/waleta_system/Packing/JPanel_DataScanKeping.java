@@ -114,7 +114,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
             if (Date_scan1.getDate() != null && Date_scan2.getDate() != null) {
                 filter_tanggal = " AND DATE(`scan_time`) BETWEEN '" + dateFormat.format(Date_scan1.getDate()) + "' AND '" + dateFormat.format(Date_scan2.getDate()) + "'";
             }
-            
+
             sql = "SELECT `no_urut_barcode`, `tb_barcode_pengiriman`.`no_barcode`, `qrcode`, `gram`, `tb_spk_detail`.`prod_date`, `tb_spk_detail`.`kode_kh`, `tb_spk_detail`.`kode_spk`, `tb_scan_qr_packing`.`no_grade_spk`, `tb_spk_detail`.`grade_buyer`, `scan_time`, `no_urut_pcs`, `kode_packing` "
                     + "FROM `tb_scan_qr_packing` "
                     + "LEFT JOIN `tb_barcode_pengiriman` ON `tb_scan_qr_packing`.`no_grade_spk` = `tb_barcode_pengiriman`.`no_grade_spk` AND `tb_scan_qr_packing`.`no_urut_barcode` = `tb_barcode_pengiriman`.`no_urut` "
@@ -132,10 +132,17 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
                 row[2] = rs.getString("qrcode");
                 row[3] = rs.getFloat("gram");
                 row[4] = rs.getDate("prod_date");
+                
+                String kode_rsb = "";
                 if (rs.getString("kode_kh") != null) {
-                    row[5] = rs.getString("kode_kh").split("-")[0] + "-" + new SimpleDateFormat("yyMMdd").format(rs.getDate("prod_date"));;
-                    row[6] = rs.getString("kode_kh").split("-")[0];
+                    kode_rsb = rs.getString("kode_kh").split("-")[0];
                 }
+                
+                if (rs.getString("kode_kh") != null && rs.getDate("prod_date") != null) {
+                    row[5] = kode_rsb + "-" + new SimpleDateFormat("yyMMdd").format(rs.getDate("prod_date"));
+                }
+
+                row[6] = kode_rsb;
                 row[7] = rs.getString("kode_spk");
                 row[8] = rs.getString("grade_buyer");
                 row[9] = rs.getInt("no_grade_spk");
@@ -1475,7 +1482,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
                 Utility.db.getConnection();
                 File file = chooser.getSelectedFile();
                 String filename1 = file.getAbsolutePath();
-                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                try ( BufferedReader br = new BufferedReader(new FileReader(filename1))) {
                     String line;
                     try {
                         Utility.db.getConnection().setAutoCommit(false);

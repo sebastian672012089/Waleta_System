@@ -42,10 +42,12 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
     public void init() {
         try {
             String tahun_ini = new SimpleDateFormat("yyyy").format(today);
-            Date filter1 = dateFormat.parse(tahun_ini + "-01-01");
-            Date_Ijin_absen1.setDate(filter1);
+            Date tgl_1_januari = dateFormat.parse(tahun_ini + "-01-01");
+            Date_pengajuan1.setDate(tgl_1_januari);
+            Date_pengajuan2.setDate(today);
+            Date_Ijin_absen1.setDate(tgl_1_januari);
             Date_Ijin_absen2.setDate(today);
-            Date_Cuti_keseluruhan1.setDate(filter1);
+            Date_Cuti_keseluruhan1.setDate(tgl_1_januari);
             Date_Cuti_keseluruhan2.setDate(today);
 
             ComboBox_departemen.removeAllItems();
@@ -78,7 +80,8 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 public void valueChanged(ListSelectionEvent event) {
                     if (!event.getValueIsAdjusting() && Table_karyawan.getSelectedRow() != -1) {
                         int x = Table_karyawan.getSelectedRow();
-                        refreshTable_Cuti();
+                        String id_pegawai = Table_karyawan.getValueAt(x, 0).toString();
+                        refreshTable_Cuti(id_pegawai);
                         label_nama.setText(Table_karyawan.getValueAt(x, 1).toString());
                     }
                 }
@@ -175,21 +178,22 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 int cuti_terpakai = 0;
                 int sisa_cuti = 0;
 
-                String query = "SELECT `jenis_cuti`, COUNT(`kode_cuti`) AS 'hari'\n"
-                        + "FROM `tb_cuti` "
-                        + "WHERE "
-                        + "`id_pegawai` = '" + rs.getString("id_pegawai") + "'\n"
-                        + "AND `tb_cuti`.`tanggal_cuti` >= '" + dateFormat.format(rs.getDate("tanggal_masuk")) + "'"
-                        + "GROUP BY `jenis_cuti`";
+                String filter_tanggal = "AND `tb_cuti`.`tanggal_cuti` >= '" + dateFormat.format(rs.getDate("tanggal_masuk")) + "' \n";
                 if (Date_Ijin_absen1.getDate() != null && Date_Ijin_absen2.getDate() != null) {
-                    query = "SELECT `jenis_cuti`, COUNT(`kode_cuti`) AS 'hari'\n"
-                            + "FROM `tb_cuti` "
-                            + "WHERE "
-                            + "`id_pegawai` = '" + rs.getString("id_pegawai") + "' "
-                            + "AND `tb_cuti`.`tanggal_cuti` >= '" + dateFormat.format(rs.getDate("tanggal_masuk")) + "'"
-                            + "AND (`tb_cuti`.`tanggal_cuti` BETWEEN '" + dateFormat.format(Date_Ijin_absen1.getDate()) + "' AND '" + dateFormat.format(Date_Ijin_absen2.getDate()) + "') \n"
-                            + "GROUP BY `jenis_cuti`";
+                    filter_tanggal = "AND (`tb_cuti`.`tanggal_cuti` BETWEEN '" + dateFormat.format(Date_Ijin_absen1.getDate()) + "' AND '" + dateFormat.format(Date_Ijin_absen2.getDate()) + "') \n";
                 }
+                String query = "SELECT `tb_cuti`.`jenis_cuti`, COUNT(`kode_cuti`) AS 'hari'\n"
+                        + "FROM `tb_cuti` "
+                        + "LEFT JOIN `tb_cuti_pengajuan` ON `tb_cuti`.`kode_pengajuan` = `tb_cuti_pengajuan`.`kode_pengajuan` "
+                        + "WHERE "
+                        + "`tb_cuti`.`id_pegawai` = '" + rs.getString("id_pegawai") + "' "
+                        + filter_tanggal
+                        + "AND (\n"
+                        + "`tb_cuti`.`kode_pengajuan` IS NULL\n"
+                        + "OR (`tb_cuti_pengajuan`.`diketahui` IS NOT NULL AND `tb_cuti_pengajuan`.`dibatalkan` IS NULL) \n"
+                        + ") \n"
+                        + "GROUP BY `tb_cuti`.`jenis_cuti`";
+
                 ResultSet result = Utility.db.getStatement().executeQuery(query);
                 while (result.next()) {
                     switch (result.getString("jenis_cuti")) {
@@ -232,18 +236,20 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         }
     }
 
-    public void refreshTable_Cuti() {
+    public void refreshTable_Cuti(String id_pegawai) {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_Cuti_per_karyawan.getModel();
             model.setRowCount(0);
-            int i = Table_karyawan.getSelectedRow();
             String filter_tanggal = "";
             if (Date_Ijin_absen1.getDate() != null && Date_Ijin_absen2.getDate() != null) {
                 filter_tanggal = "AND `tb_cuti`.`tanggal_cuti` BETWEEN '" + dateFormat.format(Date_Ijin_absen1.getDate()) + "' AND '" + dateFormat.format(Date_Ijin_absen2.getDate()) + "' ";
             }
-            sql = "SELECT * FROM `tb_cuti` "
+            sql = "SELECT `kode_cuti`, `tb_cuti`.`id_pegawai`, `tb_cuti`.`tanggal_cuti`, `tb_cuti`.`jenis_cuti`, `tb_cuti`.`kategori_cuti`, `tb_cuti`.`keterangan`, `tb_cuti`.`pengganti`, `tb_karyawan`.`nama_pegawai`, "
+                    + "`tb_cuti_pengajuan`.`diketahui`, `tb_cuti_pengajuan`.`dibatalkan` "
+                    + "FROM `tb_cuti` "
+                    + "LEFT JOIN `tb_cuti_pengajuan` ON `tb_cuti`.`kode_pengajuan` = `tb_cuti_pengajuan`.`kode_pengajuan` "
                     + "LEFT JOIN `tb_karyawan` ON `tb_cuti`.`pengganti` = `tb_karyawan`.`id_pegawai` "
-                    + "WHERE `tb_cuti`.`id_pegawai` = '" + Table_karyawan.getValueAt(i, 0) + "'"
+                    + "WHERE `tb_cuti`.`id_pegawai` = '" + id_pegawai + "'"
                     + filter_tanggal;
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[10];
@@ -256,6 +262,8 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 row[5] = rs.getString("keterangan");
                 row[6] = rs.getString("pengganti");
                 row[7] = rs.getString("nama_pegawai");
+                row[8] = rs.getString("diketahui");
+                row[9] = rs.getString("dibatalkan");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Cuti_per_karyawan);
@@ -303,8 +311,10 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 data_absen.put(String.format("%05d", result.getInt("pin")) + result.getString("tanggal"), result.getString("scan_date"));
             }
 
-            sql = "SELECT `kode_cuti`, `tb_cuti`.`id_pegawai`, A.`nama_pegawai`, A.`posisi`, `tb_bagian`.`nama_bagian`, `tanggal_cuti`, `kategori_cuti`, `jenis_cuti`, `tb_cuti`.`keterangan`, `pengganti`, B.`nama_pegawai` AS 'nama_pengganti' "
+            sql = "SELECT `kode_cuti`, `tb_cuti`.`id_pegawai`, A.`nama_pegawai`, A.`posisi`, `tb_bagian`.`nama_bagian`, `tb_cuti`.`tanggal_cuti`, `tb_cuti`.`kategori_cuti`, `tb_cuti`.`jenis_cuti`, `tb_cuti`.`keterangan`, `tb_cuti`.`pengganti`, B.`nama_pegawai` AS 'nama_pengganti', "
+                    + "`tb_cuti_pengajuan`.`diketahui`, `tb_cuti_pengajuan`.`dibatalkan` "
                     + "FROM `tb_cuti` "
+                    + "LEFT JOIN `tb_cuti_pengajuan` ON `tb_cuti`.`kode_pengajuan` = `tb_cuti_pengajuan`.`kode_pengajuan` "
                     + "LEFT JOIN `tb_karyawan` A ON `tb_cuti`.`id_pegawai` = A.`id_pegawai` "
                     + "LEFT JOIN `tb_bagian` ON A.`kode_bagian` = `tb_bagian`.`kode_bagian` "
                     + "LEFT JOIN `tb_karyawan` B ON `tb_cuti`.`pengganti` = B.`id_pegawai` "
@@ -330,6 +340,9 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 row[9] = rs.getString("pengganti");
                 row[10] = rs.getString("nama_pengganti");
                 row[11] = data_absen.get(rs.getString("id_pegawai").substring(6) + rs.getDate("tanggal_cuti"));
+                row[12] = rs.getString("diketahui");
+                row[13] = rs.getString("dibatalkan");
+
                 if (ComboBox_realisasi_cuti.getSelectedItem().toString().equals("BATAL")) {
                     if (data_absen.get(rs.getString("id_pegawai").substring(6) + rs.getDate("tanggal_cuti")) != null) {
                         model.addRow(row);
@@ -351,12 +364,13 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_pengajuan.getModel();
             model.setRowCount(0);
-            String bagian = ComboBox_bagian_pengajuan.getSelectedItem().toString();
+            
+            String bagian = "AND `tb_bagian`.`nama_bagian` = '" + ComboBox_bagian_pengajuan.getSelectedItem().toString() + "' ";
             if ("All".equals(ComboBox_bagian_pengajuan.getSelectedItem().toString())) {
                 bagian = "";
             }
 
-            String departemen = ComboBox_departemen_pengajuan.getSelectedItem().toString();
+            String departemen = "AND `tb_bagian`.`kode_departemen` = '" + ComboBox_departemen_pengajuan.getSelectedItem().toString() + "' ";
             if ("All".equals(ComboBox_departemen_pengajuan.getSelectedItem().toString())) {
                 departemen = "";
             }
@@ -385,9 +399,10 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_karyawan` A ON `tb_cuti_pengajuan`.`id_pegawai` = A.`id_pegawai`\n"
                     + "LEFT JOIN `tb_bagian` ON A.`kode_bagian` = `tb_bagian`.`kode_bagian` "
                     + "LEFT JOIN `tb_karyawan` B ON `tb_cuti_pengajuan`.`pengganti` = B.`id_pegawai` "
-                    + "WHERE A.`nama_pegawai` LIKE '%" + txt_search_karyawan_pengajuan.getText() + "%' "
-                    + "AND `tb_bagian`.`nama_bagian` LIKE '%" + bagian + "%' "
-                    + "AND `tb_bagian`.`kode_departemen` LIKE '%" + departemen + "%' "
+                    + "WHERE "
+                    + "A.`nama_pegawai` LIKE '%" + txt_search_karyawan_pengajuan.getText() + "%' "
+                    + bagian
+                    + departemen
                     + kelamin
                     + status
                     + posisi
@@ -830,14 +845,14 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Nama", "Bagian", "Posisi", "Tgl Ijin", "Hari", "Jenis", "Ijin", "Keterangan", "ID Pengganti", "Pengganti", "Realisasi Absen"
+                "No", "Nama", "Bagian", "Posisi", "Tgl Ijin", "Hari", "Jenis", "Ijin", "Keterangan", "ID Pengganti", "Pengganti", "Realisasi Absen", "Diketahui", "Dibatalkan"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -895,7 +910,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         ComboBox_posisi1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
 
         jLabel37.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel37.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+        jLabel37.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel37.setText("Tgl Cuti :");
 
         jLabel22.setBackground(new java.awt.Color(255, 255, 255));
@@ -912,12 +927,12 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
         Date_Cuti_keseluruhan1.setBackground(new java.awt.Color(255, 255, 255));
         Date_Cuti_keseluruhan1.setToolTipText("");
         Date_Cuti_keseluruhan1.setDateFormatString("dd MMMM yyyy");
-        Date_Cuti_keseluruhan1.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+        Date_Cuti_keseluruhan1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         Date_Cuti_keseluruhan1.setMinSelectableDate(new java.util.Date(1483207315000L));
 
         Date_Cuti_keseluruhan2.setBackground(new java.awt.Color(255, 255, 255));
         Date_Cuti_keseluruhan2.setDateFormatString("dd MMMM yyyy");
-        Date_Cuti_keseluruhan2.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+        Date_Cuti_keseluruhan2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         txt_search_karyawan1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_search_karyawan1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1016,7 +1031,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                                 .addComponent(jLabel21)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label_total_data_absen_keseluruhan)))
-                        .addGap(0, 136, Short.MAX_VALUE)))
+                        .addGap(0, 138, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -1050,7 +1065,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                     .addComponent(button_edit_ijin_cuti)
                     .addComponent(button_export1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 696, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1124,14 +1139,14 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "ID Pegawai", "Tgl Ijin", "Jenis", "Ijin", "Keterangan", "ID Pengganti", "Pengganti"
+                "No", "ID Pegawai", "Tgl Ijin", "Jenis", "Ijin", "Keterangan", "ID Pengganti", "Pengganti", "Diketahui", "Dibatalkan"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

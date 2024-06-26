@@ -188,8 +188,8 @@ public class JPanel_Absen_Keuangan extends javax.swing.JPanel {
             if ("All".equals(ComboBox_posisi2.getSelectedItem().toString())) {
                 posisi = "";
             }
-            String jam1 = Spinner_jam1.getValue().toString() + ":" + Spinner_menit1.getValue().toString();
-            String jam2 = Spinner_jam2.getValue().toString() + ":" + Spinner_menit2.getValue().toString();
+            String jam1 = String.format("%02d", Spinner_jam1.getValue()) + ":" + String.format("%02d", Spinner_menit1.getValue()) + ":00";
+            String jam2 = String.format("%02d", Spinner_jam2.getValue()) + ":" + String.format("%02d", Spinner_menit2.getValue()) + ":00";
 
             if (Date_TidakMasuk1.getDate() != null && Date_TidakMasuk2.getDate() != null) {
                 Date date = Date_TidakMasuk1.getDate();

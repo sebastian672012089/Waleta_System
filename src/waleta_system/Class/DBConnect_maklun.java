@@ -17,11 +17,11 @@ public class DBConnect_maklun {
     public DBConnect_maklun() {
         try {
             System.out.println("connecting .. ");
-            ds.setServerName("194.163.41.103");
+            ds.setServerName("213.210.37.19");
             ds.setPort(3306);
-            ds.setDatabaseName("u1607207_maklun");
-            ds.setUser("u1607207_maklun");
-            ds.setPassword("waleta12345678");
+            ds.setDatabaseName("waleta_maklun");
+            ds.setUser("waleta_main");
+            ds.setPassword("7RMrPLYLA302");
 
 //        ds.setServerName("217.21.72.7");
 //        ds.setPort(3306);

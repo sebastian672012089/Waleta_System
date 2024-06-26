@@ -25,6 +25,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import waleta_system.Class.AksesMenu;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
+import waleta_system.RND.JFrame_Timer;
 
 public class MainForm extends javax.swing.JFrame {
 
@@ -640,6 +641,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem_tv_wip2 = new javax.swing.JMenuItem();
         MenuItem_Penilaian_BuluUpah = new javax.swing.JMenuItem();
         jMenu_produksi_data_kinerja_hc_kopyok = new javax.swing.JMenuItem();
+        jMenu_timer = new javax.swing.JMenuItem();
         jMenu_atb = new javax.swing.JMenu();
         jMenuItem_atb_dataKaryawan = new javax.swing.JMenuItem();
         jMenuItem_atb_dataProduksi = new javax.swing.JMenuItem();
@@ -706,6 +708,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenu_qc_heat_treatment = new javax.swing.JMenuItem();
         jMenu_qc_dokumen = new javax.swing.JMenuItem();
         jMenu_qc_BahanKimia = new javax.swing.JMenuItem();
+        jMenu_qc_suhu_kelembapan_hmi = new javax.swing.JMenuItem();
         jMenuItem_tv_qc = new javax.swing.JMenuItem();
         jMenuItem_tv_qc_belumSetor = new javax.swing.JMenuItem();
         jMenuItem_tv_wip1 = new javax.swing.JMenuItem();
@@ -822,11 +825,12 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Home.setBackground(new java.awt.Color(162, 155, 254));
         jPanel_Home.setPreferredSize(new java.awt.Dimension(1366, 700));
 
+        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.340");
+        jLabel19.setText("2.2.368");
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel21.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
+        jLabel21.setFont(new java.awt.Font("Calibri Light", 1, 48)); // NOI18N
         jLabel21.setText("PT. WALETA ASIA JAYA");
 
         jPanel_need_attention.setBackground(new java.awt.Color(255, 255, 255));
@@ -975,7 +979,6 @@ public class MainForm extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Pengajuan Alat", jScrollPane5);
 
-        Button_refresh_butuh_Acc.setBackground(new java.awt.Color(255, 255, 255));
         Button_refresh_butuh_Acc.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         Button_refresh_butuh_Acc.setText("Refresh");
         Button_refresh_butuh_Acc.addActionListener(new java.awt.event.ActionListener() {
@@ -1096,8 +1099,9 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jLabel20.setBackground(new java.awt.Color(255, 255, 255));
         jLabel20.setFont(new java.awt.Font("Calibri Light", 0, 24)); // NOI18N
-        jLabel20.setText("Ver : ");
+        jLabel20.setText("System version :");
 
         javax.swing.GroupLayout jPanel_HomeLayout = new javax.swing.GroupLayout(jPanel_Home);
         jPanel_Home.setLayout(jPanel_HomeLayout);
@@ -1852,6 +1856,14 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu_produksi.add(jMenu_produksi_data_kinerja_hc_kopyok);
 
+        jMenu_timer.setText("TIMER");
+        jMenu_timer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_timerActionPerformed(evt);
+            }
+        });
+        jMenu_produksi.add(jMenu_timer);
+
         jMenuBar1.add(jMenu_produksi);
 
         jMenu_atb.setBackground(new java.awt.Color(255, 255, 255));
@@ -2482,6 +2494,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu_QC.add(jMenu_qc_BahanKimia);
+
+        jMenu_qc_suhu_kelembapan_hmi.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu_qc_suhu_kelembapan_hmi.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenu_qc_suhu_kelembapan_hmi.setText("Suhu & Kelembapan HMI");
+        jMenu_qc_suhu_kelembapan_hmi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_qc_suhu_kelembapan_hmiActionPerformed(evt);
+            }
+        });
+        jMenu_QC.add(jMenu_qc_suhu_kelembapan_hmi);
 
         jMenuItem_tv_qc.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem_tv_qc.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -6177,7 +6199,7 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Aset_PengajuanPembelian1);
         main_panel.repaint();
         main_panel.revalidate();
-        jPanel_Aset_PengajuanPembelian1.init();
+        jPanel_Aset_PengajuanPembelian1.init("Keuangan");
     }//GEN-LAST:event_jMenuItem_Keu_Pengajuan_PembelianActionPerformed
 
     private void jMenuItem_Keu_Pengajuan_Pembelian2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_Keu_Pengajuan_Pembelian2ActionPerformed
@@ -6190,7 +6212,7 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Aset_PengajuanPembelian1);
         main_panel.repaint();
         main_panel.revalidate();
-        jPanel_Aset_PengajuanPembelian1.init();
+        jPanel_Aset_PengajuanPembelian1.init("MainMenu");
     }//GEN-LAST:event_jMenuItem_Keu_Pengajuan_Pembelian2ActionPerformed
 
     private void jMenuItem_tv_qc_belumSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tv_qc_belumSetorActionPerformed
@@ -6527,6 +6549,30 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Reproses_Sub1.init();
     }//GEN-LAST:event_jMenu_Sub_ReprosesActionPerformed
 
+    private void jMenu_qc_suhu_kelembapan_hmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_qc_suhu_kelembapan_hmiActionPerformed
+        // TODO add your handling code here:
+        main_panel.removeAll();
+        main_panel.repaint();
+        main_panel.revalidate();
+
+        //add panel
+        main_panel.add(jPanel_Suhu_dan_Kelembapan21);
+        main_panel.repaint();
+        main_panel.revalidate();
+        jPanel_Suhu_dan_Kelembapan21.init();
+    }//GEN-LAST:event_jMenu_qc_suhu_kelembapan_hmiActionPerformed
+
+    private void jMenu_timerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_timerActionPerformed
+        // TODO add your handling code here:
+        JFrame_Timer frame = new JFrame_Timer();
+        frame.pack();
+        frame.setResizable(true);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.setEnabled(true);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }//GEN-LAST:event_jMenu_timerActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_refresh_butuh_Acc;
@@ -6762,9 +6808,11 @@ public class MainForm extends javax.swing.JFrame {
     public static javax.swing.JMenuItem jMenu_qc_lp;
     public javax.swing.JMenuItem jMenu_qc_pemanasan_jadi;
     private javax.swing.JMenuItem jMenu_qc_pemeriksaan_pengiriman;
+    private javax.swing.JMenuItem jMenu_qc_suhu_kelembapan_hmi;
     public static javax.swing.JMenuItem jMenu_qc_treatment;
     private javax.swing.JMenuItem jMenu_qc_treatment_bj;
     public static javax.swing.JMenu jMenu_sub;
+    private javax.swing.JMenuItem jMenu_timer;
     private javax.swing.JPanel jPanel1;
     private waleta_system.HRD.JPanel_Absen_Cuti jPanel_Absen_Cuti1;
     private waleta_system.Finance.JPanel_Absen_Keuangan jPanel_Absen_Keuangan1;

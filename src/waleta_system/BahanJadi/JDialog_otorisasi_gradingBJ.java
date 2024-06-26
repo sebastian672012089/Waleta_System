@@ -11,11 +11,11 @@ import waleta_system.Class.Utility;
 
 public class JDialog_otorisasi_gradingBJ extends javax.swing.JDialog {
 
-    
     String sql = null;
     ResultSet rs;
     PreparedStatement pst;
     boolean akses = false;
+    String otorisasi = null;
 
     public JDialog_otorisasi_gradingBJ(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -24,29 +24,30 @@ public class JDialog_otorisasi_gradingBJ extends javax.swing.JDialog {
     }
 
     public boolean getAccess() {
-        boolean Access = false;
         try {
-            
             Connection con = Utility.db.getConnection();
             sql = "SELECT * FROM `tb_login` "
                     + "JOIN `tb_karyawan` ON `tb_login`.`id_pegawai` = `tb_karyawan`.`id_pegawai` "
                     + "JOIN `tb_bagian` ON `tb_bagian`.`kode_bagian` = `tb_karyawan`.`kode_bagian` "
-                    + "WHERE `user`=? AND `pass`=? AND `tb_karyawan`.`status` = 'IN' AND ((`tb_karyawan`.`posisi` LIKE 'STAFF%' AND `tb_bagian`.`kode_departemen` = 'EKSPOR' ) OR `tb_karyawan`.`posisi` = 'MANAGER') ";
+                    + "WHERE "
+                    + "`user`=? AND `pass`=? "
+                    + "AND `tb_karyawan`.`status` = 'IN' "
+                    + "AND ((`tb_karyawan`.`posisi` LIKE 'STAFF%' AND `tb_bagian`.`kode_departemen` = 'EKSPOR' ) OR `tb_karyawan`.`posisi` = 'MANAGER') ";
             pst = con.prepareStatement(sql);
             pst.setString(1, txt_username.getText());
             pst.setString(2, txt_password.getText());
             rs = pst.executeQuery();
-            Access = rs.next();
-            
-            if (Access) {
+            if (rs.next()) {
                 JOptionPane.showMessageDialog(this, "Access Granted !", "Access Granted !", JOptionPane.INFORMATION_MESSAGE);
+                return true;
             } else {
                 JOptionPane.showMessageDialog(this, "Access Denied !", "Access Denied !", JOptionPane.ERROR_MESSAGE);
+                return false;
             }
         } catch (Exception ex) {
             Logger.getLogger(JDialog_otorisasi_gradingBJ.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        return Access;
     }
     
     public void OK(){
@@ -105,11 +106,6 @@ public class JDialog_otorisasi_gradingBJ extends javax.swing.JDialog {
 
         txt_password.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txt_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txt_password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_passwordActionPerformed(evt);
-            }
-        });
         txt_password.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_passwordKeyPressed(evt);
@@ -204,10 +200,6 @@ public class JDialog_otorisasi_gradingBJ extends javax.swing.JDialog {
     private void button_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_loginActionPerformed
         OK();
     }//GEN-LAST:event_button_loginActionPerformed
-
-    private void txt_passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_passwordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_passwordActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

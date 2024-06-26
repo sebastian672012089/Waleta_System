@@ -637,7 +637,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
             }
             String Query = "SELECT `tanggal_rendam`, `tb_rendam`.`no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `lama_waktu_rendam`, `tb_laporan_produksi`.`memo_lp`, \n"
                     + "`cheat_no_kartu`, `cheat_rsb`, "
-                    + "`waktu_mulai_rendam`, `waktu_selesai_rendam` "
+                    + "`waktu_mulai_rendam`, `waktu_selesai_rendam`, `pekerja_rendam`  "
                     + "FROM `tb_rendam` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_rendam`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`"

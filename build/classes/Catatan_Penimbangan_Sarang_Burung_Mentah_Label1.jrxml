@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Catatan Penerimaan dan Grading Sarang Burung Mentah" printOrder="Horizontal" pageWidth="250" pageHeight="158" orientation="Landscape" columnWidth="246" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="11" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
 	<property name="ireport.zoom" value="2.1961500000000007"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
+	<style name="Title" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -12,7 +17,7 @@
 			<rightPen lineWidth="1.0"/>
 		</box>
 	</style>
-	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+	<style name="SubTitle" forecolor="#000000" fontName="Arial" fontSize="12" isBold="false">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -64,7 +69,7 @@
 			<style backcolor="#F0F0F0"/>
 		</conditionalStyle>
 	</style>
-	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+	<style name="Page footer" forecolor="#000000" fontName="Arial" fontSize="12">
 		<box>
 			<pen lineWidth="0.0"/>
 			<topPen lineWidth="0.0"/>
@@ -73,34 +78,41 @@
 			<rightPen lineWidth="0.0"/>
 		</box>
 	</style>
-	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
-		<box>
-			<pen lineWidth="1.0"/>
-			<topPen lineWidth="1.0"/>
-			<leftPen lineWidth="1.0"/>
-			<bottomPen lineWidth="1.0"/>
-			<rightPen lineWidth="1.0"/>
-		</box>
-	</style>
 	<parameter name="no_kartu_waleta" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT `no_kartu_waleta`, `tgl_masuk`, `berat_awal`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_rumah_burung`.`nama_rumah_burung`
 FROM `tb_bahan_baku_masuk_cheat`
-LEFT JOIN `tb_rumah_burung` ON `tb_bahan_baku_masuk_cheat`.`no_registrasi` = `tb_rumah_burung`.`no_registrasi` WHERE 1]]>
+LEFT JOIN `tb_rumah_burung` ON `tb_bahan_baku_masuk_cheat`.`no_registrasi` = `tb_rumah_burung`.`no_registrasi` 
+WHERE `no_kartu_waleta` = '24M387']]>
 	</queryString>
 	<field name="no_kartu_waleta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="no_kartu_waleta"/>
+		<property name="com.jaspersoft.studio.field.label" value="no_kartu_waleta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_bahan_baku_masuk_cheat"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="tgl_masuk" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="tgl_masuk"/>
+		<property name="com.jaspersoft.studio.field.label" value="tgl_masuk"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_bahan_baku_masuk_cheat"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="berat_awal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="berat_awal"/>
+		<property name="com.jaspersoft.studio.field.label" value="berat_awal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_bahan_baku_masuk_cheat"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="no_registrasi" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="no_registrasi"/>
+		<property name="com.jaspersoft.studio.field.label" value="no_registrasi"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_bahan_baku_masuk_cheat"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="nama_rumah_burung" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nama_rumah_burung"/>
+		<property name="com.jaspersoft.studio.field.label" value="nama_rumah_burung"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tb_rumah_burung"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
@@ -213,7 +225,7 @@ LEFT JOIN `tb_rumah_burung` ON `tb_bahan_baku_masuk_cheat`.`no_registrasi` = `tb
 				</textElement>
 				<text><![CDATA[Petugas]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="90" y="38" width="156" height="20" uuid="d60ed006-b055-4d64-a3a2-0738a3705da6"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Bold"/>
@@ -221,7 +233,7 @@ LEFT JOIN `tb_rumah_burung` ON `tb_bahan_baku_masuk_cheat`.`no_registrasi` = `tb
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no_registrasi} + "-" + $F{nama_rumah_burung}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="90" y="58" width="156" height="20" uuid="56b05a8e-bf1b-4fb1-92d2-75d5a4b3a186"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Bold"/>
@@ -229,7 +241,7 @@ LEFT JOIN `tb_rumah_burung` ON `tb_bahan_baku_masuk_cheat`.`no_registrasi` = `tb
 				</textElement>
 				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy").format($F{tgl_masuk})]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="90" y="78" width="156" height="20" uuid="0b9cf0bc-57d7-4101-a45b-1706f8d9ca05"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Bold"/>
@@ -237,7 +249,7 @@ LEFT JOIN `tb_rumah_burung` ON `tb_bahan_baku_masuk_cheat`.`no_registrasi` = `tb
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no_kartu_waleta} + "-" + $F{no_registrasi}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="90" y="98" width="156" height="20" uuid="c3af4d8b-20d7-422b-8982-a80b71ecd7df"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Bold"/>

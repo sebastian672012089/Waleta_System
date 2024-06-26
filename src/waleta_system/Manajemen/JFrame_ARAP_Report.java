@@ -303,7 +303,7 @@ public class JFrame_ARAP_Report extends javax.swing.JFrame {
             double total_dollar = 0, total_rupiah = 0;
             DefaultTableModel model = (DefaultTableModel) tabel_hutangExim.getModel();
             model.setRowCount(0);
-            sql = "SELECT `tb_hutang_exim`.`invoice`, `nama`, `jumlah_hutang`, (SELECT `nilai` FROM `tb_kurs_usd` WHERE 1 ORDER BY `tanggal` DESC) AS 'kurs_usd' "
+            sql = "SELECT `tb_hutang_exim`.`invoice`, `nama`, `jumlah_hutang`, (SELECT `nilai` FROM `tb_kurs_usd` WHERE 1 ORDER BY `tanggal` DESC LIMIT 1) AS 'kurs_usd' "
                     + "FROM `tb_hutang_exim` "
                     + "LEFT JOIN `tb_payment_report` ON `tb_hutang_exim`.`invoice` = `tb_payment_report`.`invoice`\n"
                     + "LEFT JOIN `tb_buyer` ON `tb_payment_report`.`buyer` = `tb_buyer`.`kode_buyer`\n"

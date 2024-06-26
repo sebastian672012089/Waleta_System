@@ -1,22 +1,40 @@
 package waleta_system.Maintenance;
 
-import java.awt.event.KeyEvent;
+import java.awt.BasicStroke;
+import java.net.InetAddress;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import net.wimpi.modbus.io.ModbusTCPTransaction;
+import net.wimpi.modbus.msg.ReadInputRegistersRequest;
+import net.wimpi.modbus.msg.ReadInputRegistersResponse;
+import net.wimpi.modbus.net.TCPMasterConnection;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardXYToolTipGenerator;
+import org.jfree.chart.labels.XYToolTipGenerator;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.time.Second;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
-import waleta_system.Class.ExportToExcel;
-import waleta_system.MainForm;
 
 public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
 
@@ -25,53 +43,173 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
     Date date = new Date();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DefaultTableCellRenderer TableAlignment = new DefaultTableCellRenderer();
+    DecimalFormat decimalFormat = new DecimalFormat();
+    int detik = 0;
+
+    private Timer timer;
+
+    private static final int UNIT_ID = 1; // Sesuaikan dengan ID unit Modbus Anda
+    private static final int NUMBER_OF_REGISTERS = 1; // Jumlah register yang akan dibaca
+    private static final int PORT = 9090; // Port ModBus
+    private static final String IP_ADDRESS = "192.168.8.8"; // Alamat IP HMI
 
     public JPanel_Suhu_dan_Kelembapan2() {
         initComponents();
-        table_thermohygro.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting() && table_thermohygro.getSelectedRow() != -1) {
-                    int x = table_thermohygro.getSelectedRow();
-                    if (x > -1) {
-                        txt_device_id.setText(table_thermohygro.getValueAt(x, 0).toString());
-                        txt_edit_ruangan.setText(table_thermohygro.getValueAt(x, 1).toString());
-                    }
-                }
-            }
-        });
     }
 
     public void init() {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                decimalFormat.setMaximumFractionDigits(2);
+                final int REGISTER_ADDRESS_TEMPERATURE = 300; // Alamat register untuk data suhu
+                final int REGISTER_ADDRESS_HUMIDITY = 301; // Alamat register untuk data suhu
+
+                try {
+                    float suhu = getModBusValue(REGISTER_ADDRESS_TEMPERATURE);
+                    float kelembapan = getModBusValue(REGISTER_ADDRESS_HUMIDITY);
+                    label_suhu.setText(decimalFormat.format(suhu));
+                    label_kelembapan.setText(decimalFormat.format(kelembapan));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
+                LocalTime currentTime = LocalTime.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+                String formattedTime = currentTime.format(formatter);
+                label_time.setText(formattedTime);
+
+                if (detik % 60 == 0) {
+                    refreshChart();
+                }
+                detik++;
+            }
+        };
+
+        if (timer != null) {
+            timer.cancel();
+            detik = 0;
+        }
+        timer = new Timer();
+        timer.schedule(timerTask, 100, 1000);
         refreshTable();
-        refreshTable_thermohygro();
+    }
+
+    private float getModBusValue(int REGISTER_ADDRESS) throws Exception {
+        float Value = 0;
+        InetAddress addr = InetAddress.getByName(IP_ADDRESS);
+        TCPMasterConnection connection = new TCPMasterConnection(addr);
+        connection.setPort(PORT);
+        connection.connect();
+
+        ReadInputRegistersRequest request = new ReadInputRegistersRequest(REGISTER_ADDRESS, NUMBER_OF_REGISTERS);
+        request.setUnitID(UNIT_ID);
+
+        ModbusTCPTransaction transaction = new ModbusTCPTransaction(connection);
+        transaction.setRequest(request);
+        transaction.execute();
+
+        ReadInputRegistersResponse response = (ReadInputRegistersResponse) transaction.getResponse();
+        if (response != null) {
+            Value = response.getRegisterValue(0) / 100.0f; // Konversi dari register ke suhu (misal: register value 300 = 30.0 derajat Celsius)
+        }
+
+        connection.close();
+        
+        return Value;
+    }
+
+    public void refreshChart() {
+        try {
+            System.out.println("chart refreshed!");
+            // Create TimeSeries objects for suhu and kelembapan
+            TimeSeries suhuSeries = new TimeSeries("Suhu", Second.class);
+            TimeSeries kelembapanSeries = new TimeSeries("Kelembapan", Second.class);
+
+            sql = "SELECT `suhu`, `kelembapan`, `created_at` "
+                    + "FROM `tb_suhu_kelembapan_hmi` \n"
+                    + "WHERE 1 "
+                    + "ORDER BY `created_at` DESC LIMIT 40";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            while (rs.next()) {
+                double suhu = rs.getDouble("suhu");
+                double kelembapan = rs.getDouble("kelembapan");
+                Timestamp timestamp = rs.getTimestamp("created_at");
+                Second second = new Second(timestamp);
+
+                // Add data points to the series
+                suhuSeries.add(second, suhu);
+                kelembapanSeries.add(second, kelembapan);
+            }
+
+            // Create a dataset and add the series to it
+            TimeSeriesCollection dataset = new TimeSeriesCollection();
+            dataset.addSeries(suhuSeries);
+            dataset.addSeries(kelembapanSeries);
+
+            // Create the chart
+            JFreeChart lineChart = ChartFactory.createTimeSeriesChart(
+                    "Suhu dan Kelembapan",
+                    "Timestamp",
+                    "Value",
+                    dataset,
+                    true,
+                    true,
+                    false
+            );
+
+            // Set maximum y-axis value to 100
+            XYPlot plot = lineChart.getXYPlot();
+            NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+            rangeAxis.setRange(-10.0, 100.0);
+
+            // Customize the renderer to make the stroke more bold
+            XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+            renderer.setSeriesStroke(0, new BasicStroke(2.0f)); // Bold stroke for the first series
+            renderer.setSeriesStroke(1, new BasicStroke(2.0f)); // Bold stroke for the second series
+            XYToolTipGenerator tooltipGenerator = new StandardXYToolTipGenerator("{0}: {2} ({1})", new SimpleDateFormat("HH:mm"), NumberFormat.getInstance());
+            renderer.setBaseToolTipGenerator(tooltipGenerator);
+            plot.setRenderer(renderer);
+
+            // Create a panel for the chart
+            ChartPanel chartPanel = new ChartPanel(lineChart);
+            chartPanel.setPreferredSize(new java.awt.Dimension(jPanel_chart.getWidth(), jPanel_chart.getHeight()));
+
+            // Remove all existing components and add the new chart panel
+            jPanel_chart.removeAll();
+            jPanel_chart.setLayout(new java.awt.BorderLayout());
+            jPanel_chart.add(chartPanel, java.awt.BorderLayout.CENTER);
+            jPanel_chart.validate();
+            jPanel_chart.repaint();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Suhu_dan_Kelembapan2.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void refreshTable() {
         try {
-
             DefaultTableModel model = (DefaultTableModel) Table_suhu_dan_kelembapan.getModel();
             model.setRowCount(0);
             String filter_tanggal = "";
             if (Date1.getDate() != null && Date2.getDate() != null) {
-                filter_tanggal = " AND DATE(`log_time`) BETWEEN '" + dateFormat.format(Date1.getDate()) + "' AND '" + dateFormat.format(Date2.getDate()) + "' ";
+                filter_tanggal = "AND DATE(`created_at`) BETWEEN '" + dateFormat.format(Date1.getDate()) + "' AND '" + dateFormat.format(Date2.getDate()) + "' \n";
             }
-            sql = "SELECT `thermohygro_log`.`device_id`, `thermohygro_log`.`location`, `log_time`, `temperature`, `humidity`, `battery` \n"
-                    + "FROM `thermohygro_log` \n"
-                    + "LEFT JOIN `thermohygro_device` ON `thermohygro_log`.`device_id` = `thermohygro_device`.`device_id`\n"
-                    + "WHERE `thermohygro_log`.`location` LIKE '%" + txt_search_ruang.getText() + "%' "
+
+            String jam1 = String.format("%02d", Spinner_jam1.getValue()) + ":" + String.format("%02d", Spinner_menit1.getValue()) + ":00";
+            String jam2 = String.format("%02d", Spinner_jam2.getValue()) + ":" + String.format("%02d", Spinner_menit2.getValue()) + ":00";
+            sql = "SELECT `no_input`, `ruang`, `suhu`, `kelembapan`, `created_at` "
+                    + "FROM `tb_suhu_kelembapan_hmi` \n"
+                    + "WHERE \n"
+                    + "TIME(`created_at`) BETWEEN '" + jam1 + "' AND '" + jam2 + "' \n"
                     + filter_tanggal
-                    + "ORDER BY `log_time` DESC";
+                    + "ORDER BY `created_at` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[10];
             while (rs.next()) {
-                row[0] = rs.getDate("log_time");
-                row[1] = rs.getTime("log_time");
-                row[2] = rs.getString("device_id");
-                row[3] = rs.getString("location");
-                row[4] = rs.getFloat("temperature");
-                row[5] = rs.getFloat("humidity");
-                row[6] = rs.getInt("battery");
+                row[0] = rs.getTimestamp("created_at");
+                row[1] = rs.getFloat("suhu");
+                row[2] = rs.getFloat("kelembapan");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_suhu_dan_kelembapan);
@@ -82,32 +220,6 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
             for (int i = 0; i < Table_suhu_dan_kelembapan.getColumnCount(); i++) {
                 Table_suhu_dan_kelembapan.getColumnModel().getColumn(i).setCellRenderer(TableAlignment);
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JPanel_Suhu_dan_Kelembapan2.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void refreshTable_thermohygro() {
-        try {
-            DefaultTableModel model = (DefaultTableModel) table_thermohygro.getModel();
-            model.setRowCount(0);
-            String filter_tanggal = "";
-            sql = "SELECT `device_id`, `location`, `product_name`, `activation_time`, `active_status` FROM `thermohygro_device` WHERE 1 "
-                    + filter_tanggal;
-            rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[10];
-            while (rs.next()) {
-                row[0] = rs.getString("device_id");
-                row[1] = rs.getString("location");
-                row[2] = rs.getString("product_name");
-                row[3] = rs.getTimestamp("activation_time");
-                row[4] = rs.getInt("active_status");
-                model.addRow(row);
-            }
-            ColumnsAutoSizer.sizeColumnsToFit(table_thermohygro);
-            int rowData = table_thermohygro.getRowCount();
-            label_total_thermohygro.setText(Integer.toString(rowData));
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Suhu_dan_Kelembapan2.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,26 +240,33 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
         Table_suhu_dan_kelembapan = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         label_total_data = new javax.swing.JLabel();
-        txt_search_ruang = new javax.swing.JTextField();
         button_search = new javax.swing.JButton();
-        button_export_customer = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Date1 = new com.toedter.calendar.JDateChooser();
         Date2 = new com.toedter.calendar.JDateChooser();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table_thermohygro = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_device_id = new javax.swing.JTextField();
-        txt_edit_ruangan = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        Spinner_jam2 = new javax.swing.JSpinner();
+        Spinner_menit2 = new javax.swing.JSpinner();
+        Spinner_jam1 = new javax.swing.JSpinner();
+        Spinner_menit1 = new javax.swing.JSpinner();
         jLabel5 = new javax.swing.JLabel();
-        button_edit_thermohygro = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
-        label_total_thermohygro = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        label_suhu = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        label_kelembapan = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel23 = new javax.swing.JLabel();
+        label_time = new javax.swing.JLabel();
+        jPanel_chart = new javax.swing.JPanel();
 
         jPanel_SuhuKelembapan.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_SuhuKelembapan.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Suhu dan Kelembapan OTOMATIS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
         jPanel_SuhuKelembapan.setPreferredSize(new java.awt.Dimension(1366, 701));
 
         Table_suhu_dan_kelembapan.setAutoCreateRowSorter(true);
@@ -156,14 +275,14 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Tanggal", "Jam", "Device ID", "Location", "Suhu", "Kelembapan", "Battery Level"
+                "Waktu", "Suhu", "Kelembapan"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Integer.class
+                java.lang.Object.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -178,19 +297,12 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
         jScrollPane8.setViewportView(Table_suhu_dan_kelembapan);
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel12.setText("Total Data :");
 
         label_total_data.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_data.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        label_total_data.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_total_data.setText("TOTAL");
-
-        txt_search_ruang.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_search_ruang.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_search_ruangKeyPressed(evt);
-            }
-        });
 
         button_search.setBackground(new java.awt.Color(255, 255, 255));
         button_search.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -200,19 +312,6 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
                 button_searchActionPerformed(evt);
             }
         });
-
-        button_export_customer.setBackground(new java.awt.Color(255, 255, 255));
-        button_export_customer.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_export_customer.setText("Export To Excel");
-        button_export_customer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_export_customerActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel1.setText("Location :");
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -228,65 +327,57 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
         Date2.setDateFormatString("dd MMM yyyy");
         Date2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Thermohygro", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
-
-        table_thermohygro.setAutoCreateRowSorter(true);
-        table_thermohygro.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Device ID", "Location", "Product Name", "Activation Time", "Status"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        table_thermohygro.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table_thermohygro);
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel4.setText("Data Suhu dan Kelembapan HMI Coolroom Ruang A");
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
         jLabel3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel3.setText("Device ID :");
+        jLabel3.setText("Jam :");
 
-        txt_device_id.setEditable(false);
-        txt_device_id.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel19.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel19.setText(":");
 
-        txt_edit_ruangan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel20.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel20.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel20.setText(":");
+
+        Spinner_jam2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        Spinner_jam2.setModel(new javax.swing.SpinnerNumberModel(23, 0, 23, 1));
+        Spinner_jam2.setEditor(new javax.swing.JSpinner.NumberEditor(Spinner_jam2, ""));
+
+        Spinner_menit2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        Spinner_menit2.setModel(new javax.swing.SpinnerNumberModel(59, 0, 59, 1));
+        Spinner_menit2.setEditor(new javax.swing.JSpinner.NumberEditor(Spinner_menit2, ""));
+
+        Spinner_jam1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        Spinner_jam1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 23, 1));
+        Spinner_jam1.setEditor(new javax.swing.JSpinner.NumberEditor(Spinner_jam1, ""));
+
+        Spinner_menit1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        Spinner_menit1.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
+        Spinner_menit1.setEditor(new javax.swing.JSpinner.NumberEditor(Spinner_menit1, ""));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel5.setText("Total Data :");
+        jLabel5.setText("Sampai");
 
-        button_edit_thermohygro.setBackground(new java.awt.Color(255, 255, 255));
-        button_edit_thermohygro.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_edit_thermohygro.setText("Edit");
-        button_edit_thermohygro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_edit_thermohygroActionPerformed(evt);
-            }
-        });
+        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
 
-        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel6.setText("Ruangan :");
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel13.setText("Temperature");
 
-        label_total_thermohygro.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_thermohygro.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
-        label_total_thermohygro.setText("0");
+        label_suhu.setBackground(new java.awt.Color(255, 255, 255));
+        label_suhu.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
+        label_suhu.setForeground(new java.awt.Color(0, 153, 0));
+        label_suhu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_suhu.setText("000.00");
+
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel15.setText("°C");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -295,40 +386,114 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(label_suhu, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_device_id, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_edit_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_edit_thermohygro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_thermohygro)
-                        .addGap(0, 181, Short.MAX_VALUE)))
+                        .addComponent(jLabel15)
+                        .addGap(0, 13, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(txt_device_id, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txt_edit_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_edit_thermohygro, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label_total_thermohygro, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_suhu)
+                    .addComponent(jLabel15))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(245, 245, 245));
+
+        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel14.setText("Humidity");
+
+        label_kelembapan.setBackground(new java.awt.Color(255, 255, 255));
+        label_kelembapan.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
+        label_kelembapan.setForeground(new java.awt.Color(0, 153, 0));
+        label_kelembapan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_kelembapan.setText("000.00");
+
+        jLabel16.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel16.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel16.setText("%");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(label_kelembapan, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel16)
+                        .addGap(0, 22, Short.MAX_VALUE))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_kelembapan)
+                    .addComponent(jLabel16))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBackground(new java.awt.Color(245, 245, 245));
+
+        jLabel23.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel23.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel23.setText("Time");
+
+        label_time.setBackground(new java.awt.Color(255, 255, 255));
+        label_time.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
+        label_time.setForeground(new java.awt.Color(0, 153, 0));
+        label_time.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_time.setText("00:00:00");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(label_time, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE))
                 .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_time)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel_chart.setBackground(new java.awt.Color(245, 245, 245));
+
+        javax.swing.GroupLayout jPanel_chartLayout = new javax.swing.GroupLayout(jPanel_chart);
+        jPanel_chart.setLayout(jPanel_chartLayout);
+        jPanel_chartLayout.setHorizontalGroup(
+            jPanel_chartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 656, Short.MAX_VALUE)
+        );
+        jPanel_chartLayout.setVerticalGroup(
+            jPanel_chartLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel_SuhuKelembapanLayout = new javax.swing.GroupLayout(jPanel_SuhuKelembapan);
@@ -338,49 +503,80 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
             .addGroup(jPanel_SuhuKelembapanLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_SuhuKelembapanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
                     .addGroup(jPanel_SuhuKelembapanLayout.createSequentialGroup()
-                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel_SuhuKelembapanLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_search_ruang, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Date1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Date2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_search)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_export_customer)
+                        .addComponent(Spinner_jam1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Spinner_menit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Spinner_jam2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Spinner_menit2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_search))
+                    .addGroup(jPanel_SuhuKelembapanLayout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_data)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(label_total_data))
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel_chart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel_SuhuKelembapanLayout.setVerticalGroup(
             jPanel_SuhuKelembapanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_SuhuKelembapanLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel_SuhuKelembapanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export_customer, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_search, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_ruang, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_SuhuKelembapanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_SuhuKelembapanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel_SuhuKelembapanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_search, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Date2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Date1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_SuhuKelembapanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(Spinner_jam1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Spinner_menit1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Spinner_jam2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Spinner_menit2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_SuhuKelembapanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_SuhuKelembapanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel_chart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -396,68 +592,46 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanel_SuhuKelembapan, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE))
+                .addComponent(jPanel_SuhuKelembapan, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txt_search_ruangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_ruangKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            refreshTable();
-        }
-    }//GEN-LAST:event_txt_search_ruangKeyPressed
 
     private void button_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_searchActionPerformed
         // TODO add your handling code here:
         refreshTable();
     }//GEN-LAST:event_button_searchActionPerformed
 
-    private void button_export_customerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_customerActionPerformed
-        // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) Table_suhu_dan_kelembapan.getModel();
-        ExportToExcel.writeToExcel(model, this);
-    }//GEN-LAST:event_button_export_customerActionPerformed
-
-    private void button_edit_thermohygroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_edit_thermohygroActionPerformed
-        try {
-            // TODO add your handling code here:
-            String Query = "UPDATE `thermohygro_device` SET "
-                    + "`location` = '" + txt_edit_ruangan.getText() + "' "
-                    + "WHERE `device_id` = '" + txt_device_id.getText() + "'";
-            if ((Utility.db.getStatement().executeUpdate(Query)) > 0) {
-                refreshTable_thermohygro();
-            } else {
-                JOptionPane.showMessageDialog(this, "tidak ada perubahan data!");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JPanel_Suhu_dan_Kelembapan2.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_button_edit_thermohygroActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date1;
     private com.toedter.calendar.JDateChooser Date2;
+    private javax.swing.JSpinner Spinner_jam1;
+    private javax.swing.JSpinner Spinner_jam2;
+    private javax.swing.JSpinner Spinner_menit1;
+    private javax.swing.JSpinner Spinner_menit2;
     private javax.swing.JTable Table_suhu_dan_kelembapan;
-    private javax.swing.JButton button_edit_thermohygro;
-    private javax.swing.JButton button_export_customer;
     private javax.swing.JButton button_search;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel_SuhuKelembapan;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel_chart;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JLabel label_kelembapan;
+    private javax.swing.JLabel label_suhu;
+    private javax.swing.JLabel label_time;
     private javax.swing.JLabel label_total_data;
-    private javax.swing.JLabel label_total_thermohygro;
-    private javax.swing.JTable table_thermohygro;
-    private javax.swing.JTextField txt_device_id;
-    private javax.swing.JTextField txt_edit_ruangan;
-    private javax.swing.JTextField txt_search_ruang;
     // End of variables declaration//GEN-END:variables
 }

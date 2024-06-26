@@ -677,6 +677,22 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         Utility.db_cabuto.getStatement().executeUpdate(Query);
     }
 
+    private boolean check_bisa_edit_lp_cabuto() throws Exception {
+        String Qry = "SELECT `id_order` FROM `tb_lp` WHERE `no_laporan_produksi` = '" + no_lp + "'";
+        ResultSet result = Utility.db_cabuto.getStatement().executeQuery(Qry);
+        if (result.next()) {
+            if (result.getString("id_order") == null) {
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(this, "No LP " + no_lp + " sudah diambil oleh mitra, tidak dapat melakukan edit!");
+                return false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No LP " + no_lp + " tidak ditemukan dalam database CABUTO!");
+            return false;
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1560,11 +1576,15 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     edit_lp_waleta();
                     delete_lp_sub();
                 } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("CABUTO")) {
-                    edit_lp_waleta();
-                    edit_lp_cabuto();
+                    if (check_bisa_edit_lp_cabuto()) {
+                        edit_lp_waleta();
+                        edit_lp_cabuto();
+                    }
                 } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("WALETA")) {
-                    edit_lp_waleta();
-                    delete_lp_cabuto();
+                    if (check_bisa_edit_lp_cabuto()) {
+                        edit_lp_waleta();
+                        delete_lp_cabuto();
+                    }
                 } else if (ruangan_awal.equals("WALETA") && ruangan_akhir.equals("CABUTO")) {
                     JOptionPane.showMessageDialog(this, "Tidak bisa memindahkan LP WALETA ke CABUTO !");
 //                    edit_lp_waleta();

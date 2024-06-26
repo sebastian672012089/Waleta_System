@@ -627,11 +627,11 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
         jScrollPane7.setViewportView(Table_RincianLP);
 
         label_total_kpg_rincianLP.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_kpg_rincianLP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_kpg_rincianLP.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_kpg_rincianLP.setText("0");
 
         label_total_asal_rincianLP.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_asal_rincianLP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_asal_rincianLP.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_asal_rincianLP.setText("0");
 
         jLabel48.setBackground(new java.awt.Color(255, 255, 255));
@@ -647,7 +647,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
         jLabel49.setText("Gram :");
 
         label_total_gram_rincianLP.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_gram_rincianLP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_gram_rincianLP.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_gram_rincianLP.setText("0");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -721,11 +721,11 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
         jScrollPane8.setViewportView(Table_RincianBox);
 
         label_total_gram_rincianBox.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_gram_rincianBox.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_gram_rincianBox.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_gram_rincianBox.setText("0");
 
         label_total_kpg_rincianBox.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_kpg_rincianBox.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_kpg_rincianBox.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_kpg_rincianBox.setText("0");
 
         jLabel50.setBackground(new java.awt.Color(255, 255, 255));
@@ -733,7 +733,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
         jLabel50.setText("Keping :");
 
         label_total_rincian_box.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_rincian_box.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_rincian_box.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_rincian_box.setText("0");
 
         jLabel51.setBackground(new java.awt.Color(255, 255, 255));
@@ -920,15 +920,15 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
         jLabel35.setText("Gram :");
 
         label_total_kpg_hasil_grading.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_kpg_hasil_grading.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_kpg_hasil_grading.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_kpg_hasil_grading.setText("0");
 
         label_total_gram_hasil_grading.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_gram_hasil_grading.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_gram_hasil_grading.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_gram_hasil_grading.setText("0");
 
         label_total_box_hasil_grading.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_box_hasil_grading.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_box_hasil_grading.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_box_hasil_grading.setText("0");
 
         jLabel38.setBackground(new java.awt.Color(255, 255, 255));
@@ -940,7 +940,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
         jLabel33.setText("Total Grade :");
 
         label_total_grade_hasil_grading.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_grade_hasil_grading.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_grade_hasil_grading.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_grade_hasil_grading.setText("0");
 
         button_export_gradingTutupan.setBackground(new java.awt.Color(255, 255, 255));
@@ -982,7 +982,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
         jScrollPane5.setViewportView(Table_Detail_Asal);
 
         label_total_asal_detail_asal.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_asal_detail_asal.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_asal_detail_asal.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_asal_detail_asal.setText("0");
 
         jLabel36.setBackground(new java.awt.Color(255, 255, 255));
@@ -990,11 +990,11 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
         jLabel36.setText("Keping :");
 
         label_total_kpg_detail_asal.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_kpg_detail_asal.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_kpg_detail_asal.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_kpg_detail_asal.setText("0");
 
         label_total_gram_detail_asal.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_gram_detail_asal.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_total_gram_detail_asal.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_total_gram_detail_asal.setText("0");
 
         jLabel28.setBackground(new java.awt.Color(255, 255, 255));
@@ -1032,33 +1032,33 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel33)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_grade_hasil_grading)
+                        .addComponent(label_total_grade_hasil_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel34)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_kpg_hasil_grading)
+                        .addComponent(label_total_kpg_hasil_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel35)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_gram_hasil_grading)
+                        .addComponent(label_total_gram_hasil_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel38)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_box_hasil_grading)
+                        .addComponent(label_total_box_hasil_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel28)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_asal_detail_asal)
+                        .addComponent(label_total_asal_detail_asal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel36)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_kpg_detail_asal)
+                        .addComponent(label_total_kpg_detail_asal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel37)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_gram_detail_asal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
+                        .addComponent(label_total_gram_detail_asal, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(button_export_LPTutupan)))
                 .addContainerGap())
         );
@@ -1157,15 +1157,15 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                                 .addComponent(button_export_Tutupan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_edit_tutupan))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel_Data_TutupanLayout.createSequentialGroup()
                                 .addComponent(button_tambah_data)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_tambah_data1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_tambah_data2)))
+                                .addComponent(button_tambah_data2))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );

@@ -319,7 +319,8 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
 
             DefaultTableModel model = (DefaultTableModel) Table_traceability2.getModel();
             model.setRowCount(0);
-            sql = "SELECT `tb_box_bahan_jadi`.`no_tutupan`, `no_tutupan_ct1`, `tb_box_bahan_jadi`.`no_box`, `tb_box_bahan_jadi`.`no_box_ct1`, `tanggal_box`, `tb_grade_bahan_jadi`.`kode_grade`, `tb_box_bahan_jadi`.`keping`, `tb_box_bahan_jadi`.`berat`, `tb_box_packing`.`batch_number`, `tb_box_packing`.`invoice_pengiriman`, `tb_pengiriman`.`tanggal_pengiriman`, `tb_box_bahan_jadi`.`kode_rsb`, `tb_box_packing`.`tanggal_masuk` AS 'tgl_heat_treatment', `tb_spk_detail`.`prod_date`, `tb_spk_detail`.`kode_spk` \n"
+            sql = "SELECT `tb_box_bahan_jadi`.`no_tutupan`, `no_tutupan_ct1`, `tb_box_bahan_jadi`.`no_box`, `tb_box_bahan_jadi`.`no_box_ct1`, `tanggal_box`, `tb_grade_bahan_jadi`.`kode_grade`, `tb_box_bahan_jadi`.`keping`, `tb_box_bahan_jadi`.`berat`, `tb_box_packing`.`batch_number`, `tb_box_packing`.`invoice_pengiriman`, `tb_pengiriman`.`tanggal_pengiriman`, `tb_box_bahan_jadi`.`kode_rsb`, "
+                    + "`tb_box_packing`.`tanggal_masuk` AS 'tgl_turun_packing', `tb_box_packing`.`tanggal_masuk_cheat` AS 'tgl_turun_packing_cheat', `tb_spk_detail`.`prod_date`, `tb_spk_detail`.`kode_spk` \n"
                     + "FROM `tb_box_bahan_jadi` "
                     + "LEFT JOIN `tb_grade_bahan_jadi` ON `tb_box_bahan_jadi`.`kode_grade_bahan_jadi` = `tb_grade_bahan_jadi`.`kode`\n"
                     + "LEFT JOIN `tb_box_packing` ON `tb_box_bahan_jadi`.`no_box` = `tb_box_packing`.`no_box`\n"
@@ -327,11 +328,11 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_pengiriman` ON `tb_box_packing`.`invoice_pengiriman` = `tb_pengiriman`.`invoice_no`\n"
                     + "WHERE `tb_box_bahan_jadi`.`no_tutupan` LIKE '%" + txt_search_tutupan2.getText() + "%' "
                     + filter_no_box_ct
-                    + search_grade 
-                    + filter_rsb 
-                    + filter_invoice 
-                    + filter_tutupan_ct 
-                    + filter_tanggal_box 
+                    + search_grade
+                    + filter_rsb
+                    + filter_invoice
+                    + filter_tutupan_ct
+                    + filter_tanggal_box
                     + filter_kode_spk;
 //            System.out.println(sql);
             ResultSet rs = Utility.db.getStatement().executeQuery(sql);
@@ -346,15 +347,18 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                 row[6] = rs.getString("kode_grade");
                 row[7] = rs.getInt("keping");
                 row[8] = rs.getFloat("berat");
-                row[9] = rs.getDate("tgl_heat_treatment");
-                row[10] = rs.getString("batch_number");
-                row[11] = rs.getString("invoice_pengiriman");
-                row[12] = rs.getDate("tanggal_pengiriman");
-                row[13] = rs.getDate("prod_date");
+                row[9] = rs.getDate("tgl_turun_packing");
+                row[10] = rs.getDate("tgl_turun_packing_cheat");
+                row[11] = rs.getString("batch_number");
+                row[12] = rs.getString("invoice_pengiriman");
+                row[13] = rs.getDate("tanggal_pengiriman");
+                row[14] = rs.getDate("prod_date");
                 if (rs.getDate("prod_date") != null && rs.getString("kode_rsb") != null) {
-                    row[14] = rs.getString("kode_rsb") + "-" + new SimpleDateFormat("yyMMdd").format(rs.getDate("prod_date"));
+                    row[15] = rs.getString("kode_rsb") + "-" + new SimpleDateFormat("yyMMdd").format(rs.getDate("prod_date"));
+                } else {
+                    row[15] = null;
                 }
-                row[15] = rs.getString("kode_spk");
+                row[16] = rs.getString("kode_spk");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_traceability2);
@@ -454,6 +458,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
         Date_box2 = new com.toedter.calendar.JDateChooser();
         jLabel21 = new javax.swing.JLabel();
         txt_search_spk = new javax.swing.JTextField();
+        button_set_tgl_masuk = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1022,14 +1027,14 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
 
             },
             new String [] {
-                "RSB", "No Tutupan", "No Tutupan CT1", "No Box", "No Box Real", "Tgl Box", "Grade", "Keping", "Gram", "Tgl Heat Treatment", "Batch No", "Invoice No", "Tgl Kirim", "Tgl Produksi", "Batch No Baru", "SPK"
+                "RSB", "No Tutupan", "No Tutupan CT1", "No Box", "No Box Real", "Tgl Box", "Grade", "Keping", "Gram", "Tgl Heat Treatment / Tgl turun", "Tgl Turun Cheat", "Batch No", "Invoice No", "Tgl Kirim", "Tgl Produksi", "Batch No Baru", "SPK"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1244,6 +1249,15 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
             }
         });
 
+        button_set_tgl_masuk.setBackground(new java.awt.Color(255, 255, 255));
+        button_set_tgl_masuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_set_tgl_masuk.setText("Set Tgl Turun Packing CT");
+        button_set_tgl_masuk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_set_tgl_masukActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -1285,7 +1299,9 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_edit_rsb_tutupan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_cheat_kode_tutupan))
+                                .addComponent(button_cheat_kode_tutupan)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_set_tgl_masuk))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1352,7 +1368,8 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                     .addComponent(Date_box2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(button_edit_rsb_tutupan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_cheat_kode_tutupan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(button_cheat_kode_tutupan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_set_tgl_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1459,13 +1476,13 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
             if (j == -1) {
                 JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu nomor box yang akan dibuatkan laporan pengirimannya", "warning!", 1);
             } else {
-                if (Table_traceability2.getValueAt(j, 11) == null || Table_traceability2.getValueAt(j, 11).toString().equals("")) {
+                if (Table_traceability2.getValueAt(j, 12) == null || Table_traceability2.getValueAt(j, 12).toString().equals("")) {
                     JOptionPane.showMessageDialog(this, "Maaf Box ini belum ada nomor Invoice.", "warning!", 1);
                 } else {
                     JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Traceability2\\Laporan_Pengiriman_tv2.jrxml");
                     JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
                     Map<String, Object> params = new HashMap<String, Object>();
-                    params.put("no_invoice", Table_traceability2.getValueAt(j, 11).toString() + "%");
+                    params.put("no_invoice", Table_traceability2.getValueAt(j, 12).toString() + "%");
                     JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
                     JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
                 }
@@ -2016,7 +2033,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                 }
                 no_lp = no_lp + "'" + Table_traceability.getValueAt(i, 5).toString() + "'";
             }
-            String Query = "SELECT `tanggal_rendam`, `tb_rendam`.`no_laporan_produksi`, `no_kartu_waleta`, `kode_rsb`, `jumlah_keping`, `berat_basah`, `lama_waktu_rendam`, `waktu_mulai_rendam`, `waktu_selesai_rendam` \n"
+            String Query = "SELECT `tanggal_rendam`, `tb_rendam`.`no_laporan_produksi`, `no_kartu_waleta`, `kode_rsb`, `jumlah_keping`, `berat_basah`, `lama_waktu_rendam`, `waktu_mulai_rendam`, `waktu_selesai_rendam`, `pekerja_rendam` \n"
                     + "FROM `tb_rendam` "
                     + "LEFT JOIN `tb_laporan_produksi_tv2` ON `tb_rendam`.`no_laporan_produksi` = `tb_laporan_produksi_tv2`.`no_laporan_produksi`\n"
                     + "WHERE `tb_rendam`.`no_laporan_produksi` IN (" + no_lp + ") \n"
@@ -2214,7 +2231,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
         if (x < 0) {
             JOptionPane.showMessageDialog(this, "Pilih salah satu data BOX !");
         } else {
-            String file_name = Table_traceability2.getValueAt(x, 11).toString().replace("/", "_");
+            String file_name = Table_traceability2.getValueAt(x, 12).toString().replace("/", "_");
             try {
                 Runtime rt = Runtime.getRuntime();
                 Process pr = rt.exec("explorer.exe \\\\192.168.10.2\\Shared Folder\\DOKUMEN SISTEM\\5_Health_Certificate\\" + file_name + ".pdf");
@@ -2230,7 +2247,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
         if (x < 0) {
             JOptionPane.showMessageDialog(this, "Pilih salah satu data BOX !");
         } else {
-            String file_name = Table_traceability2.getValueAt(x, 11).toString().replace("/", "_");
+            String file_name = Table_traceability2.getValueAt(x, 12).toString().replace("/", "_");
             try {
                 Runtime rt = Runtime.getRuntime();
                 Process pr = rt.exec("explorer.exe \\\\192.168.10.2\\Shared Folder\\DOKUMEN SISTEM\\4_Packing_List\\" + file_name + ".pdf");
@@ -2324,7 +2341,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
         if (x < 0) {
             JOptionPane.showMessageDialog(this, "Pilih salah satu data BOX !");
         } else {
-            String file_name = Table_traceability2.getValueAt(x, 11).toString().replace("/", "_");
+            String file_name = Table_traceability2.getValueAt(x, 12).toString().replace("/", "_");
             try {
                 Runtime rt = Runtime.getRuntime();
                 Process pr = rt.exec("explorer.exe \\\\192.168.10.2\\Shared Folder\\DOKUMEN SISTEM\\3_(KH-12)_Sertifikat_Sanitasi_Produk_Hewan_Ekspor\\" + file_name + ".pdf");
@@ -2386,7 +2403,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
         if (x < 0) {
             JOptionPane.showMessageDialog(this, "Pilih salah satu data BOX !");
         } else {
-            String file_name = Table_traceability2.getValueAt(x, 11).toString().replace("/", "_");
+            String file_name = Table_traceability2.getValueAt(x, 12).toString().replace("/", "_");
             try {
                 Runtime rt = Runtime.getRuntime();
                 Process pr = rt.exec("explorer.exe \\\\192.168.10.2\\Shared Folder\\DOKUMEN SISTEM\\7_Label_Box\\" + file_name + ".pdf");
@@ -3192,6 +3209,36 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_print_lp_semuaActionPerformed
 
+    private void button_set_tgl_masukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_set_tgl_masukActionPerformed
+        // TODO add your handling code here:
+        try {
+            int jumlah_berhasil = 0, jumlah_gagal = 0;
+            int jumlah_data = Table_traceability2.getRowCount();
+            String tanggal_masuk_cheat = JOptionPane.showInputDialog("Silahkan tanggal masuk dengan format tanggal : yyyy-MM-dd, contoh : 2024-06-30");
+            if (tanggal_masuk_cheat != null && !tanggal_masuk_cheat.equals("")) {
+                Date Date_tanggal_masuk_cheat = dateFormat.parse(tanggal_masuk_cheat);
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Cheat tanggal masuk " + jumlah_data + " box, menjadi tanggal " + new SimpleDateFormat("dd MMMM yyyy").format(tanggal_masuk_cheat) + ", lanjutkan ??", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    for (int i = 0; i < jumlah_data; i++) {
+                        String Query = "UPDATE `tb_box_packing` SET "
+                                + "`tanggal_masuk_cheat`='" + tanggal_masuk_cheat + "' "
+                                + "WHERE `no_box` = '" + Table_traceability2.getValueAt(i, 4).toString() + "'";
+                        if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
+                            jumlah_berhasil++;
+                        } else {
+                            jumlah_gagal++;
+                        }
+                    }
+                    JOptionPane.showMessageDialog(this, "Data berhasil terupdate = " + jumlah_berhasil);
+                    refreshTable2();
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_set_tgl_masukActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_Search;
@@ -3233,6 +3280,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
     private javax.swing.JButton button_packing_list;
     private javax.swing.JButton button_print_cacatan_penyimpanan_barang_jadi;
     private javax.swing.JButton button_print_lp_semua;
+    private javax.swing.JButton button_set_tgl_masuk;
     private javax.swing.JButton button_surat_keterangan_pengiriman;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

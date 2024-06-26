@@ -763,7 +763,7 @@
                                           <Component id="label_total_data_absen_keseluruhan" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="136" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="138" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
@@ -805,7 +805,7 @@
                               <Component id="button_export1" alignment="2" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" pref="695" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="696" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -826,7 +826,7 @@
                           <Font name="Arial" size="12" style="0"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="12" rowCount="0">
+                          <Table columnCount="14" rowCount="0">
                             <Column editable="false" title="No" type="java.lang.String"/>
                             <Column editable="false" title="Nama" type="java.lang.String"/>
                             <Column editable="false" title="Bagian" type="java.lang.String"/>
@@ -839,11 +839,23 @@
                             <Column editable="false" title="ID Pengganti" type="java.lang.String"/>
                             <Column editable="false" title="Pengganti" type="java.lang.String"/>
                             <Column editable="false" title="Realisasi Absen" type="java.lang.String"/>
+                            <Column editable="false" title="Diketahui" type="java.lang.String"/>
+                            <Column editable="false" title="Dibatalkan" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
                             <Column maxWidth="0" minWidth="0" prefWidth="0" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -1000,7 +1012,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial Unicode MS" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Tgl Cuti :"/>
                   </Properties>
@@ -1051,7 +1063,7 @@
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                     <Property name="dateFormatString" type="java.lang.String" value="dd MMMM yyyy"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial Unicode MS" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="0"/>
                     </Property>
                     <Property name="minSelectableDate" type="java.util.Date" editor="org.netbeans.beaninfo.editors.DateEditor">
                       <SerializedValue value="-84,-19,0,5,115,114,0,14,106,97,118,97,46,117,116,105,108,46,68,97,116,101,104,106,-127,1,75,89,116,25,3,0,0,120,112,119,8,0,0,1,89,86,11,-114,56,120"/>
@@ -1065,7 +1077,7 @@
                     </Property>
                     <Property name="dateFormatString" type="java.lang.String" value="dd MMMM yyyy"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial Unicode MS" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="0"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -1528,7 +1540,7 @@
                           <Font name="Arial" size="12" style="0"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="8" rowCount="0">
+                          <Table columnCount="10" rowCount="0">
                             <Column editable="false" title="No" type="java.lang.String"/>
                             <Column editable="false" title="ID Pegawai" type="java.lang.String"/>
                             <Column editable="false" title="Tgl Ijin" type="java.lang.Object"/>
@@ -1537,10 +1549,22 @@
                             <Column editable="false" title="Keterangan" type="java.lang.String"/>
                             <Column editable="false" title="ID Pengganti" type="java.lang.String"/>
                             <Column editable="false" title="Pengganti" type="java.lang.String"/>
+                            <Column editable="false" title="Diketahui" type="java.lang.String"/>
+                            <Column editable="false" title="Dibatalkan" type="java.lang.String"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                              <Title/>
+                              <Editor/>
+                              <Renderer/>
+                            </Column>
                             <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                               <Title/>
                               <Editor/>

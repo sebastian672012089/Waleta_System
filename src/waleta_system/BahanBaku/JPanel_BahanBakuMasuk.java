@@ -96,6 +96,12 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 if (!event.getValueIsAdjusting() && Table_Grading_Bahan_Baku.getSelectedRow() != -1) {
                     int i = Table_Grading_Bahan_Baku.getSelectedRow();
                     refreshTable_pecah_lp(Table_Grading_Bahan_Baku.getValueAt(i, 0).toString());
+
+                    if ((int) Table_Grading_Bahan_Baku.getValueAt(i, 5) > 0) {
+                        button_input_pecah.setEnabled(false);
+                    } else {
+                        button_input_pecah.setEnabled(true);
+                    }
                 }
             }
         });
@@ -262,6 +268,11 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         try {
             decimalFormat.setMaximumFractionDigits(0);
             decimalFormat.setGroupingUsed(true);
+            int total_keping_riil = 0;
+            int total_keping_upah = 0;
+            int total_gram_riil = 0;
+            int total_gram_sistem = 0;
+
             DefaultTableModel model = (DefaultTableModel) Table_pecah_lp.getModel();
             model.setRowCount(0);
 
@@ -300,9 +311,19 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 row[22] = rs.getInt("jumlah_gumpil");
                 row[23] = rs.getString("no_laporan_produksi");
                 model.addRow(row);
+
+                total_keping_riil += rs.getInt("jumlah_keping");
+                total_keping_upah += rs.getInt("keping_upah");
+                total_gram_sistem += rs.getInt("berat_basah");
+                total_gram_riil += rs.getInt("berat_riil");
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_pecah_lp);
             int rowData = Table_pecah_lp.getRowCount();
+
+            label_total_keping_riil.setText(decimalFormat.format(total_keping_riil));
+            label_total_keping_upah.setText(decimalFormat.format(total_keping_upah));
+            label_total_gram_sistem.setText(decimalFormat.format(total_gram_sistem));
+            label_total_gram_riil.setText(decimalFormat.format(total_gram_riil));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, ex);
@@ -501,9 +522,18 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         button_search_grading = new javax.swing.JButton();
         button_export_grading = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
+        button_input_pecah = new javax.swing.JButton();
         button_export_pecah = new javax.swing.JButton();
         button_edit_pecah = new javax.swing.JButton();
         button_gabung_pecah = new javax.swing.JButton();
+        jLabel28 = new javax.swing.JLabel();
+        label_total_keping_riil = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        label_total_gram_sistem = new javax.swing.JLabel();
+        label_total_gram_riil = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        label_total_keping_upah = new javax.swing.JLabel();
         jPanel_StokPecah = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         Table_stok_pecah_lp = new javax.swing.JTable();
@@ -1080,6 +1110,15 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         jLabel19.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel19.setText("Total Data :");
 
+        button_input_pecah.setBackground(new java.awt.Color(255, 255, 255));
+        button_input_pecah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_input_pecah.setText("Input Pecah Pertama");
+        button_input_pecah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_input_pecahActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -1104,6 +1143,8 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_data_grading)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(button_input_pecah)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export_grading)))
                 .addContainerGap())
         );
@@ -1123,7 +1164,8 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_total_data_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_export_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_input_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1157,6 +1199,50 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             }
         });
 
+        jLabel28.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel28.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel28.setText("Total Keping Upah :");
+        jLabel28.setFocusable(false);
+
+        label_total_keping_riil.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_keping_riil.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_total_keping_riil.setForeground(new java.awt.Color(255, 0, 0));
+        label_total_keping_riil.setText("0000");
+        label_total_keping_riil.setFocusable(false);
+
+        jLabel29.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel29.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel29.setText("Total Keping Riil :");
+        jLabel29.setFocusable(false);
+
+        jLabel30.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel30.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel30.setText("Total Gram :");
+        jLabel30.setFocusable(false);
+
+        label_total_gram_sistem.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_gram_sistem.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_total_gram_sistem.setForeground(new java.awt.Color(255, 0, 0));
+        label_total_gram_sistem.setText("0000");
+        label_total_gram_sistem.setFocusable(false);
+
+        label_total_gram_riil.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_gram_riil.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_total_gram_riil.setForeground(new java.awt.Color(255, 0, 0));
+        label_total_gram_riil.setText("0000");
+        label_total_gram_riil.setFocusable(false);
+
+        jLabel31.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel31.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel31.setText("Total Gram Riil :");
+        jLabel31.setFocusable(false);
+
+        label_total_keping_upah.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_keping_upah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_total_keping_upah.setForeground(new java.awt.Color(255, 0, 0));
+        label_total_keping_upah.setText("0000");
+        label_total_keping_upah.setFocusable(false);
+
         javax.swing.GroupLayout jPanel_gradingLayout = new javax.swing.GroupLayout(jPanel_grading);
         jPanel_grading.setLayout(jPanel_gradingLayout);
         jPanel_gradingLayout.setHorizontalGroup(
@@ -1173,7 +1259,24 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_edit_pecah)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_export_pecah)))
+                        .addComponent(button_export_pecah))
+                    .addGroup(jPanel_gradingLayout.createSequentialGroup()
+                        .addComponent(jLabel29)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_total_keping_riil)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_total_keping_upah)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel30)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_total_gram_sistem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel31)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_total_gram_riil)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_gradingLayout.setVerticalGroup(
@@ -1185,6 +1288,16 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                     .addComponent(button_export_pecah)
                     .addComponent(button_edit_pecah)
                     .addComponent(button_gabung_pecah))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_gradingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_keping_riil, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_keping_upah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_gram_riil, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_gram_sistem, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2)
                 .addContainerGap())
@@ -1931,6 +2044,27 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_search_grade_grading_conveyorKeyPressed
 
+    private void button_input_pecahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_pecahActionPerformed
+        // TODO add your handling code here:
+        int j = Table_Grading_Bahan_Baku.getSelectedRow();
+        if (j == -1) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih data pada tabel grading sebelah kiri !");
+        } else {
+            String no_grading = Table_Grading_Bahan_Baku.getValueAt(j, 0).toString();
+            String no_kartu = Table_Grading_Bahan_Baku.getValueAt(j, 1).toString();
+            String grade = Table_Grading_Bahan_Baku.getValueAt(j, 2).toString();
+            int keping = (int) Table_Grading_Bahan_Baku.getValueAt(j, 3);
+            int gram = (int) Table_Grading_Bahan_Baku.getValueAt(j, 4);
+            JDialog_PecahLP_InputPecah dialog = new JDialog_PecahLP_InputPecah(new javax.swing.JFrame(), true, no_grading, no_kartu, grade, keping, gram);
+            dialog.pack();
+            dialog.setLocationRelativeTo(this);
+            dialog.setVisible(true);
+            dialog.setEnabled(true);
+            refreshTable_grading();
+            refreshTable_pecah_lp(no_grading);
+        }
+    }//GEN-LAST:event_button_input_pecahActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CheckBox_showCMP;
@@ -1959,6 +2093,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
     public javax.swing.JButton button_export_pecah;
     public javax.swing.JButton button_export_stok_pecah;
     public javax.swing.JButton button_gabung_pecah;
+    public javax.swing.JButton button_input_pecah;
     public javax.swing.JButton button_insert_bahan_baku_masuk;
     public javax.swing.JButton button_save_timbang_bahan_baku;
     public javax.swing.JButton button_save_uji_kemasan;
@@ -1985,6 +2120,10 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -2008,7 +2147,11 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
     private javax.swing.JLabel label_total_data_grading_conveyor;
     private javax.swing.JLabel label_total_data_stok_pecah;
     private javax.swing.JLabel label_total_gram_grading;
+    private javax.swing.JLabel label_total_gram_riil;
+    private javax.swing.JLabel label_total_gram_sistem;
     private javax.swing.JLabel label_total_keping_grading;
+    private javax.swing.JLabel label_total_keping_riil;
+    private javax.swing.JLabel label_total_keping_upah;
     private javax.swing.JTable tabel_rekap_grade;
     private javax.swing.JTextField txt_search_bahan_masuk;
     private javax.swing.JTextField txt_search_grade_grading_conveyor;

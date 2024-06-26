@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Catatan Penerimaan dan Grading Sarang Burung Mentah" printOrder="Horizontal" pageWidth="250" pageHeight="158" orientation="Landscape" columnWidth="246" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="11" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
 	<property name="ireport.zoom" value="1.9965000000000008"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+	<style name="Title" fontName="Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -12,7 +13,7 @@
 			<rightPen lineWidth="1.0"/>
 		</box>
 	</style>
-	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+	<style name="SubTitle" forecolor="#000000" fontName="Arial" fontSize="12" isBold="false">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -64,22 +65,13 @@
 			<style backcolor="#F0F0F0"/>
 		</conditionalStyle>
 	</style>
-	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+	<style name="Page footer" forecolor="#000000" fontName="Arial" fontSize="12">
 		<box>
 			<pen lineWidth="0.0"/>
 			<topPen lineWidth="0.0"/>
 			<leftPen lineWidth="0.0"/>
 			<bottomPen lineWidth="0.0"/>
 			<rightPen lineWidth="0.0"/>
-		</box>
-	</style>
-	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
-		<box>
-			<pen lineWidth="1.0"/>
-			<topPen lineWidth="1.0"/>
-			<leftPen lineWidth="1.0"/>
-			<bottomPen lineWidth="1.0"/>
-			<rightPen lineWidth="1.0"/>
 		</box>
 	</style>
 	<parameter name="no_kartu_waleta" class="java.lang.String"/>
@@ -145,10 +137,10 @@ ORDER BY `tb_grading_bahan_baku`.`no_kartu_waleta` DESC]]>
 	</background>
 	<detail>
 		<band height="145" splitType="Stretch">
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="120" y="42" width="126" height="14" uuid="92aa1dc2-1f8e-43c3-867c-dda0592dd719"/>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="42" width="126" height="19" uuid="92aa1dc2-1f8e-43c3-867c-dda0592dd719"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName=""/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": " + $F{nama_rumah_burung} + "(" + $F{no_registrasi} + ")"]]></textFieldExpression>
@@ -160,34 +152,38 @@ ORDER BY `tb_grading_bahan_baku`.`no_kartu_waleta` DESC]]>
 				</textElement>
 				<text><![CDATA[Records of Raw Material Storage]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="120" y="84" width="126" height="14" uuid="1d916d13-3490-4878-93cf-4565e11f1232"/>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="89" width="126" height="14" uuid="1d916d13-3490-4878-93cf-4565e11f1232"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName=""/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": " + (int) ($F{total_berat}) + "  Gram"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="0" y="56" width="120" height="14" forecolor="#000000" uuid="967a22e0-1d43-478a-9848-2f27ff46026c"/>
-				<textElement verticalAlignment="Top">
+				<reportElement style="Column header" positionType="Float" x="0" y="61" width="120" height="14" forecolor="#000000" uuid="967a22e0-1d43-478a-9848-2f27ff46026c">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="false"/>
-					<paragraph leftIndent="3" spacingBefore="2"/>
+					<paragraph leftIndent="3" spacingBefore="0"/>
 				</textElement>
-				<text><![CDATA[Tanggal / Date]]></text>
+				<text><![CDATA[Tanggal kedatangan/ Date of received]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="0" y="98" width="120" height="14" forecolor="#000000" uuid="5c08c4f0-7d0b-4fe5-94cb-a48c9a93f8a8"/>
-				<textElement verticalAlignment="Top">
+				<reportElement style="Column header" positionType="Float" x="0" y="103" width="120" height="14" forecolor="#000000" uuid="5c08c4f0-7d0b-4fe5-94cb-a48c9a93f8a8">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="false"/>
-					<paragraph leftIndent="3" spacingBefore="2"/>
+					<paragraph leftIndent="3" spacingBefore="0"/>
 				</textElement>
 				<text><![CDATA[Jumlah (pcs) / Total pcs]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="120" y="56" width="126" height="14" uuid="5aaeb7df-74e4-4489-b4a2-5f5344a274ca"/>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="61" width="126" height="14" uuid="5aaeb7df-74e4-4489-b4a2-5f5344a274ca"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName=""/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": " + new SimpleDateFormat("dd MMMM yyyy").format($F{tgl_grading})]]></textFieldExpression>
@@ -200,41 +196,45 @@ ORDER BY `tb_grading_bahan_baku`.`no_kartu_waleta` DESC]]>
 				<text><![CDATA[FR/WAJ/BM/02/a/2]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="Detail" positionType="Float" x="120" y="126" width="126" height="14" uuid="39931091-acf0-43e8-9884-fd6e35cbbb8d"/>
+				<reportElement style="Detail" positionType="Float" x="120" y="131" width="126" height="14" uuid="39931091-acf0-43e8-9884-fd6e35cbbb8d"/>
 				<textElement verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName=""/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": " + $F{pekerja_grading}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="120" y="112" width="126" height="14" uuid="35dec223-a7b0-460f-80fd-f961dc8202e6"/>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="117" width="126" height="14" uuid="35dec223-a7b0-460f-80fd-f961dc8202e6"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName=""/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": " + $F{kode_grade}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="0" y="112" width="120" height="14" forecolor="#000000" uuid="fcb8740d-6a34-4e9b-af98-1b523c68e10e"/>
-				<textElement verticalAlignment="Top">
+				<reportElement style="Column header" positionType="Float" x="0" y="117" width="120" height="14" forecolor="#000000" uuid="fcb8740d-6a34-4e9b-af98-1b523c68e10e">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="false" isItalic="true"/>
-					<paragraph leftIndent="3" spacingBefore="2"/>
+					<paragraph leftIndent="3" spacingBefore="0"/>
 				</textElement>
 				<text><![CDATA[Grade]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="0" y="84" width="120" height="14" forecolor="#000000" uuid="8d5d76b4-8277-457d-ac66-9eef4eb5dd8e"/>
-				<textElement verticalAlignment="Top">
+				<reportElement style="Column header" positionType="Float" x="0" y="89" width="120" height="14" forecolor="#000000" uuid="8d5d76b4-8277-457d-ac66-9eef4eb5dd8e">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="false"/>
-					<paragraph leftIndent="3" spacingBefore="2"/>
+					<paragraph leftIndent="3" spacingBefore="0"/>
 				</textElement>
 				<text><![CDATA[Berat / Weight]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="120" y="70" width="126" height="14" uuid="7a635c0f-8c7c-458d-aca5-65cae9844e4e"/>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="75" width="126" height="14" uuid="7a635c0f-8c7c-458d-aca5-65cae9844e4e"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName=""/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": " + $P{no_kartu_waleta} + "-" + $F{no_registrasi}]]></textFieldExpression>
@@ -250,33 +250,40 @@ ORDER BY `tb_grading_bahan_baku`.`no_kartu_waleta` DESC]]>
 )]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="0" y="126" width="120" height="14" forecolor="#000000" uuid="957f4b26-9398-4b28-b9ff-e1c7b0478f8c"/>
-				<textElement verticalAlignment="Top">
+				<reportElement style="Column header" positionType="Float" x="0" y="131" width="120" height="14" forecolor="#000000" uuid="957f4b26-9398-4b28-b9ff-e1c7b0478f8c">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="false"/>
-					<paragraph leftIndent="3" spacingBefore="2"/>
+					<paragraph leftIndent="3" spacingBefore="0"/>
 				</textElement>
 				<text><![CDATA[Petugas / Worker]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="0" y="70" width="120" height="14" forecolor="#000000" uuid="665c3d9d-9da8-40c9-ad5a-c406c7862cba"/>
-				<textElement verticalAlignment="Top">
+				<reportElement style="Column header" positionType="Float" x="0" y="75" width="120" height="14" forecolor="#000000" uuid="665c3d9d-9da8-40c9-ad5a-c406c7862cba">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="false"/>
-					<paragraph leftIndent="3" spacingBefore="2"/>
+					<paragraph leftIndent="3" spacingBefore="0"/>
 				</textElement>
 				<text><![CDATA[No Kartu / Card Number]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" positionType="Float" x="0" y="42" width="120" height="14" forecolor="#000000" uuid="c4e38e50-aa3e-428c-b39e-d154900c2e11"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Arial Narrow" size="8" isBold="false"/>
-					<paragraph leftIndent="3" spacingBefore="2"/>
-				</textElement>
-				<text><![CDATA[Nama Rumah Burung/Bird Nest Name]]></text>
-			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="Detail" positionType="Float" x="120" y="98" width="126" height="14" uuid="e9b5bae3-9a73-4b75-873a-eb78dc916a47"/>
+				<reportElement style="Column header" positionType="Float" x="0" y="42" width="120" height="19" forecolor="#000000" uuid="c4e38e50-aa3e-428c-b39e-d154900c2e11">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
+					<font fontName="Arial Narrow" size="7" isBold="false"/>
+					<paragraph lineSpacingSize="0.0" leftIndent="3" spacingBefore="0"/>
+				</textElement>
+				<text><![CDATA[Nama Rumah Burung dan Nomor/
+Bird Nest House Name and Number]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="120" y="103" width="126" height="14" uuid="e9b5bae3-9a73-4b75-873a-eb78dc916a47"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName=""/>
 					<paragraph leftIndent="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[": " + $F{jumlah_keping}]]></textFieldExpression>
@@ -289,9 +296,9 @@ ORDER BY `tb_grading_bahan_baku`.`no_kartu_waleta` DESC]]>
 				<text><![CDATA[Catatan Penyimpanan Bahan Mentah]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="222" y="112" width="24" height="14" uuid="c76cf058-bbc2-4e3d-a9ad-337c8b5ce1e0"/>
+				<reportElement x="222" y="117" width="24" height="14" uuid="c76cf058-bbc2-4e3d-a9ad-337c8b5ce1e0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial Narrow" size="10" isBold="true"/>
+					<font fontName="Arial Narrow" size="10" isBold="true" pdfFontName=""/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{RerataKpg}>=8?"J":""]]></textFieldExpression>
 			</textField>

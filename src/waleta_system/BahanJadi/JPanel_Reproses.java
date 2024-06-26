@@ -1154,6 +1154,8 @@ public class JPanel_Reproses extends javax.swing.JPanel {
             dialog.setVisible(true);
             dialog.setEnabled(true);
             refreshTable_reProses_pencabut();
+            refreshTable_reProses();
+            table_data_reproses_cabut.setRowSelectionInterval(x, x);
         }
     }//GEN-LAST:event_button_input_pekerja_cabutActionPerformed
 

@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package waleta_system;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -15,6 +12,7 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.Class.ColumnsAutoSizer;
@@ -31,6 +29,7 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
     public JFrame_TV_PengajuanPembelian() {
         initComponents();
         try {
+            Utility.db.connect();
             TimerTask timer;
             timer = new TimerTask() {
                 @Override
@@ -40,7 +39,7 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
                 }
             };
             t = new Timer();
-            t.schedule(timer, 100, 10000);//10 detik
+            t.schedule(timer, 100, 120000);//120 detik / 2 menit
         } catch (Exception ex) {
             Logger.getLogger(JFrame_TV_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -48,6 +47,7 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
 
     public void refreshTable() {
         try {
+            int jumlah_Diajukan = 0, jumlah_Diketahui = 0, jumlah_Disetujui = 0, jumlah_Proses = 0, jumlah_Dikirim = 0, jumlah_Sampai = 0;
             DefaultTableModel model = (DefaultTableModel) table_pengajuan.getModel();
             model.setRowCount(0);
             sql = "SELECT `no`, `tanggal_pengajuan`, `tb_aset_pengajuan`.`departemen`, `keperluan`, `nama_barang`, `jumlah`, `link_pembelian`, `dibutuhkan_tanggal`, `nama_pegawai` AS 'diajukan', `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `jenis_pembelian`, `tb_aset_pengajuan`.`status`, `tb_aset_pengajuan`.`keterangan`, "
@@ -55,8 +55,8 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
                     + "FROM `tb_aset_pengajuan` \n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_aset_pengajuan`.`diajukan` = `tb_karyawan`.`id_pegawai` \n"
                     + "WHERE \n"
-                    + "`tb_aset_pengajuan`.`status` <> 'Selesai'"
-                    + "ORDER BY `tanggal_pengajuan`";
+                    + "`tb_aset_pengajuan`.`status` NOT IN ('Selesai', 'dibatalkan') "
+                    + "ORDER BY `tanggal_pengajuan` ";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[10];
             while (rs.next()) {
@@ -70,9 +70,154 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
                 row[7] = rs.getString("status");
                 row[8] = rs.getInt("lama_proses");
                 model.addRow(row);
+                if (rs.getString("status").equals("Diajukan")) {
+                    jumlah_Diajukan++;
+                } else if (rs.getString("status").equals("Diketahui")) {
+                    jumlah_Diketahui++;
+                } else if (rs.getString("status").equals("Disetujui")) {
+                    jumlah_Disetujui++;
+                } else if (rs.getString("status").equals("Proses")) {
+                    jumlah_Proses++;
+                } else if (rs.getString("status").equals("Dikirim")) {
+                    jumlah_Dikirim++;
+                } else if (rs.getString("status").equals("Sampai")) {
+                    jumlah_Sampai++;
+                }
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_pengajuan);
             label_total_data_nota.setText(decimalFormat.format(table_pengajuan.getRowCount()));
+            label_jumlah_diajukan.setText(decimalFormat.format(jumlah_Diajukan));
+            label_jumlah_diketahui.setText(decimalFormat.format(jumlah_Diketahui));
+            label_jumlah_disetujui.setText(decimalFormat.format(jumlah_Disetujui));
+            label_jumlah_proses.setText(decimalFormat.format(jumlah_Proses));
+            label_jumlah_dikirim.setText(decimalFormat.format(jumlah_Dikirim));
+            label_jumlah_sampai.setText(decimalFormat.format(jumlah_Sampai));
+            
+            table_pengajuan.setDefaultRenderer(Integer.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if ((int) table_pengajuan.getValueAt(row, 8) > 20) {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.red);
+                            comp.setForeground(Color.WHITE);
+                        }
+                    } else if ((int) table_pengajuan.getValueAt(row, 8) > 13) {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.orange);
+                            comp.setForeground(Color.BLACK);
+                        }
+                    } else if ((int) table_pengajuan.getValueAt(row, 8) > 6) {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.yellow);
+                            comp.setForeground(Color.BLACK);
+                        }
+                    } else {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.cyan);
+                            comp.setForeground(Color.BLACK);
+                        }
+                    }
+                    return comp;
+                }
+            });
+            table_pengajuan.repaint();
+            
+            table_pengajuan.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if ((int) table_pengajuan.getValueAt(row, 8) > 20) {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.red);
+                            comp.setForeground(Color.WHITE);
+                        }
+                    } else if ((int) table_pengajuan.getValueAt(row, 8) > 13) {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.orange);
+                            comp.setForeground(Color.BLACK);
+                        }
+                    } else if ((int) table_pengajuan.getValueAt(row, 8) > 6) {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.yellow);
+                            comp.setForeground(Color.BLACK);
+                        }
+                    } else {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.cyan);
+                            comp.setForeground(Color.BLACK);
+                        }
+                    }
+                    return comp;
+                }
+            });
+            table_pengajuan.repaint();
+            
+            table_pengajuan.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if ((int) table_pengajuan.getValueAt(row, 8) > 20) {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.red);
+                            comp.setForeground(Color.WHITE);
+                        }
+                    } else if ((int) table_pengajuan.getValueAt(row, 8) > 13) {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.orange);
+                            comp.setForeground(Color.BLACK);
+                        }
+                    } else if ((int) table_pengajuan.getValueAt(row, 8) > 6) {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.yellow);
+                            comp.setForeground(Color.BLACK);
+                        }
+                    } else {
+                        if (isSelected) {
+                            comp.setBackground(table_pengajuan.getSelectionBackground());
+                            comp.setForeground(table_pengajuan.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.cyan);
+                            comp.setForeground(Color.BLACK);
+                        }
+                    }
+                    return comp;
+                }
+            });
+            table_pengajuan.repaint();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JFrame_TV_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,6 +241,18 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
         label_total_data_nota = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         label_waktu_update = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        label_jumlah_diketahui = new javax.swing.JLabel();
+        label_jumlah_disetujui = new javax.swing.JLabel();
+        label_jumlah_proses = new javax.swing.JLabel();
+        label_jumlah_dikirim = new javax.swing.JLabel();
+        label_jumlah_sampai = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        label_jumlah_diajukan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -155,6 +312,54 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
         label_waktu_update.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         label_waktu_update.setText("<time>");
 
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel6.setText("Sampai :");
+
+        label_jumlah_diketahui.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_diketahui.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_jumlah_diketahui.setText("00");
+
+        label_jumlah_disetujui.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_disetujui.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_jumlah_disetujui.setText("00");
+
+        label_jumlah_proses.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_proses.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_jumlah_proses.setText("00");
+
+        label_jumlah_dikirim.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_dikirim.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_jumlah_dikirim.setText("00");
+
+        label_jumlah_sampai.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_sampai.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_jumlah_sampai.setText("00");
+
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setText("Diketahui :");
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel8.setText("Disetujui :");
+
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel9.setText("Proses :");
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText("Dikirim :");
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel11.setText("Diajukan :");
+
+        label_jumlah_diajukan.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_diajukan.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        label_jumlah_diajukan.setText("00");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -165,29 +370,68 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1346, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_data_nota)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_waktu_update)))
+                        .addComponent(label_waktu_update))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_total_data_nota)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_diajukan)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_diketahui)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_disetujui)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_proses)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_dikirim)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_sampai)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_total_data_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label_waktu_update, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(label_waktu_update, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(label_jumlah_dikirim, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_jumlah_proses, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_jumlah_diajukan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_jumlah_disetujui, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_jumlah_diketahui, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_jumlah_sampai, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_data_nota, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -246,11 +490,23 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label_jumlah_diajukan;
+    private javax.swing.JLabel label_jumlah_diketahui;
+    private javax.swing.JLabel label_jumlah_dikirim;
+    private javax.swing.JLabel label_jumlah_disetujui;
+    private javax.swing.JLabel label_jumlah_proses;
+    private javax.swing.JLabel label_jumlah_sampai;
     private javax.swing.JLabel label_total_data_nota;
     private javax.swing.JLabel label_waktu_update;
     public static javax.swing.JTable table_pengajuan;

@@ -35,7 +35,7 @@ public class TableColumnHider {
         if (o == null) {
             return;
         }
-        int column = ((Integer) o).intValue();
+        int column = (int) o;
         int lastColumn = ColumnModel.getColumnCount() - 1;
         if (column < lastColumn) {
             ColumnModel.moveColumn(lastColumn, column);

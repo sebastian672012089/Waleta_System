@@ -18,6 +18,7 @@ import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Manajemen.JFrame_KategoriStokJualTV;
+import waleta_system.Manajemen.JFrame_KategoriStokJualTV_New;
 
 public class JPanel_StockBahanJadi extends javax.swing.JPanel {
 
@@ -816,7 +817,7 @@ public class JPanel_StockBahanJadi extends javax.swing.JPanel {
 
     private void button_tvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_tvActionPerformed
         // TODO add your handling code here:
-        JFrame_KategoriStokJualTV Stok = new JFrame_KategoriStokJualTV();
+        JFrame_KategoriStokJualTV_New Stok = new JFrame_KategoriStokJualTV_New();
         Stok.pack();
         Stok.setLocationRelativeTo(this);
         Stok.setVisible(true);

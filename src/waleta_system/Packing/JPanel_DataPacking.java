@@ -78,7 +78,7 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
             }
 
             sql = "SELECT `tb_box_packing`.`no_box`, `tb_box_bahan_jadi`.`tanggal_box`, `tb_grade_bahan_jadi`.`kode_grade`,`tb_box_bahan_jadi`.`keping`, `tb_box_bahan_jadi`.`berat`, `tb_box_bahan_jadi`.`kode_rsb` AS 'rsb_box', "
-                    + "`tanggal_masuk`, `tb_box_packing`.`status`, `tb_box_packing`.`batch_number`, `tb_box_packing`.`invoice_pengiriman`, `tb_spk_detail`.`kode_spk`, `tb_spk_detail`.`grade_buyer`, `tb_spk_detail`.`kode_kh`, "
+                    + "`tanggal_masuk`, `tanggal_masuk_cheat`, `tb_box_packing`.`status`, `tb_box_packing`.`batch_number`, `tb_box_packing`.`invoice_pengiriman`, `tb_spk_detail`.`kode_spk`, `tb_spk_detail`.`grade_buyer`, `tb_spk_detail`.`kode_kh`, "
                     + "`tb_spk`.`tanggal_awb`, `tb_buyer`.`nama`, `jenis_pengiriman`  \n"
                     + "FROM `tb_box_packing` "
                     + "LEFT JOIN `tb_box_bahan_jadi` ON `tb_box_packing`.`no_box` = `tb_box_bahan_jadi`.`no_box`\n"
@@ -112,6 +112,7 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
                 baris[12] = rs.getString("nama");
                 baris[13] = rs.getString("kode_kh");
                 baris[14] = rs.getString("rsb_box");
+                baris[15] = rs.getDate("tanggal_masuk_cheat");
                 model.addRow(baris);
                 total_kpg += rs.getInt("keping");
                 total_gram += rs.getFloat("berat");
@@ -159,6 +160,7 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
         txt_no_spk = new javax.swing.JTextField();
         txt_search_grade = new javax.swing.JTextField();
         ComboBox_filter_tanggal = new javax.swing.JComboBox<>();
+        button_set_tgl_masuk = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Box Packing", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -170,14 +172,14 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No Box", "Grade", "Keping", "Gram", "Tanggal Masuk", "Status", "Batch Numb", "Invoice Pengiriman", "Jenis Pengiriman", "SPK", "Grade SPK", "Tanggal AWB", "Nama Buyer", "RSB SPK", "RSB BOX"
+                "No Box", "Grade", "Keping", "Gram", "Tanggal Masuk", "Status", "Batch Numb", "Invoice Pengiriman", "Jenis Pengiriman", "SPK", "Grade SPK", "Tanggal AWB", "Nama Buyer", "RSB SPK", "RSB BOX", "Tgl Masuk CT"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -330,6 +332,15 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
 
         ComboBox_filter_tanggal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tgl Masuk", "Tgl AWB" }));
 
+        button_set_tgl_masuk.setBackground(new java.awt.Color(255, 255, 255));
+        button_set_tgl_masuk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_set_tgl_masuk.setText("Set Tgl Masuk CT");
+        button_set_tgl_masuk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_set_tgl_masukActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -346,7 +357,8 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
                                 .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(button_retur, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(button_pindah_SPK, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_print_label_packing, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(button_print_label_packing, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_set_tgl_masuk, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -428,6 +440,8 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
                         .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_print_label_packing, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_set_tgl_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -526,6 +540,7 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_DataPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_label_packingActionPerformed
@@ -544,6 +559,36 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txt_search_gradeKeyPressed
 
+    private void button_set_tgl_masukActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_set_tgl_masukActionPerformed
+        // TODO add your handling code here:
+        try {
+            int jumlah_berhasil = 0, jumlah_gagal = 0;
+            int jumlah_data = table_box_packing.getRowCount();
+            String tanggal_masuk_cheat = JOptionPane.showInputDialog("Silahkan tanggal masuk dengan format tanggal : yyyy-MM-dd, contoh : 2024-06-30");
+            if (tanggal_masuk_cheat != null && !tanggal_masuk_cheat.equals("")) {
+                Date Date_tanggal_masuk_cheat = dateFormat.parse(tanggal_masuk_cheat);
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Cheat tanggal masuk " + jumlah_data + " box, menjadi tanggal " + new SimpleDateFormat("dd MMMM yyyy").format(tanggal_masuk_cheat) + ", lanjutkan ??", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    for (int i = 0; i < jumlah_data; i++) {
+                        String Query = "UPDATE `tb_box_packing` SET "
+                                + "`tanggal_masuk_cheat`='" + tanggal_masuk_cheat + "' "
+                                + "WHERE `no_box` = '" + table_box_packing.getValueAt(i, 0).toString() + "'";
+                        if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
+                            jumlah_berhasil++;
+                        } else {
+                            jumlah_gagal++;
+                        }
+                    }
+                    JOptionPane.showMessageDialog(this, "Data berhasil terupdate = " + jumlah_berhasil);
+                    button_search.doClick();
+                }
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_DataPacking.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_set_tgl_masukActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_filter_tanggal;
@@ -555,6 +600,7 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
     private javax.swing.JButton button_print_label_packing;
     public javax.swing.JButton button_retur;
     public static javax.swing.JButton button_search;
+    private javax.swing.JButton button_set_tgl_masuk;
     public javax.swing.JButton button_terima;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

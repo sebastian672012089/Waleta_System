@@ -141,7 +141,6 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="button_edit_tutupan" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jScrollPane1" min="-2" pref="605" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="button_tambah_data" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -149,9 +148,10 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="button_tambah_data2" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="jScrollPane1" alignment="0" pref="603" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel2" max="32767" attributes="0"/>
+                              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jTabbedPane2" min="-2" pref="306" max="-2" attributes="0"/>
                           </Group>
@@ -604,7 +604,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial" size="11" style="0"/>
+                          <Font name="Arial" size="11" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="0"/>
                       </Properties>
@@ -615,7 +615,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial" size="11" style="0"/>
+                          <Font name="Arial" size="11" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="0"/>
                       </Properties>
@@ -659,7 +659,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial" size="11" style="0"/>
+                          <Font name="Arial" size="11" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="0"/>
                       </Properties>
@@ -801,7 +801,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial" size="11" style="0"/>
+                          <Font name="Arial" size="11" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="0"/>
                       </Properties>
@@ -812,7 +812,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial" size="11" style="0"/>
+                          <Font name="Arial" size="11" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="0"/>
                       </Properties>
@@ -834,7 +834,7 @@
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial" size="11" style="0"/>
+                          <Font name="Arial" size="11" style="1"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="0"/>
                       </Properties>
@@ -1039,34 +1039,34 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="label_total_grade_hasil_grading" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_total_grade_hasil_grading" min="-2" pref="30" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="label_total_kpg_hasil_grading" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_total_kpg_hasil_grading" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel35" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="label_total_gram_hasil_grading" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_total_gram_hasil_grading" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel38" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="label_total_box_hasil_grading" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_total_box_hasil_grading" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="label_total_asal_detail_asal" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_total_asal_detail_asal" min="-2" pref="30" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="label_total_kpg_detail_asal" min="-2" max="-2" attributes="0"/>
+                                  <Component id="label_total_kpg_detail_asal" min="-2" pref="50" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="label_total_gram_detail_asal" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="142" max="32767" attributes="0"/>
+                                  <Component id="label_total_gram_detail_asal" min="-2" pref="50" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="button_export_LPTutupan" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1228,7 +1228,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="0"/>
                   </Properties>
@@ -1239,7 +1239,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="0"/>
                   </Properties>
@@ -1250,7 +1250,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="0"/>
                   </Properties>
@@ -1283,7 +1283,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="0"/>
                   </Properties>
@@ -1375,7 +1375,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="0"/>
                   </Properties>
@@ -1397,7 +1397,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="0"/>
                   </Properties>
@@ -1408,7 +1408,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial" size="11" style="0"/>
+                      <Font name="Arial" size="11" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="0"/>
                   </Properties>

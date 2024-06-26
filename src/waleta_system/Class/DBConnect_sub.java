@@ -17,11 +17,11 @@ public class DBConnect_sub {
     public DBConnect_sub() {
         try {
             System.out.println("connecting .. ");
-            ds.setServerName("194.163.41.103");
+            ds.setServerName("213.210.37.19");
             ds.setPort(3306);
-            ds.setDatabaseName("u1607207_sub");
-            ds.setUser("u1607207_admin_sub");
-            ds.setPassword("waletasub_2022");
+            ds.setDatabaseName("waleta_sub");
+            ds.setUser("waleta_main");
+            ds.setPassword("7RMrPLYLA302");
 
             ds.setAutoReconnect(true);
 

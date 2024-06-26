@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Label_grading_baku" printOrder="Horizontal" pageWidth="250" pageHeight="158" orientation="Landscape" columnWidth="246" leftMargin="2" rightMargin="2" topMargin="2" bottomMargin="11" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
 	<property name="ireport.zoom" value="1.9965000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+	<style name="Title" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -12,7 +13,7 @@
 			<rightPen lineWidth="1.0"/>
 		</box>
 	</style>
-	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+	<style name="SubTitle" forecolor="#000000" fontName="Arial" fontSize="12" isBold="false">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -64,22 +65,13 @@
 			<style backcolor="#F0F0F0"/>
 		</conditionalStyle>
 	</style>
-	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+	<style name="Page footer" forecolor="#000000" fontName="Arial" fontSize="12">
 		<box>
 			<pen lineWidth="0.0"/>
 			<topPen lineWidth="0.0"/>
 			<leftPen lineWidth="0.0"/>
 			<bottomPen lineWidth="0.0"/>
 			<rightPen lineWidth="0.0"/>
-		</box>
-	</style>
-	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
-		<box>
-			<pen lineWidth="1.0"/>
-			<topPen lineWidth="1.0"/>
-			<leftPen lineWidth="1.0"/>
-			<bottomPen lineWidth="1.0"/>
-			<rightPen lineWidth="1.0"/>
 		</box>
 	</style>
 	<parameter name="no_kartu_waleta" class="java.lang.String"/>
@@ -181,7 +173,7 @@ WHERE `tb_grading_bahan_baku`.`no_kartu_waleta` = $P{no_kartu_waleta} AND  `kode
 				</textElement>
 				<text><![CDATA[Nama Rumah Burung/Bird Nest Name]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="120" y="98" width="126" height="14" uuid="6fcacc63-ece2-4d68-8201-4ef70d24813a"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
@@ -189,7 +181,7 @@ WHERE `tb_grading_bahan_baku`.`no_kartu_waleta` = $P{no_kartu_waleta} AND  `kode
 				</textElement>
 				<textFieldExpression><![CDATA[": " + $F{jumlah_keping}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="120" y="42" width="126" height="14" uuid="96384e88-daf3-4602-ad08-7d552a568716"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
@@ -197,7 +189,7 @@ WHERE `tb_grading_bahan_baku`.`no_kartu_waleta` = $P{no_kartu_waleta} AND  `kode
 				</textElement>
 				<textFieldExpression><![CDATA[": " + $F{nama_rumah_burung} + "(" + $F{no_registrasi} + ")"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="120" y="84" width="126" height="14" uuid="50e003fe-c4e2-4963-8b5a-15797fd6fd10"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
@@ -237,7 +229,7 @@ WHERE `tb_grading_bahan_baku`.`no_kartu_waleta` = $P{no_kartu_waleta} AND  `kode
 				</textElement>
 				<text><![CDATA[Grade]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="120" y="112" width="126" height="14" uuid="b29b6e5b-a181-4471-9e65-1812b5bc6647"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
@@ -245,7 +237,7 @@ WHERE `tb_grading_bahan_baku`.`no_kartu_waleta` = $P{no_kartu_waleta} AND  `kode
 				</textElement>
 				<textFieldExpression><![CDATA[": " + $F{kode_grade}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="120" y="70" width="126" height="14" uuid="e2b20947-cf92-4a42-9209-1fa8972e69a8"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>
@@ -269,7 +261,7 @@ WHERE `tb_grading_bahan_baku`.`no_kartu_waleta` = $P{no_kartu_waleta} AND  `kode
 				</textElement>
 				<text><![CDATA[No Kartu / Card Number]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+			<textField isBlankWhenNull="true">
 				<reportElement style="Detail" positionType="Float" x="120" y="56" width="126" height="14" uuid="c1cda3af-9e2f-42f3-853a-0c17f69b231f"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="8" isBold="true" pdfFontName="Times-Bold"/>

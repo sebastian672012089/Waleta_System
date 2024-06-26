@@ -17,11 +17,11 @@ public class DBConnect_cabuto {
     public DBConnect_cabuto() {
         try {
             System.out.println("connecting .. ");
-            ds.setServerName("194.163.41.103");
+            ds.setServerName("213.210.37.19");
             ds.setPort(3306);
-            ds.setDatabaseName("u1607207_cabuto");
-            ds.setUser("u1607207_admin_cabuto");
-            ds.setPassword("c4bcabcabto");
+            ds.setDatabaseName("waleta_cabuto");
+            ds.setUser("waleta_main");
+            ds.setPassword("7RMrPLYLA302");
 
             ds.setAutoReconnect(true);
             

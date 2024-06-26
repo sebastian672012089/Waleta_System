@@ -359,7 +359,7 @@ public class JDialog_reProses_pencabut extends javax.swing.JDialog {
                 int dialogResult = JOptionPane.showConfirmDialog(null, "Apakah anda yakin pegawai bukan dari bagian CABUT?", "Warning", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     // Saving code here
-                    if (input_pertama) {
+                    if (!input_pertama) {
                         sql = "UPDATE `tb_reproses` SET `tgl_cabut`=CURRENT_DATE WHERE `no_reproses` = '" + no_reproses + "'";
                         Utility.db.getConnection().createStatement();
                         Utility.db.getStatement().executeUpdate(sql);

@@ -19,7 +19,6 @@ import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
 import waleta_system.Class.ExportToExcel;
 import waleta_system.HRD.JDialog_Show_KTP;
-import waleta_system.HRD.JDialog_karyawan_keluar_masuk;
 
 public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
 
@@ -104,7 +103,7 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
             if ("All".equals(ComboBox_status.getSelectedItem().toString())) {
                 Status = "";
             }
-            String query = "SELECT `id_pegawai`, `nama_pegawai`, `bagian`, `status`, `email`, `tgl_lahir`, `jenis_kelamin`, `no_hp`, `bagian`, `jenis_pegawai`, `level_gaji`, `login_username`, `login_pin`, `tanggal_masuk`, `tanggal_keluar`, `saldo`, `foto_ktp`  "
+            String query = "SELECT `id_pegawai`, `nama_pegawai`, `bagian`, `divisi`, `status`, `email`, `tgl_lahir`, `jenis_kelamin`, `no_hp`, `bagian`, `jenis_pegawai`, `level_gaji`, `login_username`, `login_pin`, `tanggal_masuk`, `tanggal_keluar`, `saldo`, `foto_ktp`  "
                     + "FROM `tb_karyawan` "
                     + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' "
                     + "AND `id_pegawai` LIKE '%" + txt_search_id.getText() + "%' "
@@ -115,23 +114,20 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
                 row[0] = rs.getString("id_pegawai");
                 row[1] = rs.getString("nama_pegawai");
                 row[2] = rs.getString("bagian");
-                row[3] = rs.getString("status");
-                row[4] = rs.getString("email");
-                row[5] = rs.getDate("tgl_lahir");
-                row[6] = rs.getString("jenis_kelamin");
-                row[7] = rs.getString("no_hp");
-                row[8] = rs.getString("jenis_pegawai");
-                row[9] = rs.getString("level_gaji");
-                row[10] = rs.getString("login_username");
-                row[11] = rs.getString("login_pin");
-                row[12] = rs.getString("tanggal_masuk");
-                row[13] = rs.getDate("tanggal_keluar");
-                row[14] = 0;
-                if (rs.getString("foto_ktp") == null || rs.getString("foto_ktp").equals("")) {
-                    row[15] = false;
-                } else {
-                    row[15] = true;
-                }
+                row[3] = rs.getString("divisi");
+                row[4] = rs.getString("status");
+                row[5] = rs.getString("email");
+                row[6] = rs.getDate("tgl_lahir");
+                row[7] = rs.getString("jenis_kelamin");
+                row[8] = rs.getString("no_hp");
+                row[9] = rs.getString("jenis_pegawai");
+                row[10] = rs.getString("level_gaji");
+                row[11] = rs.getString("login_username");
+                row[12] = rs.getString("login_pin");
+                row[13] = rs.getString("tanggal_masuk");
+                row[14] = rs.getDate("tanggal_keluar");
+                row[15] = 0;
+                row[16] = !(rs.getString("foto_ktp") == null || rs.getString("foto_ktp").equals(""));
 
                 model.addRow(row);
             }
@@ -170,7 +166,6 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
         button_level_gaji_sub = new javax.swing.JButton();
         button_status_OUT_online = new javax.swing.JButton();
         button_edit_data_online = new javax.swing.JButton();
-        button_list_sub_online = new javax.swing.JButton();
         button_lihat_KTP_online = new javax.swing.JButton();
         button_tambah_data_online = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -278,15 +273,6 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
             }
         });
 
-        button_list_sub_online.setBackground(new java.awt.Color(255, 255, 255));
-        button_list_sub_online.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_list_sub_online.setText("List BAGIAN online");
-        button_list_sub_online.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_list_sub_onlineActionPerformed(evt);
-            }
-        });
-
         button_lihat_KTP_online.setBackground(new java.awt.Color(255, 255, 255));
         button_lihat_KTP_online.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
         button_lihat_KTP_online.setText("Lihat KTP");
@@ -312,14 +298,14 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
 
             },
             new String [] {
-                "ID", "NAMA", "BAGIAN", "Status", "Email", "Tgl Lahir", "Jenis Kelamin", "No hp", "Posisi", "LevelGaji", "Login User", "Login PIN", "Tgl Masuk", "Tgl Keluar", "Saldo", "KTP"
+                "ID", "NAMA", "Bagian Sub", "Divisi", "Status", "Email", "Tgl Lahir", "Jenis Kelamin", "No hp", "Posisi", "LevelGaji", "Login User", "Login PIN", "Tgl Masuk", "Tgl Keluar", "Saldo", "KTP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -388,8 +374,6 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_status_OUT_online)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_list_sub_online)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_level_gaji_sub)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export_data_online)))
@@ -422,7 +406,6 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
                     .addComponent(button_level_gaji_sub, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_status_OUT_online, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_edit_data_online, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_list_sub_online, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_lihat_KTP_online, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_tambah_data_online, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -524,24 +507,13 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_edit_data_onlineActionPerformed
 
-    private void button_list_sub_onlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_list_sub_onlineActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "List bagian akan mengikuti data SUB, silahkan melakukan penambahan pada data SUB");
-//        JDialog_List_bagian_sub dialog = new JDialog_List_bagian_sub(new javax.swing.JFrame(), true);
-//        dialog.pack();
-//        dialog.setLocationRelativeTo(this);
-//        dialog.setVisible(true);
-//        dialog.setEnabled(true);
-//        dialog.setResizable(false);
-    }//GEN-LAST:event_button_list_sub_onlineActionPerformed
-
     private void button_lihat_KTP_onlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_lihat_KTP_onlineActionPerformed
         // TODO add your handling code here:
         int x = table_data_online.getSelectedRow();
         if (x == -1) {
             JOptionPane.showMessageDialog(this, "Silahkan pilih salah satu data pada tabel !");
         } else {
-            if ((boolean) table_data_online.getValueAt(x, 15)) {
+            if ((boolean) table_data_online.getValueAt(x, 16)) {
                 String id = table_data_online.getValueAt(x, 0).toString();
                 String nama = table_data_online.getValueAt(x, 1).toString();
                 JDialog_Show_KTP dialog = new JDialog_Show_KTP(new javax.swing.JFrame(), true, null, nama);
@@ -585,7 +557,6 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
     private javax.swing.JButton button_export_data_online;
     public javax.swing.JButton button_level_gaji_sub;
     public javax.swing.JButton button_lihat_KTP_online;
-    public javax.swing.JButton button_list_sub_online;
     public static javax.swing.JButton button_search_karyawan;
     public javax.swing.JButton button_status_OUT_online;
     public javax.swing.JButton button_tambah_data_online;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jdbcDataAdapter class="net.sf.jasperreports.data.jdbc.JdbcDataAdapterImpl">
+  <name>Waleta Database Conn</name>
+  <driver>com.mysql.jdbc.Driver</driver>
+  <username>test</username>
+  <password>test</password>
+  <url>jdbc:mysql://192.168.10.2/waleta_database</url>
+  <database></database>
+  <savePassword>true</savePassword>
+  <serverAddress></serverAddress>
+</jdbcDataAdapter>

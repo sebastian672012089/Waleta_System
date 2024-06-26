@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Pengiriman" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
-	<property name="ireport.zoom" value="1.3310000000000008"/>
+	<property name="ireport.zoom" value="1.464100000000001"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
@@ -244,14 +244,14 @@ LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta`
 					<font fontName="Arial Narrow" size="12" isBold="true" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 					<paragraph spacingBefore="5"/>
 				</textElement>
-				<text><![CDATA[CATATAN PENGUJIAN SODIUM NITRIT SETELAH PERENDAMAN (CCP1)]]></text>
+				<text><![CDATA[CATATAN PENGUJIAN SODIUM NITRIT SETELAH PENCUCIAN (CCP1)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="130" y="15" width="245" height="60" forecolor="#000000" uuid="fa1d9236-e9a2-4e96-9400-738fb310c1db"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="9" isBold="true" isItalic="true"/>
 				</textElement>
-				<text><![CDATA[RECORD OF NITRITE TEST AFTER SOAKING (CCP1)]]></text>
+				<text><![CDATA[RECORD OF NITRITE TEST AFTER WASHING (CCP 1)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Title" x="0" y="30" width="130" height="45" uuid="2f052891-2b0e-4b7d-9d07-b6743395aa96"/>

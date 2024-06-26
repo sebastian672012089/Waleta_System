@@ -262,7 +262,7 @@ public class JPanel_Ijin_keluar extends javax.swing.JPanel {
                     + jenis_ijin
                     + filter_tanggal
                     + "ORDER BY `tb_ijin_keluar`.`tanggal_keluar` DESC";
-            
+
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[15];
             while (rs.next()) {
@@ -1132,7 +1132,7 @@ public class JPanel_Ijin_keluar extends javax.swing.JPanel {
                     JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
                     JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
                     JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
-                        refreshTable_Data_ijin();
+                    refreshTable_Data_ijin();
                 }
             }
         } catch (Exception ex) {
@@ -1172,7 +1172,7 @@ public class JPanel_Ijin_keluar extends javax.swing.JPanel {
                     JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
                     JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
                     JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
-                        refreshTable_Data_ijin();
+                    refreshTable_Data_ijin();
                 }
             }
         } catch (Exception ex) {

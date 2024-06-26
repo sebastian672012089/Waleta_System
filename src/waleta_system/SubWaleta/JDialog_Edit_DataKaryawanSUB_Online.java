@@ -53,7 +53,7 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
 
     public void loadData_edit(String id) {
         try {
-            String get_karyawan_sql = "SELECT `id_pegawai`, `nama_pegawai`, `jenis_kelamin`, `tgl_lahir`, `no_hp`, `email`, `saldo`, `bagian`, `jenis_pegawai`, `level_gaji`, `status`, `tanggal_masuk`, `tanggal_keluar`, `login_username`, `login_pin`, `foto_ktp` "
+            String get_karyawan_sql = "SELECT `id_pegawai`, `nama_pegawai`, `jenis_kelamin`, `tgl_lahir`, `no_hp`, `email`, `saldo`, `bagian`, `divisi`, `jenis_pegawai`, `level_gaji`, `status`, `tanggal_masuk`, `tanggal_keluar`, `login_username`, `login_pin`, `foto_ktp` "
                     + "FROM `tb_karyawan` WHERE `id_pegawai`='" + id_pegawai + "'";
             rs = Utility.db_sub.getStatement().executeQuery(get_karyawan_sql);
             if (rs.next()) {
@@ -64,6 +64,7 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
                 txt_no_telp.setText(rs.getString("no_hp"));
                 txt_email.setText(rs.getString("email"));
                 ComboBox_bagian.setSelectedItem(rs.getString("bagian"));
+                ComboBox_divisi.setSelectedItem(rs.getString("divisi"));
                 ComboBox_posisi.setSelectedItem(rs.getString("jenis_pegawai"));
                 ComboBox_levelGaji.setSelectedItem(rs.getString("level_gaji"));
                 Date_masuk.setDate(rs.getDate("tanggal_masuk"));
@@ -116,6 +117,8 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
         ComboBox_levelGaji = new javax.swing.JComboBox<>();
         txt_login_username = new javax.swing.JTextField();
         txt_login_pin = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        ComboBox_divisi = new javax.swing.JComboBox<>();
         lbl_Image_ktp = new javax.swing.JLabel();
         label_ktp_location = new javax.swing.JLabel();
         button_browse_ktp = new javax.swing.JButton();
@@ -226,6 +229,13 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
 
         txt_login_pin.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
+        jLabel27.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel27.setFont(new java.awt.Font("Yu Gothic UI", 0, 11)); // NOI18N
+        jLabel27.setText("Divisi :");
+
+        ComboBox_divisi.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_divisi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cuci", "Cabut", "Cetak", "Koreksi", "Trainer", "Admin" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -245,7 +255,8 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ComboBox_Kelamin, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -258,7 +269,8 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
                             .addComponent(ComboBox_levelGaji, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt_email)
                             .addComponent(txt_login_username)
-                            .addComponent(txt_login_pin)))
+                            .addComponent(txt_login_pin)
+                            .addComponent(ComboBox_divisi, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -312,6 +324,10 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboBox_bagian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_divisi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -392,7 +408,7 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_Image_ktp, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                .addComponent(lbl_Image_ktp, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_ktp_location, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -471,6 +487,7 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
                         + "`no_hp`='"+txt_no_telp.getText()+"',"
                         + "`email`='"+txt_email.getText()+"',"
                         + "`bagian`='"+ComboBox_bagian.getSelectedItem().toString()+"',"
+                        + "`divisi`='"+ComboBox_divisi.getSelectedItem().toString()+"',"
                         + "`jenis_pegawai`='"+ComboBox_posisi.getSelectedItem().toString()+"',"
                         + "`level_gaji`='"+ComboBox_levelGaji.getSelectedItem().toString()+"',"
                         + "`tanggal_masuk`='"+dateFormat.format(Date_masuk.getDate())+"',"
@@ -516,6 +533,7 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JComboBox<String> ComboBox_Kelamin;
     public static javax.swing.JComboBox<String> ComboBox_bagian;
+    public static javax.swing.JComboBox<String> ComboBox_divisi;
     public static javax.swing.JComboBox<String> ComboBox_levelGaji;
     public static javax.swing.JComboBox<String> ComboBox_posisi;
     public static com.toedter.calendar.JDateChooser Date_keluar;
@@ -532,6 +550,7 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel5;
