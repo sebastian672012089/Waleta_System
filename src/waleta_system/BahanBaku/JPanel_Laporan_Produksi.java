@@ -347,6 +347,15 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
     public void refresh_tabel_cabuto_online() {
         try {
             Utility.db_cabuto.connect();
+            int jumlah_lp_cabuto_SALAH = 0;
+            int jumlah_lp_cabuto_25 = 0;
+            int jumlah_lp_cabuto_50 = 0;
+            int jumlah_lp_cabuto_75 = 0;
+            int jumlah_lp_cabuto_100 = 0;
+            int jumlah_lp_cabuto_125 = 0;
+            int jumlah_lp_cabuto_150 = 0;
+            int jumlah_lp_cabuto_175 = 0;
+            int jumlah_lp_cabuto_200 = 0;
             DefaultTableModel model = (DefaultTableModel) Table_laporan_produksi_cabuto.getModel();
             model.setRowCount(0);
             String filter_tanggal_lp = "";
@@ -380,8 +389,38 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 row[11] = result.getInt("harga_baku");
                 row[12] = result.getString("id_order");
                 model.addRow(row);
+                
+                if (result.getInt("berat_basah") >= 25 && result.getInt("berat_basah") <= 35) {
+                    jumlah_lp_cabuto_25++;
+                } else if (result.getInt("berat_basah") >= 50 && result.getInt("berat_basah") <= 60) {
+                    jumlah_lp_cabuto_50++;
+                } else if (result.getInt("berat_basah") >= 75 && result.getInt("berat_basah") <= 85) {
+                    jumlah_lp_cabuto_75++;
+                } else if (result.getInt("berat_basah") >= 100 && result.getInt("berat_basah") <= 110) {
+                    jumlah_lp_cabuto_100++;
+                } else if (result.getInt("berat_basah") >= 125 && result.getInt("berat_basah") <= 135) {
+                    jumlah_lp_cabuto_125++;
+                } else if (result.getInt("berat_basah") >= 150 && result.getInt("berat_basah") <= 160) {
+                    jumlah_lp_cabuto_150++;
+                } else if (result.getInt("berat_basah") >= 175 && result.getInt("berat_basah") <= 185) {
+                    jumlah_lp_cabuto_175++;
+                } else if (result.getInt("berat_basah") >= 200 && result.getInt("berat_basah") <= 210) {
+                    jumlah_lp_cabuto_200++;
+                } else {
+                    jumlah_lp_cabuto_SALAH++;
+                }
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_laporan_produksi_cabuto);
+            label_jumlah_lp_cabuto.setText(decimalFormat.format(Table_laporan_produksi_cabuto.getRowCount()));
+            label_jumlah_lp_cabuto_SALAH.setText(decimalFormat.format(jumlah_lp_cabuto_SALAH));
+            label_jumlah_lp_cabuto_25.setText(decimalFormat.format(jumlah_lp_cabuto_25));
+            label_jumlah_lp_cabuto_50.setText(decimalFormat.format(jumlah_lp_cabuto_50));
+            label_jumlah_lp_cabuto_75.setText(decimalFormat.format(jumlah_lp_cabuto_75));
+            label_jumlah_lp_cabuto_100.setText(decimalFormat.format(jumlah_lp_cabuto_100));
+            label_jumlah_lp_cabuto_125.setText(decimalFormat.format(jumlah_lp_cabuto_125));
+            label_jumlah_lp_cabuto_150.setText(decimalFormat.format(jumlah_lp_cabuto_150));
+            label_jumlah_lp_cabuto_175.setText(decimalFormat.format(jumlah_lp_cabuto_175));
+            label_jumlah_lp_cabuto_200.setText(decimalFormat.format(jumlah_lp_cabuto_200));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
@@ -421,8 +460,29 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         Table_laporan_produksi = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
         Table_laporan_produksi_sub = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         Table_laporan_produksi_cabuto = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto_SALAH = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto_25 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto_50 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto_75 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto_100 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto_125 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto_150 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto_175 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto_200 = new javax.swing.JLabel();
+        label_jumlah_lp_cabuto = new javax.swing.JLabel();
         button_report_lp_sub1 = new javax.swing.JButton();
         button_report_lp_wlt1 = new javax.swing.JButton();
         button_report_lp_wlt_jdn = new javax.swing.JButton();
@@ -656,6 +716,8 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Data LP online SUB", jScrollPane8);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         Table_laporan_produksi_cabuto.setAutoCreateRowSorter(true);
         Table_laporan_produksi_cabuto.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         Table_laporan_produksi_cabuto.setModel(new javax.swing.table.DefaultTableModel(
@@ -684,7 +746,188 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         Table_laporan_produksi_cabuto.getTableHeader().setReorderingAllowed(false);
         jScrollPane9.setViewportView(Table_laporan_produksi_cabuto);
 
-        jTabbedPane1.addTab("Data LP online CABUTO", jScrollPane9);
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Jumlah LP :");
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setText("SALAH :");
+
+        label_jumlah_lp_cabuto_SALAH.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto_SALAH.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto_SALAH.setText("0");
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel4.setText("25 :");
+
+        label_jumlah_lp_cabuto_25.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto_25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto_25.setText("0");
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("50 :");
+
+        label_jumlah_lp_cabuto_50.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto_50.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto_50.setText("0");
+
+        label_jumlah_lp_cabuto_75.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto_75.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto_75.setText("0");
+
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setText("75 :");
+
+        label_jumlah_lp_cabuto_100.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto_100.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto_100.setText("0");
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel11.setText("100 :");
+
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel12.setText("125 :");
+
+        label_jumlah_lp_cabuto_125.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto_125.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto_125.setText("0");
+
+        label_jumlah_lp_cabuto_150.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto_150.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto_150.setText("0");
+
+        jLabel22.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel22.setText("150 :");
+
+        label_jumlah_lp_cabuto_175.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto_175.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto_175.setText("0");
+
+        jLabel24.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel24.setText("175 :");
+
+        jLabel25.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel25.setText("200 :");
+
+        label_jumlah_lp_cabuto_200.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto_200.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto_200.setText("0");
+
+        label_jumlah_lp_cabuto.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_lp_cabuto.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        label_jumlah_lp_cabuto.setText("0");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(label_jumlah_lp_cabuto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_lp_cabuto_SALAH, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_lp_cabuto_25, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_lp_cabuto_50, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_lp_cabuto_75, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_lp_cabuto_100, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_lp_cabuto_125, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_lp_cabuto_150, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_lp_cabuto_175, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_jumlah_lp_cabuto_200, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(label_jumlah_lp_cabuto))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(label_jumlah_lp_cabuto_SALAH))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(label_jumlah_lp_cabuto_25))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(label_jumlah_lp_cabuto_50))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(label_jumlah_lp_cabuto_75))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel11)
+                            .addComponent(label_jumlah_lp_cabuto_100))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(label_jumlah_lp_cabuto_125))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22)
+                            .addComponent(label_jumlah_lp_cabuto_150))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel24)
+                            .addComponent(label_jumlah_lp_cabuto_175))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel25)
+                            .addComponent(label_jumlah_lp_cabuto_200))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Data LP online CABUTO", jPanel1);
 
         button_report_lp_sub1.setBackground(new java.awt.Color(255, 255, 255));
         button_report_lp_sub1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -877,7 +1120,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_laporan_produksiLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1184, Short.MAX_VALUE))
+                        .addComponent(jTabbedPane1))
                     .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
                         .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
@@ -984,7 +1227,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                     .addComponent(button_search_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
                         .addComponent(button_insert_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1051,11 +1294,11 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(2, 2, 2)
-                .addComponent(jPanel_laporan_produksi, javax.swing.GroupLayout.DEFAULT_SIZE, 1364, Short.MAX_VALUE))
+                .addComponent(jPanel_laporan_produksi, javax.swing.GroupLayout.DEFAULT_SIZE, 1394, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel_laporan_produksi, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+            .addComponent(jPanel_laporan_produksi, javax.swing.GroupLayout.PREFERRED_SIZE, 728, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1274,7 +1517,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         try {
             String ruang = "AND `tb_laporan_produksi`.`ruangan` IN ('A', 'B', 'C', 'D', 'E') ";
             if (Date_Search_LP_1.getDate() != null && Date_Search_LP_2.getDate() != null) {
-                sql = "SELECT `no_laporan_produksi`, `keping_upah`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
+                sql = "SELECT `no_laporan_produksi`, `keping_upah`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, `rontokan_gbm`, `susur_kering`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
                         + ", `cheat_no_kartu`, `cheat_rsb`, `cheat_tgl_lp` "
                         + "FROM `tb_laporan_produksi` \n"
                         + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
@@ -1737,7 +1980,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         try {
             String ruang = "AND `tb_laporan_produksi`.`ruangan` NOT IN ('A', 'B', 'C', 'D', 'E') ";
             if (Date_Search_LP_1.getDate() != null && Date_Search_LP_2.getDate() != null) {
-                sql = "SELECT `no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `tarif_sub`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
+                sql = "SELECT `no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `tarif_sub`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, `rontokan_gbm`, `susur_kering`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
                         + ", `cheat_no_kartu`, `cheat_rsb`, `cheat_tgl_lp` "
                         + "FROM `tb_laporan_produksi` \n"
                         + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
@@ -1983,7 +2226,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         try {
             String ruang = "AND `tb_laporan_produksi`.`ruangan` NOT IN ('A', 'B', 'C', 'D', 'E') ";
             if (Date_Search_LP_1.getDate() != null && Date_Search_LP_2.getDate() != null) {
-                sql = "SELECT `no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `tarif_gram`, `tarif_sub`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
+                sql = "SELECT `no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `tarif_gram`, `tarif_sub`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, `rontokan_gbm`, `susur_kering`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
                         + ", `cheat_no_kartu`, `cheat_rsb`, `cheat_tgl_lp` "
                         + "FROM `tb_laporan_produksi` \n"
                         + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
@@ -2033,7 +2276,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         try {
             String ruang = "AND `tb_laporan_produksi`.`ruangan` IN ('A', 'B', 'C', 'D', 'E') ";
             if (Date_Search_LP_1.getDate() != null && Date_Search_LP_2.getDate() != null) {
-                sql = "SELECT `no_laporan_produksi`, `keping_upah`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
+                sql = "SELECT `no_laporan_produksi`, `keping_upah`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, `rontokan_gbm`, `susur_kering`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
                         + ", `cheat_no_kartu`, `cheat_rsb`, `cheat_tgl_lp` "
                         + "FROM `tb_laporan_produksi` \n"
                         + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
@@ -2081,7 +2324,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         try {
             String ruang = "AND `tb_laporan_produksi`.`ruangan` IN ('A', 'B', 'C', 'D', 'E') ";
             if (Date_Search_LP_1.getDate() != null && Date_Search_LP_2.getDate() != null) {
-                sql = "SELECT `no_laporan_produksi`, `keping_upah`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `tarif_sub`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
+                sql = "SELECT `no_laporan_produksi`, `keping_upah`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `tarif_sub`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, `rontokan_gbm`, `susur_kering`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`\n"
                         + ", `cheat_no_kartu`, `cheat_rsb`, `cheat_tgl_lp` "
                         + "FROM `tb_laporan_produksi` \n"
                         + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
@@ -2474,21 +2717,42 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
     private javax.swing.JButton button_search_lp;
     private javax.swing.JButton button_total_cucian_hari_ini;
     public javax.swing.JButton button_update_LP;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel_laporan_produksi;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel label_jumlah_lp_cabuto;
+    private javax.swing.JLabel label_jumlah_lp_cabuto_100;
+    private javax.swing.JLabel label_jumlah_lp_cabuto_125;
+    private javax.swing.JLabel label_jumlah_lp_cabuto_150;
+    private javax.swing.JLabel label_jumlah_lp_cabuto_175;
+    private javax.swing.JLabel label_jumlah_lp_cabuto_200;
+    private javax.swing.JLabel label_jumlah_lp_cabuto_25;
+    private javax.swing.JLabel label_jumlah_lp_cabuto_50;
+    private javax.swing.JLabel label_jumlah_lp_cabuto_75;
+    private javax.swing.JLabel label_jumlah_lp_cabuto_SALAH;
     private javax.swing.JLabel label_total_data_laporan_produksi;
     private javax.swing.JLabel label_total_gram_LP;
     private javax.swing.JLabel label_total_keping_LP;

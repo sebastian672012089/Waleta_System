@@ -126,8 +126,13 @@ public class JDialog_CreateKartuCampuran extends javax.swing.JDialog {
             if (INSERT_KARTU_CMP()) {
                 int Keping_grading = 0, Gram_grading = 0;
                 String grade = "";
-                String sql3 = "SELECT `tb_grading_bahan_baku`.`kode_grade`, SUM(`keping`) AS 'total_kpg', SUM(`gram`) AS 'total_gram', COUNT(DISTINCT(`tb_grading_bahan_baku`.`kode_grade`)) AS 'jumlah_grade' "
-                        + "FROM `tb_kartu_cmp_detail` LEFT JOIN `tb_grading_bahan_baku` ON `tb_kartu_cmp_detail`.`no_grading` =  `tb_grading_bahan_baku`.`no_grading` "
+                String sql3 = "SELECT "
+                        + "`tb_grading_bahan_baku`.`kode_grade`, "
+                        + "SUM(`keping`) AS 'total_kpg', "
+                        + "SUM(`gram`) AS 'total_gram', "
+                        + "COUNT(DISTINCT(`tb_grading_bahan_baku`.`kode_grade`)) AS 'jumlah_grade' "
+                        + "FROM `tb_kartu_cmp_detail` "
+                        + "LEFT JOIN `tb_grading_bahan_baku` ON `tb_kartu_cmp_detail`.`no_grading` =  `tb_grading_bahan_baku`.`no_grading` "
                         + "WHERE `kode_kartu_cmp` = '" + txt_kode_kartu.getText() + "'";
                 PreparedStatement pst1 = Utility.db.getConnection().prepareStatement(sql3);
                 ResultSet rs3 = pst1.executeQuery();
@@ -142,7 +147,8 @@ public class JDialog_CreateKartuCampuran extends javax.swing.JDialog {
                 }
 
                 double KA = 0;
-                String sql1 = "SELECT AVG(`tb_bahan_baku_masuk`.`kadar_air_bahan_baku`) AS 'rata2_KA' FROM `tb_kartu_cmp_detail` \n"
+                String sql1 = "SELECT AVG(`tb_bahan_baku_masuk`.`kadar_air_bahan_baku`) AS 'rata2_KA' "
+                        + "FROM `tb_kartu_cmp_detail` \n"
                         + "LEFT JOIN `tb_grading_bahan_baku` ON `tb_grading_bahan_baku`.`no_grading` = `tb_kartu_cmp_detail`.`no_grading`\n"
                         + "LEFT JOIN `tb_bahan_baku_masuk` ON `tb_grading_bahan_baku`.`no_kartu_waleta` = `tb_bahan_baku_masuk`.`no_kartu_waleta`\n"
                         + "WHERE `kode_kartu_cmp` = '" + txt_kode_kartu.getText() + "'";
@@ -155,13 +161,13 @@ public class JDialog_CreateKartuCampuran extends javax.swing.JDialog {
                 decimalFormat.setMaximumFractionDigits(2);
                 decimalFormat.setGroupingUsed(false);
                 String sql2 = "INSERT INTO `tb_bahan_baku_masuk`(`no_kartu_waleta`, `no_registrasi`, `kode_supplier`, `tgl_kh`, `tgl_masuk`, `tgl_panen`, `tgl_timbang`, `kadar_air_waleta`, `kadar_air_bahan_baku`, `berat_awal`, `keping_real`, `berat_real`) "
-                        + "VALUES ('" + txt_kode_kartu.getText() + "','10001','ZZ','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "', " + decimalFormat.format(KA) + ", " + decimalFormat.format(KA) + ", 0, " + Keping_grading + ", " + Gram_grading + ")";
+                        + "VALUES ('" + txt_kode_kartu.getText() + "','1703','ZZ','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "', " + decimalFormat.format(KA) + ", " + decimalFormat.format(KA) + ", 0, " + Keping_grading + ", " + Gram_grading + ")";
 //                JOptionPane.showMessageDialog(this, sql2);
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(sql2)) > 0) {
                     JOptionPane.showMessageDialog(this, "No kartu bahan baku baru sukses");
                     String insert_ct1 = "INSERT INTO `tb_bahan_baku_masuk_cheat`(`no_kartu_waleta`, `no_registrasi`, `kode_supplier`, `tgl_kh`, `tgl_masuk`, `tgl_panen`, `tgl_timbang`, `kadar_air_waleta`, `kadar_air_bahan_baku`, `berat_awal`, `keping_real`, `berat_real`) "
-                            + "VALUES ('" + txt_kode_kartu.getText() + "','10001','ZZ','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "', " + decimalFormat.format(KA) + ", " + decimalFormat.format(KA) + ", 0, " + Keping_grading + ", " + Gram_grading + ")";
+                            + "VALUES ('" + txt_kode_kartu.getText() + "','1703','ZZ','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "','" + dateFormat.format(Date_kartu.getDate()) + "', " + decimalFormat.format(KA) + ", " + decimalFormat.format(KA) + ", 0, " + Keping_grading + ", " + Gram_grading + ")";
                     Utility.db.getConnection().createStatement();
                     if ((Utility.db.getStatement().executeUpdate(insert_ct1)) > 0) {
                         String sql4 = "INSERT INTO `tb_grading_bahan_baku`(`no_kartu_waleta`, `kode_grade`, `jumlah_keping`, `total_berat`) "

@@ -1,5 +1,7 @@
 package waleta_system.QC;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +12,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -74,6 +77,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 ComboBox_kode_dokumen.addItem(rs.getString("kode_dokumen") + "-" + rs.getString("nama_dokumen"));
             }
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -90,25 +94,95 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
             if (DateFilter_tgl_kadaluarsa1.getDate() != null && DateFilter_tgl_kadaluarsa2.getDate() != null) {
                 filter_tanggal_kadaluarsa = " AND `tanggal_kadaluarsa` BETWEEN '" + dateFormat.format(DateFilter_tgl_kadaluarsa1.getDate()) + "' AND '" + dateFormat.format(DateFilter_tgl_kadaluarsa2.getDate()) + "') ";
             }
-            sql = "SELECT `no_dokumen`, `tb_dokumen_qc_update`.`kode_dokumen`, `tb_dokumen_qc`.`nama_dokumen`, `tanggal_dokumen`, `tanggal_kadaluarsa`\n"
+            sql = "SELECT `no_dokumen`, `tb_dokumen_qc_update`.`kode_dokumen`, `tb_dokumen_qc`.`nama_dokumen`, `tanggal_dokumen`, `tanggal_kadaluarsa`, DATEDIFF(`tanggal_kadaluarsa`, CURRENT_DATE()) AS 'hari_jatuh_tempo' \n"
                     + "FROM `tb_dokumen_qc_update` \n"
                     + "LEFT JOIN `tb_dokumen_qc` ON `tb_dokumen_qc`.`kode_dokumen` = `tb_dokumen_qc_update`.`kode_dokumen`\n"
                     + "WHERE (`no_dokumen` LIKE '%" + txt_search_dokumen.getText() + "%' OR `tb_dokumen_qc_update`.`kode_dokumen` LIKE '%" + txt_search_dokumen.getText() + "%' OR `tb_dokumen_qc`.`nama_dokumen` LIKE '%" + txt_search_dokumen.getText() + "%') "
                     + filter_tanggal_dokumen + filter_tanggal_kadaluarsa;
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[15];
+            Object[] row = new Object[10];
             while (rs.next()) {
                 row[0] = rs.getString("kode_dokumen");
                 row[1] = rs.getString("no_dokumen");
                 row[2] = rs.getString("nama_dokumen");
                 row[3] = rs.getDate("tanggal_dokumen");
                 row[4] = rs.getDate("tanggal_kadaluarsa");
+                row[5] = rs.getInt("hari_jatuh_tempo");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_pembaruan_dokumen);
             int rowData = Table_pembaruan_dokumen.getRowCount();
             label_total_data.setText(Integer.toString(rowData));
+
+            Table_pembaruan_dokumen.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (isSelected) {
+                        comp.setBackground(Table_pembaruan_dokumen.getSelectionBackground());
+                        comp.setForeground(Table_pembaruan_dokumen.getSelectionForeground());
+                    } else {
+                        if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 0) {
+                            comp.setBackground(Color.RED);
+                            comp.setForeground(Color.WHITE);
+                        } else if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 30) {
+                            comp.setBackground(Color.ORANGE);
+                            comp.setForeground(Color.BLACK);
+                        } else {
+                            comp.setBackground(Table_pembaruan_dokumen.getBackground());
+                            comp.setForeground(Table_pembaruan_dokumen.getForeground());
+                        }
+                    }
+                    return comp;
+                }
+            });
+            Table_pembaruan_dokumen.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (isSelected) {
+                        comp.setBackground(Table_pembaruan_dokumen.getSelectionBackground());
+                        comp.setForeground(Table_pembaruan_dokumen.getSelectionForeground());
+                    } else {
+                        if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 0) {
+                            comp.setBackground(Color.RED);
+                            comp.setForeground(Color.WHITE);
+                        } else if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 30) {
+                            comp.setBackground(Color.ORANGE);
+                            comp.setForeground(Color.BLACK);
+                        } else {
+                            comp.setBackground(Table_pembaruan_dokumen.getBackground());
+                            comp.setForeground(Table_pembaruan_dokumen.getForeground());
+                        }
+                    }
+                    return comp;
+                }
+            });
+            Table_pembaruan_dokumen.setDefaultRenderer(Integer.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (isSelected) {
+                        comp.setBackground(Table_pembaruan_dokumen.getSelectionBackground());
+                        comp.setForeground(Table_pembaruan_dokumen.getSelectionForeground());
+                    } else {
+                        if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 0) {
+                            comp.setBackground(Color.RED);
+                            comp.setForeground(Color.WHITE);
+                        } else if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 30) {
+                            comp.setBackground(Color.ORANGE);
+                            comp.setForeground(Color.BLACK);
+                        } else {
+                            comp.setBackground(Table_pembaruan_dokumen.getBackground());
+                            comp.setForeground(Table_pembaruan_dokumen.getForeground());
+                        }
+                    }
+                    return comp;
+                }
+            });
+            Table_pembaruan_dokumen.repaint();
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -132,7 +206,9 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_master_dokumen);
+
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -208,14 +284,14 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode Dokumen", "No Dokumen", "Nama Dokumen", "Tgl Dokumen", "Tgl kadaluarsa"
+                "Kode Dokumen", "No Dokumen", "Nama Dokumen", "Tgl Dokumen", "Tgl kadaluarsa", "Hari Jatuh Tempo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -498,6 +574,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
         label_noTelp_customer_baku3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_noTelp_customer_baku3.setText("Masa Berlaku (Hari) :");
 
+        txt_kode_dokumen.setEditable(false);
         txt_kode_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         label_noTelp_customer_baku4.setBackground(new java.awt.Color(255, 255, 255));
@@ -816,13 +893,11 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
     private void button_insert_master_dokumenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_insert_master_dokumenActionPerformed
         // TODO add your handling code here:
         try {
-            if (txt_kode_dokumen.getText() == null || txt_kode_dokumen.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Kode Dokumen tidak boleh kosong");
-            } else if (txt_nama_dokumen.getText() == null || txt_nama_dokumen.getText().equals("")) {
+            if (txt_nama_dokumen.getText() == null || txt_nama_dokumen.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "No Dokumen tidak boleh kosong");
             } else {
-                sql = "INSERT INTO `tb_dokumen_qc`(`kode_dokumen`, `nama_dokumen`, `tempat_pengujian`, `jenis_dokumen`, `keterangan`, `masa_berlaku`) "
-                        + "VALUES ('" + txt_kode_dokumen.getText() + "','" + txt_nama_dokumen.getText() + "','" + txt_tempat_pengujian.getText() + "','" + ComboBox_jenis_dokumen.getSelectedItem().toString() + "','" + txt_keterangan_dokumen.getText() + "','" + txt_masa_berlaku.getText() + "')";
+                sql = "INSERT INTO `tb_dokumen_qc`(`nama_dokumen`, `tempat_pengujian`, `jenis_dokumen`, `keterangan`, `masa_berlaku`) "
+                        + "VALUES ('" + txt_nama_dokumen.getText() + "','" + txt_tempat_pengujian.getText() + "','" + ComboBox_jenis_dokumen.getSelectedItem().toString() + "','" + txt_keterangan_dokumen.getText() + "','" + txt_masa_berlaku.getText() + "')";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
                     JOptionPane.showMessageDialog(this, "data Saved !");
@@ -847,13 +922,10 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
             if (j == -1) {
                 JOptionPane.showMessageDialog(this, "Silahkan klik data pada tabel !");
             } else {
-                if (txt_kode_dokumen.getText() == null || txt_kode_dokumen.getText().equals("")) {
-                    JOptionPane.showMessageDialog(this, "Kode Dokumen tidak boleh kosong");
-                } else if (txt_nama_dokumen.getText() == null || txt_nama_dokumen.getText().equals("")) {
+                if (txt_nama_dokumen.getText() == null || txt_nama_dokumen.getText().equals("")) {
                     JOptionPane.showMessageDialog(this, "No Dokumen tidak boleh kosong");
                 } else {
                     sql = "UPDATE `tb_dokumen_qc` SET "
-                            + "`kode_dokumen` = '" + txt_kode_dokumen.getText() + "', "
                             + "`nama_dokumen` = '" + txt_nama_dokumen.getText() + "', "
                             + "`tempat_pengujian` = '" + txt_tempat_pengujian.getText() + "', "
                             + "`jenis_dokumen` = '" + ComboBox_jenis_dokumen.getSelectedItem().toString() + "', "
@@ -881,8 +953,10 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
         // TODO add your handling code here:
         txt_kode_dokumen.setText("");
         txt_nama_dokumen.setText("");
+        txt_tempat_pengujian.setText("");
         txt_keterangan_dokumen.setText("");
         txt_masa_berlaku.setText("");
+        ComboBox_jenis_dokumen.setSelectedIndex(0);
     }//GEN-LAST:event_button_clear_master_dokumenActionPerformed
 
     private void button_delete_master_dokumenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_delete_master_dokumenActionPerformed

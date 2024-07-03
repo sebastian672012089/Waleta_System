@@ -45,7 +45,8 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
     public void init() {
         try {
             ComboBox_ruangan.removeAllItems();
-            ComboBox_ruangan.addItem("All");
+            ComboBox_ruangan.addItem("ALL");
+            ComboBox_ruangan.addItem("Eksternal");
             sql = "SELECT DISTINCT(`ruangan`) AS 'ruangan' FROM `tb_laporan_produksi` WHERE 1";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
@@ -96,8 +97,12 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
             }
 
             String ruang = "";
-            if (ComboBox_ruangan.getSelectedItem() != "All") {
-                ruang = ComboBox_ruangan.getSelectedItem().toString();
+            if (ComboBox_ruangan.getSelectedItem() == "ALL") {
+                ruang = "";
+            } else if (ComboBox_ruangan.getSelectedItem() == "Eksternal") {
+                ruang = "AND LENGTH(`tb_laporan_produksi`.`ruangan`) = 5 \n";
+            } else {
+                ruang = "AND `tb_laporan_produksi`.`ruangan` = '" + ComboBox_ruangan.getSelectedItem().toString() + "' \n";
             }
             String search = "";
             switch (ComboBox_search.getSelectedIndex()) {
@@ -188,7 +193,11 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     + "LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_bahan_jadi_masuk`.`kode_asal`\n"
                     + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
                     + "LEFT JOIN `tb_tutupan_grading` ON `tb_bahan_jadi_masuk`.`kode_tutupan` = `tb_tutupan_grading`.`kode_tutupan`\n"
-                    + "WHERE " + search + " LIKE '%" + txt_search_proses.getText() + "%' AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruang + "%' AND YEAR(`tb_laporan_produksi`.`tanggal_lp`)>=2018  AND `berat_basah` > 0 \n"
+                    + "WHERE "
+                    + "" + search + " LIKE '%" + txt_search_proses.getText() + "%' "
+                    + ruang
+                    + "AND YEAR(`tb_laporan_produksi`.`tanggal_lp`)>=2018  "
+                    + "AND `berat_basah` > 0 \n"
                     + jenis_filter_tanggal
                     + filter_status
                     + " GROUP BY `tb_laporan_produksi`.`no_laporan_produksi`";
@@ -705,7 +714,6 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
             }
         });
 
-        button_search_proses.setBackground(new java.awt.Color(255, 255, 255));
         button_search_proses.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_search_proses.setText("Search");
         button_search_proses.addActionListener(new java.awt.event.ActionListener() {
@@ -744,7 +752,6 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
         Table_progress_lp.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(Table_progress_lp);
 
-        button_export_data_rendam.setBackground(new java.awt.Color(255, 255, 255));
         button_export_data_rendam.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_export_data_rendam.setText("Export to Excel");
         button_export_data_rendam.addActionListener(new java.awt.event.ActionListener() {
@@ -774,7 +781,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
         jLabel1.setText("Grams");
 
         ComboBox_ruangan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_ruangan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "A", "B", "C", "D" }));
+        ComboBox_ruangan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ALL" }));
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -802,7 +809,6 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
         jLabel5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel5.setText("Status LP :");
 
-        button_rekap.setBackground(new java.awt.Color(255, 255, 255));
         button_rekap.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_rekap.setText("Rekap per Grade");
         button_rekap.addActionListener(new java.awt.event.ActionListener() {
@@ -875,7 +881,6 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
         jLabel16.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         jLabel16.setText("Rata2 Lama Grading :");
 
-        button_evaluasi_lama_progres.setBackground(new java.awt.Color(255, 255, 255));
         button_evaluasi_lama_progres.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_evaluasi_lama_progres.setText("Evaluasi Lama Progres");
         button_evaluasi_lama_progres.addActionListener(new java.awt.event.ActionListener() {
@@ -897,89 +902,90 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
             .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1336, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_DataRendamLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBox_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBox_search, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_search_proses, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBox_filter_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_filter1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date_filter2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBox_filter_status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_search_proses)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
                         .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_bk)
+                                .addComponent(ComboBox_ruangan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1))
+                                .addComponent(ComboBox_search, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_proses, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_filter_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_filter1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date_filter2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_filter_status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_search_proses))
                             .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
+                                .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_total_bk)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel1))
+                                    .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_total_data_rendam)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_data_rendam)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
-                                .addComponent(jLabel10)
+                                .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_rata_cabut))
+                                    .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_rata_tandon)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_rata_cabut))
-                            .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
-                                .addComponent(jLabel9)
+                                .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
+                                        .addComponent(jLabel12)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_rata_cetak))
+                                    .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_rata_koreksi)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_rata_tandon)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
-                                .addComponent(jLabel12)
+                                .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
+                                        .addComponent(jLabel13)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_rata_f2))
+                                    .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
+                                        .addComponent(jLabel14)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(label_rata_qc)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_rata_cetak))
-                            .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
-                                .addComponent(jLabel11)
+                                .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel16))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_rata_koreksi)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_rata_proses)
+                                    .addComponent(label_rata_grading)))
                             .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_rata_f2))
-                            .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_rata_qc)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel16))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
-                                .addComponent(label_rata_proses)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(button_rekap)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_export_data_rendam))
-                            .addComponent(label_rata_grading))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_evaluasi_lama_progres)))
+                                .addComponent(button_export_data_rendam)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_evaluasi_lama_progres)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 112, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_DataRendamLayout.setVerticalGroup(
@@ -992,14 +998,20 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                     .addComponent(button_search_proses, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboBox_filter_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date_filter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date_filter2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_filter1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_filter2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboBox_filter_status, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(button_export_data_rendam, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_rekap, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_evaluasi_lama_progres, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1043,11 +1055,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                                         .addComponent(label_rata_qc))))))
                     .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel15)
-                        .addComponent(label_rata_proses))
-                    .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(button_export_data_rendam, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_rekap, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(button_evaluasi_lama_progres, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(label_rata_proses)))
                 .addGap(15, 15, 15))
         );
 

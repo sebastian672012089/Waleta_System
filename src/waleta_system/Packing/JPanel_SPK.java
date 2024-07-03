@@ -676,6 +676,7 @@ public class JPanel_SPK extends javax.swing.JPanel {
 
         ComboBox_send_out.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         ComboBox_send_out.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "SEND OUT", "PROSES" }));
+        ComboBox_send_out.setSelectedIndex(2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -741,7 +742,7 @@ public class JPanel_SPK extends javax.swing.JPanel {
                                 .addComponent(ComboBox_send_out, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_search)))
-                        .addGap(528, 528, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(

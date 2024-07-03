@@ -225,19 +225,22 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             double total_sh = 0;
             DefaultTableModel model = (DefaultTableModel) table_data_repacking.getModel();
             model.setRowCount(0);
+            String filter_tanggal = "";
             if (Date_Search_Repacking1.getDate() != null && Date_Search_Repacking2.getDate() != null) {
-                sql = "SELECT `kode_repacking`, `tanggal_repacking`, `status_repacking`, `keterangan_repacking`, `pekerja_repacking`, `nama_pegawai`, SUM(IF(`tb_repacking`.`status` = 'ASAL', `gram`, 0)) AS 'gram_asal', SUM(IF(`tb_repacking`.`status` = 'HASIL', `gram`, 0)) AS 'gram_hasil', `kode_rsb` "
-                        + "FROM `tb_repacking` "
-                        + "LEFT JOIN `tb_karyawan` ON `tb_repacking`.`pekerja_repacking` = `tb_karyawan`.`id_pegawai` "
-                        + "WHERE `kode_repacking` LIKE '%" + txt_search_kode_repacking.getText() + "%' AND `tanggal_repacking` BETWEEN '" + dateFormat.format(Date_Search_Repacking1.getDate()) + "' AND '" + dateFormat.format(Date_Search_Repacking2.getDate()) + "' "
-                        + "GROUP BY `kode_repacking` ORDER BY `tanggal_repacking` DESC";
-            } else {
-                sql = "SELECT `kode_repacking`, `tanggal_repacking`, `status_repacking`, `keterangan_repacking`, `pekerja_repacking`, `nama_pegawai`, SUM(IF(`tb_repacking`.`status` = 'ASAL', `gram`, 0)) AS 'gram_asal', SUM(IF(`tb_repacking`.`status` = 'HASIL', `gram`, 0)) AS 'gram_hasil', `kode_rsb` "
-                        + "FROM `tb_repacking` "
-                        + "LEFT JOIN `tb_karyawan` ON `tb_repacking`.`pekerja_repacking` = `tb_karyawan`.`id_pegawai` "
-                        + "WHERE `kode_repacking` LIKE '%" + txt_search_kode_repacking.getText() + "%'  "
-                        + "GROUP BY `kode_repacking` ORDER BY `tanggal_repacking` DESC";
+                filter_tanggal = "AND `tanggal_repacking` BETWEEN '" + dateFormat.format(Date_Search_Repacking1.getDate()) + "' AND '" + dateFormat.format(Date_Search_Repacking2.getDate()) + "' \n";
             }
+
+            sql = "SELECT `kode_repacking`, `tanggal_repacking`, `status_repacking`, `keterangan_repacking`, `pekerja_repacking`, `nama_pegawai` AS 'nama_pekerja_repacking', "
+                    + "SUM(IF(`tb_repacking`.`status` = 'ASAL', `gram`, 0)) AS 'gram_asal', "
+                    + "SUM(IF(`tb_repacking`.`status` = 'HASIL', `gram`, 0)) AS 'gram_hasil', "
+                    + "`kode_rsb` \n"
+                    + "FROM `tb_repacking` \n"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_repacking`.`pekerja_repacking` = `tb_karyawan`.`id_pegawai` \n"
+                    + "WHERE \n"
+                    + "`kode_repacking` LIKE '%" + txt_search_kode_repacking.getText() + "%' \n"
+                    + filter_tanggal
+                    + "GROUP BY `kode_repacking` \n"
+                    + "ORDER BY `tanggal_repacking` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[7];
             while (rs.next()) {
@@ -245,7 +248,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 row[1] = rs.getString("tanggal_repacking");
                 row[2] = rs.getString("status_repacking");
                 row[3] = rs.getString("keterangan_repacking");
-                row[4] = rs.getString("nama_pegawai");
+                row[4] = rs.getString("nama_pekerja_repacking");
                 double susut_hilang = Math.round((rs.getFloat("gram_asal") - rs.getFloat("gram_hasil")) / rs.getFloat("gram_asal") * 10000.f) / 100.f;
                 total_sh = total_sh + susut_hilang;
                 row[5] = susut_hilang;
@@ -1370,14 +1373,14 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode Repacking", "Tanggal Repacking", "Status", "Keterangan", "Pekerja", "% SH", "Kode RSB", "Otorisasi"
+                "Kode Repacking", "Tanggal Repacking", "Status", "Keterangan", "Pekerja", "% SH", "Kode RSB"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -3135,6 +3138,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_selesai_repackingActionPerformed

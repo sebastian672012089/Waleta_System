@@ -93,7 +93,7 @@
 		<defaultValueExpression><![CDATA[0]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT `no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `tarif_sub`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`, `cheat_no_kartu`, `cheat_rsb`, `cheat_tgl_lp`
+		<![CDATA[SELECT `no_laporan_produksi`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`kode_grade`, `tb_grade_bahan_baku`.`jenis_bulu`, `tb_grade_bahan_baku`.`jenis_bentuk`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `tarif_sub`, `tarif_gram`, `kpg_lp`, `tb_laporan_produksi`.`grup_lp`, `rontokan_gbm`, `susur_kering`, CONCAT(`tb_laporan_produksi`.`tanggal_lp`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`grup_lp`) AS 'kode', y.`bobot`, `cheat_no_kartu`, `cheat_rsb`, `cheat_tgl_lp`
 FROM `tb_laporan_produksi`
 LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`
 LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`
@@ -160,9 +160,13 @@ LEFT JOIN
 	<field name="grup_lp" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="kode" class="java.lang.String">
+	<field name="rontokan_gbm" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="susur_kering" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode" class="java.lang.String"/>
 	<field name="bobot" class="java.math.BigDecimal"/>
 	<field name="cheat_no_kartu" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -207,7 +211,7 @@ LEFT JOIN
 (new java.text.SimpleDateFormat("EEEEE, dd MMMMM yyyy hh:mm aaa",new Locale("id", "ID"))).format($F{tanggal_lp})]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement style="Column header" x="100" y="30" width="35" height="30" forecolor="#000000" uuid="f87f6d6d-71e8-4184-8f3b-dd214a831491"/>
+					<reportElement style="Column header" x="87" y="30" width="35" height="30" forecolor="#000000" uuid="f87f6d6d-71e8-4184-8f3b-dd214a831491"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -221,21 +225,21 @@ LEFT JOIN
 					<text><![CDATA[Gram/Kpg]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="135" y="30" width="30" height="30" forecolor="#000000" uuid="271511c0-79c9-4c8f-840e-dfb232dfad6a"/>
+					<reportElement style="Column header" x="122" y="30" width="30" height="30" forecolor="#000000" uuid="271511c0-79c9-4c8f-840e-dfb232dfad6a"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Biji]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="165" y="30" width="30" height="30" forecolor="#000000" uuid="ad8695c3-1364-4f1d-8a93-dd1d7c12ef82"/>
+					<reportElement style="Column header" x="152" y="30" width="30" height="30" forecolor="#000000" uuid="ad8695c3-1364-4f1d-8a93-dd1d7c12ef82"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Gram]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="250" y="30" width="100" height="30" forecolor="#000000" uuid="63493442-c4e3-4480-978c-0b88e6fbe11b"/>
+					<reportElement style="Column header" x="297" y="30" width="100" height="30" forecolor="#000000" uuid="63493442-c4e3-4480-978c-0b88e6fbe11b"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -249,7 +253,7 @@ LEFT JOIN
 					<text><![CDATA[Jenis LP]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="0" y="30" width="100" height="30" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
+					<reportElement style="Column header" x="0" y="30" width="87" height="30" forecolor="#000000" uuid="151aee67-0663-45c1-a92a-0401b60bc07f"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -263,14 +267,14 @@ LEFT JOIN
 					<text><![CDATA[Tarif/Kpg]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="375" y="30" width="117" height="30" forecolor="#000000" uuid="a0fbc9f1-6fe4-443f-859e-e874684477d9"/>
+					<reportElement style="Column header" x="422" y="30" width="70" height="30" forecolor="#000000" uuid="a0fbc9f1-6fe4-443f-859e-e874684477d9"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Memo]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="195" y="30" width="55" height="30" forecolor="#000000" uuid="e7102293-7517-4cfe-ae46-210d45c19119"/>
+					<reportElement style="Column header" x="242" y="30" width="55" height="30" forecolor="#000000" uuid="e7102293-7517-4cfe-ae46-210d45c19119"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -312,7 +316,7 @@ LEFT JOIN
 					<text><![CDATA[Bobot LP]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Column header" x="350" y="30" width="25" height="30" forecolor="#000000" uuid="0d956673-6eaf-4e8d-9546-73314f37e29b"/>
+					<reportElement style="Column header" x="397" y="30" width="25" height="30" forecolor="#000000" uuid="0d956673-6eaf-4e8d-9546-73314f37e29b"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -325,26 +329,40 @@ LEFT JOIN
 					</textElement>
 					<text><![CDATA[Terima CTK]]></text>
 				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="182" y="30" width="30" height="30" forecolor="#000000" uuid="dfe7ea99-c561-455e-a59e-22aa8430e1ed"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ront GBM]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="212" y="30" width="30" height="30" forecolor="#000000" uuid="dd0a43fc-cd94-4555-97a5-7d0ac825dfb8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="9" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Susur Kering]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="36">
 				<staticText>
-					<reportElement style="Column footer" x="0" y="0" width="135" height="15" forecolor="#000000" uuid="7086cc77-8b80-4eb0-972f-64d6a86b880b"/>
+					<reportElement style="Column footer" x="0" y="0" width="122" height="15" forecolor="#000000" uuid="7086cc77-8b80-4eb0-972f-64d6a86b880b"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Total]]></text>
 				</staticText>
 				<textField pattern="#,##0">
-					<reportElement style="Column footer" x="135" y="0" width="30" height="15" forecolor="#000000" uuid="b41d2ff8-0f2e-4c22-a3fa-695ed591334d"/>
+					<reportElement style="Column footer" x="122" y="0" width="30" height="15" forecolor="#000000" uuid="b41d2ff8-0f2e-4c22-a3fa-695ed591334d"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{TotalBiji}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
-					<reportElement style="Column footer" x="165" y="0" width="30" height="15" forecolor="#000000" uuid="2bceea18-e3ec-4393-8d7c-173f2fe9d5bc"/>
+					<reportElement style="Column footer" x="152" y="0" width="30" height="15" forecolor="#000000" uuid="2bceea18-e3ec-4393-8d7c-173f2fe9d5bc"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font size="9" isBold="true"/>
 					</textElement>
@@ -358,42 +376,42 @@ LEFT JOIN
 					<textFieldExpression><![CDATA[$V{TotalGram}.floatValue()/$V{TotalBiji}.floatValue()]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement style="Page header" x="195" y="0" width="30" height="15" forecolor="#000000" uuid="9c0f0990-326a-4c22-bde5-7e11a0a31984"/>
+					<reportElement style="Page header" x="182" y="0" width="30" height="15" forecolor="#000000" uuid="9c0f0990-326a-4c22-bde5-7e11a0a31984"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[B :]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Page header" x="255" y="0" width="30" height="15" forecolor="#000000" uuid="d4421206-a383-4937-8baf-ff86266a95c8"/>
+					<reportElement style="Page header" x="242" y="0" width="30" height="15" forecolor="#000000" uuid="d4421206-a383-4937-8baf-ff86266a95c8"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[K :]]></text>
 				</staticText>
 				<staticText>
-					<reportElement style="Page header" x="315" y="0" width="45" height="15" forecolor="#000000" uuid="2994505c-c5d4-4453-9d7e-26e967f857e1"/>
+					<reportElement style="Page header" x="302" y="0" width="45" height="15" forecolor="#000000" uuid="2994505c-c5d4-4453-9d7e-26e967f857e1"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[HARIAN :]]></text>
 				</staticText>
 				<textField>
-					<reportElement style="Page header" x="225" y="0" width="30" height="15" forecolor="#000000" uuid="56e8d6b2-44aa-4213-aef2-b43b08de7b25"/>
+					<reportElement style="Page header" x="212" y="0" width="30" height="15" forecolor="#000000" uuid="56e8d6b2-44aa-4213-aef2-b43b08de7b25"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[Math.floor($V{TotalB})]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Page header" x="285" y="0" width="30" height="15" forecolor="#000000" uuid="e37104df-f25b-4397-9779-5ec2baefc52a"/>
+					<reportElement style="Page header" x="272" y="0" width="30" height="15" forecolor="#000000" uuid="e37104df-f25b-4397-9779-5ec2baefc52a"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[Math.floor($V{TotalK} * 2)]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Page header" x="360" y="0" width="30" height="15" forecolor="#000000" uuid="481edf9c-33c4-46ed-a8c0-a9e81078663b"/>
+					<reportElement style="Page header" x="347" y="0" width="30" height="15" forecolor="#000000" uuid="481edf9c-33c4-46ed-a8c0-a9e81078663b"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font isBold="true"/>
 					</textElement>
@@ -407,7 +425,7 @@ LEFT JOIN
 					<textFieldExpression><![CDATA[$V{TotalBobot}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Page header" x="390" y="0" width="102" height="15" forecolor="#000000" uuid="8bbd44e5-fc00-4f2c-ac23-faf297b27539"/>
+					<reportElement style="Page header" x="377" y="0" width="102" height="15" forecolor="#000000" uuid="8bbd44e5-fc00-4f2c-ac23-faf297b27539"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font isBold="true"/>
 					</textElement>
@@ -441,7 +459,7 @@ LEFT JOIN
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="20" uuid="ceb3e7bd-a5cc-494b-873f-f1f6d6f4e1ca"/>
 				<textField>
-					<reportElement style="Detail" mode="Opaque" x="0" y="0" width="100" height="20" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
+					<reportElement style="Detail" mode="Opaque" x="0" y="0" width="87" height="20" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 						<paragraph leftIndent="3"/>
@@ -449,7 +467,7 @@ LEFT JOIN
 					<textFieldExpression><![CDATA[$F{kode_grade}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Detail" mode="Opaque" x="100" y="0" width="35" height="20" uuid="f8fb7274-70dd-406f-8265-daa9f4a09555"/>
+					<reportElement style="Detail" mode="Opaque" x="87" y="0" width="35" height="20" uuid="f8fb7274-70dd-406f-8265-daa9f4a09555"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 						<paragraph leftIndent="3"/>
@@ -457,21 +475,21 @@ LEFT JOIN
 					<textFieldExpression><![CDATA[$F{jenis_bulu_lp}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
-					<reportElement style="Detail" mode="Opaque" x="135" y="0" width="30" height="20" uuid="483ae050-6146-4f0b-9492-338e794d0d15"/>
+					<reportElement style="Detail" mode="Opaque" x="122" y="0" width="30" height="20" uuid="483ae050-6146-4f0b-9492-338e794d0d15"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{keping_upah}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
-					<reportElement style="Detail" mode="Opaque" x="165" y="0" width="30" height="20" uuid="d39d6804-8d12-4de8-aaae-0b63227ab4e7"/>
+					<reportElement style="Detail" mode="Opaque" x="152" y="0" width="30" height="20" uuid="d39d6804-8d12-4de8-aaae-0b63227ab4e7"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{berat_basah}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Detail" mode="Opaque" x="195" y="0" width="55" height="20" uuid="11746251-503e-41d2-8596-6225f5e1c1cd"/>
+					<reportElement style="Detail" mode="Opaque" x="242" y="0" width="55" height="20" uuid="11746251-503e-41d2-8596-6225f5e1c1cd"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 						<paragraph leftIndent="3"/>
@@ -481,7 +499,7 @@ LEFT JOIN
 ($F{cheat_rsb} != null?$F{cheat_rsb}:$F{no_registrasi})]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Detail" mode="Opaque" x="250" y="0" width="100" height="20" uuid="c8c4e0be-22f7-4713-ab16-52052e08902d"/>
+					<reportElement style="Detail" mode="Opaque" x="297" y="0" width="100" height="20" uuid="c8c4e0be-22f7-4713-ab16-52052e08902d"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 						<paragraph leftIndent="3"/>
@@ -489,7 +507,7 @@ LEFT JOIN
 					<textFieldExpression><![CDATA[$F{no_laporan_produksi} + "-" + ($F{cheat_rsb}!=null?$F{cheat_rsb}:$F{no_registrasi})]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" mode="Opaque" x="375" y="0" width="117" height="20" uuid="6990a25f-e502-498d-bb52-61a48b5a2c3b"/>
+					<reportElement style="Detail" mode="Opaque" x="422" y="0" width="70" height="20" uuid="6990a25f-e502-498d-bb52-61a48b5a2c3b"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="6"/>
 						<paragraph leftIndent="3"/>
@@ -551,7 +569,7 @@ LEFT JOIN
 					<textFieldExpression><![CDATA[Math.round($F{keping_upah}.floatValue() / $F{kpg_lp}.floatValue() * 1000000.0) / 1000000.0]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Detail" mode="Opaque" x="350" y="0" width="25" height="20" uuid="8040a85a-0c4a-4b53-95e7-4a23837c185c"/>
+					<reportElement style="Detail" mode="Opaque" x="397" y="0" width="25" height="20" uuid="8040a85a-0c4a-4b53-95e7-4a23837c185c"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 						<paragraph leftIndent="3"/>
@@ -565,6 +583,20 @@ LEFT JOIN
 						<paragraph leftIndent="3"/>
 					</textElement>
 					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" mode="Opaque" x="212" y="0" width="30" height="20" uuid="f0f1c2f1-6a69-4475-9731-9b12275272b1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{susur_kering}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0">
+					<reportElement style="Detail" mode="Opaque" x="182" y="0" width="30" height="20" uuid="dc511384-796d-43a8-b744-4313a02bd274"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{rontokan_gbm}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

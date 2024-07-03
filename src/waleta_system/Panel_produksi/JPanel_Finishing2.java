@@ -530,7 +530,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         float tot_rend_sh = 0, tot_rend_sp = 0, tot_rend_utuh = 0, tot_rend_flat = 0;
         Color green = new Color(0, 145, 0);
 
-        Object[] row = new Object[38];
+        Object[] row = new Object[40];
         for (int i = 0; i < list.size(); i++) {
             bk = list.get(i).getBerat_Kering();
             bk_12 = bk * 1.12f;
@@ -609,6 +609,8 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             row[35] = Math.round(rend_flat_12 * 100.f) / 100.f;
             row[36] = Math.round(rend_jidun_12 * 100.f) / 100.f;
             row[37] = Math.round(rend_total_12 * 100.f) / 100.f;
+            
+            row[38] = list.get(i).getTgl_setor_f2();
 
             model.addRow(row);
 
@@ -1444,7 +1446,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         Table_Data_f2.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(Table_Data_f2);
 
-        button_f2_terima_lp.setBackground(new java.awt.Color(255, 255, 255));
         button_f2_terima_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_f2_terima_lp.setText("Terima LP");
         button_f2_terima_lp.addActionListener(new java.awt.event.ActionListener() {
@@ -1453,7 +1454,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_f2_setor_lp.setBackground(new java.awt.Color(255, 255, 255));
         button_f2_setor_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_f2_setor_lp.setText("Setor LP");
         button_f2_setor_lp.addActionListener(new java.awt.event.ActionListener() {
@@ -1462,7 +1462,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_f2_edit.setBackground(new java.awt.Color(255, 255, 255));
         button_f2_edit.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_f2_edit.setText("Edit");
         button_f2_edit.addActionListener(new java.awt.event.ActionListener() {
@@ -1471,7 +1470,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_f2_delete.setBackground(new java.awt.Color(255, 255, 255));
         button_f2_delete.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_f2_delete.setText("Delete");
         button_f2_delete.addActionListener(new java.awt.event.ActionListener() {
@@ -1499,7 +1497,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_search_f2.setBackground(new java.awt.Color(255, 255, 255));
         button_search_f2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_search_f2.setText("Search");
         button_search_f2.addActionListener(new java.awt.event.ActionListener() {
@@ -1518,7 +1515,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         Date2_f2.setDateFormatString("dd MMM yyyy");
         Date2_f2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
-        button_export_f2.setBackground(new java.awt.Color(255, 255, 255));
         button_export_f2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_export_f2.setText("Export to Excel");
         button_export_f2.addActionListener(new java.awt.event.ActionListener() {
@@ -1530,7 +1526,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         ComboBox_SearchDate.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         ComboBox_SearchDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tgl Masuk", "Tgl Input By Product", "Tgl Koreksi Kering", "Tgl F1", "Tgl F2", "Tgl Setor", "Tgl input ssk" }));
 
-        button_input_sesekan.setBackground(new java.awt.Color(255, 255, 255));
         button_input_sesekan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_input_sesekan.setText("Input Sesekan");
         button_input_sesekan.addActionListener(new java.awt.event.ActionListener() {
@@ -1539,7 +1534,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_input_koreksi.setBackground(new java.awt.Color(255, 255, 255));
         button_input_koreksi.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_input_koreksi.setText("Input Koreksi");
         button_input_koreksi.addActionListener(new java.awt.event.ActionListener() {
@@ -1548,7 +1542,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_input_f1.setBackground(new java.awt.Color(255, 255, 255));
         button_input_f1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_input_f1.setText("Input F1");
         button_input_f1.addActionListener(new java.awt.event.ActionListener() {
@@ -1557,7 +1550,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_input_f2.setBackground(new java.awt.Color(255, 255, 255));
         button_input_f2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_input_f2.setText("Input F2");
         button_input_f2.addActionListener(new java.awt.event.ActionListener() {
@@ -1566,7 +1558,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_input_byproduct.setBackground(new java.awt.Color(255, 255, 255));
         button_input_byproduct.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_input_byproduct.setText("Input By Product");
         button_input_byproduct.addActionListener(new java.awt.event.ActionListener() {
@@ -1575,7 +1566,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_input_koreksi1.setBackground(new java.awt.Color(255, 255, 255));
         button_input_koreksi1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_input_koreksi1.setText("Input Koreksi V2");
         button_input_koreksi1.addActionListener(new java.awt.event.ActionListener() {
@@ -1584,7 +1574,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_input_kaki.setBackground(new java.awt.Color(255, 255, 255));
         button_input_kaki.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_input_kaki.setText("Input Kaki");
         button_input_kaki.addActionListener(new java.awt.event.ActionListener() {
@@ -1593,7 +1582,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_tv_reproses.setBackground(new java.awt.Color(255, 255, 255));
         button_tv_reproses.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_tv_reproses.setText("TV Reproses");
         button_tv_reproses.addActionListener(new java.awt.event.ActionListener() {
@@ -1602,7 +1590,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_laporan_f2.setBackground(new java.awt.Color(255, 255, 255));
         button_laporan_f2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_laporan_f2.setText("Catatan Pemeriksaan Kebersihan Sarang Walet Selama Proses");
         button_laporan_f2.addActionListener(new java.awt.event.ActionListener() {
@@ -1622,7 +1609,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_f2_edit_kaki.setBackground(new java.awt.Color(255, 255, 255));
         button_f2_edit_kaki.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_f2_edit_kaki.setText("Edit Kaki");
         button_f2_edit_kaki.addActionListener(new java.awt.event.ActionListener() {
@@ -1631,7 +1617,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_laporan_terima_WLT.setBackground(new java.awt.Color(255, 255, 255));
         button_laporan_terima_WLT.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_laporan_terima_WLT.setText("Print Laporan Terima LP WLT");
         button_laporan_terima_WLT.addActionListener(new java.awt.event.ActionListener() {
@@ -1652,7 +1637,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         jLabel24.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel24.setText("Laporan Terima :");
 
-        button_laporan_terima_SUB.setBackground(new java.awt.Color(255, 255, 255));
         button_laporan_terima_SUB.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_laporan_terima_SUB.setText("Print Laporan Terima LP SUB");
         button_laporan_terima_SUB.addActionListener(new java.awt.event.ActionListener() {
@@ -1770,7 +1754,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addComponent(button_f2_edit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_f2_delete)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 6, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -1794,16 +1778,13 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         .addComponent(button_tv_reproses, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_export_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ComboBox_LaporanTerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(Date_LaporanTerima, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(button_laporan_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(button_laporan_terima_WLT, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_laporan_terima_SUB, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(button_laporan_terima_WLT, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_LaporanTerima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_LaporanTerima, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_laporan_terima_SUB, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1820,7 +1801,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                     .addComponent(button_f2_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_f2_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1848,7 +1829,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_search_setoran.setBackground(new java.awt.Color(255, 255, 255));
         button_search_setoran.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_search_setoran.setText("Search");
         button_search_setoran.addActionListener(new java.awt.event.ActionListener() {
@@ -1864,14 +1844,14 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No Kartu", "No LP", "Grade", "Memo", "Berat 0%", "Berat 12%", "Ruang", "Cetak", "Cabut", "Kpg Utuh", "Realisasi Utuh", "Netto Utuh", "Pch.Kpg", "Pch", "Flat.Kpg", "Flat", "Jidun.Utuh", "Jidun.Pch", "Jidun", "Netto Jidun", "S", "H", "R", "B", "Srbt", "Total G.Kaki", "SH 0%", "SP 0%", "Utuh 0%", "F/P 0%", "Jidun 0%", "Total 0%", "SH 12%", "SP 12%", "Utuh 12%", "F/P 12%", "Jidun 12%", "Total 12%"
+                "No Kartu", "No LP", "Grade", "Memo", "Berat 0%", "Berat 12%", "Ruang", "Cetak", "Cabut", "Kpg Utuh", "Realisasi Utuh", "Netto Utuh", "Pch.Kpg", "Pch", "Flat.Kpg", "Flat", "Jidun.Utuh", "Jidun.Pch", "Jidun", "Netto Jidun", "S", "H", "R", "B", "Srbt", "Total G.Kaki", "SH 0%", "SP 0%", "Utuh 0%", "F/P 0%", "Jidun 0%", "Total 0%", "SH 12%", "SP 12%", "Utuh 12%", "F/P 12%", "Jidun 12%", "Total 12%", "Tgl Setor F2"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -2189,7 +2169,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         jLabel46.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel46.setText("Kelompok Cabut");
 
-        button_export_f2_rendemen.setBackground(new java.awt.Color(255, 255, 255));
         button_export_f2_rendemen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_export_f2_rendemen.setText("Export to Excel");
         button_export_f2_rendemen.addActionListener(new java.awt.event.ActionListener() {
@@ -2805,7 +2784,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addComponent(label_total_pencabut, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel7))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -2867,7 +2846,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_refresh_evaluasiMLEM.setBackground(new java.awt.Color(255, 255, 255));
         button_refresh_evaluasiMLEM.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_refresh_evaluasiMLEM.setText("Search");
         button_refresh_evaluasiMLEM.addActionListener(new java.awt.event.ActionListener() {
@@ -3052,7 +3030,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_search_lp_balen.setBackground(new java.awt.Color(255, 255, 255));
         button_search_lp_balen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_search_lp_balen.setText("Search");
         button_search_lp_balen.addActionListener(new java.awt.event.ActionListener() {
@@ -3093,7 +3070,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             Table_balen.getColumnModel().getColumn(4).setHeaderValue("Keping Akhir");
         }
 
-        button_selesai_balen.setBackground(new java.awt.Color(255, 255, 255));
         button_selesai_balen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_selesai_balen.setText("Selesai");
         button_selesai_balen.addActionListener(new java.awt.event.ActionListener() {
@@ -3154,7 +3130,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         jLabel49.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel49.setText("Grams");
 
-        button_delete.setBackground(new java.awt.Color(255, 255, 255));
         button_delete.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_delete.setText("Delete Data");
         button_delete.addActionListener(new java.awt.event.ActionListener() {
@@ -3283,7 +3258,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         Date_Search_LPsuwir_2.setDateFormatString("dd MMMM yyyy");
         Date_Search_LPsuwir_2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
-        button_search_lp.setBackground(new java.awt.Color(255, 255, 255));
         button_search_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_search_lp.setText("Search");
         button_search_lp.addActionListener(new java.awt.event.ActionListener() {
@@ -3393,7 +3367,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         label_asalBox_lpSuwir.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_asalBox_lpSuwir.setText("(NO LP SUWIR)");
 
-        button_export_LPSuwir.setBackground(new java.awt.Color(255, 255, 255));
         button_export_LPSuwir.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_export_LPSuwir.setText("Export");
         button_export_LPSuwir.addActionListener(new java.awt.event.ActionListener() {
@@ -3402,7 +3375,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_export_AsalBox.setBackground(new java.awt.Color(255, 255, 255));
         button_export_AsalBox.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_export_AsalBox.setText("Export");
         button_export_AsalBox.addActionListener(new java.awt.event.ActionListener() {
@@ -3433,7 +3405,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         jLabel100.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         jLabel100.setText("Laporan Produksi yang menggunakan LP Suwir");
 
-        button_export_LP_F2.setBackground(new java.awt.Color(255, 255, 255));
         button_export_LP_F2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_export_LP_F2.setText("Export");
         button_export_LP_F2.addActionListener(new java.awt.event.ActionListener() {
@@ -3564,7 +3535,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         label_BoxReproses_lpSuwir1.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
         label_BoxReproses_lpSuwir1.setText("(NO LP SUWIR)");
 
-        button_export_BoxReproses.setBackground(new java.awt.Color(255, 255, 255));
         button_export_BoxReproses.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_export_BoxReproses.setText("Export");
         button_export_BoxReproses.addActionListener(new java.awt.event.ActionListener() {
@@ -3647,7 +3617,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         jLabel105.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel105.setText("Total Keluar F2 :");
 
-        button_Print_LP_SWR.setBackground(new java.awt.Color(255, 255, 255));
         button_Print_LP_SWR.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_Print_LP_SWR.setText("Print");
         button_Print_LP_SWR.addActionListener(new java.awt.event.ActionListener() {

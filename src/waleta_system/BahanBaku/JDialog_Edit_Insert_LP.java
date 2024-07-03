@@ -140,7 +140,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "`jumlah_gumpil`, "
                     + "`grup_lp`, "
                     + "`kode_pecah_lp`, "
-                    + "`rontokan_gbm` "
+                    + "`rontokan_gbm`, susur_kering "
                     + "FROM `tb_laporan_produksi` "
                     + "LEFT JOIN `tb_bahan_baku_masuk` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk`.`no_kartu_waleta`"
                     + "WHERE  `no_laporan_produksi` = '" + no_lp + "' ";
@@ -200,6 +200,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     label_kode_pecah_lp.setVisible(true);
                 }
                 txt_rontokan_gbm.setText(rs.getString("rontokan_gbm"));
+                txt_susur_kering.setText(rs.getString("susur_kering"));
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -254,7 +255,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             Utility.db.getConnection().setAutoCommit(false);
 
             String no_laporan_produksi = no_LP_Baru(status);
-            String insert_lp_local = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `kode_pecah_lp`, `rontokan_gbm`) "
+            String insert_lp_local = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `kode_pecah_lp`, `rontokan_gbm`, `susur_kering`) "
                     + "VALUES ("
                     + "'" + no_laporan_produksi + "',"
                     + "'" + Label_no_kartu_LP.getText() + "',"
@@ -282,7 +283,8 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_gumpil_lp.getText() + "',"
                     + "'" + txt_grup_lp.getText() + "', "
                     + "'" + label_kode_pecah_lp.getText() + "',"
-                    + "'" + txt_rontokan_gbm.getText() + "'"
+                    + "'" + txt_rontokan_gbm.getText() + "',"
+                    + "'" + txt_susur_kering.getText() + "'"
                     + ")";
             if ((Utility.db.getStatement().executeUpdate(insert_lp_local)) == 1) {
                 JOptionPane.showMessageDialog(this, "Input LP berhasil");
@@ -350,7 +352,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_grup_lp.getText() + "', "
                     + "'" + upah_per_gram + "')";
 
-            String insert_lp_local = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `kode_pecah_lp`) "
+            String insert_lp_local = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `kode_pecah_lp`, `rontokan_gbm`, `susur_kering`) "
                     + "VALUES ("
                     + "'" + no_laporan_produksi + "',"
                     + "'" + Label_no_kartu_LP.getText() + "',"
@@ -377,7 +379,10 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_sobek_lepas_lp.getText() + "',"
                     + "'" + txt_gumpil_lp.getText() + "',"
                     + "'" + txt_grup_lp.getText() + "', "
-                    + "'" + label_kode_pecah_lp.getText() + "')";
+                    + "'" + label_kode_pecah_lp.getText() + "',"
+                    + "'" + txt_rontokan_gbm.getText() + "',"
+                    + "'" + txt_susur_kering.getText() + "'"
+                    + ")";
             Utility.db_sub.getStatement().executeUpdate(insert_lp_online);
             if (!ComboBox_ruangan.getSelectedItem().toString().equals("SUB00")) {
                 if ((Utility.db.getStatement().executeUpdate(insert_lp_local)) == 1) {
@@ -450,7 +455,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_jumlah_keping_upah.getText() + "',"
                     + "'" + harga_baku_lp + "')";
 
-            String insert_lp_waleta = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `kode_pecah_lp`) "
+            String insert_lp_waleta = "INSERT INTO `tb_laporan_produksi`(`no_laporan_produksi`, `no_kartu_waleta`, `tanggal_lp`, `ruangan`, `kode_grade`, `jenis_bulu_lp`, `memo_lp`, `berat_basah`, `berat_kering`, `jumlah_keping`, `keping_upah`, `kaki_besar_lp`, `kaki_kecil_lp`, `hilang_kaki_lp`, `ada_susur_lp`, `ada_susur_besar_lp`, `tanpa_susur_lp`, `utuh_lp`, `hilang_ujung_lp`, `pecah_1_lp`, `pecah_2`, `jumlah_sobek`, `sobek_lepas`, `jumlah_gumpil`, `grup_lp`, `kode_pecah_lp`, `rontokan_gbm`, `susur_kering`) "
                     + "VALUES ('" + no_laporan_produksi + "',"
                     + "'" + Label_no_kartu_LP.getText() + "',"
                     + "'" + dateFormat.format(Date_LP.getDate()) + "',"
@@ -476,7 +481,10 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     + "'" + txt_sobek_lepas_lp.getText() + "',"
                     + "'" + txt_gumpil_lp.getText() + "',"
                     + "'" + txt_grup_lp.getText() + "', "
-                    + "'" + label_kode_pecah_lp.getText() + "')";
+                    + "'" + label_kode_pecah_lp.getText() + "',"
+                    + "'" + txt_rontokan_gbm.getText() + "',"
+                    + "'" + txt_susur_kering.getText() + "'"
+                    + ")";
 
             Utility.db.getStatement().executeUpdate(insert_lp_waleta);
             Utility.db_cabuto.getStatement().executeUpdate(insert_lp_cabuto);
@@ -530,7 +538,8 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 + "`jumlah_gumpil` = '" + txt_gumpil_lp.getText() + "', "
                 + "`grup_lp` = '" + txt_grup_lp.getText() + "', "
                 + "`kode_pecah_lp` = '" + label_kode_pecah_lp.getText() + "', "
-                + "`rontokan_gbm` = '" + txt_rontokan_gbm.getText() + "' "
+                + "`rontokan_gbm` = '" + txt_rontokan_gbm.getText() + "', "
+                + "`susur_kering` = '" + txt_susur_kering.getText() + "' "
                 + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + no_lp + "'";
         Utility.db.getStatement().executeUpdate(Query);
     }
@@ -773,6 +782,8 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         label_jumlah_pecah_lp8 = new javax.swing.JLabel();
         txt_rontokan_gbm = new javax.swing.JTextField();
         txt_grup_lp = new javax.swing.JTextField();
+        label_jumlah_pecah_lp9 = new javax.swing.JLabel();
+        txt_susur_kering = new javax.swing.JTextField();
         button_pilih_pecah_lp = new javax.swing.JButton();
         label_kode_pecah_lp = new javax.swing.JLabel();
 
@@ -1284,36 +1295,59 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         });
 
+        label_jumlah_pecah_lp9.setBackground(new java.awt.Color(255, 255, 255));
+        label_jumlah_pecah_lp9.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_jumlah_pecah_lp9.setText("Susur Kering :");
+
+        txt_susur_kering.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_susur_kering.setText("0");
+        txt_susur_kering.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_susur_keringKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(button_update_LP)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_insert_LP)
-                .addGap(10, 10, 10))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(button_update_LP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_insert_LP))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(label_jumlah_pecah_lp4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_jumlah_pecah_lp6, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_tgl_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_hilang_kaki_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_jumlah_pecah_lp2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_gumpil_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_hilang_kaki_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_pecah_lp8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_tgl_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_jumlah_hilang_ujung_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_jumlah_gumpil_lp2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_hilang_kaki_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_pecah_lp4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(label_jumlah_pecah_lp8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_hilang_kaki_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_gumpil_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_pecah_lp9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Date_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txt_ada_susur_besar_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_grup_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_jumlah_pecah_lp7))
+                            .addComponent(txt_memo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Date_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_rontokan_gbm, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txt_kaki_besar_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_tanpa_susur_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_kaki_kecil_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_hilang_kaki_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_ada_susur_besar_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_ada_susur_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(label_jumlah_gumpil_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1325,27 +1359,14 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                                     .addComponent(label_jumlah_hilang_kaki_lp2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(4, 4, 4)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_gumpil_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_sobek_lepas_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_sobek_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_pecah_2_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_pecah_1_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_hilang_ujung_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_sobek_lepas_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_pecah_2_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_sobek_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txt_gumpil_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txt_utuh_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txt_grup_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_jumlah_pecah_lp7))
-                            .addComponent(txt_memo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_rontokan_gbm, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_ada_susur_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_tanpa_susur_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_hilang_kaki_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_kaki_kecil_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_kaki_besar_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txt_susur_kering, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -1411,6 +1432,10 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(label_jumlah_pecah_lp8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_rontokan_gbm, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(label_jumlah_pecah_lp9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_susur_kering, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_update_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1869,6 +1894,10 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txt_rontokan_gbmKeyTyped
 
+    private void txt_susur_keringKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_susur_keringKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_susur_keringKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JComboBox<String> ComboBox_jenisBulu;
@@ -1916,6 +1945,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
     private javax.swing.JLabel label_jumlah_pecah_lp6;
     private javax.swing.JLabel label_jumlah_pecah_lp7;
     private javax.swing.JLabel label_jumlah_pecah_lp8;
+    private javax.swing.JLabel label_jumlah_pecah_lp9;
     private javax.swing.JLabel label_jumlah_sobek_lp;
     private javax.swing.JLabel label_jumlah_sobek_lp1;
     private javax.swing.JLabel label_kadar_air_lp;
@@ -1942,6 +1972,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
     public javax.swing.JTextField txt_rontokan_gbm;
     public javax.swing.JTextField txt_sobek_lepas_lp;
     public javax.swing.JTextField txt_sobek_lp;
+    public javax.swing.JTextField txt_susur_kering;
     public javax.swing.JTextField txt_tanpa_susur_lp;
     public javax.swing.JTextField txt_utuh_lp;
     // End of variables declaration//GEN-END:variables
