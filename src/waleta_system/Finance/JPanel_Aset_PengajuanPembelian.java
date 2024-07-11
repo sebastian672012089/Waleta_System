@@ -55,42 +55,42 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 ComboBox_filter_departemen.addItem(MainForm.Login_Departemen);
             }
 
-            table_pengajuan.getColumnModel().getColumn(19).setMinWidth(0);//Realisasi Harga (Rp.)
-            table_pengajuan.getColumnModel().getColumn(19).setMaxWidth(0);//Realisasi Harga (Rp.)
-            table_pengajuan.getColumnModel().getColumn(19).setWidth(0);//Realisasi Harga (Rp.)
-            table_pengajuan.getColumnModel().getColumn(19).setPreferredWidth(0);//Realisasi Harga (Rp.)
-            table_pengajuan.getColumnModel().getColumn(20).setMinWidth(0);//PPN %
-            table_pengajuan.getColumnModel().getColumn(20).setMaxWidth(0);//PPN %
-            table_pengajuan.getColumnModel().getColumn(20).setWidth(0);//PPN %
-            table_pengajuan.getColumnModel().getColumn(20).setPreferredWidth(0);//PPN %
-            table_pengajuan.getColumnModel().getColumn(21).setMinWidth(0);//PPN (Rp.)
-            table_pengajuan.getColumnModel().getColumn(21).setMaxWidth(0);//PPN (Rp.)
-            table_pengajuan.getColumnModel().getColumn(21).setWidth(0);//PPN (Rp.)
-            table_pengajuan.getColumnModel().getColumn(21).setPreferredWidth(0);//PPN (Rp.)
-            table_pengajuan.getColumnModel().getColumn(22).setMinWidth(0);//Biaya Lain (Rp.)
-            table_pengajuan.getColumnModel().getColumn(22).setMaxWidth(0);//Biaya Lain (Rp.)
-            table_pengajuan.getColumnModel().getColumn(22).setWidth(0);//Biaya Lain (Rp.)
-            table_pengajuan.getColumnModel().getColumn(22).setPreferredWidth(0);//Biaya Lain (Rp.)
-            table_pengajuan.getColumnModel().getColumn(23).setMinWidth(0);//Ket Biaya
-            table_pengajuan.getColumnModel().getColumn(23).setMaxWidth(0);//Ket Biaya
-            table_pengajuan.getColumnModel().getColumn(23).setWidth(0);//Ket Biaya
-            table_pengajuan.getColumnModel().getColumn(23).setPreferredWidth(0);//Ket Biaya
-            table_pengajuan.getColumnModel().getColumn(24).setMinWidth(0);//Total (Rp.)
-            table_pengajuan.getColumnModel().getColumn(24).setMaxWidth(0);//Total (Rp.)
-            table_pengajuan.getColumnModel().getColumn(24).setWidth(0);//Total (Rp.)
-            table_pengajuan.getColumnModel().getColumn(24).setPreferredWidth(0);//Total (Rp.)
-            table_pengajuan.getColumnModel().getColumn(25).setMinWidth(0);//Nama Bank
-            table_pengajuan.getColumnModel().getColumn(25).setMaxWidth(0);//Nama Bank
-            table_pengajuan.getColumnModel().getColumn(25).setWidth(0);//Nama Bank
-            table_pengajuan.getColumnModel().getColumn(25).setPreferredWidth(0);//Nama Bank
-            table_pengajuan.getColumnModel().getColumn(26).setMinWidth(0);//No Rekening
-            table_pengajuan.getColumnModel().getColumn(26).setMaxWidth(0);//No Rekening
-            table_pengajuan.getColumnModel().getColumn(26).setWidth(0);//No Rekening
-            table_pengajuan.getColumnModel().getColumn(26).setPreferredWidth(0);//No Rekening
-            table_pengajuan.getColumnModel().getColumn(27).setMinWidth(0);//Nama Rekening
-            table_pengajuan.getColumnModel().getColumn(27).setMaxWidth(0);//Nama Rekening
-            table_pengajuan.getColumnModel().getColumn(27).setWidth(0);//Nama Rekening
-            table_pengajuan.getColumnModel().getColumn(27).setPreferredWidth(0);//Nama Rekening
+            table_pengajuan.getColumnModel().getColumn(20).setMinWidth(0);//Realisasi Harga (Rp.)
+            table_pengajuan.getColumnModel().getColumn(20).setMaxWidth(0);//Realisasi Harga (Rp.)
+            table_pengajuan.getColumnModel().getColumn(20).setWidth(0);//Realisasi Harga (Rp.)
+            table_pengajuan.getColumnModel().getColumn(20).setPreferredWidth(0);//Realisasi Harga (Rp.)
+            table_pengajuan.getColumnModel().getColumn(21).setMinWidth(0);//PPN %
+            table_pengajuan.getColumnModel().getColumn(21).setMaxWidth(0);//PPN %
+            table_pengajuan.getColumnModel().getColumn(21).setWidth(0);//PPN %
+            table_pengajuan.getColumnModel().getColumn(21).setPreferredWidth(0);//PPN %
+            table_pengajuan.getColumnModel().getColumn(22).setMinWidth(0);//PPN (Rp.)
+            table_pengajuan.getColumnModel().getColumn(22).setMaxWidth(0);//PPN (Rp.)
+            table_pengajuan.getColumnModel().getColumn(22).setWidth(0);//PPN (Rp.)
+            table_pengajuan.getColumnModel().getColumn(22).setPreferredWidth(0);//PPN (Rp.)
+            table_pengajuan.getColumnModel().getColumn(23).setMinWidth(0);//Biaya Lain (Rp.)
+            table_pengajuan.getColumnModel().getColumn(23).setMaxWidth(0);//Biaya Lain (Rp.)
+            table_pengajuan.getColumnModel().getColumn(23).setWidth(0);//Biaya Lain (Rp.)
+            table_pengajuan.getColumnModel().getColumn(23).setPreferredWidth(0);//Biaya Lain (Rp.)
+            table_pengajuan.getColumnModel().getColumn(24).setMinWidth(0);//Ket Biaya
+            table_pengajuan.getColumnModel().getColumn(24).setMaxWidth(0);//Ket Biaya
+            table_pengajuan.getColumnModel().getColumn(24).setWidth(0);//Ket Biaya
+            table_pengajuan.getColumnModel().getColumn(24).setPreferredWidth(0);//Ket Biaya
+            table_pengajuan.getColumnModel().getColumn(25).setMinWidth(0);//Total (Rp.)
+            table_pengajuan.getColumnModel().getColumn(25).setMaxWidth(0);//Total (Rp.)
+            table_pengajuan.getColumnModel().getColumn(25).setWidth(0);//Total (Rp.)
+            table_pengajuan.getColumnModel().getColumn(25).setPreferredWidth(0);//Total (Rp.)
+            table_pengajuan.getColumnModel().getColumn(26).setMinWidth(0);//Nama Bank
+            table_pengajuan.getColumnModel().getColumn(26).setMaxWidth(0);//Nama Bank
+            table_pengajuan.getColumnModel().getColumn(26).setWidth(0);//Nama Bank
+            table_pengajuan.getColumnModel().getColumn(26).setPreferredWidth(0);//Nama Bank
+            table_pengajuan.getColumnModel().getColumn(27).setMinWidth(0);//No Rekening
+            table_pengajuan.getColumnModel().getColumn(27).setMaxWidth(0);//No Rekening
+            table_pengajuan.getColumnModel().getColumn(27).setWidth(0);//No Rekening
+            table_pengajuan.getColumnModel().getColumn(27).setPreferredWidth(0);//No Rekening
+            table_pengajuan.getColumnModel().getColumn(28).setMinWidth(0);//Nama Rekening
+            table_pengajuan.getColumnModel().getColumn(28).setMaxWidth(0);//Nama Rekening
+            table_pengajuan.getColumnModel().getColumn(28).setWidth(0);//Nama Rekening
+            table_pengajuan.getColumnModel().getColumn(28).setPreferredWidth(0);//Nama Rekening
         } else if (jenisAkses.equals("Keuangan")) {
             try {
                 ComboBox_filter_departemen.removeAllItems();
@@ -103,15 +103,15 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             } catch (SQLException ex) {
                 Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
             }
-            table_pengajuan.getColumnModel().getColumn(19).setMaxWidth(300);//Realisasi Harga (Rp.)
-            table_pengajuan.getColumnModel().getColumn(20).setMaxWidth(300);//PPN %
-            table_pengajuan.getColumnModel().getColumn(21).setMaxWidth(300);//PPN (Rp.)
-            table_pengajuan.getColumnModel().getColumn(22).setMaxWidth(300);//Biaya Lain (Rp.)
-            table_pengajuan.getColumnModel().getColumn(23).setMaxWidth(300);//Ket Biaya
-            table_pengajuan.getColumnModel().getColumn(24).setMaxWidth(300);//Total (Rp.)
-            table_pengajuan.getColumnModel().getColumn(25).setMaxWidth(300);//Nama Bank
-            table_pengajuan.getColumnModel().getColumn(26).setMaxWidth(300);//No Rekening
-            table_pengajuan.getColumnModel().getColumn(27).setMaxWidth(300);//Nama Rekening
+            table_pengajuan.getColumnModel().getColumn(20).setMaxWidth(300);//Realisasi Harga (Rp.)
+            table_pengajuan.getColumnModel().getColumn(21).setMaxWidth(300);//PPN %
+            table_pengajuan.getColumnModel().getColumn(22).setMaxWidth(300);//PPN (Rp.)
+            table_pengajuan.getColumnModel().getColumn(23).setMaxWidth(300);//Biaya Lain (Rp.)
+            table_pengajuan.getColumnModel().getColumn(24).setMaxWidth(300);//Ket Biaya
+            table_pengajuan.getColumnModel().getColumn(25).setMaxWidth(300);//Total (Rp.)
+            table_pengajuan.getColumnModel().getColumn(26).setMaxWidth(300);//Nama Bank
+            table_pengajuan.getColumnModel().getColumn(27).setMaxWidth(300);//No Rekening
+            table_pengajuan.getColumnModel().getColumn(28).setMaxWidth(300);//Nama Rekening
         }
 
         refreshTable();
@@ -144,7 +144,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 filter_tgl_pengajuan = "AND `tanggal_pengajuan` BETWEEN '" + dateFormat.format(Date_pengajuan1.getDate()) + "' AND '" + dateFormat.format(Date_pengajuan2.getDate()) + "'";
             }
             sql = "SELECT "
-                    + "`no`, `tanggal_pengajuan`, `tb_aset_pengajuan`.`departemen`, `keperluan`, `nama_barang`, `jumlah`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `nama_pegawai` AS 'diajukan', `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `waktu_selesai`, `jenis_pembelian`, `tb_aset_pengajuan`.`status`, `tb_aset_pengajuan`.`keterangan`,"
+                    + "`no`, `tanggal_pengajuan`, `tb_aset_pengajuan`.`departemen`, `keperluan`, `nama_barang`, `jumlah`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `nama_pegawai` AS 'diajukan', `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `waktu_sampai`, `waktu_selesai`, `jenis_pembelian`, `tb_aset_pengajuan`.`status`, `tb_aset_pengajuan`.`keterangan`,"
                     + " `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, `nama_bank`, `no_rekening`, `nama_rekening` \n"
                     + "FROM `tb_aset_pengajuan` \n"
                     + "LEFT JOIN `tb_karyawan` ON `tb_aset_pengajuan`.`diajukan` = `tb_karyawan`.`id_pegawai` \n"
@@ -173,22 +173,23 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 row[11] = rs.getString("diketahui");
                 row[12] = rs.getString("disetujui");
                 row[13] = rs.getString("diproses");
-                row[14] = rs.getTimestamp("waktu_selesai");
-                row[15] = rs.getString("jenis_pembelian");
-                row[16] = rs.getString("status");
-                row[17] = rs.getString("keterangan");
-                row[18] = rs.getString("link_pembelian");
-                row[19] = rs.getInt("realisasi_harga_satuan");
-                row[20] = rs.getInt("ppn");
-                row[21] = Math.round(rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")));
-                row[22] = rs.getInt("biaya_lain");
-                row[23] = rs.getString("keterangan_biaya_lain");
-                row[24] = Math.round((rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan"))
+                row[14] = rs.getTimestamp("waktu_sampai");
+                row[15] = rs.getTimestamp("waktu_selesai");
+                row[16] = rs.getString("jenis_pembelian");
+                row[17] = rs.getString("status");
+                row[18] = rs.getString("keterangan");
+                row[19] = rs.getString("link_pembelian");
+                row[20] = rs.getInt("realisasi_harga_satuan");
+                row[21] = rs.getInt("ppn");
+                row[22] = Math.round(rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")));
+                row[23] = rs.getInt("biaya_lain");
+                row[24] = rs.getString("keterangan_biaya_lain");
+                row[25] = Math.round((rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan"))
                         + (rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")))
                         + rs.getFloat("biaya_lain"));
-                row[25] = rs.getString("nama_bank");
-                row[26] = rs.getString("no_rekening");
-                row[27] = rs.getString("nama_rekening");
+                row[26] = rs.getString("nama_bank");
+                row[27] = rs.getString("no_rekening");
+                row[28] = rs.getString("nama_rekening");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_pengajuan);
@@ -247,14 +248,14 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Tgl Pengajuan", "Departemen", "Keperluan", "Nama Barang", "Jumlah", "Est. Harga", "Est. Total", "Dibutuhkan Tgl", "Diajukan Oleh", "Diketahui Kadep", "Diketahui Oleh", "Disetujui Oleh", "Diproses Oleh", "Waktu Selesai", "Jenis Pembelian", "Status", "Keterangan", "Link Pembelian", "Realisasi Harga (Rp.)", "PPN %", "PPN (Rp.)", "Biaya Lain (Rp.)", "Ket Biaya", "Total (Rp.)", "Nama Bank", "No Rekening", "Nama Rekening"
+                "No", "Tgl Pengajuan", "Departemen", "Keperluan", "Nama Barang", "Jumlah", "Est. Harga", "Est. Total", "Dibutuhkan Tgl", "Diajukan Oleh", "Diketahui Kadep", "Diketahui Oleh", "Disetujui Oleh", "Diproses Oleh", "Waktu Sampai", "Waktu Selesai", "Jenis Pembelian", "Status", "Keterangan", "Link Pembelian", "Realisasi Harga (Rp.)", "PPN %", "PPN (Rp.)", "Biaya Lain (Rp.)", "Ket Biaya", "Total (Rp.)", "Nama Bank", "No Rekening", "Nama Rekening"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -268,7 +269,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
         table_pengajuan.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(table_pengajuan);
         if (table_pengajuan.getColumnModel().getColumnCount() > 0) {
-            table_pengajuan.getColumnModel().getColumn(18).setMaxWidth(100);
+            table_pengajuan.getColumnModel().getColumn(19).setMaxWidth(100);
         }
 
         button_new.setBackground(new java.awt.Color(255, 255, 255));
@@ -741,7 +742,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 } else if (table_pengajuan.getValueAt(j, 11) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diketahui");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 16).toString().equals("Dibatalkan")) {
+                } else if (table_pengajuan.getValueAt(j, 17).toString().equals("Dibatalkan")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah dibatalkan!");
                     Check = false;
                 } else if (MainForm.Login_kodeBagian != 244) {//OPERATIONAL MANAGER----OFFICE
@@ -751,7 +752,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
                 if (Check) {
                     String no = table_pengajuan.getValueAt(j, 0).toString();
-                    String keterangan_lama = table_pengajuan.getValueAt(j, 17).toString();
+                    String keterangan_lama = table_pengajuan.getValueAt(j, 18).toString();
                     String keterangan = JOptionPane.showInputDialog(this, "Keterangan :", keterangan_lama);
                     if (keterangan != null) {
                         String Query = "UPDATE `tb_aset_pengajuan` SET "
@@ -800,7 +801,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 } else if (table_pengajuan.getValueAt(j, 12) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah disetujui");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 16).toString().equals("Dibatalkan")) {
+                } else if (table_pengajuan.getValueAt(j, 17).toString().equals("Dibatalkan")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah dibatalkan!");
                     Check = false;
                 } else if (!MainForm.Login_idPegawai.equals("1") && !MainForm.Login_idPegawai.equals("2")) {
@@ -853,7 +854,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 } else if (table_pengajuan.getValueAt(j, 13) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diproses");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 16).toString().equals("Dibatalkan")) {
+                } else if (table_pengajuan.getValueAt(j, 17).toString().equals("Dibatalkan")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah dibatalkan!");
                     Check = false;
                 } else if (MainForm.Login_Departemen == null || !MainForm.Login_Departemen.equals("KEUANGAN")) {
@@ -947,7 +948,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 // Specify the URL you want to open
-                String url = table_pengajuan.getValueAt(j, 18).toString();
+                String url = table_pengajuan.getValueAt(j, 19).toString();
 
                 // Get the system clipboard
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -972,10 +973,10 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 Boolean Check = true;
-                if (table_pengajuan.getValueAt(j, 16).toString().equals("Selesai")) {
+                if (table_pengajuan.getValueAt(j, 17).toString().equals("Selesai")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diselesaikan oleh user, status tidak bisa berubah");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 16).toString().equals("Dibatalkan")) {
+                } else if (table_pengajuan.getValueAt(j, 17).toString().equals("Dibatalkan")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah dibatalkan!");
                     Check = false;
                 } else if (MainForm.Login_Departemen == null || !MainForm.Login_Departemen.equals("KEUANGAN")) {
@@ -1007,10 +1008,10 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Pilih salah satu data !");
             } else {
                 Boolean Check = true;
-                if (table_pengajuan.getValueAt(j, 16).toString().equals("Selesai")) {
+                if (table_pengajuan.getValueAt(j, 17).toString().equals("Selesai")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diselesaikan oleh user, status tidak bisa berubah");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 16).toString().equals("Dibatalkan")) {
+                } else if (table_pengajuan.getValueAt(j, 17).toString().equals("Dibatalkan")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah dibatalkan!");
                     Check = false;
                 } else if (MainForm.Login_Departemen == null || !MainForm.Login_Departemen.equals("KEUANGAN")) {
@@ -1020,7 +1021,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
                 if (Check) {
                     String no = table_pengajuan.getValueAt(j, 0).toString();
-                    String Query = "UPDATE `tb_aset_pengajuan` SET `status`='Sampai' WHERE `no` = '" + no + "'";
+                    String Query = "UPDATE `tb_aset_pengajuan` SET `waktu_sampai` = NOW(), `status`='Sampai' WHERE `no` = '" + no + "'";
                     Utility.db.getConnection().createStatement();
                     if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
                         JOptionPane.showMessageDialog(this, "Status pengajuan : Sampai");
@@ -1043,10 +1044,10 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             } else {
                 Boolean Check = true;
                 String diajukan_oleh = table_pengajuan.getValueAt(j, 9).toString();
-                if (table_pengajuan.getValueAt(j, 16).toString().equals("Selesai")) {
+                if (table_pengajuan.getValueAt(j, 17).toString().equals("Selesai")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diselesaikan oleh user, status tidak bisa berubah");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 16).toString().equals("Dibatalkan")) {
+                } else if (table_pengajuan.getValueAt(j, 17).toString().equals("Dibatalkan")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah dibatalkan!");
                     Check = false;
                 } else if (!MainForm.Login_NamaPegawai.equals(diajukan_oleh)) {
@@ -1093,7 +1094,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 if (table_pengajuan.getValueAt(j, 10) != null) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah diketahui kadep");
                     Check = false;
-                } else if (table_pengajuan.getValueAt(j, 16).toString().equals("Dibatalkan")) {
+                } else if (table_pengajuan.getValueAt(j, 17).toString().equals("Dibatalkan")) {
                     JOptionPane.showMessageDialog(this, "Pengajuan sudah dibatalkan!");
                     Check = false;
                 } else if (!MainForm.Login_namaBagian.toUpperCase().contains("KADEP-" + kode_departemen) && MainForm.Login_kodeBagian != 244) {
@@ -1179,11 +1180,11 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 // Create a DecimalFormat object with custom symbols
                 DecimalFormat FormatHarga = new DecimalFormat("###,###", symbols);
 
-                String harga_satuan = FormatHarga.format(table_pengajuan.getValueAt(j, 19));
-                String subtotal = FormatHarga.format((int) table_pengajuan.getValueAt(j, 5) * (int) table_pengajuan.getValueAt(j, 19));
-                String ppn = FormatHarga.format(table_pengajuan.getValueAt(j, 21));
-                String biaya_lain = FormatHarga.format(table_pengajuan.getValueAt(j, 22));
-                String total = FormatHarga.format(table_pengajuan.getValueAt(j, 24));
+                String harga_satuan = FormatHarga.format(table_pengajuan.getValueAt(j, 20));
+                String subtotal = FormatHarga.format((int) table_pengajuan.getValueAt(j, 5) * (int) table_pengajuan.getValueAt(j, 20));
+                String ppn = FormatHarga.format(table_pengajuan.getValueAt(j, 22));
+                String biaya_lain = FormatHarga.format(table_pengajuan.getValueAt(j, 23));
+                String total = FormatHarga.format(table_pengajuan.getValueAt(j, 25));
 
                 JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Form_Pengajuan_Pembelian.jrxml");
                 Map<String, Object> params = new HashMap<>();
@@ -1214,7 +1215,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 String no = table_pengajuan.getValueAt(j, 0).toString();
                 String namaBarang = table_pengajuan.getValueAt(j, 4).toString();
                 String diajukan_oleh = table_pengajuan.getValueAt(j, 9).toString();
-                String StatusPengajuan = table_pengajuan.getValueAt(j, 16).toString();
+                String StatusPengajuan = table_pengajuan.getValueAt(j, 17).toString();
                 switch (StatusPengajuan) {
                     case "Diajukan":
                     case "Diketahui Kadep":
@@ -1229,14 +1230,14 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                         if (rs.next()) {
                             kode_departemen = rs.getString("kode_departemen");
                         }
-                        if (MainForm.Login_Departemen == null || (!MainForm.Login_NamaPegawai.equals(diajukan_oleh) && !MainForm.Login_namaBagian.toUpperCase().contains("KADEP-" + kode_departemen) && MainForm.Login_kodeBagian != 244)) {
+                        if (!MainForm.Login_NamaPegawai.equals(diajukan_oleh) && !MainForm.Login_namaBagian.toUpperCase().contains("KADEP-" + kode_departemen) && MainForm.Login_kodeBagian != 244) {
                             JOptionPane.showMessageDialog(this, "Pengajuan sudah diketahui, pengajuan hanya bisa dibatalkan oleh staff yang mengajukan / Kadep yang bersangkutan / Manager Operational!");
                             Check = false;
                         }
                         break;
                     case "Disetujui":
                     case "Proses":
-                        if (MainForm.Login_Departemen == null || (!MainForm.Login_Departemen.equals("KEUANGAN") && MainForm.Login_kodeBagian != 244 && !MainForm.Login_idPegawai.equals("1") && !MainForm.Login_idPegawai.equals("2"))) {
+                        if (!(MainForm.Login_Departemen != null && MainForm.Login_Departemen.equals("KEUANGAN")) && MainForm.Login_kodeBagian != 244 && !MainForm.Login_idPegawai.equals("1") && !MainForm.Login_idPegawai.equals("2")) {
                             JOptionPane.showMessageDialog(this, "Pengajuan yang sudah disetujui / diproses, hanya bisa dibatalkan oleh bagian keuangan / Manager Operational / Direktur!");
                             Check = false;
                         }

@@ -89,7 +89,18 @@
 	<parameter name="biaya_lain" class="java.lang.String"/>
 	<parameter name="total" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT `no`, `tanggal_pengajuan`, `departemen`, `keperluan`, `nama_barang`, `jumlah`, `satuan`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, `diajukan`, `diketahui_kadep`, `diketahui`, `disetujui`, `diproses`, `jenis_pembelian`, `status`, `keterangan`, `realisasi_jumlah`, `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, CONCAT(`nama_bank`, ' ', `no_rekening`) AS 'no_rekening', `nama_rekening` FROM `tb_aset_pengajuan`
+		<![CDATA[SELECT `no`, `tanggal_pengajuan`, `departemen`, `keperluan`, `nama_barang`, `jumlah`, `satuan`, `estimasi_harga_satuan`, `link_pembelian`, `dibutuhkan_tanggal`, 
+`diajukan`, 
+SUBSTRING(`diketahui_kadep`, 1, LENGTH(`diketahui_kadep`) - 20) AS 'diketahui_kadep', 
+SUBSTRING(`diketahui`, 1, LENGTH(`diketahui`) - 20) AS 'diketahui', 
+SUBSTRING(`disetujui`, 1, LENGTH(`disetujui`) - 20) AS 'disetujui', 
+SUBSTRING(`diproses`, 1, LENGTH(`diproses`) - 20) AS 'diproses', 
+STR_TO_DATE(SUBSTRING(`diketahui_kadep`, LENGTH(`diketahui_kadep`) - 18, 10), '%Y-%m-%d') AS 'tgl_diketahui_kadep', 
+STR_TO_DATE(SUBSTRING(`diketahui`, LENGTH(`diketahui`) - 18, 10), '%Y-%m-%d') AS 'tgl_diketahui', 
+STR_TO_DATE(SUBSTRING(`disetujui`, LENGTH(`disetujui`) - 18, 10), '%Y-%m-%d') AS 'tgl_disetujui', 
+STR_TO_DATE(SUBSTRING(`diproses`, LENGTH(`diproses`) - 18, 10), '%Y-%m-%d') AS 'tgl_diproses', 
+`jenis_pembelian`, `status`, `keterangan`, `realisasi_jumlah`, `realisasi_harga_satuan`, `ppn`, `biaya_lain`, `keterangan_biaya_lain`, CONCAT(`nama_bank`, ' ', `no_rekening`) AS 'no_rekening', `nama_rekening` 
+FROM `tb_aset_pengajuan`
 WHERE `no` = $P{NO_PENGAJUAN}]]>
 	</queryString>
 	<field name="no" class="java.lang.Integer">
@@ -125,18 +136,14 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 	<field name="diajukan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="diketahui_kadep" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="diketahui" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="disetujui" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="diproses" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="diketahui_kadep" class="java.lang.String"/>
+	<field name="diketahui" class="java.lang.String"/>
+	<field name="disetujui" class="java.lang.String"/>
+	<field name="diproses" class="java.lang.String"/>
+	<field name="tgl_diketahui_kadep" class="java.sql.Date"/>
+	<field name="tgl_diketahui" class="java.sql.Date"/>
+	<field name="tgl_disetujui" class="java.sql.Date"/>
+	<field name="tgl_diproses" class="java.sql.Date"/>
 	<field name="jenis_pembelian" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -161,9 +168,7 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 	<field name="keterangan_biaya_lain" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="no_rekening" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
+	<field name="no_rekening" class="java.lang.String"/>
 	<field name="nama_rekening" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -674,28 +679,28 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 				<text><![CDATA[Disetujui oleh]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="500" width="135" height="15" forecolor="#000000" uuid="a2c2be5e-b2de-4328-a54a-3810d118ff35"/>
+				<reportElement x="0" y="515" width="135" height="15" forecolor="#000000" uuid="a2c2be5e-b2de-4328-a54a-3810d118ff35"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="11" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Head of Department]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="135" y="500" width="135" height="15" forecolor="#000000" uuid="cbe12580-cb6f-45d8-a7f5-e746ea087101"/>
+				<reportElement x="135" y="515" width="135" height="15" forecolor="#000000" uuid="cbe12580-cb6f-45d8-a7f5-e746ea087101"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="11" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Operational Manager]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="405" y="500" width="135" height="15" forecolor="#000000" uuid="7adcbac8-9d92-438c-b1e1-62573c3d1a58"/>
+				<reportElement x="405" y="515" width="135" height="15" forecolor="#000000" uuid="7adcbac8-9d92-438c-b1e1-62573c3d1a58"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="11" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[Director]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="270" y="500" width="135" height="15" forecolor="#000000" uuid="c1ab656e-c180-4f68-8a6f-173be7ae573c"/>
+				<reportElement x="270" y="515" width="135" height="15" forecolor="#000000" uuid="c1ab656e-c180-4f68-8a6f-173be7ae573c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Arial" size="11" isItalic="false"/>
 				</textElement>
@@ -741,6 +746,78 @@ WHERE `no` = $P{NO_PENGAJUAN}]]>
 				</textElement>
 				<text><![CDATA[Rp.]]></text>
 			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="500" width="135" height="15" forecolor="#000000" uuid="940f070a-82c3-477c-ad48-8d20d0192428"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diketahui_kadep}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="135" y="500" width="135" height="15" forecolor="#000000" uuid="a907902d-2b75-4e9a-acda-c53a91eea9d4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diketahui}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="270" y="500" width="135" height="15" forecolor="#000000" uuid="0c7ef7f9-0fb0-4851-8f2b-bf9f2a49a8d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diproses}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="405" y="500" width="135" height="15" forecolor="#000000" uuid="df1acc8a-0275-40e7-8a26-9492fd68d3ff"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{disetujui}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="0" y="485" width="135" height="15" forecolor="#000000" uuid="336b2189-907f-4b8a-a945-06a7f0a52079"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tgl_diketahui_kadep}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="135" y="485" width="135" height="15" forecolor="#000000" uuid="3346cb5d-5a3e-4394-8986-124951abf143"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tgl_diketahui}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="270" y="485" width="135" height="15" forecolor="#000000" uuid="4c3bd5b7-c134-4003-99dc-4c3191bcbc8b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tgl_diproses}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="405" y="485" width="135" height="15" forecolor="#000000" uuid="da710fe6-d9bc-47fe-bab8-5d7c3c62eeaf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Arial" size="9" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tgl_disetujui}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="0" y="415" width="135" height="85" uuid="b4cb6b1a-e172-4173-924a-1b26ab4761fe"/>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD "+$F{diketahui_kadep}+".png"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="135" y="415" width="135" height="85" uuid="36404563-4055-4769-b00e-033f50f0315e"/>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD "+$F{diketahui}+".png"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="270" y="415" width="135" height="85" uuid="f8f1e2ed-2ebc-4784-b434-a7b78363b739"/>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD "+$F{diproses}+".png"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="405" y="415" width="135" height="85" uuid="56242fc0-8c44-44fd-8af0-3794047e4dd7"/>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD "+$F{disetujui}+".png"]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 	<summary>

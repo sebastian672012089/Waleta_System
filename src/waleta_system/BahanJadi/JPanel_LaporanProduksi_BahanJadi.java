@@ -61,6 +61,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
 
                 ComboBox_Ruangan.removeAllItems();
                 ComboBox_Ruangan.addItem("All");
+                ComboBox_Ruangan.addItem("Eksternal");
                 sql = "SELECT DISTINCT(`ruangan`) AS 'ruangan' FROM `tb_laporan_produksi` WHERE 1";
                 rs = Utility.db.getStatement().executeQuery(sql);
                 while (rs.next()) {
@@ -115,6 +116,8 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
             String ruangan = " AND `tb_laporan_produksi`.`ruangan` = '" + ComboBox_Ruangan.getSelectedItem().toString() + "'";
             if (ComboBox_Ruangan.getSelectedIndex() == 0) {
                 ruangan = "";
+            } else if (ComboBox_Ruangan.getSelectedIndex() == 1) {
+                ruangan = " AND LENGTH(`tb_laporan_produksi`.`ruangan`) = 5 ";
             }
 
             String search_pekerja = "";
@@ -339,7 +342,10 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
             String ruangan = " AND `tb_laporan_produksi`.`ruangan` = '" + ComboBox_Ruangan.getSelectedItem().toString() + "' ";
             if (ComboBox_Ruangan.getSelectedIndex() == 0) {
                 ruangan = "";
+            } else if (ComboBox_Ruangan.getSelectedIndex() == 1) {
+                ruangan = " AND LENGTH(`tb_laporan_produksi`.`ruangan`) = 5 ";
             }
+
 
             String search_pekerja = "";
             if (txt_search_pekerja.getText() != null && !txt_search_pekerja.getText().equals("")) {

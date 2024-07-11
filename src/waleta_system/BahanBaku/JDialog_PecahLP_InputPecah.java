@@ -194,8 +194,11 @@ public class JDialog_PecahLP_InputPecah extends javax.swing.JDialog {
             check = false;
         }
 
-        if (txt_keping_riil.getText() == null || txt_keping_riil.getText().equals("")) {
-            txt_keping_riil.setText("0");
+        if (txt_keping_riil.isEnabled()) {
+            if (txt_keping_riil.getText() == null || txt_keping_riil.getText().equals("") || txt_keping_riil.getText().equals("0")) {
+                JOptionPane.showMessageDialog(this, "Keping Riil tidak boleh kosong / 0!");
+                check = false;
+            }
         }
 
         if (check) {

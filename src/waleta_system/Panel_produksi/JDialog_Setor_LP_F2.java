@@ -1176,7 +1176,6 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
             } else if (ruangan.length() == 5) {
                 JOptionPane.showMessageDialog(this, "untuk LP sub tidak ada pengecekan keping");
             } else if (keping_cetak != keping_akhir) {
-                check = false;
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah keping CETAK(" + Math.round(keping_cetak) + ") dan F2(" + Math.round(keping_akhir) + ") tidak sama, apakah ingin melanjutkan?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Jumlah keping CETAK dan F2 tidak sama");

@@ -793,16 +793,9 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         table_data_ktp = new javax.swing.JTable();
         button_view_ktp = new javax.swing.JButton();
         button_export_data_karyawan_ktp = new javax.swing.JButton();
-        button_import = new javax.swing.JButton();
         button_input_foto = new javax.swing.JButton();
-        button_import_edit = new javax.swing.JButton();
-        button_PrintIDCARD = new javax.swing.JButton();
-        button_PrintIDCARD_Semua = new javax.swing.JButton();
+        button_PrintIDCARD_Training = new javax.swing.JButton();
         button_set_JamKerja = new javax.swing.JButton();
-        button_finger2 = new javax.swing.JButton();
-        button_finger1 = new javax.swing.JButton();
-        button_tes_finger1 = new javax.swing.JButton();
-        button_tes_finger2 = new javax.swing.JButton();
         button_set_jemputan = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         txt_nama_pelatihan = new javax.swing.JTextField();
@@ -812,10 +805,23 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         jLabel15 = new javax.swing.JLabel();
         Date_evaluasi_Pelatihan = new com.toedter.calendar.JDateChooser();
         button_print_evaluasi_pelatihan = new javax.swing.JButton();
-        button_PrintIDCARD1 = new javax.swing.JButton();
-        button_PrintIDCARD2 = new javax.swing.JButton();
+        button_PrintIDCARD = new javax.swing.JButton();
+        button_PrintIDCARD_QR = new javax.swing.JButton();
         button_unduh_ktp = new javax.swing.JButton();
         button_view_kk = new javax.swing.JButton();
+        button_PrintIDCARD_CABUTO = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        label_total_out = new javax.swing.JLabel();
+        label_total_absen = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        label_total_data = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        label_total_batal = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        label_total_strip = new javax.swing.JLabel();
+        label_total_in = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel_Data_Berkas_Karyawan = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         table_data_berkas = new javax.swing.JTable();
@@ -833,25 +839,18 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         jTable1 = new javax.swing.JTable();
         button_set_JamKerja1 = new javax.swing.JButton();
         button_set_JamKerja2 = new javax.swing.JButton();
+        button_tes_finger1 = new javax.swing.JButton();
+        button_tes_finger2 = new javax.swing.JButton();
+        button_finger1 = new javax.swing.JButton();
+        button_finger2 = new javax.swing.JButton();
         button_insert_karyawan = new javax.swing.JButton();
         button_status_OUT = new javax.swing.JButton();
         button_status_IN = new javax.swing.JButton();
         button_status_batal = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        label_total_in = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        label_total_out = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        label_total_data = new javax.swing.JLabel();
         button_masuk_kembali = new javax.swing.JButton();
         button_edit_data_karyawan = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        label_total_batal = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        label_total_strip = new javax.swing.JLabel();
         button_status_absen = new javax.swing.JButton();
-        jLabel17 = new javax.swing.JLabel();
-        label_total_absen = new javax.swing.JLabel();
+        button_import = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Karyawan", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -1163,15 +1162,6 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
         });
 
-        button_import.setBackground(new java.awt.Color(255, 255, 255));
-        button_import.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
-        button_import.setText("Import From CSV");
-        button_import.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_importActionPerformed(evt);
-            }
-        });
-
         button_input_foto.setBackground(new java.awt.Color(255, 255, 255));
         button_input_foto.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
         button_input_foto.setText("Input Foto");
@@ -1181,31 +1171,12 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
         });
 
-        button_import_edit.setBackground(new java.awt.Color(255, 255, 255));
-        button_import_edit.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
-        button_import_edit.setText("Edit data From CSV");
-        button_import_edit.setEnabled(false);
-        button_import_edit.addActionListener(new java.awt.event.ActionListener() {
+        button_PrintIDCARD_Training.setBackground(new java.awt.Color(255, 255, 255));
+        button_PrintIDCARD_Training.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_PrintIDCARD_Training.setText("ID CARD TRAINING");
+        button_PrintIDCARD_Training.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_import_editActionPerformed(evt);
-            }
-        });
-
-        button_PrintIDCARD.setBackground(new java.awt.Color(255, 255, 255));
-        button_PrintIDCARD.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_PrintIDCARD.setText("Print ID CARD");
-        button_PrintIDCARD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_PrintIDCARDActionPerformed(evt);
-            }
-        });
-
-        button_PrintIDCARD_Semua.setBackground(new java.awt.Color(255, 255, 255));
-        button_PrintIDCARD_Semua.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_PrintIDCARD_Semua.setText("Print semua ID CARD");
-        button_PrintIDCARD_Semua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_PrintIDCARD_SemuaActionPerformed(evt);
+                button_PrintIDCARD_TrainingActionPerformed(evt);
             }
         });
 
@@ -1215,42 +1186,6 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         button_set_JamKerja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_set_JamKerjaActionPerformed(evt);
-            }
-        });
-
-        button_finger2.setBackground(new java.awt.Color(255, 255, 255));
-        button_finger2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_finger2.setText("Finger 2");
-        button_finger2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_finger2ActionPerformed(evt);
-            }
-        });
-
-        button_finger1.setBackground(new java.awt.Color(255, 255, 255));
-        button_finger1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_finger1.setText("Finger 1");
-        button_finger1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_finger1ActionPerformed(evt);
-            }
-        });
-
-        button_tes_finger1.setBackground(new java.awt.Color(255, 255, 255));
-        button_tes_finger1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_tes_finger1.setText("Tes Finger 1");
-        button_tes_finger1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_tes_finger1ActionPerformed(evt);
-            }
-        });
-
-        button_tes_finger2.setBackground(new java.awt.Color(255, 255, 255));
-        button_tes_finger2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_tes_finger2.setText("Tes Finger 2");
-        button_tes_finger2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_tes_finger2ActionPerformed(evt);
             }
         });
 
@@ -1308,21 +1243,21 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
         });
 
-        button_PrintIDCARD1.setBackground(new java.awt.Color(255, 255, 255));
-        button_PrintIDCARD1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_PrintIDCARD1.setText("Print NEW ID CARD");
-        button_PrintIDCARD1.addActionListener(new java.awt.event.ActionListener() {
+        button_PrintIDCARD.setBackground(new java.awt.Color(255, 255, 255));
+        button_PrintIDCARD.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_PrintIDCARD.setText("ID CARD");
+        button_PrintIDCARD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_PrintIDCARD1ActionPerformed(evt);
+                button_PrintIDCARDActionPerformed(evt);
             }
         });
 
-        button_PrintIDCARD2.setBackground(new java.awt.Color(255, 255, 255));
-        button_PrintIDCARD2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_PrintIDCARD2.setText("Print QR ID CARD");
-        button_PrintIDCARD2.addActionListener(new java.awt.event.ActionListener() {
+        button_PrintIDCARD_QR.setBackground(new java.awt.Color(255, 255, 255));
+        button_PrintIDCARD_QR.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_PrintIDCARD_QR.setText("QR ID CARD");
+        button_PrintIDCARD_QR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_PrintIDCARD2ActionPerformed(evt);
+                button_PrintIDCARD_QRActionPerformed(evt);
             }
         });
 
@@ -1343,6 +1278,61 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 button_view_kkActionPerformed(evt);
             }
         });
+
+        button_PrintIDCARD_CABUTO.setBackground(new java.awt.Color(255, 255, 255));
+        button_PrintIDCARD_CABUTO.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_PrintIDCARD_CABUTO.setText("ID CARD CABUTO");
+        button_PrintIDCARD_CABUTO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_PrintIDCARD_CABUTOActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel17.setText("Total ABSEN :");
+
+        label_total_out.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_out.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_out.setText("0");
+
+        label_total_absen.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_absen.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_absen.setText("0");
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel3.setText("Total Data :");
+
+        label_total_data.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_data.setText("0");
+
+        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel11.setText("Total BATAL :");
+
+        label_total_batal.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_batal.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_batal.setText("0");
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel13.setText("Total - :");
+
+        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel9.setText("Total IN :");
+
+        label_total_strip.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_strip.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_strip.setText("0");
+
+        label_total_in.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_in.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        label_total_in.setText("0");
+
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel10.setText("Total OUT :");
 
         javax.swing.GroupLayout jPanel_Data_KTP_KaryawanLayout = new javax.swing.GroupLayout(jPanel_Data_KTP_Karyawan);
         jPanel_Data_KTP_Karyawan.setLayout(jPanel_Data_KTP_KaryawanLayout);
@@ -1369,42 +1359,54 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_print_daftar_hadir_pelatihan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_print_evaluasi_pelatihan)
+                                .addComponent(button_print_evaluasi_pelatihan))
+                            .addGroup(jPanel_Data_KTP_KaryawanLayout.createSequentialGroup()
+                                .addComponent(button_set_JamKerja)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_PrintIDCARD1)
+                                .addComponent(button_set_jemputan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_PrintIDCARD2)
+                                .addComponent(button_PrintIDCARD)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_PrintIDCARD_QR)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_PrintIDCARD_Training)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_PrintIDCARD_CABUTO)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_view_ktp)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_unduh_ktp)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_set_jemputan))
-                            .addGroup(jPanel_Data_KTP_KaryawanLayout.createSequentialGroup()
-                                .addComponent(button_tes_finger1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_tes_finger2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_finger1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_finger2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_set_JamKerja)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_PrintIDCARD_Semua)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_PrintIDCARD)
-                                .addGap(14, 14, 14)
-                                .addComponent(button_view_ktp)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_import_edit)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_import)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_export_data_karyawan_ktp)
-                                .addGap(91, 91, 91)
                                 .addComponent(button_view_kk)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_input_foto)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(button_input_foto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_data_karyawan_ktp))
+                            .addGroup(jPanel_Data_KTP_KaryawanLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_data)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_in)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_out)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_batal)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_strip)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel17)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_absen)))
+                        .addGap(0, 154, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_Data_KTP_KaryawanLayout.setVerticalGroup(
@@ -1412,35 +1414,49 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Data_KTP_KaryawanLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(button_PrintIDCARD, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_import_edit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_input_foto, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_import, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export_data_karyawan_ktp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_view_ktp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_tes_finger2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_tes_finger1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_finger1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_finger2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_set_JamKerja, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_PrintIDCARD_Semua, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_view_kk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_view_kk)
+                    .addComponent(button_unduh_ktp)
+                    .addComponent(button_PrintIDCARD_QR)
+                    .addComponent(button_PrintIDCARD)
+                    .addComponent(button_view_ktp)
+                    .addComponent(button_export_data_karyawan_ktp)
+                    .addComponent(button_input_foto)
+                    .addComponent(button_set_jemputan)
+                    .addComponent(button_set_JamKerja)
+                    .addComponent(button_PrintIDCARD_Training)
+                    .addComponent(button_PrintIDCARD_CABUTO))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(Date_evaluasi_Pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date_Pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_print_daftar_hadir_pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nama_pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_set_jemputan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_PrintIDCARD1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_print_evaluasi_pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_PrintIDCARD2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_unduh_ktp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_print_evaluasi_pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_evaluasi_Pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_Pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_print_daftar_hadir_pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nama_pelatihan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label_total_out, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label_total_in, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label_total_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label_total_strip, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_Data_KTP_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label_total_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1526,7 +1542,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             .addGroup(jPanel_Data_Berkas_KaryawanLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_Data_Berkas_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1404, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1291, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Data_Berkas_KaryawanLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(button_data_berkas_karyawan)
@@ -1551,7 +1567,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                     .addComponent(button_data_berkas_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_export_data_karyawan_berkas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1603,7 +1619,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             .addGroup(jPanel_Data_CIMB_KaryawanLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_Data_CIMB_KaryawanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1404, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1291, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Data_CIMB_KaryawanLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(button_export_data_cimb)))
@@ -1615,7 +1631,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(button_export_data_cimb, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1654,27 +1670,79 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
         });
 
+        button_tes_finger1.setBackground(new java.awt.Color(255, 255, 255));
+        button_tes_finger1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_tes_finger1.setText("Tes Finger 1");
+        button_tes_finger1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_tes_finger1ActionPerformed(evt);
+            }
+        });
+
+        button_tes_finger2.setBackground(new java.awt.Color(255, 255, 255));
+        button_tes_finger2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_tes_finger2.setText("Tes Finger 2");
+        button_tes_finger2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_tes_finger2ActionPerformed(evt);
+            }
+        });
+
+        button_finger1.setBackground(new java.awt.Color(255, 255, 255));
+        button_finger1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_finger1.setText("Finger 1");
+        button_finger1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_finger1ActionPerformed(evt);
+            }
+        });
+
+        button_finger2.setBackground(new java.awt.Color(255, 255, 255));
+        button_finger2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_finger2.setText("Finger 2");
+        button_finger2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_finger2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1424, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1321, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(button_set_JamKerja2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_set_JamKerja1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(button_set_JamKerja2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_set_JamKerja1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(button_tes_finger1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_tes_finger2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_finger1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_finger2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(button_set_JamKerja2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_set_JamKerja1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(button_set_JamKerja2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_set_JamKerja1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(button_tes_finger2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_tes_finger1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_finger1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_finger2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Data Fingerprint", jPanel1);
@@ -1715,22 +1783,6 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
         });
 
-        jLabel9.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Total IN :");
-
-        label_total_in.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_in.setText("0");
-
-        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Total OUT :");
-
-        label_total_out.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_out.setText("0");
-
-        jLabel3.setText("Total Data :");
-
-        label_total_data.setText("0");
-
         button_masuk_kembali.setBackground(new java.awt.Color(255, 255, 255));
         button_masuk_kembali.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         button_masuk_kembali.setText("Input Karyawan Lama");
@@ -1749,18 +1801,6 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
         });
 
-        jLabel11.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Total BATAL :");
-
-        label_total_batal.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_batal.setText("0");
-
-        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Total - :");
-
-        label_total_strip.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_strip.setText("0");
-
         button_status_absen.setBackground(new java.awt.Color(255, 255, 255));
         button_status_absen.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
         button_status_absen.setText("Status ABSEN");
@@ -1770,11 +1810,14 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
         });
 
-        jLabel17.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Total ABSEN :");
-
-        label_total_absen.setBackground(new java.awt.Color(255, 255, 255));
-        label_total_absen.setText("0");
+        button_import.setBackground(new java.awt.Color(255, 255, 255));
+        button_import.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+        button_import.setText("Import From CSV");
+        button_import.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_importActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -1784,8 +1827,10 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel_search_karyawan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(button_import)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_insert_karyawan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_masuk_kembali)
@@ -1799,30 +1844,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                         .addComponent(button_status_batal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_status_absen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_data)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_in)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_out)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_batal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_strip)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_absen)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1830,37 +1852,18 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel_search_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(button_insert_karyawan)
-                        .addComponent(button_masuk_kembali)
-                        .addComponent(button_status_IN)
-                        .addComponent(button_edit_data_karyawan)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(button_status_batal)
-                            .addComponent(button_status_absen))
-                        .addComponent(button_status_OUT))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(label_total_out, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(label_total_in, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(label_total_absen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(label_total_strip, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(label_total_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(button_status_absen)
+                    .addComponent(button_status_batal)
+                    .addComponent(button_status_IN)
+                    .addComponent(button_status_OUT)
+                    .addComponent(button_insert_karyawan)
+                    .addComponent(button_edit_data_karyawan)
+                    .addComponent(button_masuk_kembali)
+                    .addComponent(button_import))
+                .addGap(14, 14, 14))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -2121,37 +2124,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_input_fotoActionPerformed
 
-    private void button_import_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_import_editActionPerformed
-        // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            ImportDataEdit();
-        } catch (ParseException ex) {
-            Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_button_import_editActionPerformed
-
-    private void button_PrintIDCARDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_PrintIDCARDActionPerformed
-        // TODO add your handling code here:
-        try {
-            int x = table_data_ktp.getSelectedRow();
-            if (x > -1) {
-                String id = table_data_ktp.getValueAt(x, 0).toString();
-                JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\IDCARD_Karyawan.jrxml");
-                Map<String, Object> map = new HashMap<>();
-                map.put("id_pegawai", id);//parameter name should be like it was named inside your report.
-                map.put("TITLE", "PT. WALETA ASIA JAYA");//parameter name should be like it was named inside your report.
-                JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
-                JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
-                JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
-            }
-        } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_button_PrintIDCARDActionPerformed
-
-    private void button_PrintIDCARD_SemuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_PrintIDCARD_SemuaActionPerformed
+    private void button_PrintIDCARD_TrainingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_PrintIDCARD_TrainingActionPerformed
         // TODO add your handling code here:
         try {
             JRDesignQuery newQuery = new JRDesignQuery();
@@ -2167,7 +2140,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_button_PrintIDCARD_SemuaActionPerformed
+    }//GEN-LAST:event_button_PrintIDCARD_TrainingActionPerformed
 
     private void button_set_JamKerjaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_set_JamKerjaActionPerformed
         // TODO add your handling code here:
@@ -2201,7 +2174,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                     ResultSet rs1 = pst1.executeQuery();
                     if (rs1.next()) {
                         String new_id = generate_ID();
-                        String insert = "INSERT INTO `tb_karyawan`(`id_pegawai`, `pin_finger`, `nik_ktp`, `nama_pegawai`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `agama`, `alamat`, `desa`, `kecamatan`, `golongan_darah`, `no_telp`, `email`, `status_kawin`, `nama_ibu`, `kode_bagian`, `posisi`, `pendidikan`, `tanggal_interview`, `tanggal_masuk`, `tanggal_keluar`, `status`, `level_gaji`, `jam_kerja`, `fc_ktp`, `sertifikat_vaksin1`, `sertifikat_vaksin2`, `berkas_surat_pernyataan`, `tanggal_surat`, `rek_cimb`, `keterangan`) "
+                        String insert = "INSERT INTO `tb_karyawan`(`id_pegawai`, `pin_finger`, `nik_ktp`, `nama_pegawai`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `agama`, `alamat`, `desa`, `kecamatan`, `kota_kabupaten`, `provinsi`, `golongan_darah`, `no_telp`, `email`, `status_kawin`, `nama_ibu`, `kode_bagian`, `posisi`, `pendidikan`, `tanggal_interview`, `tanggal_masuk`, `tanggal_keluar`, `status`, `level_gaji`, `jam_kerja`, `fc_ktp`, `sertifikat_vaksin1`, `sertifikat_vaksin2`, `berkas_surat_pernyataan`, `tanggal_surat`, `rek_cimb`, `keterangan`) "
                                 + "VALUES ("
                                 + "'" + new_id + "',"
                                 + "'" + new_id.substring(7) + "',"
@@ -2214,6 +2187,8 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                                 + "'" + rs1.getString("alamat") + "',"
                                 + "'" + rs1.getString("desa") + "',"
                                 + "'" + rs1.getString("kecamatan") + "',"
+                                + "'" + rs1.getString("kota_kabupaten") + "',"
+                                + "'" + rs1.getString("posisi") + "',"
                                 + "'" + rs1.getString("golongan_darah") + "',"
                                 + "'" + rs1.getString("no_telp") + "',"
                                 + "'" + rs1.getString("email") + "',"
@@ -2424,7 +2399,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_open_sertifikat_vaksin2ActionPerformed
 
-    private void button_PrintIDCARD1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_PrintIDCARD1ActionPerformed
+    private void button_PrintIDCARDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_PrintIDCARDActionPerformed
         // TODO add your handling code here:
         try {
             int x = table_data_ktp.getSelectedRow();
@@ -2441,7 +2416,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_button_PrintIDCARD1ActionPerformed
+    }//GEN-LAST:event_button_PrintIDCARDActionPerformed
 
     private void button_status_absenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_status_absenActionPerformed
         // TODO add your handling code here:
@@ -2470,7 +2445,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_status_absenActionPerformed
 
-    private void button_PrintIDCARD2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_PrintIDCARD2ActionPerformed
+    private void button_PrintIDCARD_QRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_PrintIDCARD_QRActionPerformed
         // TODO add your handling code here:
         try {
             int x = table_data_ktp.getSelectedRow();
@@ -2487,7 +2462,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_button_PrintIDCARD2ActionPerformed
+    }//GEN-LAST:event_button_PrintIDCARD_QRActionPerformed
 
     private void button_unduh_ktpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_unduh_ktpActionPerformed
         // TODO add your handling code here:
@@ -2596,6 +2571,25 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_view_kkActionPerformed
 
+    private void button_PrintIDCARD_CABUTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_PrintIDCARD_CABUTOActionPerformed
+        // TODO add your handling code here:
+        try {
+            int x = table_data_ktp.getSelectedRow();
+            if (x > -1) {
+                String id = table_data_ktp.getValueAt(x, 0).toString();
+                JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\IDCARD_Karyawan_CABUTO.jrxml");
+                Map<String, Object> map = new HashMap<>();
+                map.put("id_pegawai", id);//parameter name should be like it was named inside your report.
+                JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+                JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
+                JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_PrintIDCARD_CABUTOActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_filter_bagian;
@@ -2612,9 +2606,9 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser Date_Search2;
     private com.toedter.calendar.JDateChooser Date_evaluasi_Pelatihan;
     public javax.swing.JButton button_PrintIDCARD;
-    public javax.swing.JButton button_PrintIDCARD1;
-    public javax.swing.JButton button_PrintIDCARD2;
-    public javax.swing.JButton button_PrintIDCARD_Semua;
+    public javax.swing.JButton button_PrintIDCARD_CABUTO;
+    public javax.swing.JButton button_PrintIDCARD_QR;
+    public javax.swing.JButton button_PrintIDCARD_Training;
     public static javax.swing.JButton button_data_berkas_karyawan;
     public javax.swing.JButton button_edit_data_karyawan;
     private javax.swing.JButton button_export_data_cimb;
@@ -2623,7 +2617,6 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
     public javax.swing.JButton button_finger1;
     public javax.swing.JButton button_finger2;
     private javax.swing.JButton button_import;
-    private javax.swing.JButton button_import_edit;
     private javax.swing.JButton button_input_foto;
     public javax.swing.JButton button_insert_karyawan;
     public javax.swing.JButton button_masuk_kembali;

@@ -529,6 +529,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                         + "LEFT JOIN `tb_level_gaji` ON `tb_karyawan`.`level_gaji` = `tb_level_gaji`.`level_gaji`\n"
                         + "WHERE "
                         + "`tb_karyawan`.`nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' "
+                        + "AND NOT (`tb_bagian`.`bagian_bagian` = 'SECURITY' AND `posisi` = 'Staff 6') "
                         + "AND `tanggal` BETWEEN '" + dateFormat.format(tanggal_mulai) + "' AND '" + dateFormat.format(tanggal_selesai) + "' "
                         + "GROUP BY `tb_jadwal_kerja_sc`.`id_pegawai` "
                         + "ORDER BY `tb_karyawan`.`nama_pegawai`";
@@ -818,6 +819,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         button_slip_harian = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTextArea4 = new javax.swing.JTextArea();
+        button_rekap_jam_kerja_kurang = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txt_search_jadwal_byNamaKaryawan = new javax.swing.JTextField();
@@ -902,9 +904,11 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         jScrollPane2.setViewportView(tabel_data_lembur_security);
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel14.setText("Total Data :");
 
         label_total_data.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_data.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         label_total_data.setText("0");
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
@@ -912,7 +916,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         jLabel7.setText("Bagian :");
 
         button_export_lembur.setBackground(new java.awt.Color(255, 255, 255));
-        button_export_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_export_lembur.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_export_lembur.setText("Export");
         button_export_lembur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -921,7 +925,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         });
 
         button_input_jam_pulang.setBackground(new java.awt.Color(255, 255, 255));
-        button_input_jam_pulang.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_input_jam_pulang.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_input_jam_pulang.setText("Input Jam Pulang Manual");
         button_input_jam_pulang.setEnabled(false);
         button_input_jam_pulang.addActionListener(new java.awt.event.ActionListener() {
@@ -940,7 +944,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTextArea1);
 
         button_input_absen_manual.setBackground(new java.awt.Color(255, 255, 255));
-        button_input_absen_manual.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_input_absen_manual.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_input_absen_manual.setText("Input Absen Manual");
         button_input_absen_manual.setEnabled(false);
         button_input_absen_manual.addActionListener(new java.awt.event.ActionListener() {
@@ -950,7 +954,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         });
 
         button_input_pengurang_lembur.setBackground(new java.awt.Color(255, 255, 255));
-        button_input_pengurang_lembur.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_input_pengurang_lembur.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_input_pengurang_lembur.setText("Input Pengurang Lembur");
         button_input_pengurang_lembur.setEnabled(false);
         button_input_pengurang_lembur.addActionListener(new java.awt.event.ActionListener() {
@@ -994,7 +998,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         Date_penggajian.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         button_save_data_shift_malam.setBackground(new java.awt.Color(255, 255, 255));
-        button_save_data_shift_malam.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_save_data_shift_malam.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_save_data_shift_malam.setText("Save Data");
         button_save_data_shift_malam.setEnabled(false);
         button_save_data_shift_malam.addActionListener(new java.awt.event.ActionListener() {
@@ -1014,7 +1018,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1083, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1044,8 +1048,8 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_input_absen_manual)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_input_pengurang_lembur)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_input_pengurang_lembur))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label_total_data)
@@ -1071,24 +1075,26 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     .addComponent(button_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_search_bagian, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(button_save_data_shift_malam)
+                    .addComponent(button_input_absen_manual)
+                    .addComponent(button_input_pengurang_lembur)
+                    .addComponent(button_export_lembur)
+                    .addComponent(button_input_jam_pulang))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(label_data_ijin_tidak_valid, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(label_data_lembur_tidak_valid, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(button_input_jam_pulang, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_export_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_input_absen_manual, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_input_pengurang_lembur, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(label_total_data, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_save_data_shift_malam, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
-                .addGap(9, 9, 9)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
                 .addContainerGap())
         );
 
@@ -1218,6 +1224,8 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         txt_potongan_bpjs_tk.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txt_potongan_bpjs_tk.setText("71370");
 
+        button_export.setBackground(new java.awt.Color(255, 255, 255));
+        button_export.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_export.setText("Export to Excel");
         button_export.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1225,6 +1233,8 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
             }
         });
 
+        button_slip_harian.setBackground(new java.awt.Color(255, 255, 255));
+        button_slip_harian.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_slip_harian.setText("Slip Harian");
         button_slip_harian.setEnabled(false);
         button_slip_harian.addActionListener(new java.awt.event.ActionListener() {
@@ -1237,8 +1247,18 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         jTextArea4.setColumns(20);
         jTextArea4.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         jTextArea4.setRows(5);
-        jTextArea4.setText("1. premi hadir diberikan tambahan jika masuk di hari libur lebih dari 4 jam.\n2. JIKA Gaji < 0, maka potongan BPJS di 0 kan, dan akan di potong minggu depan.\n3. JIKA Gaji < 0, maka potongan Piutang di 0 kan, dan akan di potong minggu depan.\n4. utk SECURITY, jika (menit_lembur >= 480), maka menit_lembur -60 menit istirahat.\n5. utk selain SECURITY, jika (menit_lembur >= 510), maka menit_lembur -60 menit istirahat.\n6. utk selain SECURITY, jika (menit_lembur >= 210), maka menit_lembur -30 menit istirahat.");
+        jTextArea4.setText("1. premi hadir diberikan tambahan jika masuk di hari libur lebih dari 4 jam.\n2. JIKA Gaji < 0, maka potongan BPJS di 0 kan, dan akan di potong minggu depan.\n3. JIKA Gaji < 0, maka potongan Piutang di 0 kan, dan akan di potong minggu depan.\n4. utk SECURITY, jika (menit_lembur >= 480), maka menit_lembur -60 menit istirahat.\n5. utk selain SECURITY, jika (menit_lembur >= 510), maka menit_lembur -60 menit istirahat.\n6. utk selain SECURITY, jika (menit_lembur >= 210), maka menit_lembur -30 menit istirahat.\n7. Tidak menampilkan SECURITY STAFF.");
         jScrollPane7.setViewportView(jTextArea4);
+
+        button_rekap_jam_kerja_kurang.setBackground(new java.awt.Color(255, 255, 255));
+        button_rekap_jam_kerja_kurang.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_rekap_jam_kerja_kurang.setText("Rekap jam kerja kurang / tidak masuk");
+        button_rekap_jam_kerja_kurang.setEnabled(false);
+        button_rekap_jam_kerja_kurang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_rekap_jam_kerja_kurangActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -1249,11 +1269,8 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane6)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 696, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 540, Short.MAX_VALUE)
-                        .addComponent(button_export))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 696, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1291,8 +1308,12 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_save_data_fix)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_slip_harian)))
-                        .addGap(0, 739, Short.MAX_VALUE)))
+                                .addComponent(button_slip_harian)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_rekap_jam_kerja_kurang)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export)))
+                        .addGap(0, 419, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -1304,7 +1325,9 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     .addComponent(txt_search_karyawan, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_load, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_save_data_fix, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_slip_harian))
+                    .addComponent(button_slip_harian)
+                    .addComponent(button_rekap_jam_kerja_kurang, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_export))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1324,11 +1347,9 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_total_gaji, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1467,7 +1488,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1341, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1517,7 +1538,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                     .addComponent(button_refresh1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_insert_jadwal1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 570, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -2070,6 +2091,57 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_save_data_shift_malamActionPerformed
 
+    private void button_rekap_jam_kerja_kurangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rekap_jam_kerja_kurangActionPerformed
+        // TODO add your handling code here:
+        try {
+            ArrayList<String> id_pegawai = new ArrayList<>();
+            ArrayList<String> tanggal = new ArrayList<>();
+            Date tanggal_mulai = new Date(Date_penggajian.getDate().getTime() - (7 * 24 * 60 * 60 * 1000));
+            Date tanggal_selesai = new Date(Date_penggajian.getDate().getTime() - (1 * 24 * 60 * 60 * 1000));
+
+            sql = "SELECT `tb_lembur_rekap`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, CONCAT(`divisi_bagian`, '-', `ruang_bagian`) AS 'nama_bagian',\n"
+                    + "DAYNAME(`tanggal`) AS 'hari', `tanggal`, `premi_hadir` \n"
+                    + "FROM `tb_lembur_rekap` \n"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_lembur_rekap`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
+                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
+                    + "WHERE "
+                    + "`premi_hadir` = 0\n"
+                    + "AND `jam_kerja` = 'SHIFT_MALAM'\n"
+                    + "AND `tanggal` BETWEEN '" + tanggal_mulai + "' AND '" + tanggal_selesai + "'";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            while (rs.next()) {
+                id_pegawai.add(rs.getString("id_pegawai"));
+                tanggal.add(rs.getString("tanggal"));
+            }
+
+            if (id_pegawai.size() > 0) {
+                int dialogResult = JOptionPane.showConfirmDialog(this, id_pegawai.size() + " karyawan kurang jam kerja, input ke data cuti?", "Warning", 0);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    int count = 0;
+                    for (int i = 0; i < id_pegawai.size(); i++) {
+                        String Query = "INSERT INTO `tb_cuti`(`id_pegawai`, `tanggal_cuti`, `jenis_cuti`, `kategori_cuti`, `keterangan`) "
+                                + "SELECT * FROM (SELECT '" + id_pegawai.get(i) + "','" + tanggal.get(i) + "', 'Absen', 'Jam Kerja Kurang', '-' AS 'keterangan') AS tmp\n"
+                                + "WHERE NOT EXISTS (SELECT `kode_cuti` FROM `tb_cuti` WHERE `id_pegawai` = '" + id_pegawai.get(i) + "' AND `tanggal_cuti` = '" + tanggal.get(i) + "')";
+                        Utility.db.getConnection().createStatement();
+                        if (Utility.db.getStatement().executeUpdate(Query) == 1) {
+                            count++;
+                        }
+                    }
+                    JOptionPane.showMessageDialog(this, count + " data berhasil di input ke data cuti/absen !");
+                }
+            }
+
+//        JDialog_Input_JamKerjaKurang dialog = new JDialog_Input_JamKerjaKurang(new javax.swing.JFrame(), true, tanggal_mulai, tanggal_selesai);
+//        dialog.setResizable(false);
+//        dialog.setLocationRelativeTo(this);
+//        dialog.setEnabled(true);
+//        dialog.setVisible(true);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_rekap_jam_kerja_kurangActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_Jadwal1;
@@ -2089,6 +2161,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
     private javax.swing.JButton button_load;
     private javax.swing.JButton button_refresh;
     private javax.swing.JButton button_refresh1;
+    private javax.swing.JButton button_rekap_jam_kerja_kurang;
     private javax.swing.JButton button_save_data_fix;
     private javax.swing.JButton button_save_data_shift_malam;
     private javax.swing.JButton button_slip_harian;

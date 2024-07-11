@@ -1135,7 +1135,7 @@ public class Login extends javax.swing.JFrame {
         user_image.setBackground(new java.awt.Color(255, 255, 255));
 
         button_login.setBackground(new java.awt.Color(153, 255, 204));
-        button_login.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_login.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_login.setText("Log In");
         button_login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1144,7 +1144,7 @@ public class Login extends javax.swing.JFrame {
         });
 
         button_cancel.setBackground(new java.awt.Color(153, 255, 204));
-        button_cancel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_cancel.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_cancel.setText("Cancel");
         button_cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1153,7 +1153,7 @@ public class Login extends javax.swing.JFrame {
         });
 
         label_forgot_password.setBackground(new java.awt.Color(255, 255, 255));
-        label_forgot_password.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        label_forgot_password.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         label_forgot_password.setText("Forgot password?");
         label_forgot_password.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1168,7 +1168,7 @@ public class Login extends javax.swing.JFrame {
         });
 
         check_password.setBackground(new java.awt.Color(255, 255, 255));
-        check_password.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        check_password.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         check_password.setText("See Password");
         check_password.setFocusable(false);
         check_password.addActionListener(new java.awt.event.ActionListener() {
@@ -1180,7 +1180,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.373");
+        label_version.setText("2.2.378");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N

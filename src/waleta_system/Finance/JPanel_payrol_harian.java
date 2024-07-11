@@ -848,6 +848,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_karyawan` ON `tb_lembur_rekap`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
                     + "WHERE `premi_hadir` = 0\n"
+                    + "AND `jam_kerja` <> 'SHIFT_MALAM'\n"
                     + "AND `tanggal` BETWEEN '" + tanggal_mulai + "' AND '" + tanggal_selesai + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {

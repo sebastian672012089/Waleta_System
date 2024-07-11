@@ -136,6 +136,7 @@ public class JDialog_DataGajiBorongOM_dariCSV extends javax.swing.JDialog {
         });
 
         tabel_bonus_pencapaian_produksi.setAutoCreateRowSorter(true);
+        tabel_bonus_pencapaian_produksi.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabel_bonus_pencapaian_produksi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

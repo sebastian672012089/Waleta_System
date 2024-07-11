@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
 import waleta_system.Class.ExportToExcel;
+import waleta_system.MainForm;
 
 public class JPanel_Dokumen_QC extends javax.swing.JPanel {
 
@@ -29,9 +30,17 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     DefaultTableCellRenderer TableAlignment = new DefaultTableCellRenderer();
     DecimalFormat decimalFormat = new DecimalFormat();
+    String kode_departemen = null;
 
     public JPanel_Dokumen_QC() {
         initComponents();
+    }
+
+    public void init() {
+        this.kode_departemen = MainForm.Login_Departemen;
+        if (kode_departemen == null) {
+            button_insert_master_dokumen.setEnabled(false);
+        }
         Table_pembaruan_dokumen.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
@@ -56,22 +65,24 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                     txt_tempat_pengujian.setText(table_master_dokumen.getValueAt(i, 2).toString());
                     ComboBox_jenis_dokumen.setSelectedItem(table_master_dokumen.getValueAt(i, 3).toString());
                     txt_keterangan_dokumen.setText(table_master_dokumen.getValueAt(i, 4).toString());
-                    txt_masa_berlaku.setText(table_master_dokumen.getValueAt(i, 5).toString());
+                    txt_masa_berlaku.setText(table_master_dokumen.getValueAt(i, 6).toString());
                 }
             }
         });
-    }
 
-    public void init() {
         refreshComboBox();
         refreshTable_data_pembaruan_dokumen();
         refreshTable_data_master_dokumen();
     }
 
-    public void refreshComboBox() {
+    private void refreshComboBox() {
         try {
+            String filter_departemen = "1";
+            if (kode_departemen != null) {
+                filter_departemen = "`kode_departemen` = '" + kode_departemen + "' \n";
+            }
             ComboBox_kode_dokumen.removeAllItems();
-            sql = "SELECT `kode_dokumen`, `nama_dokumen` FROM `tb_dokumen_qc` WHERE 1";
+            sql = "SELECT `kode_dokumen`, `nama_dokumen` FROM `tb_dokumen_qc` WHERE " + filter_departemen;
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {
                 ComboBox_kode_dokumen.addItem(rs.getString("kode_dokumen") + "-" + rs.getString("nama_dokumen"));
@@ -82,7 +93,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
         }
     }
 
-    public void refreshTable_data_pembaruan_dokumen() {
+    private void refreshTable_data_pembaruan_dokumen() {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_pembaruan_dokumen.getModel();
             model.setRowCount(0);
@@ -94,11 +105,18 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
             if (DateFilter_tgl_kadaluarsa1.getDate() != null && DateFilter_tgl_kadaluarsa2.getDate() != null) {
                 filter_tanggal_kadaluarsa = " AND `tanggal_kadaluarsa` BETWEEN '" + dateFormat.format(DateFilter_tgl_kadaluarsa1.getDate()) + "' AND '" + dateFormat.format(DateFilter_tgl_kadaluarsa2.getDate()) + "') ";
             }
+            String filter_departemen = "";
+            if (kode_departemen != null) {
+                filter_departemen = "AND `kode_departemen` = '" + kode_departemen + "' \n";
+            }
             sql = "SELECT `no_dokumen`, `tb_dokumen_qc_update`.`kode_dokumen`, `tb_dokumen_qc`.`nama_dokumen`, `tanggal_dokumen`, `tanggal_kadaluarsa`, DATEDIFF(`tanggal_kadaluarsa`, CURRENT_DATE()) AS 'hari_jatuh_tempo' \n"
                     + "FROM `tb_dokumen_qc_update` \n"
                     + "LEFT JOIN `tb_dokumen_qc` ON `tb_dokumen_qc`.`kode_dokumen` = `tb_dokumen_qc_update`.`kode_dokumen`\n"
-                    + "WHERE (`no_dokumen` LIKE '%" + txt_search_dokumen.getText() + "%' OR `tb_dokumen_qc_update`.`kode_dokumen` LIKE '%" + txt_search_dokumen.getText() + "%' OR `tb_dokumen_qc`.`nama_dokumen` LIKE '%" + txt_search_dokumen.getText() + "%') "
-                    + filter_tanggal_dokumen + filter_tanggal_kadaluarsa;
+                    + "WHERE "
+                    + "(`no_dokumen` LIKE '%" + txt_search_dokumen.getText() + "%' OR `tb_dokumen_qc_update`.`kode_dokumen` LIKE '%" + txt_search_dokumen.getText() + "%' OR `tb_dokumen_qc`.`nama_dokumen` LIKE '%" + txt_search_dokumen.getText() + "%') "
+                    + filter_departemen
+                    + filter_tanggal_dokumen
+                    + filter_tanggal_kadaluarsa;
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[10];
             while (rs.next()) {
@@ -187,13 +205,19 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
         }
     }
 
-    public void refreshTable_data_master_dokumen() {
+    private void refreshTable_data_master_dokumen() {
         try {
             DefaultTableModel model = (DefaultTableModel) table_master_dokumen.getModel();
             model.setRowCount(0);
-            sql = "SELECT `kode_dokumen`, `nama_dokumen`, `tempat_pengujian`, `jenis_dokumen`, `keterangan`, `masa_berlaku` \n"
+            String filter_departemen = "";
+            if (kode_departemen != null) {
+                filter_departemen = "AND `kode_departemen` = '" + kode_departemen + "' \n";
+            }
+            sql = "SELECT `kode_dokumen`, `nama_dokumen`, `tempat_pengujian`, `jenis_dokumen`, `keterangan`, `kode_departemen`, `masa_berlaku` \n"
                     + "FROM `tb_dokumen_qc` \n"
-                    + "WHERE (`kode_dokumen` LIKE '%" + txt_search_master_dokumen.getText() + "%' OR `nama_dokumen` LIKE '%" + txt_search_master_dokumen.getText() + "%') ";
+                    + "WHERE "
+                    + "(`kode_dokumen` LIKE '%" + txt_search_master_dokumen.getText() + "%' OR `nama_dokumen` LIKE '%" + txt_search_master_dokumen.getText() + "%') "
+                    + filter_departemen;
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[10];
             while (rs.next()) {
@@ -202,7 +226,8 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 row[2] = rs.getString("tempat_pengujian");
                 row[3] = rs.getString("jenis_dokumen");
                 row[4] = rs.getString("keterangan");
-                row[5] = rs.getInt("masa_berlaku");
+                row[5] = rs.getString("kode_departemen");
+                row[6] = rs.getInt("masa_berlaku");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_master_dokumen);
@@ -384,19 +409,15 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(button_update_pembaruan_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_insert_pembaruan_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_delete_pembaruan_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_clear_pembaruan_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(label_nama_customer_baku1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ComboBox_kode_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(label_alamat_customer_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_Dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(ComboBox_kode_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_Dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_insert_pembaruan_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_update_pembaruan_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_clear_pembaruan_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_delete_pembaruan_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_alamat_customer_baku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_nama_customer_baku1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -500,18 +521,18 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
             .addGroup(jPanel_Pembaruan_Dokumen_QCLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_Pembaruan_Dokumen_QCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DateFilter_tgl_dokumen1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DateFilter_tgl_dokumen2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(DateFilter_tgl_kadaluarsa1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12)
                     .addComponent(DateFilter_tgl_kadaluarsa2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_total_data)
+                    .addComponent(txt_search_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_search_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_export_pembaruan_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12)
-                    .addComponent(label_total_data))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DateFilter_tgl_dokumen1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -680,14 +701,14 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode Dokumen", "Nama Dokumen", "Tempat Pengujian", "Jenis Dokumen", "Keterangan", "Masa Berlaku (Hari)"
+                "Kode Dokumen", "Nama Dokumen", "Tempat Pengujian", "Jenis Dokumen", "Keterangan", "Departemen", "Masa Berlaku (Hari)"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -896,8 +917,8 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
             if (txt_nama_dokumen.getText() == null || txt_nama_dokumen.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "No Dokumen tidak boleh kosong");
             } else {
-                sql = "INSERT INTO `tb_dokumen_qc`(`nama_dokumen`, `tempat_pengujian`, `jenis_dokumen`, `keterangan`, `masa_berlaku`) "
-                        + "VALUES ('" + txt_nama_dokumen.getText() + "','" + txt_tempat_pengujian.getText() + "','" + ComboBox_jenis_dokumen.getSelectedItem().toString() + "','" + txt_keterangan_dokumen.getText() + "','" + txt_masa_berlaku.getText() + "')";
+                sql = "INSERT INTO `tb_dokumen_qc`(`nama_dokumen`, `tempat_pengujian`, `jenis_dokumen`, `keterangan`, `kode_departemen`, `masa_berlaku`) "
+                        + "VALUES ('" + txt_nama_dokumen.getText() + "','" + txt_tempat_pengujian.getText() + "','" + ComboBox_jenis_dokumen.getSelectedItem().toString() + "','" + txt_keterangan_dokumen.getText() + "', '" + kode_departemen + "','" + txt_masa_berlaku.getText() + "')";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
                     JOptionPane.showMessageDialog(this, "data Saved !");

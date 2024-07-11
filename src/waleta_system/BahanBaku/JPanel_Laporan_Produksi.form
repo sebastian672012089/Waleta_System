@@ -18,13 +18,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-              <Component id="jPanel_laporan_produksi" pref="1394" max="32767" attributes="0"/>
+              <Component id="jPanel_laporan_produksi" pref="1364" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel_laporan_produksi" alignment="0" pref="728" max="32767" attributes="0"/>
+          <Component id="jPanel_laporan_produksi" alignment="0" pref="752" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -103,10 +103,10 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="button_insert_LP" min="-2" pref="150" max="-2" attributes="0"/>
                               <Component id="button_insert_LP_Sub" min="-2" pref="150" max="-2" attributes="0"/>
                               <Component id="button_update_LP" min="-2" pref="150" max="-2" attributes="0"/>
@@ -114,35 +114,40 @@
                               <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                                       <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                          <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                              <Component id="button_report_lp_wlt" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                              <Component id="button_report_lp_sub" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                                  <Component id="button_report_lp_wlt1" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                                  <Component id="button_report_lp_sub1" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                              </Group>
+                                          <Component id="button_report_lp_wlt" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <Component id="button_report_lp_sub" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                              <Component id="button_report_lp_wlt1" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                              <Component id="button_report_lp_sub1" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="button_report_lp_wlt_jdn" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                                          <Component id="button_laporan_ozon" min="-2" pref="150" max="-2" attributes="0"/>
-                                          <Component id="button_export" min="-2" pref="150" max="-2" attributes="0"/>
-                                          <Component id="button_rekap" min="-2" pref="150" max="-2" attributes="0"/>
-                                          <Component id="button_print_surat_jalan_lp" min="-2" pref="150" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="button_total_cucian_hari_ini" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                                      <Component id="button_cheat_rsb2" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                                      <Component id="button_cheat_no_kartu2" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                                      <Component id="button_cheat_tgl_lp" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="button_report_lp_wlt_jdn" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="button_laporan_ozon" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="button_export" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="button_rekap" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="button_print_surat_jalan_lp" min="-2" pref="150" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="button_print_1_lp_cheat" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <Component id="button_print_lp" min="-2" pref="150" max="-2" attributes="0"/>
-                                  <Component id="button_print_semua_lp_cheat" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="button_total_cucian_hari_ini" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="button_cheat_rsb2" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="button_cheat_no_kartu2" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                  <Component id="button_cheat_tgl_lp" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="button_print_1_lp_besar" min="-2" pref="150" max="-2" attributes="0"/>
-                              <Component id="button_print_semua_lp_besar" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="button_print_lp_semua" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="button_print_qr_lp" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                      <Component id="button_print_1_lp_cheat" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="button_print_lp" min="-2" pref="150" max="-2" attributes="0"/>
+                                      <Component id="button_print_semua_lp_cheat" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="button_print_lp_semua" alignment="1" min="-2" pref="150" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="button_print_qr_lp" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -207,10 +212,6 @@
                           <Component id="button_cheat_no_kartu2" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="button_cheat_tgl_lp" min="-2" pref="20" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="button_print_1_lp_besar" min="-2" pref="20" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="button_print_semua_lp_besar" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="button_print_1_lp_cheat" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -397,20 +398,6 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="button_print_1_lp_besar">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="11" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Print 1 LP Besar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_print_1_lp_besarActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="button_laporan_ozon">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -437,20 +424,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_report_lp_wltActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="button_print_semua_lp_besar">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="11" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Print Semua LP Besar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_print_semua_lp_besarActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="button_report_lp_sub">
@@ -908,7 +881,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane9" pref="994" max="32767" attributes="0"/>
+                          <Component id="jScrollPane9" pref="964" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
@@ -1023,7 +996,7 @@
                                   </Group>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jScrollPane9" pref="621" max="32767" attributes="0"/>
+                              <Component id="jScrollPane9" pref="563" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>

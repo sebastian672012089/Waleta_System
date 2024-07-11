@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Produksi" language="groovy" pageWidth="158" pageHeight="1280" whenNoDataType="BlankPage" columnWidth="138" leftMargin="10" rightMargin="10" topMargin="5" bottomMargin="5" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
 	<property name="ireport.zoom" value="2.4793388429752232"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="480"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold">
 		<box>
 			<pen lineWidth="1.0"/>
@@ -93,7 +93,7 @@
 	</style>
 	<parameter name="CHEAT" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT `no_laporan_produksi`, `tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `tb_laporan_produksi`.`kaki_besar_lp`, `tb_laporan_produksi`.`kaki_kecil_lp`, `tb_laporan_produksi`.`hilang_kaki_lp`, `tb_laporan_produksi`.`ada_susur_lp`, `tb_laporan_produksi`.`ada_susur_besar_lp`, `tb_laporan_produksi`.`tanpa_susur_lp`, `tb_laporan_produksi`.`utuh_lp`, `tb_laporan_produksi`.`hilang_ujung_lp`, `tb_laporan_produksi`.`pecah_1_lp`, `tb_laporan_produksi`.`pecah_2`, `tb_laporan_produksi`.`jumlah_sobek`, `tb_laporan_produksi`.`sobek_lepas`, `tb_laporan_produksi`.`jumlah_gumpil`, `target_ctk_mku`, `rontokan_gbm`, `berat_riil`
+		<![CDATA[SELECT `no_laporan_produksi`, `tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `tb_laporan_produksi`.`kaki_besar_lp`, `tb_laporan_produksi`.`kaki_kecil_lp`, `tb_laporan_produksi`.`hilang_kaki_lp`, `tb_laporan_produksi`.`ada_susur_lp`, `tb_laporan_produksi`.`ada_susur_besar_lp`, `tb_laporan_produksi`.`tanpa_susur_lp`, `tb_laporan_produksi`.`utuh_lp`, `tb_laporan_produksi`.`hilang_ujung_lp`, `tb_laporan_produksi`.`pecah_1_lp`, `tb_laporan_produksi`.`pecah_2`, `tb_laporan_produksi`.`jumlah_sobek`, `tb_laporan_produksi`.`sobek_lepas`, `tb_laporan_produksi`.`jumlah_gumpil`, `target_ctk_mku`, `rontokan_gbm`, `berat_riil`, `print_number_lp`
 FROM `tb_laporan_produksi`
 LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`
 LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`
@@ -187,6 +187,9 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 	<field name="berat_riil" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="print_number_lp" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -240,11 +243,13 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 )]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Page header" x="0" y="0" width="154" height="10" uuid="45ff8c8e-7093-4a3e-b954-530fad62dddb"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font size="8"/>
+				<reportElement style="Page header" x="0" y="0" width="138" height="10" uuid="45ff8c8e-7093-4a3e-b954-530fad62dddb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="none">
+					<font size="8" isBold="true" isItalic="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{print_number_lp} > 0?
+"COPY " + $F{print_number_lp}
+: ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Page header" x="0" y="50" width="138" height="10" uuid="597c584e-1899-4894-8302-560fbd2f2e4b"/>

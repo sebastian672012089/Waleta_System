@@ -514,7 +514,6 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Dokumen_QC1 = new waleta_system.QC.JPanel_Dokumen_QC();
         jPanel_BonusKecepatanF21 = new waleta_system.Finance.JPanel_BonusKecepatanF2();
         jPanel_Traceability1 = new waleta_system.JPanel_Traceability();
-        jPanel_Undian1 = new waleta_system.JPanel_Undian();
         jPanel_DataCetakSub1 = new waleta_system.SubWaleta.JPanel_DataCetakSub();
         jPanel_Data_KaryawanLama_Masuk1 = new waleta_system.HRD.JPanel_Data_KaryawanLama_Masuk();
         jPanel_Absen_Cuti1 = new waleta_system.HRD.JPanel_Absen_Cuti();
@@ -586,11 +585,9 @@ public class MainForm extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_File = new javax.swing.JMenu();
         jMenu_Home = new javax.swing.JMenuItem();
-        jMenu_Chart = new javax.swing.JMenuItem();
         jMenu_Traceability = new javax.swing.JMenuItem();
         jMenu_Traceability2 = new javax.swing.JMenuItem();
         jMenu_SistemUndian = new javax.swing.JMenuItem();
-        jMenu_SistemUndian2 = new javax.swing.JMenuItem();
         jMenu_Input_Lembur = new javax.swing.JMenuItem();
         jMenu_pindah_grup = new javax.swing.JMenuItem();
         jMenu_produksi_isu = new javax.swing.JMenuItem();
@@ -602,6 +599,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem_FormTidakMasuk = new javax.swing.JMenuItem();
         jMenuItem_Pengajuan_naikLevel = new javax.swing.JMenuItem();
         jMenuItem_Keu_Pengajuan_Pembelian2 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem_SistemPrintSlip = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu_Exit = new javax.swing.JMenuItem();
@@ -827,7 +825,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.373");
+        jLabel19.setText("2.2.378");
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Calibri Light", 1, 48)); // NOI18N
@@ -1238,7 +1236,6 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Dokumen_QC1, "card102");
         main_panel.add(jPanel_BonusKecepatanF21, "card103");
         main_panel.add(jPanel_Traceability1, "card103");
-        main_panel.add(jPanel_Undian1, "card104");
         main_panel.add(jPanel_DataCetakSub1, "card105");
         main_panel.add(jPanel_Data_KaryawanLama_Masuk1, "card106");
         main_panel.add(jPanel_Absen_Cuti1, "card106");
@@ -1327,16 +1324,6 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu_File.add(jMenu_Home);
 
-        jMenu_Chart.setBackground(new java.awt.Color(255, 255, 255));
-        jMenu_Chart.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jMenu_Chart.setText("Chart Data");
-        jMenu_Chart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu_ChartActionPerformed(evt);
-            }
-        });
-        jMenu_File.add(jMenu_Chart);
-
         jMenu_Traceability.setBackground(new java.awt.Color(255, 255, 255));
         jMenu_Traceability.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jMenu_Traceability.setText("Traceability");
@@ -1366,16 +1353,6 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu_File.add(jMenu_SistemUndian);
-
-        jMenu_SistemUndian2.setBackground(new java.awt.Color(255, 255, 255));
-        jMenu_SistemUndian2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jMenu_SistemUndian2.setText("Sistem Undian ver. 2");
-        jMenu_SistemUndian2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu_SistemUndian2ActionPerformed(evt);
-            }
-        });
-        jMenu_File.add(jMenu_SistemUndian2);
 
         jMenu_Input_Lembur.setBackground(new java.awt.Color(255, 255, 255));
         jMenu_Input_Lembur.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -1486,6 +1463,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu_File.add(jMenuItem_Keu_Pengajuan_Pembelian2);
+
+        jMenuItem13.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem13.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem13.setText("Data Dokumen");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu_File.add(jMenuItem13);
 
         jMenuItem_SistemPrintSlip.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem_SistemPrintSlip.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -4619,27 +4606,6 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.revalidate();
     }//GEN-LAST:event_jMenuItem_Keu_RekapBTKActionPerformed
 
-    private void jMenu_ChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_ChartActionPerformed
-        // TODO add your handling code here:
-        JFrame_Chart chart = new JFrame_Chart();
-        chart.pack();
-        chart.setResizable(true);
-        chart.setLocationRelativeTo(null);
-        chart.setVisible(true);
-        chart.setEnabled(true);
-        chart.init();
-        chart.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        main_panel.removeAll();
-//        main_panel.repaint();
-//        main_panel.revalidate();
-//
-//        //add panel
-//        jPanel_Dashboard1.init();
-//        main_panel.add(jPanel_Dashboard1);
-//        main_panel.repaint();
-//        main_panel.revalidate();
-    }//GEN-LAST:event_jMenu_ChartActionPerformed
-
     private void jMenuItem_Keu_HariKerjaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_Keu_HariKerjaActionPerformed
         // TODO add your handling code here:
         main_panel.removeAll();
@@ -5508,7 +5474,7 @@ public class MainForm extends javax.swing.JFrame {
 
         //add panel
 //        jPanel_Undian1.init();
-        main_panel.add(jPanel_Undian1);
+        main_panel.add(jPanel_Undian21);
         main_panel.repaint();
         main_panel.revalidate();
     }//GEN-LAST:event_jMenu_SistemUndianActionPerformed
@@ -5758,18 +5724,6 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.revalidate();
         jPanel_Laporan_Produksi11.init();
     }//GEN-LAST:event_jMenu_baku_lp_cheatActionPerformed
-
-    private void jMenu_SistemUndian2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_SistemUndian2ActionPerformed
-        // TODO add your handling code here:
-        main_panel.removeAll();
-        main_panel.repaint();
-        main_panel.revalidate();
-
-        //add panel
-        main_panel.add(jPanel_Undian21);
-        main_panel.repaint();
-        main_panel.revalidate();
-    }//GEN-LAST:event_jMenu_SistemUndian2ActionPerformed
 
     private void jMenu_hrd_dataPersonalHygieneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_hrd_dataPersonalHygieneActionPerformed
         // TODO add your handling code here:
@@ -6573,6 +6527,19 @@ public class MainForm extends javax.swing.JFrame {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jMenu_timerActionPerformed
 
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+        main_panel.removeAll();
+        main_panel.repaint();
+        main_panel.revalidate();
+
+        //add panel
+        jPanel_Dokumen_QC1.init();
+        main_panel.add(jPanel_Dokumen_QC1);
+        main_panel.repaint();
+        main_panel.revalidate();
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_refresh_butuh_Acc;
@@ -6596,6 +6563,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -6709,7 +6677,6 @@ public class MainForm extends javax.swing.JFrame {
     public static javax.swing.JMenuItem jMenuItem_user_view;
     public static javax.swing.JMenu jMenu_BahanJadi;
     public static javax.swing.JMenu jMenu_Cabuto;
-    private javax.swing.JMenuItem jMenu_Chart;
     private javax.swing.JMenuItem jMenu_Exit;
     private javax.swing.JMenu jMenu_File;
     public static javax.swing.JMenu jMenu_HRD;
@@ -6725,7 +6692,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu_Maintenance;
     public static javax.swing.JMenu jMenu_QC;
     private javax.swing.JMenuItem jMenu_SistemUndian;
-    private javax.swing.JMenuItem jMenu_SistemUndian2;
     public static javax.swing.JMenuItem jMenu_Sub_Piutang_sub;
     private javax.swing.JMenuItem jMenu_Sub_Reproses;
     public static javax.swing.JMenuItem jMenu_Sub_dataSub;
@@ -6968,7 +6934,6 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.JPanel_Traceability2 jPanel_Traceability21;
     private waleta_system.BahanJadi.JPanel_TutupanGradingBahanJadi jPanel_TutupanGradingBahanJadi1;
     private waleta_system.Finance.JPanel_TutupanGradingBahanJadi_Keuangan jPanel_TutupanGradingBahanJadi_Keuangan1;
-    private waleta_system.JPanel_Undian jPanel_Undian1;
     private waleta_system.JPanel_Undian2 jPanel_Undian21;
     private waleta_system.HRD.JPanel_ijinToilet jPanel_ijinToilet1;
     private javax.swing.JPanel jPanel_need_attention;

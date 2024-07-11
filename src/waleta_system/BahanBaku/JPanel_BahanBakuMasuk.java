@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -54,6 +55,11 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
 
     public void init(String akses) {
         this.akses = akses;
+        if (MainForm.Login_kodeBagian == 244 || MainForm.Login_kodeBagian == 245 || MainForm.Login_idPegawai.equals("20180102221")) {//MANAGER OPERATIONAL / KADEP BAHAN MENTAH
+            button_hapus_pecah.setEnabled(true);
+        } else {
+            button_hapus_pecah.setEnabled(false);
+        }
         Table_Bahan_Baku_Masuk.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 11));
         refreshTable();
 
@@ -534,6 +540,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         label_total_gram_riil = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         label_total_keping_upah = new javax.swing.JLabel();
+        button_hapus_pecah = new javax.swing.JButton();
         jPanel_StokPecah = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         Table_stok_pecah_lp = new javax.swing.JTable();
@@ -1137,7 +1144,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_search_grading)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel19)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1167,7 +1174,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                     .addComponent(button_export_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_input_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1243,6 +1250,19 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         label_total_keping_upah.setText("0000");
         label_total_keping_upah.setFocusable(false);
 
+        button_hapus_pecah.setBackground(new java.awt.Color(255, 255, 255));
+        button_hapus_pecah.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_hapus_pecah.setForeground(new java.awt.Color(255, 0, 0));
+        button_hapus_pecah.setIcon(new javax.swing.ImageIcon(getClass().getResource("/waleta_system/Images/box_important.png"))); // NOI18N
+        button_hapus_pecah.setText("Hapus semua pecahan");
+        button_hapus_pecah.setIconTextGap(2);
+        button_hapus_pecah.setMargin(new java.awt.Insets(2, 5, 2, 5));
+        button_hapus_pecah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_hapus_pecahActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_gradingLayout = new javax.swing.GroupLayout(jPanel_grading);
         jPanel_grading.setLayout(jPanel_gradingLayout);
         jPanel_gradingLayout.setHorizontalGroup(
@@ -1258,6 +1278,8 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                         .addComponent(button_gabung_pecah)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_edit_pecah)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_hapus_pecah)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export_pecah))
                     .addGroup(jPanel_gradingLayout.createSequentialGroup()
@@ -1285,9 +1307,10 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel_gradingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export_pecah)
-                    .addComponent(button_edit_pecah)
-                    .addComponent(button_gabung_pecah))
+                    .addComponent(button_export_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_edit_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_gabung_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_hapus_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_gradingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1694,7 +1717,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Edit_Insert_KartuBaku.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, "data not inserted" + e);
+            JOptionPane.showMessageDialog(this, "data not inserted :" + e);
             Logger.getLogger(JDialog_Edit_Insert_KartuBaku.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
@@ -2065,6 +2088,93 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_input_pecahActionPerformed
 
+    private void button_hapus_pecahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_hapus_pecahActionPerformed
+        // TODO add your handling code here:
+        int j = Table_Grading_Bahan_Baku.getSelectedRow();
+        if (j == -1) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih data pada tabel kiri !");
+        } else {
+            String no_grading = Table_Grading_Bahan_Baku.getValueAt(j, 0).toString();
+            String no_kartu = Table_Grading_Bahan_Baku.getValueAt(j, 1).toString();
+            String grade = Table_Grading_Bahan_Baku.getValueAt(j, 2).toString();
+
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data pecah " + no_kartu + "-" + grade + "?", "Warning", 0);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                PreparedStatement checkStatement = null;
+                PreparedStatement deleteStatement = null;
+                ResultSet resultSet = null;
+                try {
+                    //check for existing records
+                    String checkSql = "SELECT `no_laporan_produksi`, `tb_bahan_baku_pecah_kartu`.`kode_pecah_kartu` "
+                            + "FROM `tb_laporan_produksi` "
+                            + "LEFT JOIN `tb_bahan_baku_pecah_kartu` "
+                            + "ON `tb_bahan_baku_pecah_kartu`.`kode_pecah_kartu` = `tb_laporan_produksi`.`kode_pecah_lp` "
+                            + "WHERE `tb_bahan_baku_pecah_kartu`.`no_grading` = ?";
+                    checkStatement = Utility.db.getConnection().prepareStatement(checkSql);
+                    checkStatement.setString(1, no_grading);
+                    resultSet = checkStatement.executeQuery();
+                    // If the query returns any rows, do not proceed with the deletion
+                    if (resultSet.next()) {
+                        JOptionPane.showMessageDialog(this, "Cannot delete record: kode pecah sudah dipakai menjadi LP.");
+                    } else {
+                        String Query = "DELETE FROM `tb_bahan_baku_pecah_kartu` WHERE `no_grading` = ?";
+                        deleteStatement = Utility.db.getConnection().prepareStatement(Query);
+                        deleteStatement.setString(1, no_grading);
+
+                        int rowsAffected = deleteStatement.executeUpdate();
+                        Utility.db.getConnection().commit();
+
+                        DefaultTableModel model = (DefaultTableModel) Table_pecah_lp.getModel();
+                        model.setRowCount(0);
+                        label_total_keping_riil.setText("0");
+                        label_total_keping_upah.setText("0");
+                        label_total_gram_sistem.setText("0");
+                        label_total_gram_riil.setText("0");
+                        refreshTable_grading();
+
+                        JOptionPane.showMessageDialog(this, rowsAffected + " record(s) deleted successfully.");
+                    }
+                } catch (Exception e) {
+                    try {
+                        Utility.db.getConnection().rollback();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(JDialog_Edit_Insert_KartuBaku.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    JOptionPane.showMessageDialog(this, "An error occurred while deleting the record :" + e);
+                    Logger.getLogger(JDialog_Edit_Insert_KartuBaku.class.getName()).log(Level.SEVERE, null, e);
+                } finally {
+                    // Clean up resources
+                    if (resultSet != null) {
+                        try {
+                            resultSet.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (checkStatement != null) {
+                        try {
+                            checkStatement.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (deleteStatement != null) {
+                        try {
+                            deleteStatement.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    try {
+                        Utility.db.getConnection().setAutoCommit(true);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(JDialog_Edit_Insert_KartuBaku.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_button_hapus_pecahActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox CheckBox_showCMP;
@@ -2093,6 +2203,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
     public javax.swing.JButton button_export_pecah;
     public javax.swing.JButton button_export_stok_pecah;
     public javax.swing.JButton button_gabung_pecah;
+    public javax.swing.JButton button_hapus_pecah;
     public javax.swing.JButton button_input_pecah;
     public javax.swing.JButton button_insert_bahan_baku_masuk;
     public javax.swing.JButton button_save_timbang_bahan_baku;

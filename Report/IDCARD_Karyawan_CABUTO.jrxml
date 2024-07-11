@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Catatan Penerimaan dan Grading Sarang Burung Mentah" pageWidth="153" pageHeight="242" columnWidth="153" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="2.48368529223662"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="23"/>
+	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="SubTitle" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+		<paragraph leftIndent="3"/>
+	</style>
+	<style name="Page header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="Column header" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Detail" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Column footer" forecolor="#000000" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Row" mode="Transparent" isBold="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#F0F0F0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Page footer" forecolor="#000000" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="0.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<style name="TTD" forecolor="#000000" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="1.0"/>
+			<leftPen lineWidth="1.0"/>
+			<bottomPen lineWidth="1.0"/>
+			<rightPen lineWidth="1.0"/>
+		</box>
+	</style>
+	<style name="Text" fontName="Arial" fontSize="10" isBold="false">
+		<box>
+			<pen lineWidth="1.0"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+	<parameter name="id_pegawai" class="java.lang.String"/>
+	<parameter name="Foto" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT `id_pegawai`, `nik_ktp`, `nama_pegawai`,`tb_bagian`.`nama_bagian`, `tb_bagian`.`kode_departemen`
+FROM `tb_karyawan` LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`
+WHERE `id_pegawai`=$P{id_pegawai}]]>
+	</queryString>
+	<field name="id_pegawai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nik_ktp" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_pegawai" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_bagian" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="kode_departemen" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="242" splitType="Stretch">
+			<image scaleImage="FillFrame" hAlign="Center" isUsingCache="false">
+				<reportElement x="0" y="0" width="153" height="168" uuid="e4f8d03f-b929-416b-8df6-61aa4efe565f"/>
+				<imageExpression><![CDATA["\\\\192.168.10.2\\Shared Folder\\DOKUMEN SISTEM\\FOTO_ID_CARD\\" + $F{id_pegawai} + ".JPG"]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="0" width="153" height="242" uuid="79a737c0-6890-4b34-b33d-18f8adcd8cef"/>
+				<imageExpression><![CDATA["Report\\ReportImages\\IDCARD_CABUTO_BG.png"]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement style="Text" positionType="Float" x="76" y="168" width="72" height="68" uuid="8a5409d2-ee29-412d-9a6e-795d29f91417"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Louis George Cafe" size="11" isBold="true" pdfFontName="Times-Bold"/>
+					<paragraph spacingBefore="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_pegawai}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle" isUsingCache="false">
+				<reportElement x="9" y="175" width="60" height="60" uuid="793adb6e-e4de-4814-a811-15b2d81af35f"/>
+				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
+    new com.google.zxing.qrcode.QRCodeWriter().encode(
+        $F{id_pegawai},
+        com.google.zxing.BarcodeFormat.QR_CODE, 250, 250,
+        com.google.common.collect.ImmutableMap.of(com.google.zxing.EncodeHintType.MARGIN,0)
+    )
+)]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
