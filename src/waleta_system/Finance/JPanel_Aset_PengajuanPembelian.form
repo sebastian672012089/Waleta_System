@@ -39,7 +39,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="1346" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="1465" max="32767" attributes="0"/>
                       <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -104,7 +104,7 @@
                                   <Component id="button_export" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="0" pref="314" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="290" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -154,7 +154,7 @@
                       <Component id="button_batal" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="469" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="434" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="91" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -183,9 +183,9 @@
                     <Column editable="false" title="Departemen" type="java.lang.String"/>
                     <Column editable="false" title="Keperluan" type="java.lang.String"/>
                     <Column editable="false" title="Nama Barang" type="java.lang.String"/>
-                    <Column editable="false" title="Jumlah" type="java.lang.Float"/>
-                    <Column editable="false" title="Est. Harga" type="java.lang.Float"/>
-                    <Column editable="false" title="Est. Total" type="java.lang.Float"/>
+                    <Column editable="false" title="Jumlah" type="java.lang.String"/>
+                    <Column editable="false" title="Est. Harga" type="java.lang.String"/>
+                    <Column editable="false" title="Est. Total" type="java.lang.String"/>
                     <Column editable="false" title="Dibutuhkan Tgl" type="java.lang.Object"/>
                     <Column editable="false" title="Diajukan Oleh" type="java.lang.String"/>
                     <Column editable="false" title="Diketahui Kadep" type="java.lang.String"/>
@@ -198,12 +198,12 @@
                     <Column editable="false" title="Status" type="java.lang.String"/>
                     <Column editable="false" title="Keterangan" type="java.lang.String"/>
                     <Column editable="false" title="Link Pembelian" type="java.lang.String"/>
-                    <Column editable="false" title="Realisasi Harga (Rp.)" type="java.lang.Float"/>
-                    <Column editable="false" title="PPN %" type="java.lang.Float"/>
-                    <Column editable="false" title="PPN (Rp.)" type="java.lang.Float"/>
-                    <Column editable="false" title="Biaya Lain (Rp.)" type="java.lang.Float"/>
+                    <Column editable="false" title="Realisasi Harga (Rp.)" type="java.lang.String"/>
+                    <Column editable="false" title="PPN %" type="java.lang.String"/>
+                    <Column editable="false" title="PPN (Rp.)" type="java.lang.String"/>
+                    <Column editable="false" title="Biaya Lain (Rp.)" type="java.lang.String"/>
                     <Column editable="false" title="Ket Biaya" type="java.lang.String"/>
-                    <Column editable="false" title="Total (Rp.)" type="java.lang.Float"/>
+                    <Column editable="false" title="Total (Rp.)" type="java.lang.String"/>
                     <Column editable="false" title="Nama Bank" type="java.lang.String"/>
                     <Column editable="false" title="No Rekening" type="java.lang.String"/>
                     <Column editable="false" title="Nama Rekening" type="java.lang.String"/>
@@ -370,9 +370,6 @@
         </Container>
         <Component class="javax.swing.JButton" name="button_new">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -384,9 +381,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_edit">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -398,9 +392,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_delete">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -433,9 +424,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_search">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -447,9 +435,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_export">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -494,9 +479,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_diketahui">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -508,9 +490,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_disetujui">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -522,9 +501,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_diproses">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -536,9 +512,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_selesai">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -550,9 +523,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_buka_link">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -599,9 +569,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_dikirim">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -613,9 +580,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_sampai">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -647,9 +611,6 @@
         </Container>
         <Component class="javax.swing.JButton" name="button_diketahui_kadep">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -661,9 +622,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_tv_pengajuan">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -729,9 +687,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_realisasi">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -743,9 +698,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_form_pengajuan">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>
@@ -757,9 +709,6 @@
         </Component>
         <Component class="javax.swing.JButton" name="button_batal">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
             </Property>

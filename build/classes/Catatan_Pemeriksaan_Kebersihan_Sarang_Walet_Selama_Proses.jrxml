@@ -446,7 +446,7 @@ ORDER BY `tb_finishing_2`.`tgl_masuk_f2` DESC]]>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 				<reportElement x="280" y="30" width="120" height="75" uuid="34829c5a-7c24-4262-9565-50d10fc0a31f"/>
-				<imageExpression><![CDATA["Report\\ReportImages\\TTD PRISKA.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD PRISKA DWI APRIYANTI.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="TTD" x="277" y="25" width="120" height="20" uuid="1d56e4f4-e0bf-4024-8344-47ef446e87a4"/>

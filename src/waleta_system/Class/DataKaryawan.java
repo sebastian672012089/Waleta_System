@@ -43,8 +43,11 @@ public class DataKaryawan {
     private Date tanggal_berakhir;
     private byte[] image;
     
+    private String status_pajak;
+    private String no_npwp;
+    
     public DataKaryawan(String id, String pin, String nik, String nama, String kelamin, String tempatLahir, Date tanggalLahir, String Alamat, String Desa, String Kecamatan, String kota, String provinsi, String golongan_darah, String kawin, String nama_ibu, String no_telp, String email, String kategori_keluar, String keterangan, boolean uid_card, 
-            String bagian, String Posisi, String departemen, String pend, Date tanggal_interview, Date tgl_masuk, Date tgl_keluar, String Status, String jam_kerja, String jalur_jemputan, int potongan_bpjs, int fc_ktp, int sertifikat_vaksin1, int sertifikat_vaksin2, int pernyataan, Date tgl_surat, Date tgl_berakhir){
+            String bagian, String Posisi, String departemen, String pend, Date tanggal_interview, Date tgl_masuk, Date tgl_keluar, String Status, String jam_kerja, String jalur_jemputan, int potongan_bpjs, int fc_ktp, int sertifikat_vaksin1, int sertifikat_vaksin2, int pernyataan, Date tgl_surat, Date tgl_berakhir, String status_pajak, String no_npwp){
         this.id_pegawai = id;
         this.pin = pin;
         this.nik_ktp = nik;
@@ -84,6 +87,9 @@ public class DataKaryawan {
         this.berkas_surat_pernyataan = pernyataan;
         this.tanggal_surat = tgl_surat;
         this.tanggal_berakhir = tgl_berakhir;
+        
+        this.status_pajak = status_pajak;
+        this.no_npwp = no_npwp;
     }
 
     public String getId_pegawai() {
@@ -385,4 +391,21 @@ public class DataKaryawan {
     public void setTanggal_berakhir(Date tanggal_berakhir) {
         this.tanggal_berakhir = tanggal_berakhir;
     }
+
+    public String getStatus_pajak() {
+        return status_pajak;
+    }
+
+    public void setStatus_pajak(String status_pajak) {
+        this.status_pajak = status_pajak;
+    }
+
+    public String getNo_npwp() {
+        return no_npwp;
+    }
+
+    public void setNo_npwp(String no_npwp) {
+        this.no_npwp = no_npwp;
+    }
+    
 }

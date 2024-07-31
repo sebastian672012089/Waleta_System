@@ -160,19 +160,6 @@ public class JPanel_DataCetakSub extends javax.swing.JPanel implements Interface
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel_search_data_cetak = new javax.swing.JPanel();
-        txt_search_cetak = new javax.swing.JTextField();
-        button_search_cetak = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        Date1_cetak = new com.toedter.calendar.JDateChooser();
-        Date2_cetak = new com.toedter.calendar.JDateChooser();
-        ComboBox_filterTgl = new javax.swing.JComboBox<>();
-        button_export_f2 = new javax.swing.JButton();
-        button_download = new javax.swing.JButton();
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        ComboBox_ruang = new javax.swing.JComboBox<>();
         jScrollPane4 = new javax.swing.JScrollPane();
         Table_Data_Cetak = new javax.swing.JTable();
         label_total_data_cetak = new javax.swing.JLabel();
@@ -193,134 +180,23 @@ public class JPanel_DataCetakSub extends javax.swing.JPanel implements Interface
         label_total_jidun1 = new javax.swing.JLabel();
         label_total_gram = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        button_export_f2 = new javax.swing.JButton();
+        button_download = new javax.swing.JButton();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txt_search_cetak = new javax.swing.JTextField();
+        ComboBox_ruang = new javax.swing.JComboBox<>();
+        button_search_cetak = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        Date1_cetak = new com.toedter.calendar.JDateChooser();
+        Date2_cetak = new com.toedter.calendar.JDateChooser();
+        ComboBox_filterTgl = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Cetak", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel_search_data_cetak.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_search_data_cetak.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Search Data Cetak", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Yu Gothic", 1, 12))); // NOI18N
-
-        txt_search_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_search_cetak.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_search_cetakKeyPressed(evt);
-            }
-        });
-
-        button_search_cetak.setBackground(new java.awt.Color(255, 255, 255));
-        button_search_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_search_cetak.setText("Search");
-        button_search_cetak.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_search_cetakActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel2.setText("Laporan Produksi :");
-
-        Date1_cetak.setBackground(new java.awt.Color(255, 255, 255));
-        Date1_cetak.setDate(new Date(new Date().getTime()- (7 * 24 * 60 * 60 * 1000)));
-        Date1_cetak.setDateFormatString("dd MMMM yyyy");
-        Date1_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        Date2_cetak.setBackground(new java.awt.Color(255, 255, 255));
-        Date2_cetak.setDate(new Date());
-        Date2_cetak.setDateFormatString("dd MMMM yyyy");
-        Date2_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        ComboBox_filterTgl.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_filterTgl.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tanggal Masuk", "Tanggal Setor" }));
-
-        button_export_f2.setBackground(new java.awt.Color(255, 255, 255));
-        button_export_f2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_export_f2.setText("Export to Excel");
-        button_export_f2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_export_f2ActionPerformed(evt);
-            }
-        });
-
-        button_download.setBackground(new java.awt.Color(255, 255, 255));
-        button_download.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_download.setText("Download data to Waleta");
-        button_download.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_downloadActionPerformed(evt);
-            }
-        });
-
-        jProgressBar1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel3.setText("Note : yang di download hanya data yang sudah di setorkan");
-
-        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel13.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel13.setText("Ruang :");
-
-        ComboBox_ruang.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_ruang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "A", "B", "C", "D" }));
-
-        javax.swing.GroupLayout jPanel_search_data_cetakLayout = new javax.swing.GroupLayout(jPanel_search_data_cetak);
-        jPanel_search_data_cetak.setLayout(jPanel_search_data_cetakLayout);
-        jPanel_search_data_cetakLayout.setHorizontalGroup(
-            jPanel_search_data_cetakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_search_data_cetakLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_search_data_cetakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_search_data_cetakLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_search_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBox_ruang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ComboBox_filterTgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date1_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Date2_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(button_search_cetak))
-                    .addGroup(jPanel_search_data_cetakLayout.createSequentialGroup()
-                        .addComponent(button_export_f2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_download)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)))
-                .addContainerGap(498, Short.MAX_VALUE))
-        );
-        jPanel_search_data_cetakLayout.setVerticalGroup(
-            jPanel_search_data_cetakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_search_data_cetakLayout.createSequentialGroup()
-                .addGroup(jPanel_search_data_cetakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_ruang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_filterTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date1_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date2_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_search_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_search_data_cetakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel_search_data_cetakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel_search_data_cetakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(button_download, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_export_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         Table_Data_Cetak.setAutoCreateRowSorter(true);
         Table_Data_Cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -422,6 +298,70 @@ public class JPanel_DataCetakSub extends javax.swing.JPanel implements Interface
         jLabel12.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel12.setText("Total Gram :");
 
+        button_export_f2.setBackground(new java.awt.Color(255, 255, 255));
+        button_export_f2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_export_f2.setText("Export to Excel");
+        button_export_f2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_export_f2ActionPerformed(evt);
+            }
+        });
+
+        button_download.setBackground(new java.awt.Color(255, 255, 255));
+        button_download.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_download.setText("Download data to Waleta");
+        button_download.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_downloadActionPerformed(evt);
+            }
+        });
+
+        jProgressBar1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel3.setText("Note : yang di download hanya data yang sudah di setorkan");
+
+        jLabel13.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel13.setText("Ruang :");
+
+        txt_search_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_cetak.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_cetakKeyPressed(evt);
+            }
+        });
+
+        ComboBox_ruang.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_ruang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "A", "B", "C", "D" }));
+
+        button_search_cetak.setBackground(new java.awt.Color(255, 255, 255));
+        button_search_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_search_cetak.setText("Search");
+        button_search_cetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_search_cetakActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel2.setText("Laporan Produksi :");
+
+        Date1_cetak.setBackground(new java.awt.Color(255, 255, 255));
+        Date1_cetak.setDate(new Date(new Date().getTime()- (7 * 24 * 60 * 60 * 1000)));
+        Date1_cetak.setDateFormatString("dd MMMM yyyy");
+        Date1_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        Date2_cetak.setBackground(new java.awt.Color(255, 255, 255));
+        Date2_cetak.setDate(new Date());
+        Date2_cetak.setDateFormatString("dd MMMM yyyy");
+        Date2_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        ComboBox_filterTgl.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_filterTgl.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tanggal Masuk", "Tanggal Setor" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -430,8 +370,8 @@ public class JPanel_DataCetakSub extends javax.swing.JPanel implements Interface
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel_search_data_cetak, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_data_cetak)
@@ -466,15 +406,58 @@ public class JPanel_DataCetakSub extends javax.swing.JPanel implements Interface
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_jidun)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_jidun1)))
+                        .addComponent(label_total_jidun1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_search_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_ruang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(ComboBox_filterTgl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date1_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Date2_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(button_search_cetak)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export_f2))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(button_download)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)))
+                        .addGap(0, 409, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel_search_data_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_ruang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_filterTgl, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date1_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date2_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_search_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_export_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(button_download, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -644,7 +627,6 @@ public class JPanel_DataCetakSub extends javax.swing.JPanel implements Interface
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel_search_data_cetak;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel label_total_data_cetak;

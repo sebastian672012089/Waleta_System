@@ -233,7 +233,7 @@ public class JFrame_KPI_Waleta extends javax.swing.JFrame {
             float[] Berat_LP_SUB = new float[jumlah_bulan];
             while (rs.next()) {
                 float utuh = rs.getInt("berat_fbonus") + rs.getInt("berat_fnol");
-                float kaki = rs.getInt("tambahan_kaki1") + rs.getInt("tambahan_kaki2");
+                float kaki = rs.getFloat("tambahan_kaki1") + rs.getFloat("tambahan_kaki2");
                 float jidun = rs.getInt("berat_jidun");
                 float pchFlat = rs.getInt("berat_pecah") + rs.getInt("berat_flat");
                 float ByProduct = rs.getInt("sesekan") + rs.getInt("hancuran") + rs.getInt("rontokan") + rs.getInt("bonggol") + rs.getInt("serabut");

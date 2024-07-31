@@ -892,7 +892,7 @@ public class JPanel_Tarif_upah_sub extends javax.swing.JPanel {
 
     private void button_edit_data_local_waletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_edit_data_local_waletaActionPerformed
         // TODO add your handling code here:
-        int j = tabel_data_bulu_upah.getSelectedRow();
+        int j = tabel_data_bulu_upah_local_waleta.getSelectedRow();
         Boolean Check = true;
         try {
             if (j == -1) {

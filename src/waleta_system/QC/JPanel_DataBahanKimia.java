@@ -14,6 +14,15 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.Utility;
 import waleta_system.Class.ExportToExcel;
@@ -41,9 +50,21 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
     }
 
     public void init() {
-        refreshTable_PembelianBahanKimia();
-        refreshTable_MasterBahanKimia();
-        refreshTable_PemakaianBahanKimia();
+        try {
+            ComboBox_Filter_NamaBahanKimia_Pembelian.removeAllItems();
+            ComboBox_Filter_NamaBahanKimia_Pembelian.addItem("Pilih Semua");
+            sql = "SELECT `kode_bahan_kimia`, `nama_bahan_kimia` FROM `tb_lab_bahan_kimia` WHERE 1 ORDER BY `nama_bahan_kimia`";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            while (rs.next()) {
+                ComboBox_Filter_NamaBahanKimia_Pembelian.addItem(rs.getString("kode_bahan_kimia") + "-" + rs.getString("nama_bahan_kimia"));
+            }
+            refreshTable_PembelianBahanKimia();
+            refreshTable_MasterBahanKimia();
+            refreshTable_PemakaianBahanKimia();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_DataBahanKimia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void refreshTable_PembelianBahanKimia() {
@@ -51,6 +72,10 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             float total_pembelian = 0, total_pemakaian = 0;
             DefaultTableModel model = (DefaultTableModel) Table_PembelianBahanKimia.getModel();
             model.setRowCount(0);
+            String Filter_NamaBahanKimia = "1\n";
+            if (ComboBox_Filter_NamaBahanKimia_Pembelian.getSelectedIndex() > 0) {
+                Filter_NamaBahanKimia = "`nama_bahan_kimia` = '" + ComboBox_Filter_NamaBahanKimia_Pembelian.getSelectedItem().toString().split("-", 2)[1] + "' \n";
+            }
             String filter_tanggal_pembelian = "";
             if (Date_PembelianBahanKimia1.getDate() != null && Date_PembelianBahanKimia2.getDate() != null) {
                 filter_tanggal_pembelian = " AND (`tanggal_pembelian` BETWEEN '" + dateFormat.format(Date_PembelianBahanKimia1.getDate()) + "' AND '" + dateFormat.format(Date_PembelianBahanKimia2.getDate()) + "') \n";
@@ -65,7 +90,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                     + "LEFT JOIN `tb_lab_bahan_kimia` ON `tb_lab_bahan_kimia_pembelian`.`kode_bahan_kimia` = `tb_lab_bahan_kimia`.`kode_bahan_kimia`\n"
                     + "LEFT JOIN `tb_lab_bahan_kimia_pemakaian` ON `tb_lab_bahan_kimia_pembelian`.`id_pembelian` = `tb_lab_bahan_kimia_pemakaian`.`id_pembelian`\n"
                     + "WHERE \n"
-                    + "`nama_bahan_kimia` LIKE '%" + txt_search_PembelianBahanKimia_NamaBahanKimia.getText() + "%' \n"
+                    + Filter_NamaBahanKimia
                     + filter_tanggal_pembelian
                     + filter_tanggal_kadaluarsa
                     + "GROUP BY `tb_lab_bahan_kimia_pembelian`.`id_pembelian` "
@@ -131,12 +156,12 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) table_MasterBahanKimia.getModel();
             model.setRowCount(0);
             sql = "SELECT "
-                    + "`kode_bahan_kimia`, `nama_bahan_kimia`, `satuan`, `kondisi`, `supplier`, `penggunaan`, `aturan_pemakaian`, `msds` "
+                    + "`kode_bahan_kimia`, `nama_bahan_kimia`, `satuan`, `kondisi`, `supplier`, `penggunaan`, `aturan_pemakaian`, `msds`, `no_dokumen`, `no_revisi`, `tanggal_dokumen`, `menggantikan_no_dokumen` "
                     + "FROM `tb_lab_bahan_kimia` "
                     + "WHERE "
                     + "`nama_bahan_kimia` LIKE '%" + txt_search_MasterBahanKimia_NamaBahanKimia.getText() + "%' ";
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[10];
+            Object[] row = new Object[15];
             while (rs.next()) {
                 row[0] = rs.getInt("kode_bahan_kimia");
                 row[1] = rs.getString("nama_bahan_kimia");
@@ -146,6 +171,10 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                 row[5] = rs.getString("penggunaan");
                 row[6] = rs.getString("aturan_pemakaian");
                 row[7] = rs.getString("msds");
+                row[8] = rs.getString("no_dokumen");
+                row[9] = rs.getInt("no_revisi");
+                row[10] = rs.getDate("tanggal_dokumen");
+                row[11] = rs.getString("menggantikan_no_dokumen");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_MasterBahanKimia);
@@ -156,7 +185,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             Logger.getLogger(JPanel_DataBahanKimia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void refreshTable_PemakaianBahanKimia() {
         try {
             float total_pemakaian = 0;
@@ -177,11 +206,12 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[10];
             while (rs.next()) {
-                row[0] = rs.getTimestamp("waktu_ambil");
-                row[1] = rs.getString("nama_pegawai");
-                row[2] = rs.getString("nama_bahan_kimia");
-                row[3] = rs.getFloat("jumlah_pemakaian");
-                row[4] = rs.getString("satuan");
+                row[0] = rs.getDate("waktu_ambil");
+                row[1] = rs.getTime("waktu_ambil");
+                row[2] = rs.getString("nama_pegawai");
+                row[3] = rs.getString("nama_bahan_kimia");
+                row[4] = rs.getFloat("jumlah_pemakaian");
+                row[5] = rs.getString("satuan");
                 model.addRow(row);
                 total_pemakaian = total_pemakaian + rs.getFloat("jumlah_pemakaian");
             }
@@ -210,7 +240,6 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         Table_PembelianBahanKimia = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         label_total_data_PembelianBahanKimia = new javax.swing.JLabel();
-        txt_search_PembelianBahanKimia_NamaBahanKimia = new javax.swing.JTextField();
         button_PembelianBahanKimia = new javax.swing.JButton();
         button_export_PembelianBahanKimia = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -231,6 +260,8 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         label_total_jumlah_PembelianBahanKimia = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         label_total_stok_PembelianBahanKimia = new javax.swing.JLabel();
+        button_catatan_pemakaian_BahanKimia = new javax.swing.JButton();
+        ComboBox_Filter_NamaBahanKimia_Pembelian = new javax.swing.JComboBox<>();
         jPanel_MasterBahanKimia = new javax.swing.JPanel();
         jScrollPane11 = new javax.swing.JScrollPane();
         table_MasterBahanKimia = new javax.swing.JTable();
@@ -299,13 +330,6 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         label_total_data_PembelianBahanKimia.setBackground(new java.awt.Color(255, 255, 255));
         label_total_data_PembelianBahanKimia.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_total_data_PembelianBahanKimia.setText("TOTAL");
-
-        txt_search_PembelianBahanKimia_NamaBahanKimia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        txt_search_PembelianBahanKimia_NamaBahanKimia.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_search_PembelianBahanKimia_NamaBahanKimiaKeyPressed(evt);
-            }
-        });
 
         button_PembelianBahanKimia.setBackground(new java.awt.Color(255, 255, 255));
         button_PembelianBahanKimia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -428,7 +452,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                     .addComponent(label_total_pemakaian_PembelianBahanKimia)
                     .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -448,6 +472,18 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         label_total_stok_PembelianBahanKimia.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_total_stok_PembelianBahanKimia.setText("TOTAL");
 
+        button_catatan_pemakaian_BahanKimia.setBackground(new java.awt.Color(255, 255, 255));
+        button_catatan_pemakaian_BahanKimia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        button_catatan_pemakaian_BahanKimia.setText("Catatan Pemakaian Bahan Kimia");
+        button_catatan_pemakaian_BahanKimia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_catatan_pemakaian_BahanKimiaActionPerformed(evt);
+            }
+        });
+
+        ComboBox_Filter_NamaBahanKimia_Pembelian.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        ComboBox_Filter_NamaBahanKimia_Pembelian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Semua" }));
+
         javax.swing.GroupLayout jPanel_PembelianBahanKimiaLayout = new javax.swing.GroupLayout(jPanel_PembelianBahanKimia);
         jPanel_PembelianBahanKimia.setLayout(jPanel_PembelianBahanKimiaLayout);
         jPanel_PembelianBahanKimiaLayout.setHorizontalGroup(
@@ -460,7 +496,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                             .addGroup(jPanel_PembelianBahanKimiaLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_search_PembelianBahanKimia_NamaBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ComboBox_Filter_NamaBahanKimia_Pembelian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -488,7 +524,9 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel16)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_stok_PembelianBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(label_total_stok_PembelianBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_catatan_pemakaian_BahanKimia)))
                         .addContainerGap(175, Short.MAX_VALUE))
                     .addGroup(jPanel_PembelianBahanKimiaLayout.createSequentialGroup()
                         .addComponent(jScrollPane8)
@@ -500,7 +538,6 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             .addGroup(jPanel_PembelianBahanKimiaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_PembelianBahanKimiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(txt_search_PembelianBahanKimia_NamaBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date_PembelianBahanKimia1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -509,15 +546,17 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                     .addComponent(Date_KadaluarsaBahanKimia1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date_KadaluarsaBahanKimia2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_PembelianBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export_PembelianBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_export_PembelianBahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_Filter_NamaBahanKimia_Pembelian, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_PembelianBahanKimiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(label_total_data_PembelianBahanKimia)
                     .addComponent(jLabel12)
-                    .addComponent(label_total_jumlah_PembelianBahanKimia)
+                    .addComponent(label_total_data_PembelianBahanKimia)
                     .addComponent(jLabel15)
+                    .addComponent(label_total_jumlah_PembelianBahanKimia)
+                    .addComponent(jLabel16)
                     .addComponent(label_total_stok_PembelianBahanKimia)
-                    .addComponent(jLabel16))
+                    .addComponent(button_catatan_pemakaian_BahanKimia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_PembelianBahanKimiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -537,14 +576,14 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode Bahan Kimia", "Nama Bahan Kimia", "Satuan", "Kondisi", "Supplier", "Penggunaan", "Aturan Pemakaian", "MSDS"
+                "Kode Bahan Kimia", "Nama Bahan Kimia", "Satuan", "Kondisi", "Supplier", "Penggunaan", "Aturan Pemakaian", "MSDS", "No Dokumen", "No Revisi", "Tgl Dokumen", "Menggantikan No Dokumen"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -558,12 +597,6 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         table_MasterBahanKimia.setRowHeight(20);
         table_MasterBahanKimia.getTableHeader().setReorderingAllowed(false);
         jScrollPane11.setViewportView(table_MasterBahanKimia);
-        if (table_MasterBahanKimia.getColumnModel().getColumnCount() > 0) {
-            table_MasterBahanKimia.getColumnModel().getColumn(0).setHeaderValue("Kode Bahan Kimia");
-            table_MasterBahanKimia.getColumnModel().getColumn(5).setHeaderValue("Penggunaan");
-            table_MasterBahanKimia.getColumnModel().getColumn(6).setHeaderValue("Aturan Pemakaian");
-            table_MasterBahanKimia.getColumnModel().getColumn(7).setHeaderValue("MSDS");
-        }
 
         button_search_MasterBahanKimia.setBackground(new java.awt.Color(255, 255, 255));
         button_search_MasterBahanKimia.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -644,7 +677,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_data_MasterBahanKimia)
-                        .addGap(0, 633, Short.MAX_VALUE)))
+                        .addGap(0, 604, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_MasterBahanKimiaLayout.setVerticalGroup(
@@ -665,7 +698,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                         .addComponent(label_total_data_MasterBahanKimia, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+                .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -680,14 +713,14 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Waktu Ambil", "Petugas", "Nama Bahan Kimia", "Jumlah", "Satuan"
+                "Tanggal AMbil", "Waktu Ambil", "Petugas", "Nama Bahan Kimia", "Jumlah", "Satuan"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -826,13 +859,6 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_search_PembelianBahanKimia_NamaBahanKimiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_PembelianBahanKimia_NamaBahanKimiaKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            refreshTable_PembelianBahanKimia();
-        }
-    }//GEN-LAST:event_txt_search_PembelianBahanKimia_NamaBahanKimiaKeyPressed
-
     private void button_PembelianBahanKimiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_PembelianBahanKimiaActionPerformed
         // TODO add your handling code here:
         refreshTable_PembelianBahanKimia();
@@ -927,8 +953,44 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
         ExportToExcel.writeToExcel(model, jPanel_PembelianBahanKimia);
     }//GEN-LAST:event_button_export_PemakaianBahanKimiaActionPerformed
 
+    private void button_catatan_pemakaian_BahanKimiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_catatan_pemakaian_BahanKimiaActionPerformed
+        // TODO add your handling code here:
+        if (ComboBox_Filter_NamaBahanKimia_Pembelian.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih bahan kimia !");
+        } else if (Date_PembelianBahanKimia1.getDate() == null || Date_PembelianBahanKimia2.getDate() == null) {
+            JOptionPane.showMessageDialog(this, "Silahkan pilih tanggal pembelian !");
+        } else {
+            try {
+                String kode_bahan_kimia = ComboBox_Filter_NamaBahanKimia_Pembelian.getSelectedItem().toString().split("-")[0];
+                sql = "SELECT `tb_lab_bahan_kimia_pembelian`.`id_pembelian`, `tb_lab_bahan_kimia_pembelian`.`jumlah_pembelian`, `tanggal_pembelian`,\n"
+                        + "`tb_lab_bahan_kimia`.`nama_bahan_kimia`, `satuan`, `no_dokumen`, `no_revisi`, `tanggal_dokumen`, `menggantikan_no_dokumen`,\n"
+                        + "`waktu_ambil`, DATE(`waktu_ambil`) AS 'tanggal_ambil', TIME(`waktu_ambil`) AS 'jam_ambil', `jumlah_pemakaian`, `tb_karyawan`.`nama_pegawai`\n"
+                        + "FROM `tb_lab_bahan_kimia_pembelian` \n"
+                        + "LEFT JOIN `tb_lab_bahan_kimia` ON `tb_lab_bahan_kimia_pembelian`.`kode_bahan_kimia` = `tb_lab_bahan_kimia`.`kode_bahan_kimia`\n"
+                        + "LEFT JOIN `tb_lab_bahan_kimia_pemakaian` ON `tb_lab_bahan_kimia_pemakaian`.`id_pembelian` = `tb_lab_bahan_kimia_pembelian`.`id_pembelian`\n"
+                        + "LEFT JOIN `tb_karyawan` ON `tb_lab_bahan_kimia_pemakaian`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
+                        + "WHERE \n"
+                        + "`tb_lab_bahan_kimia`.`kode_bahan_kimia` = '" + kode_bahan_kimia + "'\n"
+                        + "AND `tanggal_pembelian` BETWEEN '" + dateFormat.format(Date_PembelianBahanKimia1.getDate()) + "' AND '" + dateFormat.format(Date_PembelianBahanKimia2.getDate()) + "'\n"
+                        + "ORDER BY `tb_lab_bahan_kimia_pembelian`.`id_pembelian`, `waktu_ambil`";
+                JRDesignQuery newQuery = new JRDesignQuery();
+                newQuery.setText(sql);
+                JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Catatan_Pemakaian_Bahan_Kimia.jrxml");
+                JASP_DESIGN.setQuery(newQuery);
+
+                JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+                JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
+                JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(this, ex);
+                Logger.getLogger(JPanel_Lab_LaporanProduksi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_button_catatan_pemakaian_BahanKimiaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBox_Filter_NamaBahanKimia_Pembelian;
     private com.toedter.calendar.JDateChooser Date_KadaluarsaBahanKimia1;
     private com.toedter.calendar.JDateChooser Date_KadaluarsaBahanKimia2;
     private com.toedter.calendar.JDateChooser Date_PemakaianBahanKimia1;
@@ -938,6 +1000,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
     private javax.swing.JTable Table_DataPemakaian_perPembelian;
     private javax.swing.JTable Table_PembelianBahanKimia;
     private javax.swing.JButton button_PembelianBahanKimia;
+    public javax.swing.JButton button_catatan_pemakaian_BahanKimia;
     public javax.swing.JButton button_delete_MasterBahanKimia;
     public javax.swing.JButton button_edit_MasterBahanKimia;
     private javax.swing.JButton button_export_PemakaianBahanKimia;
@@ -980,6 +1043,5 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
     private javax.swing.JTable table_PemakaianBahanKimia;
     private javax.swing.JTextField txt_search_MasterBahanKimia_NamaBahanKimia;
     private javax.swing.JTextField txt_search_PemakaianBahanKimia_NamaBahanKimia;
-    private javax.swing.JTextField txt_search_PembelianBahanKimia_NamaBahanKimia;
     // End of variables declaration//GEN-END:variables
 }

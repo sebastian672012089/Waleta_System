@@ -106,8 +106,10 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
                 float flat = rs.getInt("cetak_flat");
                 float jidun = rs.getInt("cetak_jidun");
                 float jidun_real = rs.getInt("cetak_jidun_real");
+                float kpg_cetak = mk + pecah + flat + jidun;
                 float kpg_lp = rs.getInt("jumlah_keping");
                 float gram_lp = rs.getInt("berat_basah");
+                float kpg_tidak_cetak = kpg_lp - kpg_cetak;
                 float persen_mk = (mk / kpg_lp) * 100;
                 float persen_pecah = (pecah / kpg_lp) * 100;
                 float persen_flat = (flat / kpg_lp) * 100;
@@ -141,6 +143,11 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
                 row[19] = persen_jidun;
                 row[20] = jidun_real;
                 row[21] = rs.getString("admin_cetak");
+                if (rs.getDate("tgl_selesai_cetak") != null) {
+                    row[22] = kpg_tidak_cetak;
+                } else {
+                    row[22] = 0;
+                }
                 model.addRow(row);
 
             }
@@ -282,14 +289,14 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No LP", "Grade", "Ruang", "Total Keping", "Gram", "Tgl Masuk", "Diterima", "Pekerja Cetak 1", "Pekerja Cetak 2", "Pengoreksi", "Diserahkan", "Tgl Selesai", "Mk (Kpg)", "Mk (%)", "Pecah (Kpg)", "Pecah (%)", "Flat (Kpg)", "Flat (%)", "Jidun", "Jidun(%)", "Jidun Real", "admin"
+                "No LP", "Grade", "Ruang", "Total Keping", "Gram", "Tgl Masuk", "Diterima", "Pekerja Cetak 1", "Pekerja Cetak 2", "Pengoreksi", "Diserahkan", "Tgl Selesai", "Mk (Kpg)", "Mk (%)", "Pecah (Kpg)", "Pecah (%)", "Flat (Kpg)", "Flat (%)", "Jidun", "Jidun(%)", "Jidun Real", "admin", "Tidak Cetak"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

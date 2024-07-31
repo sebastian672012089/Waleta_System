@@ -2093,53 +2093,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
 
     private void button_rekap_jam_kerja_kurangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_rekap_jam_kerja_kurangActionPerformed
         // TODO add your handling code here:
-        try {
-            ArrayList<String> id_pegawai = new ArrayList<>();
-            ArrayList<String> tanggal = new ArrayList<>();
-            Date tanggal_mulai = new Date(Date_penggajian.getDate().getTime() - (7 * 24 * 60 * 60 * 1000));
-            Date tanggal_selesai = new Date(Date_penggajian.getDate().getTime() - (1 * 24 * 60 * 60 * 1000));
-
-            sql = "SELECT `tb_lembur_rekap`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, CONCAT(`divisi_bagian`, '-', `ruang_bagian`) AS 'nama_bagian',\n"
-                    + "DAYNAME(`tanggal`) AS 'hari', `tanggal`, `premi_hadir` \n"
-                    + "FROM `tb_lembur_rekap` \n"
-                    + "LEFT JOIN `tb_karyawan` ON `tb_lembur_rekap`.`id_pegawai` = `tb_karyawan`.`id_pegawai`\n"
-                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
-                    + "WHERE "
-                    + "`premi_hadir` = 0\n"
-                    + "AND `jam_kerja` = 'SHIFT_MALAM'\n"
-                    + "AND `tanggal` BETWEEN '" + tanggal_mulai + "' AND '" + tanggal_selesai + "'";
-            rs = Utility.db.getStatement().executeQuery(sql);
-            while (rs.next()) {
-                id_pegawai.add(rs.getString("id_pegawai"));
-                tanggal.add(rs.getString("tanggal"));
-            }
-
-            if (id_pegawai.size() > 0) {
-                int dialogResult = JOptionPane.showConfirmDialog(this, id_pegawai.size() + " karyawan kurang jam kerja, input ke data cuti?", "Warning", 0);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    int count = 0;
-                    for (int i = 0; i < id_pegawai.size(); i++) {
-                        String Query = "INSERT INTO `tb_cuti`(`id_pegawai`, `tanggal_cuti`, `jenis_cuti`, `kategori_cuti`, `keterangan`) "
-                                + "SELECT * FROM (SELECT '" + id_pegawai.get(i) + "','" + tanggal.get(i) + "', 'Absen', 'Jam Kerja Kurang', '-' AS 'keterangan') AS tmp\n"
-                                + "WHERE NOT EXISTS (SELECT `kode_cuti` FROM `tb_cuti` WHERE `id_pegawai` = '" + id_pegawai.get(i) + "' AND `tanggal_cuti` = '" + tanggal.get(i) + "')";
-                        Utility.db.getConnection().createStatement();
-                        if (Utility.db.getStatement().executeUpdate(Query) == 1) {
-                            count++;
-                        }
-                    }
-                    JOptionPane.showMessageDialog(this, count + " data berhasil di input ke data cuti/absen !");
-                }
-            }
-
-//        JDialog_Input_JamKerjaKurang dialog = new JDialog_Input_JamKerjaKurang(new javax.swing.JFrame(), true, tanggal_mulai, tanggal_selesai);
-//        dialog.setResizable(false);
-//        dialog.setLocationRelativeTo(this);
-//        dialog.setEnabled(true);
-//        dialog.setVisible(true);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
-            Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        rekap_jam_kerja_kurang();
     }//GEN-LAST:event_button_rekap_jam_kerja_kurangActionPerformed
 
 

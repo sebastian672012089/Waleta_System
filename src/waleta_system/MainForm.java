@@ -1,5 +1,7 @@
 package waleta_system;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -8,11 +10,11 @@ import waleta_system.SubWaleta.JFrame_TV_Sub;
 import waleta_system.Manajemen.JFrame_TV_WIP;
 import java.sql.*;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import javax.swing.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -62,6 +64,7 @@ public class MainForm extends javax.swing.JFrame {
         Refresh_StokBaku_Unworkable();
         Refresh_StokQC_Hold();
         refreshTable_detailLP_WIP();
+        refreshTable_data_master_dokumen();
         if (!MainForm.Login_Posisi.contains("STAFF")) {
             jMenuItem_Pengajuan_naikLevel.setVisible(false);
             jMenuItem_DataKaryawanViewOnly.setVisible(false);
@@ -108,9 +111,9 @@ public class MainForm extends javax.swing.JFrame {
             total_reproses = total_reproses - total_repacking;
             label_warning_stok_reproses.setText("Stok Reproses Barang Jadi > 200Kg : " + Math.round(total_reproses / 1000d) + " Kg");
             if (Math.round(total_reproses / 1000d) > 200) {
-                label_warning_stok_reproses.setVisible(true);
+                label_warning_stok_reproses.setForeground(Color.red);
             } else {
-                label_warning_stok_reproses.setVisible(false);
+                label_warning_stok_reproses.setForeground(Color.green);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -169,9 +172,9 @@ public class MainForm extends javax.swing.JFrame {
             }
             label_warning_stok_baku.setText("Stok Unworkable Raw Material > 30Kg : " + Math.round(stok_jual / 1000d) + " Kg");
             if (Math.round(stok_jual / 1000d) > 30) {
-                label_warning_stok_baku.setVisible(true);
+                label_warning_stok_baku.setForeground(Color.red);
             } else {
-                label_warning_stok_baku.setVisible(false);
+                label_warning_stok_baku.setForeground(Color.green);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -194,9 +197,9 @@ public class MainForm extends javax.swing.JFrame {
             }
             label_warning_stok_qchold.setText("Stok QC Hold > 30Kg : " + Math.round(qc_hold_gram / 1000d) + " Kg (" + qc_hold_lp + "LP)");
             if (Math.round(qc_hold_gram / 1000d) > 30) {
-                label_warning_stok_qchold.setVisible(true);
+                label_warning_stok_qchold.setForeground(Color.red);
             } else {
-                label_warning_stok_qchold.setVisible(false);
+                label_warning_stok_qchold.setForeground(Color.green);
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -386,6 +389,96 @@ public class MainForm extends javax.swing.JFrame {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    private void refreshTable_data_master_dokumen() {
+        try {
+            DefaultTableModel model = (DefaultTableModel) Table_dokumen_jatuh_tempo.getModel();
+            model.setRowCount(0);
+            String kode_departemen = MainForm.Login_Departemen;
+            String filter_departemen = "";
+            if (kode_departemen != null) {
+                filter_departemen = "AND `kode_departemen` = '" + kode_departemen + "' \n";
+            }
+            String sql = "SELECT `tb_dokumen_qc`.`kode_dokumen`, `nama_dokumen`, `tempat_pengujian`, `jenis_dokumen`, `keterangan`, `kode_departemen`, `masa_berlaku`, \n"
+                    + "MAX(`tanggal_kadaluarsa`) AS 'tanggal_kadaluarsa', DATEDIFF(MAX(`tanggal_kadaluarsa`), CURRENT_DATE()) AS 'hari_jatuh_tempo'"
+                    + "FROM `tb_dokumen_qc` \n"
+                    + "LEFT JOIN `tb_dokumen_qc_update` ON `tb_dokumen_qc`.`kode_dokumen` = `tb_dokumen_qc_update`.`kode_dokumen`\n"
+                    + "WHERE "
+                    + "`tb_dokumen_qc_update`.`kode_dokumen` IS NOT NULL \n"
+                    + filter_departemen
+                    + "GROUP BY `tb_dokumen_qc`.`kode_dokumen`\n"
+                    + "HAVING `hari_jatuh_tempo` < 30 \n"
+                    + "ORDER BY `hari_jatuh_tempo` ASC";
+            ResultSet rs = Utility.db.getStatement().executeQuery(sql);
+            Object[] row = new Object[5];
+            while (rs.next()) {
+                row[0] = rs.getString("kode_dokumen");
+                row[1] = rs.getString("nama_dokumen");
+                row[2] = rs.getDate("tanggal_kadaluarsa");
+                row[3] = convertDays(rs.getInt("hari_jatuh_tempo"));
+                row[4] = rs.getInt("hari_jatuh_tempo");
+                model.addRow(row);
+            }
+            ColumnsAutoSizer.sizeColumnsToFit(Table_dokumen_jatuh_tempo);
+
+            Table_dokumen_jatuh_tempo.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (isSelected) {
+                        comp.setBackground(Table_dokumen_jatuh_tempo.getSelectionBackground());
+                        comp.setForeground(Table_dokumen_jatuh_tempo.getSelectionForeground());
+                    } else {
+                        if ((int) Table_dokumen_jatuh_tempo.getValueAt(row, 4) < 0) {
+                            comp.setBackground(Color.RED);
+                            comp.setForeground(Color.WHITE);
+                        } else if ((int) Table_dokumen_jatuh_tempo.getValueAt(row, 4) < 30) {
+                            comp.setBackground(Color.ORANGE);
+                            comp.setForeground(Color.BLACK);
+                        } else {
+                            comp.setBackground(Table_dokumen_jatuh_tempo.getBackground());
+                            comp.setForeground(Table_dokumen_jatuh_tempo.getForeground());
+                        }
+                    }
+                    return comp;
+                }
+            });
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static String convertDays(int totalDays) {
+        boolean isNegative = totalDays < 0;
+        totalDays = Math.abs(totalDays);
+
+        int years = totalDays / 365;
+        int remainingDays = totalDays % 365;
+        int months = remainingDays / 30;
+        int days = remainingDays % 30;
+
+        StringBuilder result = new StringBuilder();
+        if (years > 0) {
+            result.append(years).append(" Tahun ");
+        }
+        if (months > 0) {
+            result.append(months).append(" Bulan ");
+        }
+        if (days > 0) {
+            result.append(days).append(" Hari");
+        }
+
+        // Trim trailing space
+        String finalResult = result.toString().trim();
+        
+        if (isNegative) {
+            finalResult = "-(" + finalResult + ")";
+        }
+        
+        return finalResult;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -425,6 +518,10 @@ public class MainForm extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         label_total_gram_lp_percobaan = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        jPanel_Butuh_Acc1 = new javax.swing.JPanel();
+        Button_refresh_dokumen_jatuh_tempo = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        Table_dokumen_jatuh_tempo = new javax.swing.JTable();
         jPanel_DataDepartemen1 = new waleta_system.HRD.JPanel_DataDepartemen();
         jPanel_Traceability21 = new waleta_system.JPanel_Traceability2();
         jPanel_Ijin_keluar1 = new waleta_system.HRD.JPanel_Ijin_keluar();
@@ -683,6 +780,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem_tv_wip = new javax.swing.JMenuItem();
         jMenuItem_tv_gbj = new javax.swing.JMenuItem();
         jMenuItem_tv_spk = new javax.swing.JMenuItem();
+        jMenuItem_tv_spk_lokal = new javax.swing.JMenuItem();
         jMenu_packing = new javax.swing.JMenu();
         JMenuItem_DataPacking = new javax.swing.JMenuItem();
         jMenuItem_DataPengiriman = new javax.swing.JMenuItem();
@@ -691,7 +789,9 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem_print_weight_label = new javax.swing.JMenuItem();
         jMenuItem_barcode_packing = new javax.swing.JMenuItem();
         jMenuItem_PaymentReport = new javax.swing.JMenuItem();
+        jMenu_TV_SPK = new javax.swing.JMenu();
         jMenuItem_tv_spk2 = new javax.swing.JMenuItem();
+        jMenuItem_tv_spk_lok = new javax.swing.JMenuItem();
         jMenuItem_kinerja_karyawan_packing = new javax.swing.JMenuItem();
         jMenuItem_pack_ProgressPengiriman = new javax.swing.JMenuItem();
         jMenuItem_peramalan_barangjadi = new javax.swing.JMenuItem();
@@ -825,7 +925,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.378");
+        jLabel19.setText("2.2.386");
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Calibri Light", 1, 48)); // NOI18N
@@ -882,7 +982,7 @@ public class MainForm extends javax.swing.JFrame {
         );
 
         jPanel_Butuh_Acc.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_Butuh_Acc.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Approval Required", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Bahnschrift", 0, 24), new java.awt.Color(255, 0, 0))); // NOI18N
+        jPanel_Butuh_Acc.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Approval Required", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 0, 18), new java.awt.Color(255, 0, 0))); // NOI18N
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -1000,11 +1100,11 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Butuh_AccLayout.createSequentialGroup()
                 .addComponent(Button_refresh_butuh_Acc)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Posisi LP Percobaan", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 0, 11))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Posisi LP Percobaan", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 0, 18))); // NOI18N
 
         tabel_data_LP_percobaan.setAutoCreateRowSorter(true);
         tabel_data_LP_percobaan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -1065,7 +1165,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1093,13 +1193,76 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(label_total_gram_lp_percobaan)
                     .addComponent(label_total_lp_percobaan))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jLabel20.setBackground(new java.awt.Color(255, 255, 255));
         jLabel20.setFont(new java.awt.Font("Calibri Light", 0, 24)); // NOI18N
         jLabel20.setText("System version :");
+
+        jPanel_Butuh_Acc1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Butuh_Acc1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Dokumen Jatuh Tempo", javax.swing.border.TitledBorder.LEADING, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Arial", 0, 18), new java.awt.Color(255, 0, 0))); // NOI18N
+
+        Button_refresh_dokumen_jatuh_tempo.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        Button_refresh_dokumen_jatuh_tempo.setText("Refresh");
+        Button_refresh_dokumen_jatuh_tempo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Button_refresh_dokumen_jatuh_tempoActionPerformed(evt);
+            }
+        });
+
+        Table_dokumen_jatuh_tempo.setAutoCreateRowSorter(true);
+        Table_dokumen_jatuh_tempo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Kode Dokumen", "Nama Dokumen", "Tgl kedaluarsa", "Jatuh Tempo", "Total Hari"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        Table_dokumen_jatuh_tempo.getTableHeader().setReorderingAllowed(false);
+        jScrollPane8.setViewportView(Table_dokumen_jatuh_tempo);
+        if (Table_dokumen_jatuh_tempo.getColumnModel().getColumnCount() > 0) {
+            Table_dokumen_jatuh_tempo.getColumnModel().getColumn(4).setMinWidth(0);
+            Table_dokumen_jatuh_tempo.getColumnModel().getColumn(4).setPreferredWidth(0);
+            Table_dokumen_jatuh_tempo.getColumnModel().getColumn(4).setMaxWidth(0);
+        }
+
+        javax.swing.GroupLayout jPanel_Butuh_Acc1Layout = new javax.swing.GroupLayout(jPanel_Butuh_Acc1);
+        jPanel_Butuh_Acc1.setLayout(jPanel_Butuh_Acc1Layout);
+        jPanel_Butuh_Acc1Layout.setHorizontalGroup(
+            jPanel_Butuh_Acc1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Butuh_Acc1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Butuh_Acc1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                    .addComponent(Button_refresh_dokumen_jatuh_tempo))
+                .addContainerGap())
+        );
+        jPanel_Butuh_Acc1Layout.setVerticalGroup(
+            jPanel_Butuh_Acc1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Butuh_Acc1Layout.createSequentialGroup()
+                .addComponent(Button_refresh_dokumen_jatuh_tempo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel_HomeLayout = new javax.swing.GroupLayout(jPanel_Home);
         jPanel_Home.setLayout(jPanel_HomeLayout);
@@ -1111,9 +1274,7 @@ public class MainForm extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel_need_attention, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel_Butuh_Acc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel_Butuh_Acc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel_HomeLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1121,26 +1282,32 @@ public class MainForm extends javax.swing.JFrame {
                             .addGroup(jPanel_HomeLayout.createSequentialGroup()
                                 .addComponent(jLabel20)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel19)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(jLabel19)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel_Butuh_Acc1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel_HomeLayout.setVerticalGroup(
             jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_HomeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel20))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel21)
-                .addGap(11, 11, 11)
                 .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_HomeLayout.createSequentialGroup()
+                        .addGroup(jPanel_HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel20))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel21)
+                        .addGap(11, 11, 11)
                         .addComponent(jPanel_need_attention, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel_Butuh_Acc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel_HomeLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel_Butuh_Acc1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -2259,6 +2426,16 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem_tv_spk);
 
+        jMenuItem_tv_spk_lokal.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem_tv_spk_lokal.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem_tv_spk_lokal.setText("TV SPK LOK");
+        jMenuItem_tv_spk_lokal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_tv_spk_lokalActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem_tv_spk_lokal);
+
         jMenu_BahanJadi.add(jMenu3);
 
         jMenuBar1.add(jMenu_BahanJadi);
@@ -2337,6 +2514,10 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu_packing.add(jMenuItem_PaymentReport);
 
+        jMenu_TV_SPK.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu_TV_SPK.setText("TV SPK");
+        jMenu_TV_SPK.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
         jMenuItem_tv_spk2.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem_tv_spk2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jMenuItem_tv_spk2.setText("TV SPK Packing");
@@ -2345,7 +2526,19 @@ public class MainForm extends javax.swing.JFrame {
                 jMenuItem_tv_spk2ActionPerformed(evt);
             }
         });
-        jMenu_packing.add(jMenuItem_tv_spk2);
+        jMenu_TV_SPK.add(jMenuItem_tv_spk2);
+
+        jMenuItem_tv_spk_lok.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem_tv_spk_lok.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem_tv_spk_lok.setText("TV SPK Lokal");
+        jMenuItem_tv_spk_lok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_tv_spk_lokActionPerformed(evt);
+            }
+        });
+        jMenu_TV_SPK.add(jMenuItem_tv_spk_lok);
+
+        jMenu_packing.add(jMenu_TV_SPK);
 
         jMenuItem_kinerja_karyawan_packing.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jMenuItem_kinerja_karyawan_packing.setText("Kinerja Karyawan Packing");
@@ -6540,9 +6733,39 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.revalidate();
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    private void Button_refresh_dokumen_jatuh_tempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_refresh_dokumen_jatuh_tempoActionPerformed
+        // TODO add your handling code here:
+        refreshTable_data_master_dokumen();
+    }//GEN-LAST:event_Button_refresh_dokumen_jatuh_tempoActionPerformed
+
+    private void jMenuItem_tv_spk_lokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tv_spk_lokActionPerformed
+        // TODO add your handling code here:
+        waleta_system.Packing.JFrame_TV_SPK_LOKAL chart = new waleta_system.Packing.JFrame_TV_SPK_LOKAL();
+        chart.pack();
+        chart.setResizable(true);
+        chart.setLocationRelativeTo(null);
+        chart.setVisible(true);
+        chart.setEnabled(true);
+        chart.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        chart.init();
+    }//GEN-LAST:event_jMenuItem_tv_spk_lokActionPerformed
+
+    private void jMenuItem_tv_spk_lokalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tv_spk_lokalActionPerformed
+        // TODO add your handling code here:
+        waleta_system.Packing.JFrame_TV_SPK_LOKAL chart = new waleta_system.Packing.JFrame_TV_SPK_LOKAL();
+        chart.pack();
+        chart.setResizable(true);
+        chart.setLocationRelativeTo(null);
+        chart.setVisible(true);
+        chart.setEnabled(true);
+        chart.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        chart.init();
+    }//GEN-LAST:event_jMenuItem_tv_spk_lokalActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_refresh_butuh_Acc;
+    private javax.swing.JButton Button_refresh_dokumen_jatuh_tempo;
     public static javax.swing.JMenuItem JMenuItem_DataPacking;
     private javax.swing.JMenuItem MenuItem_Keu_BakuKeluar;
     private javax.swing.JMenuItem MenuItem_Penilaian_BuluUpah;
@@ -6550,6 +6773,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTable Tabel_butuh_Acc_Lembur;
     private javax.swing.JTable Tabel_butuh_Acc_PengajuanAlat;
     private javax.swing.JTable Tabel_butuh_Acc_PindahBagian;
+    private javax.swing.JTable Table_dokumen_jatuh_tempo;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -6668,6 +6892,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_tv_qc_belumSetor;
     private javax.swing.JMenuItem jMenuItem_tv_spk;
     private javax.swing.JMenuItem jMenuItem_tv_spk2;
+    private javax.swing.JMenuItem jMenuItem_tv_spk_lok;
+    private javax.swing.JMenuItem jMenuItem_tv_spk_lokal;
     private javax.swing.JMenuItem jMenuItem_tv_wip;
     private javax.swing.JMenuItem jMenuItem_tv_wip1;
     private javax.swing.JMenuItem jMenuItem_tv_wip2;
@@ -6700,6 +6926,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenu_TV_IjinBelumKembali;
     private javax.swing.JMenuItem jMenu_TV_KPI;
     private javax.swing.JMenuItem jMenu_TV_KPI_Sub;
+    private javax.swing.JMenu jMenu_TV_SPK;
     public static javax.swing.JMenuItem jMenu_TV_belumAbsen;
     private javax.swing.JMenuItem jMenu_Traceability;
     private javax.swing.JMenuItem jMenu_Traceability2;
@@ -6806,6 +7033,7 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.BahanJadi.JPanel_BoxBahanJadi jPanel_BoxBahanJadi1;
     private waleta_system.Finance.JPanel_BoxBahanJadi_Keuangan jPanel_BoxBahanJadi_Keuangan1;
     private javax.swing.JPanel jPanel_Butuh_Acc;
+    private javax.swing.JPanel jPanel_Butuh_Acc1;
     private waleta_system.BahanBaku.JPanel_Customer jPanel_Customer1;
     private waleta_system.BahanBaku.JPanel_DataBahanBaku jPanel_DataBahanBaku1;
     private waleta_system.Finance.JPanel_DataBahanBaku_Finance jPanel_DataBahanBaku_Finance1;
@@ -6945,6 +7173,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel label_need_attention;

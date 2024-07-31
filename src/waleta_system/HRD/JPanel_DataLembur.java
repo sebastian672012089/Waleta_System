@@ -812,14 +812,14 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "ID Pegawai", "Nama", "Bagian", "Tgl Lembur", "Jam Mulai", "Jam Selesai", "Jam", "Istirahat"
+                "No", "ID Pegawai", "Nama", "Bagian", "Tgl Lembur", "Jam Mulai", "Jam Selesai", "Jam", "Istirahat", "Absen Terakhir"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

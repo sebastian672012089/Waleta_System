@@ -159,7 +159,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 }
             }
         });
-        
+
         table_data_LPsuwir.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
@@ -377,24 +377,24 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         SearchByBentuk = "";
                         break;
                     case "Mangkok":
-                        SearchByBentuk = "AND `tb_grade_bahan_baku`.`jenis_bentuk` = 'Mangkok'";
+                        SearchByBentuk = "AND `tb_grade_bahan_baku`.`jenis_bentuk` = 'Mangkok'\n";
                         break;
                     case "Oval":
-                        SearchByBentuk = "AND `tb_grade_bahan_baku`.`jenis_bentuk` = 'Oval'";
+                        SearchByBentuk = "AND `tb_grade_bahan_baku`.`jenis_bentuk` = 'Oval'\n";
                         break;
                     case "Segitiga":
-                        SearchByBentuk = "AND `tb_grade_bahan_baku`.`jenis_bentuk` = 'Segitiga'";
+                        SearchByBentuk = "AND `tb_grade_bahan_baku`.`jenis_bentuk` = 'Segitiga'\n";
                         break;
                     case "Flat/Pecah":
                         SearchByBentuk = "AND (`tb_grade_bahan_baku`.`jenis_bentuk` = 'Pecah'"
-                                + "OR `tb_grade_bahan_baku`.`jenis_bentuk` = 'Lubang')";
+                                + "OR `tb_grade_bahan_baku`.`jenis_bentuk` = 'Lubang')\n";
                         break;
                     case "-":
-                        SearchByBentuk = "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Mangkok'"
-                                + "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Oval'"
-                                + "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Segitiga'"
-                                + "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Pecah'"
-                                + "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Lubang'";
+                        SearchByBentuk = "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Mangkok'\n"
+                                + "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Oval'\n"
+                                + "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Segitiga'\n"
+                                + "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Pecah'\n"
+                                + "AND `tb_grade_bahan_baku`.`jenis_bentuk` NOT LIKE 'Lubang'\n";
                         break;
                     default:
                         break;
@@ -408,33 +408,32 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         break;
                     }
                     default:
-                        ruang = ComboBox_ruangan.getSelectedItem().toString();
+                        ruang = "AND `tb_laporan_produksi`.`ruangan` = '" + ComboBox_ruangan.getSelectedItem().toString() + "' \n";
                         break;
                 }
             }
-            if (Date_Setoran1.getDate() == null || Date_Setoran2.getDate() == null) {
-                sql = "SELECT * \n"
-                        + "FROM `tb_finishing_2` "
-                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
-                        + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_grade_bahan_baku`.`kode_grade` = `tb_laporan_produksi`.`kode_grade`\n"
-                        + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_karyawan` ON `tb_karyawan`.`id_pegawai` = `tb_cetak`.`cetak_dikerjakan`\n"
-                        + "LEFT JOIN `tb_cabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "WHERE `tb_finishing_2`.`tgl_setor_f2` IS NOT NULL AND `tb_laporan_produksi`.`memo_lp` LIKE '%" + txt_search_Memo_Setoran.getText() + "%' AND `tb_laporan_produksi`.`no_kartu_waleta` LIKE '%" + txt_search_kartu_setoran.getText() + "%' AND `tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_LP_setoran.getText() + "%' AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruang + "%' " + SearchByBentuk + "\n"
-                        + "ORDER BY `tb_finishing_2`.`tgl_setor_f2` DESC";
-            } else {
-                sql = "SELECT * \n"
-                        + "FROM `tb_finishing_2` "
-                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
-                        + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_grade_bahan_baku`.`kode_grade` = `tb_laporan_produksi`.`kode_grade`\n"
-                        + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "LEFT JOIN `tb_karyawan` ON `tb_karyawan`.`id_pegawai` = `tb_cetak`.`cetak_dikerjakan`\n"
-                        + "LEFT JOIN `tb_cabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                        + "WHERE `tb_finishing_2`.`tgl_setor_f2` IS NOT NULL AND `tb_laporan_produksi`.`memo_lp` LIKE '%" + txt_search_Memo_Setoran.getText() + "%' AND `tb_laporan_produksi`.`no_kartu_waleta` LIKE '%" + txt_search_kartu_setoran.getText() + "%' AND `tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_LP_setoran.getText() + "%' AND `tb_laporan_produksi`.`ruangan` LIKE '%" + ruang + "%' AND `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(Date_Setoran1.getDate()) + "' AND '" + dateFormat.format(Date_Setoran2.getDate()) + "' " + SearchByBentuk + "\n"
-                        + "ORDER BY `tb_finishing_2`.`tgl_setor_f2` DESC";
+            String filter_tanggal_setor = "";
+            if (Date_Setoran1.getDate() != null && Date_Setoran2.getDate() != null) {
+                filter_tanggal_setor = "AND `tb_finishing_2`.`tgl_setor_f2` BETWEEN '" + dateFormat.format(Date_Setoran1.getDate()) + "' AND '" + dateFormat.format(Date_Setoran2.getDate()) + "'\n";
             }
+
+            sql = "SELECT * \n"
+                    + "FROM `tb_finishing_2` "
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
+                    + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_grade_bahan_baku`.`kode_grade` = `tb_laporan_produksi`.`kode_grade`\n"
+                    + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_karyawan`.`id_pegawai` = `tb_cetak`.`cetak_dikerjakan`\n"
+                    + "LEFT JOIN `tb_cabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "WHERE "
+                    + "`tb_finishing_2`.`tgl_setor_f2` IS NOT NULL "
+                    + "AND `tb_laporan_produksi`.`memo_lp` LIKE '%" + txt_search_Memo_Setoran.getText() + "%' "
+                    + "AND `tb_laporan_produksi`.`no_kartu_waleta` LIKE '%" + txt_search_kartu_setoran.getText() + "%' "
+                    + "AND `tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_LP_setoran.getText() + "%' "
+                    + ruang
+                    + filter_tanggal_setor
+                    + SearchByBentuk
+                    + "ORDER BY `tb_finishing_2`.`tgl_setor_f2` DESC";
 //            System.out.println(sql);
             rs = Utility.db.getStatement().executeQuery(sql);
             DataF2 f2;
@@ -609,7 +608,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             row[35] = Math.round(rend_flat_12 * 100.f) / 100.f;
             row[36] = Math.round(rend_jidun_12 * 100.f) / 100.f;
             row[37] = Math.round(rend_total_12 * 100.f) / 100.f;
-            
+
             row[38] = list.get(i).getTgl_setor_f2();
 
             model.addRow(row);

@@ -244,8 +244,17 @@ public class JPanel_StokOpname_WIP extends javax.swing.JPanel {
             String qry_rekap = "SELECT `posisi`, COUNT(`tb_stokopname_wip_scan`.`no_laporan_produksi`) AS 'jumlah_lp', SUM(`jumlah_keping`) AS 'tot_kpg', SUM(`berat_basah`) AS 'tot_gram' "
                     + "FROM `tb_stokopname_wip_scan` \n"
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_stokopname_wip_scan`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
-                    + "WHERE `tb_stokopname_wip_scan`.`no_laporan_produksi` LIKE '%" + txt_search_LP_WIP.getText() + "%' "
-                    + "AND `tgl_stok_opname_wip` = '" + tgl_SO + "'" + filter_posisi
+                    + "LEFT JOIN "
+                    + "(SELECT `tb_laporan_produksi`.`no_laporan_produksi` FROM `tb_laporan_produksi` \n"
+                    + "LEFT JOIN `tb_bahan_jadi_masuk` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_bahan_jadi_masuk`.`kode_asal`\n"
+                    + "LEFT JOIN `tb_tutupan_grading` ON `tb_bahan_jadi_masuk`.`kode_tutupan` = `tb_tutupan_grading`.`kode_tutupan`\n"
+                    + "WHERE YEAR(`tanggal_lp`)>=2018 AND `tanggal_lp` <= '" + tgl_SO + "' AND `berat_basah` > 0 AND (`tgl_statusBox` > '" + tgl_SO + "' OR `tgl_statusBox` IS NULL)"
+                    + ") LP_WIP ON `tb_stokopname_wip_scan`.`no_laporan_produksi` = LP_WIP.`no_laporan_produksi` \n"
+                    + "WHERE \n"
+                    + "`tb_stokopname_wip_scan`.`no_laporan_produksi` LIKE '%" + txt_search_LP_WIP.getText() + "%' \n"
+                    + "AND `tgl_stok_opname_wip` = '" + tgl_SO + "'\n"
+                    + "AND LP_WIP.`no_laporan_produksi` IS NOT NULL \n" 
+                    + filter_posisi
                     + "GROUP BY `posisi`";
             ResultSet rs_rekap = Utility.db.getStatement().executeQuery(qry_rekap);
             while (rs_rekap.next()) {

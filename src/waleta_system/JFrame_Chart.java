@@ -125,7 +125,7 @@ public class JFrame_Chart extends javax.swing.JFrame {
     public ArrayList<DataF2> SetoranHarianList() {
         ArrayList<DataF2> F2List = new ArrayList<>();
         try {
-            
+
             String ruang = "";
             String kodeGrade = "";
 
@@ -227,21 +227,24 @@ public class JFrame_Chart extends javax.swing.JFrame {
     public ArrayList<DataKaryawan> KaryawanList() {
         ArrayList<DataKaryawan> KaryawanList = new ArrayList<>();
         try {
-            sql = "SELECT `id_pegawai`, `pin_finger`, `nik_ktp`, `nama_pegawai`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `agama`, `alamat`, `desa`, `kecamatan`, `golongan_darah`, `no_telp`, `status_kawin`, `nama_ibu`, `tb_bagian`.`nama_bagian`,`tb_bagian`.`kode_departemen`, `posisi`, `pendidikan`, `tanggal_interview`, `tanggal_masuk`, `tanggal_keluar`, `kategori_keluar`, `keterangan`, `status`, `level_gaji`, `jam_kerja`, `fc_ktp`, `sertifikat_vaksin1`, `sertifikat_vaksin2`, `berkas_surat_pernyataan`, `tanggal_surat`, `email`, `potongan_bpjs` "
-                    + "FROM `tb_karyawan` JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian` "
-                    + "ORDER BY `id_pegawai` DESC";
+            String filter_tanggal = "1";
             if (Date_DataMasuk.getDate() != null && Date_DataMasuk2.getDate() != null) {
-                sql = "SELECT `id_pegawai`, `pin_finger`, `nik_ktp`, `nama_pegawai`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `agama`, `alamat`, `desa`, `kecamatan`, `golongan_darah`, `no_telp`, `status_kawin`, `nama_ibu`, `tb_bagian`.`nama_bagian`,`tb_bagian`.`kode_departemen`, `posisi`, `pendidikan`, `tanggal_interview`, `tanggal_masuk`, `tanggal_keluar`, `kategori_keluar`, `keterangan`, `status`, `level_gaji`, `jam_kerja`, `fc_ktp`, `sertifikat_vaksin1`, `sertifikat_vaksin2`, `berkas_surat_pernyataan`, `tanggal_surat`, `email`, `potongan_bpjs` "
-                        + "FROM `tb_karyawan` JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian` "
-                        + "WHERE `tanggal_masuk` BETWEEN '" + dateFormat.format(Date_DataMasuk.getDate()) + "' AND '" + dateFormat.format(Date_DataMasuk2.getDate()) + "' "
-                        + "ORDER BY `id_pegawai` DESC";
+                filter_tanggal = "`tanggal_masuk` BETWEEN '" + dateFormat.format(Date_DataMasuk.getDate()) + "' AND '" + dateFormat.format(Date_DataMasuk2.getDate()) + "'\n";
             }
+            
+            sql = "SELECT `id_pegawai`, `pin_finger`, `nik_ktp`, `nama_pegawai`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `agama`, `alamat`, `desa`, `kecamatan`, `golongan_darah`, `no_telp`, `status_kawin`, `nama_ibu`, `tb_bagian`.`nama_bagian`,`tb_bagian`.`kode_departemen`, `posisi`, `pendidikan`, `tanggal_interview`, `tanggal_masuk`, `tanggal_keluar`, `kategori_keluar`, `keterangan`, `status`, `level_gaji`, `jam_kerja`, `fc_ktp`, `sertifikat_vaksin1`, `sertifikat_vaksin2`, `berkas_surat_pernyataan`, `tanggal_surat`, `email`, `potongan_bpjs`, `status_pajak`, `no_npwp` "
+                    + "FROM `tb_karyawan` "
+                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian` \n"
+                    + filter_tanggal
+                    + "ORDER BY `id_pegawai` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             DataKaryawan Karyawan;
             while (rs.next()) {
                 Karyawan = new DataKaryawan(rs.getString("id_pegawai"), rs.getString("pin_finger"), rs.getString("nik_ktp"), rs.getString("nama_pegawai"), rs.getString("jenis_kelamin"), rs.getString("tempat_lahir"), rs.getDate("tanggal_lahir"), rs.getString("alamat"), rs.getString("desa"), rs.getString("kecamatan"), rs.getString("kota_kabupaten"), rs.getString("provinsi"), rs.getString("golongan_darah"), rs.getString("status_kawin"), rs.getString("nama_ibu"), rs.getString("no_telp"), rs.getString("email"), rs.getString("kategori_keluar"), rs.getString("keterangan"), rs.getBoolean("uid_card"),
                         rs.getString("nama_bagian"), rs.getString("posisi"), rs.getString("kode_departemen"), rs.getString("pendidikan"), rs.getDate("tanggal_interview"), rs.getDate("tanggal_masuk"), rs.getDate("tanggal_keluar"), rs.getString("status"), rs.getString("jam_kerja"), rs.getString("jalur_jemputan"), rs.getInt("potongan_bpjs"),
-                        rs.getInt("fc_ktp"), rs.getInt("sertifikat_vaksin1"), rs.getInt("sertifikat_vaksin2"), rs.getInt("berkas_surat_pernyataan"), rs.getDate("tanggal_surat"), rs.getDate("tgl_surat_berakhir"));
+                        rs.getInt("fc_ktp"), rs.getInt("sertifikat_vaksin1"), rs.getInt("sertifikat_vaksin2"), rs.getInt("berkas_surat_pernyataan"), rs.getDate("tanggal_surat"), rs.getDate("tgl_surat_berakhir"),
+                        rs.getString("status_pajak"), rs.getString("no_npwp")
+                );
                 KaryawanList.add(Karyawan);
             }
         } catch (Exception ex) {
@@ -270,7 +273,7 @@ public class JFrame_Chart extends javax.swing.JFrame {
     public ArrayList<GradeBahanJadi> GradeBJList() {
         ArrayList<GradeBahanJadi> GradeBJList = new ArrayList<>();
         try {
-            
+
             sql = "SELECT * FROM `tb_grade_bahan_jadi`";
             rs = Utility.db.getStatement().executeQuery(sql);
             GradeBahanJadi GradeBJ;
@@ -414,7 +417,7 @@ public class JFrame_Chart extends javax.swing.JFrame {
     public void show_data_qclp() {
         try {
             int total_passed = 0, total_hold = 0;
-            
+
             if (Date_QCLP1.getDate() != null && Date_QCLP2.getDate() != null) {
                 sql = "SELECT * FROM `tb_lab_treatment_lp` LEFT JOIN `tb_laporan_produksi` ON `tb_lab_treatment_lp`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`"
                         + "WHERE (`tgl_treatment` BETWEEN '" + dateFormat.format(Date_QCLP1.getDate()) + "' AND '" + dateFormat.format(Date_QCLP2.getDate()) + "') ";
@@ -1062,7 +1065,7 @@ public class JFrame_Chart extends javax.swing.JFrame {
             }
         });
         ((BarRenderer) cp4.getRenderer()).setBarPainter(new StandardBarPainter());
- /*BarRenderer r4 = (BarRenderer) chart6.getCategoryPlot().getRenderer();
+        /*BarRenderer r4 = (BarRenderer) chart6.getCategoryPlot().getRenderer();
         r4.setSeriesPaint(0, Color.cyan);
         r4.setSeriesPaint(1, Color.magenta);
         r4.setSeriesPaint(2, Color.green);
@@ -2455,7 +2458,7 @@ public class JFrame_Chart extends javax.swing.JFrame {
 
     private void button_search_LPSetoranActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_search_LPSetoranActionPerformed
         try {
-            
+
             if (Date_Setoran.getDate() != null) {
                 sql = "SELECT "
                         + "(SELECT COUNT(tgl_masuk_cuci) FROM `tb_laporan_produksi` LEFT JOIN `tb_cuci` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cuci`.`no_laporan_produksi` WHERE tgl_masuk_cuci='" + dateFormat.format(Date_Setoran.getDate()) + "') AS `cuci_lp`, "
@@ -2504,7 +2507,7 @@ public class JFrame_Chart extends javax.swing.JFrame {
 
     private void button_search_LPTandonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_search_LPTandonActionPerformed
         try {
-            
+
             if (Date_Tandon.getDate() != null) {
                 sql = "SELECT "
                         + "(SELECT COUNT(`tb_laporan_produksi`.`no_laporan_produksi`) FROM `tb_laporan_produksi` LEFT JOIN `tb_cuci` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cuci`.`no_laporan_produksi` WHERE cuci_diserahkan='-' OR cuci_diserahkan IS NULL) AS `cuci_lp`, "

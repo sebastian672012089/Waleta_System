@@ -125,80 +125,12 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 row[2] = rs.getString("nama_dokumen");
                 row[3] = rs.getDate("tanggal_dokumen");
                 row[4] = rs.getDate("tanggal_kadaluarsa");
-                row[5] = rs.getInt("hari_jatuh_tempo");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_pembaruan_dokumen);
             int rowData = Table_pembaruan_dokumen.getRowCount();
             label_total_data.setText(Integer.toString(rowData));
-
-            Table_pembaruan_dokumen.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                    if (isSelected) {
-                        comp.setBackground(Table_pembaruan_dokumen.getSelectionBackground());
-                        comp.setForeground(Table_pembaruan_dokumen.getSelectionForeground());
-                    } else {
-                        if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 0) {
-                            comp.setBackground(Color.RED);
-                            comp.setForeground(Color.WHITE);
-                        } else if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 30) {
-                            comp.setBackground(Color.ORANGE);
-                            comp.setForeground(Color.BLACK);
-                        } else {
-                            comp.setBackground(Table_pembaruan_dokumen.getBackground());
-                            comp.setForeground(Table_pembaruan_dokumen.getForeground());
-                        }
-                    }
-                    return comp;
-                }
-            });
-            Table_pembaruan_dokumen.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                    if (isSelected) {
-                        comp.setBackground(Table_pembaruan_dokumen.getSelectionBackground());
-                        comp.setForeground(Table_pembaruan_dokumen.getSelectionForeground());
-                    } else {
-                        if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 0) {
-                            comp.setBackground(Color.RED);
-                            comp.setForeground(Color.WHITE);
-                        } else if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 30) {
-                            comp.setBackground(Color.ORANGE);
-                            comp.setForeground(Color.BLACK);
-                        } else {
-                            comp.setBackground(Table_pembaruan_dokumen.getBackground());
-                            comp.setForeground(Table_pembaruan_dokumen.getForeground());
-                        }
-                    }
-                    return comp;
-                }
-            });
-            Table_pembaruan_dokumen.setDefaultRenderer(Integer.class, new DefaultTableCellRenderer() {
-                @Override
-                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                    if (isSelected) {
-                        comp.setBackground(Table_pembaruan_dokumen.getSelectionBackground());
-                        comp.setForeground(Table_pembaruan_dokumen.getSelectionForeground());
-                    } else {
-                        if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 0) {
-                            comp.setBackground(Color.RED);
-                            comp.setForeground(Color.WHITE);
-                        } else if ((int) Table_pembaruan_dokumen.getValueAt(row, 5) < 30) {
-                            comp.setBackground(Color.ORANGE);
-                            comp.setForeground(Color.BLACK);
-                        } else {
-                            comp.setBackground(Table_pembaruan_dokumen.getBackground());
-                            comp.setForeground(Table_pembaruan_dokumen.getForeground());
-                        }
-                    }
-                    return comp;
-                }
-            });
-            Table_pembaruan_dokumen.repaint();
+            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, ex);
@@ -213,11 +145,15 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
             if (kode_departemen != null) {
                 filter_departemen = "AND `kode_departemen` = '" + kode_departemen + "' \n";
             }
-            sql = "SELECT `kode_dokumen`, `nama_dokumen`, `tempat_pengujian`, `jenis_dokumen`, `keterangan`, `kode_departemen`, `masa_berlaku` \n"
+            sql = "SELECT `tb_dokumen_qc`.`kode_dokumen`, `nama_dokumen`, `tempat_pengujian`, `jenis_dokumen`, `keterangan`, `kode_departemen`, `masa_berlaku`, \n"
+                    + "MAX(`tanggal_kadaluarsa`) AS 'tanggal_kadaluarsa', DATEDIFF(MAX(`tanggal_kadaluarsa`), CURRENT_DATE()) AS 'hari_jatuh_tempo'"
                     + "FROM `tb_dokumen_qc` \n"
+                    + "LEFT JOIN `tb_dokumen_qc_update` ON `tb_dokumen_qc`.`kode_dokumen` = `tb_dokumen_qc_update`.`kode_dokumen`\n"
                     + "WHERE "
-                    + "(`kode_dokumen` LIKE '%" + txt_search_master_dokumen.getText() + "%' OR `nama_dokumen` LIKE '%" + txt_search_master_dokumen.getText() + "%') "
-                    + filter_departemen;
+                    + "(`tb_dokumen_qc`.`kode_dokumen` LIKE '%" + txt_search_master_dokumen.getText() + "%' OR `nama_dokumen` LIKE '%" + txt_search_master_dokumen.getText() + "%') "
+                    + filter_departemen
+                    + "GROUP BY `tb_dokumen_qc`.`kode_dokumen`";
+            System.out.println(sql);
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[10];
             while (rs.next()) {
@@ -228,9 +164,78 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 row[4] = rs.getString("keterangan");
                 row[5] = rs.getString("kode_departemen");
                 row[6] = rs.getInt("masa_berlaku");
+                row[7] = rs.getDate("tanggal_kadaluarsa");
+                row[8] = rs.getInt("hari_jatuh_tempo");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_master_dokumen);
+
+            table_master_dokumen.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (isSelected) {
+                        comp.setBackground(table_master_dokumen.getSelectionBackground());
+                        comp.setForeground(table_master_dokumen.getSelectionForeground());
+                    } else {
+                        if ((int) table_master_dokumen.getValueAt(row, 8) < 0) {
+                            comp.setBackground(Color.RED);
+                            comp.setForeground(Color.WHITE);
+                        } else if ((int) table_master_dokumen.getValueAt(row, 8) < 30) {
+                            comp.setBackground(Color.ORANGE);
+                            comp.setForeground(Color.BLACK);
+                        } else {
+                            comp.setBackground(table_master_dokumen.getBackground());
+                            comp.setForeground(table_master_dokumen.getForeground());
+                        }
+                    }
+                    return comp;
+                }
+            });
+            table_master_dokumen.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (isSelected) {
+                        comp.setBackground(table_master_dokumen.getSelectionBackground());
+                        comp.setForeground(table_master_dokumen.getSelectionForeground());
+                    } else {
+                        if ((int) table_master_dokumen.getValueAt(row, 8) < 0) {
+                            comp.setBackground(Color.RED);
+                            comp.setForeground(Color.WHITE);
+                        } else if ((int) table_master_dokumen.getValueAt(row, 8) < 30) {
+                            comp.setBackground(Color.ORANGE);
+                            comp.setForeground(Color.BLACK);
+                        } else {
+                            comp.setBackground(table_master_dokumen.getBackground());
+                            comp.setForeground(table_master_dokumen.getForeground());
+                        }
+                    }
+                    return comp;
+                }
+            });
+            table_master_dokumen.setDefaultRenderer(Float.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (isSelected) {
+                        comp.setBackground(table_master_dokumen.getSelectionBackground());
+                        comp.setForeground(table_master_dokumen.getSelectionForeground());
+                    } else {
+                        if ((int) table_master_dokumen.getValueAt(row, 8) < 0) {
+                            comp.setBackground(Color.RED);
+                            comp.setForeground(Color.WHITE);
+                        } else if ((int) table_master_dokumen.getValueAt(row, 8) < 30) {
+                            comp.setBackground(Color.ORANGE);
+                            comp.setForeground(Color.BLACK);
+                        } else {
+                            comp.setBackground(table_master_dokumen.getBackground());
+                            comp.setForeground(table_master_dokumen.getForeground());
+                        }
+                    }
+                    return comp;
+                }
+            });
 
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -248,30 +253,6 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel_Pembaruan_Dokumen_QC = new javax.swing.JPanel();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        Table_pembaruan_dokumen = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
-        button_insert_pembaruan_dokumen = new javax.swing.JButton();
-        button_update_pembaruan_dokumen = new javax.swing.JButton();
-        button_clear_pembaruan_dokumen = new javax.swing.JButton();
-        button_delete_pembaruan_dokumen = new javax.swing.JButton();
-        label_alamat_customer_baku = new javax.swing.JLabel();
-        label_nama_customer_baku1 = new javax.swing.JLabel();
-        ComboBox_kode_dokumen = new javax.swing.JComboBox<>();
-        Date_Dokumen = new com.toedter.calendar.JDateChooser();
-        jLabel12 = new javax.swing.JLabel();
-        label_total_data = new javax.swing.JLabel();
-        txt_search_dokumen = new javax.swing.JTextField();
-        button_search_dokumen = new javax.swing.JButton();
-        button_export_pembaruan_dokumen = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        DateFilter_tgl_dokumen1 = new com.toedter.calendar.JDateChooser();
-        DateFilter_tgl_dokumen2 = new com.toedter.calendar.JDateChooser();
-        jLabel3 = new javax.swing.JLabel();
-        DateFilter_tgl_kadaluarsa1 = new com.toedter.calendar.JDateChooser();
-        DateFilter_tgl_kadaluarsa2 = new com.toedter.calendar.JDateChooser();
         jPanel_master_dokumen = new javax.swing.JPanel();
         jPanel_operation_master_dokumen = new javax.swing.JPanel();
         button_insert_master_dokumen = new javax.swing.JButton();
@@ -296,9 +277,273 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
         button_search_master_dokumen = new javax.swing.JButton();
         txt_search_master_dokumen = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
+        jPanel_Pembaruan_Dokumen_QC = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        Table_pembaruan_dokumen = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        button_insert_pembaruan_dokumen = new javax.swing.JButton();
+        button_update_pembaruan_dokumen = new javax.swing.JButton();
+        button_clear_pembaruan_dokumen = new javax.swing.JButton();
+        button_delete_pembaruan_dokumen = new javax.swing.JButton();
+        label_alamat_customer_baku = new javax.swing.JLabel();
+        label_nama_customer_baku1 = new javax.swing.JLabel();
+        ComboBox_kode_dokumen = new javax.swing.JComboBox<>();
+        Date_Dokumen = new com.toedter.calendar.JDateChooser();
+        jLabel12 = new javax.swing.JLabel();
+        label_total_data = new javax.swing.JLabel();
+        txt_search_dokumen = new javax.swing.JTextField();
+        button_search_dokumen = new javax.swing.JButton();
+        button_export_pembaruan_dokumen = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        DateFilter_tgl_dokumen1 = new com.toedter.calendar.JDateChooser();
+        DateFilter_tgl_dokumen2 = new com.toedter.calendar.JDateChooser();
+        jLabel3 = new javax.swing.JLabel();
+        DateFilter_tgl_kadaluarsa1 = new com.toedter.calendar.JDateChooser();
+        DateFilter_tgl_kadaluarsa2 = new com.toedter.calendar.JDateChooser();
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+
+        jPanel_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel_operation_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_operation_master_dokumen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel_operation_master_dokumen.setName("aah"); // NOI18N
+
+        button_insert_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
+        button_insert_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_insert_master_dokumen.setText("insert");
+        button_insert_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_insert_master_dokumenActionPerformed(evt);
+            }
+        });
+
+        button_update_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
+        button_update_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_update_master_dokumen.setText("Update");
+        button_update_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_update_master_dokumenActionPerformed(evt);
+            }
+        });
+
+        button_clear_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
+        button_clear_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_clear_master_dokumen.setText("Clear Text");
+        button_clear_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_clear_master_dokumenActionPerformed(evt);
+            }
+        });
+
+        button_delete_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
+        button_delete_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_delete_master_dokumen.setText("Delete");
+        button_delete_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_delete_master_dokumenActionPerformed(evt);
+            }
+        });
+
+        txt_nama_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        txt_masa_berlaku.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        label_nama_customer_baku2.setBackground(new java.awt.Color(255, 255, 255));
+        label_nama_customer_baku2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_nama_customer_baku2.setText("Kode Dokumen :");
+
+        label_noTelp_customer_baku3.setBackground(new java.awt.Color(255, 255, 255));
+        label_noTelp_customer_baku3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_noTelp_customer_baku3.setText("Masa Berlaku (Hari) :");
+
+        txt_kode_dokumen.setEditable(false);
+        txt_kode_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        label_noTelp_customer_baku4.setBackground(new java.awt.Color(255, 255, 255));
+        label_noTelp_customer_baku4.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_noTelp_customer_baku4.setText("Nama Dokumen :");
+
+        label_noTelp_customer_baku5.setBackground(new java.awt.Color(255, 255, 255));
+        label_noTelp_customer_baku5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_noTelp_customer_baku5.setText("Keterangan :");
+
+        txt_keterangan_dokumen.setColumns(20);
+        txt_keterangan_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_keterangan_dokumen.setLineWrap(true);
+        txt_keterangan_dokumen.setRows(3);
+        jScrollPane1.setViewportView(txt_keterangan_dokumen);
+
+        label_noTelp_customer_baku6.setBackground(new java.awt.Color(255, 255, 255));
+        label_noTelp_customer_baku6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_noTelp_customer_baku6.setText("Tempat Pengujian :");
+
+        txt_tempat_pengujian.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        label_noTelp_customer_baku7.setBackground(new java.awt.Color(255, 255, 255));
+        label_noTelp_customer_baku7.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        label_noTelp_customer_baku7.setText("Jenis Dokumen :");
+
+        ComboBox_jenis_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_jenis_dokumen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Eksternal", "Internal" }));
+
+        javax.swing.GroupLayout jPanel_operation_master_dokumenLayout = new javax.swing.GroupLayout(jPanel_operation_master_dokumen);
+        jPanel_operation_master_dokumen.setLayout(jPanel_operation_master_dokumenLayout);
+        jPanel_operation_master_dokumenLayout.setHorizontalGroup(
+            jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_operation_master_dokumenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_noTelp_customer_baku3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_noTelp_customer_baku5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_noTelp_customer_baku7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_noTelp_customer_baku6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_noTelp_customer_baku4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_nama_customer_baku2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_masa_berlaku, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(ComboBox_jenis_dokumen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_tempat_pengujian, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nama_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_kode_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel_operation_master_dokumenLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(button_update_master_dokumen)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_insert_master_dokumen)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_delete_master_dokumen)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_clear_master_dokumen)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel_operation_master_dokumenLayout.setVerticalGroup(
+            jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_operation_master_dokumenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_nama_customer_baku2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_kode_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_noTelp_customer_baku4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nama_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_noTelp_customer_baku6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tempat_pengujian, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_noTelp_customer_baku7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_jenis_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_noTelp_customer_baku5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_noTelp_customer_baku3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_masa_berlaku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button_update_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_insert_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_delete_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_clear_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        table_master_dokumen.setAutoCreateRowSorter(true);
+        table_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        table_master_dokumen.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Kode Dokumen", "Nama Dokumen", "Tempat Pengujian", "Jenis Dokumen", "Keterangan", "Departemen", "Masa Berlaku (Hari)", "Tgl Kedaluarsa", "Jatuh Tempo (Hari)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Object.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table_master_dokumen.getTableHeader().setReorderingAllowed(false);
+        jScrollPane11.setViewportView(table_master_dokumen);
+
+        button_search_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
+        button_search_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_search_master_dokumen.setText("Refresh");
+        button_search_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_search_master_dokumenActionPerformed(evt);
+            }
+        });
+
+        txt_search_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_master_dokumen.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_master_dokumenKeyPressed(evt);
+            }
+        });
+
+        jLabel23.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel23.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel23.setText("Search :");
+
+        javax.swing.GroupLayout jPanel_master_dokumenLayout = new javax.swing.GroupLayout(jPanel_master_dokumen);
+        jPanel_master_dokumen.setLayout(jPanel_master_dokumenLayout);
+        jPanel_master_dokumenLayout.setHorizontalGroup(
+            jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
+                        .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 939, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel_operation_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
+                        .addComponent(jLabel23)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_search_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_search_master_dokumen)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel_master_dokumenLayout.setVerticalGroup(
+            jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_search_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 596, Short.MAX_VALUE)
+                    .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
+                        .addComponent(jPanel_operation_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Master Dokumen", jPanel_master_dokumen);
 
         jPanel_Pembaruan_Dokumen_QC.setBackground(new java.awt.Color(255, 255, 255));
         jPanel_Pembaruan_Dokumen_QC.setPreferredSize(new java.awt.Dimension(1366, 701));
@@ -309,14 +554,14 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Kode Dokumen", "No Dokumen", "Nama Dokumen", "Tgl Dokumen", "Tgl kadaluarsa", "Hari Jatuh Tempo"
+                "Kode Dokumen", "No Dokumen", "Nama Dokumen", "Tgl Dokumen", "Tgl kedaluarsa"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -511,7 +756,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_total_data)
-                        .addGap(0, 159, Short.MAX_VALUE))
+                        .addGap(0, 122, Short.MAX_VALUE))
                     .addComponent(jScrollPane8)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -536,250 +781,11 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 562, Short.MAX_VALUE))
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Data Pembaruan Dokumen", jPanel_Pembaruan_Dokumen_QC);
-
-        jPanel_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel_operation_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_operation_master_dokumen.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel_operation_master_dokumen.setName("aah"); // NOI18N
-
-        button_insert_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
-        button_insert_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_insert_master_dokumen.setText("insert");
-        button_insert_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_insert_master_dokumenActionPerformed(evt);
-            }
-        });
-
-        button_update_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
-        button_update_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_update_master_dokumen.setText("Update");
-        button_update_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_update_master_dokumenActionPerformed(evt);
-            }
-        });
-
-        button_clear_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
-        button_clear_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_clear_master_dokumen.setText("Clear Text");
-        button_clear_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_clear_master_dokumenActionPerformed(evt);
-            }
-        });
-
-        button_delete_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
-        button_delete_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_delete_master_dokumen.setText("Delete");
-        button_delete_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_delete_master_dokumenActionPerformed(evt);
-            }
-        });
-
-        txt_nama_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        txt_masa_berlaku.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        label_nama_customer_baku2.setBackground(new java.awt.Color(255, 255, 255));
-        label_nama_customer_baku2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        label_nama_customer_baku2.setText("Kode Dokumen :");
-
-        label_noTelp_customer_baku3.setBackground(new java.awt.Color(255, 255, 255));
-        label_noTelp_customer_baku3.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        label_noTelp_customer_baku3.setText("Masa Berlaku (Hari) :");
-
-        txt_kode_dokumen.setEditable(false);
-        txt_kode_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        label_noTelp_customer_baku4.setBackground(new java.awt.Color(255, 255, 255));
-        label_noTelp_customer_baku4.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        label_noTelp_customer_baku4.setText("Nama Dokumen :");
-
-        label_noTelp_customer_baku5.setBackground(new java.awt.Color(255, 255, 255));
-        label_noTelp_customer_baku5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        label_noTelp_customer_baku5.setText("Keterangan :");
-
-        txt_keterangan_dokumen.setColumns(20);
-        txt_keterangan_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_keterangan_dokumen.setLineWrap(true);
-        txt_keterangan_dokumen.setRows(3);
-        jScrollPane1.setViewportView(txt_keterangan_dokumen);
-
-        label_noTelp_customer_baku6.setBackground(new java.awt.Color(255, 255, 255));
-        label_noTelp_customer_baku6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        label_noTelp_customer_baku6.setText("Tempat Pengujian :");
-
-        txt_tempat_pengujian.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-
-        label_noTelp_customer_baku7.setBackground(new java.awt.Color(255, 255, 255));
-        label_noTelp_customer_baku7.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        label_noTelp_customer_baku7.setText("Jenis Dokumen :");
-
-        ComboBox_jenis_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        ComboBox_jenis_dokumen.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Eksternal", "Internal" }));
-
-        javax.swing.GroupLayout jPanel_operation_master_dokumenLayout = new javax.swing.GroupLayout(jPanel_operation_master_dokumen);
-        jPanel_operation_master_dokumen.setLayout(jPanel_operation_master_dokumenLayout);
-        jPanel_operation_master_dokumenLayout.setHorizontalGroup(
-            jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_operation_master_dokumenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_noTelp_customer_baku3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_noTelp_customer_baku5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_noTelp_customer_baku7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_noTelp_customer_baku6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_noTelp_customer_baku4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(label_nama_customer_baku2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_masa_berlaku, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1)
-                    .addComponent(ComboBox_jenis_dokumen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_tempat_pengujian, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nama_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_kode_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel_operation_master_dokumenLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(button_update_master_dokumen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_insert_master_dokumen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_delete_master_dokumen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_clear_master_dokumen)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel_operation_master_dokumenLayout.setVerticalGroup(
-            jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_operation_master_dokumenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_nama_customer_baku2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_kode_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_noTelp_customer_baku4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_nama_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_noTelp_customer_baku6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_tempat_pengujian, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_noTelp_customer_baku7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_jenis_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_noTelp_customer_baku5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_noTelp_customer_baku3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_masa_berlaku, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_operation_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button_update_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_insert_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_delete_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_clear_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        table_master_dokumen.setAutoCreateRowSorter(true);
-        table_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        table_master_dokumen.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Kode Dokumen", "Nama Dokumen", "Tempat Pengujian", "Jenis Dokumen", "Keterangan", "Departemen", "Masa Berlaku (Hari)"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        table_master_dokumen.getTableHeader().setReorderingAllowed(false);
-        jScrollPane11.setViewportView(table_master_dokumen);
-
-        button_search_master_dokumen.setBackground(new java.awt.Color(255, 255, 255));
-        button_search_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_search_master_dokumen.setText("Refresh");
-        button_search_master_dokumen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_search_master_dokumenActionPerformed(evt);
-            }
-        });
-
-        txt_search_master_dokumen.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_search_master_dokumen.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_search_master_dokumenKeyPressed(evt);
-            }
-        });
-
-        jLabel23.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel23.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel23.setText("Search :");
-
-        javax.swing.GroupLayout jPanel_master_dokumenLayout = new javax.swing.GroupLayout(jPanel_master_dokumen);
-        jPanel_master_dokumen.setLayout(jPanel_master_dokumenLayout);
-        jPanel_master_dokumenLayout.setHorizontalGroup(
-            jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
-                        .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 939, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel_operation_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
-                        .addComponent(jLabel23)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_search_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_search_master_dokumen)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel_master_dokumenLayout.setVerticalGroup(
-            jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_search_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_master_dokumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
-                    .addGroup(jPanel_master_dokumenLayout.createSequentialGroup()
-                        .addComponent(jPanel_operation_master_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Master Dokumen", jPanel_master_dokumen);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -789,7 +795,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -47,65 +47,55 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="label_kadar_aluminium" min="-2" pref="176" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="txt_kadar_aluminium" min="-2" pref="200" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="label_pecah" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="jLabel9" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_gram_akhir" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_tgl_uji" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_nitrit_flat" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_ka" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_tgl_selesai" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_utuh" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_jidun" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_nitrit_utuh" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_status" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_flat" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_status_akhir1" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_status_akhir" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_tanggal_masuk" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                      <Component id="label_kpg_akhir" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="txt_nitrit_utuh" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="ComboBox_status_Akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="txt_utuh" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="Date_uji" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="label_lp" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="Date_selesai" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="txt_nitrit_flat" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="txt_flat" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="txt_pecah" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="Date_masuk" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="txt_kadar_air" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="label_status_awal" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="txt_kpg_akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="txt_nitrit_jidun" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                      <Component id="txt_gram_akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <Component id="label_judul" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="182" pref="182" max="-2" attributes="0"/>
-                                  <Component id="label_status_awal1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="button_save" min="-2" pref="57" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="label_status" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_nitrit_utuh" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_jidun" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_kpg_akhir" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_tanggal_masuk" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_status_akhir1" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_kadar_aluminium" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_utuh" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_tgl_selesai" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_ka" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_nitrit_flat" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_tgl_uji" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_gram_akhir" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_status_akhir" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_flat" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="jLabel9" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
+                      <Component id="label_pecah" alignment="1" min="-2" pref="176" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="label_status_awal1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="ComboBox_status_Akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_nitrit_utuh" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_gram_akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_kpg_akhir" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_nitrit_jidun" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="label_status_awal" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_kadar_aluminium" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="Date_masuk" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_pecah" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_flat" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_nitrit_flat" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="Date_selesai" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="label_lp" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="Date_uji" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_kadar_air" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="txt_utuh" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
+                  <Component id="label_judul" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="159" max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="button_save" min="-2" pref="57" max="-2" attributes="0"/>
+                  <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -305,6 +295,9 @@
         </Component>
         <Component class="javax.swing.JComboBox" name="ComboBox_status_Akhir">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="2">
                 <StringItem index="0" value="PASSED"/>

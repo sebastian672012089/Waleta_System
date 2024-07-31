@@ -132,7 +132,8 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                         break;
                 }
             }
-            sql = "SELECT `id_pegawai`,`nik_ktp`,`nama_pegawai`,`jenis_kelamin`,`desa`,`nama_ibu`,`nama_bagian`,`kode_departemen`,`tanggal_masuk`,`tanggal_keluar`,`status`,`level_gaji`, `rek_cimb`, `posisi`, `no_telp`, `email`, `potongan_bpjs`, `potongan_bpjs_tk`, `jalur_jemputan`, `jam_kerja` FROM `tb_karyawan` "
+            sql = "SELECT `id_pegawai`,`nik_ktp`,`nama_pegawai`,`jenis_kelamin`,`desa`,`nama_ibu`,`nama_bagian`,`kode_departemen`,`tanggal_masuk`,`tanggal_keluar`,`status`,`level_gaji`, `rek_cimb`, `posisi`, `no_telp`, `email`, `potongan_bpjs`, `potongan_bpjs_tk`, `jalur_jemputan`, `jam_kerja`, `status_pajak`, `no_npwp` "
+                    + "FROM `tb_karyawan` "
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`"
                     + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' "
                     + "AND `nik_ktp` LIKE '%" + txt_search_nik.getText() + "%' "
@@ -236,6 +237,8 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                 }
                 row[22] = rs.getString("jalur_jemputan");
                 row[23] = rs.getString("jam_kerja");
+                row[24] = rs.getString("status_pajak");
+                row[25] = rs.getString("no_npwp");
 
                 model.addRow(row);
             }
@@ -598,14 +601,14 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
 
             },
             new String [] {
-                "ID", "NIK", "No Rek CIMB", "Nama", "Gender", "Desa", "Ibu Kandung", "No Telp", "Email", "Posisi", "Dept.", "Divisi", "Bagian", "Ruang", "Posisi", "Level Gaji", "Tgl Masuk", "Tgl Keluar", "Status", "Masa Kerja", "BPJS KS", "BPJS TK", "Jemputan", "Jam Kerja"
+                "ID", "NIK", "No Rek CIMB", "Nama", "Gender", "Desa", "Ibu Kandung", "No Telp", "Email", "Posisi", "Dept.", "Divisi", "Bagian", "Ruang", "Posisi", "Level Gaji", "Tgl Masuk", "Tgl Keluar", "Status", "Masa Kerja", "BPJS KS", "BPJS TK", "Jemputan", "Jam Kerja", "Status Pajak", "No NPWP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

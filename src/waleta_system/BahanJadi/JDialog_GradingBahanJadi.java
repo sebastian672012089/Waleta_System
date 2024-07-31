@@ -97,8 +97,10 @@ public class JDialog_GradingBahanJadi extends javax.swing.JDialog {
         try {
             DefaultTableModel model = (DefaultTableModel) table_hasil.getModel();
             String b = "SELECT `sesekan`, `hancuran`, `rontokan`, `bonggol`, `serabut`, `status_akhir` "
-                    + "FROM `tb_finishing_2` LEFT JOIN `tb_lab_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_lab_laporan_produksi`.`no_laporan_produksi`"
-                    + "WHERE `tb_finishing_2`.`no_laporan_produksi` = '" + label_LP.getText() + "'";
+                    + "FROM `tb_finishing_2` "
+                    + "LEFT JOIN `tb_lab_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_lab_laporan_produksi`.`no_laporan_produksi`"
+                    + "WHERE "
+                    + "`tb_finishing_2`.`no_laporan_produksi` = '" + label_LP.getText() + "'";
             pst = Utility.db.getConnection().prepareStatement(b);
             rs = pst.executeQuery();
             if (rs.next()) {
@@ -322,16 +324,28 @@ public class JDialog_GradingBahanJadi extends javax.swing.JDialog {
             table_hasil.getColumnModel().getColumn(0).setMaxWidth(30);
         }
 
+        label_total_hasil.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_hasil.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         label_total_hasil.setText("0");
 
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel7.setText("Total :");
 
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel8.setText("Keping :");
 
+        label_total_keping_hasil.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_keping_hasil.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         label_total_keping_hasil.setText("0");
 
+        jLabel10.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel10.setText("Gram :");
 
+        label_total_gram_hasil.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_gram_hasil.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         label_total_gram_hasil.setText("0");
 
         button_tambah.setBackground(new java.awt.Color(255, 255, 255));
@@ -541,7 +555,7 @@ public class JDialog_GradingBahanJadi extends javax.swing.JDialog {
                     .addComponent(button_count, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_kurang, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)

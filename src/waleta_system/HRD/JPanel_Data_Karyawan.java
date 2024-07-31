@@ -274,11 +274,12 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
 
             sql = "SELECT `id_pegawai`, `pin_finger`, `nik_ktp`, `nama_pegawai`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `agama`, `alamat`, `desa`, `kecamatan`, `kota_kabupaten`, `provinsi`, `golongan_darah`, `no_telp`, `email`, `status_kawin`, `nama_ibu`, `nama_bagian`, `kode_departemen`, `posisi`, `pendidikan`, `tanggal_interview`, `tanggal_masuk`, `tanggal_keluar`, `kategori_keluar`, `keterangan`, `status`, `level_gaji`, `jam_kerja`, IF(`uid_card` IS NOT NULL, TRUE, FALSE) AS 'uid_card', "
-                    + "`fc_ktp`, `sertifikat_vaksin1`, `sertifikat_vaksin2`, `berkas_surat_pernyataan`, `tanggal_surat`, `rek_cimb`, `jalur_jemputan`, `potongan_bpjs`, `keterangan`, DATE_ADD(`tanggal_surat`, INTERVAL 6 MONTH) AS 'tgl_surat_berakhir' "
-                    + "FROM `tb_karyawan` "
-                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`"
-                    + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' "
-                    + "AND `id_pegawai` LIKE '%" + txt_search_id.getText() + "%' "
+                    + "`fc_ktp`, `sertifikat_vaksin1`, `sertifikat_vaksin2`, `berkas_surat_pernyataan`, `tanggal_surat`, `rek_cimb`, `jalur_jemputan`, `potongan_bpjs`, `keterangan`, DATE_ADD(`tanggal_surat`, INTERVAL 6 MONTH) AS 'tgl_surat_berakhir', \n"
+                    + "`status_pajak`, `no_npwp` \n"
+                    + "FROM `tb_karyawan` \n"
+                    + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`\n"
+                    + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' \n"
+                    + "AND `id_pegawai` LIKE '%" + txt_search_id.getText() + "%' \n"
                     + bagian2
                     + posisi_bagian
                     + departemen
@@ -287,7 +288,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                     + ruang
                     + Status
                     + posisi
-                    + "AND `jenis_kelamin` LIKE '%" + kelamin + "%' "
+                    + "AND `jenis_kelamin` LIKE '%" + kelamin + "%' \n"
                     + filter_tanggal
                     + "ORDER BY `id_pegawai` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
@@ -295,7 +296,9 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             while (rs.next()) {
                 Karyawan = new DataKaryawan(rs.getString("id_pegawai"), rs.getString("pin_finger"), rs.getString("nik_ktp"), rs.getString("nama_pegawai"), rs.getString("jenis_kelamin"), rs.getString("tempat_lahir"), rs.getDate("tanggal_lahir"), rs.getString("alamat"), rs.getString("desa"), rs.getString("kecamatan"), rs.getString("kota_kabupaten"), rs.getString("provinsi"), rs.getString("golongan_darah"), rs.getString("status_kawin"), rs.getString("nama_ibu"), rs.getString("no_telp"), rs.getString("email"), rs.getString("kategori_keluar"), rs.getString("keterangan"), rs.getBoolean("uid_card"),
                         rs.getString("nama_bagian"), rs.getString("posisi"), rs.getString("kode_departemen"), rs.getString("pendidikan"), rs.getDate("tanggal_interview"), rs.getDate("tanggal_masuk"), rs.getDate("tanggal_keluar"), rs.getString("status"), rs.getString("jam_kerja"), rs.getString("jalur_jemputan"), rs.getInt("potongan_bpjs"),
-                        rs.getInt("fc_ktp"), rs.getInt("sertifikat_vaksin1"), rs.getInt("sertifikat_vaksin2"), rs.getInt("berkas_surat_pernyataan"), rs.getDate("tanggal_surat"), rs.getDate("tgl_surat_berakhir"));
+                        rs.getInt("fc_ktp"), rs.getInt("sertifikat_vaksin1"), rs.getInt("sertifikat_vaksin2"), rs.getInt("berkas_surat_pernyataan"), rs.getDate("tanggal_surat"), rs.getDate("tgl_surat_berakhir"),
+                        rs.getString("status_pajak"), rs.getString("no_npwp")
+                );
                 KaryawanList.add(Karyawan);
             }
         } catch (Exception ex) {
@@ -409,6 +412,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
 
             model.addRow(row);
         }
+        ColumnsAutoSizer.sizeColumnsToFit(table_data_ktp);
         int rowData = table_data_ktp.getRowCount();
         label_total_data.setText(Integer.toString(rowData));
         label_total_in.setText(Integer.toString(IN));
@@ -450,8 +454,6 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         }
         
         ColumnsAutoSizer.sizeColumnsToFit(table_data_berkas);
-        int rowData = table_data_berkas.getRowCount();
-        label_total_data.setText(Integer.toString(rowData));
 
 //        table_data_berkas.setModel(new javax.swing.table.DefaultTableModel(
 //                data,
@@ -492,8 +494,22 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             model.addRow(row);
         }
         ColumnsAutoSizer.sizeColumnsToFit(table_data_cimb);
-        int rowData = table_data_cimb.getRowCount();
-        label_total_data.setText(Integer.toString(rowData));
+    }
+    
+    public void refresh_data_status_pajak() {
+        DefaultTableModel model = (DefaultTableModel) table_data_status_pajak.getModel();
+        model.setRowCount(0);
+        ArrayList<DataKaryawan> list = KaryawanList;
+        Object[] row = new Object[5];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getNik_ktp();
+            row[1] = list.get(i).getNama_pegawai();
+            row[2] = list.get(i).getKode_bagian();
+            row[3] = list.get(i).getStatus_pajak();
+            row[4] = list.get(i).getNo_npwp();
+            model.addRow(row);
+        }
+        ColumnsAutoSizer.sizeColumnsToFit(table_data_status_pajak);
     }
 
     public void refreshTable() {
@@ -501,9 +517,8 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         DefaultTableModel model_table_ktp = (DefaultTableModel) table_data_ktp.getModel();
         model_table_ktp.setRowCount(0);
         show_data_ktp_karyawan();
-        ColumnsAutoSizer.sizeColumnsToFit(table_data_ktp);
-
         refresh_data_cimb();
+        refresh_data_status_pajak();
     }
     
     public void refreshTable_data_berkas_karyawan() {
@@ -834,6 +849,10 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         table_data_cimb = new javax.swing.JTable();
         button_export_data_cimb = new javax.swing.JButton();
+        jPanel_Data_Status_Pajak = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        table_data_status_pajak = new javax.swing.JTable();
+        button_export_data_status_pajak = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -1636,6 +1655,70 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         );
 
         jTabbedPane1.addTab("Data Untuk CIMB", jPanel_Data_CIMB_Karyawan);
+
+        jPanel_Data_Status_Pajak.setBackground(new java.awt.Color(255, 255, 255));
+
+        table_data_status_pajak.setAutoCreateRowSorter(true);
+        table_data_status_pajak.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        table_data_status_pajak.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "NIK", "Nama", "Bagian", "Status Pajak", "No NPWP"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table_data_status_pajak.getTableHeader().setReorderingAllowed(false);
+        jScrollPane5.setViewportView(table_data_status_pajak);
+
+        button_export_data_status_pajak.setBackground(new java.awt.Color(255, 255, 255));
+        button_export_data_status_pajak.setFont(new java.awt.Font("Arial Unicode MS", 0, 11)); // NOI18N
+        button_export_data_status_pajak.setText("Export to Excel");
+        button_export_data_status_pajak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_export_data_status_pajakActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_Data_Status_PajakLayout = new javax.swing.GroupLayout(jPanel_Data_Status_Pajak);
+        jPanel_Data_Status_Pajak.setLayout(jPanel_Data_Status_PajakLayout);
+        jPanel_Data_Status_PajakLayout.setHorizontalGroup(
+            jPanel_Data_Status_PajakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Data_Status_PajakLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_Data_Status_PajakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 1291, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Data_Status_PajakLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(button_export_data_status_pajak)))
+                .addContainerGap())
+        );
+        jPanel_Data_Status_PajakLayout.setVerticalGroup(
+            jPanel_Data_Status_PajakLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_Data_Status_PajakLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(button_export_data_status_pajak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Data Status Pajak", jPanel_Data_Status_Pajak);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -2590,6 +2673,12 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_PrintIDCARD_CABUTOActionPerformed
 
+    private void button_export_data_status_pajakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_export_data_status_pajakActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model_table_cimb = (DefaultTableModel) table_data_status_pajak.getModel();
+        ExportToExcel.writeToExcel(model_table_cimb, jPanel_Data_CIMB_Karyawan);
+    }//GEN-LAST:event_button_export_data_status_pajakActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_filter_bagian;
@@ -2614,6 +2703,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
     private javax.swing.JButton button_export_data_cimb;
     private javax.swing.JButton button_export_data_karyawan_berkas;
     private javax.swing.JButton button_export_data_karyawan_ktp;
+    private javax.swing.JButton button_export_data_status_pajak;
     public javax.swing.JButton button_finger1;
     public javax.swing.JButton button_finger2;
     private javax.swing.JButton button_import;
@@ -2665,11 +2755,13 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel_Data_Berkas_Karyawan;
     private javax.swing.JPanel jPanel_Data_CIMB_Karyawan;
     private javax.swing.JPanel jPanel_Data_KTP_Karyawan;
+    private javax.swing.JPanel jPanel_Data_Status_Pajak;
     private javax.swing.JPanel jPanel_search_karyawan;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel label_total_absen;
@@ -2681,6 +2773,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
     public static javax.swing.JTable table_data_berkas;
     public static javax.swing.JTable table_data_cimb;
     public static javax.swing.JTable table_data_ktp;
+    public static javax.swing.JTable table_data_status_pajak;
     private javax.swing.JTextField txt_nama_pelatihan;
     private javax.swing.JTextField txt_search_bagian;
     private javax.swing.JTextField txt_search_id;

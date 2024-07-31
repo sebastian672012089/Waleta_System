@@ -133,7 +133,6 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
                     return comp;
                 }
             });
-            table_pengajuan.repaint();
             
             table_pengajuan.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
                 @Override
@@ -175,7 +174,6 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
                     return comp;
                 }
             });
-            table_pengajuan.repaint();
             
             table_pengajuan.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
                 @Override

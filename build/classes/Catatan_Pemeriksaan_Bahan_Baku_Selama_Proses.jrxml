@@ -141,7 +141,7 @@ WHERE 1]]>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 				<reportElement x="365" y="285" width="120" height="65" uuid="54fe9871-c285-4d28-8398-2a6c006ffd3a"/>
-				<imageExpression><![CDATA["Report\\ReportImages\\TTD PRISKA.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD PRISKA DWI APRIYANTI.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="Column header" x="43" y="139" width="30" height="30" forecolor="#000000" uuid="ad494922-3502-46e2-bcf6-0d184df5ed9d"/>

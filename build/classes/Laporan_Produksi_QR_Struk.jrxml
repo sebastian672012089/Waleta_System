@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Produksi" language="groovy" pageWidth="158" pageHeight="1280" whenNoDataType="BlankPage" columnWidth="138" leftMargin="10" rightMargin="10" topMargin="5" bottomMargin="5" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
-	<property name="ireport.zoom" value="2.4793388429752232"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Produksi" language="groovy" pageWidth="158" pageHeight="1210" whenNoDataType="BlankPage" columnWidth="138" leftMargin="10" rightMargin="10" topMargin="5" bottomMargin="5" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
+	<property name="ireport.zoom" value="1.539474354692132"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="964"/>
 	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="8" isBold="true" pdfFontName="Times-Bold">
 		<box>
 			<pen lineWidth="1.0"/>
@@ -197,7 +197,7 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="1270" splitType="Stretch">
+		<band height="1200" splitType="Stretch">
 			<staticText>
 				<reportElement style="Title" x="0" y="99" width="138" height="15" uuid="40e54398-17de-47a4-8a8c-a7090df84273"/>
 				<textElement verticalAlignment="Middle">
@@ -528,7 +528,7 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<image scaleImage="RetainShape">
-				<reportElement x="39" y="691" width="60" height="60" uuid="dc6c37e6-601e-411e-9e10-2fb881aaad0b"/>
+				<reportElement x="39" y="691" width="60" height="60" uuid="9e3e3d4d-9314-49e9-a604-31255ef8f965"/>
 				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
     new com.google.zxing.qrcode.QRCodeWriter().encode(
         $F{no_laporan_produksi},
@@ -537,21 +537,21 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 )]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Page header" x="0" y="741" width="138" height="10" uuid="5fb988ce-f55d-4dc9-9e19-c31c66f43052"/>
+				<reportElement style="Page header" x="0" y="741" width="138" height="10" uuid="45074a9b-23de-469e-9538-edc19090e26f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_laporan_produksi} + "-" + $F{no_registrasi}: $F{no_laporan_produksi} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Page header" x="0" y="751" width="138" height="10" uuid="e6d8a494-0c67-4379-8f00-5ad51eccd0ca"/>
+				<reportElement style="Page header" x="0" y="751" width="138" height="10" uuid="a8b3ffdc-2465-4495-ab33-9a5384405c8d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_kartu_waleta} + "-" + $F{no_registrasi}: $F{cheat_no_kartu} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape">
-				<reportElement x="39" y="761" width="60" height="60" uuid="9e3e3d4d-9314-49e9-a604-31255ef8f965"/>
+				<reportElement x="39" y="761" width="60" height="60" uuid="14ee3d1a-9527-48d2-9242-0e8503910fac"/>
 				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
     new com.google.zxing.qrcode.QRCodeWriter().encode(
         $F{no_laporan_produksi},
@@ -560,21 +560,21 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 )]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Page header" x="0" y="811" width="138" height="10" uuid="45074a9b-23de-469e-9538-edc19090e26f"/>
+				<reportElement style="Page header" x="0" y="811" width="138" height="10" uuid="b57e92d1-f7ec-4474-9b4e-dadfbe331cb1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_laporan_produksi} + "-" + $F{no_registrasi}: $F{no_laporan_produksi} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Page header" x="0" y="821" width="138" height="10" uuid="a8b3ffdc-2465-4495-ab33-9a5384405c8d"/>
+				<reportElement style="Page header" x="0" y="821" width="138" height="10" uuid="9411e053-3488-4f06-8d99-f69dfc956afd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_kartu_waleta} + "-" + $F{no_registrasi}: $F{cheat_no_kartu} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape">
-				<reportElement x="39" y="831" width="60" height="60" uuid="14ee3d1a-9527-48d2-9242-0e8503910fac"/>
+				<reportElement x="39" y="831" width="60" height="60" uuid="dd8e7b34-2793-4aa9-a935-ddf4bb0f7aa2"/>
 				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
     new com.google.zxing.qrcode.QRCodeWriter().encode(
         $F{no_laporan_produksi},
@@ -583,21 +583,21 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 )]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Page header" x="0" y="881" width="138" height="10" uuid="b57e92d1-f7ec-4474-9b4e-dadfbe331cb1"/>
+				<reportElement style="Page header" x="0" y="881" width="138" height="10" uuid="eabef72f-70d7-4ced-9d95-1c03e1d3c7ea"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_laporan_produksi} + "-" + $F{no_registrasi}: $F{no_laporan_produksi} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Page header" x="0" y="891" width="138" height="10" uuid="9411e053-3488-4f06-8d99-f69dfc956afd"/>
+				<reportElement style="Page header" x="0" y="891" width="138" height="10" uuid="97e87289-7b0f-41ef-8eed-a5c6770737f1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_kartu_waleta} + "-" + $F{no_registrasi}: $F{cheat_no_kartu} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape">
-				<reportElement x="39" y="901" width="60" height="60" uuid="dd8e7b34-2793-4aa9-a935-ddf4bb0f7aa2"/>
+				<reportElement x="39" y="901" width="60" height="60" uuid="83320676-e436-4b15-861b-e44ddac8ce75"/>
 				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
     new com.google.zxing.qrcode.QRCodeWriter().encode(
         $F{no_laporan_produksi},
@@ -606,21 +606,21 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 )]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Page header" x="0" y="951" width="138" height="10" uuid="eabef72f-70d7-4ced-9d95-1c03e1d3c7ea"/>
+				<reportElement style="Page header" x="0" y="951" width="138" height="10" uuid="66192a2f-c6f9-412e-b529-d3ed0f525e50"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_laporan_produksi} + "-" + $F{no_registrasi}: $F{no_laporan_produksi} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Page header" x="0" y="961" width="138" height="10" uuid="97e87289-7b0f-41ef-8eed-a5c6770737f1"/>
+				<reportElement style="Page header" x="0" y="961" width="138" height="10" uuid="f3793e89-10a0-48ad-b8e3-cff751683c97"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_kartu_waleta} + "-" + $F{no_registrasi}: $F{cheat_no_kartu} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape">
-				<reportElement x="39" y="971" width="60" height="60" uuid="83320676-e436-4b15-861b-e44ddac8ce75"/>
+				<reportElement x="39" y="971" width="60" height="60" uuid="68ae9ab6-c206-498c-813f-f7ab0d9c13f2"/>
 				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
     new com.google.zxing.qrcode.QRCodeWriter().encode(
         $F{no_laporan_produksi},
@@ -629,21 +629,21 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 )]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Page header" x="0" y="1021" width="138" height="10" uuid="66192a2f-c6f9-412e-b529-d3ed0f525e50"/>
+				<reportElement style="Page header" x="0" y="1021" width="138" height="10" uuid="195c3d6d-40ef-434f-874b-3a1b10c81af1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_laporan_produksi} + "-" + $F{no_registrasi}: $F{no_laporan_produksi} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Page header" x="0" y="1031" width="138" height="10" uuid="f3793e89-10a0-48ad-b8e3-cff751683c97"/>
+				<reportElement style="Page header" x="0" y="1031" width="138" height="10" uuid="ef4aca7e-0b2e-4aba-924d-e5560b02e443"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_kartu_waleta} + "-" + $F{no_registrasi}: $F{cheat_no_kartu} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<image scaleImage="RetainShape">
-				<reportElement x="39" y="1041" width="60" height="60" uuid="68ae9ab6-c206-498c-813f-f7ab0d9c13f2"/>
+				<reportElement x="39" y="1041" width="60" height="60" uuid="6343e5b8-a2c6-4fe6-8926-99b409a11428"/>
 				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
     new com.google.zxing.qrcode.QRCodeWriter().encode(
         $F{no_laporan_produksi},
@@ -652,51 +652,28 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 )]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement style="Page header" x="0" y="1091" width="138" height="10" uuid="195c3d6d-40ef-434f-874b-3a1b10c81af1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font size="7"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_laporan_produksi} + "-" + $F{no_registrasi}: $F{no_laporan_produksi} + "-" + $F{cheat_rsb}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement style="Page header" x="0" y="1101" width="138" height="10" uuid="ef4aca7e-0b2e-4aba-924d-e5560b02e443"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_kartu_waleta} + "-" + $F{no_registrasi}: $F{cheat_no_kartu} + "-" + $F{cheat_rsb}]]></textFieldExpression>
-			</textField>
-			<image scaleImage="RetainShape">
-				<reportElement x="39" y="1111" width="60" height="60" uuid="6343e5b8-a2c6-4fe6-8926-99b409a11428"/>
-				<imageExpression><![CDATA[com.google.zxing.client.j2se.MatrixToImageWriter.toBufferedImage(
-    new com.google.zxing.qrcode.QRCodeWriter().encode(
-        $F{no_laporan_produksi},
-        com.google.zxing.BarcodeFormat.QR_CODE, 200, 200
-    )
-)]]></imageExpression>
-			</image>
-			<textField>
-				<reportElement style="Page header" x="0" y="1161" width="138" height="10" uuid="d07e1a9b-24d2-4e95-8a5b-c8e7b0cb568f"/>
+				<reportElement style="Page header" x="0" y="1091" width="138" height="10" uuid="d07e1a9b-24d2-4e95-8a5b-c8e7b0cb568f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_laporan_produksi} + "-" + $F{no_registrasi}: $F{no_laporan_produksi} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Page header" x="0" y="1171" width="138" height="10" uuid="0a96f236-91e2-48a7-8cc6-fba630d3e40b"/>
+				<reportElement style="Page header" x="0" y="1101" width="138" height="10" uuid="0a96f236-91e2-48a7-8cc6-fba630d3e40b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{CHEAT}==1? $F{no_kartu_waleta} + "-" + $F{no_registrasi}: $F{cheat_no_kartu} + "-" + $F{cheat_rsb}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Page header" x="0" y="1180" width="138" height="10" uuid="3c62837f-d88d-4f86-840a-526cb4c4c9ec"/>
+				<reportElement style="Page header" x="0" y="1110" width="138" height="10" uuid="3c62837f-d88d-4f86-840a-526cb4c4c9ec"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Grade:" + $F{kode_grade}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement style="Page header" x="0" y="1190" width="138" height="10" uuid="594f3154-a2df-49eb-8c9a-c0c4637cf8b3"/>
+				<reportElement style="Page header" x="0" y="1120" width="138" height="10" uuid="594f3154-a2df-49eb-8c9a-c0c4637cf8b3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
@@ -992,7 +969,7 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<textField>
-				<reportElement style="Page header" x="0" y="1200" width="138" height="10" uuid="dd84d736-160e-4822-9bc8-ec016facdc24"/>
+				<reportElement style="Page header" x="0" y="1130" width="138" height="10" uuid="dd84d736-160e-4822-9bc8-ec016facdc24"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
@@ -1091,126 +1068,126 @@ WHERE `tanggal_lp` = '2023-03-21' ORDER BY `no_laporan_produksi` DESC]]>
 				<text><![CDATA[Target Ctk Mku : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="38" y="1210" width="50" height="10" forecolor="#000000" uuid="1237dc3e-c07a-47e8-b765-6d8da6da8a2a"/>
+				<reportElement style="Detail" x="38" y="1140" width="50" height="10" forecolor="#000000" uuid="1237dc3e-c07a-47e8-b765-6d8da6da8a2a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="88" y="1210" width="50" height="10" forecolor="#000000" uuid="11de8d97-7e7c-44b8-a2e8-1e431ae99ca1"/>
+				<reportElement style="Detail" x="88" y="1140" width="50" height="10" forecolor="#000000" uuid="11de8d97-7e7c-44b8-a2e8-1e431ae99ca1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="0" y="1210" width="38" height="10" forecolor="#000000" uuid="b56076ef-d745-4f66-98dc-bd1be20abd0f"/>
+				<reportElement style="Detail" x="0" y="1140" width="38" height="10" forecolor="#000000" uuid="b56076ef-d745-4f66-98dc-bd1be20abd0f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[CBT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="38" y="1220" width="50" height="10" forecolor="#000000" uuid="2082f2cf-664b-40f0-8181-737d0b5addd2"/>
+				<reportElement style="Detail" x="38" y="1150" width="50" height="10" forecolor="#000000" uuid="2082f2cf-664b-40f0-8181-737d0b5addd2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="88" y="1220" width="50" height="10" forecolor="#000000" uuid="c9759971-40bd-4713-80ee-a02b8987c739"/>
+				<reportElement style="Detail" x="88" y="1150" width="50" height="10" forecolor="#000000" uuid="c9759971-40bd-4713-80ee-a02b8987c739"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="0" y="1220" width="38" height="10" forecolor="#000000" uuid="079ce410-460a-4dc7-ac35-a44a0199e730"/>
+				<reportElement style="Detail" x="0" y="1150" width="38" height="10" forecolor="#000000" uuid="079ce410-460a-4dc7-ac35-a44a0199e730"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[CTK]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="38" y="1230" width="50" height="10" forecolor="#000000" uuid="3267cd38-78c8-4adc-80fa-b04d74b9d2c4"/>
+				<reportElement style="Detail" x="38" y="1160" width="50" height="10" forecolor="#000000" uuid="3267cd38-78c8-4adc-80fa-b04d74b9d2c4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="88" y="1230" width="50" height="10" forecolor="#000000" uuid="dffda2d7-3963-4e39-81d3-061707c66c38"/>
+				<reportElement style="Detail" x="88" y="1160" width="50" height="10" forecolor="#000000" uuid="dffda2d7-3963-4e39-81d3-061707c66c38"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="0" y="1240" width="38" height="10" forecolor="#000000" uuid="c5cd267a-ae18-47fb-acf9-ac83888c5d9d"/>
+				<reportElement style="Detail" x="0" y="1170" width="38" height="10" forecolor="#000000" uuid="c5cd267a-ae18-47fb-acf9-ac83888c5d9d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[KK]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="38" y="1240" width="50" height="10" forecolor="#000000" uuid="0e4ac86a-08cf-45de-a673-b84fa157c70a"/>
+				<reportElement style="Detail" x="38" y="1170" width="50" height="10" forecolor="#000000" uuid="0e4ac86a-08cf-45de-a673-b84fa157c70a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="88" y="1240" width="50" height="10" forecolor="#000000" uuid="b3a16edf-f079-440e-b644-52b9057c2040"/>
+				<reportElement style="Detail" x="88" y="1170" width="50" height="10" forecolor="#000000" uuid="b3a16edf-f079-440e-b644-52b9057c2040"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="0" y="1230" width="38" height="10" forecolor="#000000" uuid="895f9db7-b404-43d7-8be5-769334886c5e"/>
+				<reportElement style="Detail" x="0" y="1160" width="38" height="10" forecolor="#000000" uuid="895f9db7-b404-43d7-8be5-769334886c5e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="38" y="1250" width="50" height="10" forecolor="#000000" uuid="14404652-2647-4b31-919f-701adb7be399"/>
+				<reportElement style="Detail" x="38" y="1180" width="50" height="10" forecolor="#000000" uuid="14404652-2647-4b31-919f-701adb7be399"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="0" y="1250" width="38" height="10" forecolor="#000000" uuid="f1abc830-227a-43bc-ba73-53da0f7b625d"/>
+				<reportElement style="Detail" x="0" y="1180" width="38" height="10" forecolor="#000000" uuid="f1abc830-227a-43bc-ba73-53da0f7b625d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[F1]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="88" y="1250" width="50" height="10" forecolor="#000000" uuid="87df2dbe-c28b-43c0-831b-069e3100de00"/>
+				<reportElement style="Detail" x="88" y="1180" width="50" height="10" forecolor="#000000" uuid="87df2dbe-c28b-43c0-831b-069e3100de00"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="88" y="1260" width="50" height="10" forecolor="#000000" uuid="b6cf0cea-002b-4570-8b83-3309c6568d9f"/>
+				<reportElement style="Detail" x="88" y="1190" width="50" height="10" forecolor="#000000" uuid="b6cf0cea-002b-4570-8b83-3309c6568d9f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="0" y="1260" width="38" height="10" forecolor="#000000" uuid="eb5468df-01bf-4074-97a6-231839f7cbd7"/>
+				<reportElement style="Detail" x="0" y="1190" width="38" height="10" forecolor="#000000" uuid="eb5468df-01bf-4074-97a6-231839f7cbd7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[F2]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Detail" x="38" y="1260" width="50" height="10" forecolor="#000000" uuid="47709cb1-5171-4139-a23d-41f324463ec4"/>
+				<reportElement style="Detail" x="38" y="1190" width="50" height="10" forecolor="#000000" uuid="47709cb1-5171-4139-a23d-41f324463ec4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="8"/>
 				</textElement>

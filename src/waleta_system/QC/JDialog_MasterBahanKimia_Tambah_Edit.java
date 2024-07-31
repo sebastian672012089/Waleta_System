@@ -24,7 +24,8 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
         txt_kode_BahanKimia.setText(kode);
         if (kode != null) {
             try {
-                sql = "SELECT `kode_bahan_kimia`, `nama_bahan_kimia`, `satuan`, `kondisi`, `supplier`, `penggunaan`, `aturan_pemakaian`, `msds` FROM `tb_lab_bahan_kimia` "
+                sql = "SELECT `kode_bahan_kimia`, `nama_bahan_kimia`, `satuan`, `kondisi`, `supplier`, `penggunaan`, `aturan_pemakaian`, `msds`, `no_dokumen`, `no_revisi`, `tanggal_dokumen`, `menggantikan_no_dokumen` "
+                        + "FROM `tb_lab_bahan_kimia` "
                         + "WHERE `kode_bahan_kimia` = '" + kode + "' ";
                 rs = Utility.db.getStatement().executeQuery(sql);
                 if (rs.next()) {
@@ -35,6 +36,10 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
                     txt_penggunaan_BahanKimia.setText(rs.getString("penggunaan"));
                     txt_aturanPemakaian_BahanKimia.setText(rs.getString("aturan_pemakaian"));
                     CheckBox_msds.setSelected(rs.getString("msds").equals("Ada"));
+                    txt_noDokumen.setText(rs.getString("no_dokumen"));
+                    Spinner_no_revisi.setValue(rs.getInt("no_revisi"));
+                    Date_Dokumen.setDate(rs.getDate("tanggal_dokumen"));
+                    txt_menggantikan_no_dokumen.setText(rs.getString("menggantikan_no_dokumen"));
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, ex);
@@ -43,10 +48,14 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
         }
     }
 
-    public void tambah() {
+    private void tambah() {
         try {
             String msds = CheckBox_msds.isSelected() ? "Ada" : "Tidak Ada";
-            sql = "INSERT INTO `tb_lab_bahan_kimia`(`nama_bahan_kimia`, `satuan`, `kondisi`, `supplier`, `penggunaan`, `aturan_pemakaian`, `msds`) "
+            String tgl_dokumen = "NULL";
+            if (Date_Dokumen.getDate() == null) {
+                tgl_dokumen = "'" + dateFormat.format(Date_Dokumen.getDate()) + "'";
+            }
+            sql = "INSERT INTO `tb_lab_bahan_kimia`(`nama_bahan_kimia`, `satuan`, `kondisi`, `supplier`, `penggunaan`, `aturan_pemakaian`, `msds`, `no_dokumen`, `no_revisi`, `tanggal_dokumen`, `menggantikan_no_dokumen`) "
                     + "VALUES ("
                     + "'" + txt_nama_BahanKimia.getText() + "',"
                     + "'" + txt_satuan_BahanKimia.getText() + "',"
@@ -54,7 +63,11 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
                     + "'" + txt_supplier_BahanKimia.getText() + "',"
                     + "'" + txt_penggunaan_BahanKimia.getText() + "',"
                     + "'" + txt_aturanPemakaian_BahanKimia.getText() + "',"
-                    + "'" + msds + "'"
+                    + "'" + msds + "',"
+                    + "'" + txt_noDokumen.getText() + "',"
+                    + "'" + Spinner_no_revisi.getValue() + "',"
+                    + "" + tgl_dokumen + ","
+                    + "'" + txt_menggantikan_no_dokumen.getText() + "'"
                     + ")";
             Utility.db.getConnection().createStatement();
             if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
@@ -69,9 +82,13 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
         }
     }
 
-    public void edit() {
+    private void edit() {
         try {
             String msds = CheckBox_msds.isSelected() ? "Ada" : "Tidak Ada";
+            String tgl_dokumen = "NULL";
+            if (Date_Dokumen.getDate() != null) {
+                tgl_dokumen = "'" + dateFormat.format(Date_Dokumen.getDate()) + "'";
+            }
             sql = "UPDATE `tb_lab_bahan_kimia` SET "
                     + "`nama_bahan_kimia`='" + txt_nama_BahanKimia.getText() + "',"
                     + "`satuan`='" + txt_satuan_BahanKimia.getText() + "',"
@@ -79,7 +96,11 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
                     + "`supplier`='" + txt_supplier_BahanKimia.getText() + "',"
                     + "`penggunaan`='" + txt_penggunaan_BahanKimia.getText() + "',"
                     + "`aturan_pemakaian`='" + txt_aturanPemakaian_BahanKimia.getText() + "',"
-                    + "`msds`='" + msds + "' "
+                    + "`msds`='" + msds + "', "
+                    + "`no_dokumen`='" + txt_noDokumen.getText() + "',"
+                    + "`no_revisi`='" + Spinner_no_revisi.getValue() + "',"
+                    + "`tanggal_dokumen`=" + tgl_dokumen + ","
+                    + "`menggantikan_no_dokumen`='" + txt_menggantikan_no_dokumen.getText() + "'"
                     + "WHERE `kode_bahan_kimia`='" + txt_kode_BahanKimia.getText() + "'";
             Utility.db.getConnection().createStatement();
             Utility.db.getStatement().executeUpdate(sql);
@@ -114,6 +135,14 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
         label_noTelp_customer_baku10 = new javax.swing.JLabel();
         CheckBox_msds = new javax.swing.JCheckBox();
         Button_Save = new javax.swing.JButton();
+        label_noTelp_customer_baku5 = new javax.swing.JLabel();
+        txt_noDokumen = new javax.swing.JTextField();
+        label_noTelp_customer_baku11 = new javax.swing.JLabel();
+        label_noTelp_customer_baku12 = new javax.swing.JLabel();
+        txt_menggantikan_no_dokumen = new javax.swing.JTextField();
+        label_noTelp_customer_baku13 = new javax.swing.JLabel();
+        Date_Dokumen = new com.toedter.calendar.JDateChooser();
+        Spinner_no_revisi = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Bahan Kimia");
@@ -183,6 +212,33 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
             }
         });
 
+        label_noTelp_customer_baku5.setBackground(new java.awt.Color(255, 255, 255));
+        label_noTelp_customer_baku5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_noTelp_customer_baku5.setText("No Dokumen :");
+
+        txt_noDokumen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        label_noTelp_customer_baku11.setBackground(new java.awt.Color(255, 255, 255));
+        label_noTelp_customer_baku11.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_noTelp_customer_baku11.setText("No Revisi :");
+
+        label_noTelp_customer_baku12.setBackground(new java.awt.Color(255, 255, 255));
+        label_noTelp_customer_baku12.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_noTelp_customer_baku12.setText("Tanggal Dokumen :");
+
+        txt_menggantikan_no_dokumen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        label_noTelp_customer_baku13.setBackground(new java.awt.Color(255, 255, 255));
+        label_noTelp_customer_baku13.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_noTelp_customer_baku13.setText("Menggantikan No Dokumen :");
+
+        Date_Dokumen.setBackground(new java.awt.Color(255, 255, 255));
+        Date_Dokumen.setDateFormatString("dd MMM yyyy");
+        Date_Dokumen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        Spinner_no_revisi.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Spinner_no_revisi.setModel(new javax.swing.SpinnerNumberModel(0, null, 20, 1));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -196,14 +252,18 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label_nama_customer_baku2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_noTelp_customer_baku3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_noTelp_customer_baku9, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_noTelp_customer_baku4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_noTelp_customer_baku8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_noTelp_customer_baku6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_noTelp_customer_baku7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_noTelp_customer_baku10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(label_nama_customer_baku2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku9, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku4, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku8, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku7, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku10, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku11, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku12, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_noTelp_customer_baku13, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_aturanPemakaian_BahanKimia)
@@ -213,7 +273,11 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
                             .addComponent(txt_kondisi_BahanKimia)
                             .addComponent(txt_satuan_BahanKimia)
                             .addComponent(txt_nama_BahanKimia)
-                            .addComponent(CheckBox_msds, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(CheckBox_msds, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_noDokumen)
+                            .addComponent(txt_menggantikan_no_dokumen)
+                            .addComponent(Date_Dokumen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Spinner_no_revisi)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(Button_Save)))
@@ -257,6 +321,22 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
                     .addComponent(label_noTelp_customer_baku3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CheckBox_msds, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_noTelp_customer_baku5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_noDokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_noTelp_customer_baku11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Spinner_no_revisi, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(label_noTelp_customer_baku12, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_Dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_noTelp_customer_baku13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_menggantikan_no_dokumen, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Button_Save)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -288,12 +368,18 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_Save;
     private javax.swing.JCheckBox CheckBox_msds;
+    private com.toedter.calendar.JDateChooser Date_Dokumen;
+    private javax.swing.JSpinner Spinner_no_revisi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label_nama_customer_baku2;
     private javax.swing.JLabel label_noTelp_customer_baku10;
+    private javax.swing.JLabel label_noTelp_customer_baku11;
+    private javax.swing.JLabel label_noTelp_customer_baku12;
+    private javax.swing.JLabel label_noTelp_customer_baku13;
     private javax.swing.JLabel label_noTelp_customer_baku3;
     private javax.swing.JLabel label_noTelp_customer_baku4;
+    private javax.swing.JLabel label_noTelp_customer_baku5;
     private javax.swing.JLabel label_noTelp_customer_baku6;
     private javax.swing.JLabel label_noTelp_customer_baku7;
     private javax.swing.JLabel label_noTelp_customer_baku8;
@@ -301,7 +387,9 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
     private javax.swing.JTextField txt_aturanPemakaian_BahanKimia;
     private javax.swing.JTextField txt_kode_BahanKimia;
     private javax.swing.JTextField txt_kondisi_BahanKimia;
+    private javax.swing.JTextField txt_menggantikan_no_dokumen;
     private javax.swing.JTextField txt_nama_BahanKimia;
+    private javax.swing.JTextField txt_noDokumen;
     private javax.swing.JTextField txt_penggunaan_BahanKimia;
     private javax.swing.JTextField txt_satuan_BahanKimia;
     private javax.swing.JTextField txt_supplier_BahanKimia;

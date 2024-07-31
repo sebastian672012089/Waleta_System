@@ -463,7 +463,7 @@ ORDER BY `tb_lab_treatment_lp`.`no_laporan_produksi` ASC]]>
 		<band height="105" splitType="Stretch">
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 				<reportElement x="277" y="19" width="120" height="65" uuid="d7e62d22-e8b8-4324-8b76-8e18167e6ad5"/>
-				<imageExpression><![CDATA["Report\\ReportImages\\TTD PRISKA.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD PRISKA DWI APRIYANTI.png"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 				<reportElement x="157" y="19" width="120" height="65" uuid="6593fa4f-d418-49b8-85ae-f6971beee869"/>

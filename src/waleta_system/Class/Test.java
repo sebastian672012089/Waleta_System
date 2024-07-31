@@ -7,10 +7,12 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -23,10 +25,70 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class Test {
 
-    public static DBConnect db = new DBConnect();
+    private static final DBConnect db = new DBConnect();
 
     public Test() {
 
+    }
+
+    private static String getStatusAkhir(String statusAwal, String no_LP) {
+        db.connect();
+        String StatusAkhir = null;
+        switch (statusAwal) {
+            case "PASSED":
+                StatusAkhir = "PASSED";
+                break;
+            case "HOLD/NON GNS":
+                StatusAkhir = "HOLD/NON GNS";
+                String status_treatment_utuh = "PASSED";
+                String status_treatment_flat = "PASSED";
+                String status_treatment_jidun = "PASSED";
+                try {
+                    String c = "SELECT\n"
+                            + "(SELECT `status` FROM `tb_lab_treatment_lp` WHERE `no_laporan_produksi` = '" + no_LP + "' AND `jenis_barang` = 'Utuh' ORDER BY `nitrit_akhir` LIMIT 1) AS 'status_utuh',\n"
+                            + "(SELECT `status` FROM `tb_lab_treatment_lp` WHERE `no_laporan_produksi` = '" + no_LP + "' AND `jenis_barang` = 'Flat' ORDER BY `nitrit_akhir` LIMIT 1) AS 'status_flat',\n"
+                            + "(SELECT `status` FROM `tb_lab_treatment_lp` WHERE `no_laporan_produksi` = '" + no_LP + "' AND `jenis_barang` = 'Jidun' ORDER BY `nitrit_akhir` LIMIT 1) AS 'status_jidun'\n"
+                            + "FROM DUAL";
+                    ResultSet rs = db.getStatement().executeQuery(c);
+                    if (rs.next()) {
+                        if (rs.getString("status_utuh") != null) {
+                            status_treatment_utuh = rs.getString("status_utuh");
+                            System.out.println("status_treatment_utuh : " + status_treatment_utuh);
+                        }
+                        if (rs.getString("status_flat") != null) {
+                            status_treatment_flat = rs.getString("status_flat");
+                            System.out.println("status_treatment_flat : " + status_treatment_flat);
+                        }
+                        if (rs.getString("status_jidun") != null) {
+                            status_treatment_jidun = rs.getString("status_jidun");
+                            System.out.println("status_treatment_jidun : " + status_treatment_jidun);
+                        }
+                        if (rs.getString("status_utuh") == null 
+                                && rs.getString("status_flat") == null 
+                                && rs.getString("status_jidun") == null) {
+                            StatusAkhir = "HOLD/NON GNS";
+                        } else if ("HOLD/NON GNS".equals(status_treatment_flat) 
+                                || "HOLD/NON GNS".equals(status_treatment_utuh) 
+                                || "HOLD/NON GNS".equals(status_treatment_jidun)) {
+                            StatusAkhir = "HOLD/NON GNS";
+                        } else {
+                            StatusAkhir = "PASSED";
+                        }
+                    }
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "ERROR");
+                    Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                break;
+            case "":
+                StatusAkhir = null;
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "ERROR");
+                break;
+        }
+        return StatusAkhir;
     }
 
     private void saveReportToServer(JasperPrint jasperPrint) {
@@ -120,7 +182,7 @@ public class Test {
 
     public static void main(String[] args) {
         try {
-
+            System.out.println(getStatusAkhir("HOLD/NON GNS", "WL-240615017-"));
         } catch (Exception ex) {
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
         }

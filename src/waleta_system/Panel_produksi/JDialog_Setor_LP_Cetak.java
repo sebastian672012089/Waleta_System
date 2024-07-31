@@ -2,6 +2,7 @@ package waleta_system.Panel_produksi;
 
 import waleta_system.Class.Utility;
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -103,6 +104,9 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         button_pilih_pekerja_cetak1 = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         txt_pekerja_cetak1_id = new javax.swing.JTextField();
+        txt_tidak_cetak = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Setor Laporan Produksi");
@@ -130,6 +134,11 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         txt_jidun.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_jidun.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_jidun.setText("0");
+        txt_jidun.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_jidunKeyTyped(evt);
+            }
+        });
 
         txt_pekerja_cetak2_id.setEditable(false);
         txt_pekerja_cetak2_id.setBackground(new java.awt.Color(255, 255, 255));
@@ -155,6 +164,11 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         txt_mk.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_mk.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_mk.setText("0");
+        txt_mk.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_mkKeyTyped(evt);
+            }
+        });
 
         jLabel16.setBackground(new java.awt.Color(255, 255, 255));
         jLabel16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -180,6 +194,11 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         txt_jidun_real.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_jidun_real.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_jidun_real.setText("0");
+        txt_jidun_real.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_jidun_realKeyTyped(evt);
+            }
+        });
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -188,6 +207,11 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         txt_flat.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_flat.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_flat.setText("0");
+        txt_flat.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_flatKeyTyped(evt);
+            }
+        });
 
         Date_Setor.setBackground(new java.awt.Color(255, 255, 255));
         Date_Setor.setDate(date);
@@ -235,6 +259,11 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         txt_mk_pecah.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_mk_pecah.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_mk_pecah.setText("0");
+        txt_mk_pecah.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_mk_pecahKeyTyped(evt);
+            }
+        });
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -281,6 +310,23 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         txt_pekerja_cetak1_id.setBackground(new java.awt.Color(255, 255, 255));
         txt_pekerja_cetak1_id.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
+        txt_tidak_cetak.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_tidak_cetak.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txt_tidak_cetak.setText("0");
+        txt_tidak_cetak.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_tidak_cetakKeyTyped(evt);
+            }
+        });
+
+        jLabel21.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel21.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel21.setText("Tidak Cetak :");
+
+        jLabel22.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel22.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel22.setText("Keping");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -307,7 +353,8 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -330,7 +377,8 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
                                 .addComponent(txt_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txt_mk_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txt_mk, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label_total_keping, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(label_total_keping, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_tidak_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,7 +387,8 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
                                         .addComponent(jLabel13)
                                         .addComponent(jLabel15))
                                     .addComponent(jLabel16)
-                                    .addComponent(jLabel19))
+                                    .addComponent(jLabel19)
+                                    .addComponent(jLabel22))
                                 .addComponent(jLabel12)))
                         .addComponent(txt_admin, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -423,6 +472,11 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_tidak_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_admin, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -448,7 +502,7 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             boolean check = true;
-            int mk = 0, pecah = 0, flat = 0, jidun = 0, jidun_real = 0;
+            int mk = 0, pecah = 0, flat = 0, jidun = 0, jidun_real = 0, tidak_cetak = 0;
             try {
                 if (txt_mk.getText() != null || !txt_mk.getText().equals("")) {
                     mk = Integer.valueOf(txt_mk.getText());
@@ -465,7 +519,10 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
                 if (txt_jidun_real.getText() != null || !txt_jidun_real.getText().equals("")) {
                     jidun_real = Integer.valueOf(txt_jidun_real.getText());
                 }
-                int total_cetak = mk + pecah + flat + jidun;
+                if (txt_tidak_cetak.getText() != null || !txt_tidak_cetak.getText().equals("")) {
+                    tidak_cetak = Integer.valueOf(txt_tidak_cetak.getText());
+                }
+                int total_cetak = mk + pecah + flat + jidun + tidak_cetak;
                 int total_keping = Integer.valueOf(label_total_keping.getText());
                 if (total_cetak != total_keping) {
                     JOptionPane.showMessageDialog(this, "failed!, jumlah keping cetak tidak sama dengan jumlah keping LP\nSilahkan cek kembali, Terima kasih !");
@@ -554,6 +611,66 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_button_pilih_pekerja_cetak1ActionPerformed
 
+    private void txt_mkKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_mkKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_mkKeyTyped
+
+    private void txt_mk_pecahKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_mk_pecahKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_mk_pecahKeyTyped
+
+    private void txt_flatKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_flatKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_flatKeyTyped
+
+    private void txt_jidunKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jidunKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_jidunKeyTyped
+
+    private void txt_jidun_realKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_jidun_realKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_jidun_realKeyTyped
+
+    private void txt_tidak_cetakKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_tidak_cetakKeyTyped
+        // TODO add your handling code here:
+        if (!Character.isDigit(evt.getKeyChar())
+                && evt.getKeyCode() != KeyEvent.VK_ENTER
+                && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE
+                && evt.getKeyCode() != KeyEvent.VK_DELETE) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt_tidak_cetakKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_Setor;
@@ -574,6 +691,8 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -594,5 +713,6 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
     private javax.swing.JTextField txt_pekerja_cetak1_nama;
     private javax.swing.JTextField txt_pekerja_cetak2_id;
     private javax.swing.JTextField txt_pekerja_cetak2_nama;
+    private javax.swing.JTextField txt_tidak_cetak;
     // End of variables declaration//GEN-END:variables
 }

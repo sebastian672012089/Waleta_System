@@ -1,5 +1,7 @@
 package waleta_system.Finance;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -8,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -29,7 +33,6 @@ import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import waleta_system.Class.ColumnsAutoSizer;
 import waleta_system.Class.ExportToExcel;
-import waleta_system.Class.TableColumnHider;
 import waleta_system.Class.Utility;
 import waleta_system.JFrame_TV_PengajuanPembelian;
 import waleta_system.MainForm;
@@ -155,7 +158,8 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                     + "`keperluan` LIKE '%" + txt_search_keyword.getText() + "%') \n"
                     + filter_tgl_pengajuan
                     + filter_status
-                    + filter_departemen;
+                    + filter_departemen
+                    + "ORDER BY `no` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[30];
             while (rs.next()) {
@@ -164,9 +168,9 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 row[2] = rs.getString("departemen");
                 row[3] = rs.getString("keperluan");
                 row[4] = rs.getString("nama_barang");
-                row[5] = rs.getInt("jumlah");
-                row[6] = rs.getInt("estimasi_harga_satuan");
-                row[7] = rs.getInt("jumlah") * rs.getInt("estimasi_harga_satuan");
+                row[5] = decimalFormat.format(rs.getInt("jumlah"));
+                row[6] = decimalFormat.format(rs.getInt("estimasi_harga_satuan"));
+                row[7] = decimalFormat.format(rs.getInt("jumlah") * rs.getInt("estimasi_harga_satuan"));
                 row[8] = rs.getDate("dibutuhkan_tanggal");
                 row[9] = rs.getString("diajukan");
                 row[10] = rs.getString("diketahui_kadep");
@@ -179,14 +183,14 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 row[17] = rs.getString("status");
                 row[18] = rs.getString("keterangan");
                 row[19] = rs.getString("link_pembelian");
-                row[20] = rs.getInt("realisasi_harga_satuan");
-                row[21] = rs.getInt("ppn");
-                row[22] = Math.round(rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")));
-                row[23] = rs.getInt("biaya_lain");
+                row[20] = decimalFormat.format(rs.getInt("realisasi_harga_satuan"));
+                row[21] = decimalFormat.format(rs.getInt("ppn"));
+                row[22] = decimalFormat.format(Math.round(rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan"))));
+                row[23] = decimalFormat.format(rs.getInt("biaya_lain"));
                 row[24] = rs.getString("keterangan_biaya_lain");
-                row[25] = Math.round((rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan"))
+                row[25] = decimalFormat.format(Math.round((rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan"))
                         + (rs.getFloat("ppn") / 100f * (rs.getFloat("jumlah") * rs.getFloat("realisasi_harga_satuan")))
-                        + rs.getFloat("biaya_lain"));
+                        + rs.getFloat("biaya_lain")));
                 row[26] = rs.getString("nama_bank");
                 row[27] = rs.getString("no_rekening");
                 row[28] = rs.getString("nama_rekening");
@@ -194,6 +198,68 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_pengajuan);
             label_total_data_nota.setText(decimalFormat.format(table_pengajuan.getRowCount()));
+
+            table_pengajuan.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    try {
+                        Date DueDate = dateFormat.parse(table_pengajuan.getValueAt(row, 8).toString());
+                        String status = table_pengajuan.getValueAt(row, 17).toString();
+                        if (DueDate.before(new Date()) && !(status.equals("Sampai") || status.equals("Selesai") || status.equals("Dibatalkan"))) {
+                            if (isSelected) {
+                                comp.setBackground(Color.decode("#D14D72"));
+                                comp.setForeground(Color.white);
+                            } else {
+                                comp.setBackground(Color.decode("#FCC8D1"));
+                                comp.setForeground(Color.black);
+                            }
+                        } else {
+                            if (isSelected) {
+                                comp.setBackground(table_pengajuan.getSelectionBackground());
+                                comp.setForeground(table_pengajuan.getSelectionForeground());
+                            } else {
+                                comp.setBackground(table_pengajuan.getBackground());
+                                comp.setForeground(table_pengajuan.getForeground());
+                            }
+                        }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    return comp;
+                }
+            });
+            table_pengajuan.setDefaultRenderer(Integer.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    try {
+                        Date DueDate = dateFormat.parse(table_pengajuan.getValueAt(row, 8).toString());
+                        String status = table_pengajuan.getValueAt(row, 17).toString();
+                        if (DueDate.before(new Date()) && !(status.equals("Sampai") || status.equals("Selesai") || status.equals("Dibatalkan"))) {
+                            if (isSelected) {
+                                comp.setBackground(Color.decode("#D14D72"));
+                                comp.setForeground(Color.white);
+                            } else {
+                                comp.setBackground(Color.decode("#FCC8D1"));
+                                comp.setForeground(Color.black);
+                            }
+                        } else {
+                            if (isSelected) {
+                                comp.setBackground(table_pengajuan.getSelectionBackground());
+                                comp.setForeground(table_pengajuan.getSelectionForeground());
+                            } else {
+                                comp.setBackground(table_pengajuan.getBackground());
+                                comp.setForeground(table_pengajuan.getForeground());
+                            }
+                        }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    return comp;
+                }
+            });
+            table_pengajuan.repaint();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
@@ -252,7 +318,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
@@ -272,7 +338,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             table_pengajuan.getColumnModel().getColumn(19).setMaxWidth(100);
         }
 
-        button_new.setBackground(new java.awt.Color(255, 255, 255));
         button_new.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_new.setText("Tambah Baru");
         button_new.addActionListener(new java.awt.event.ActionListener() {
@@ -281,7 +346,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_edit.setBackground(new java.awt.Color(255, 255, 255));
         button_edit.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_edit.setText("Edit");
         button_edit.addActionListener(new java.awt.event.ActionListener() {
@@ -290,7 +354,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_delete.setBackground(new java.awt.Color(255, 255, 255));
         button_delete.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_delete.setText("Delete");
         button_delete.addActionListener(new java.awt.event.ActionListener() {
@@ -310,7 +373,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_search.setBackground(new java.awt.Color(255, 255, 255));
         button_search.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_search.setText("Search");
         button_search.addActionListener(new java.awt.event.ActionListener() {
@@ -319,7 +381,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_export.setBackground(new java.awt.Color(255, 255, 255));
         button_export.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_export.setText("Export To Excel");
         button_export.addActionListener(new java.awt.event.ActionListener() {
@@ -340,7 +401,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
         label_total_data_nota.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         label_total_data_nota.setText("0000");
 
-        button_diketahui.setBackground(new java.awt.Color(255, 255, 255));
         button_diketahui.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_diketahui.setText("Diketahui");
         button_diketahui.addActionListener(new java.awt.event.ActionListener() {
@@ -349,7 +409,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_disetujui.setBackground(new java.awt.Color(255, 255, 255));
         button_disetujui.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_disetujui.setText("Disetujui");
         button_disetujui.addActionListener(new java.awt.event.ActionListener() {
@@ -358,7 +417,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_diproses.setBackground(new java.awt.Color(255, 255, 255));
         button_diproses.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_diproses.setText("Diproses");
         button_diproses.addActionListener(new java.awt.event.ActionListener() {
@@ -367,7 +425,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_selesai.setBackground(new java.awt.Color(255, 255, 255));
         button_selesai.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_selesai.setText("Selesai");
         button_selesai.addActionListener(new java.awt.event.ActionListener() {
@@ -376,7 +433,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_buka_link.setBackground(new java.awt.Color(255, 255, 255));
         button_buka_link.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_buka_link.setText("Copy Link");
         button_buka_link.addActionListener(new java.awt.event.ActionListener() {
@@ -392,7 +448,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
         ComboBox_filter_status.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         ComboBox_filter_status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Diajukan", "Diketahui Kadep", "Diketahui", "Disetujui", "Proses", "Dikirim", "Sampai", "Selesai", "Dibatalkan" }));
 
-        button_dikirim.setBackground(new java.awt.Color(255, 255, 255));
         button_dikirim.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_dikirim.setText("Dikirim");
         button_dikirim.addActionListener(new java.awt.event.ActionListener() {
@@ -401,7 +456,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_sampai.setBackground(new java.awt.Color(255, 255, 255));
         button_sampai.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_sampai.setText("Sampai");
         button_sampai.addActionListener(new java.awt.event.ActionListener() {
@@ -417,7 +471,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
         jTextArea1.setText("Rules : \n1. hanya yang melakukan pengajuan yang bisa edit dan delete pengajuan tsb.\n2. setelah pengajuan diketahui / disetujui, pengajuan tidak dapat di edit / delete.\n3. diketahui dan disetujui bisa dilakukan terpisah. untuk bisa di proses harus sudah di setujui dan diketahui.\n4. status 'sampai' masih bisa kembali ke status 'dikirim'.\n5. jika status sudah 'selesai', tidak bisa mengganti status kembali.");
         jScrollPane2.setViewportView(jTextArea1);
 
-        button_diketahui_kadep.setBackground(new java.awt.Color(255, 255, 255));
         button_diketahui_kadep.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_diketahui_kadep.setText("Diketahui Kadep");
         button_diketahui_kadep.addActionListener(new java.awt.event.ActionListener() {
@@ -426,7 +479,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_tv_pengajuan.setBackground(new java.awt.Color(255, 255, 255));
         button_tv_pengajuan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_tv_pengajuan.setText("TV Pengajuan");
         button_tv_pengajuan.addActionListener(new java.awt.event.ActionListener() {
@@ -452,7 +504,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
         Date_pengajuan2.setBackground(new java.awt.Color(255, 255, 255));
         Date_pengajuan2.setDateFormatString("dd MMM yyyy");
 
-        button_realisasi.setBackground(new java.awt.Color(255, 255, 255));
         button_realisasi.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_realisasi.setText("Realisasi");
         button_realisasi.addActionListener(new java.awt.event.ActionListener() {
@@ -461,7 +512,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_form_pengajuan.setBackground(new java.awt.Color(255, 255, 255));
         button_form_pengajuan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_form_pengajuan.setText("Form Pengajuan");
         button_form_pengajuan.addActionListener(new java.awt.event.ActionListener() {
@@ -470,7 +520,6 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             }
         });
 
-        button_batal.setBackground(new java.awt.Color(255, 255, 255));
         button_batal.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_batal.setText("Batal");
         button_batal.addActionListener(new java.awt.event.ActionListener() {
@@ -486,7 +535,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1346, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1465, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -547,7 +596,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                                 .addComponent(button_form_pengajuan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_export)))
-                        .addGap(0, 314, Short.MAX_VALUE)))
+                        .addGap(0, 290, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -590,7 +639,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                     .addComponent(button_diketahui_kadep, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1052,6 +1101,9 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                     Check = false;
                 } else if (!MainForm.Login_NamaPegawai.equals(diajukan_oleh)) {
                     JOptionPane.showMessageDialog(this, "hanya staff yang melakukan pengajuan yang dapat mengubah status menjadi 'Selesai'.\nSilahkan login menggunakan user : " + diajukan_oleh);
+                    Check = false;
+                } else if (!table_pengajuan.getValueAt(j, 17).toString().equals("Sampai")) {
+                    JOptionPane.showMessageDialog(this, "Hanya bisa SELESAI jika sudah sampai!");
                     Check = false;
                 }
                 if (Check) {

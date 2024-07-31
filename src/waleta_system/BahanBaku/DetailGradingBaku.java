@@ -1165,8 +1165,8 @@ public class DetailGradingBaku extends javax.swing.JFrame {
             JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
-
         } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(DetailGradingBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_printActionPerformed

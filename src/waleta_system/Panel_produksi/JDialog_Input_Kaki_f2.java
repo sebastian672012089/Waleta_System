@@ -72,7 +72,7 @@ public class JDialog_Input_Kaki_f2 extends javax.swing.JDialog {
                         if (rs.getInt("tambahan_kaki1") > 0) {
                             if (rs.getString("lp_kaki1").equals(txt_lp_kaki.getText())) {
                                 JOptionPane.showMessageDialog(this, "No LP " + Tabel_data.getValueAt(i, 1).toString() + " sudah menggunakan LP kaki " + txt_lp_kaki.getText() + ", data akan di tambahkan ke LP kaki 1");
-                                int kaki = rs.getInt("tambahan_kaki1") + Integer.valueOf(Tabel_data.getValueAt(i, 3).toString());
+                                float kaki = rs.getFloat("tambahan_kaki1") + Float.valueOf(Tabel_data.getValueAt(i, 3).toString());
                                 Query = "UPDATE `tb_finishing_2` SET `tambahan_kaki1`='" + kaki + "'"
                                     + "WHERE `no_laporan_produksi`='" + Tabel_data.getValueAt(i, 1) + "'";
                             } else {
@@ -140,7 +140,7 @@ public class JDialog_Input_Kaki_f2 extends javax.swing.JDialog {
             ResultSet rs1 = Utility.db.getStatement().executeQuery(sql1);
             if (rs1.next()) {
                 CHECK_F2 = false;
-                checkKaki = (rs1.getInt("tambahan_kaki1") > 0 && rs1.getInt("tambahan_kaki2") > 0);
+                checkKaki = (rs1.getFloat("tambahan_kaki1") > 0 && rs1.getFloat("tambahan_kaki2") > 0);
                 checkSetor = rs1.getDate("tgl_setor_f2") != null;
             } else {
                 CHECK_F2 = true;
@@ -269,7 +269,7 @@ public class JDialog_Input_Kaki_f2 extends javax.swing.JDialog {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, true

@@ -376,7 +376,7 @@ LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta`
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
 				<reportElement x="280" y="18" width="120" height="65" uuid="22b414b3-de9f-4569-8319-6272e199794e"/>
-				<imageExpression><![CDATA["Report\\ReportImages\\TTD PRISKA.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["Report\\ReportImages\\TTD PRISKA DWI APRIYANTI.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement style="TTD" x="160" y="13" width="120" height="20" uuid="edc21156-a64b-4b4e-9bdd-a4beedd6aaf3"/>

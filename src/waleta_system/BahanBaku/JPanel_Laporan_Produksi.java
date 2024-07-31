@@ -814,16 +814,6 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         jLabel26 = new javax.swing.JLabel();
         label_total_keping_LP = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        button_delete_LP = new javax.swing.JButton();
-        button_print_lp = new javax.swing.JButton();
-        button_export = new javax.swing.JButton();
-        button_rekap = new javax.swing.JButton();
-        button_insert_LP = new javax.swing.JButton();
-        button_update_LP = new javax.swing.JButton();
-        button_insert_LP_Sub = new javax.swing.JButton();
-        button_laporan_ozon = new javax.swing.JButton();
-        button_report_lp_wlt = new javax.swing.JButton();
-        button_report_lp_sub = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane6 = new javax.swing.JScrollPane();
         Table_laporan_produksi = new javax.swing.JTable();
@@ -852,18 +842,6 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         jLabel25 = new javax.swing.JLabel();
         label_jumlah_lp_cabuto_200 = new javax.swing.JLabel();
         label_jumlah_lp_cabuto = new javax.swing.JLabel();
-        button_report_lp_sub1 = new javax.swing.JButton();
-        button_report_lp_wlt1 = new javax.swing.JButton();
-        button_report_lp_wlt_jdn = new javax.swing.JButton();
-        button_print_surat_jalan_lp = new javax.swing.JButton();
-        button_total_cucian_hari_ini = new javax.swing.JButton();
-        button_cheat_rsb2 = new javax.swing.JButton();
-        button_cheat_no_kartu2 = new javax.swing.JButton();
-        button_cheat_tgl_lp = new javax.swing.JButton();
-        button_print_1_lp_cheat = new javax.swing.JButton();
-        button_print_lp_semua = new javax.swing.JButton();
-        button_print_qr_lp = new javax.swing.JButton();
-        button_print_semua_lp_cheat = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         ComboBox_Ruang_LP = new javax.swing.JComboBox<>();
         jLabel20 = new javax.swing.JLabel();
@@ -879,6 +857,31 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         jLabel35 = new javax.swing.JLabel();
         button_search_lp = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        button_total_cucian_hari_ini = new javax.swing.JButton();
+        button_report_lp_sub1 = new javax.swing.JButton();
+        button_laporan_ozon = new javax.swing.JButton();
+        button_report_lp_wlt1 = new javax.swing.JButton();
+        button_rekap = new javax.swing.JButton();
+        button_print_qr_lp = new javax.swing.JButton();
+        button_cheat_no_kartu2 = new javax.swing.JButton();
+        button_cheat_rsb2 = new javax.swing.JButton();
+        button_cheat_tgl_lp = new javax.swing.JButton();
+        button_print_lp_semua = new javax.swing.JButton();
+        button_print_surat_jalan_lp = new javax.swing.JButton();
+        button_print_1_lp_cheat = new javax.swing.JButton();
+        button_print_lp = new javax.swing.JButton();
+        button_report_lp_wlt = new javax.swing.JButton();
+        button_report_lp_sub = new javax.swing.JButton();
+        button_print_semua_lp_cheat = new javax.swing.JButton();
+        button_report_lp_wlt_jdn = new javax.swing.JButton();
+        button_print_lp_semua_CABUTO = new javax.swing.JButton();
+        button_print_lp_CABUTO = new javax.swing.JButton();
+        button_insert_LP = new javax.swing.JButton();
+        button_insert_LP_Sub = new javax.swing.JButton();
+        button_update_LP = new javax.swing.JButton();
+        button_delete_LP = new javax.swing.JButton();
+        button_export = new javax.swing.JButton();
 
         jPanel_laporan_produksi.setBackground(new java.awt.Color(255, 255, 255));
         jPanel_laporan_produksi.setPreferredSize(new java.awt.Dimension(1366, 700));
@@ -900,96 +903,6 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
 
         jLabel27.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         jLabel27.setText("Total Keping :");
-
-        button_delete_LP.setBackground(new java.awt.Color(255, 255, 255));
-        button_delete_LP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_delete_LP.setText("Delete LP");
-        button_delete_LP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_delete_LPActionPerformed(evt);
-            }
-        });
-
-        button_print_lp.setBackground(new java.awt.Color(255, 255, 255));
-        button_print_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_print_lp.setText("Print 1 LP");
-        button_print_lp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_print_lpActionPerformed(evt);
-            }
-        });
-
-        button_export.setBackground(new java.awt.Color(255, 255, 255));
-        button_export.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_export.setText("Export Excel");
-        button_export.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_exportActionPerformed(evt);
-            }
-        });
-
-        button_rekap.setBackground(new java.awt.Color(255, 255, 255));
-        button_rekap.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_rekap.setText("Rekap");
-        button_rekap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_rekapActionPerformed(evt);
-            }
-        });
-
-        button_insert_LP.setBackground(new java.awt.Color(255, 255, 255));
-        button_insert_LP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_insert_LP.setText("Buat LP Waleta");
-        button_insert_LP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_insert_LPActionPerformed(evt);
-            }
-        });
-
-        button_update_LP.setBackground(new java.awt.Color(255, 255, 255));
-        button_update_LP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_update_LP.setText("Edit LP");
-        button_update_LP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_update_LPActionPerformed(evt);
-            }
-        });
-
-        button_insert_LP_Sub.setBackground(new java.awt.Color(255, 255, 255));
-        button_insert_LP_Sub.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_insert_LP_Sub.setText("Buat LP Sub");
-        button_insert_LP_Sub.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_insert_LP_SubActionPerformed(evt);
-            }
-        });
-
-        button_laporan_ozon.setBackground(new java.awt.Color(255, 255, 255));
-        button_laporan_ozon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_laporan_ozon.setText("Laporan Ozon");
-        button_laporan_ozon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_laporan_ozonActionPerformed(evt);
-            }
-        });
-
-        button_report_lp_wlt.setBackground(new java.awt.Color(255, 255, 255));
-        button_report_lp_wlt.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_report_lp_wlt.setText("Laporan P. Baku WLT");
-        button_report_lp_wlt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_report_lp_wltActionPerformed(evt);
-            }
-        });
-
-        button_report_lp_sub.setBackground(new java.awt.Color(255, 255, 255));
-        button_report_lp_sub.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_report_lp_sub.setText("Laporan P. Baku SUB");
-        button_report_lp_sub.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_report_lp_subActionPerformed(evt);
-            }
-        });
 
         Table_laporan_produksi.setAutoCreateRowSorter(true);
         Table_laporan_produksi.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
@@ -1183,7 +1096,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 930, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1274,119 +1187,11 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                             .addComponent(jLabel25)
                             .addComponent(label_jumlah_lp_cabuto_200))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE))
+                    .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Data LP online CABUTO", jPanel1);
-
-        button_report_lp_sub1.setBackground(new java.awt.Color(255, 255, 255));
-        button_report_lp_sub1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_report_lp_sub1.setText("Laporan P. Baku SUB+");
-        button_report_lp_sub1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_report_lp_sub1ActionPerformed(evt);
-            }
-        });
-
-        button_report_lp_wlt1.setBackground(new java.awt.Color(255, 255, 255));
-        button_report_lp_wlt1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_report_lp_wlt1.setText("Laporan P. Baku WLT+");
-        button_report_lp_wlt1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_report_lp_wlt1ActionPerformed(evt);
-            }
-        });
-
-        button_report_lp_wlt_jdn.setBackground(new java.awt.Color(255, 255, 255));
-        button_report_lp_wlt_jdn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_report_lp_wlt_jdn.setText("Laporan P. Baku JDN");
-        button_report_lp_wlt_jdn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_report_lp_wlt_jdnActionPerformed(evt);
-            }
-        });
-
-        button_print_surat_jalan_lp.setBackground(new java.awt.Color(255, 255, 255));
-        button_print_surat_jalan_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_print_surat_jalan_lp.setText("Print Surat Jalan LP");
-        button_print_surat_jalan_lp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_print_surat_jalan_lpActionPerformed(evt);
-            }
-        });
-
-        button_total_cucian_hari_ini.setBackground(new java.awt.Color(255, 255, 255));
-        button_total_cucian_hari_ini.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_total_cucian_hari_ini.setText("Total Cucian Hari ini");
-        button_total_cucian_hari_ini.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_total_cucian_hari_iniActionPerformed(evt);
-            }
-        });
-
-        button_cheat_rsb2.setBackground(new java.awt.Color(255, 255, 255));
-        button_cheat_rsb2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_cheat_rsb2.setText("Cheat RSB 2");
-        button_cheat_rsb2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_cheat_rsb2ActionPerformed(evt);
-            }
-        });
-
-        button_cheat_no_kartu2.setBackground(new java.awt.Color(255, 255, 255));
-        button_cheat_no_kartu2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_cheat_no_kartu2.setText("Cheat No Kartu 2");
-        button_cheat_no_kartu2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_cheat_no_kartu2ActionPerformed(evt);
-            }
-        });
-
-        button_cheat_tgl_lp.setBackground(new java.awt.Color(255, 255, 255));
-        button_cheat_tgl_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_cheat_tgl_lp.setText("Cheat Tgl LP");
-        button_cheat_tgl_lp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_cheat_tgl_lpActionPerformed(evt);
-            }
-        });
-
-        button_print_1_lp_cheat.setBackground(new java.awt.Color(255, 255, 255));
-        button_print_1_lp_cheat.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_print_1_lp_cheat.setText("Print 1 LP Cheat");
-        button_print_1_lp_cheat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_print_1_lp_cheatActionPerformed(evt);
-            }
-        });
-
-        button_print_lp_semua.setBackground(new java.awt.Color(255, 255, 255));
-        button_print_lp_semua.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_print_lp_semua.setText("Print Semua LP");
-        button_print_lp_semua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_print_lp_semuaActionPerformed(evt);
-            }
-        });
-
-        button_print_qr_lp.setBackground(new java.awt.Color(255, 255, 255));
-        button_print_qr_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_print_qr_lp.setText("Print QR LP");
-        button_print_qr_lp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_print_qr_lpActionPerformed(evt);
-            }
-        });
-
-        button_print_semua_lp_cheat.setBackground(new java.awt.Color(255, 255, 255));
-        button_print_semua_lp_cheat.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_print_semua_lp_cheat.setText("Print Semua LP Cheat");
-        button_print_semua_lp_cheat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_print_semua_lp_cheatActionPerformed(evt);
-            }
-        });
 
         jLabel16.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel16.setText("Ruang :");
@@ -1463,15 +1268,320 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         jLabel18.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel18.setText("LAPORAN PRODUKSI");
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        button_total_cucian_hari_ini.setBackground(new java.awt.Color(255, 255, 255));
+        button_total_cucian_hari_ini.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_total_cucian_hari_ini.setText("Total Cucian Hari ini");
+        button_total_cucian_hari_ini.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_total_cucian_hari_iniActionPerformed(evt);
+            }
+        });
+
+        button_report_lp_sub1.setBackground(new java.awt.Color(255, 255, 255));
+        button_report_lp_sub1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_report_lp_sub1.setText("Laporan P. Baku SUB+");
+        button_report_lp_sub1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_report_lp_sub1ActionPerformed(evt);
+            }
+        });
+
+        button_laporan_ozon.setBackground(new java.awt.Color(255, 255, 255));
+        button_laporan_ozon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_laporan_ozon.setText("Laporan Ozon");
+        button_laporan_ozon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_laporan_ozonActionPerformed(evt);
+            }
+        });
+
+        button_report_lp_wlt1.setBackground(new java.awt.Color(255, 255, 255));
+        button_report_lp_wlt1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_report_lp_wlt1.setText("Laporan P. Baku WLT+");
+        button_report_lp_wlt1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_report_lp_wlt1ActionPerformed(evt);
+            }
+        });
+
+        button_rekap.setBackground(new java.awt.Color(255, 255, 255));
+        button_rekap.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_rekap.setText("Rekap");
+        button_rekap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_rekapActionPerformed(evt);
+            }
+        });
+
+        button_print_qr_lp.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_qr_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_qr_lp.setText("Print QR LP");
+        button_print_qr_lp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_qr_lpActionPerformed(evt);
+            }
+        });
+
+        button_cheat_no_kartu2.setBackground(new java.awt.Color(255, 255, 255));
+        button_cheat_no_kartu2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_cheat_no_kartu2.setText("Cheat No Kartu 2");
+        button_cheat_no_kartu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_cheat_no_kartu2ActionPerformed(evt);
+            }
+        });
+
+        button_cheat_rsb2.setBackground(new java.awt.Color(255, 255, 255));
+        button_cheat_rsb2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_cheat_rsb2.setText("Cheat RSB 2");
+        button_cheat_rsb2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_cheat_rsb2ActionPerformed(evt);
+            }
+        });
+
+        button_cheat_tgl_lp.setBackground(new java.awt.Color(255, 255, 255));
+        button_cheat_tgl_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_cheat_tgl_lp.setText("Cheat Tgl LP");
+        button_cheat_tgl_lp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_cheat_tgl_lpActionPerformed(evt);
+            }
+        });
+
+        button_print_lp_semua.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_lp_semua.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_lp_semua.setText("Print Semua LP");
+        button_print_lp_semua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_lp_semuaActionPerformed(evt);
+            }
+        });
+
+        button_print_surat_jalan_lp.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_surat_jalan_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_surat_jalan_lp.setText("Print Surat Jalan LP");
+        button_print_surat_jalan_lp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_surat_jalan_lpActionPerformed(evt);
+            }
+        });
+
+        button_print_1_lp_cheat.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_1_lp_cheat.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_1_lp_cheat.setText("Print 1 LP Cheat");
+        button_print_1_lp_cheat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_1_lp_cheatActionPerformed(evt);
+            }
+        });
+
+        button_print_lp.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_lp.setText("Print 1 LP");
+        button_print_lp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_lpActionPerformed(evt);
+            }
+        });
+
+        button_report_lp_wlt.setBackground(new java.awt.Color(255, 255, 255));
+        button_report_lp_wlt.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_report_lp_wlt.setText("Laporan P. Baku WLT");
+        button_report_lp_wlt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_report_lp_wltActionPerformed(evt);
+            }
+        });
+
+        button_report_lp_sub.setBackground(new java.awt.Color(255, 255, 255));
+        button_report_lp_sub.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_report_lp_sub.setText("Laporan P. Baku SUB");
+        button_report_lp_sub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_report_lp_subActionPerformed(evt);
+            }
+        });
+
+        button_print_semua_lp_cheat.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_semua_lp_cheat.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_semua_lp_cheat.setText("Print Semua LP Cheat");
+        button_print_semua_lp_cheat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_semua_lp_cheatActionPerformed(evt);
+            }
+        });
+
+        button_report_lp_wlt_jdn.setBackground(new java.awt.Color(255, 255, 255));
+        button_report_lp_wlt_jdn.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_report_lp_wlt_jdn.setText("Laporan P. Baku JDN");
+        button_report_lp_wlt_jdn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_report_lp_wlt_jdnActionPerformed(evt);
+            }
+        });
+
+        button_print_lp_semua_CABUTO.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_lp_semua_CABUTO.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_lp_semua_CABUTO.setText("Print Semua LP CABUTO");
+        button_print_lp_semua_CABUTO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_lp_semua_CABUTOActionPerformed(evt);
+            }
+        });
+
+        button_print_lp_CABUTO.setBackground(new java.awt.Color(255, 255, 255));
+        button_print_lp_CABUTO.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_print_lp_CABUTO.setText("Print 1 LP CABUTO");
+        button_print_lp_CABUTO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_print_lp_CABUTOActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(button_report_lp_wlt, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(button_report_lp_sub, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(button_report_lp_wlt1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(button_report_lp_sub1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(button_report_lp_wlt_jdn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(button_laporan_ozon, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(16, 16, 16))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(button_rekap, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(button_print_surat_jalan_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(button_total_cucian_hari_ini, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(button_cheat_rsb2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(button_cheat_no_kartu2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(button_cheat_tgl_lp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(button_print_1_lp_cheat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(button_print_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(button_print_semua_lp_cheat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(button_print_lp_semua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap()))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(button_print_lp_CABUTO, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(button_print_lp_semua_CABUTO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(button_print_qr_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(button_report_lp_wlt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_report_lp_sub, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_report_lp_wlt1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_report_lp_sub1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_report_lp_wlt_jdn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_laporan_ozon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_rekap, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_print_surat_jalan_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_total_cucian_hari_ini, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_cheat_rsb2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_cheat_no_kartu2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_cheat_tgl_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_print_1_lp_cheat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_print_semua_lp_cheat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_print_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_print_lp_semua, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_print_qr_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_print_lp_CABUTO, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button_print_lp_semua_CABUTO, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        button_insert_LP.setBackground(new java.awt.Color(255, 255, 255));
+        button_insert_LP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_insert_LP.setText("Buat LP Waleta");
+        button_insert_LP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_insert_LPActionPerformed(evt);
+            }
+        });
+
+        button_insert_LP_Sub.setBackground(new java.awt.Color(255, 255, 255));
+        button_insert_LP_Sub.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_insert_LP_Sub.setText("Buat LP Sub");
+        button_insert_LP_Sub.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_insert_LP_SubActionPerformed(evt);
+            }
+        });
+
+        button_update_LP.setBackground(new java.awt.Color(255, 255, 255));
+        button_update_LP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_update_LP.setText("Edit LP");
+        button_update_LP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_update_LPActionPerformed(evt);
+            }
+        });
+
+        button_delete_LP.setBackground(new java.awt.Color(255, 255, 255));
+        button_delete_LP.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_delete_LP.setText("Delete LP");
+        button_delete_LP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_delete_LPActionPerformed(evt);
+            }
+        });
+
+        button_export.setBackground(new java.awt.Color(255, 255, 255));
+        button_export.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_export.setText("Export Excel");
+        button_export.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_exportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_laporan_produksiLayout = new javax.swing.GroupLayout(jPanel_laporan_produksi);
         jPanel_laporan_produksi.setLayout(jPanel_laporan_produksiLayout);
         jPanel_laporan_produksiLayout.setHorizontalGroup(
             jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
                 .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_laporan_produksiLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTabbedPane1))
                     .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
                         .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
@@ -1490,6 +1600,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                             .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel18)
                                     .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
                                         .addComponent(jLabel17)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1517,123 +1628,68 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(Date_Search_LP_2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(button_search_lp))
-                                    .addComponent(jLabel18))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(button_search_lp)))))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addContainerGap()
                         .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(button_insert_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_insert_LP_Sub, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_update_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_delete_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(button_report_lp_wlt, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(button_report_lp_sub, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(button_report_lp_wlt1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(button_report_lp_sub1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(button_report_lp_wlt_jdn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(button_laporan_ozon, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(button_rekap, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(button_print_surat_jalan_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(button_total_cucian_hari_ini, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(button_cheat_rsb2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(button_cheat_no_kartu2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(button_cheat_tgl_lp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(button_print_1_lp_cheat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(button_print_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(button_print_semua_lp_cheat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(button_print_lp_semua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(button_print_qr_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
+                                .addComponent(button_insert_LP)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_insert_LP_Sub)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_update_LP)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_delete_LP)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_export)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jTabbedPane1))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel_laporan_produksiLayout.setVerticalGroup(
             jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_no_kartu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_lp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_memo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_Ruang_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_search_grade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date_Search_LP_1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date_Search_LP_2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_search_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel_laporan_produksiLayout.createSequentialGroup()
-                        .addComponent(button_insert_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_insert_LP_Sub, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_search_no_kartu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_search_lp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_search_memo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComboBox_Ruang_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_search_grade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Date_Search_LP_1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Date_Search_LP_2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_search_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_update_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(button_insert_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_insert_LP_Sub, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_update_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_delete_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_delete_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTabbedPane1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_report_lp_wlt, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_report_lp_sub, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_report_lp_wlt1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_report_lp_sub1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_report_lp_wlt_jdn, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_laporan_ozon, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_rekap, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print_surat_jalan_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_total_cucian_hari_ini, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_cheat_rsb2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_cheat_no_kartu2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_cheat_tgl_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print_1_lp_cheat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print_semua_lp_cheat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print_lp_semua, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print_qr_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel26)
-                    .addComponent(label_total_keping_LP)
-                    .addComponent(jLabel27)
-                    .addComponent(jLabel15)
-                    .addComponent(label_total_data_laporan_produksi)
-                    .addComponent(label_total_gram_LP))
+                        .addGroup(jPanel_laporan_produksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel26)
+                            .addComponent(label_total_keping_LP)
+                            .addComponent(jLabel27)
+                            .addComponent(jLabel15)
+                            .addComponent(label_total_data_laporan_produksi)
+                            .addComponent(label_total_gram_LP)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -1647,7 +1703,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel_laporan_produksi, javax.swing.GroupLayout.DEFAULT_SIZE, 752, Short.MAX_VALUE)
+            .addComponent(jPanel_laporan_produksi, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1752,7 +1808,9 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                         + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
                         + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
                         + "LEFT JOIN `tb_bahan_baku_pecah_kartu` ON `tb_laporan_produksi`.`kode_pecah_lp` = `tb_bahan_baku_pecah_kartu`.`kode_pecah_kartu`\n"
-                        + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + no_lp + "'";
+                        + "WHERE "
+                        + "`tb_laporan_produksi`.`no_laporan_produksi` = '" + no_lp + "'\n"
+                        + "AND `ruangan` <> 'CABUTO'";
                 JRDesignQuery newQuery = new JRDesignQuery();
                 newQuery.setText(query);
                 JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Laporan_Produksi_QR_Struk.jrxml");
@@ -1764,7 +1822,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
 
-                String Query = "UPDATE `tb_laporan_produksi` SET `print_number_lp`=`print_number_lp`+1 WHERE `no_laporan_produksi` = ?";
+                String Query = "UPDATE `tb_laporan_produksi` SET `print_number_lp`=`print_number_lp`+1 WHERE `no_laporan_produksi` = ? AND `ruangan` <> 'CABUTO'";
                 PreparedStatement statementInsert = Utility.db.getConnection().prepareStatement(Query);
                 statementInsert.setString(1, no_lp);
                 statementInsert.executeUpdate();
@@ -2384,7 +2442,9 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                         + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
                         + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
                         + "LEFT JOIN `tb_bahan_baku_pecah_kartu` ON `tb_laporan_produksi`.`kode_pecah_lp` = `tb_bahan_baku_pecah_kartu`.`kode_pecah_kartu`\n"
-                        + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") "
+                        + "WHERE "
+                        + "`tb_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") \n"
+                        + "AND `ruangan` <> 'CABUTO'\n"
                         + "ORDER BY `no_laporan_produksi`";
 
                 JRDesignQuery newQuery = new JRDesignQuery();
@@ -2398,7 +2458,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
                 
-                String Query = "UPDATE `tb_laporan_produksi` SET `print_number_lp`=`print_number_lp`+1 WHERE `no_laporan_produksi` IN (" + no_lp + ")";
+                String Query = "UPDATE `tb_laporan_produksi` SET `print_number_lp`=`print_number_lp`+1 WHERE `no_laporan_produksi` IN (" + no_lp + ") AND `ruangan` <> 'CABUTO'";
                 PreparedStatement statementInsert = Utility.db.getConnection().prepareStatement(Query);
                 statementInsert.executeUpdate();
             }
@@ -2460,7 +2520,6 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                         + "LEFT JOIN `tb_bahan_baku_pecah_kartu` ON `tb_laporan_produksi`.`kode_pecah_lp` = `tb_bahan_baku_pecah_kartu`.`kode_pecah_kartu`\n"
                         + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") \n"
                         + "ORDER BY `no_laporan_produksi`";
-
                 JRDesignQuery newQuery = new JRDesignQuery();
                 newQuery.setText(query);
                 JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Laporan_Produksi_QR_Struk.jrxml");
@@ -2477,6 +2536,87 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_semua_lp_cheatActionPerformed
+
+    private void button_print_lp_semua_CABUTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_print_lp_semua_CABUTOActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (Table_laporan_produksi.getRowCount() < 0) {
+                JOptionPane.showMessageDialog(this, "Tidak ada data pada tabel", "warning!", 1);
+            } else {
+                String no_lp = "";
+                for (int i = 0; i < Table_laporan_produksi.getRowCount(); i++) {
+                    if (i != 0) {
+                        no_lp = no_lp + ", ";
+                    }
+                    no_lp = no_lp + "'" + Table_laporan_produksi.getValueAt(i, 1).toString() + "'";
+                }
+                String query = "SELECT `no_laporan_produksi`, `tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `tb_laporan_produksi`.`kaki_besar_lp`, `tb_laporan_produksi`.`kaki_kecil_lp`, `tb_laporan_produksi`.`hilang_kaki_lp`, `tb_laporan_produksi`.`ada_susur_lp`, `tb_laporan_produksi`.`ada_susur_besar_lp`, `tb_laporan_produksi`.`tanpa_susur_lp`, `tb_laporan_produksi`.`utuh_lp`, `tb_laporan_produksi`.`hilang_ujung_lp`, `tb_laporan_produksi`.`pecah_1_lp`, `tb_laporan_produksi`.`pecah_2`, `tb_laporan_produksi`.`jumlah_sobek`, `tb_laporan_produksi`.`sobek_lepas`, `tb_laporan_produksi`.`jumlah_gumpil`, `target_ctk_mku`, `rontokan_gbm`, `berat_riil`, `print_number_lp` "
+                        + "FROM `tb_laporan_produksi`\n"
+                        + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
+                        + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
+                        + "LEFT JOIN `tb_bahan_baku_pecah_kartu` ON `tb_laporan_produksi`.`kode_pecah_lp` = `tb_bahan_baku_pecah_kartu`.`kode_pecah_kartu`\n"
+                        + "WHERE "
+                        + "`tb_laporan_produksi`.`no_laporan_produksi` IN (" + no_lp + ") \n"
+                        + "AND `ruangan` = 'CABUTO'\n"
+                        + "ORDER BY `no_laporan_produksi`";
+                JRDesignQuery newQuery = new JRDesignQuery();
+                newQuery.setText(query);
+                JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Laporan_Produksi_QR_Struk_CABUTO.jrxml");
+                JASP_DESIGN.setQuery(newQuery);
+
+                JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("CHEAT", 1);
+                JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
+                JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
+                
+                String Query = "UPDATE `tb_laporan_produksi` SET `print_number_lp`=`print_number_lp`+1 WHERE `no_laporan_produksi` IN (" + no_lp + ") AND `ruangan` = 'CABUTO'";
+                PreparedStatement statementInsert = Utility.db.getConnection().prepareStatement(Query);
+                statementInsert.executeUpdate();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage());
+            Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_print_lp_semua_CABUTOActionPerformed
+
+    private void button_print_lp_CABUTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_print_lp_CABUTOActionPerformed
+        // TODO add your handling code here:
+        try {
+            int j = Table_laporan_produksi.getSelectedRow();
+            if (j == -1) {
+                JOptionPane.showMessageDialog(this, "Silahkan klik salah satu LP di tabel!", "warning!", 1);
+            } else {
+                String no_lp = Table_laporan_produksi.getValueAt(j, 1).toString();
+                String query = "SELECT `no_laporan_produksi`, `tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `tb_laporan_produksi`.`kaki_besar_lp`, `tb_laporan_produksi`.`kaki_kecil_lp`, `tb_laporan_produksi`.`hilang_kaki_lp`, `tb_laporan_produksi`.`ada_susur_lp`, `tb_laporan_produksi`.`ada_susur_besar_lp`, `tb_laporan_produksi`.`tanpa_susur_lp`, `tb_laporan_produksi`.`utuh_lp`, `tb_laporan_produksi`.`hilang_ujung_lp`, `tb_laporan_produksi`.`pecah_1_lp`, `tb_laporan_produksi`.`pecah_2`, `tb_laporan_produksi`.`jumlah_sobek`, `tb_laporan_produksi`.`sobek_lepas`, `tb_laporan_produksi`.`jumlah_gumpil`, `target_ctk_mku`, `rontokan_gbm`, `berat_riil`, `print_number_lp` "
+                        + "FROM `tb_laporan_produksi`\n"
+                        + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
+                        + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
+                        + "LEFT JOIN `tb_bahan_baku_pecah_kartu` ON `tb_laporan_produksi`.`kode_pecah_lp` = `tb_bahan_baku_pecah_kartu`.`kode_pecah_kartu`\n"
+                        + "WHERE "
+                        + "`tb_laporan_produksi`.`no_laporan_produksi` = '" + no_lp + "'\n"
+                        + "AND `ruangan` = 'CABUTO'";
+                JRDesignQuery newQuery = new JRDesignQuery();
+                newQuery.setText(query);
+                JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Laporan_Produksi_QR_Struk_CABUTO.jrxml");
+                JASP_DESIGN.setQuery(newQuery);
+
+                JasperReport JASP_REP = JasperCompileManager.compileReport(JASP_DESIGN);
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("CHEAT", 1);
+                JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
+                JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
+
+                String Query = "UPDATE `tb_laporan_produksi` SET `print_number_lp`=`print_number_lp`+1 WHERE `no_laporan_produksi` = ? AND `ruangan` = 'CABUTO'";
+                PreparedStatement statementInsert = Utility.db.getConnection().prepareStatement(Query);
+                statementInsert.setString(1, no_lp);
+                statementInsert.executeUpdate();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage());
+            Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_print_lp_CABUTOActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2496,7 +2636,9 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
     private javax.swing.JButton button_laporan_ozon;
     private javax.swing.JButton button_print_1_lp_cheat;
     private javax.swing.JButton button_print_lp;
+    private javax.swing.JButton button_print_lp_CABUTO;
     private javax.swing.JButton button_print_lp_semua;
+    private javax.swing.JButton button_print_lp_semua_CABUTO;
     private javax.swing.JButton button_print_qr_lp;
     private javax.swing.JButton button_print_semua_lp_cheat;
     private javax.swing.JButton button_print_surat_jalan_lp;
@@ -2530,6 +2672,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel_laporan_produksi;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane8;

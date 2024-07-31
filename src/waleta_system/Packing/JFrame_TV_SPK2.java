@@ -91,16 +91,20 @@ public class JFrame_TV_SPK2 extends javax.swing.JFrame {
             DefaultTableModel model2 = (DefaultTableModel) Tabel_Detail_SPK1.getModel();
             model2.setRowCount(0);
             int row_counter1 = 0, row_counter2 = 0;
-            sql = "SELECT `tb_spk`.`kode_spk`, `tb_buyer`.`nama`, `tanggal_spk`, `tanggal_tk`, `detail`, "
-                    + "(SELECT SUM(`tb_spk_detail`.`berat`) FROM `tb_spk_detail` WHERE `kode_spk` = `tb_spk`.`kode_spk`) AS 'berat', "
-                    + "SUM(`tb_box_bahan_jadi`.`berat`) AS 'progress'"
-                    + "FROM `tb_spk` "
-                    + "LEFT JOIN `tb_buyer` ON `tb_spk`.`buyer` = `tb_buyer`.`kode_buyer`"
-                    + "LEFT JOIN `tb_spk_detail` ON `tb_spk`.`kode_spk` = `tb_spk_detail`.`kode_spk`"
-                    + "LEFT JOIN `tb_box_packing` ON `tb_spk_detail`.`no` = `tb_box_packing`.`no_grade_spk` "
-                    + "LEFT JOIN `tb_box_bahan_jadi` ON `tb_box_packing`.`no_box` = `tb_box_bahan_jadi`.`no_box` "
-                    + "WHERE `tb_spk`.`status` = 'PROSES' AND `tb_spk`.`kode_spk` NOT IN ('Sample Internal')"
-                    + "GROUP BY `kode_spk` ORDER BY `tanggal_tk` DESC";
+            sql = "SELECT `tb_spk`.`kode_spk`, `tb_buyer`.`nama`, `tanggal_spk`, `tanggal_tk`, `detail`, \n"
+                    + "(SELECT SUM(`tb_spk_detail`.`berat`) FROM `tb_spk_detail` WHERE `kode_spk` = `tb_spk`.`kode_spk`) AS 'berat', \n"
+                    + "SUM(`tb_box_bahan_jadi`.`berat`) AS 'progress'\n"
+                    + "FROM `tb_spk` \n"
+                    + "LEFT JOIN `tb_buyer` ON `tb_spk`.`buyer` = `tb_buyer`.`kode_buyer`\n"
+                    + "LEFT JOIN `tb_spk_detail` ON `tb_spk`.`kode_spk` = `tb_spk_detail`.`kode_spk`\n"
+                    + "LEFT JOIN `tb_box_packing` ON `tb_spk_detail`.`no` = `tb_box_packing`.`no_grade_spk` \n"
+                    + "LEFT JOIN `tb_box_bahan_jadi` ON `tb_box_packing`.`no_box` = `tb_box_bahan_jadi`.`no_box` \n"
+                    + "WHERE "
+                    + "`tb_spk`.`status` = 'PROSES' \n"
+                    + "AND `tb_spk`.`kode_spk` NOT IN ('Sample Internal')\n"
+                    + "AND `tb_spk`.`kode_spk` NOT LIKE ('LOK-%')\n"
+                    + "GROUP BY `kode_spk` \n"
+                    + "ORDER BY `tanggal_tk` DESC";
 //            System.out.println(sql);
             pst = Utility.db.getConnection().prepareStatement(sql);
             rs = pst.executeQuery();
