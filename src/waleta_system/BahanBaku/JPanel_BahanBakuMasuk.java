@@ -423,8 +423,10 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             DefaultTableModel model = (DefaultTableModel) Table_grading_conveyor.getModel();
             model.setRowCount(0);
 
-            sql = "SELECT `no_grading`, `no_kartu_waleta`, `kode_grade`, `jumlah_keping`, `created_at`, `updated_at` "
+            sql = "SELECT `tb_grading_bahan_baku_conveyor`.`no_grading`, `tb_grading_bahan_baku_conveyor`.`no_kartu_waleta`, `tb_grading_bahan_baku_conveyor`.`kode_grade`, `tb_grading_bahan_baku_conveyor`.`jumlah_keping`, `created_at`, `updated_at`, "
+                    + "`tb_grading_bahan_baku`.`jumlah_keping` AS 'keping_manual', `tb_grading_bahan_baku`.`total_berat` AS 'berat_manual'"
                     + "FROM `tb_grading_bahan_baku_conveyor` "
+                    + "LEFT JOIN `tb_grading_bahan_baku` ON `tb_grading_bahan_baku`.`no_kartu_waleta` = `tb_grading_bahan_baku_conveyor`.`no_kartu_waleta` AND `tb_grading_bahan_baku`.`kode_grade` = `tb_grading_bahan_baku_conveyor`.`kode_grade` \n"
                     + "WHERE "
                     + "`tb_grading_bahan_baku_conveyor`.`no_kartu_waleta` LIKE '%" + txt_search_no_kartu_grading_conveyor.getText() + "%' \n"
                     + "AND `tb_grading_bahan_baku_conveyor`.`kode_grade` LIKE '%" + txt_search_grade_grading_conveyor.getText() + "%' \n";
@@ -436,6 +438,8 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 row[2] = rs.getString("kode_grade");
                 row[3] = rs.getFloat("jumlah_keping");
                 row[4] = rs.getTimestamp("created_at");
+                row[5] = rs.getFloat("keping_manual");
+                row[6] = rs.getFloat("berat_manual");
                 model.addRow(row);
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_grading_conveyor);
@@ -1526,14 +1530,14 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No Grading", "No Kartu", "Grade", "Kpg", "Created At"
+                "No Grading", "No Kartu", "Grade", "Kpg", "Created At", "Kpg Manual", "Gram Manual"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

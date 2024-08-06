@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Pengiriman" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
 	<property name="ireport.zoom" value="2.3579476910000023"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="49"/>
 	<property name="ireport.y" value="0"/>
 	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
 		<box>
@@ -496,11 +496,11 @@ WHERE 1]]>
 	<pageFooter>
 		<band height="83" splitType="Stretch">
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-				<reportElement x="160" y="28" width="120" height="55" uuid="e0161475-283c-4564-a7cd-05d3541eb8b5"/>
+				<reportElement x="280" y="28" width="120" height="55" uuid="e0161475-283c-4564-a7cd-05d3541eb8b5"/>
 				<imageExpression><![CDATA["Report\\ReportImages\\TTD ELDABERTI GRESELDA.png"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-				<reportElement x="280" y="28" width="120" height="55" uuid="22b414b3-de9f-4569-8319-6272e199794e"/>
+				<reportElement x="160" y="28" width="120" height="55" uuid="22b414b3-de9f-4569-8319-6272e199794e"/>
 				<imageExpression><![CDATA["Report\\ReportImages\\TTD_TITAN.png"]]></imageExpression>
 			</image>
 			<staticText>

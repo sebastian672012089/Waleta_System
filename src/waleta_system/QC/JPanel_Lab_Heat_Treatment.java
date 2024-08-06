@@ -531,7 +531,15 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                     + "WHERE "
                     + "`tb_heat_treatment_pengiriman`.`no` IN (" + no + ") "
                     + "ORDER BY "
-                    + "`tb_heat_treatment_pengiriman`.`tanggal_pengiriman`, `tgl_heat_treatment`, `suhu_ruang`, `suhu_sarang_awal`, `waktu_preheat`, `suhu_preheat`, `suhu_akhir`, `waktu_heat_treatment`, `no_tray`";
+                    + "`tb_heat_treatment_pengiriman`.`tanggal_pengiriman`, "
+                    + "`tgl_heat_treatment`, "
+                    + "`suhu_ruang`, "
+                    + "`waktu_preheat`, "
+                    + "`suhu_preheat`, "
+                    + "`suhu_sarang_awal`, "
+                    + "`suhu_akhir`, "
+                    + "`waktu_heat_treatment`, "
+                    + "`no_tray`";
             JRDesignQuery newQuery = new JRDesignQuery();
             newQuery.setText(Query);
             JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Catatan_Pemanasan_Barang_Jadi_CCP2.jrxml");
