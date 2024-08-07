@@ -30,7 +30,7 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
     public void get_data_edit() {
         try {
             sql = "SELECT `tb_heat_treatment_pengiriman`.`no`, `tb_heat_treatment_pengiriman`.`no_box`, `tb_heat_treatment_pengiriman`.`keping`, `tb_heat_treatment_pengiriman`.`gram`, `operator_heat_treatment`, `nama_pegawai`, "
-                    + "`suhu_ruang`, `suhu_sarang_awal`, `waktu_preheat`, `suhu_preheat`, `suhu_akhir`, `waktu_heat_treatment`, `tb_heat_treatment_pengiriman`.`keterangan`, "
+                    + "`suhu_ruang`, `suhu_sarang_awal`, `waktu_preheat`, `suhu_preheat`, `suhu_akhir`, `waktu_heat_treatment`, `tb_heat_treatment_pengiriman`.`keterangan`, `waktu_input`, "
                     + "`tb_grade_bahan_jadi`.`kode_grade`, `tb_box_bahan_jadi`.`keping`, `tb_box_bahan_jadi`.`berat`, "
                     + "`invoice_pengiriman`, `tb_spk_detail`.`kode_spk`, `tb_spk_detail`.`grade_buyer` "
                     + "FROM `tb_heat_treatment_pengiriman` "
@@ -65,6 +65,11 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
                     Spinner_heat_treatment_detik.setValue(Integer.valueOf(rs.getString("waktu_heat_treatment").split(":")[2]));
                 }
                 txt_keterangan.setText(rs.getString("keterangan"));
+                if (rs.getString("waktu_input") != null) {
+                    Spinner_waktu_input_jam.setValue(Integer.valueOf(rs.getString("waktu_input").split(":")[0]));
+                    Spinner_waktu_input_menit.setValue(Integer.valueOf(rs.getString("waktu_input").split(":")[1]));
+                    Spinner_waktu_input_detik.setValue(Integer.valueOf(rs.getString("waktu_input").split(":")[2]));
+                }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
@@ -85,6 +90,7 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
             } else {
                 String waktu_preheat = String.format("%02d", Spinner_preheat_jam.getValue()) + ":" + String.format("%02d", Spinner_preheat_menit.getValue()) + ":" + String.format("%02d", Spinner_preheat_detik.getValue());
                 String waktu_heat_treatment = String.format("%02d", Spinner_heat_treatment_jam.getValue()) + ":" + String.format("%02d", Spinner_heat_treatment_menit.getValue()) + ":" + String.format("%02d", Spinner_heat_treatment_detik.getValue());
+                String waktu_input = String.format("%02d", Spinner_waktu_input_jam.getValue()) + ":" + String.format("%02d", Spinner_waktu_input_menit.getValue()) + ":" + String.format("%02d", Spinner_waktu_input_detik.getValue());
                 sql = "UPDATE `tb_heat_treatment_pengiriman` SET "
                         + "`keping`=" + Float.valueOf(txt_keping.getText()) + ","
                         + "`gram`=" + Float.valueOf(txt_gram.getText()) + ", "
@@ -95,7 +101,8 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
                         + "`suhu_preheat`=" + Float.valueOf(txt_suhu_preheat.getText()) + ", "
                         + "`suhu_akhir`=" + Float.valueOf(txt_suhu_akhir.getText()) + ", "
                         + "`waktu_heat_treatment`='" + waktu_heat_treatment + "', "
-                        + "`keterangan`='" + txt_keterangan.getText() + "' "
+                        + "`keterangan`='" + txt_keterangan.getText() + "', "
+                        + "`waktu_input`='" + waktu_input + "' "
                         + "WHERE `no`='" + label_no.getText() + "'";
                 Utility.db.getConnection().createStatement();
                 Utility.db.getStatement().executeUpdate(sql);
@@ -154,6 +161,10 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
         label_no = new javax.swing.JLabel();
         txt_gram = new javax.swing.JTextField();
         txt_keping = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        Spinner_waktu_input_jam = new javax.swing.JSpinner();
+        Spinner_waktu_input_menit = new javax.swing.JSpinner();
+        Spinner_waktu_input_detik = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Bagian Lab");
@@ -349,6 +360,19 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
 
         txt_keping.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
+        jLabel24.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel24.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel24.setText("Waktu Input :");
+
+        Spinner_waktu_input_jam.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Spinner_waktu_input_jam.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+
+        Spinner_waktu_input_menit.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Spinner_waktu_input_menit.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
+
+        Spinner_waktu_input_detik.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Spinner_waktu_input_detik.setModel(new javax.swing.SpinnerNumberModel(0, 0, 59, 1));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -360,64 +384,72 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_gram)
-                    .addComponent(txt_keping)
-                    .addComponent(label_no_spk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(label_grade_buyer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(label_grade_waleta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(label_no_invoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_no_box)
-                    .addComponent(label_no, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txt_suhu_ruang)
-                    .addComponent(txt_suhu_sarang_awal)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txt_operator_id)
-                        .addGap(0, 0, 0)
-                        .addComponent(button_pick_diserahkan, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txt_operator_nama)
-                    .addComponent(txt_suhu_preheat)
-                    .addComponent(txt_suhu_akhir)
-                    .addComponent(txt_keterangan)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_gram)
+                            .addComponent(txt_keping)
+                            .addComponent(label_no_spk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_grade_buyer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_grade_waleta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(label_no_invoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_no_box)
+                            .addComponent(label_no, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_suhu_ruang)
+                            .addComponent(txt_suhu_sarang_awal)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Spinner_preheat_jam, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Spinner_preheat_menit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Spinner_preheat_detik, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_operator_id)
+                                .addGap(0, 0, 0)
+                                .addComponent(button_pick_diserahkan, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_operator_nama)
+                            .addComponent(txt_suhu_preheat)
+                            .addComponent(txt_suhu_akhir)
+                            .addComponent(txt_keterangan)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Spinner_heat_treatment_jam, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Spinner_heat_treatment_menit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Spinner_heat_treatment_detik, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(Spinner_preheat_jam, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Spinner_preheat_menit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Spinner_preheat_detik, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(Spinner_heat_treatment_jam, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Spinner_heat_treatment_menit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Spinner_heat_treatment_detik, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(Spinner_waktu_input_jam, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Spinner_waktu_input_menit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Spinner_waktu_input_detik, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(button_cancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_save, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(188, Short.MAX_VALUE)
-                .addComponent(button_cancel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button_save, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -502,6 +534,12 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_keterangan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Spinner_waktu_input_jam, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Spinner_waktu_input_menit, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Spinner_waktu_input_detik, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_save)
@@ -606,6 +644,9 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
     private javax.swing.JSpinner Spinner_preheat_detik;
     private javax.swing.JSpinner Spinner_preheat_jam;
     private javax.swing.JSpinner Spinner_preheat_menit;
+    private javax.swing.JSpinner Spinner_waktu_input_detik;
+    private javax.swing.JSpinner Spinner_waktu_input_jam;
+    private javax.swing.JSpinner Spinner_waktu_input_menit;
     private javax.swing.JButton button_cancel;
     private javax.swing.JButton button_pick_diserahkan;
     private javax.swing.JButton button_save;
@@ -624,6 +665,7 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

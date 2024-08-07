@@ -88,7 +88,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                     + "`tb_heat_treatment_pengiriman`.`kode_rsb`, `tb_heat_treatment_pengiriman`.`kode_grade`,\n"
                     + "`tb_box_bahan_jadi`.`kode_rsb` AS 'kode_rsb2', `tb_grade_bahan_jadi`.`kode_grade` AS 'kode_grade2',\n"
                     + "`tb_heat_treatment_pengiriman`.`keping`, `tb_heat_treatment_pengiriman`.`gram`, `waktu_preheat`, `suhu_preheat`, `suhu_akhir`, `waktu_heat_treatment`, "
-                    + "`tb_heat_treatment_pengiriman`.`keterangan`, `tb_heat_treatment_pengiriman`.`tanggal_pengiriman` \n"
+                    + "`tb_heat_treatment_pengiriman`.`keterangan`, `tb_heat_treatment_pengiriman`.`tanggal_pengiriman`, `waktu_input` \n"
                     + "FROM `tb_heat_treatment_pengiriman` \n"
                     + "LEFT JOIN `tb_box_packing` ON `tb_heat_treatment_pengiriman`.`no_box` = `tb_box_packing`.`no_box`\n"
                     + "LEFT JOIN `tb_spk_detail` ON `tb_box_packing`.`no_grade_spk` = `tb_spk_detail`.`no`\n"
@@ -126,6 +126,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                 row[16] = rs.getFloat("suhu_akhir");
                 row[17] = rs.getTime("waktu_heat_treatment");
                 row[18] = rs.getString("keterangan");
+                row[19] = rs.getTime("waktu_input");
                 String batch = new SimpleDateFormat("YYMMDD").format(rs.getDate("tgl_heat_treatment"));
                 model.addRow(row);
             }
@@ -183,14 +184,14 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No", "Invoice", "kode SPK", "Tgl Pengiriman", "Operator", "Suhu Ruang", "Suhu Sarang awal", "Tgl Heat Treatment", "No Tray", "No Box", "Kode RSB", "Grade", "Biji (pcs)", "Berat (gr)", "Waktu Preheat", "Suhu Preheat", "Suhu Akhir", "Menit Treatment", "Keterangan"
+                "No", "Invoice", "kode SPK", "Tgl Pengiriman", "Operator", "Suhu Ruang", "Suhu Sarang awal", "Tgl Heat Treatment", "No Tray", "No Box", "Kode RSB", "Grade", "Biji (pcs)", "Berat (gr)", "Waktu Preheat", "Suhu Preheat", "Suhu Akhir", "Menit Treatment", "Keterangan", "Waktu Input"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.Float.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -539,6 +540,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                     + "`suhu_sarang_awal`, "
                     + "`suhu_akhir`, "
                     + "`waktu_heat_treatment`, "
+                    + "`waktu_input`, "
                     + "`no_tray`";
             JRDesignQuery newQuery = new JRDesignQuery();
             newQuery.setText(Query);
@@ -595,7 +597,8 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                                     + "`suhu_preheat`, "
                                     + "`suhu_akhir`, "
                                     + "`waktu_heat_treatment`, "
-                                    + "`keterangan`"
+                                    + "`keterangan`,"
+                                    + "`waktu_input`"
                                     + ") "
                                     + "VALUES ("
                                     + "'" + value[0] + "',"//tanggal_pengiriman
@@ -613,7 +616,8 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                                     + "'" + value[12] + "',"//suhu_preheat
                                     + "'" + value[13] + "',"//suhu_akhir
                                     + "'" + value[14] + "',"//waktu_heat_treatment
-                                    + "'" + value[15] + "'"//keterangan
+                                    + "'" + value[15] + "',"//keterangan
+                                    + "'" + value[16] + "'"//waktu_input
                                     + ") ";
                             Utility.db.getConnection().prepareStatement(Query);
                             if ((Utility.db.getStatement().executeUpdate(Query)) > 0) {

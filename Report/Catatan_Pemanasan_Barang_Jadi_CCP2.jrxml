@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Pengiriman" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
 	<property name="ireport.zoom" value="2.3579476910000055"/>
-	<property name="ireport.x" value="59"/>
-	<property name="ireport.y" value="6"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" hAlign="Center" vAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
 		<box>
 			<pen lineWidth="1.0"/>
@@ -409,13 +409,6 @@ WHERE 1]]>
 					<text><![CDATA[Tanggal Pengiriman /]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="20" width="170" height="15" forecolor="#000000" uuid="027edbf7-779a-4540-ac6e-a2ddc2b54525"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-					</textElement>
-					<text><![CDATA[Suhu Ruang /]]></text>
-				</staticText>
-				<staticText>
 					<reportElement x="305" y="20" width="140" height="15" forecolor="#000000" uuid="6fa3949c-39f5-4d05-9ae1-7910035530c7"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
@@ -428,13 +421,6 @@ WHERE 1]]>
 						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Shipment Date]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="55" y="20" width="115" height="15" forecolor="#000000" uuid="b2454e41-9116-466a-8a0b-f6fdfe6bffaa"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-					</textElement>
-					<text><![CDATA[Room Temperature]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="370" y="20" width="75" height="15" forecolor="#000000" uuid="3766a1b5-677e-4a39-8c98-f0b16572e953"/>
@@ -450,20 +436,6 @@ WHERE 1]]>
 					</textElement>
 					<text><![CDATA[=]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="170" y="20" width="15" height="15" forecolor="#000000" uuid="453b10fa-d1fc-4af7-8a34-57f3c4b20195"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
-					</textElement>
-					<text><![CDATA[=]]></text>
-				</staticText>
-				<textField pattern="">
-					<reportElement x="185" y="20" width="120" height="15" forecolor="#000000" uuid="5c2e486f-e155-4ce8-9f02-61a8830627a1"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
-						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{suhu_ruang} + " °C"]]></textFieldExpression>
-				</textField>
 				<staticText>
 					<reportElement x="445" y="20" width="110" height="15" forecolor="#000000" uuid="569c6304-6b72-43aa-b780-4c49ba4137e3"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
@@ -500,21 +472,21 @@ WHERE 1]]>
 					<text><![CDATA[= Electric Steamer]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="35" width="170" height="15" forecolor="#000000" uuid="2558d458-b143-4e5d-b09c-af771505e6e9"/>
+					<reportElement x="0" y="20" width="170" height="15" forecolor="#000000" uuid="2558d458-b143-4e5d-b09c-af771505e6e9"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Nama Operator /]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="65" y="35" width="75" height="15" forecolor="#000000" uuid="402ab433-7049-4f87-a483-96a45b98b198"/>
+					<reportElement x="65" y="20" width="75" height="15" forecolor="#000000" uuid="402ab433-7049-4f87-a483-96a45b98b198"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[Operator Name]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="185" y="35" width="110" height="15" forecolor="#000000" uuid="6b1bd211-0643-4ddf-a606-ab330e6eb4bc"/>
+					<reportElement x="185" y="20" width="110" height="15" forecolor="#000000" uuid="6b1bd211-0643-4ddf-a606-ab330e6eb4bc"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
 						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
 					</textElement>
@@ -570,12 +542,40 @@ WHERE 1]]>
 					<text><![CDATA[time-preheat]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="170" y="35" width="15" height="15" forecolor="#000000" uuid="a67fb833-923f-451a-8f4e-69440484d59a"/>
+					<reportElement x="170" y="20" width="15" height="15" forecolor="#000000" uuid="a67fb833-923f-451a-8f4e-69440484d59a"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
 					</textElement>
 					<text><![CDATA[=]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="0" y="35" width="170" height="15" forecolor="#000000" uuid="027edbf7-779a-4540-ac6e-a2ddc2b54525"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Suhu Ruang /]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="55" y="35" width="115" height="15" forecolor="#000000" uuid="b2454e41-9116-466a-8a0b-f6fdfe6bffaa"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[Room Temperature]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="170" y="35" width="15" height="15" forecolor="#000000" uuid="453b10fa-d1fc-4af7-8a34-57f3c4b20195"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="true" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[=]]></text>
+				</staticText>
+				<textField pattern="">
+					<reportElement x="185" y="35" width="120" height="15" forecolor="#000000" uuid="5c2e486f-e155-4ce8-9f02-61a8830627a1"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial Narrow" size="8" isItalic="false" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{suhu_ruang} + " °C"]]></textFieldExpression>
+				</textField>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -587,7 +587,7 @@ WHERE 1]]>
 		<groupHeader>
 			<band height="15">
 				<rectangle>
-					<reportElement mode="Transparent" x="0" y="0" width="555" height="15" uuid="d94e4335-1914-4935-baad-817b9d9d28f7"/>
+					<reportElement mode="Transparent" x="85" y="0" width="470" height="15" uuid="d94e4335-1914-4935-baad-817b9d9d28f7"/>
 				</rectangle>
 				<textField pattern="">
 					<reportElement style="Detail" x="55" y="0" width="30" height="15" uuid="57d7fdd5-9f2d-4ea2-ad9e-af3efc56208f"/>
@@ -605,6 +605,13 @@ new SimpleDateFormat("ss").format($F{waktu_preheat})
 						<font size="8" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{suhu_preheat}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement style="Detail" x="0" y="0" width="30" height="15" uuid="9dd2a897-8ed3-4ba8-abe2-e0ec9eb0677f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="7" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yy").format($F{tgl_heat_treatment})]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -714,7 +721,7 @@ new SimpleDateFormat("ss").format($F{waktu_preheat})
 				<textElement markup="none">
 					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[13 Maret 2024]]></text>
+				<text><![CDATA[6 Agustus 2024]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="455" y="45" width="100" height="30" uuid="e556a2d1-6638-43e2-a2ce-2ec1397c416b"/>
@@ -728,7 +735,7 @@ new SimpleDateFormat("ss").format($F{waktu_preheat})
 				<textElement markup="none">
 					<font fontName="Arial Narrow" size="10" pdfFontName="Times-Roman" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[16]]></text>
+				<text><![CDATA[17]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

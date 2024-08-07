@@ -41,8 +41,8 @@ public class JDialog_CreateNew_User1 extends javax.swing.JDialog {
         try {
             initComponents();
             //MAIN MENU
-            listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_ISU_PRODUKSI, new JCheckBox[]{cbView_MainMenu1, cbInsert_MainMenu2, cbUpdate_MainMenu2, cbDelete_MainMenu2}));
-            listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_ABSEN_PRODUKSI, new JCheckBox[]{cbView_MainMenu2, cbInsert_MainMenu1, cbUpdate_MainMenu1, cbDelete_MainMenu1}));
+            listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_ISU_PRODUKSI, new JCheckBox[]{cbView_MainMenu1, cbInsert_MainMenu1, cbUpdate_MainMenu1, cbDelete_MainMenu1}));
+            listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_ABSEN_PRODUKSI, new JCheckBox[]{cbView_MainMenu2, cbInsert_MainMenu2, cbUpdate_MainMenu2, cbDelete_MainMenu2}));
             //BAHAN BAKU
             listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_BAHAN_BAKU, new JCheckBox[]{cbView0, cbInsert0, cbUpdate0, cbDelete0}));
             listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_SUPPLIER, new JCheckBox[]{cbView0_1, cbInsert0_1, cbUpdate0_1, cbDelete0_1}));
@@ -50,6 +50,7 @@ public class JDialog_CreateNew_User1 extends javax.swing.JDialog {
             listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_RUMAH_BURUNG, new JCheckBox[]{cbView0_3, cbInsert0_3, cbUpdate0_3, cbDelete0_3}));
             listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_GRADE_BAKU, new JCheckBox[]{cbView0_4, cbInsert0_4, cbUpdate0_4, cbDelete0_4}));
             listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_BAHAN_BAKU_MASUK, new JCheckBox[]{cbView0_5, cbInsert0_5, cbUpdate0_5, cbDelete0_5}));
+            listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_LAPORAN_PRODUKSI, new JCheckBox[]{cbView0_6, cbInsert0_6, cbUpdate0_6, cbDelete0_6}));
             listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_LAPORAN_PRODUKSI_SESEKAN, new JCheckBox[]{cbView0_7, cbInsert0_7, cbUpdate0_7, cbDelete0_7}));
             listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_LAPORAN_PRODUKSI_SAPON, new JCheckBox[]{cbView0_8, cbInsert0_8, cbUpdate0_8, cbDelete0_8}));
             listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_BAKU_KELUAR, new JCheckBox[]{cbView0_9, cbInsert0_9, cbUpdate0_9, cbDelete0_9}));
@@ -4366,25 +4367,30 @@ public class JDialog_CreateNew_User1 extends javax.swing.JDialog {
                 Check = false;
             }
             if (Check) {
-                List<AksesMenu.Akses> listAkses = hakAkses();
                 Utility.db.getConnection().setAutoCommit(false);
+
                 String Query = "INSERT INTO `tb_login`(`user`, `pass`, `id_pegawai`) VALUES ('" + txt_username.getText() + "','" + txt_pass_2.getText() + "','" + label_id.getText() + "')";
                 Utility.db.getConnection().createStatement();
-                if ((Utility.db.getStatement().executeUpdate(Query)) > 0) {
-                    for (int i = 0; i < listAkses.size(); i++) {
-                        String Query2 = "INSERT INTO `tb_hak_akses`(`user`, `menu`, `hak_akses`) VALUES ('" + txt_username.getText() + "','" + listAkses.get(i).nama + "','" + listAkses.get(i).akses + "')";
-                        Utility.db.getConnection().createStatement();
-                        if ((Utility.db.getStatement().executeUpdate(Query2)) <= 0) {
-                            throw new Exception("Error");
+                Utility.db.getStatement().executeUpdate(Query);
+                for (int j = 0; j < listCB.size(); j++) {
+                    String akses = "";
+                    for (int k = 0; k < listCB.get(j).data.length; k++) {
+                        if (listCB.get(j).data[k].isSelected()) {
+                            akses += "1";
+                        } else {
+                            akses += "0";
                         }
                     }
-                    JOptionPane.showMessageDialog(this, "User baru berhasil dibuat");
-                    this.dispose();
-                } else {
-                    throw new Exception("Error");
+
+                    String Query2 = "INSERT INTO `tb_hak_akses` (`user`, `menu`, `hak_akses`) VALUES('" + txt_username.getText() + "','" + listCB.get(j).nama + "','" + akses + "')";
+                    Utility.db.getConnection().createStatement();
+                    if ((Utility.db.getStatement().executeUpdate(Query2)) <= 0) {
+                        throw new Exception();
+                    }
                 }
                 Utility.db.getConnection().commit();
-
+                JOptionPane.showMessageDialog(this, "User baru berhasil dibuat");
+                this.dispose();
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);

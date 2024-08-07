@@ -45,8 +45,8 @@ public class JPanel_Data_User extends javax.swing.JPanel implements InterfacePan
         initComponents();
         listCB = new ArrayList<AksesMenu.ComboMenu>();
         //MAIN MENU
-        listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_ISU_PRODUKSI, new JCheckBox[]{cbView_MainMenu1, cbInsert_MainMenu2, cbUpdate_MainMenu2, cbDelete_MainMenu2}));
-        listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_ABSEN_PRODUKSI, new JCheckBox[]{cbView_MainMenu2, cbInsert_MainMenu1, cbUpdate_MainMenu1, cbDelete_MainMenu1}));
+        listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_ISU_PRODUKSI, new JCheckBox[]{cbView_MainMenu1, cbInsert_MainMenu1, cbUpdate_MainMenu1, cbDelete_MainMenu1}));
+        listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_ABSEN_PRODUKSI, new JCheckBox[]{cbView_MainMenu2, cbInsert_MainMenu2, cbUpdate_MainMenu2, cbDelete_MainMenu2}));
         //BAHAN BAKU
         listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_BAHAN_BAKU, new JCheckBox[]{cbView0, cbInsert0, cbUpdate0, cbDelete0}));
         listCB.add(new AksesMenu.ComboMenu(AksesMenu.MENU_ITEM_SUPPLIER, new JCheckBox[]{cbView0_1, cbInsert0_1, cbUpdate0_1, cbDelete0_1}));
@@ -4637,7 +4637,7 @@ public class JPanel_Data_User extends javax.swing.JPanel implements InterfacePan
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Yakin hapus data ini?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     // delete code here
-                    String Query = "DELETE FROM `tb_login` WHERE `user` = \'" + table_data_user.getValueAt(j, 0) + "\'";
+                    String Query = "DELETE FROM `tb_login` WHERE `user` = '" + table_data_user.getValueAt(j, 0) + "'";
                     Utility.db.getConnection().createStatement();
                     if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
                         refreshTable();

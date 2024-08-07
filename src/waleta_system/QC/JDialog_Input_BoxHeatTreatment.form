@@ -52,75 +52,86 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel9" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel10" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel11" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel12" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel13" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel6" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel15" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel19" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel20" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel21" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel18" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel22" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel23" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel16" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel17" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                      <Component id="jLabel14" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txt_gram" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txt_keping" alignment="0" max="32767" attributes="0"/>
-                      <Component id="label_no_spk" alignment="0" max="32767" attributes="0"/>
-                      <Component id="label_grade_buyer" alignment="0" max="32767" attributes="0"/>
-                      <Component id="label_grade_waleta" alignment="0" max="32767" attributes="0"/>
-                      <Component id="label_no_invoice" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txt_no_box" alignment="0" max="32767" attributes="0"/>
-                      <Component id="label_no" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txt_suhu_ruang" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txt_suhu_sarang_awal" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="txt_operator_id" max="32767" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                          <Component id="button_pick_diserahkan" min="-2" pref="22" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="txt_operator_nama" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txt_suhu_preheat" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txt_suhu_akhir" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txt_keterangan" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel21" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel13" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel22" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel15" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel16" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel23" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel17" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel18" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel6" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel9" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel19" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel10" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel20" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel11" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel14" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel12" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="jLabel24" alignment="0" min="-2" pref="130" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txt_gram" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_keping" alignment="0" max="32767" attributes="0"/>
+                              <Component id="label_no_spk" alignment="0" max="32767" attributes="0"/>
+                              <Component id="label_grade_buyer" alignment="0" max="32767" attributes="0"/>
+                              <Component id="label_grade_waleta" alignment="0" max="32767" attributes="0"/>
+                              <Component id="label_no_invoice" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_no_box" alignment="0" max="32767" attributes="0"/>
+                              <Component id="label_no" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_suhu_ruang" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_suhu_sarang_awal" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="Spinner_preheat_jam" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="Spinner_preheat_menit" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="Spinner_preheat_detik" min="-2" pref="50" max="-2" attributes="0"/>
+                                  <Component id="txt_operator_id" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                                  <Component id="button_pick_diserahkan" min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="Spinner_heat_treatment_jam" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="Spinner_heat_treatment_menit" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="Spinner_heat_treatment_detik" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="txt_operator_nama" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_suhu_preheat" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_suhu_akhir" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txt_keterangan" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="Spinner_preheat_jam" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="Spinner_preheat_menit" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="Spinner_preheat_detik" min="-2" pref="50" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="Spinner_heat_treatment_jam" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="Spinner_heat_treatment_menit" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="Spinner_heat_treatment_detik" min="-2" pref="50" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="Spinner_waktu_input_jam" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="Spinner_waktu_input_menit" min="-2" pref="50" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="Spinner_waktu_input_detik" min="-2" pref="50" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="button_cancel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="button_save" min="-2" pref="57" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="188" max="32767" attributes="0"/>
-                  <Component id="button_cancel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="button_save" min="-2" pref="57" max="-2" attributes="0"/>
-                  <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -223,6 +234,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txt_keterangan" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
                       <Component id="jLabel22" alignment="0" min="-2" pref="20" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel24" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="Spinner_waktu_input_jam" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="Spinner_waktu_input_menit" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="Spinner_waktu_input_detik" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -671,6 +689,47 @@
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="12" style="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel24">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Waktu Input :"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="Spinner_waktu_input_jam">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="Spinner_waktu_input_menit">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="0" maximum="59" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSpinner" name="Spinner_waktu_input_detik">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="12" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="0" maximum="59" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
           </Properties>
         </Component>
