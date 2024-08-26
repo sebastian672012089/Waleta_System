@@ -534,12 +534,12 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                     + "ORDER BY "
                     + "`tb_heat_treatment_pengiriman`.`tanggal_pengiriman`, "
                     + "`tgl_heat_treatment`, "
-                    + "`suhu_ruang`, "
-                    + "`waktu_preheat`, "
-                    + "`suhu_preheat`, "
-                    + "`suhu_sarang_awal`, "
-                    + "`suhu_akhir`, "
-                    + "`waktu_heat_treatment`, "
+//                    + "`suhu_ruang`, "
+//                    + "`waktu_preheat`, "
+//                    + "`suhu_preheat`, "
+//                    + "`suhu_sarang_awal`, "
+//                    + "`suhu_akhir`, "
+//                    + "`waktu_heat_treatment`, "
                     + "`waktu_input`, "
                     + "`no_tray`";
             JRDesignQuery newQuery = new JRDesignQuery();

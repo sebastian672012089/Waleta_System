@@ -87,7 +87,7 @@
 		<![CDATA[SELECT `nomor_lembur`, `tb_surat_lembur_detail`.`id_pegawai`, `tb_karyawan`.`nama_pegawai`, `nama_bagian`, `tanggal_lembur`, `jenis_lembur`, `mulai_lembur`, `selesai_lembur`, `jumlah_jam`, `nomor_surat`, `absen_masuk`, `absen_pulang`,
 IF(`jenis_lembur` = 'Masuk',
        IF(`absen_masuk`>`mulai_lembur`, TIMESTAMPDIFF(minute, `absen_masuk`, `selesai_lembur`), TIMESTAMPDIFF(minute, `mulai_lembur`, `selesai_lembur`)),
-       IF(`absen_pulang`>`selesai_lembur`, TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`), TIMESTAMPDIFF(minute, `mulai_lembur`, `selesai_lembur`))
+       IF(`absen_pulang`>`selesai_lembur`, TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`), TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`))
       ) AS 'menit_lembur'
 FROM `tb_surat_lembur_detail`
 LEFT JOIN `tb_karyawan` ON `tb_surat_lembur_detail`.`id_pegawai` = `tb_karyawan`.`id_pegawai`
@@ -104,7 +104,7 @@ WHERE
 AND `tb_surat_lembur_detail`.`id_pegawai` <> '20170600001'
 AND IF(`jenis_lembur` = 'Masuk',
        IF(`absen_masuk`>`mulai_lembur`, TIMESTAMPDIFF(minute, `absen_masuk`, `selesai_lembur`), TIMESTAMPDIFF(minute, `mulai_lembur`, `selesai_lembur`)),
-       IF(`absen_pulang`>`selesai_lembur`, TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`), TIMESTAMPDIFF(minute, `mulai_lembur`, `selesai_lembur`))
+       IF(`absen_pulang`>`selesai_lembur`, TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`), TIMESTAMPDIFF(minute, `mulai_lembur`, `absen_pulang`))
       ) >= 180
 GROUP BY `tb_surat_lembur_detail`.`id_pegawai`
 ORDER BY `nama_bagian`, `tb_karyawan`.`nama_pegawai`]]>

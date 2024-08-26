@@ -109,15 +109,15 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 if (!event.getValueIsAdjusting() && Table_Data_f2.getSelectedRow() != -1) {
                     int i = Table_Data_f2.getSelectedRow();
                     if (i != -1) {
-                        if (JPanel_Finishing2.Table_Data_f2.getValueAt(i, 6) == null) {
+                        if (Table_Data_f2.getValueAt(i, 6) == null) {
                             button_input_koreksi.setEnabled(false);
                             button_input_koreksi1.setEnabled(false);
                             button_input_f1.setEnabled(false);
                             button_input_f2.setEnabled(false);
                             button_f2_setor_lp.setEnabled(false);
                             button_f2_edit.setEnabled(false);
-                        } else {
-                            if (JPanel_Finishing2.Table_Data_f2.getValueAt(i, 8) == null) {
+                        } else if (!Table_Data_f2.getValueAt(i, 4).toString().equals("C") && !Table_Data_f2.getValueAt(i, 4).toString().equals("CABUTO")) {
+                            if (Table_Data_f2.getValueAt(i, 8) == null) {
                                 button_input_koreksi.setEnabled(true);
                                 button_input_koreksi1.setEnabled(true);
                                 button_input_f1.setEnabled(false);
@@ -127,13 +127,13 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                             } else {
                                 button_input_koreksi.setEnabled(false);
                                 button_input_koreksi1.setEnabled(false);
-                                if (JPanel_Finishing2.Table_Data_f2.getValueAt(i, 10) == null) {
+                                if (Table_Data_f2.getValueAt(i, 10) == null) {
                                     button_f2_setor_lp.setEnabled(true);
                                     button_input_f1.setEnabled(true);
                                     button_input_f2.setEnabled(false);
                                 } else {
                                     button_input_f1.setEnabled(false);
-                                    if (JPanel_Finishing2.Table_Data_f2.getValueAt(i, 12) == null) {
+                                    if (Table_Data_f2.getValueAt(i, 12) == null) {
                                         button_input_f2.setEnabled(true);
                                         button_f2_setor_lp.setEnabled(false);
                                     } else {
@@ -142,7 +142,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                     }
                                 }
 
-                                if (JPanel_Finishing2.Table_Data_f2.getValueAt(i, 14) == null) {
+                                if (Table_Data_f2.getValueAt(i, 14) == null) {
                                     button_f2_edit.setEnabled(false);
                                     button_f2_setor_lp.setEnabled(true);
                                 } else {

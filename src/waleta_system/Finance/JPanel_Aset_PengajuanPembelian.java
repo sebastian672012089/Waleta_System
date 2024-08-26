@@ -1232,11 +1232,16 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 // Create a DecimalFormat object with custom symbols
                 DecimalFormat FormatHarga = new DecimalFormat("###,###", symbols);
 
-                String harga_satuan = FormatHarga.format(table_pengajuan.getValueAt(j, 20));
-                String subtotal = FormatHarga.format((int) table_pengajuan.getValueAt(j, 5) * (int) table_pengajuan.getValueAt(j, 20));
-                String ppn = FormatHarga.format(table_pengajuan.getValueAt(j, 22));
-                String biaya_lain = FormatHarga.format(table_pengajuan.getValueAt(j, 23));
-                String total = FormatHarga.format(table_pengajuan.getValueAt(j, 25));
+                Number num_jumlah = decimalFormat.parse(table_pengajuan.getValueAt(j, 5).toString());
+                Number num_harga_satuan = decimalFormat.parse(table_pengajuan.getValueAt(j, 20).toString());
+                double double_jumlah = num_jumlah.doubleValue();
+                double double_harga_satuan = num_harga_satuan.doubleValue();
+
+                String harga_satuan = table_pengajuan.getValueAt(j, 20).toString();
+                String subtotal = FormatHarga.format(double_jumlah * double_harga_satuan);
+                String ppn = table_pengajuan.getValueAt(j, 22).toString();
+                String biaya_lain = table_pengajuan.getValueAt(j, 23).toString();
+                String total = table_pengajuan.getValueAt(j, 25).toString();
 
                 JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\Form_Pengajuan_Pembelian.jrxml");
                 Map<String, Object> params = new HashMap<>();

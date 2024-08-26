@@ -182,7 +182,7 @@ public class Test {
 
     public static void main(String[] args) {
         try {
-            System.out.println(getStatusAkhir("HOLD/NON GNS", "WL-240615017-"));
+//            System.out.println(getStatusAkhir("HOLD/NON GNS", "WL-240615017-"));
         } catch (Exception ex) {
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
         }

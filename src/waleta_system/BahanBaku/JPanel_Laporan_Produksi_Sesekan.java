@@ -115,13 +115,13 @@ public class JPanel_Laporan_Produksi_Sesekan extends javax.swing.JPanel {
                 row[6] = rs.getInt("jumlah_keping");
                 row[7] = rs.getInt("berat_basah");
                 row[8] = rs.getString("no_lp_sesekan");
-                row[9] = rs.getInt("gram_sesekan_lp");
+                row[9] = rs.getFloat("gram_sesekan_lp");
                 row[10] = Math.round(rs.getFloat("gram_sesekan_lp") / rs.getFloat("berat_basah") * 1000d) / 10d;
                 row[11] = rs.getString("nama_pegawai");
                 model.addRow(row);
                 total_gram = total_gram + rs.getInt("berat_basah");
                 total_kpg = total_kpg + rs.getInt("jumlah_keping");
-                total_gram_sesekan = total_gram_sesekan + rs.getInt("gram_sesekan_lp");
+                total_gram_sesekan = total_gram_sesekan + rs.getFloat("gram_sesekan_lp");
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_laporan_produksi);
             int rowData = Table_laporan_produksi.getRowCount();
@@ -208,7 +208,7 @@ public class JPanel_Laporan_Produksi_Sesekan extends javax.swing.JPanel {
                 row[9] = rs.getInt("berat_setelah_cuci");
                 row[10] = rs.getInt("nilai_lp");
                 row[11] = Math.round(rs.getFloat("berat_setelah_cuci") * 100f / rs.getFloat("sesekan_bersih")) / 100f;
-                row[12] = rs.getInt("gram_sesekan_lp");
+                row[12] = rs.getFloat("gram_sesekan_lp");
                 model.addRow(row);
                 total_kpg = total_kpg + rs.getInt("keping");
                 total_ssk_bersih = total_ssk_bersih + rs.getInt("sesekan_bersih");
@@ -244,10 +244,10 @@ public class JPanel_Laporan_Produksi_Sesekan extends javax.swing.JPanel {
                 row[1] = rs.getString("kode_grade");
                 row[2] = rs.getString("jenis_bulu_lp");
                 row[3] = rs.getInt("berat_basah");
-                row[4] = rs.getInt("gram_sesekan_lp");
+                row[4] = rs.getFloat("gram_sesekan_lp");
                 model.addRow(row);
                 total_gram_lp = total_gram_lp + rs.getInt("berat_basah");
-                total_gram_sesekan = total_gram_sesekan + rs.getInt("gram_sesekan_lp");
+                total_gram_sesekan = total_gram_sesekan + rs.getFloat("gram_sesekan_lp");
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_LP_Sesekan_detail);
             int rowData = Table_LP_Sesekan_detail.getRowCount();

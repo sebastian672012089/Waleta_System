@@ -59,6 +59,7 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
                 txt_ruang.setText(rs.getString("ruang_bagian"));
                 txt_Grup.setText(rs.getString("grup"));
                 ComboBox_atasan.setSelectedIndex(kode_atasan.indexOf(rs.getInt("kepala_bagian")));
+                NamaBagian();
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);

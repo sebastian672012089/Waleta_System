@@ -74,14 +74,15 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
 
             sql = "SELECT "
                     + "`ruangan`, `tb_laporan_produksi`.`berat_kering`, "
-                    + "(`cetak_mangkok` + `cetak_pecah` + `cetak_flat`) AS 'awal', "
+                    + "`jumlah_keping` AS 'keping_lp', "
+                    + "(`cetak_mangkok` + `cetak_pecah` + `cetak_flat`) AS 'keping_cetak', "
                     + "`cetak_jidun_real` "
                     + "FROM `tb_cetak` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi` "
                     + "WHERE `tb_cetak`.`no_laporan_produksi` = '" + JPanel_Finishing2.Table_Data_f2.getValueAt(i, 0).toString() + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             if (rs.next()) {
-                keping_cetak = rs.getInt("awal");
+                keping_cetak = rs.getInt("keping_lp");
                 jidun_cetak = rs.getInt("cetak_jidun_real");
                 berat_kering_lp = rs.getInt("berat_kering");
                 ruangan = rs.getString("ruangan");
@@ -188,8 +189,16 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
-        button_pick_timbang = new javax.swing.JButton();
+        button_pilih_pekerja_timbang = new javax.swing.JButton();
         txt_pekerja_timbang = new javax.swing.JTextField();
+        jLabel50 = new javax.swing.JLabel();
+        button_pilih_pekerja_cabut_OM = new javax.swing.JButton();
+        txt_pekerja_cabut_OM_id = new javax.swing.JTextField();
+        button_pilih_pekerja_cetak_OM = new javax.swing.JButton();
+        txt_pekerja_cetak_OM_id = new javax.swing.JTextField();
+        jLabel51 = new javax.swing.JLabel();
+        txt_pekerja_cabut_OM_nama = new javax.swing.JTextField();
+        txt_pekerja_cetak_OM_nama = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -614,62 +623,49 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label_tanggal_selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_Setor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_diserahkan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_pick_diserahkan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_koreksi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_pengoreksi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_pick_pengoreksi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_f1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_pekerja_f1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_pick_f1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Date_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_pekerja_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_pick_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(246, 246, 246)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_bk_fbonus, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_bk_fnol, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_bk_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_tanggal_selesai, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_Setor, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_diserahkan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_pick_diserahkan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_koreksi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_pengoreksi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_pick_pengoreksi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel40, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_f1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_pekerja_f1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_pick_f1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Date_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_pekerja_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(button_pick_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_fbonus, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -683,32 +679,45 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_mk_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_bk_fbonus, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txt_bk_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txt_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_bk_fnol, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txt_bk_jidun, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_jidun_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_jidun_pch, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_bk_pecah, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_jidun_utuh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_jidun_pch, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_bk_flat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txt_bk_jidun, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 255));
@@ -925,12 +934,12 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         jLabel47.setText("Pekerja Timbang :");
         jLabel47.setFocusable(false);
 
-        button_pick_timbang.setBackground(new java.awt.Color(255, 255, 255));
-        button_pick_timbang.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_pick_timbang.setText("...");
-        button_pick_timbang.addActionListener(new java.awt.event.ActionListener() {
+        button_pilih_pekerja_timbang.setBackground(new java.awt.Color(255, 255, 255));
+        button_pilih_pekerja_timbang.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_pilih_pekerja_timbang.setText("...");
+        button_pilih_pekerja_timbang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_pick_timbangActionPerformed(evt);
+                button_pilih_pekerja_timbangActionPerformed(evt);
             }
         });
 
@@ -938,6 +947,54 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         txt_pekerja_timbang.setBackground(new java.awt.Color(255, 255, 255));
         txt_pekerja_timbang.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         txt_pekerja_timbang.setFocusable(false);
+
+        jLabel50.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel50.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel50.setText("Pekerja Cabut OM :");
+        jLabel50.setFocusable(false);
+
+        button_pilih_pekerja_cabut_OM.setBackground(new java.awt.Color(255, 255, 255));
+        button_pilih_pekerja_cabut_OM.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_pilih_pekerja_cabut_OM.setText("...");
+        button_pilih_pekerja_cabut_OM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_pilih_pekerja_cabut_OMActionPerformed(evt);
+            }
+        });
+
+        txt_pekerja_cabut_OM_id.setEditable(false);
+        txt_pekerja_cabut_OM_id.setBackground(new java.awt.Color(255, 255, 255));
+        txt_pekerja_cabut_OM_id.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_pekerja_cabut_OM_id.setFocusable(false);
+
+        button_pilih_pekerja_cetak_OM.setBackground(new java.awt.Color(255, 255, 255));
+        button_pilih_pekerja_cetak_OM.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_pilih_pekerja_cetak_OM.setText("...");
+        button_pilih_pekerja_cetak_OM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_pilih_pekerja_cetak_OMActionPerformed(evt);
+            }
+        });
+
+        txt_pekerja_cetak_OM_id.setEditable(false);
+        txt_pekerja_cetak_OM_id.setBackground(new java.awt.Color(255, 255, 255));
+        txt_pekerja_cetak_OM_id.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_pekerja_cetak_OM_id.setFocusable(false);
+
+        jLabel51.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel51.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel51.setText("Pekerja Cetak OM :");
+        jLabel51.setFocusable(false);
+
+        txt_pekerja_cabut_OM_nama.setEditable(false);
+        txt_pekerja_cabut_OM_nama.setBackground(new java.awt.Color(255, 255, 255));
+        txt_pekerja_cabut_OM_nama.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_pekerja_cabut_OM_nama.setFocusable(false);
+
+        txt_pekerja_cetak_OM_nama.setEditable(false);
+        txt_pekerja_cetak_OM_nama.setBackground(new java.awt.Color(255, 255, 255));
+        txt_pekerja_cetak_OM_nama.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_pekerja_cetak_OM_nama.setFocusable(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -956,7 +1013,9 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel37, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel38, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1001,7 +1060,17 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(txt_pekerja_timbang, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
-                        .addComponent(button_pick_timbang, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(button_pilih_pekerja_timbang, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txt_pekerja_cabut_OM_id, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(button_pilih_pekerja_cabut_OM, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(txt_pekerja_cetak_OM_id, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(button_pilih_pekerja_cetak_OM, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_pekerja_cabut_OM_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_pekerja_cetak_OM_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -1068,8 +1137,22 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_pekerja_timbang, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel47, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_pick_timbang, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(button_pilih_pekerja_timbang, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_pekerja_cabut_OM_id, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_pilih_pekerja_cabut_OM, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_pekerja_cabut_OM_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_pekerja_cetak_OM_id, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_pilih_pekerja_cetak_OM, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_pekerja_cetak_OM_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -1170,41 +1253,6 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
             } else if (txt_diserahkan.getText() == null || txt_diserahkan.getText().equals("")) {
                 check = false;
                 JOptionPane.showMessageDialog(this, "Harap mengisi pekerja Final Check F2 / F2 diserahkan oleh !");
-            } else if (txt_pengoreksi.getText() == null || txt_pengoreksi.getText().equals("")) {
-                check = false;
-                JOptionPane.showMessageDialog(this, "Harap mengisi pekerja koreksi !");
-            } else if (ruangan.length() == 5) {
-                JOptionPane.showMessageDialog(this, "untuk LP sub tidak ada pengecekan keping");
-            } else if (keping_cetak != keping_akhir) {
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah keping CETAK(" + Math.round(keping_cetak) + ") dan F2(" + Math.round(keping_akhir) + ") tidak sama, apakah ingin melanjutkan?", "Warning", 0);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Jumlah keping CETAK dan F2 tidak sama");
-                    dialog.pack();
-                    dialog.setLocationRelativeTo(this);
-                    dialog.setVisible(true);
-                    dialog.setEnabled(true);
-//                    System.out.println(dialog.akses());
-                    check = dialog.akses();
-                    nama_otorisasi = dialog.getNama();
-                    keterangan = dialog.getKeterangan();
-                } else {
-                    check = false;
-                }
-            } else if (jidun_cetak != kpg_jidun) {
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah jidun CETAK(" + Math.round(jidun_cetak) + ") dan F2(" + Math.round(kpg_jidun) + ") tidak sama, apakah ingin melanjutkan?", "Warning", 0);
-                if (dialogResult == JOptionPane.YES_OPTION) {
-                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Jumlah jidun CETAK dan F2 tidak sama");
-                    dialog.pack();
-                    dialog.setLocationRelativeTo(this);
-                    dialog.setVisible(true);
-                    dialog.setEnabled(true);
-//                    System.out.println(dialog.akses());
-                    check = dialog.akses();
-                    nama_otorisasi = dialog.getNama();
-                    keterangan = dialog.getKeterangan();
-                } else {
-                    check = false;
-                }
             } else if (persen_sh < 0f || persen_sh > 20f) {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Susut hilang(" + Math.round(sh) + "gr " + Math.round(persen_sh) + "%) diluar batas yang ditentukan (0-15%), apakah ingin melanjutkan?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {
@@ -1220,9 +1268,50 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                 } else {
                     check = false;
                 }
-            }
+            } 
+//            else if (ruangan.length() == 5) {
+//                JOptionPane.showMessageDialog(this, "untuk LP sub tidak ada pengecekan keping");
+//            } else if (keping_cetak != keping_akhir) {
+//                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah keping CETAK(" + Math.round(keping_cetak) + ") dan F2(" + Math.round(keping_akhir) + ") tidak sama, apakah ingin melanjutkan?", "Warning", 0);
+//                if (dialogResult == JOptionPane.YES_OPTION) {
+//                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Jumlah keping CETAK dan F2 tidak sama");
+//                    dialog.pack();
+//                    dialog.setLocationRelativeTo(this);
+//                    dialog.setVisible(true);
+//                    dialog.setEnabled(true);
+////                    System.out.println(dialog.akses());
+//                    check = dialog.akses();
+//                    nama_otorisasi = dialog.getNama();
+//                    keterangan = dialog.getKeterangan();
+//                } else {
+//                    check = false;
+//                }
+//            } else if (jidun_cetak != kpg_jidun) {
+//                int dialogResult = JOptionPane.showConfirmDialog(this, "Maaf Jumlah jidun CETAK(" + Math.round(jidun_cetak) + ") dan F2(" + Math.round(kpg_jidun) + ") tidak sama, apakah ingin melanjutkan?", "Warning", 0);
+//                if (dialogResult == JOptionPane.YES_OPTION) {
+//                    JDialog_otorisasi_f2 dialog = new JDialog_otorisasi_f2(new javax.swing.JFrame(), true, "Jumlah jidun CETAK dan F2 tidak sama");
+//                    dialog.pack();
+//                    dialog.setLocationRelativeTo(this);
+//                    dialog.setVisible(true);
+//                    dialog.setEnabled(true);
+////                    System.out.println(dialog.akses());
+//                    check = dialog.akses();
+//                    nama_otorisasi = dialog.getNama();
+//                    keterangan = dialog.getKeterangan();
+//                } else {
+//                    check = false;
+//                }
+//            }
             Utility.db.getConnection().setAutoCommit(false);
             if (check) {
+                String edit_pekerja_cabut_OM = "";
+                if (txt_pekerja_cabut_OM_id.getText() != null && !txt_pekerja_cabut_OM_id.getText().equals("")) {
+                    edit_pekerja_cabut_OM = "`id_cabut_om`='" + txt_pekerja_cabut_OM_id.getText() + "',";
+                }
+                String edit_pekerja_cetak_OM = "";
+                if (txt_pekerja_cabut_OM_id.getText() != null && !txt_pekerja_cabut_OM_id.getText().equals("")) {
+                    edit_pekerja_cetak_OM = "`id_cetak_om`='" + txt_pekerja_cabut_OM_id.getText() + "',";
+                }
                 String Query = "UPDATE `tb_finishing_2` SET "
                         + "`tgl_setor_f2`='" + dateFormat.format(Date_Setor.getDate()) + "',"
                         + "`f2_disetor`='" + txt_diserahkan.getText() + "',"
@@ -1249,6 +1338,8 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                         + "`lp_kaki2`='" + txt_lp_kaki2.getText() + "',"
                         + "`admin_f2`='" + txt_admin.getText() + "', "
                         + "`otorisasi`='" + nama_otorisasi + "', "
+                        + edit_pekerja_cabut_OM
+                        + edit_pekerja_cetak_OM
                         + "`keterangan`='" + keterangan + "' "
                         + "WHERE `no_laporan_produksi`='" + label_no_lp.getText() + "'";
                 Utility.db.getStatement().executeUpdate(Query);
@@ -1377,7 +1468,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_button_pick_f2ActionPerformed
 
-    private void button_pick_timbangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_pick_timbangActionPerformed
+    private void button_pilih_pekerja_timbangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_pilih_pekerja_timbangActionPerformed
         // TODO add your handling code here:
         String filter_tgl = "AND DATE(`att_log`.`scan_date`) = CURRENT_DATE()";
         Browse_Karyawan dialog = new Browse_Karyawan(new javax.swing.JFrame(), true, filter_tgl);
@@ -1390,7 +1481,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         if (x != -1) {
             txt_pekerja_timbang.setText(Browse_Karyawan.table_list_karyawan.getValueAt(x, 1).toString());
         }
-    }//GEN-LAST:event_button_pick_timbangActionPerformed
+    }//GEN-LAST:event_button_pilih_pekerja_timbangActionPerformed
 
     private void txt_fbonusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_fbonusKeyTyped
         // TODO add your handling code here:
@@ -1579,6 +1670,38 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txt_nettoKeyTyped
 
+    private void button_pilih_pekerja_cabut_OMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_pilih_pekerja_cabut_OMActionPerformed
+        // TODO add your handling code here:
+        String filter_tgl = "";
+        Browse_Karyawan dialog = new Browse_Karyawan(new javax.swing.JFrame(), true, filter_tgl);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+        dialog.setEnabled(true);
+
+        int x = Browse_Karyawan.table_list_karyawan.getSelectedRow();
+        if (x != -1) {
+            txt_pekerja_cabut_OM_id.setText(Browse_Karyawan.table_list_karyawan.getValueAt(x, 0).toString());
+            txt_pekerja_cabut_OM_nama.setText(Browse_Karyawan.table_list_karyawan.getValueAt(x, 1).toString());
+        }
+    }//GEN-LAST:event_button_pilih_pekerja_cabut_OMActionPerformed
+
+    private void button_pilih_pekerja_cetak_OMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_pilih_pekerja_cetak_OMActionPerformed
+        // TODO add your handling code here:
+        String filter_tgl = "";
+        Browse_Karyawan dialog = new Browse_Karyawan(new javax.swing.JFrame(), true, filter_tgl);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+        dialog.setEnabled(true);
+
+        int x = Browse_Karyawan.table_list_karyawan.getSelectedRow();
+        if (x != -1) {
+            txt_pekerja_cetak_OM_id.setText(Browse_Karyawan.table_list_karyawan.getValueAt(x, 0).toString());
+            txt_pekerja_cetak_OM_nama.setText(Browse_Karyawan.table_list_karyawan.getValueAt(x, 1).toString());
+        }
+    }//GEN-LAST:event_button_pilih_pekerja_cetak_OMActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date_Setor;
@@ -1592,7 +1715,9 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
     private javax.swing.JButton button_pick_f1;
     private javax.swing.JButton button_pick_f2;
     private javax.swing.JButton button_pick_pengoreksi;
-    private javax.swing.JButton button_pick_timbang;
+    private javax.swing.JButton button_pilih_pekerja_cabut_OM;
+    private javax.swing.JButton button_pilih_pekerja_cetak_OM;
+    private javax.swing.JButton button_pilih_pekerja_timbang;
     private javax.swing.JButton button_save;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1639,6 +1764,8 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -1666,6 +1793,10 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
     private javax.swing.JTextField txt_lp_kaki2;
     private javax.swing.JTextField txt_mk_pecah;
     private javax.swing.JTextField txt_netto;
+    private javax.swing.JTextField txt_pekerja_cabut_OM_id;
+    private javax.swing.JTextField txt_pekerja_cabut_OM_nama;
+    private javax.swing.JTextField txt_pekerja_cetak_OM_id;
+    private javax.swing.JTextField txt_pekerja_cetak_OM_nama;
     private javax.swing.JTextField txt_pekerja_f1;
     private javax.swing.JTextField txt_pekerja_f2;
     private javax.swing.JTextField txt_pekerja_timbang;

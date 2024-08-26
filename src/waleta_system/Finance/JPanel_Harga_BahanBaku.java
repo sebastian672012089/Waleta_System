@@ -677,7 +677,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
                         Utility.db.getStatement().executeUpdate(sql);
                     }
                     sql = "INSERT IGNORE INTO `tb_grading_bahan_baku_cheat`(`no_grading`, `no_kartu_waleta`, `kode_grade`, `jumlah_keping`, `total_berat`, `harga_bahanbaku`) \n"
-                            + "SELECT * FROM `tb_grading_bahan_baku` WHERE `no_kartu_waleta` = '" + no_kartu + "'";
+                            + "SELECT `no_grading`, `no_kartu_waleta`, `kode_grade`, `jumlah_keping`, `total_berat`, `harga_bahanbaku`s FROM `tb_grading_bahan_baku` WHERE `no_kartu_waleta` = '" + no_kartu + "'";
                     Utility.db.getConnection().createStatement();
                     Utility.db.getStatement().executeUpdate(sql);
                     JOptionPane.showMessageDialog(this, no_kartu + " Sudah diLAPORKAN !");

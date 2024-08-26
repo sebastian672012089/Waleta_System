@@ -383,11 +383,11 @@ public class JDialog_Input_Sesekan_F2_v2 extends javax.swing.JDialog {
                 String sql2 = "SELECT `no_lp_sesekan`, `gram_sesekan_lp` FROM `tb_laporan_produksi` WHERE `no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
                 ResultSet rs2 = Utility.db.getStatement().executeQuery(sql2);
                 if (rs2.next()) {
-//                    if ((rs2.getString("no_lp_sesekan") == null || rs2.getString("no_lp_sesekan").equals("")) && rs2.getInt("gram_sesekan_lp") > 0) {
+//                    if ((rs2.getString("no_lp_sesekan") == null || rs2.getString("no_lp_sesekan").equals("")) && rs2.getFloat("gram_sesekan_lp") > 0) {
 //                        JOptionPane.showMessageDialog(this, "LP belum di proses di SUB");
 //                    } else {
                         DefaultTableModel model = (DefaultTableModel) Tabel_data.getModel();
-                        model.addRow(new Object[]{Tabel_data.getRowCount() + 1, txt_no_lp.getText().toUpperCase(), rs2.getInt("gram_sesekan_lp"), null});
+                        model.addRow(new Object[]{Tabel_data.getRowCount() + 1, txt_no_lp.getText().toUpperCase(), rs2.getFloat("gram_sesekan_lp"), null});
                         txt_no_lp.setText("");
                         txt_no_lp.requestFocus();
                         count();

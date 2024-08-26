@@ -191,13 +191,13 @@ public class JDialog_input_sesekanLP extends javax.swing.JDialog {
         if (txt_gram_sesekan.getText() != null && !txt_gram_sesekan.getText().equals("")) {
             try {
                 double GRAM_SSK = Double.valueOf(txt_gram_sesekan.getText());
-                decimalFormat = Utility.DecimalFormatUS(decimalFormat);
                 sql = "UPDATE `tb_laporan_produksi` SET "
-                        + "`gram_sesekan_lp`='" + decimalFormat.format(GRAM_SSK) + "', "
+                        + "`gram_sesekan_lp`='" + GRAM_SSK + "', "
                         + "`pekerja_sesekan`='" + txt_pekerja_sesekan_id.getText() + "' "
                         + "WHERE `no_laporan_produksi`='" + no_lp + "' ";
                 if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
                     JOptionPane.showMessageDialog(this, "Update success!");
+                    this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Update failed!");
                 }
