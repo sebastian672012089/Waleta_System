@@ -152,23 +152,30 @@ public class JPanel_Kinerja_Operator_ATB extends javax.swing.JPanel {
                 Gram.put(rs.getString("operator"), Gram.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("gram"));
 
                 String indonesianDay = Utility.ubah_ke_INDONESIA(rs.getString("hari"));
-                if (indonesianDay.equals("Kamis")) {
-                    if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {//shift 3
-                        Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
-                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("16:00:01"))) {//shift 1/2
-                        Bobot_LP_Shift_12.put(rs.getString("operator"), Bobot_LP_Shift_12.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
-                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("21:00:01"))) {//shift 3
-                        Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
-                    }
-                } else {
-                    if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {//shift 3
-                        Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
-                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("22:00:01"))) {//shift 1/2
-                        Bobot_LP_Shift_12.put(rs.getString("operator"), Bobot_LP_Shift_12.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
-                    } else {//shift 3
-                        Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
-                    }
+                if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {//shift 3
+                    Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
+                } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("22:00:01"))) {//shift 1/2
+                    Bobot_LP_Shift_12.put(rs.getString("operator"), Bobot_LP_Shift_12.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
+                } else {//shift 3
+                    Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
                 }
+//                if (indonesianDay.equals("Kamis")) {
+//                    if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {//shift 3
+//                        Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
+//                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("16:00:01"))) {//shift 1/2
+//                        Bobot_LP_Shift_12.put(rs.getString("operator"), Bobot_LP_Shift_12.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
+//                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("21:00:01"))) {//shift 3
+//                        Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
+//                    }
+//                } else {
+//                    if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {//shift 3
+//                        Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
+//                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("22:00:01"))) {//shift 1/2
+//                        Bobot_LP_Shift_12.put(rs.getString("operator"), Bobot_LP_Shift_12.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
+//                    } else {//shift 3
+//                        Bobot_LP_Shift_3.put(rs.getString("operator"), Bobot_LP_Shift_3.getOrDefault(rs.getString("operator"), 0d) + rs.getFloat("bobot_lp"));
+//                    }
+//                }
 
                 total_bobot_lp += rs.getFloat("bobot_lp");
                 total_kpg += rs.getFloat("keping");
@@ -266,23 +273,30 @@ public class JPanel_Kinerja_Operator_ATB extends javax.swing.JPanel {
                 row[7] = rs.getDate("tgl_mulai_lp");
                 row[8] = rs.getTime("waktu_mulai_lp");
                 String shift = "-";
-                if (indonesianDay.equals("Kamis")) {
-                    if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {
-                        shift = "shift 3";
-                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("16:00:01"))) {
-                        shift = "shift 1/2";
-                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("21:00:01"))) {
-                        shift = "shift 3";
-                    }
+                if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {
+                    shift = "shift 3";
+                } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("22:00:01"))) {
+                    shift = "shift 1/2";
                 } else {
-                    if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {
-                        shift = "shift 3";
-                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("22:00:01"))) {
-                        shift = "shift 1/2";
-                    } else {
-                        shift = "shift 3";
-                    }
+                    shift = "shift 3";
                 }
+//                if (indonesianDay.equals("Kamis")) {
+//                    if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {
+//                        shift = "shift 3";
+//                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("16:00:01"))) {
+//                        shift = "shift 1/2";
+//                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("21:00:01"))) {
+//                        shift = "shift 3";
+//                    }
+//                } else {
+//                    if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("06:00:01"))) {
+//                        shift = "shift 3";
+//                    } else if (rs.getTime("waktu_mulai_lp").before(java.sql.Time.valueOf("22:00:01"))) {
+//                        shift = "shift 1/2";
+//                    } else {
+//                        shift = "shift 3";
+//                    }
+//                }
                 row[9] = shift;
                 model.addRow(row);
                 total_bobot_lp += Math.round(rs.getDouble("bobot_lp") * 100d) / 100d;

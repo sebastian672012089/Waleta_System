@@ -2108,6 +2108,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 PreparedStatement deleteStatement = null;
                 ResultSet resultSet = null;
                 try {
+                    Utility.db.getConnection().setAutoCommit(false);
                     //check for existing records
                     String checkSql = "SELECT `no_laporan_produksi`, `tb_bahan_baku_pecah_kartu`.`kode_pecah_kartu` "
                             + "FROM `tb_laporan_produksi` "

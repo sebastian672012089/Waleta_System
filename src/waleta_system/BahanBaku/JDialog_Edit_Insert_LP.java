@@ -157,7 +157,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 ComboBox_ruangan.addItem("C");
                 ComboBox_ruangan.addItem("D");
                 ComboBox_ruangan.addItem("E");
-                if (rs.getString("ruangan").equals("CABUTO")) {
+                if (rs.getString("ruangan").equals("CABUTO") || rs.getString("ruangan").equals("C")) {
                     ruangan_awal = "CABUTO";
                     ComboBox_ruangan.addItem("CABUTO");
                 } else if (list_kode_sub.indexOf(rs.getString("ruangan")) > -1) {//ruangan sub
@@ -168,6 +168,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                     ComboBox_ruangan.removeItem("SUB00");
                 } else {
                     ruangan_awal = "WALETA";
+                    ComboBox_ruangan.addItem("CABUTO");
                     for (String kode_sub : list_kode_sub) {
                         ComboBox_ruangan.addItem(kode_sub);
                     }
@@ -946,16 +947,16 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                         .addGap(1, 1, 1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_jumlah_pecah_lp5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_berat_basah_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_kartu_waleta_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_kode_grade_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_pecah_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_keping_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_berat_basah_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_berat_kering, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_keping_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(label_jumlah_pecah_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_keping_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_berat_basah_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_keping_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_kode_grade_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -1584,9 +1585,9 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 String ruangan_akhir = "";
                 if (list_kode_sub.indexOf(ComboBox_ruangan.getSelectedItem().toString()) > -1) {
                     ruangan_akhir = "SUB";
-                } else if (ComboBox_ruangan.getSelectedItem().toString().length() == 1) {
+                } else if (ComboBox_ruangan.getSelectedItem().toString().length() == 1 && !ComboBox_ruangan.getSelectedItem().toString().equals("C")) {
                     ruangan_akhir = "WALETA";
-                } else if (ComboBox_ruangan.getSelectedItem().toString().equals("CABUTO")) {
+                } else if (ComboBox_ruangan.getSelectedItem().toString().equals("CABUTO") || ComboBox_ruangan.getSelectedItem().toString().equals("C")) {
                     ruangan_akhir = "CABUTO";
                 }
                 if (ruangan_awal.equals("WALETA") && ruangan_akhir.equals("WALETA")) {
@@ -1611,9 +1612,9 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                         delete_lp_cabuto();
                     }
                 } else if (ruangan_awal.equals("WALETA") && ruangan_akhir.equals("CABUTO")) {
-                    JOptionPane.showMessageDialog(this, "Tidak bisa memindahkan LP WALETA ke CABUTO !");
-//                    edit_lp_waleta();
-//                    input_lp_cabuto();
+//                    JOptionPane.showMessageDialog(this, "Tidak bisa memindahkan LP WALETA ke CABUTO !");
+                    edit_lp_waleta();
+                    input_lp_cabuto();
                 } else if (ruangan_awal.equals("SUB") && ruangan_akhir.equals("CABUTO")) {
                     JOptionPane.showMessageDialog(this, "Tidak bisa memindahkan LP SUB ke CABUTO !");
                 } else if (ruangan_awal.equals("CABUTO") && ruangan_akhir.equals("SUB")) {
@@ -1687,7 +1688,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             if (status.equals("sub")) {
                 insert_lp_sub();
             } else {
-                if (ComboBox_ruangan.getSelectedItem().toString().equals("CABUTO")) {
+                if (ComboBox_ruangan.getSelectedItem().toString().equals("CABUTO") || ComboBox_ruangan.getSelectedItem().toString().equals("C")) {
                     insert_lp_cabuto();
                 } else {
                     insert_lp_waleta();

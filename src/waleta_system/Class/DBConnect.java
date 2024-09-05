@@ -24,6 +24,13 @@ public class DBConnect {
             ds.setDatabaseName("waleta_database");
             ds.setUser("test");
             ds.setPassword("test");
+            
+//            ds.setServerName("localhost");
+//            ds.setPort(3306);
+//            ds.setDatabaseName("waleta_database");
+//            ds.setUser("root");
+//            ds.setPassword("");
+            
             ds.setAutoReconnect(true);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex, "Access Denied !", JOptionPane.ERROR_MESSAGE);

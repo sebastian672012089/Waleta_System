@@ -218,6 +218,7 @@ public class JDialog_Setor_LP_Cetak extends javax.swing.JDialog {
         Date_Setor.setDateFormatString("dd MMMM yyyy");
         Date_Setor.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         Date_Setor.setMaxSelectableDate(new Date());
+        Date_Setor.setMinSelectableDate(new java.util.Date(-62135791094000L));
 
         label_no_lp.setBackground(new java.awt.Color(255, 255, 255));
         label_no_lp.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N

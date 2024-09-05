@@ -132,12 +132,12 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
                 row[2] = rs.getString("qrcode");
                 row[3] = rs.getFloat("gram");
                 row[4] = rs.getDate("prod_date");
-                
+
                 String kode_rsb = "";
                 if (rs.getString("kode_kh") != null) {
                     kode_rsb = rs.getString("kode_kh").split("-")[0];
                 }
-                
+
                 if (rs.getString("kode_kh") != null && rs.getDate("prod_date") != null) {
                     row[5] = kode_rsb + "-" + new SimpleDateFormat("yyMMdd").format(rs.getDate("prod_date"));
                 }
@@ -199,11 +199,12 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
                         JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
                     }
                 } else if (RadioButton2.isSelected()) {
-                    if (gram_print > 5) {
-                        plus_minus = "(± 0.3 g)";
-                    } else {
-                        plus_minus = "(± 0.2 g)";
-                    }
+//                    if (gram_print > 5) {
+//                        plus_minus = "(± 0.3 g)";
+//                    } else {
+//                        plus_minus = "(± 0.2 g)";
+//                    }
+                    plus_minus = "(± 0.3 g)";
                     JasperDesign JASP_DESIGN = JRXmlLoader.load("Report\\weight_label.jrxml");
                     Map<String, Object> map = new HashMap<>();
                     map.put("GRAM_KEPING", print);//parameter name should be like it was named inside your report.

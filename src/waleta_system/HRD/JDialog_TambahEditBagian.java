@@ -135,7 +135,7 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
                     + "`kepala_bagian` = '" + kode_atasan.get(ComboBox_atasan.getSelectedIndex()) + "' "
                     + "WHERE `tb_bagian`.`kode_bagian` = '" + kode_bagian + "'";
             Utility.db.getStatement().executeUpdate(sql);
-            
+
             String insert = "INSERT INTO `tb_bagian_edit_log`(`nama_bagian_lama`, `nama_bagian_baru`) VALUES ('" + namaBagianLama + "','" + label_nama_bagian.getText() + "')";
             Utility.db.getStatement().executeUpdate(insert);
 
@@ -197,7 +197,6 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel2.setText("Atasan :");
 
-        button_simpan.setBackground(new java.awt.Color(255, 255, 255));
         button_simpan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_simpan.setText("SIMPAN");
         button_simpan.addActionListener(new java.awt.event.ActionListener() {
@@ -232,6 +231,9 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_posisiKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_posisiKeyTyped(evt);
+            }
         });
 
         label_nama_bagian.setBackground(new java.awt.Color(255, 255, 255));
@@ -247,6 +249,9 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_divisiKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_divisiKeyTyped(evt);
+            }
         });
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
@@ -258,6 +263,9 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_bagianKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_bagianKeyTyped(evt);
+            }
         });
 
         jLabel13.setBackground(new java.awt.Color(255, 255, 255));
@@ -268,6 +276,9 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
         txt_ruang.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txt_ruangKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_ruangKeyTyped(evt);
             }
         });
 
@@ -410,6 +421,38 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
         // TODO add your handling code here:
         NamaBagian();
     }//GEN-LAST:event_ComboBox_departemenItemStateChanged
+
+    private void txt_posisiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_posisiKeyTyped
+        // TODO add your handling code here:
+        if (evt.getKeyChar() == '-') {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Tidak bisa memasukkan tanda \"-\"");
+        }
+    }//GEN-LAST:event_txt_posisiKeyTyped
+
+    private void txt_divisiKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_divisiKeyTyped
+        // TODO add your handling code here:
+        if (evt.getKeyChar() == '-') {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Tidak bisa memasukkan tanda \"-\"");
+        }
+    }//GEN-LAST:event_txt_divisiKeyTyped
+
+    private void txt_bagianKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_bagianKeyTyped
+        // TODO add your handling code here:
+        if (evt.getKeyChar() == '-') {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Tidak bisa memasukkan tanda \"-\"");
+        }
+    }//GEN-LAST:event_txt_bagianKeyTyped
+
+    private void txt_ruangKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_ruangKeyTyped
+        // TODO add your handling code here:
+        if (evt.getKeyChar() == '-') {
+            evt.consume();
+            JOptionPane.showMessageDialog(this, "Tidak bisa memasukkan tanda \"-\"");
+        }
+    }//GEN-LAST:event_txt_ruangKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

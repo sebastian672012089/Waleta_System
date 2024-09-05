@@ -237,8 +237,10 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
         jLabel9.setText("Dibutuhkan Tanggal :");
 
         Date_dibutuhkan.setBackground(new java.awt.Color(255, 255, 255));
+        Date_dibutuhkan.setDate(new Date());
         Date_dibutuhkan.setDateFormatString("dd MMM yyyy");
         Date_dibutuhkan.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        Date_dibutuhkan.setMinSelectableDate(new Date());
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N

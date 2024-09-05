@@ -320,6 +320,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             row[4] = list.get(i).getStatus();
             row[5] = list.get(i).getPosisi();
             if (list.get(i).getKode_bagian() != null) {
+                System.out.println(list.get(i).getKode_bagian());
                 if (list.get(i).getKode_bagian().split("-").length > 1) {
                     row[6] = list.get(i).getKode_bagian().split("-")[0];//posisi
                     row[7] = list.get(i).getKode_bagian().split("-")[1];//dept

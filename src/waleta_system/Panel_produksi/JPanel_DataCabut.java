@@ -2,6 +2,8 @@ package waleta_system.Panel_produksi;
 
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -133,9 +135,10 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 filter_tanggal = "`tb_cabut`.`tgl_setor_cabut`";
                 filter_tanggal = " AND (" + filter_tanggal + " BETWEEN '" + dateFormat.format(Date1_cabut.getDate()) + "' and '" + dateFormat.format(Date2_cabut.getDate()) + "')";
             }
-            sql = "SELECT `tb_cabut`.`no_laporan_produksi`, `ruangan`, `tb_laporan_produksi`.`kode_grade`, `keping_upah`, `berat_basah`, `tb_laporan_produksi`.`pekerja_sesekan`, `pekerja_hancuran`, `pekerja_kopyok`, `cabut_diterima`, `tgl_mulai_cabut`, `cabut_diserahkan`, `tgl_setor_cabut`, `sobek_cabut`, `cabut_sobek_lepas`, `gumpil_cabut`, `pecah_cabut`, `cabut_pecah_2`, `cabut_lubang`, `cabut_hilang_kaki`, `cabut_hilang_ujung`, `cabut_kaki_besar`, `cabut_kaki_kecil`, `cabut_hilang_bawah`, `admin_cabut`, `ketua_regu`, `tgl_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'tanggal_cabut', `jenis_bulu_cabut`"
+            sql = "SELECT `tb_cabut`.`no_laporan_produksi`, `ruangan`, `tb_laporan_produksi`.`kode_grade`, `keping_upah`, `berat_basah`, `tb_karyawan`.`nama_pegawai` AS 'pekerja_sesekan', `pekerja_hancuran`, `pekerja_kopyok`, `cabut_diterima`, `tgl_mulai_cabut`, `cabut_diserahkan`, `tgl_setor_cabut`, `sobek_cabut`, `cabut_sobek_lepas`, `gumpil_cabut`, `pecah_cabut`, `cabut_pecah_2`, `cabut_lubang`, `cabut_hilang_kaki`, `cabut_hilang_ujung`, `cabut_kaki_besar`, `cabut_kaki_kecil`, `cabut_hilang_bawah`, `admin_cabut`, `ketua_regu`, `tgl_cabut`, MIN(`tb_detail_pencabut`.`tanggal_cabut`) AS 'tanggal_cabut', `jenis_bulu_cabut`"
                     + "FROM `tb_cabut` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_cabut`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                    + "LEFT JOIN `tb_karyawan` ON `tb_laporan_produksi`.`pekerja_sesekan` = `tb_karyawan`.`id_pegawai`\n"
                     + "LEFT JOIN `tb_cuci` ON `tb_cuci`.`no_laporan_produksi` = `tb_cabut`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_detail_pencabut` ON `tb_cabut`.`no_laporan_produksi` = `tb_detail_pencabut`.`no_laporan_produksi`\n"
                     + "WHERE `tb_cabut`.`no_laporan_produksi` LIKE '%" + txt_search_cabut.getText() + "%' "
@@ -425,6 +428,8 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
         jLabel15 = new javax.swing.JLabel();
         label_total_kpg = new javax.swing.JLabel();
         button_rank_pencabut = new javax.swing.JButton();
+        button_terima_cabut_lp_om = new javax.swing.JButton();
+        button_setor_cabut_lp_om = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Cabut", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -829,6 +834,24 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
             }
         });
 
+        button_terima_cabut_lp_om.setBackground(new java.awt.Color(255, 255, 255));
+        button_terima_cabut_lp_om.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_terima_cabut_lp_om.setText("Terima LP CABUT OM");
+        button_terima_cabut_lp_om.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_terima_cabut_lp_omActionPerformed(evt);
+            }
+        });
+
+        button_setor_cabut_lp_om.setBackground(new java.awt.Color(255, 255, 255));
+        button_setor_cabut_lp_om.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_setor_cabut_lp_om.setText("Setor LP CABUT OM");
+        button_setor_cabut_lp_om.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_setor_cabut_lp_omActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -856,7 +879,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(label_total_gram))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 966, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())
@@ -911,8 +934,12 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_tandon_cabut)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_rank_pencabut)))
-                        .addGap(0, 578, Short.MAX_VALUE))))
+                                .addComponent(button_rank_pencabut)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_terima_cabut_lp_om)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(button_setor_cabut_lp_om)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -936,7 +963,9 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                     .addComponent(button_export_data_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_print_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_tandon_cabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_rank_pencabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button_rank_pencabut, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_terima_cabut_lp_om, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_setor_cabut_lp_om, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 358, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1277,6 +1306,67 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_button_rank_pencabutActionPerformed
 
+    private void button_terima_cabut_lp_omActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_terima_cabut_lp_omActionPerformed
+        // TODO add your handling code here:
+        JDialog_Terima_LP_Cabut_OM terima_lp = new JDialog_Terima_LP_Cabut_OM(new javax.swing.JFrame(), true);
+        terima_lp.pack();
+        terima_lp.setLocationRelativeTo(this);
+        terima_lp.setVisible(true);
+        terima_lp.setEnabled(true);
+    }//GEN-LAST:event_button_terima_cabut_lp_omActionPerformed
+
+    private void button_setor_cabut_lp_omActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_setor_cabut_lp_omActionPerformed
+        // TODO add your handling code here:
+        int j = Table_Data_Cabut.getSelectedRow();
+        if (j == -1) {
+            JOptionPane.showMessageDialog(this, "Anda belum memilih LP yang akan di setorkan !");
+        } else {
+            boolean check = true;
+            String ruangan = Table_Data_Cabut.getValueAt(j, 1).toString();
+            if (Table_Data_Cabut.getValueAt(j, 11) != "-" && Table_Data_Cabut.getValueAt(j, 10) != null) {
+                JOptionPane.showMessageDialog(this, "No Laporan Produksi : " + Table_Data_Cabut.getValueAt(j, 0).toString() + "\n Sudah disetor");
+            } else if (!ruangan.equals("C") && !ruangan.equals("CABUTO")) {
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Ruangan bukan merupakan ruangan CABUTO\nApakah yakin ingin dilanjutkan?", "Warning", 0);
+                check = dialogResult == JOptionPane.YES_OPTION;
+            }
+
+            if (check) {
+                try {
+                    // Get the value of no_lp from the table
+                    String no_lp = Table_Data_Cabut.getValueAt(j, 0).toString();
+
+                    // Define the SQL query using a prepared statement
+                    String Query = "UPDATE `tb_cabut` SET `tgl_setor_cabut`=CURRENT_DATE WHERE `no_laporan_produksi`=?";
+
+                    // Get the database connection and prepare the statement
+                    Connection conn = Utility.db.getConnection();
+                    PreparedStatement pstmt = conn.prepareStatement(Query);
+
+                    // Set the value for the placeholder (?)
+                    pstmt.setString(1, no_lp);
+
+                    // Execute the update
+                    int rowsAffected = pstmt.executeUpdate();
+
+                    // Check if the update was successful
+                    if (rowsAffected == 1) {
+                        JOptionPane.showMessageDialog(this, "LP berhasil disetorkan");
+                        refreshTable_Cabut();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Data failed!");
+                    }
+
+                    // Close the prepared statement and the connection
+                    pstmt.close();
+//                    conn.close();
+                } catch (SQLException e) {
+                    // Handle any SQL exceptions
+                    JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+                }
+            }
+        }
+    }//GEN-LAST:event_button_setor_cabut_lp_omActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_filterDate;
@@ -1297,8 +1387,10 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
     private javax.swing.JButton button_rank_pencabut;
     public static javax.swing.JButton button_search_cabut;
     public javax.swing.JButton button_setor_cabut;
+    public javax.swing.JButton button_setor_cabut_lp_om;
     public static javax.swing.JButton button_tandon_cabut;
     public javax.swing.JButton button_terima_cabut;
+    public javax.swing.JButton button_terima_cabut_lp_om;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

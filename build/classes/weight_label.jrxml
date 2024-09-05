@@ -13,14 +13,14 @@
 			<textField>
 				<reportElement x="0" y="0" width="64" height="14" uuid="290f5cfa-a59e-4cf5-bd16-7d829f294abc"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
-					<font size="10" isBold="true"/>
+					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{GRAM_KEPING}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="0" y="14" width="64" height="10" uuid="6a30ff6e-a8e6-4ef4-bda5-f7cd5a146a25"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font size="7" isBold="false"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{PLUS_MINUS}]]></textFieldExpression>
 			</textField>
