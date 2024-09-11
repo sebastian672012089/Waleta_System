@@ -1677,14 +1677,11 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (berat_per_keping_lp > (berat_per_keping_grading + 1)
-                || berat_per_keping_lp < (berat_per_keping_grading - 1)) {
-            JOptionPane.showMessageDialog(this, "Maaf Berat/Keping tidak wajar (± 1gr)");
-            Check = false;
-        } else if (berat_kering > berat_basah) {
+        if (berat_kering > berat_basah) {
             JOptionPane.showMessageDialog(this, "Maaf Berat Kering tidak bisa lebih besar dari berat angin2\nSilahkan cek kadar air kartu baku");
             Check = false;
         }
+        
         if (Check) {
             if (status.equals("sub")) {
                 insert_lp_sub();

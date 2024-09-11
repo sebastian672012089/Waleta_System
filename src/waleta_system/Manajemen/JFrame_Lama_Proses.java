@@ -94,8 +94,13 @@ public class JFrame_Lama_Proses extends javax.swing.JFrame {
 
     public void PembelianBaku() {
         try {
-            sql = "SELECT AVG(DATEDIFF(`tgl_terima`, `tgl_kirim`)) AS 'hari', MONTH(`tgl_terima`) AS 'bulan', YEAR(`tgl_terima`) AS 'tahun' FROM `tb_pembelian_bahan_baku`"
-                    + "WHERE `tgl_terima` BETWEEN '" + tahun[jumlah_bulan - 1] + "-" + bulan[jumlah_bulan - 1] + "-01' AND '" + tahun[0] + "-" + bulan[0] + "-31'"
+            sql = "SELECT "
+                    + "AVG(DATEDIFF(`tgl_terima`, `tgl_kirim`)) AS 'hari', "
+                    + "MONTH(`tgl_terima`) AS 'bulan', "
+                    + "YEAR(`tgl_terima`) AS 'tahun' "
+                    + "FROM `tb_pembelian_bahan_baku`"
+                    + "WHERE "
+                    + "`tgl_terima` BETWEEN '" + tahun[jumlah_bulan - 1] + "-" + bulan[jumlah_bulan - 1] + "-01' AND '" + tahun[0] + "-" + bulan[0] + "-31'"
                     + "GROUP BY MONTH(`tgl_terima`)";
             rs = Utility.db.getStatement().executeQuery(sql);
             while (rs.next()) {

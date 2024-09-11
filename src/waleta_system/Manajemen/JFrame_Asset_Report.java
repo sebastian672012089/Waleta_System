@@ -120,7 +120,10 @@ public class JFrame_Asset_Report extends javax.swing.JFrame {
     public void StokTerkirim() {
         try {
             DefaultTableModel model = (DefaultTableModel) jTable_Asset.getModel();
-            sql = "SELECT (`berat` * `harga_gram`) AS 'harga', `status` FROM `tb_pembelian_bahan_baku` WHERE `status` IN ('OTW', 'PROSES')";
+            sql = "SELECT (`berat` * `harga_gram`) AS 'harga', `status` "
+                    + "FROM `tb_pembelian_bahan_baku` "
+                    + "WHERE "
+                    + "`status` IN ('OTW', 'PROSES')";
             rs = Utility.db.getStatement().executeQuery(sql);
             double otw = 0, proses = 0;
             while (rs.next()) {

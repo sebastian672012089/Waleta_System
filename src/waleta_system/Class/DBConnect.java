@@ -21,6 +21,7 @@ public class DBConnect {
             System.out.println("connecting .. ");
             ds.setServerName("192.168.10.2");
             ds.setPort(3306);
+//            ds.setDatabaseName("waleta_dev");
             ds.setDatabaseName("waleta_database");
             ds.setUser("test");
             ds.setPassword("test");

@@ -5,10 +5,14 @@
         <group>
             <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Class/ApiClient.java</file>
             <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Panel_produksi/JPanel_DataCetak.java</file>
+            <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Panel_produksi/JDialog_Setor_LP_Cetak_OM.java</file>
+            <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Manajemen/JFrame_Lama_Proses.java</file>
+            <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/BahanBaku/JDialog_Edit_Insert_LP.java</file>
+            <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Manajemen/JFrame_Asset_Report.java</file>
             <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/MainForm.java</file>
+            <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/BahanBaku/JPanel_Pembelian_Baku.java</file>
+            <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Class/DBConnect.java</file>
             <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Login.java</file>
-            <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Panel_produksi/JPanel_DataCabut.java</file>
-            <file>file:/C:/Users/it/Documents/NetBeansProjects/Waleta_System/src/waleta_system/Packing/JPanel_DataScanKeping.java</file>
         </group>
     </open-files>
 </project-private>

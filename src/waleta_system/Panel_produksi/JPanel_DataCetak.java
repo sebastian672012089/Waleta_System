@@ -1264,12 +1264,37 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
         // TODO add your handling code here:
         String no_lp = JOptionPane.showInputDialog("Masukkan no LP : ");
         if (no_lp != null && !no_lp.equals("")) {
-            
+            try {
+                String Query = "INSERT INTO `tb_cetak`(`no_laporan_produksi`, `tgl_mulai_cetak`) VALUES ('" + no_lp + "', NOW())";
+                Utility.db.getConnection().createStatement();
+                if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
+                    JOptionPane.showMessageDialog(this, "Berhasil terima CETAK LP OM!");
+                    refreshTable_Cetak();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(JPanel_DataCetak.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_button_cetak_terima_lp_omActionPerformed
 
     private void button_cetak_setor_lp_omActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_cetak_setor_lp_omActionPerformed
         // TODO add your handling code here:
+        int j = Table_Data_Cetak.getSelectedRow();
+        if (j == -1) {
+            JOptionPane.showMessageDialog(this, "Anda belum memilih LP yang akan di setorkan !");
+        } else {
+            if (Table_Data_Cetak.getValueAt(j, 11) != null) {
+                JOptionPane.showMessageDialog(this, "No Laporan Produksi : " + Table_Data_Cetak.getValueAt(j, 0).toString() + "\n Sudah disetorkan");
+            } else {
+                String no_lp = Table_Data_Cetak.getValueAt(j, 0).toString();
+                JDialog_Setor_LP_Cetak_OM setor_lp = new JDialog_Setor_LP_Cetak_OM(new javax.swing.JFrame(), true, no_lp);
+                setor_lp.pack();
+                setor_lp.setLocationRelativeTo(this);
+                setor_lp.setVisible(true);
+                setor_lp.setEnabled(true);
+                refreshTable_Cetak();
+            }
+        }
     }//GEN-LAST:event_button_cetak_setor_lp_omActionPerformed
 
 

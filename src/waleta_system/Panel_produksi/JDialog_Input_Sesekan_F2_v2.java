@@ -41,9 +41,9 @@ public class JDialog_Input_Sesekan_F2_v2 extends javax.swing.JDialog {
             try {
                 Utility.db.getConnection().setAutoCommit(false);
                 for (int i = 0; i < total_baris; i++) {
-                    int sesekan = Math.round(Float.valueOf(Tabel_data.getValueAt(i, 2).toString()));
+                    float sesekan = Math.round(Float.valueOf(Tabel_data.getValueAt(i, 2).toString()) * 10f) / 10f;
                     if (Tabel_data.getValueAt(i, 3) != null && !Tabel_data.getValueAt(i, 3).equals("") && !Tabel_data.getValueAt(i, 3).equals("0")) {
-                        sesekan = Math.round(Float.valueOf(Tabel_data.getValueAt(i, 3).toString()));
+                        sesekan = Math.round(Float.valueOf(Tabel_data.getValueAt(i, 3).toString()) * 10f) / 10f;
                     }
                     String Query = "INSERT INTO `tb_finishing_2`(`no_laporan_produksi`, `tgl_input_sesekan`, `sesekan`) "
                             + "VALUES ("

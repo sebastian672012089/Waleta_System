@@ -42,7 +42,8 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                     if (!event.getValueIsAdjusting() && Table_pembelian.getSelectedRow() != -1) {
                         int i = Table_pembelian.getSelectedRow();
                         if (i > -1) {
-                            txt_no.setText(Table_pembelian.getValueAt(i, 0).toString());
+                            String no_nota = Table_pembelian.getValueAt(i, 0).toString();
+                            txt_no.setText(no_nota);
                             ComboBox_supplier.setSelectedItem(Table_pembelian.getValueAt(i, 1).toString());
                             txt_grade.setText(Table_pembelian.getValueAt(i, 2).toString());
                             txt_berat.setText(Table_pembelian.getValueAt(i, 3).toString());
@@ -50,14 +51,16 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                             try {
                                 Date_kirim.setDate(dateFormat.parse(Table_pembelian.getValueAt(i, 6).toString()));
                             } catch (ParseException | NullPointerException ex) {
-//                                Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             try {
                                 Date_terima.setDate(dateFormat.parse(Table_pembelian.getValueAt(i, 7).toString()));
                             } catch (ParseException | NullPointerException ex) {
-//                                Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
+                                Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
                             }
                             txt_status.setText(Table_pembelian.getValueAt(i, 8).toString());
+                            
+                            refreshTableDataKartu(no_nota);
                         }
                     }
                 }
@@ -70,6 +73,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                 ComboBox_supplier.addItem(rs.getString("nama_supplier"));
             }
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -78,15 +82,27 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
         try {
             DefaultTableModel model = (DefaultTableModel) Table_pembelian.getModel();
             model.setRowCount(0);
-            String status_grading = ComboBox_status_grading.getSelectedItem().toString();
-            if (ComboBox_status_grading.getSelectedItem().toString().equals("All")) {
-                status_grading = "";
+            String status_grading = "";
+            if (!ComboBox_status_grading.getSelectedItem().toString().equals("All")) {
+                status_grading = "AND `status` = '" + ComboBox_status_grading.getSelectedItem().toString() + "'\n";
             }
-            sql = "SELECT `no_nota`, `tb_supplier`.`nama_supplier`, `grade`, `berat`, `harga_gram`, `tgl_kirim`, `tgl_terima`, `status` "
-                    + "FROM `tb_pembelian_bahan_baku`  LEFT JOIN `tb_supplier` ON `tb_pembelian_bahan_baku`.`kode_supplier` = `tb_supplier`.`kode_supplier`"
-                    + "WHERE `nama_supplier` LIKE '%" + txt_search_supplier.getText() + "%' AND `status` LIKE '%" + status_grading + "%'ORDER BY `tgl_kirim` DESC";
+            String searchNoKartu = "";
+            if (txt_search_no_kartu.getText() != null && !txt_search_no_kartu.getText().equals("")) {
+                searchNoKartu = "AND B.`no_kartu_waleta` LIKE '%" + txt_search_no_kartu.getText() + "%'\n";
+            }
+            sql = "SELECT `tb_pembelian_bahan_baku`.`no_nota`, `tb_supplier`.`nama_supplier`, `grade`, `berat`, `harga_gram`, `tgl_kirim`, `tgl_terima`, `status`, "
+                    + "GROUP_CONCAT(B.`no_kartu_waleta` ORDER BY B.`no_kartu_waleta` ASC) AS `no_kartu_waleta`"
+                    + "FROM `tb_pembelian_bahan_baku` \n"
+                    + "LEFT JOIN `tb_supplier` ON `tb_pembelian_bahan_baku`.`kode_supplier` = `tb_supplier`.`kode_supplier`\n"
+                    + "LEFT JOIN `tb_pembelian_bahan_baku_ke_bahan_baku_masuk` B ON `tb_pembelian_bahan_baku`.`no_nota` = B.`no_nota`\n"
+                    + "WHERE \n"
+                    + "`nama_supplier` LIKE '%" + txt_search_supplier.getText() + "%' \n"
+                    + searchNoKartu
+                    + status_grading
+                    + "GROUP BY `tb_pembelian_bahan_baku`.`no_nota`\n"
+                    + "ORDER BY `tgl_kirim` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
-            Object[] row = new Object[9];
+            Object[] row = new Object[15];
             while (rs.next()) {
                 row[0] = rs.getInt("no_nota");
                 row[1] = rs.getString("nama_supplier");
@@ -97,6 +113,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                 row[6] = dateFormat.format(rs.getDate("tgl_kirim"));
                 row[7] = rs.getDate("tgl_terima");
                 row[8] = rs.getString("status");
+                row[9] = rs.getString("no_kartu_waleta");
                 model.addRow(row);
             }
 
@@ -104,6 +121,34 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
             int rowData = Table_pembelian.getRowCount();
             label_total_data_supplier.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
+            Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void refreshTableDataKartu(String no_nota) {
+        try {
+            DefaultTableModel model = (DefaultTableModel) tabel_data_kartu_baku.getModel();
+            model.setRowCount(0);
+            sql = "SELECT `no_nota`, `tb_pembelian_bahan_baku_ke_bahan_baku_masuk`.`no_kartu_waleta`, `tb_bahan_baku_masuk`.`tgl_masuk`, `tb_bahan_baku_masuk`.`berat_awal`, `tb_bahan_baku_masuk`.`tgl_timbang`, `tb_bahan_baku_masuk`.`status_kartu_baku`\n"
+                    + "FROM `tb_pembelian_bahan_baku_ke_bahan_baku_masuk` \n"
+                    + "LEFT JOIN `tb_bahan_baku_masuk` ON `tb_pembelian_bahan_baku_ke_bahan_baku_masuk`.`no_kartu_waleta` = `tb_bahan_baku_masuk`.`no_kartu_waleta`\n"
+                    + "WHERE \n"
+                    + "`no_nota` = '" + no_nota + "' \n";
+            rs = Utility.db.getStatement().executeQuery(sql);
+            Object[] row = new Object[5];
+            while (rs.next()) {
+                row[0] = rs.getString("no_kartu_waleta");
+                row[1] = rs.getDate("tgl_masuk");
+                row[2] = rs.getInt("berat_awal");
+                row[3] = rs.getDate("tgl_timbang");
+                row[4] = rs.getInt("status_kartu_baku");
+                model.addRow(row);
+            }
+
+            ColumnsAutoSizer.sizeColumnsToFit(tabel_data_kartu_baku);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -150,25 +195,33 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
         button_selesai_grading = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         ComboBox_status_grading = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabel_data_kartu_baku = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        label_total_gram_awal_kartu = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txt_search_no_kartu = new javax.swing.JTextField();
 
         jPanel_Pembelian_baku.setBackground(new java.awt.Color(255, 255, 255));
         jPanel_Pembelian_baku.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Pembelian Bahan Baku", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
         jPanel_Pembelian_baku.setPreferredSize(new java.awt.Dimension(1366, 700));
 
         Table_pembelian.setAutoCreateRowSorter(true);
+        Table_pembelian.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         Table_pembelian.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "No", "Supplier", "Grade", "Berat Gr", "Harga/Gr", "Total Harga", "Tgl Kirim", "Tgl Terima", "Status Grading"
+                "No Nota", "Supplier", "Grade", "Berat Gr", "Harga/Gr", "Total Harga", "Tgl Kirim", "Tgl Terima", "Status Grading", "No Kartu"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -330,28 +383,28 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
             jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_operation_supplierLayout.createSequentialGroup()
                 .addGroup(jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_no, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_no, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_supplier_1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_supplier_5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboBox_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_supplier_3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_grade, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_grade, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_supplier_8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_berat, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_berat, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_harga, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_harga, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label_supplier_4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label_supplier_6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Date_kirim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Date_kirim, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_operation_supplierLayout.createSequentialGroup()
@@ -359,8 +412,8 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(label_supplier_9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_status, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(Date_terima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_status, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(Date_terima, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel_operation_supplierLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_update, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -370,13 +423,15 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                 .addGap(10, 10, 10))
         );
 
-        jLabel7.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabel7.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel7.setText("Total Data :");
 
-        label_total_data_supplier.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        label_total_data_supplier.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_data_supplier.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         label_total_data_supplier.setText("TOTAL");
 
-        txt_search_supplier.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_search_supplier.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         txt_search_supplier.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_search_supplierKeyPressed(evt);
@@ -384,7 +439,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
         });
 
         button_search_supplier.setBackground(new java.awt.Color(255, 255, 255));
-        button_search_supplier.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_search_supplier.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_search_supplier.setText("Search");
         button_search_supplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,7 +448,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
         });
 
         button_export_supplier.setBackground(new java.awt.Color(255, 255, 255));
-        button_export_supplier.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_export_supplier.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_export_supplier.setText("Export To Excel");
         button_export_supplier.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -402,11 +457,11 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
         });
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel1.setText("Search By Nama Supplier :");
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel1.setText("Nama Supplier :");
 
         button_selesai_grading.setBackground(new java.awt.Color(255, 255, 255));
-        button_selesai_grading.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_selesai_grading.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button_selesai_grading.setText("Selesai Grading");
         button_selesai_grading.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -415,11 +470,60 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
         });
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel2.setText("Status Grading :");
 
-        ComboBox_status_grading.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        ComboBox_status_grading.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         ComboBox_status_grading.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "PROSES", "SELESAI" }));
+
+        tabel_data_kartu_baku.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tabel_data_kartu_baku.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "No Kartu", "Tgl Masuk", "Berat Awal", "Tgl Grading", "Status Grading"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class, java.lang.Float.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tabel_data_kartu_baku);
+
+        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel3.setText("Data Kartu Baku");
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel8.setText("Total Gram :");
+
+        label_total_gram_awal_kartu.setBackground(new java.awt.Color(255, 255, 255));
+        label_total_gram_awal_kartu.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        label_total_gram_awal_kartu.setText("TOTAL");
+
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabel4.setText("No Kartu Baku :");
+
+        txt_search_no_kartu.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        txt_search_no_kartu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_search_no_kartuKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_Pembelian_bakuLayout = new javax.swing.GroupLayout(jPanel_Pembelian_baku);
         jPanel_Pembelian_baku.setLayout(jPanel_Pembelian_bakuLayout);
@@ -433,6 +537,10 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_search_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_search_no_kartu, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ComboBox_status_grading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -440,37 +548,56 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                         .addComponent(button_search_supplier)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_selesai_grading)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
                         .addComponent(button_export_supplier))
                     .addGroup(jPanel_Pembelian_bakuLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addGroup(jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_Pembelian_bakuLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_data_supplier)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_total_data_supplier)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel_Pembelian_bakuLayout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel_operation_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel_operation_supplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addGroup(jPanel_Pembelian_bakuLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label_total_gram_awal_kartu)))))
                 .addContainerGap())
         );
         jPanel_Pembelian_bakuLayout.setVerticalGroup(
             jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_Pembelian_bakuLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
-                .addGroup(jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_search_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_search_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_export_supplier)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_selesai_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ComboBox_status_grading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(button_search_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_export_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_selesai_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboBox_status_grading, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_search_no_kartu, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_Pembelian_bakuLayout.createSequentialGroup()
                         .addComponent(jPanel_operation_supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(label_total_gram_awal_kartu)
+                                .addComponent(jLabel8)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_Pembelian_bakuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(label_total_data_supplier)
@@ -484,7 +611,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanel_Pembelian_baku, javax.swing.GroupLayout.DEFAULT_SIZE, 1364, Short.MAX_VALUE))
+                .addComponent(jPanel_Pembelian_baku, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -678,6 +805,10 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_statusKeyTyped
 
+    private void txt_search_no_kartuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_no_kartuKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_search_no_kartuKeyPressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBox_status_grading;
@@ -694,9 +825,13 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
     public javax.swing.JButton button_update;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel_Pembelian_baku;
     private javax.swing.JPanel jPanel_operation_supplier;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel label_supplier_1;
     private javax.swing.JLabel label_supplier_3;
@@ -707,10 +842,13 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
     private javax.swing.JLabel label_supplier_8;
     private javax.swing.JLabel label_supplier_9;
     private javax.swing.JLabel label_total_data_supplier;
+    private javax.swing.JLabel label_total_gram_awal_kartu;
+    private javax.swing.JTable tabel_data_kartu_baku;
     private javax.swing.JTextField txt_berat;
     private javax.swing.JTextField txt_grade;
     private javax.swing.JTextField txt_harga;
     private javax.swing.JTextField txt_no;
+    private javax.swing.JTextField txt_search_no_kartu;
     private javax.swing.JTextField txt_search_supplier;
     private javax.swing.JTextField txt_status;
     // End of variables declaration//GEN-END:variables
