@@ -111,7 +111,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                     if (i != -1) {
                         if (Table_Data_f2.getValueAt(i, 6) == null) {
                             button_input_koreksi.setEnabled(false);
-                            button_input_koreksi1.setEnabled(false);
+                            button_input_koreksi_v2.setEnabled(false);
                             button_input_f1.setEnabled(false);
                             button_input_f2.setEnabled(false);
                             button_f2_setor_lp.setEnabled(false);
@@ -119,14 +119,15 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         } else if (!Table_Data_f2.getValueAt(i, 4).toString().equals("C") && !Table_Data_f2.getValueAt(i, 4).toString().equals("CABUTO")) {
                             if (Table_Data_f2.getValueAt(i, 8) == null) {
                                 button_input_koreksi.setEnabled(true);
-                                button_input_koreksi1.setEnabled(true);
+                                button_input_koreksi_v2.setEnabled(true);
                                 button_input_f1.setEnabled(false);
                                 button_input_f2.setEnabled(false);
                                 button_f2_edit.setEnabled(false);
                                 button_f2_setor_lp.setEnabled(false);
                             } else {
                                 button_input_koreksi.setEnabled(false);
-                                button_input_koreksi1.setEnabled(false);
+                                button_input_koreksi_v2.setEnabled(false);
+
                                 if (Table_Data_f2.getValueAt(i, 10) == null) {
                                     button_f2_setor_lp.setEnabled(true);
                                     button_input_f1.setEnabled(true);
@@ -150,8 +151,6 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                     button_f2_edit.setEnabled(true);
                                     button_input_f1.setEnabled(false);
                                     button_input_f2.setEnabled(false);
-                                    button_input_koreksi.setEnabled(false);
-                                    button_input_koreksi1.setEnabled(false);
                                 }
                             }
                         }
@@ -1172,7 +1171,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         button_input_f1 = new javax.swing.JButton();
         button_input_f2 = new javax.swing.JButton();
         button_input_byproduct = new javax.swing.JButton();
-        button_input_koreksi1 = new javax.swing.JButton();
+        button_input_koreksi_v2 = new javax.swing.JButton();
         button_input_kaki = new javax.swing.JButton();
         button_tv_reproses = new javax.swing.JButton();
         button_laporan_f2 = new javax.swing.JButton();
@@ -1565,11 +1564,11 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
         });
 
-        button_input_koreksi1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_input_koreksi1.setText("Input Koreksi V2");
-        button_input_koreksi1.addActionListener(new java.awt.event.ActionListener() {
+        button_input_koreksi_v2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_input_koreksi_v2.setText("Input Koreksi V2");
+        button_input_koreksi_v2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_input_koreksi1ActionPerformed(evt);
+                button_input_koreksi_v2ActionPerformed(evt);
             }
         });
 
@@ -1738,7 +1737,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_input_koreksi)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(button_input_koreksi1)
+                                .addComponent(button_input_koreksi_v2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_input_f1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1793,7 +1792,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         .addComponent(button_input_f1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_input_f2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_input_byproduct, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_input_koreksi1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_input_koreksi_v2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_input_kaki, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(button_f2_edit_kaki, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(button_f2_setor_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3899,17 +3898,13 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         // TODO add your handling code here:
         int i = Table_Data_f2.getSelectedRow();
         if (i > -1) {
-            if (Table_Data_f2.getValueAt(i, 6) == null) {
-                String lp = Table_Data_f2.getValueAt(i, 0).toString();
-                JDialog_Input_Koreksi input_koreksi = new JDialog_Input_Koreksi(new javax.swing.JFrame(), true, lp);
-                input_koreksi.pack();
-                input_koreksi.setLocationRelativeTo(this);
-                input_koreksi.setVisible(true);
-                input_koreksi.setEnabled(true);
-                refreshTable_F2();
-            } else {
-                JOptionPane.showMessageDialog(this, "LP belum di terima");
-            }
+            String lp = Table_Data_f2.getValueAt(i, 0).toString();
+            JDialog_Input_Koreksi input_koreksi = new JDialog_Input_Koreksi(new javax.swing.JFrame(), true, lp);
+            input_koreksi.pack();
+            input_koreksi.setLocationRelativeTo(this);
+            input_koreksi.setVisible(true);
+            input_koreksi.setEnabled(true);
+            refreshTable_F2();
         } else {
             JOptionPane.showMessageDialog(this, "Silahkan klik pada LP yang akan masuk");
         }
@@ -3957,7 +3952,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         refreshTable_F2();
     }//GEN-LAST:event_button_input_byproductActionPerformed
 
-    private void button_input_koreksi1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_koreksi1ActionPerformed
+    private void button_input_koreksi_v2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_input_koreksi_v2ActionPerformed
         // TODO add your handling code here:
         JDialog_Input_Koreksi_v21 input = new JDialog_Input_Koreksi_v21(new javax.swing.JFrame(), true);
         input.pack();
@@ -3965,7 +3960,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
         input.setVisible(true);
         input.setEnabled(true);
         refreshTable_F2();
-    }//GEN-LAST:event_button_input_koreksi1ActionPerformed
+    }//GEN-LAST:event_button_input_koreksi_v2ActionPerformed
 
     private void txt_search_lp_balenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_search_lp_balenKeyPressed
         // TODO add your handling code here:
@@ -4087,6 +4082,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
+            JOptionPane.showMessageDialog(this, ex);
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_laporan_f2ActionPerformed
@@ -4306,7 +4302,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
     public javax.swing.JButton button_input_f2;
     public javax.swing.JButton button_input_kaki;
     public javax.swing.JButton button_input_koreksi;
-    public javax.swing.JButton button_input_koreksi1;
+    public javax.swing.JButton button_input_koreksi_v2;
     public javax.swing.JButton button_input_sesekan;
     public static javax.swing.JButton button_laporan_f2;
     public static javax.swing.JButton button_laporan_terima_SUB;

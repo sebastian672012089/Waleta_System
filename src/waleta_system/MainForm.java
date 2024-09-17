@@ -924,7 +924,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.397");
+        jLabel19.setText("2.2.399");
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Calibri Light", 1, 48)); // NOI18N
@@ -4345,7 +4345,7 @@ public class MainForm extends javax.swing.JFrame {
             jPanel_Finishing21.button_input_byproduct.setVisible(false);
             jPanel_Finishing21.button_f2_terima_lp.setVisible(false);
             jPanel_Finishing21.button_input_koreksi.setVisible(false);
-            jPanel_Finishing21.button_input_koreksi1.setVisible(false);
+            jPanel_Finishing21.button_input_koreksi_v2.setVisible(false);
             jPanel_Finishing21.button_input_f1.setVisible(false);
             jPanel_Finishing21.button_input_f2.setVisible(false);
             jPanel_Finishing21.button_input_kaki.setVisible(false);
@@ -4355,7 +4355,7 @@ public class MainForm extends javax.swing.JFrame {
             jPanel_Finishing21.button_input_byproduct.setVisible(true);
             jPanel_Finishing21.button_f2_terima_lp.setVisible(true);
             jPanel_Finishing21.button_input_koreksi.setVisible(true);
-            jPanel_Finishing21.button_input_koreksi1.setVisible(true);
+            jPanel_Finishing21.button_input_koreksi_v2.setVisible(true);
             jPanel_Finishing21.button_input_f1.setVisible(true);
             jPanel_Finishing21.button_input_f2.setVisible(true);
             jPanel_Finishing21.button_input_kaki.setVisible(true);

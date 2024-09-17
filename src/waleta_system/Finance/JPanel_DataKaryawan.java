@@ -44,7 +44,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
     public void init() {
         try {
             if (MainForm.Login_idPegawai.equals("20171201644")//INDRIKA
-                || MainForm.Login_idPegawai.equals("20230907768")//diyan
+                    || MainForm.Login_idPegawai.equals("20230907768")//diyan
                     ) {//INDRIKA
                 button_ubah_level_gaji1.setEnabled(true);
                 button_buka_kunci_grup.setEnabled(true);
@@ -79,8 +79,6 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
             }
             ComboBox_status_karyawan.setSelectedItem("IN");
             refreshTable();
-        } catch (SQLException ex) {
-            Logger.getLogger(JPanel_DataKaryawan.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(JPanel_DataKaryawan.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -132,7 +130,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                         break;
                 }
             }
-            sql = "SELECT `id_pegawai`,`nik_ktp`,`nama_pegawai`,`jenis_kelamin`,`desa`,`nama_ibu`,`nama_bagian`,`kode_departemen`,`tanggal_masuk`,`tanggal_keluar`,`status`,`level_gaji`, `rek_cimb`, `posisi`, `no_telp`, `email`, `potongan_bpjs`, `potongan_bpjs_tk`, `jalur_jemputan`, `jam_kerja`, `status_pajak`, `no_npwp` "
+            sql = "SELECT `id_pegawai`,`nik_ktp`,`nama_pegawai`,`jenis_kelamin`,`alamat`,`nama_ibu`,`nama_bagian`,`kode_departemen`,`tanggal_masuk`,`tanggal_keluar`,`status`,`level_gaji`, `rek_cimb`, `posisi`, `no_telp`, `email`, `potongan_bpjs`, `potongan_bpjs_tk`, `jalur_jemputan`, `jam_kerja`, `status_pajak`, `no_npwp` "
                     + "FROM `tb_karyawan` "
                     + "LEFT JOIN `tb_bagian` ON `tb_karyawan`.`kode_bagian` = `tb_bagian`.`kode_bagian`"
                     + "WHERE `nama_pegawai` LIKE '%" + txt_search_karyawan.getText() + "%' "
@@ -159,7 +157,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                 } else {
                     row[4] = "-";
                 }
-                row[5] = rs.getString("desa");
+                row[5] = rs.getString("alamat");
                 row[6] = rs.getString("nama_ibu");
                 row[7] = rs.getString("no_telp");
                 row[8] = rs.getString("email");
@@ -244,60 +242,57 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_data);
 
-            try {
-                table_data.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
-                    @Override
-                    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                        Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                        if (table_data.getValueAt(row, 11) == null || table_data.getValueAt(row, 12) == null || table_data.getValueAt(row, 15) == null) {
-                            if (isSelected) {
-                                comp.setBackground(table_data.getSelectionBackground());
-                                comp.setForeground(table_data.getSelectionForeground());
-                            } else {
-                                comp.setBackground(table_data.getBackground());
-                                comp.setForeground(table_data.getForeground());
-                            }
-                        } else if (table_data.getValueAt(row, 11).toString().toUpperCase().contains("CABUT")
-                                && //divisi
-                                (table_data.getValueAt(row, 12).toString().toUpperCase().contains("BORONG") || table_data.getValueAt(row, 12).toString().toUpperCase().contains("TRAINING"))
-                                && //bagian
-                                !table_data.getValueAt(row, 15).toString().toUpperCase().contains("BORONG")//level gaji
-                                ) {
-                            if (isSelected) {
-                                comp.setBackground(table_data.getSelectionBackground());
-                                comp.setForeground(table_data.getSelectionForeground());
-                            } else {
-                                comp.setBackground(Color.red);
-                                comp.setForeground(Color.WHITE);
-                            }
-                        } else if (table_data.getValueAt(row, 11).toString().toUpperCase().contains("CABUT")
-                                && //divisi
-                                !(table_data.getValueAt(row, 12).toString().toUpperCase().contains("BORONG") || table_data.getValueAt(row, 12).toString().toUpperCase().contains("TRAINING"))
-                                && //bagian
-                                table_data.getValueAt(row, 15).toString().toUpperCase().contains("BORONG")//level gaji
-                                ) {
-                            if (isSelected) {
-                                comp.setBackground(table_data.getSelectionBackground());
-                                comp.setForeground(table_data.getSelectionForeground());
-                            } else {
-                                comp.setBackground(Color.red);
-                                comp.setForeground(Color.WHITE);
-                            }
+            table_data.setDefaultRenderer(String.class, new DefaultTableCellRenderer() {
+                @Override
+                public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                    Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                    if (table_data.getValueAt(row, 11) == null || table_data.getValueAt(row, 12) == null || table_data.getValueAt(row, 15) == null) {
+                        if (isSelected) {
+                            comp.setBackground(table_data.getSelectionBackground());
+                            comp.setForeground(table_data.getSelectionForeground());
                         } else {
-                            if (isSelected) {
-                                comp.setBackground(table_data.getSelectionBackground());
-                                comp.setForeground(table_data.getSelectionForeground());
-                            } else {
-                                comp.setBackground(table_data.getBackground());
-                                comp.setForeground(table_data.getForeground());
-                            }
+                            comp.setBackground(table_data.getBackground());
+                            comp.setForeground(table_data.getForeground());
                         }
-                        return comp;
+                    } else if (table_data.getValueAt(row, 11).toString().toUpperCase().contains("CABUT")
+                            && //divisi
+                            (table_data.getValueAt(row, 12).toString().toUpperCase().contains("BORONG") || table_data.getValueAt(row, 12).toString().toUpperCase().contains("TRAINING"))
+                            && //bagian
+                            !table_data.getValueAt(row, 15).toString().toUpperCase().contains("BORONG")//level gaji
+                            ) {
+                        if (isSelected) {
+                            comp.setBackground(table_data.getSelectionBackground());
+                            comp.setForeground(table_data.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.red);
+                            comp.setForeground(Color.WHITE);
+                        }
+                    } else if (table_data.getValueAt(row, 11).toString().toUpperCase().contains("CABUT")
+                            && //divisi
+                            !(table_data.getValueAt(row, 12).toString().toUpperCase().contains("BORONG") || table_data.getValueAt(row, 12).toString().toUpperCase().contains("TRAINING"))
+                            && //bagian
+                            table_data.getValueAt(row, 15).toString().toUpperCase().contains("BORONG")//level gaji
+                            ) {
+                        if (isSelected) {
+                            comp.setBackground(table_data.getSelectionBackground());
+                            comp.setForeground(table_data.getSelectionForeground());
+                        } else {
+                            comp.setBackground(Color.red);
+                            comp.setForeground(Color.WHITE);
+                        }
+                    } else {
+                        if (isSelected) {
+                            comp.setBackground(table_data.getSelectionBackground());
+                            comp.setForeground(table_data.getSelectionForeground());
+                        } else {
+                            comp.setBackground(table_data.getBackground());
+                            comp.setForeground(table_data.getForeground());
+                        }
                     }
-                });
-                table_data.repaint();
-            } catch (Exception e) {
-            }
+                    return comp;
+                }
+            });
+            table_data.repaint();
 
             int rowDataMasuk = table_data.getRowCount();
             label_total_data_masuk.setText(Integer.toString(rowDataMasuk));
@@ -549,7 +544,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                         .addComponent(Date_Search2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_search_karyawan)
-                        .addGap(0, 238, Short.MAX_VALUE)))
+                        .addGap(0, 192, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_search_karyawanLayout.setVerticalGroup(
@@ -794,7 +789,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                     .addComponent(button_refresh_bpjs, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_export_data_karyawan_masuk, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -894,7 +889,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                 Utility.db.getConnection();
                 File file = chooser.getSelectedFile();
                 String filename1 = file.getAbsolutePath();
-                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                try ( BufferedReader br = new BufferedReader(new FileReader(filename1))) {
                     String line;
                     String Query = null;
                     try {
@@ -952,7 +947,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                 Utility.db.getConnection();
                 File file = chooser.getSelectedFile();
                 String filename1 = file.getAbsolutePath();
-                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                try ( BufferedReader br = new BufferedReader(new FileReader(filename1))) {
                     String line;
                     String Query = null;
                     try {
@@ -1032,7 +1027,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                 Utility.db.getConnection();
                 File file = chooser.getSelectedFile();
                 String filename1 = file.getAbsolutePath();
-                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                try ( BufferedReader br = new BufferedReader(new FileReader(filename1))) {
                     String line;
                     String Query = null;
                     try {

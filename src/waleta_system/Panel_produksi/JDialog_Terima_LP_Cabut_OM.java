@@ -1,7 +1,6 @@
 package waleta_system.Panel_produksi;
 
 import waleta_system.Class.Utility;
-
 import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,7 +58,7 @@ public class JDialog_Terima_LP_Cabut_OM extends javax.swing.JDialog {
 
             if (Check) {
                 String Query = "INSERT INTO `tb_cabut`(`no_laporan_produksi`, `ketua_regu`, `tgl_mulai_cabut`) "
-                        + "VALUES ('" + txt_no_lp.getText() + "','" + txt_ketua_regu.getText() + "','" + dateFormat.format(tgl_masuk) + "')";
+                        + "VALUES ('" + txt_no_lp.getText() + "','" + txt_ketua_regu.getText() + "',CURRENT_DATE())";
                 Utility.db.getConnection().createStatement();
                 if ((Utility.db.getStatement().executeUpdate(Query)) == 1) {
                     JPanel_DataCabut.button_search_cabut.doClick();

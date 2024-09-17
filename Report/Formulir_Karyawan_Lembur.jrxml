@@ -101,6 +101,7 @@ WHERE
 ((`jumlah_jam`+`menit_istirahat_lembur` >= 3 AND `nama_bagian` NOT LIKE '%SECURITY%') OR (`jumlah_jam`+`menit_istirahat_lembur` >= 6 AND `nama_bagian` LIKE '%SECURITY%'))
  AND `tanggal_lembur` = $P{tgl_lembur_absen}
  AND `nama_bagian` NOT LIKE '%DRIVER%'
+AND attlog.`pin` IS NOT NULL
 AND `tb_surat_lembur_detail`.`id_pegawai` <> '20170600001'
 AND IF(`jenis_lembur` = 'Masuk',
        IF(`absen_masuk`>`mulai_lembur`, TIMESTAMPDIFF(minute, `absen_masuk`, `selesai_lembur`), TIMESTAMPDIFF(minute, `mulai_lembur`, `selesai_lembur`)),

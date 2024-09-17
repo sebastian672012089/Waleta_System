@@ -63,43 +63,11 @@ public class DBConnect {
     }
 
     public static void main(String[] args) {
-        DBConnect db_sub = new DBConnect();
         try {
-            db_sub.connect();
-            System.out.println("Successfully connected.");
-            String query = "SELECT * FROM `att_log` WHERE 1";
-            System.out.println("Executing query: " + query);
-
-//            String query = "SELECT * FROM `tes` WHERE 1";
-//            try (PreparedStatement statement = conn.prepareStatement(query);
-//                    ResultSet resultSet = statement.executeQuery()) {
-//
-//                int count = 0;
-//                while (resultSet.next()) {
-//                    count++;
-//                    System.out.println(count + " = " + resultSet.getString("grade"));
-//                }
-//                System.out.println("Total records retrieved: " + count);
-//            }
-
-            Connection con = db_sub.getConnection();
-            PreparedStatement pst = con.prepareStatement(query);
-            ResultSet result = pst.executeQuery();
-//            
-            int i = 0;
-            while (result.next()) {
-                i++;
-//                System.out.println(i + " = " + result.getString("pin") + " = " + result.getString("scan_date"));
-            }
-            System.out.println("Total records retrieved: " + i);
+            new DBConnect().connect();
+            System.out.println("berhasil");
         } catch (Exception ex) {
             Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                db_sub.closeConnection();
-            } catch (Exception ex) {
-                Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 }

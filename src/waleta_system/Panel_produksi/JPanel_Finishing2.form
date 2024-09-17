@@ -151,7 +151,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="button_input_koreksi" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="button_input_koreksi1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="button_input_koreksi_v2" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="button_input_f1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -217,7 +217,7 @@
                               <Component id="button_input_f1" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="button_input_f2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="button_input_byproduct" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="button_input_koreksi1" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="button_input_koreksi_v2" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="button_input_kaki" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                               <Component id="button_f2_edit_kaki" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
@@ -792,7 +792,7 @@
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="button_input_koreksi1">
+            <Component class="javax.swing.JButton" name="button_input_koreksi_v2">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="11" style="0"/>
@@ -800,7 +800,7 @@
                 <Property name="text" type="java.lang.String" value="Input Koreksi V2"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_input_koreksi1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_input_koreksi_v2ActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
