@@ -679,6 +679,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Peramalan_barangjadi21 = new waleta_system.Packing.JPanel_Peramalan_barangjadi2();
         jPanel_DataKinerjaCuci_HC_Kopyok1 = new waleta_system.Panel_produksi.JPanel_DataKinerjaCuci_HC_Kopyok();
         jPanel_Reproses_Sub1 = new waleta_system.SubWaleta.JPanel_Reproses_Sub();
+        jPanel_DataResiduPH_LP1 = new waleta_system.QC.JPanel_DataResiduPH_LP();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_File = new javax.swing.JMenu();
         jMenu_Home = new javax.swing.JMenuItem();
@@ -806,6 +807,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenu_qc_dokumen = new javax.swing.JMenuItem();
         jMenu_qc_BahanKimia = new javax.swing.JMenuItem();
         jMenu_qc_suhu_kelembapan_hmi = new javax.swing.JMenuItem();
+        jMenu_qc_DataResiduPH = new javax.swing.JMenuItem();
         jMenuItem_tv_qc = new javax.swing.JMenuItem();
         jMenuItem_tv_qc_belumSetor = new javax.swing.JMenuItem();
         jMenuItem_tv_wip1 = new javax.swing.JMenuItem();
@@ -924,7 +926,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.399");
+        jLabel19.setText("2.2.400");
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Calibri Light", 1, 48)); // NOI18N
@@ -1470,6 +1472,7 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Peramalan_barangjadi21, "card158");
         main_panel.add(jPanel_DataKinerjaCuci_HC_Kopyok1, "card159");
         main_panel.add(jPanel_Reproses_Sub1, "card160");
+        main_panel.add(jPanel_DataResiduPH_LP1, "card160");
 
         jScrollPane2.setViewportView(main_panel);
 
@@ -2675,6 +2678,16 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
         jMenu_QC.add(jMenu_qc_suhu_kelembapan_hmi);
+
+        jMenu_qc_DataResiduPH.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu_qc_DataResiduPH.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenu_qc_DataResiduPH.setText("Residu & PH LP");
+        jMenu_qc_DataResiduPH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_qc_DataResiduPHActionPerformed(evt);
+            }
+        });
+        jMenu_QC.add(jMenu_qc_DataResiduPH);
 
         jMenuItem_tv_qc.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem_tv_qc.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -6742,6 +6755,19 @@ public class MainForm extends javax.swing.JFrame {
         chart.init();
     }//GEN-LAST:event_jMenuItem_tv_spk_lokalActionPerformed
 
+    private void jMenu_qc_DataResiduPHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_qc_DataResiduPHActionPerformed
+        // TODO add your handling code here:
+        main_panel.removeAll();
+        main_panel.repaint();
+        main_panel.revalidate();
+
+        //add panel
+        jPanel_DataResiduPH_LP1.init();
+        main_panel.add(jPanel_DataResiduPH_LP1);
+        main_panel.repaint();
+        main_panel.revalidate();
+    }//GEN-LAST:event_jMenu_qc_DataResiduPHActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Button_refresh_butuh_Acc;
@@ -6975,6 +7001,7 @@ public class MainForm extends javax.swing.JFrame {
     public static javax.swing.JMenuItem jMenu_produksi_rendam;
     private javax.swing.JMenuItem jMenu_produksi_stokOpname_LP_WIP;
     private javax.swing.JMenuItem jMenu_qc_BahanKimia;
+    private javax.swing.JMenuItem jMenu_qc_DataResiduPH;
     public static javax.swing.JMenuItem jMenu_qc_bahanbaku;
     private javax.swing.JMenuItem jMenu_qc_dokumen;
     private javax.swing.JMenuItem jMenu_qc_heat_treatment;
@@ -7040,6 +7067,7 @@ public class MainForm extends javax.swing.JFrame {
     private waleta_system.Panel_produksi.JPanel_DataPencetak jPanel_DataPencetak1;
     private waleta_system.HRD.JPanel_DataPindahBagian jPanel_DataPindahBagian1;
     private waleta_system.Panel_produksi.JPanel_DataRendam jPanel_DataRendam1;
+    private waleta_system.QC.JPanel_DataResiduPH_LP jPanel_DataResiduPH_LP1;
     private waleta_system.SubWaleta.JPanel_DataSaponSub jPanel_DataSaponSub1;
     private waleta_system.Packing.JPanel_DataScanKeping jPanel_DataScanKeping1;
     private waleta_system.Panel_produksi.JPanel_DataTRSela jPanel_DataTRSela1;
