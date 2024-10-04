@@ -30,8 +30,6 @@ public class JPanel_HargaBahanBaku extends javax.swing.JPanel implements Interfa
     @Override
     public void init() {
         try {
-            
-            
             ComboBox_tanggal.removeAllItems();
             String query = "SELECT DISTINCT(`tanggal`) AS 'tanggal' FROM `tb_harga_baku_esta` WHERE 1 ORDER BY `tanggal` DESC";
             ResultSet rs1 = Utility.db.getStatement().executeQuery(query);
@@ -50,11 +48,15 @@ public class JPanel_HargaBahanBaku extends javax.swing.JPanel implements Interfa
             DefaultTableModel model = (DefaultTableModel) Table_PerhitunganEstaWaleta.getModel();
             model.setRowCount(0);
             sql = "SELECT `tb_grading_bahan_baku`.`no_kartu_waleta`, `tb_bahan_baku_masuk`.`tgl_masuk`, SUM(`jumlah_keping`) AS 'jumlah_keping', SUM(`total_berat`) AS 'total_berat', SUM(`harga_bahanbaku` * `total_berat`) AS 'harga_bahanbaku', SUM(`tb_harga_baku_esta`.`harga` * `total_berat`) AS 'harga_esta' \n"
-                    + "FROM `tb_grading_bahan_baku` LEFT JOIN `tb_grade_bahan_baku` ON `tb_grading_bahan_baku`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
+                    + "FROM `tb_grading_bahan_baku` "
+                    + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_grading_bahan_baku`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
                     + "LEFT JOIN `tb_bahan_baku_masuk` ON `tb_grading_bahan_baku`.`no_kartu_waleta` = `tb_bahan_baku_masuk`.`no_kartu_waleta`\n"
                     + "LEFT JOIN `tb_harga_baku_esta` ON `tb_grade_bahan_baku`.`kategori_esta` = `tb_harga_baku_esta`.`grade_esta`\n"
-                    + "WHERE `tb_grading_bahan_baku`.`no_kartu_waleta` LIKE '%" + txt_cari_kartu.getText() + "%' AND `tb_harga_baku_esta`.`tanggal` = '" + ComboBox_tanggal.getSelectedItem().toString() + "'"
-                    + "GROUP BY `tb_grading_bahan_baku`.`no_kartu_waleta` ORDER BY `tb_bahan_baku_masuk`.`tgl_masuk` DESC";
+                    + "WHERE "
+                    + "`tb_grading_bahan_baku`.`no_kartu_waleta` LIKE '%" + txt_cari_kartu.getText() + "%' "
+                    + "AND `tb_harga_baku_esta`.`tanggal` = '" + ComboBox_tanggal.getSelectedItem().toString() + "'"
+                    + "GROUP BY `tb_grading_bahan_baku`.`no_kartu_waleta` "
+                    + "ORDER BY `tb_bahan_baku_masuk`.`tgl_masuk` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[7];
             while (rs.next()) {
@@ -157,7 +159,7 @@ public class JPanel_HargaBahanBaku extends javax.swing.JPanel implements Interfa
 
             },
             new String [] {
-                "No Kartu", "Tgl Masuk", "Kpg", "Berat", "Harga Waleta", "Harga Rujukan", "Selisih"
+                "No Kartu", "Tgl Masuk", "Kpg", "Berat", "Harga Waleta", "Harga Rujukan Esta", "Selisih"
             }
         ) {
             Class[] types = new Class [] {
@@ -337,7 +339,7 @@ public class JPanel_HargaBahanBaku extends javax.swing.JPanel implements Interfa
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1371, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

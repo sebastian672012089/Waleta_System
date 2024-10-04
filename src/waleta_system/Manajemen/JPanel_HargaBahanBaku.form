@@ -251,7 +251,7 @@
                         <Column editable="false" title="Kpg" type="java.lang.Float"/>
                         <Column editable="false" title="Berat" type="java.lang.Float"/>
                         <Column editable="false" title="Harga Waleta" type="java.lang.Double"/>
-                        <Column editable="false" title="Harga Rujukan" type="java.lang.Double"/>
+                        <Column editable="false" title="Harga Rujukan Esta" type="java.lang.Double"/>
                         <Column editable="false" title="Selisih" type="java.lang.Double"/>
                       </Table>
                     </Property>

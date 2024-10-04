@@ -43,11 +43,11 @@ public class JPanel_DataResiduPH_LP extends javax.swing.JPanel {
                 filter_tanggal = "AND (DATE(`created_at`) BETWEEN '" + dateFormat.format(Date_1.getDate()) + "' AND '" + dateFormat.format(Date_2.getDate()) + "')";
             }
 
-            sql = "SELECT `id`, `tb_lab_laporan_prduksi_data_ph_residu`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `nilai_residu`, `nilai_ph`, `created_at`, `updated_at` \n"
-                    + "FROM `tb_lab_laporan_prduksi_data_ph_residu` \n"
-                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_lab_laporan_prduksi_data_ph_residu`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+            sql = "SELECT `id`, `tb_lab_laporan_produksi_data_ph_residu`.`no_laporan_produksi`, `tb_laporan_produksi`.`kode_grade`, `nilai_residu`, `nilai_ph`, `created_at`, `updated_at` \n"
+                    + "FROM `tb_lab_laporan_produksi_data_ph_residu` \n"
+                    + "LEFT JOIN `tb_laporan_produksi` ON `tb_lab_laporan_produksi_data_ph_residu`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "WHERE "
-                    + "`tb_lab_laporan_prduksi_data_ph_residu`.`no_laporan_produksi` LIKE '%" + txt_no_lp.getText() + "%'";
+                    + "`tb_lab_laporan_produksi_data_ph_residu`.`no_laporan_produksi` LIKE '%" + txt_no_lp.getText() + "%'";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[15];
             double total_residu = 0, total_ph = 0;

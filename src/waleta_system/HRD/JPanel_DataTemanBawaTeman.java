@@ -16,13 +16,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.Class.ColumnsAutoSizer;
-
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Class.Utility;
 
 public class JPanel_DataTemanBawaTeman extends javax.swing.JPanel {
 
-    
     String sql = null;
     ResultSet rs;
     Date date = new Date();
@@ -31,15 +29,9 @@ public class JPanel_DataTemanBawaTeman extends javax.swing.JPanel {
     DefaultTableCellRenderer TableAlignment = new DefaultTableCellRenderer();
 
     public void init() {
-        try {
-            
-            
-            decimalFormat = Utility.DecimalFormatUS(decimalFormat);
-            refreshTable_tbt();
-            refreshTable_top10();
-        } catch (Exception ex) {
-            Logger.getLogger(JPanel_DataTemanBawaTeman.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        decimalFormat = Utility.DecimalFormatUS(decimalFormat);
+        refreshTable_tbt();
+        refreshTable_top10();
     }
 
     public JPanel_DataTemanBawaTeman() {
@@ -57,7 +49,7 @@ public class JPanel_DataTemanBawaTeman extends javax.swing.JPanel {
             String filter_penggajian = "";
             if (Date_penggajian.getDate() != null) {
                 filter_penggajian = "AND DATEDIFF(IF(C.`tanggal_keluar` IS NULL, '" + dateFormat.format(Date_penggajian.getDate()) + "', IF('" + dateFormat.format(Date_penggajian.getDate()) + "' > C.`tanggal_keluar`, C.`tanggal_keluar`, '" + dateFormat.format(Date_penggajian.getDate()) + "')), C.`tanggal_masuk`) > 20 "
-                                    + "AND DATEDIFF(IF(C.`tanggal_keluar` IS NULL, '" + dateFormat.format(Date_penggajian.getDate()) + "', IF('" + dateFormat.format(Date_penggajian.getDate()) + "' > C.`tanggal_keluar`, C.`tanggal_keluar`, '" + dateFormat.format(Date_penggajian.getDate()) + "')), C.`tanggal_masuk`) < 28 ";
+                        + "AND DATEDIFF(IF(C.`tanggal_keluar` IS NULL, '" + dateFormat.format(Date_penggajian.getDate()) + "', IF('" + dateFormat.format(Date_penggajian.getDate()) + "' > C.`tanggal_keluar`, C.`tanggal_keluar`, '" + dateFormat.format(Date_penggajian.getDate()) + "')), C.`tanggal_masuk`) < 28 ";
             }
             DefaultTableModel model = (DefaultTableModel) Tabel_TBT.getModel();
             model.setRowCount(0);
@@ -88,13 +80,13 @@ public class JPanel_DataTemanBawaTeman extends javax.swing.JPanel {
                 row[9] = rs.getInt("hari_kerja");
                 model.addRow(row);
             }
+            int rowData = Tabel_TBT.getRowCount();
+            label_total_data.setText(Integer.toString(rowData));
+            ColumnsAutoSizer.sizeColumnsToFit(Tabel_TBT);
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_TglLibur.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        int rowData = Tabel_TBT.getRowCount();
-        label_total_data.setText(Integer.toString(rowData));
-        ColumnsAutoSizer.sizeColumnsToFit(Tabel_TBT);
     }
 
     public void refreshTable_top10() {
@@ -116,16 +108,17 @@ public class JPanel_DataTemanBawaTeman extends javax.swing.JPanel {
                 model.addRow(row);
                 peringkat++;
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(JPanel_Data_TglLibur.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        ColumnsAutoSizer.sizeColumnsToFit(Tabel_Top10);
 
-        TableAlignment.setHorizontalAlignment(JLabel.CENTER);
-        //tabel Data Bahan Baku
-        for (int i = 0; i < Tabel_Top10.getColumnCount(); i++) {
-            Tabel_Top10.getColumnModel().getColumn(i).setCellRenderer(TableAlignment);
+            ColumnsAutoSizer.sizeColumnsToFit(Tabel_Top10);
+
+            TableAlignment.setHorizontalAlignment(JLabel.CENTER);
+            //tabel Data Bahan Baku
+            for (int i = 0; i < Tabel_Top10.getColumnCount(); i++) {
+                Tabel_Top10.getColumnModel().getColumn(i).setCellRenderer(TableAlignment);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+            Logger.getLogger(JPanel_Data_TglLibur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

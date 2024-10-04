@@ -1250,9 +1250,6 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
             if (netto_sistem != netto_manual) {
                 check = false;
                 JOptionPane.showMessageDialog(this, "Maaf Netto Manual dan Netto Sistem belum cocok !");
-            } else if (txt_diserahkan.getText() == null || txt_diserahkan.getText().equals("")) {
-                check = false;
-                JOptionPane.showMessageDialog(this, "Harap mengisi pekerja Final Check F2 / F2 diserahkan oleh !");
             } else if (persen_sh < 0f || persen_sh > 20f) {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Susut hilang(" + Math.round(sh) + "gr " + Math.round(persen_sh) + "%) diluar batas yang ditentukan (0-15%), apakah ingin melanjutkan?", "Warning", 0);
                 if (dialogResult == JOptionPane.YES_OPTION) {

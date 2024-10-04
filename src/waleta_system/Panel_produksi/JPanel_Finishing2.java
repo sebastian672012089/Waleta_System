@@ -287,10 +287,13 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 search_ruangan = "";
             }
 
-            sql = "SELECT `tb_finishing_2`.*, `jumlah_keping`, `berat_basah`, `kode_grade`, `tb_laporan_produksi`.`no_kartu_waleta`, `ruangan`, `no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `edited` \n"
+            sql = "SELECT `tb_finishing_2`.*, `jumlah_keping`, `berat_basah`, `kode_grade`, `tb_laporan_produksi`.`no_kartu_waleta`, `ruangan`, `no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `edited`,\n"
+                    + "CABUT_OM.`nama_pegawai` AS 'pekerja_cabut_om', CETAK_OM.`nama_pegawai` AS 'pekerja_cetak_om' \n"
                     + "FROM `tb_finishing_2` "
                     + "LEFT JOIN `tb_laporan_produksi` ON `tb_finishing_2`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
+                    + "LEFT JOIN `tb_karyawan` CABUT_OM ON `tb_finishing_2`.`id_cabut_om` = CABUT_OM.`id_pegawai`\n"
+                    + "LEFT JOIN `tb_karyawan` CETAK_OM ON `tb_finishing_2`.`id_cetak_om` = CETAK_OM.`id_pegawai`\n"
                     //                        + "LEFT JOIN `tb_cetak` ON `tb_cetak`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
                     + "WHERE "
                     + "`tb_finishing_2`.`no_laporan_produksi` LIKE '%" + txt_search_no_lp.getText() + "%' "
@@ -350,6 +353,8 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 row[43] = rs.getInt("flat_f1");
                 row[44] = rs.getDate("tgl_input_sesekan");
                 row[45] = rs.getString("edited");
+                row[46] = rs.getString("pekerja_cabut_om");
+                row[47] = rs.getString("pekerja_cetak_om");
                 model.addRow(row);
                 total_kpg = total_kpg + rs.getInt("jumlah_keping");
                 total_gram = total_gram + rs.getInt("berat_basah");
@@ -1423,14 +1428,14 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
 
             },
             new String [] {
-                "No LP", "Kpg", "Berat Angin", "Grade", "Ruang", "Tgl BP masuk", "Tgl Masuk", "Diterima", "Tgl koreksi kering", "Pekerja Koreksi", "Tgl F1", "Pekerja F1", "Tgl F2", "Pekerja F2", "Tgl Selesai", "Diserahkan", "P. Timbang", "FBonus", "Berat FBonus", "F Nol", "Berat F Nol", "Pch.Kpg", "Pch.BK", "Flat.Kpg", "Flat.BK", "Jidun.Utuh", "Jidun.Pch", "Jidun.BK", "S", "H", "R", "B", "Srbt", "G.Kaki 1", "LP kaki 1", "G. kaki 2", "LP kaki 2", "Admin", "Otorisasi", "Keterangan", "Tanpa Kaki F1", "Kaki Kecil F1", "Kaki Besar F1", "Flat F1", "Tgl Input Ssk", "Edited"
+                "No LP", "Kpg", "Berat Angin", "Grade", "Ruang", "Tgl BP masuk", "Tgl Masuk", "Diterima", "Tgl koreksi kering", "Pekerja Koreksi", "Tgl F1", "Pekerja F1", "Tgl F2", "Pekerja F2", "Tgl Selesai", "Diserahkan", "P. Timbang", "FBonus", "Berat FBonus", "F Nol", "Berat F Nol", "Pch.Kpg", "Pch.BK", "Flat.Kpg", "Flat.BK", "Jidun.Utuh", "Jidun.Pch", "Jidun.BK", "S", "H", "R", "B", "Srbt", "G.Kaki 1", "LP kaki 1", "G. kaki 2", "LP kaki 2", "Admin", "Otorisasi", "Keterangan", "Tanpa Kaki F1", "Kaki Kecil F1", "Kaki Besar F1", "Flat F1", "Tgl Input Ssk", "Edited", "Pekerja Cabut OM", "Pekerja Cetak OM"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -1677,7 +1682,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1321, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -1752,7 +1757,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addComponent(button_f2_edit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_f2_delete)))
-                        .addGap(0, 6, Short.MAX_VALUE)))
+                        .addGap(0, 120, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -2782,7 +2787,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addComponent(label_total_pencabut, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel7))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -2976,7 +2981,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addComponent(DateTutupan2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_refresh_evaluasiMLEM)))
-                        .addGap(0, 382, Short.MAX_VALUE))
+                        .addGap(0, 339, Short.MAX_VALUE))
                     .addComponent(jScrollPane7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3143,7 +3148,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1331, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1321, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -3566,7 +3571,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         .addComponent(label_BoxReproses_lpSuwir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_export_BoxReproses))
-                    .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+                    .addComponent(jScrollPane13, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
                     .addGroup(jPanel11Layout.createSequentialGroup()
                         .addComponent(jLabel102)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3645,7 +3650,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_search_lp))
                     .addGroup(jPanel_data_LP_suwirLayout.createSequentialGroup()
-                        .addGroup(jPanel_data_LP_suwirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel_data_LP_suwirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_data_LP_suwirLayout.createSequentialGroup()
                                 .addComponent(jLabel77)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -3664,7 +3669,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                                 .addComponent(button_Print_LP_SWR)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_export_LPSuwir))
-                            .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 871, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane10, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel_data_LP_suwirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)

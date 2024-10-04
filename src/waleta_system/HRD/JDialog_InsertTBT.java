@@ -129,7 +129,7 @@ public class JDialog_InsertTBT extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_bagian1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -218,7 +218,7 @@ public class JDialog_InsertTBT extends javax.swing.JDialog {
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel7.setText("Note : teman yang di bawa harus masuk CETAK / CABUT");
+        jLabel7.setText("Note : teman yang di bawa harus masuk CETAK / CABUT / OM");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -291,8 +291,8 @@ public class JDialog_InsertTBT extends javax.swing.JDialog {
             txt_nama2.setText(waleta_system.Browse_Karyawan.table_list_karyawan.getValueAt(x, 1).toString());
             txt_bagian2.setText(waleta_system.Browse_Karyawan.table_list_karyawan.getValueAt(x, 2).toString());
         }
-        if (txt_bagian2.getText().length() < 5 || !(txt_bagian2.getText().contains("CABUT") || txt_bagian2.getText().contains("CETAK"))) {
-            JOptionPane.showMessageDialog(this, "Maaf Teman yang dibawa harus masuk CABUT/CETAK!");
+        if (txt_bagian2.getText().length() < 5 || !(txt_bagian2.getText().contains("CABUT") || txt_bagian2.getText().contains("CETAK") || txt_bagian2.getText().contains("-OM-"))) {
+            JOptionPane.showMessageDialog(this, "Maaf Teman yang dibawa harus masuk CABUT/CETAK/OM!");
             txt_id2.setText(null);
             txt_nama2.setText(null);
             txt_bagian2.setText(null);

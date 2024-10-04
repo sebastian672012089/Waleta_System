@@ -697,7 +697,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem_FormTidakMasuk = new javax.swing.JMenuItem();
         jMenuItem_Pengajuan_naikLevel = new javax.swing.JMenuItem();
         jMenuItem_Keu_Pengajuan_Pembelian2 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem_DataDokumenQC = new javax.swing.JMenuItem();
         jMenuItem_SistemPrintSlip = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu_Exit = new javax.swing.JMenuItem();
@@ -926,7 +926,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.400");
+        jLabel19.setText("2.2.404");
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Calibri Light", 1, 48)); // NOI18N
@@ -1633,15 +1633,15 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu_File.add(jMenuItem_Keu_Pengajuan_Pembelian2);
 
-        jMenuItem13.setBackground(new java.awt.Color(255, 255, 255));
-        jMenuItem13.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jMenuItem13.setText("Data Dokumen");
-        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem_DataDokumenQC.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem_DataDokumenQC.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jMenuItem_DataDokumenQC.setText("Data Dokumen");
+        jMenuItem_DataDokumenQC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem13ActionPerformed(evt);
+                jMenuItem_DataDokumenQCActionPerformed(evt);
             }
         });
-        jMenu_File.add(jMenuItem13);
+        jMenu_File.add(jMenuItem_DataDokumenQC);
 
         jMenuItem_SistemPrintSlip.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem_SistemPrintSlip.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -3489,6 +3489,8 @@ public class MainForm extends javax.swing.JFrame {
         });
         jMenu_manajemen.add(jMenuItem8);
 
+        jMenu_TV_KPI.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu_TV_KPI.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jMenu_TV_KPI.setText("TV LP WIP");
         jMenu_TV_KPI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -6713,7 +6715,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel_Suhu_dan_Kelembapan21.init();
     }//GEN-LAST:event_jMenu_qc_suhu_kelembapan_hmiActionPerformed
 
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+    private void jMenuItem_DataDokumenQCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_DataDokumenQCActionPerformed
         // TODO add your handling code here:
         main_panel.removeAll();
         main_panel.repaint();
@@ -6724,7 +6726,7 @@ public class MainForm extends javax.swing.JFrame {
         main_panel.add(jPanel_Dokumen_QC1);
         main_panel.repaint();
         main_panel.revalidate();
-    }//GEN-LAST:event_jMenuItem13ActionPerformed
+    }//GEN-LAST:event_jMenuItem_DataDokumenQCActionPerformed
 
     private void Button_refresh_dokumen_jatuh_tempoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Button_refresh_dokumen_jatuh_tempoActionPerformed
         // TODO add your handling code here:
@@ -6793,7 +6795,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -6805,6 +6806,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_AbsensiKaryawan;
     private javax.swing.JMenuItem jMenuItem_BiayaLP;
     public static javax.swing.JMenuItem jMenuItem_Bonus_Grading;
+    private javax.swing.JMenuItem jMenuItem_DataDokumenQC;
     private javax.swing.JMenuItem jMenuItem_DataKaryawanViewOnly;
     private javax.swing.JMenuItem jMenuItem_DataKinerjaCabut;
     private javax.swing.JMenuItem jMenuItem_DataKinerjaCetak;

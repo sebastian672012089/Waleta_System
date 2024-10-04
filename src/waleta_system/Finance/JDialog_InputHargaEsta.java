@@ -132,7 +132,7 @@ public class JDialog_InputHargaEsta extends javax.swing.JDialog {
                 java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true
+                false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
