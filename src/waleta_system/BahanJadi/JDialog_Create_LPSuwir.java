@@ -187,7 +187,7 @@ public class JDialog_Create_LPSuwir extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Create_LPSuwir.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Create_LPSuwir.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
@@ -254,7 +254,7 @@ public class JDialog_Create_LPSuwir extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Create_LPSuwir.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Create_LPSuwir.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {

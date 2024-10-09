@@ -97,7 +97,7 @@ public class JFrame_Tampilan_TidakAbsen extends javax.swing.JFrame {
             t = new Timer();
             t.schedule(timerTask, 120000, 120000); //120 detik = 2 menit
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_Tampilan_TidakAbsen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -251,7 +251,7 @@ public class JFrame_Tampilan_TidakAbsen extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_TidakMasuk1);
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_TidakMasuk2);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_Tampilan_TidakAbsen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -311,7 +311,7 @@ public class JFrame_Tampilan_TidakAbsen extends javax.swing.JFrame {
             label_jumlah_terlambat.setText(Integer.toString(tabel_data_Terlambat.getRowCount()));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_Terlambat);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_Tampilan_TidakAbsen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -393,7 +393,7 @@ public class JFrame_Tampilan_TidakAbsen extends javax.swing.JFrame {
             chart_dataset.setValue(total_data, "", "Karyawan Terlambat");
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_Tampilan_TidakAbsen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

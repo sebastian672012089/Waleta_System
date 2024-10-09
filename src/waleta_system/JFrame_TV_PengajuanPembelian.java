@@ -217,7 +217,7 @@ public class JFrame_TV_PengajuanPembelian extends javax.swing.JFrame {
             });
             table_pengajuan.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

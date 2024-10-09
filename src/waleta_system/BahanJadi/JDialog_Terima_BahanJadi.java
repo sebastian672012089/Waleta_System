@@ -80,7 +80,7 @@ public class JDialog_Terima_BahanJadi extends javax.swing.JDialog {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_belum_terimaGBJ);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Terima_BahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -317,7 +317,7 @@ public class JDialog_Terima_BahanJadi extends javax.swing.JDialog {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BahanJadiMasuk.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (Check) {

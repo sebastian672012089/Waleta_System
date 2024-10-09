@@ -86,7 +86,7 @@ public class JPanel_Absensi_Sub extends javax.swing.JPanel {
                 ColumnsAutoSizer.sizeColumnsToFit(tabel_data_absen_sub);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -127,7 +127,7 @@ public class JPanel_Absensi_Sub extends javax.swing.JPanel {
                 ColumnsAutoSizer.sizeColumnsToFit(tabel_data_absen_waleta);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -154,7 +154,7 @@ public class JPanel_Absensi_Sub extends javax.swing.JPanel {
             rekap_sub = rekap_sub + "*TOTAL : " + total_sub + "*";
             label_totalSUB.setText(Integer.toString(total_sub));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -211,7 +211,7 @@ public class JPanel_Absensi_Sub extends javax.swing.JPanel {
             label_total_masuk.setText(Integer.toString(jumlah_masuk));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_TidakMasuk);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1074,7 +1074,7 @@ public class JPanel_Absensi_Sub extends javax.swing.JPanel {
                     } catch (SQLException ex) {
                         Logger.getLogger(JPanel_Absensi_Sub.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_Absensi_Sub.class.getName()).log(Level.SEVERE, null, e);
                 } finally {
                     try {

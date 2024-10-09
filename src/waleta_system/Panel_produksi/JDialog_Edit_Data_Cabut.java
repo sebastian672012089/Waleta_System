@@ -51,7 +51,7 @@ public class JDialog_Edit_Data_Cabut extends javax.swing.JDialog {
                 txt_ketua_regu.setText(rs.getString("ketua_regu"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Data_Cabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -495,7 +495,7 @@ public class JDialog_Edit_Data_Cabut extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "data not updated");
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

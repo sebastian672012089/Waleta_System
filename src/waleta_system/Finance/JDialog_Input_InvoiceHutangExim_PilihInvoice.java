@@ -57,7 +57,7 @@ public class JDialog_Input_InvoiceHutangExim_PilihInvoice extends javax.swing.JD
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_data);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_MasterDataAset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

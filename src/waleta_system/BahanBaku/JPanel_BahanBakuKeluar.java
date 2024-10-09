@@ -513,7 +513,7 @@ public class JPanel_BahanBakuKeluar extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_BahanBakuKeluar.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_bahan_baku_keluarActionPerformed

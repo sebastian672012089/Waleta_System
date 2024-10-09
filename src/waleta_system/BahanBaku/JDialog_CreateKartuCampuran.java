@@ -108,7 +108,7 @@ public class JDialog_CreateKartuCampuran extends javax.swing.JDialog {
             } catch (SQLException e) {
                 Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, e);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, ex);
             INSERT_KARTU_CMP = false;
         } finally {
@@ -185,7 +185,7 @@ public class JDialog_CreateKartuCampuran extends javax.swing.JDialog {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

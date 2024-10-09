@@ -111,7 +111,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
             label_total_kpg.setText(decimalFormat.format(total_kpg));
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPencabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -177,7 +177,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_data_reproses_cabut);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPencabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -273,7 +273,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
                 JOptionPane.showMessageDialog(this, "Maaf filter tanggal setor cabut tidak boleh kosong !");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPencabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -478,7 +478,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
             label_total_bonus_lp_rekapgrup.setText("Total Bonus : Rp. " + decimalFormat.format(total_bonus_lp_per_bagian));
             label_total_bonus_lp2_rekapgrup.setText("Total Bonus+ : Rp. " + decimalFormat.format(total_bonus_tambahan_per_bagian));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPencabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -534,7 +534,7 @@ public class JPanel_DataPencabut extends javax.swing.JPanel implements Interface
             label_total_bonus_lp_rekap_karyawan.setText("Total Bonus : Rp. " + decimalFormat.format(total_bonus_lp_per_karyawan));
             label_total_bonus_lp2_rekap_karyawan.setText("Total Bonus+ : Rp. " + decimalFormat.format(total_bonus_lp_tambahan_per_karyawan));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPencabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

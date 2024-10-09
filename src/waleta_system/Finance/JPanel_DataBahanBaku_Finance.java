@@ -48,7 +48,7 @@ public class JPanel_DataBahanBaku_Finance extends javax.swing.JPanel {
                 ComboBox_Search_grade.addItem(rs1.getString("kode_grade"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataBahanBaku_Finance.class.getName()).log(Level.SEVERE, null, ex);
         }
         AutoCompleteDecorator.decorate(ComboBox_Search_grade);
@@ -231,7 +231,7 @@ public class JPanel_DataBahanBaku_Finance extends javax.swing.JPanel {
             label_berat_stok.setText(decimalFormat.format(total_gram_stok));
             label_total_harga_kartu.setText(decimalFormat.format(total_harga_kartu));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataBahanBaku_Finance.class.getName()).log(Level.SEVERE, null, e);
         }
     }

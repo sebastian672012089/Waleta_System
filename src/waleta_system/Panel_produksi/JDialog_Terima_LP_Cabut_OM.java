@@ -67,7 +67,7 @@ public class JDialog_Terima_LP_Cabut_OM extends javax.swing.JDialog {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Terima_LP_Cabut_OM.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -296,7 +296,7 @@ public class JDialog_Terima_LP_Cabut_OM extends javax.swing.JDialog {
                 Check = true;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Terima_LP_Cabut_OM.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_txt_no_lpFocusLost

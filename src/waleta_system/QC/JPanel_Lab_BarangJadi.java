@@ -129,7 +129,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
             label_rata2_nitritAkhir.setText(decimalFormat.format(rata2_nitrit_akhir));
             ColumnsAutoSizer.sizeColumnsToFit(Table_data_treatment);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lab_BarangJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -597,7 +597,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Lab_BarangJadi.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");
@@ -677,7 +677,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
             Utility.db.getStatement().executeUpdate(Query_update);
             refreshTable();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lab_LaporanProduksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_label_passedActionPerformed
@@ -707,7 +707,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                 Utility.db.getStatement().executeUpdate(Query_update);
                 refreshTable();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Lab_LaporanProduksi.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -752,7 +752,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Lab_BarangJadi.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");
@@ -788,7 +788,7 @@ public class JPanel_Lab_BarangJadi extends javax.swing.JPanel {
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Lab_BarangJadi.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");

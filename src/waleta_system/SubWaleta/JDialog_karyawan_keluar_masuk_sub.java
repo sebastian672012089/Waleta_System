@@ -45,7 +45,7 @@ public class JDialog_karyawan_keluar_masuk_sub extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_karyawan_keluar_masuk_sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -69,7 +69,7 @@ public class JDialog_karyawan_keluar_masuk_sub extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_karyawan_keluar_masuk_sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -90,7 +90,7 @@ public class JDialog_karyawan_keluar_masuk_sub extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "failed");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_karyawan_keluar_masuk_sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

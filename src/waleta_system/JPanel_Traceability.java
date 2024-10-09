@@ -242,7 +242,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
 //            label_total_gram_all.setText(decimalFormat.format(total_gram));
 //            label_total_data.setText(Integer.toString(tabel_stockBJ.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -327,7 +327,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
             int total_data = Table_traceability2.getRowCount();
             label_total_data2.setText(Integer.toString(total_data));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1912,7 +1912,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                         + "WHERE `no_kartu_waleta` = '" + Table_traceability.getValueAt(i, 6).toString() + "'";
                                 Utility.db.getStatement().executeUpdate(sql);
                             } catch (SQLException e) {
-                                JOptionPane.showMessageDialog(this, e);
+                                JOptionPane.showMessageDialog(this, e.getMessage());
                                 Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                             }
                         }
@@ -2079,7 +2079,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_traceability.getValueAt(i, 5).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2096,7 +2096,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_traceability.getValueAt(i, 5).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2117,7 +2117,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_traceability.getValueAt(i, 5).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2134,7 +2134,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_traceability.getValueAt(i, 5).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2157,7 +2157,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                     + "WHERE `no_laporan_produksi` = '" + Table_traceability.getValueAt(i, 5).toString() + "'";
                             Utility.db.getStatement().executeUpdate(sql);
                         } catch (SQLException e) {
-                            JOptionPane.showMessageDialog(this, e);
+                            JOptionPane.showMessageDialog(this, e.getMessage());
                             Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                         }
                     }
@@ -2177,7 +2177,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_traceability.getValueAt(i, 5).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2202,7 +2202,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                     + "WHERE `no_laporan_produksi` = '" + Table_traceability.getValueAt(i, 5).toString() + "'";
                             Utility.db.getStatement().executeUpdate(sql);
                         } catch (SQLException e) {
-                            JOptionPane.showMessageDialog(this, e);
+                            JOptionPane.showMessageDialog(this, e.getMessage());
                             Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                         }
                     }
@@ -2222,7 +2222,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_traceability.getValueAt(i, 5).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2365,7 +2365,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                     + "WHERE `no_box` = '" + Table_traceability2.getValueAt(i, 3).toString() + "'";
                             Utility.db.getStatement().executeUpdate(sql);
                         } catch (SQLException e) {
-                            JOptionPane.showMessageDialog(this, e);
+                            JOptionPane.showMessageDialog(this, e.getMessage());
                             Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                         }
                     }
@@ -2385,7 +2385,7 @@ public class JPanel_Traceability extends javax.swing.JPanel {
                                 + "WHERE `no_box` = '" + Table_traceability2.getValueAt(i, 3).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Traceability.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }

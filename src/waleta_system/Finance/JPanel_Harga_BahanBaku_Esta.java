@@ -1,7 +1,6 @@
 package waleta_system.Finance;
 
 import waleta_system.Class.Utility;
-
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,14 +16,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import waleta_system.Class.ColumnsAutoSizer;
-
 import waleta_system.Class.ExportToExcel;
 import waleta_system.Class.Utility;
 import waleta_system.Interface.InterfacePanel;
 
 public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements InterfacePanel {
 
-    
     String sql = null;
     ResultSet rs;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -46,8 +43,9 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
             public void valueChanged(ListSelectionEvent event) {
                 int selectedRow = Table_Tanggal.getSelectedRow();
                 if (!event.getValueIsAdjusting() && selectedRow != -1) {
-                    label_tanggal.setText(Table_Tanggal.getValueAt(selectedRow, 1).toString());
-                    refreshTable_harga();
+                    String tanggal = Table_Tanggal.getValueAt(selectedRow, 1).toString();
+                    label_tanggal.setText(tanggal);
+                    refreshTable_harga(tanggal);
                 }
             }
         });
@@ -55,17 +53,14 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
 
     public void load_ComboBox_tanggal() {
         try {
-            
-            
             ComboBox_tanggal.removeAllItems();
             String query = "SELECT DISTINCT(`tanggal`) AS 'tanggal' FROM `tb_harga_baku_esta` WHERE 1 ORDER BY `tanggal` DESC";
             ResultSet rs1 = Utility.db.getStatement().executeQuery(query);
             while (rs1.next()) {
                 ComboBox_tanggal.addItem(rs1.getString("tanggal"));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -74,9 +69,7 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
         try {
             DefaultTableModel model = (DefaultTableModel) Table_Tanggal.getModel();
             model.setRowCount(0);
-            int month = jMonthChooser1.getMonth() + 1;
-            int year = jYearChooser1.getYear();
-            sql = "SELECT DISTINCT(`tanggal`) AS 'tanggal' FROM `tb_harga_baku_esta` WHERE MONTH(`tanggal`) = " + month + " AND YEAR(`tanggal`) = " + year + " ORDER BY `tanggal` DESC";
+            sql = "SELECT DISTINCT(`tanggal`) AS 'tanggal' FROM `tb_harga_baku_esta` WHERE 1 ORDER BY `tanggal` DESC";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[2];
             int no = 1;
@@ -88,24 +81,18 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Tanggal);
             load_ComboBox_tanggal();
-        } catch (SQLException ex) {
-            Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void refreshTable_harga() {
+    public void refreshTable_harga(String tanggal) {
         try {
-            Date tanggal = null;
-            try {
-                tanggal = new SimpleDateFormat("dd MMMM yyyy").parse(Table_Tanggal.getValueAt(Table_Tanggal.getSelectedRow(), 1).toString());
-            } catch (ParseException ex) {
-                Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Date formatTanggal = new SimpleDateFormat("dd MMMM yyyy").parse(tanggal);
             DefaultTableModel model = (DefaultTableModel) Table_Harga.getModel();
             model.setRowCount(0);
-            sql = "SELECT `grade_esta`, `harga` FROM `tb_harga_baku_esta` WHERE `tanggal` = '" + dateFormat.format(tanggal) + "'";
+            sql = "SELECT `grade_esta`, `harga` FROM `tb_harga_baku_esta` WHERE `tanggal` = '" + dateFormat.format(formatTanggal) + "'";
             rs = Utility.db.getStatement().executeQuery(sql);
             Object[] row = new Object[3];
             int no = 1;
@@ -117,7 +104,8 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
                 no++;
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Harga);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -137,6 +125,7 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
                 no++;
             }
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -188,6 +177,7 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
             label_total_selisih.setText("Rp. " + decimalFormat.format(total_selisih));
             ColumnsAutoSizer.sizeColumnsToFit(Table_PerhitunganEstaWaleta);
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -232,8 +222,6 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         button_export = new javax.swing.JButton();
-        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
-        jYearChooser1 = new com.toedter.calendar.JYearChooser();
         button_refresh = new javax.swing.JButton();
         button_input = new javax.swing.JButton();
         button_delete = new javax.swing.JButton();
@@ -638,24 +626,11 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
             .addGroup(jPanel_Grade_Harga_EstaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_Grade_Harga_EstaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addGroup(jPanel_Grade_Harga_EstaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel_Grade_Harga_EstaLayout.createSequentialGroup()
-                            .addComponent(jMonthChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(button_refresh))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_Grade_Harga_EstaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_Grade_Harga_EstaLayout.createSequentialGroup()
-                        .addComponent(button_input)
+                        .addGroup(jPanel_Grade_Harga_EstaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_delete)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_export))
-                    .addGroup(jPanel_Grade_Harga_EstaLayout.createSequentialGroup()
                         .addGroup(jPanel_Grade_Harga_EstaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_Grade_Harga_EstaLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
@@ -670,7 +645,15 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
                                 .addComponent(button_new_grade_esta)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(button_delete_grade_esta))
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel_Grade_Harga_EstaLayout.createSequentialGroup()
+                        .addComponent(button_refresh)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_input)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_delete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_export)))
                 .addContainerGap())
         );
         jPanel_Grade_Harga_EstaLayout.setVerticalGroup(
@@ -679,8 +662,6 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
                 .addContainerGap()
                 .addGroup(jPanel_Grade_Harga_EstaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(button_export, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jMonthChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_refresh, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_input, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -691,7 +672,7 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE))
                     .addGroup(jPanel_Grade_Harga_EstaLayout.createSequentialGroup()
                         .addGroup(jPanel_Grade_Harga_EstaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -753,13 +734,13 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
                 sql = "UPDATE `tb_harga_baku_esta` SET `harga`='" + decimalFormat.format(HARGA_F) + "' WHERE `tanggal`='" + dateFormat.format(tanggal) + "' AND `grade_esta`='" + Table_Harga.getValueAt(j, 1).toString() + "'";
                 System.out.println(sql);
                 if ((Utility.db.getStatement().executeUpdate(sql)) == 1) {
-                    refreshTable_harga();
+                    refreshTable_harga(label_tanggal.getText());
                     JOptionPane.showMessageDialog(this, "Update success!");
                 } else {
                     JOptionPane.showMessageDialog(this, "Update failed!");
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Harga_BahanBaku_Esta.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -815,6 +796,7 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
                         JOptionPane.showMessageDialog(this, "Data berhasil Di hapus");
                     }
                 } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_Biaya_Ekspor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -869,7 +851,6 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
-    private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel_Grade_Harga_Esta;
     private javax.swing.JPanel jPanel_Perbandingan;
@@ -878,7 +859,6 @@ public class JPanel_Harga_BahanBaku_Esta extends javax.swing.JPanel implements I
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private com.toedter.calendar.JYearChooser jYearChooser1;
     private javax.swing.JLabel label_tanggal;
     private javax.swing.JLabel label_total_berat;
     private javax.swing.JLabel label_total_grading;

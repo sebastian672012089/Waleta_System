@@ -272,7 +272,7 @@ public class JDialog_InputBTK extends javax.swing.JDialog {
                 this.dispose(); 
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_InputBTK.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Maaf format angka salah");

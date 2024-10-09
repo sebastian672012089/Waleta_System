@@ -118,7 +118,7 @@ public class JFrame_StokPacking extends javax.swing.JFrame {
             label_total_harga_idr.setText("Rp. " + decimalFormat.format(total_nilai_bjd * kurs));
             label_total_gram_Stok.setText(decimalFormat.format(total_gram_Stok_Packing / 1000.f) + " Kg");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_StokPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -154,7 +154,7 @@ public class JFrame_StokPacking extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_stok_per_spk);
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_StokPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

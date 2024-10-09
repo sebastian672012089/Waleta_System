@@ -90,7 +90,7 @@ public class JDialog_PindahGrup_disetujui extends javax.swing.JDialog {
                 button_disetujui.setText("Disetujui");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_PindahGrup_disetujui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -162,7 +162,7 @@ public class JDialog_PindahGrup_disetujui extends javax.swing.JDialog {
                         this.dispose();
                     }
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JDialog_PindahGrup_disetujui.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -225,7 +225,7 @@ public class JDialog_PindahGrup_disetujui extends javax.swing.JDialog {
                         JOptionPane.showMessageDialog(this, "DATA SAVED !\nNama : " + nama_pegawai + "\nBagian baru : " + bagian_baru + "\nJam Kerja baru : " + jamkerja_baru);
                         this.dispose();
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JDialog_PindahGrup.class.getName()).log(Level.SEVERE, null, ex);
                         try {
                             Utility.db.getConnection().rollback();
@@ -242,7 +242,7 @@ public class JDialog_PindahGrup_disetujui extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_PindahGrup.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -293,7 +293,7 @@ public class JDialog_PindahGrup_disetujui extends javax.swing.JDialog {
                         JOptionPane.showMessageDialog(this, "DATA SAVED !\nNama : " + nama_pegawai + "\nLevel gaji baru : " + levelgaji_baru);
                         this.dispose();
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JDialog_PindahGrup.class.getName()).log(Level.SEVERE, null, ex);
                         try {
                             Utility.db.getConnection().rollback();
@@ -310,7 +310,7 @@ public class JDialog_PindahGrup_disetujui extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_PindahGrup.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

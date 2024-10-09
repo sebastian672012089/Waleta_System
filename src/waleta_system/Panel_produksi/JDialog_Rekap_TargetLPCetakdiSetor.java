@@ -89,7 +89,7 @@ public class JDialog_Rekap_TargetLPCetakdiSetor extends javax.swing.JDialog {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_koreksi);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Rekap_TargetLPCetakdiSetor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

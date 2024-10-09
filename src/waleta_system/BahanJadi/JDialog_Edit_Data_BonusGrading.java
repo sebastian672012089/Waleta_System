@@ -46,7 +46,7 @@ public class JDialog_Edit_Data_BonusGrading extends javax.swing.JDialog {
                 txt_pch_flat.setText(rs.getString("pch_flat"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Data_BonusGrading.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -441,7 +441,7 @@ public class JDialog_Edit_Data_BonusGrading extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Edit_Data_BonusGrading.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

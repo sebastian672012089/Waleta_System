@@ -60,7 +60,7 @@ public class JFrame_Reproses_Belum_Repack extends javax.swing.JFrame {
             label_total_gram_reproses.setText(decimalFormat.format(total_gram));
             ColumnsAutoSizer.sizeColumnsToFit(table_data_belum_repack);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

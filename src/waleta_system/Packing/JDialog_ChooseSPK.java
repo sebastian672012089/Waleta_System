@@ -40,7 +40,7 @@ public class JDialog_ChooseSPK extends javax.swing.JDialog {
                 model.addRow(row);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_ChooseSPK.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

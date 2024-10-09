@@ -54,7 +54,7 @@ public class JPanel_DataSaponSub extends javax.swing.JPanel {
                 }
             });
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataSaponSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -121,7 +121,7 @@ public class JPanel_DataSaponSub extends javax.swing.JPanel {
             label_total_keping_LP_sapon.setText(decimalFormat.format(total_kpg) + " Keping");
             label_total_gram_sapon.setText(decimalFormat.format(total_gram_sapon) + " Gram");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataSaponSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -153,7 +153,7 @@ public class JPanel_DataSaponSub extends javax.swing.JPanel {
             label_total_data_pekerja_sapon.setText(decimalFormat.format(rowData));
             label_total_nilai_dikerjakan.setText(decimalFormat.format(total_nilai_dikerjakan));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataSaponSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -538,7 +538,7 @@ public class JPanel_DataSaponSub extends javax.swing.JPanel {
                 refreshTable_lp_sapon();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataLPSesekanSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_input_rendemenActionPerformed

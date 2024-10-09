@@ -1,7 +1,6 @@
 package waleta_system.HRD;
 
 import waleta_system.Class.Utility;
-
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
@@ -422,7 +421,7 @@ public class JPanel_DataTemanBawaTeman extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataTemanBawaTeman.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed

@@ -156,7 +156,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
             label_total_data.setText(decimalFormat.format(Tabel_data_scan_export.getRowCount()));
             label_total_berat.setText(decimalFormat.format(total_berat));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -282,7 +282,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
                 txt_berat_timbangan.requestFocus();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -323,7 +323,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_spk);
             label_total_data_spk.setText(decimalFormat.format(Tabel_spk.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -359,7 +359,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_grade_spk);
             label_total_scan_grade.setText(decimalFormat.format(total_gram_scan));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -396,7 +396,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_barcode);
             label_total_scan_barcode.setText(decimalFormat.format(total_gram_scan));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -425,7 +425,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_scan_qr);
             label_total_scan_satuan.setText(decimalFormat.format(total_gram_scan));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1369,7 +1369,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_input_scanActionPerformed
@@ -1449,7 +1449,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
                 button_refresh_scan.doClick();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_scanActionPerformed
@@ -1518,7 +1518,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
                         } catch (SQLException ex1) {
                             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex1);
                         }
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         try {
@@ -1530,7 +1530,7 @@ public class JPanel_DataScanKeping extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_input_csvActionPerformed

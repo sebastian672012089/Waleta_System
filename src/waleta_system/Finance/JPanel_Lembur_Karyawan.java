@@ -394,7 +394,7 @@ public class JPanel_Lembur_Karyawan extends javax.swing.JPanel {
             label_total_data.setText(Integer.toString(tabel_data_lembur.getRowCount()));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_lembur);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -258,7 +258,7 @@ public class JFrame_TV_SPK_LOKAL extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_Detail_SPK);
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_Detail_SPK1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_SPK_LOKAL.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

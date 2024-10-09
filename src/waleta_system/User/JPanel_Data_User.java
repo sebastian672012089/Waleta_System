@@ -233,7 +233,7 @@ public class JPanel_Data_User extends javax.swing.JPanel implements InterfacePan
                 UserList.get(i).setDataMenu(dataMenu);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(Browse_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
         return UserList;
@@ -4648,7 +4648,7 @@ public class JPanel_Data_User extends javax.swing.JPanel implements InterfacePan
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_User.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -4714,7 +4714,7 @@ public class JPanel_Data_User extends javax.swing.JPanel implements InterfacePan
                     } catch (SQLException ex) {
                         Logger.getLogger(JPanel_Data_User.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_Data_User.class.getName()).log(Level.SEVERE, null, e);
                 } finally {
                     try {

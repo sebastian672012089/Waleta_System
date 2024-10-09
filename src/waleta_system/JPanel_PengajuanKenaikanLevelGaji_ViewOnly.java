@@ -148,7 +148,7 @@ public class JPanel_PengajuanKenaikanLevelGaji_ViewOnly extends javax.swing.JPan
             int rowData = Table_pengajuan_kenaikan_gaji.getRowCount();
             label_total_data.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji_ViewOnly.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -571,7 +571,7 @@ public class JPanel_PengajuanKenaikanLevelGaji_ViewOnly extends javax.swing.JPan
                 JOptionPane.showMessageDialog(this, "Anda belum memilih data!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji_ViewOnly.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_diketahui_kadepActionPerformed

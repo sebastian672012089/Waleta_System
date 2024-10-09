@@ -55,7 +55,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                 hitung_total_harga();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_PengajuanPembelian_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -95,7 +95,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                 JOptionPane.showMessageDialog(this, "Data Berhasil simpan");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_PengajuanPembelian_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -121,7 +121,7 @@ public class JDialog_Aset_PengajuanPembelian_NewEdit extends javax.swing.JDialog
                 JOptionPane.showMessageDialog(this, "Data Berhasil simpan");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_PengajuanPembelian_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

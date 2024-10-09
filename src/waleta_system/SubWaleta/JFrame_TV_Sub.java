@@ -271,7 +271,7 @@ public class JFrame_TV_Sub extends javax.swing.JFrame {
             });
             Table_kpi_sub.repaint();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JFrame_TV_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
 //        AVG_ProductionPerWeek();
@@ -307,7 +307,7 @@ public class JFrame_TV_Sub extends javax.swing.JFrame {
                 Table_kpi_sub.setValueAt(Math.round((100 - (Result.getFloat("utuh") + Result.getFloat("jidun") + Result.getFloat("PecahFlat") + Result.getFloat("ByProd"))) * 10f) / 10f, row, 8);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JFrame_TV_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }

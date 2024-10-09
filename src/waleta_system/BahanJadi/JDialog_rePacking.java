@@ -137,7 +137,7 @@ public class JDialog_rePacking extends javax.swing.JDialog {
             }
             newCode = "-" + new SimpleDateFormat("yyMM").format(Date_repacking.getDate()) + new_number;
         } catch (SQLException | NullPointerException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_TambahDataTutupan.class.getName()).log(Level.SEVERE, null, ex);
         }
         return newCode;
@@ -203,7 +203,7 @@ public class JDialog_rePacking extends javax.swing.JDialog {
             no_box_baru = "BOX" + kode_grade + "-" + new SimpleDateFormat("yyMM").format(repacking) + String.format("%05d", total_box);
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_AddBox.class.getName()).log(Level.SEVERE, null, ex);
         }
         return no_box_baru;
@@ -325,7 +325,7 @@ public class JDialog_rePacking extends javax.swing.JDialog {
                 } catch (SQLException ex) {
                     Logger.getLogger(JDialog_reProcess.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JDialog_reProcess.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {
@@ -360,7 +360,7 @@ public class JDialog_rePacking extends javax.swing.JDialog {
             }
         } catch (Exception e) {
             add = false;
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
         if (add) {

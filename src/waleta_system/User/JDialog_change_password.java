@@ -28,7 +28,7 @@ public class JDialog_change_password extends javax.swing.JDialog {
                 label_id.setText(rs.getString("id_pegawai"));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -205,7 +205,7 @@ public class JDialog_change_password extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password !", "Access Denied !", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_change_password.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_proceedActionPerformed

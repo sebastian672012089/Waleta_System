@@ -256,7 +256,7 @@ public class JDialog_Reproses_Sub_Terima extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Reproses_Sub_Terima.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed
@@ -314,7 +314,7 @@ public class JDialog_Reproses_Sub_Terima extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Silahkan masukkan no reproses!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Reproses_Sub_Terima.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_get_dataActionPerformed

@@ -63,7 +63,7 @@ public class JDialog_balen_f2 extends javax.swing.JDialog {
                 } catch (SQLException ex) {
                     Logger.getLogger(JDialog_balen_f2.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JDialog_balen_f2.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {
@@ -356,7 +356,7 @@ public class JDialog_balen_f2 extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "LP belum Masuk di bagian F2");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_balen_f2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_insertActionPerformed
@@ -402,7 +402,7 @@ public class JDialog_balen_f2 extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "LP belum Masuk di bagian F2");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_balen_f2.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

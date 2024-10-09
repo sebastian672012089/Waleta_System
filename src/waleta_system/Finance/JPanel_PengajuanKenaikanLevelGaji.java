@@ -182,7 +182,7 @@ public class JPanel_PengajuanKenaikanLevelGaji extends javax.swing.JPanel {
             int rowData = Table_pengajuan_kenaikan_gaji.getRowCount();
             label_total_data.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -605,7 +605,7 @@ public class JPanel_PengajuanKenaikanLevelGaji extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -673,7 +673,7 @@ public class JPanel_PengajuanKenaikanLevelGaji extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Anda belum memilih data!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_disetujui_direkturActionPerformed
@@ -725,7 +725,7 @@ public class JPanel_PengajuanKenaikanLevelGaji extends javax.swing.JPanel {
             } catch (SQLException ex1) {
                 Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -767,7 +767,7 @@ public class JPanel_PengajuanKenaikanLevelGaji extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Anda belum memilih data!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_diketahui_managerActionPerformed
@@ -803,7 +803,7 @@ public class JPanel_PengajuanKenaikanLevelGaji extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Anda belum memilih data!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PengajuanKenaikanLevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_dibatalkanActionPerformed

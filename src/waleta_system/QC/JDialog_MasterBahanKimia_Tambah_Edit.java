@@ -42,7 +42,7 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
                     txt_menggantikan_no_dokumen.setText(rs.getString("menggantikan_no_dokumen"));
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_MasterBahanKimia_Tambah_Edit.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -77,7 +77,7 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Tambah Data Gagal!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Input_UjiPengiriman.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -107,7 +107,7 @@ public class JDialog_MasterBahanKimia_Tambah_Edit extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Data Berhasil disimpan");
             this.dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Input_UjiPengiriman.class.getName()).log(Level.SEVERE, null, e);
         }
     }

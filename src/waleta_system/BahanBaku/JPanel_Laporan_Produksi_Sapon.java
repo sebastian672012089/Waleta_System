@@ -96,7 +96,7 @@ public class JPanel_Laporan_Produksi_Sapon extends javax.swing.JPanel {
             label_total_keping_LP_sapon.setText(decimalFormat.format(total_kpg) + " Keping");
             label_total_gram_Sapon.setText(decimalFormat.format(total_gram) + " Gram");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi_Sapon.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -445,7 +445,7 @@ public class JPanel_Laporan_Produksi_Sapon extends javax.swing.JPanel {
                             } catch (SQLException ex) {
                                 Logger.getLogger(JDialog_Edit_Insert_LP_Sapon.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            JOptionPane.showMessageDialog(this, e);
+                            JOptionPane.showMessageDialog(this, e.getMessage());
                             Logger.getLogger(JDialog_Edit_Insert_LP_Sapon.class.getName()).log(Level.SEVERE, null, e);
                         } finally {
                             try {
@@ -459,7 +459,7 @@ public class JPanel_Laporan_Produksi_Sapon extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_lp_SaponActionPerformed

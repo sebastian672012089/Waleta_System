@@ -48,7 +48,7 @@ public class JDialog_Browse_KaryawanSub extends javax.swing.JDialog {
                 ComboBox_sub.addItem(rs.getString("kode_sub"));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Browse_KaryawanSub.class.getName()).log(Level.SEVERE, null, e);
         }
         refreshTable();
@@ -84,7 +84,7 @@ public class JDialog_Browse_KaryawanSub extends javax.swing.JDialog {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_list_karyawan);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Browse_KaryawanSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }

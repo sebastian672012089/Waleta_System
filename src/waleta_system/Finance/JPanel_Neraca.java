@@ -177,7 +177,7 @@ public class JPanel_Neraca extends javax.swing.JPanel {
                         } catch (SQLException x) {
                             Logger.getLogger(JPanel_Neraca.class.getName()).log(Level.SEVERE, null, "BBB : " + x);
                         }
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_Neraca.class.getName()).log(Level.SEVERE, null, "AAA : " + ex);
                     } finally {
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
@@ -185,7 +185,7 @@ public class JPanel_Neraca extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 
@@ -597,7 +597,7 @@ public class JPanel_Neraca extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Neraca.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_delete_pengeluaranActionPerformed

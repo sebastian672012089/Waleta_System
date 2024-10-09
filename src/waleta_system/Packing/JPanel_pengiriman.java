@@ -867,7 +867,7 @@ public class JPanel_pengiriman extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Silahkan menghubungi KEPALA DEPARTEMEN EKSPOR untuk melakukan pengiriman,\nPENGAWAS DIVISI PACKING untuk pengiriman Sample", "Access Denied !", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_pengiriman.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -915,7 +915,7 @@ public class JPanel_pengiriman extends javax.swing.JPanel {
             } catch (SQLException e) {
                 Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, e);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

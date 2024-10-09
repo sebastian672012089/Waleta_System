@@ -195,7 +195,7 @@ public class JPanel_BonusCabut2 extends javax.swing.JPanel implements InterfaceP
             label_total_bonus_lp_rekap_karyawan.setText("Total Bonus = " + decimalFormat.format(Math.round(total_bonus_lp_rekap_karyawan)));
             label_total_bonus_lp2_rekap_karyawan.setText("Total Bonus = " + decimalFormat.format(Math.round(total_bonus_lp2_rekap_karyawan)));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BonusCabut2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -177,7 +177,7 @@ public class JDialog_pengiriman_SI extends javax.swing.JDialog {
             } catch (SQLException e) {
                 Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, e);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -227,7 +227,7 @@ public class JDialog_pengiriman_SI extends javax.swing.JDialog {
             } catch (SQLException e) {
                 Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, e);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

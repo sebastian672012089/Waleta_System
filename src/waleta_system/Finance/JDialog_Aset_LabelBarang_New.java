@@ -71,7 +71,7 @@ public class JDialog_Aset_LabelBarang_New extends javax.swing.JDialog {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_nota_detail);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_LabelBarang_New.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -124,7 +124,7 @@ public class JDialog_Aset_LabelBarang_New extends javax.swing.JDialog {
             } catch (SQLException ex1) {
                 Logger.getLogger(JDialog_Aset_LabelBarang_New.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_Nota_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

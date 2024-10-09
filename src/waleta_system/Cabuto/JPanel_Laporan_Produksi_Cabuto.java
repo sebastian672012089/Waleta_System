@@ -81,7 +81,7 @@ public class JPanel_Laporan_Produksi_Cabuto extends javax.swing.JPanel {
             label_total_keping_LP.setText(decimalFormat.format(total_keping));
             label_total_gram_LP.setText(decimalFormat.format(total_gram));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi_Cabuto.class.getName()).log(Level.SEVERE, null, e);
         }
     }

@@ -45,7 +45,7 @@ public class JDialog_Show_KTP extends javax.swing.JDialog {
 //                lbl_Image.setIcon(Utility.ResizeImage(null, rs.getBytes("ktp_image"), lbl_Image.getWidth(), lbl_Image.getHeight()));
 //            }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Show_KTP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -79,7 +79,7 @@ public class JDialog_Show_KTP extends javax.swing.JDialog {
                 lbl_Image.setIcon(Utility.ResizeImage(null, data, lbl_Image.getWidth(), lbl_Image.getHeight()));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Show_KTP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

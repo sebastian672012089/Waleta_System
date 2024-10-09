@@ -260,7 +260,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             label_avg_sh_repacking.setText(decimalFormat.format(total_sh / total_data_repacking));
             label_total_repacking.setText(Integer.toString(total_data_repacking));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -323,7 +323,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 ColumnsAutoSizer.sizeColumnsToFit(table_hasil_repacking);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -356,7 +356,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             label_total_gram_keluar.setText(Float.toString(gram_keluar));
             ColumnsAutoSizer.sizeColumnsToFit(table_data_keluar);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -420,7 +420,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             label_total_stok.setText(decimalFormat.format(total_stok));
             label_total_keluar_f2.setText(decimalFormat.format(total_keluar_f2));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -455,7 +455,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             label_total_LaporanProduksi_lpsuwir.setText(Integer.toString(table_LaporanProduksi_LPSuwir.getRowCount()));
             label_total_gram_LaporanProduksi_lpsuwir.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -489,7 +489,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             label_total_BoxRepacking_lpsuwir.setText(Integer.toString(table_BoxReprosesi_LPSuwir.getRowCount()));
             label_total_gram_BoxRepracking_lpsuwir.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -522,7 +522,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             label_total_keping_asalBox_lpsuwir.setText(Integer.toString(total_keping));
             label_total_gram_asalBox_lpsuwir.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -563,7 +563,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             label_total_gram_dipinjam.setText(decimalFormat.format(total_gram));
             ColumnsAutoSizer.sizeColumnsToFit(table_data_pinjam_barang_jadi);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -613,7 +613,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
             label_total_gram_dikerjakan_kinerjaGBJ.setText(decimalFormat.format(total_gram_dikerjakan));
             ColumnsAutoSizer.sizeColumnsToFit(table_data_pinjam_barang_jadi);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -3017,7 +3017,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 }
             } catch (SQLException ex) {
                 check = false;
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -3138,7 +3138,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_selesai_repackingActionPerformed
@@ -3349,7 +3349,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_set_cheat_no_boxActionPerformed
@@ -3435,7 +3435,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_kinerjaActionPerformed
@@ -3494,7 +3494,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                     refreshTable_DataBox();
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, e);
             }
         } else {
@@ -3549,7 +3549,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 } catch (SQLException ex) {
                     Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {
@@ -3614,7 +3614,7 @@ public class JPanel_BoxBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_edit_memo_boxActionPerformed

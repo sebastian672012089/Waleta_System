@@ -60,7 +60,7 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
             }
             refreshTable_DataBox();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -126,7 +126,7 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
             label_total_gram_data_box.setText(decimalFormat.format(total_gram));
             label_total_nilai_hpp.setText("Rp. " + decimalFormat.format(total_hpp));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -168,7 +168,7 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
             label_avg_sh_repacking.setText(decimalFormat.format(total_sh / total_data_repacking));
             label_total_repacking.setText(Integer.toString(total_data_repacking));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -231,7 +231,7 @@ public class JPanel_BoxBahanJadi_Keuangan extends javax.swing.JPanel {
                 ColumnsAutoSizer.sizeColumnsToFit(table_hasil_repacking);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -432,7 +432,7 @@ public class JDialog_treatment_box extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_treatment_box.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_treatment_box.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             this.dispose();

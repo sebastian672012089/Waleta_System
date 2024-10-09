@@ -76,7 +76,7 @@ public class JPanel_Data_Aset extends javax.swing.JPanel {
                 Table_aset_barang_maintenance.getColumnModel().getColumn(i).setCellRenderer(TableAlignment);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_Aset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -303,7 +303,7 @@ public class JPanel_Data_Aset extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_Aset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_semuaActionPerformed
@@ -329,7 +329,7 @@ public class JPanel_Data_Aset extends javax.swing.JPanel {
                 JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Data_Aset.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

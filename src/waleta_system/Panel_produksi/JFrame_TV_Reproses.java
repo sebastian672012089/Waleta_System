@@ -129,7 +129,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
         //TABEL 2
@@ -157,7 +157,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak2);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
         //TABEL 3
@@ -185,7 +185,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak3);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
         //TABEL 4
@@ -213,7 +213,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Setoran_cetak4);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1158,7 +1158,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_Detail_SPK);
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_Detail_SPK1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1345,7 +1345,7 @@ public class JFrame_TV_Reproses extends javax.swing.JFrame {
             label_awas1.setText(Integer.toString(merah));
             ColumnsAutoSizer.sizeColumnsToFit(Table_Data_Nitrit_jadi);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_Tampilan_Treatment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

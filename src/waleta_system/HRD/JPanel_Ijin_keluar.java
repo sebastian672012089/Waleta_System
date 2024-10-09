@@ -86,7 +86,7 @@ public class JPanel_Ijin_keluar extends javax.swing.JPanel {
             refreshTable_karyawan();
             refreshTable_Data_ijin();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
         Table_rekap.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -283,7 +283,7 @@ public class JPanel_Ijin_keluar extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Ijin_Keluar);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Ijin_keluar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1090,7 +1090,7 @@ public class JPanel_Ijin_keluar extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Ijin_keluar.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_ijin_keluarActionPerformed
@@ -1136,7 +1136,7 @@ public class JPanel_Ijin_keluar extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Ijin_keluar.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -1176,7 +1176,7 @@ public class JPanel_Ijin_keluar extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Ijin_keluar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_KELUARActionPerformed

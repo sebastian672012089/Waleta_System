@@ -73,7 +73,7 @@ public class JPanel_Data_User_Cabuto extends javax.swing.JPanel {
             int total_data = table_data_user.getRowCount();
             label_total_data.setText(decimalFormat.format(total_data));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_User_Cabuto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -279,7 +279,7 @@ public class JPanel_Data_User_Cabuto extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_User_Cabuto.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_hapusActionPerformed

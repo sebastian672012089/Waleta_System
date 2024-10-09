@@ -62,7 +62,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             refreshTable_MasterBahanKimia();
             refreshTable_PemakaianBahanKimia();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataBahanKimia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -116,7 +116,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             label_total_jumlah_PembelianBahanKimia.setText(decimalFormat.format(total_pembelian));
             label_total_stok_PembelianBahanKimia.setText(decimalFormat.format(total_pembelian - total_pemakaian));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataBahanKimia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -146,7 +146,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             label_total_data_Pemakaian_perPembelian.setText(decimalFormat.format(rowData));
             label_total_pemakaian_PembelianBahanKimia.setText(decimalFormat.format(total_pemakaian));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataBahanKimia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -181,7 +181,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             int rowData = table_MasterBahanKimia.getRowCount();
             label_total_data_MasterBahanKimia.setText(decimalFormat.format(rowData));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataBahanKimia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -220,7 +220,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
             label_total_data_PemakaianBahanKimia.setText(decimalFormat.format(rowData));
             label_total_PemakaianBahanKimia.setText(decimalFormat.format(total_pemakaian));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataBahanKimia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -930,7 +930,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataBahanKimia.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_MasterBahanKimiaActionPerformed
@@ -982,7 +982,7 @@ public class JPanel_DataBahanKimia extends javax.swing.JPanel {
                 JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             } catch (JRException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Lab_LaporanProduksi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

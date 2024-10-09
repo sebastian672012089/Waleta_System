@@ -99,7 +99,7 @@ public class JDialog_Input_UjiPengiriman extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Input_UjiPengiriman.class.getName()).log(Level.SEVERE, null, e);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Maaf data yang anda input salah, silahkan cek kembali");
@@ -124,7 +124,7 @@ public class JDialog_Input_UjiPengiriman extends javax.swing.JDialog {
             this.dispose();
 
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Input_UjiPengiriman.class.getName()).log(Level.SEVERE, null, e);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Maaf data yang anda input salah, silahkan cek kembali");

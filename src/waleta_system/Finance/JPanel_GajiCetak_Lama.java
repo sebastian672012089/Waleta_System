@@ -239,7 +239,7 @@ public class JPanel_GajiCetak_Lama extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(table_data_pegawai_cetak);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCetak_Lama.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -301,7 +301,7 @@ public class JPanel_GajiCetak_Lama extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_detail_LP_cetak1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCetak_Lama.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -362,7 +362,7 @@ public class JPanel_GajiCetak_Lama extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_detail_LP_cetak2);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCetak_Lama.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -416,7 +416,7 @@ public class JPanel_GajiCetak_Lama extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_detail_Box_reproses);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCetak_Lama.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -500,7 +500,7 @@ public class JPanel_GajiCetak_Lama extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(table_data_pegawai_koreksi);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCetak_Lama.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -545,7 +545,7 @@ public class JPanel_GajiCetak_Lama extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_detail_LP_koreksi);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCetak_Lama.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -677,7 +677,7 @@ public class JPanel_GajiCetak_Lama extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(table_data_pegawai_cetak_baru);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCetak_Lama.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -739,7 +739,7 @@ public class JPanel_GajiCetak_Lama extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_detail_LP_cetak_baru);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCetak_Lama.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -793,7 +793,7 @@ public class JPanel_GajiCetak_Lama extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_detail_Box_reproses_baru);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCetak_Lama.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

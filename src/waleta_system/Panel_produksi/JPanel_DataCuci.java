@@ -63,7 +63,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -166,7 +166,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
             label_total_kpg.setText(decimalFormat.format(keping));
             label_total_gram.setText(decimalFormat.format(gram));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataCuci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -543,7 +543,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_cuciActionPerformed
 
@@ -599,7 +599,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
                 }
 
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_DataCuci.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -620,7 +620,7 @@ public class JPanel_DataCuci extends javax.swing.JPanel implements InterfacePane
                 edit_cuci.setEnabled(true);
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_cuciActionPerformed

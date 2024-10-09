@@ -319,7 +319,7 @@ public class JDialog_Edit_Cuti extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

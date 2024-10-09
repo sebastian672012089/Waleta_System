@@ -530,7 +530,7 @@ public class JPanel_DataBahanBaku extends javax.swing.JPanel implements Interfac
                 ComboBox_FilterKategori.addItem(rs.getString("kategori_proses"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
         AutoCompleteDecorator.decorate(ComboBox_Search_grade);
         table_stok_per_kartu.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -616,7 +616,7 @@ public class JPanel_DataBahanBaku extends javax.swing.JPanel implements Interfac
                 BahanBakuList.add(BahanBaku);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         return BahanBakuList;
@@ -721,7 +721,7 @@ public class JPanel_DataBahanBaku extends javax.swing.JPanel implements Interfac
             label_total_stok_kpg.setText(decimalFormat.format(total_stok_kpg));
             label_total_stok_gram.setText(decimalFormat.format(total_stok_gram));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -904,7 +904,7 @@ public class JPanel_DataBahanBaku extends javax.swing.JPanel implements Interfac
             label_keping_lp.setText(Integer.toString(total_keping));
             label_berat_lp.setText(Integer.toString(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -957,7 +957,7 @@ public class JPanel_DataBahanBaku extends javax.swing.JPanel implements Interfac
             label_keping_keluar.setText(Integer.toString(total_keping));
             label_berat_keluar.setText(Integer.toString(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1009,7 +1009,7 @@ public class JPanel_DataBahanBaku extends javax.swing.JPanel implements Interfac
             label_keping_cmp.setText(Integer.toString(total_keping));
             label_berat_cmp.setText(Integer.toString(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -3364,7 +3364,7 @@ public class JPanel_DataBahanBaku extends javax.swing.JPanel implements Interfac
             });
             table_on_proses.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

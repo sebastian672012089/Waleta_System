@@ -279,7 +279,7 @@ public class JDialog_JadwalKerjaSecurity_Tambah extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "data Failed");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_JadwalKerjaSecurity_Tambah.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveActionPerformed
@@ -312,7 +312,7 @@ public class JDialog_JadwalKerjaSecurity_Tambah extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Jam kerja karyawan harus 'SHIFT_MALAM'!");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_JadwalKerjaSecurity_Tambah.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

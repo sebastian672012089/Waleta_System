@@ -83,7 +83,7 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
 //            ColumnsAutoSizer.sizeColumnsToFit(tabel_stockOpname);
             label_total_data_SO.setText(Integer.toString(tabel_stockOpname.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpname_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -114,7 +114,7 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
             label_total_keping_stok.setText(decimalFormat.format(total_keping));
             label_total_gram_stok.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpname_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -155,7 +155,7 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
             label_total_gram_scan.setText(decimalFormat.format(total_gram));
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpname_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -777,7 +777,7 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_StokOpname_Baku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_detele_SOActionPerformed
@@ -801,7 +801,7 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_StokOpname_Baku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_new_stokOpnameActionPerformed
@@ -856,7 +856,7 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_StokOpname_Baku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_selesaiActionPerformed
@@ -881,7 +881,7 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_StokOpname_Baku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_ScanActionPerformed
@@ -908,7 +908,7 @@ public class JPanel_StokOpname_Baku extends javax.swing.JPanel {
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             }
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpname_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_printActionPerformed

@@ -40,7 +40,7 @@ public class JDialog_Aset_DataMasterAset_InsertEdit extends javax.swing.JDialog 
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_DataMasterAset_InsertEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -55,7 +55,7 @@ public class JDialog_Aset_DataMasterAset_InsertEdit extends javax.swing.JDialog 
             }
             return kode_baru;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_DataMasterAset_InsertEdit.class.getName()).log(Level.SEVERE, null, ex);
             return "";
         }
@@ -75,7 +75,7 @@ public class JDialog_Aset_DataMasterAset_InsertEdit extends javax.swing.JDialog 
                 return true;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_DataMasterAset_InsertEdit.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
@@ -258,7 +258,7 @@ public class JDialog_Aset_DataMasterAset_InsertEdit extends javax.swing.JDialog 
                         JOptionPane.showMessageDialog(this, "Data Berhasil simpan");
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JDialog_Aset_DataMasterAset_InsertEdit.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (operand.equals("edit")) {
@@ -276,7 +276,7 @@ public class JDialog_Aset_DataMasterAset_InsertEdit extends javax.swing.JDialog 
                         JOptionPane.showMessageDialog(this, "Data Berhasil simpan");
                     }
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JDialog_Aset_DataMasterAset_InsertEdit.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

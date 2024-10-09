@@ -318,7 +318,7 @@ public class JDialog_Selesai_Balen extends javax.swing.JDialog {
                 JPanel_Finishing2.button_search_lp_balen.doClick();
             }
         } catch (SQLException | NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_balen_f2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveActionPerformed

@@ -206,7 +206,7 @@ public class JFrame_TV_StokBaku extends javax.swing.JFrame {
             Date END_SUB = Utility.addDaysSkippingSundays(new Date(), Math.round(ketahanan_sub));
             txt_tanggal_end_sub.setText(new SimpleDateFormat("dd MMM yyyy").format(END_SUB));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_StokBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

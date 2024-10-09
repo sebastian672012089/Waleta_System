@@ -780,7 +780,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Invalid Username or Password !", "Access Denied !", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -804,7 +804,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -822,7 +822,7 @@ public class Login extends javax.swing.JFrame {
                             Runtime.getRuntime().exec("updater.exe");
                             System.exit(0);
                         } catch (IOException ex) {
-                            JOptionPane.showMessageDialog(this, ex);
+                            JOptionPane.showMessageDialog(this, ex.getMessage());
                             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                             System.exit(0);
                         }
@@ -833,7 +833,7 @@ public class Login extends javax.swing.JFrame {
                                 Runtime.getRuntime().exec("updater.exe");
                                 System.exit(0);
                             } catch (IOException ex) {
-                                JOptionPane.showMessageDialog(this, ex);
+                                JOptionPane.showMessageDialog(this, ex.getMessage());
                                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                                 System.exit(0);
                             }
@@ -846,7 +846,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "versi tidak di temukan, harap menghubungi tim IT");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -922,7 +922,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -963,7 +963,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1003,7 +1003,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1022,7 +1022,7 @@ public class Login extends javax.swing.JFrame {
             System.out.println(idr);
             System.out.println(idr / cny);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1180,7 +1180,7 @@ public class Login extends javax.swing.JFrame {
         label_version.setBackground(new java.awt.Color(255, 255, 255));
         label_version.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         label_version.setForeground(new java.awt.Color(153, 153, 153));
-        label_version.setText("2.2.404");
+        label_version.setText("2.2.406");
 
         label1.setBackground(new java.awt.Color(255, 255, 255));
         label1.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N

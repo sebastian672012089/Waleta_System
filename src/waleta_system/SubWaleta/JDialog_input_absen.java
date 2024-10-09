@@ -52,7 +52,7 @@ public class JDialog_input_absen extends javax.swing.JDialog {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_list_karyawan);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_input_absen.class.getName()).log(Level.SEVERE, null, e);
         }
     }

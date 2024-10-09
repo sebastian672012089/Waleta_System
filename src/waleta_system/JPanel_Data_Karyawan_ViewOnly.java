@@ -50,7 +50,7 @@ public class JPanel_Data_Karyawan_ViewOnly extends javax.swing.JPanel {
 
             refreshTable();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan_ViewOnly.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -175,7 +175,7 @@ public class JPanel_Data_Karyawan_ViewOnly extends javax.swing.JPanel {
             label_total_batal.setText(Integer.toString(BATAL));
             label_total_strip.setText(Integer.toString(STRIP));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan_ViewOnly.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

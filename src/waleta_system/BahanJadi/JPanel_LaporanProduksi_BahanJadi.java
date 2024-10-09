@@ -69,7 +69,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
                 }
 
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_LaporanProduksi_BahanJadi.class.getName()).log(Level.SEVERE, null, e);
             }
             AutoCompleteDecorator.decorate(ComboBox_Grade);
@@ -306,7 +306,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
             label_tot_serabut.setText(decimalFormat.format(tot_serabut));
             refreshTableGrading();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_LaporanProduksi_BahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -441,7 +441,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
             label_persen_real.setText(decimalFormat.format(total_persen_gram_real) + "%");
             label_persen_SH.setText(decimalFormat.format(100f - total_persen_gram_real) + "%");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_LaporanProduksi_BahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1668,7 +1668,7 @@ public class JPanel_LaporanProduksi_BahanJadi extends javax.swing.JPanel {
 //                    model.addRow(new Object[]{rs.getString("kode_grade"), bentuk, bulu, rs.getString("jenis_warna")});
 //                }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_LaporanProduksi_BahanJadi.class.getName()).log(Level.SEVERE, null, e);
             }
 

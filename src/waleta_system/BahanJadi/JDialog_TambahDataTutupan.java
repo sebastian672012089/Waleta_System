@@ -69,7 +69,7 @@ public class JDialog_TambahDataTutupan extends javax.swing.JDialog {
 //                txt_kode_tutupan.setEditable(true);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_TambahDataTutupan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -97,7 +97,7 @@ public class JDialog_TambahDataTutupan extends javax.swing.JDialog {
             }
             newCode = kode_tutupan + "-" + new SimpleDateFormat("yyMM").format(Date_Mulai_tutupan.getDate()) + new_number;
         } catch (SQLException | NullPointerException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_TambahDataTutupan.class.getName()).log(Level.SEVERE, null, ex);
         }
         return newCode;
@@ -136,7 +136,7 @@ public class JDialog_TambahDataTutupan extends javax.swing.JDialog {
             label_total_daftar_lp.setText(Integer.toString(table_daftar_lp.getRowCount()));
 //            ColumnsAutoSizer.sizeColumnsToFit(table_daftar_lp, 10);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_TambahDataTutupan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -638,7 +638,7 @@ public class JDialog_TambahDataTutupan extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_reProcess.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_reProcess.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {

@@ -368,7 +368,7 @@ public class JDialog_Edit_Ijin_Keluar extends javax.swing.JDialog {
                 }
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

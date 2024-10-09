@@ -71,7 +71,7 @@ public class JDialog_InsertEdit_Pengajuan_Kenaikan_LevelGaji extends javax.swing
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_NoRek_LevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -92,7 +92,7 @@ public class JDialog_InsertEdit_Pengajuan_Kenaikan_LevelGaji extends javax.swing
                 return false;
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_NoRek_LevelGaji.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
@@ -353,7 +353,7 @@ public class JDialog_InsertEdit_Pengajuan_Kenaikan_LevelGaji extends javax.swing
                     JOptionPane.showMessageDialog(this, "data Failed");
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_InsertEdit_Pengajuan_Kenaikan_LevelGaji.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

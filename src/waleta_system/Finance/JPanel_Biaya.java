@@ -175,7 +175,7 @@ public class JPanel_Biaya extends javax.swing.JPanel {
                         Utility.db.getConnection().commit();
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_Biaya.class.getName()).log(Level.SEVERE, null, ex);
                         try {
                             Utility.db.getConnection().rollback();
@@ -192,7 +192,7 @@ public class JPanel_Biaya extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 

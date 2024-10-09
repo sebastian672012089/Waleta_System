@@ -164,7 +164,7 @@ public class JDialog_Set_JamKerja extends javax.swing.JDialog {
                 this.dispose();
                 
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_Set_JamKerja.class.getName()).log(Level.SEVERE, null, ex);
             }
     }//GEN-LAST:event_Button_saveActionPerformed

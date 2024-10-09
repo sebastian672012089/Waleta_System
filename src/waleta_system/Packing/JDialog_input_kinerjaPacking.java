@@ -52,7 +52,7 @@ public class JDialog_input_kinerjaPacking extends javax.swing.JDialog {
                 label_buyer.setText(rs.getString("buyer"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_input_kinerjaPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -81,7 +81,7 @@ public class JDialog_input_kinerjaPacking extends javax.swing.JDialog {
                 txt_scan.setText(rs.getString("scan"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_input_kinerjaPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -392,7 +392,7 @@ public class JDialog_input_kinerjaPacking extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Data disimpan !");
             this.dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_input_kinerjaPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveActionPerformed

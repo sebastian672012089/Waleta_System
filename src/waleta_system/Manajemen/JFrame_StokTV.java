@@ -251,7 +251,7 @@ public class JFrame_StokTV extends javax.swing.JFrame {
             label_total_gram_NonBox.setText(decimalFormat.format(total_gram_NonBox / 1000.f) + " Kg");
             label_total_gram_StokBox.setText(decimalFormat.format(total_gram_StokBox / 1000.f) + " Kg");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_StokTV.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -353,7 +353,7 @@ public class JFrame_StokTV extends javax.swing.JFrame {
 
             refreshTable_StockRepacking();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_StokTV.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -382,7 +382,7 @@ public class JFrame_StokTV extends javax.swing.JFrame {
 
             label_total_stok_repacking.setText(decimalFormat.format(total_gram_StokBox));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_StokTV.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -96,7 +96,7 @@ public class JPanel_DataBahanBaku_PerGrade extends javax.swing.JPanel {
             }
         } catch (Exception ex) {
             Logger.getLogger(JPanel_DataBahanBaku_PerGrade.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         return gradeList;
     }
@@ -183,7 +183,7 @@ public class JPanel_DataBahanBaku_PerGrade extends javax.swing.JPanel {
 
                 model.addRow(row);
             } catch (SQLException | NullPointerException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_LaporanBaku_perGrade.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

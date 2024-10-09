@@ -60,7 +60,7 @@ public class JDialog_Edit_Data_Cuci extends javax.swing.JDialog {
                 txt_nama_pekerja_kopyok.setText(rs.getString("nama_pekerja_kopyok"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Data_Cuci.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -614,7 +614,7 @@ public class JDialog_Edit_Data_Cuci extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Edit_Data_Cuci.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

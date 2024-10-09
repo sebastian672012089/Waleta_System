@@ -83,7 +83,7 @@ public class JDialog_Grading_PembelianBJ extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -422,7 +422,7 @@ public class JDialog_Grading_PembelianBJ extends javax.swing.JFrame {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_Button_AddActionPerformed
@@ -448,7 +448,7 @@ public class JDialog_Grading_PembelianBJ extends javax.swing.JFrame {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         } catch (SQLException ex) {
             Logger.getLogger(JDialog_Grading_PembelianBJ.class.getName()).log(Level.SEVERE, null, ex);

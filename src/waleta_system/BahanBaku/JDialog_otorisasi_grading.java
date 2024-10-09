@@ -34,7 +34,7 @@ public class JDialog_otorisasi_grading extends javax.swing.JDialog {
             rs = pst.executeQuery();
             Access = rs.next();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_otorisasi_grading.class.getName()).log(Level.SEVERE, null, ex);
         }
         return Access;

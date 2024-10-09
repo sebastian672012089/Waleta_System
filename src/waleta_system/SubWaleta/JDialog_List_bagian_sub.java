@@ -31,7 +31,7 @@ public class JDialog_List_bagian_sub extends javax.swing.JDialog {
                 model.addRow(new Object[]{rs.getString("bagian")});
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_List_bagian_sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -197,7 +197,7 @@ public class JDialog_List_bagian_sub extends javax.swing.JDialog {
                     }
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JDialog_List_bagian_sub.class.getName()).log(Level.SEVERE, null, e);
             }
         }
@@ -235,7 +235,7 @@ public class JDialog_List_bagian_sub extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_List_bagian_sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_newActionPerformed
@@ -261,7 +261,7 @@ public class JDialog_List_bagian_sub extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_List_bagian_sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed

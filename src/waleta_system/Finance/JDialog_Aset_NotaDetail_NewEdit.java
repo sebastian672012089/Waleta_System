@@ -71,7 +71,7 @@ public class JDialog_Aset_NotaDetail_NewEdit extends javax.swing.JDialog {
                 txt_keperluan.setText(rs.getString("keperluan"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_NotaDetail_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -626,7 +626,7 @@ public class JDialog_Aset_NotaDetail_NewEdit extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_NotaDetail_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveActionPerformed

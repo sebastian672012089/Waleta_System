@@ -567,7 +567,7 @@ public class JDialog_LaporanBaku_perGrade extends javax.swing.JDialog {
             }
         } catch (Exception ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         return gradeList;
     }

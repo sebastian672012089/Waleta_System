@@ -83,7 +83,7 @@ public class JPanel_GradeBahanBaku extends javax.swing.JPanel {
 //                Table_GradeBahanBaku.getColumnModel().getColumn(i).setCellRenderer(TableAlignment);
 //            }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -99,7 +99,7 @@ public class JPanel_GradeBahanBaku extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -543,7 +543,7 @@ public class JPanel_GradeBahanBaku extends javax.swing.JPanel {
                 button_clear_grade.doClick();
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_insert_gradeActionPerformed
@@ -564,7 +564,7 @@ public class JPanel_GradeBahanBaku extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_gradeActionPerformed
 
@@ -615,7 +615,7 @@ public class JPanel_GradeBahanBaku extends javax.swing.JPanel {
                     }
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -649,7 +649,7 @@ public class JPanel_GradeBahanBaku extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "FAILED");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

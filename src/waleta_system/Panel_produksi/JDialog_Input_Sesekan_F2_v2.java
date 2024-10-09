@@ -65,7 +65,7 @@ public class JDialog_Input_Sesekan_F2_v2 extends javax.swing.JDialog {
                 } catch (SQLException ex) {
                     Logger.getLogger(JDialog_Input_Sesekan_F2_v2.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JDialog_Input_Sesekan_F2_v2.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {

@@ -1328,7 +1328,7 @@ public class JPanel_Data_Jam_Kerja extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Jam_Kerja.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_newActionPerformed
@@ -1425,7 +1425,7 @@ public class JPanel_Data_Jam_Kerja extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Jam_Kerja.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_editActionPerformed
@@ -1451,7 +1451,7 @@ public class JPanel_Data_Jam_Kerja extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Jam_Kerja.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -1506,7 +1506,7 @@ public class JPanel_Data_Jam_Kerja extends javax.swing.JPanel {
                 ComboBox_bagian.addItem(rs.getString("nama_bagian"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_ComboBox_departemenActionPerformed
 

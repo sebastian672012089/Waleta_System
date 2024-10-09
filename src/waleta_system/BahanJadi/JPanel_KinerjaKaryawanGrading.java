@@ -135,7 +135,7 @@ public class JPanel_KinerjaKaryawanGrading extends javax.swing.JPanel {
                 label_total_gram_grading.setText(decimalFormat.format(total_gram));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_KinerjaKaryawanGrading.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -214,7 +214,7 @@ public class JPanel_KinerjaKaryawanGrading extends javax.swing.JPanel {
                 label_total_gram_repacking.setText(decimalFormat.format(total_gram));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_KinerjaKaryawanGrading.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

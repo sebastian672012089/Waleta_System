@@ -39,7 +39,7 @@ public class JDialog_EditSubsidi extends javax.swing.JDialog {
                 label_bagian_lama.setText(rs.getString("nama_bagian"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_EditSubsidi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -184,7 +184,7 @@ public class JDialog_EditSubsidi extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "GAGAL edit bagian");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_EditSubsidi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveActionPerformed

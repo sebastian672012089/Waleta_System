@@ -116,7 +116,7 @@ public class MainForm extends javax.swing.JFrame {
                 label_warning_stok_reproses.setForeground(Color.green);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -177,7 +177,7 @@ public class MainForm extends javax.swing.JFrame {
                 label_warning_stok_baku.setForeground(Color.green);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -202,7 +202,7 @@ public class MainForm extends javax.swing.JFrame {
                 label_warning_stok_qchold.setForeground(Color.green);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -232,7 +232,7 @@ public class MainForm extends javax.swing.JFrame {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_butuh_Acc_Lembur);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -258,7 +258,7 @@ public class MainForm extends javax.swing.JFrame {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_butuh_Acc_PindahBagian);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -286,7 +286,7 @@ public class MainForm extends javax.swing.JFrame {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_butuh_Acc_PengajuanAlat);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -315,7 +315,7 @@ public class MainForm extends javax.swing.JFrame {
 //            }
 //            ColumnsAutoSizer.sizeColumnsToFit(Tabel_ultah);
 //        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(this, ex);
+//            JOptionPane.showMessageDialog(this, ex.getMessage());
 //            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
@@ -385,7 +385,7 @@ public class MainForm extends javax.swing.JFrame {
             label_total_gram_lp_percobaan.setText(decimalFormat.format(total_gram));
             label_total_lp_percobaan.setText(Integer.toString(tabel_data_LP_percobaan.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -445,7 +445,7 @@ public class MainForm extends javax.swing.JFrame {
             });
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -926,7 +926,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
-        jLabel19.setText("2.2.404");
+        jLabel19.setText("2.2.406");
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Calibri Light", 1, 48)); // NOI18N
@@ -6175,7 +6175,7 @@ public class MainForm extends javax.swing.JFrame {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMenuItem_FormTidakMasukActionPerformed

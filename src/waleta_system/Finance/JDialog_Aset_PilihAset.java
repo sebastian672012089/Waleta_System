@@ -44,7 +44,7 @@ public class JDialog_Aset_PilihAset extends javax.swing.JDialog {
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         refreshTable();
@@ -72,7 +72,7 @@ public class JDialog_Aset_PilihAset extends javax.swing.JDialog {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_master_data_aset);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_MasterDataAset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -283,7 +283,7 @@ public class JPanel_Dokumen_KH extends javax.swing.JPanel {
             label_total_berat_baku_jual1.setText(decimalFormat.format(total_jual_baku / 1000d) + " Kg");
             label_total_berat_stok1.setText(decimalFormat.format(total_stok / 1000d) + " Kg");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Dokumen_KH.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1112,7 +1112,7 @@ public class JPanel_Dokumen_KH extends javax.swing.JPanel {
                 button_clear.doClick();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Dokumen_KH.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_insertActionPerformed
@@ -1163,7 +1163,7 @@ public class JPanel_Dokumen_KH extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Dokumen_KH.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_updateActionPerformed
@@ -1199,7 +1199,7 @@ public class JPanel_Dokumen_KH extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Dokumen_KH.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed

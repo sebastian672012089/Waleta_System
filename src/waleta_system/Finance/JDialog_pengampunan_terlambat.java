@@ -225,7 +225,7 @@ public class JDialog_pengampunan_terlambat extends javax.swing.JDialog {
             Utility.db.getStatement().executeUpdate(Query);
             refresh_tabel();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_NoRek_LevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_newActionPerformed
@@ -243,7 +243,7 @@ public class JDialog_pengampunan_terlambat extends javax.swing.JDialog {
                 refresh_tabel();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_NoRek_LevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_deleteActionPerformed

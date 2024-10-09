@@ -112,7 +112,7 @@ public class JPanel_Aset_UnitAset extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(table_unit_aset);
             label_total_data.setText(Integer.toString(table_unit_aset.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_UnitAset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -498,7 +498,7 @@ public class JPanel_Aset_UnitAset extends javax.swing.JPanel {
                 refreshTable();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_UnitAset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_edit_kondisi_asetActionPerformed
@@ -522,7 +522,7 @@ public class JPanel_Aset_UnitAset extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_UnitAset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_delete_stok_asetActionPerformed
@@ -570,7 +570,7 @@ public class JPanel_Aset_UnitAset extends javax.swing.JPanel {
                 Utility.db.getStatement().executeUpdate(Query_update);
                 refreshTable();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Aset_UnitAset.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -607,7 +607,7 @@ public class JPanel_Aset_UnitAset extends javax.swing.JPanel {
                 Utility.db.getStatement().executeUpdate(Query_update);
                 refreshTable();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Aset_UnitAset.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

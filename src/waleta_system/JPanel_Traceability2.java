@@ -116,7 +116,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_data_LP);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -144,7 +144,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_data_GradingLP);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -275,7 +275,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
 //            label_total_gram_all.setText(decimalFormat.format(total_gram));
 //            label_total_data.setText(Integer.toString(tabel_stockBJ.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -365,7 +365,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
             int total_data = Table_traceability2.getRowCount();
             label_total_data2.setText(Integer.toString(total_data));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -2191,7 +2191,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                         } catch (SQLException e) {
                             Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, e);
                         }
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         try {
@@ -2203,7 +2203,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_insert_LPActionPerformed
@@ -2574,7 +2574,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_insert_hasil_gradingLPActionPerformed
@@ -2600,7 +2600,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_lp_1ActionPerformed
 
@@ -2626,7 +2626,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_lp_semuaActionPerformed
 
@@ -2673,7 +2673,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                         Utility.db.getStatement().executeUpdate(sql);
                     }
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
@@ -2695,7 +2695,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                             Utility.db.getStatement().executeUpdate(sql);
                         }
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2759,7 +2759,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_all_hasil_gradingActionPerformed
 
@@ -3234,7 +3234,7 @@ public class JPanel_Traceability2 extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Traceability2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_set_tgl_masukActionPerformed

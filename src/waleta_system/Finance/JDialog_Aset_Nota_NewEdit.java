@@ -52,7 +52,7 @@ public class JDialog_Aset_Nota_NewEdit extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_Nota_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -68,7 +68,7 @@ public class JDialog_Aset_Nota_NewEdit extends javax.swing.JDialog {
             }
             return kode_baru;
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_Nota_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
             return "";
         }
@@ -114,7 +114,7 @@ public class JDialog_Aset_Nota_NewEdit extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_Nota_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -156,7 +156,7 @@ public class JDialog_Aset_Nota_NewEdit extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_Nota_NewEdit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

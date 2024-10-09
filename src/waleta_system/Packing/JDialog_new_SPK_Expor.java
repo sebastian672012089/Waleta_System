@@ -155,7 +155,7 @@ public class JDialog_new_SPK_Expor extends javax.swing.JDialog {
             String new_kode_spk = "SPK-" + new SimpleDateFormat("yyMM").format(tgl_spk) + String.format("%03d", LastNumber);
             return new_kode_spk;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_new_SPK_Expor.class.getName()).log(Level.SEVERE, null, ex);
             return "ERROR";
         }

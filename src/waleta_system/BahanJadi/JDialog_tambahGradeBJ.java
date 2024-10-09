@@ -54,7 +54,7 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
                 txt_kategori_subbagian.setText(kategori_subbagian);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_tambahGradeBJ.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -69,7 +69,7 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
             }
             label_kode.setText(String.format("%03d", last_number));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -84,7 +84,7 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
             }
             label_kode.setText(new_code);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -105,7 +105,7 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Perubahan data berhasil disimpan !");
             this.dispose();
         } catch (SQLException | NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_tambahGradeBJ.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -128,7 +128,7 @@ public class JDialog_tambahGradeBJ extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Data berhasil ditambahkan!");
             this.dispose();
         } catch (SQLException | NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_tambahGradeBJ.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

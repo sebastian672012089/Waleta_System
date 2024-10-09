@@ -116,7 +116,7 @@ public class JPanel_DataKinerjaPacking extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_rekap_pekerja_hotgun);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataKinerjaPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -203,7 +203,7 @@ public class JPanel_DataKinerjaPacking extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_rekap_pekerja_vakum);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataKinerjaPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

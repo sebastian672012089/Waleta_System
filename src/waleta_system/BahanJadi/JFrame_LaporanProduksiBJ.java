@@ -194,7 +194,7 @@ public class JFrame_LaporanProduksiBJ extends javax.swing.JFrame {
             label_tot_bonggol.setText(decimalFormat.format(tot_bonggol));
             label_tot_serabut.setText(decimalFormat.format(tot_serabut));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_LaporanProduksi_BahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -239,7 +239,7 @@ public class JFrame_LaporanProduksiBJ extends javax.swing.JFrame {
             label_total_kpg_grading.setText(decimalFormat.format(tot_kpg));
             label_total_gram_grading.setText(decimalFormat.format(tot_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_LaporanProduksi_BahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -268,7 +268,7 @@ public class JFrame_LaporanProduksiBJ extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_pencabut);
             label_total_pekerja.setText(Integer.toString(tabel_pencabut.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_LaporanProduksi_BahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

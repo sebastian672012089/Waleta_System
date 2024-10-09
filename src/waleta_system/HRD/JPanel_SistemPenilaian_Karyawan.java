@@ -108,7 +108,7 @@ public class JPanel_SistemPenilaian_Karyawan extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_pelanggaran_ph);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_SistemPenilaian_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -156,7 +156,7 @@ public class JPanel_SistemPenilaian_Karyawan extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_absensi);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_SistemPenilaian_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -204,7 +204,7 @@ public class JPanel_SistemPenilaian_Karyawan extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_keterlambatan);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_SistemPenilaian_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -253,7 +253,7 @@ public class JPanel_SistemPenilaian_Karyawan extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_ijin_keluar);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_SistemPenilaian_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -309,7 +309,7 @@ public class JPanel_SistemPenilaian_Karyawan extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_ijin_keluar_ruangan);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_SistemPenilaian_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -320,7 +320,7 @@ public class JPanel_SistemPenilaian_Karyawan extends javax.swing.JPanel {
             model.setRowCount(0);
             ColumnsAutoSizer.sizeColumnsToFit(Table_pelanggaran_lain2);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_SistemPenilaian_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

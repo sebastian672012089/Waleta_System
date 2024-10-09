@@ -73,7 +73,7 @@ public class JDialog_Level_Gaji_Sub extends javax.swing.JDialog {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_level_gaji);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Level_Gaji_Sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -371,7 +371,7 @@ public class JDialog_Level_Gaji_Sub extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Level_Gaji_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_newActionPerformed
@@ -407,7 +407,7 @@ public class JDialog_Level_Gaji_Sub extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Level_Gaji_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_editActionPerformed
@@ -432,7 +432,7 @@ public class JDialog_Level_Gaji_Sub extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Level_Gaji_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed

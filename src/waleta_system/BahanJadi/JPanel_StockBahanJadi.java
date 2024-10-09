@@ -96,7 +96,7 @@ public class JPanel_StockBahanJadi extends javax.swing.JPanel {
             label_total_gram_BJ.setText(decimalFormat.format(total_gram));
             label_total_data_BJ.setText(Integer.toString(tabel_stockBJ.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StockBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -166,7 +166,7 @@ public class JPanel_StockBahanJadi extends javax.swing.JPanel {
             label_total_gram_BoxBJ.setText(decimalFormat.format(total_gram));
             label_total_data_BoxBJ.setText(Integer.toString(tabel_stockBoxBJ.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StockBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -230,7 +230,7 @@ public class JPanel_StockBahanJadi extends javax.swing.JPanel {
             label_total_gram_box.setText(decimalFormat.format(total_gram));
             label_total_box.setText(Integer.toString(tabel_detailBox.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StockBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -869,7 +869,7 @@ public class JPanel_StockBahanJadi extends javax.swing.JPanel {
                     }
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_StockBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

@@ -186,10 +186,10 @@ public class JDialog_EDIT_SPK extends javax.swing.JDialog {
             try {
                 Utility.db.getConnection().rollback();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JDialog_EDIT_SPK.class.getName()).log(Level.SEVERE, null, e);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_EDIT_SPK.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -701,7 +701,7 @@ public class JDialog_EDIT_SPK extends javax.swing.JDialog {
         try {
             Utility.db.getConnection().rollback();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_EDIT_SPK.class.getName()).log(Level.SEVERE, null, e);
         }
         this.dispose();
@@ -720,7 +720,7 @@ public class JDialog_EDIT_SPK extends javax.swing.JDialog {
                         model.removeRow(i);
                     }
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JDialog_EDIT_SPK.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

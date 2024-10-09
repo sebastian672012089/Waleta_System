@@ -186,7 +186,7 @@ public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements Inter
             label_total_bonus_F2.setText("Total Bonus F2 : " + decimalFormat.format(total_bonus_f2));
             label_total_bonus_FC.setText("Total Bonus FC : " + decimalFormat.format(total_bonus_fc));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BonusKecepatanF2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -310,7 +310,7 @@ public class JPanel_BonusKecepatanF2 extends javax.swing.JPanel implements Inter
             ColumnsAutoSizer.sizeColumnsToFit(table_rekap);
             label_total_bonus_rekap.setText("Total Bonus : " + decimalFormat.format(total_bonus));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BonusKecepatanF2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

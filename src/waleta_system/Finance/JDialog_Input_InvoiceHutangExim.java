@@ -43,7 +43,7 @@ public class JDialog_Input_InvoiceHutangExim extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Input_InvoiceHutangExim.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -265,7 +265,7 @@ public class JDialog_Input_InvoiceHutangExim extends javax.swing.JDialog {
                 } catch (SQLException ex1) {
                     Logger.getLogger(JDialog_Input_InvoiceHutangExim.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_Input_InvoiceHutangExim.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {

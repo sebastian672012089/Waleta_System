@@ -200,7 +200,7 @@ public class JPanel_ProduksiATB_PenilaianLP extends javax.swing.JPanel {
             label_total_kpg.setText(decimalFormat.format(total_kpg));
             label_total_gram.setText(decimalFormat.format(total_gram));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_ProduksiATB_PenilaianLP.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -241,7 +241,7 @@ public class JPanel_ProduksiATB_PenilaianLP extends javax.swing.JPanel {
             label_total_kpg_produksi.setText(decimalFormat.format(total_kpg));
             label_total_gram_produksi.setText(decimalFormat.format(total_gram));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_ProduksiATB_PenilaianLP.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -753,12 +753,12 @@ public class JPanel_ProduksiATB_PenilaianLP extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "data SAVED!");
                     refreshTable_penilaian_lp();
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_ProduksiATB_PenilaianLP.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_ProduksiATB_PenilaianLP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_simpanActionPerformed
@@ -881,7 +881,7 @@ public class JPanel_ProduksiATB_PenilaianLP extends javax.swing.JPanel {
                     Utility.db.getConnection().rollback();
                     Utility.db_sub.getConnection().rollback();
                     Utility.db_maklun.getConnection().rollback();
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_ProduksiATB_PenilaianLP.class.getName()).log(Level.SEVERE, null, e);
                 } finally {
                     Utility.db.getConnection().setAutoCommit(true);
@@ -890,7 +890,7 @@ public class JPanel_ProduksiATB_PenilaianLP extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_ProduksiATB_PenilaianLP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_setujuiActionPerformed

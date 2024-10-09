@@ -60,7 +60,7 @@ public class JPanel_PiutangKaryawan extends javax.swing.JPanel {
             ComboBox_status_karyawan.setSelectedItem("IN");
             refreshTable();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PiutangKaryawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -120,7 +120,7 @@ public class JPanel_PiutangKaryawan extends javax.swing.JPanel {
             int rowData = Table_PiutangKaryawan.getRowCount();
             label_total_data.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PiutangKaryawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -526,7 +526,7 @@ public class JPanel_PiutangKaryawan extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PiutangKaryawan.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_piutangActionPerformed
@@ -570,7 +570,7 @@ public class JPanel_PiutangKaryawan extends javax.swing.JPanel {
                 ComboBox_bagian.addItem(rs.getString("nama_bagian"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PiutangKaryawan.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_ComboBox_departemenActionPerformed
@@ -618,7 +618,7 @@ public class JPanel_PiutangKaryawan extends javax.swing.JPanel {
                         } catch (SQLException ex1) {
                             Logger.getLogger(JPanel_PiutangKaryawan.class.getName()).log(Level.SEVERE, null, ex1);
                         }
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_PiutangKaryawan.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         try {
@@ -631,7 +631,7 @@ public class JPanel_PiutangKaryawan extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PiutangKaryawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_input_csv_piutangActionPerformed

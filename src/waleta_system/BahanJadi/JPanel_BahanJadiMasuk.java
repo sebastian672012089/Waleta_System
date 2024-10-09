@@ -156,7 +156,7 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
             label_total_berat_grading.setText(decimalFormat.format(total_gram_grading) + " Gram");
             label_total_berat_basah_lp.setText(decimalFormat.format(total_gram_basah_lp) + " Gram");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BahanJadiMasuk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -200,7 +200,7 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -721,7 +721,7 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_lpActionPerformed
 
@@ -748,7 +748,7 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         } catch (SQLException ex) {
             Logger.getLogger(JPanel_BahanJadiMasuk.class.getName()).log(Level.SEVERE, null, ex);
@@ -803,7 +803,7 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
             refreshTable();
 //            }
         } catch (NumberFormatException | ParseException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BahanJadiMasuk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_edit_gradingActionPerformed
@@ -845,7 +845,7 @@ public class JPanel_BahanJadiMasuk extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_BahanJadiMasuk.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_kembali_qcActionPerformed

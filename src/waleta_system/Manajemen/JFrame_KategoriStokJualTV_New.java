@@ -226,7 +226,7 @@ public class JFrame_KategoriStokJualTV_New extends javax.swing.JFrame {
             label_total_non_aktif.setText(decimalFormat.format(total_non_aktif / 1000.f) + " Kg");
 //            label_total_no_kategori.setText(decimalFormat.format(total_no_kategori / 1000.f) + " Kg");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_KategoriStokJualTV_New.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -375,7 +375,7 @@ public class JFrame_KategoriStokJualTV_New extends javax.swing.JFrame {
             label_total_repacking.setText(decimalFormat.format(total_gram_StokRepacking / 1000.f) + " Kg");
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_KategoriStokJualTV_New.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -406,7 +406,7 @@ public class JFrame_KategoriStokJualTV_New extends javax.swing.JFrame {
             decimalFormat.setMaximumFractionDigits(0);
             label_total_mlem.setText(decimalFormat.format(total_gram_mlem / 1000.f) + " Kg");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_KategoriStokJualTV_New.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -436,7 +436,7 @@ public class JFrame_KategoriStokJualTV_New extends javax.swing.JFrame {
             }
             label_total_wip_reproses.setText(decimalFormat.format(total_gram_wip_reproses / 1000.f) + " Kg");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_KategoriStokJualTV_New.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -480,7 +480,7 @@ public class JFrame_KategoriStokJualTV_New extends javax.swing.JFrame {
             label_total_harga_idr.setText("Rp. " + decimalFormat.format(total_nilai_bjd * kurs));
             label_total_gram_Stok.setText(decimalFormat.format(total_gram_Stok_Packing / 1000.f) + " Kg");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_StokPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -515,7 +515,7 @@ public class JFrame_KategoriStokJualTV_New extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_stok_per_spk);
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_StokPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

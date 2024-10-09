@@ -44,7 +44,7 @@ public class JDialog_EditBox extends javax.swing.JDialog {
             
             getDataEdit();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_EditBox.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -376,7 +376,7 @@ public class JDialog_EditBox extends javax.swing.JDialog {
                 } catch (SQLException ex) {
                     Logger.getLogger(JDialog_reProcess.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JDialog_reProcess.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {

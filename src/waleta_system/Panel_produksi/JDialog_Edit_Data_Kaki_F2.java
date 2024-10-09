@@ -29,7 +29,7 @@ public class JDialog_Edit_Data_Kaki_F2 extends javax.swing.JDialog {
             txt_tambah_kaki2.setText(JPanel_Finishing2.Table_Data_f2.getValueAt(i, 35).toString());
             txt_lp_kaki2.setText(JPanel_Finishing2.Table_Data_f2.getValueAt(i, 36).toString());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Data_Cabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -253,7 +253,7 @@ public class JDialog_Edit_Data_Kaki_F2 extends javax.swing.JDialog {
             }
 
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

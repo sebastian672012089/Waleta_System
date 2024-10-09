@@ -214,7 +214,7 @@ public class JDialog_PindahGrup extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Pegawai berhasil di pindahkan ke grup " + ComboBox_grup.getSelectedItem());
             this.dispose();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             try {
                 Utility.db.getConnection().rollback();
             } catch (Exception e) {

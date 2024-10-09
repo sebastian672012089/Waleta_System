@@ -89,7 +89,7 @@ public class JDialog_Pilih_PecahLP extends javax.swing.JDialog {
                 setData(Table_pecah_lp.getValueAt(0, 0).toString());
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -156,7 +156,7 @@ public class JDialog_Pilih_PecahLP extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Kode pecah tidak di temukan !");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

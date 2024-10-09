@@ -69,7 +69,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
             label_jumlah_departemen.setText(Integer.toString(rowData));
             FillComboBox_dept();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataDepartemen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -122,7 +122,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
             int rowData = table_bagian.getRowCount();
             label_jumlah_bagian.setText(Integer.toString(rowData));
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataDepartemen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -143,7 +143,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_bagian_edit_log);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataDepartemen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -158,7 +158,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
                 ComboBox_departemen.addItem(rs.getString("kode_dep"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataDepartemen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -692,7 +692,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataDepartemen.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_bagian_deleteActionPerformed
@@ -715,7 +715,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataDepartemen.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_bagian_aktifkanActionPerformed
@@ -738,7 +738,7 @@ public class JPanel_DataDepartemen extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataDepartemen.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_bagian_non_aktifkanActionPerformed

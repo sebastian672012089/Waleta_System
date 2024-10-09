@@ -95,7 +95,7 @@ public class JDialog_new_SPK_SE_Lokal extends javax.swing.JDialog {
             String new_kode_spk = kode + new SimpleDateFormat("yyMM").format(tgl_spk) + String.format("%03d", LastNumber) + "W";
             return new_kode_spk;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_new_SPK_Expor.class.getName()).log(Level.SEVERE, null, ex);
             return "ERROR";
         }
@@ -147,7 +147,7 @@ public class JDialog_new_SPK_SE_Lokal extends javax.swing.JDialog {
             } catch (SQLException e) {
                 Logger.getLogger(JDialog_new_SPK_SE_Lokal.class.getName()).log(Level.SEVERE, null, e);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_new_SPK_SE_Lokal.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

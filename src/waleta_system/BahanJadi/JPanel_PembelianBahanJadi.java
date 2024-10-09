@@ -45,7 +45,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
             refreshTable();
             refreshTable_detail();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, e);
         }
         Table_pembelian_bahan_jadi.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -249,7 +249,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1215,7 +1215,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
                 try {
                     expansion_rate = Integer.parseInt(txt_expansion_rate.getText());
                 } catch (NumberFormatException | NullPointerException e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
                     Check = false;
                 }
@@ -1238,7 +1238,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_save_hasil_masakActionPerformed
@@ -1269,7 +1269,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
                     as = Float.parseFloat(txt_As.getText());
                     detergen = Float.parseFloat(txt_DETERGEN.getText());
                 } catch (NumberFormatException | NullPointerException e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
                     Check = false;
                 }
@@ -1295,7 +1295,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_save_hasil_labActionPerformed
@@ -1435,7 +1435,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -1475,7 +1475,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
                         Check = false;
                     }
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
                     Check = false;
                 }
@@ -1493,7 +1493,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_updateActionPerformed
@@ -1510,7 +1510,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
             kpg = Integer.parseInt(txt_keping.getText());
             gram = Float.parseFloat(txt_berat.getText());
         } catch (NumberFormatException | NullPointerException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
             Check = false;
         }
@@ -1540,7 +1540,7 @@ public class JPanel_PembelianBahanJadi extends javax.swing.JPanel {
                 dialog.init(kode, berat);
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PembelianBahanJadi.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_input_gradingActionPerformed

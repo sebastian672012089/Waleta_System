@@ -71,7 +71,7 @@ public class JPanel_Aset_MasterDataAset extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_master_data_aset);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_MasterDataAset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -89,7 +89,7 @@ public class JPanel_Aset_MasterDataAset extends javax.swing.JPanel {
                 model.addRow(row);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_MasterDataAset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -437,7 +437,7 @@ public class JPanel_Aset_MasterDataAset extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_MasterDataAset.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -479,7 +479,7 @@ public class JPanel_Aset_MasterDataAset extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Aset_MasterDataAset.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_new_supplierActionPerformed
@@ -510,7 +510,7 @@ public class JPanel_Aset_MasterDataAset extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Aset_MasterDataAset.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_supplierActionPerformed
@@ -534,7 +534,7 @@ public class JPanel_Aset_MasterDataAset extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Aset_MasterDataAset.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_supplierActionPerformed

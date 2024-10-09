@@ -42,7 +42,7 @@ public class JDialog_Aset_LabelBarang_Edit extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Tidak ada perubahan pada data!");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Aset_LabelBarang_Edit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

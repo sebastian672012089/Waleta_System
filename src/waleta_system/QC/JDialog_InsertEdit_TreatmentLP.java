@@ -76,7 +76,7 @@ public class JDialog_InsertEdit_TreatmentLP extends javax.swing.JDialog {
                 label_status.setText(rs.getString("status"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_InsertEdit_TreatmentLP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -351,7 +351,7 @@ public class JDialog_InsertEdit_TreatmentLP extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Input angka salah, untuk bilangan desimal harap menggunakan tanda titik (.)");
             Logger.getLogger(JDialog_InsertEdit_TreatmentLP.class.getName()).log(Level.SEVERE, null, e);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_InsertEdit_TreatmentLP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_insert_treatmentActionPerformed
@@ -374,7 +374,7 @@ public class JDialog_InsertEdit_TreatmentLP extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "FAILED!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_InsertEdit_TreatmentLP.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_treatmentActionPerformed

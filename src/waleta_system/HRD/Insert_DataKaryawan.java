@@ -57,7 +57,7 @@ public class Insert_DataKaryawan extends javax.swing.JDialog {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(Insert_DataKaryawan.class.getName()).log(Level.SEVERE, null, e);
         }
 
@@ -293,7 +293,7 @@ public class Insert_DataKaryawan extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(Insert_DataKaryawan.class.getName()).log(Level.SEVERE, null, e);
         }
         imgPath = null;
@@ -373,7 +373,7 @@ public class Insert_DataKaryawan extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "FAILED!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(Insert_DataKaryawan.class.getName()).log(Level.SEVERE, null, e);
         }
     }

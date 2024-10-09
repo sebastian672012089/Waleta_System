@@ -141,7 +141,7 @@ public class JPanel_Harga_LaporanProduksi extends javax.swing.JPanel {
             label_total_biaya_overhead.setText("Rp. " + decimalFormat.format(total_biaya_overhead) + ",-");
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_LaporanProduksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

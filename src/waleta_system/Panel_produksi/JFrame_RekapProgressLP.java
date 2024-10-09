@@ -54,7 +54,7 @@ public class JFrame_RekapProgressLP extends javax.swing.JFrame {
             label_total_keping.setText(Integer.toString(total_kpg));
             label_total_gram.setText(Float.toString(total_gram));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_RekapProgressLP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

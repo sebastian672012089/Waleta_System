@@ -500,7 +500,7 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
                 }
             });
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JFrame_TV_WIP.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -552,7 +552,7 @@ public class JFrame_TV_WIP extends javax.swing.JFrame {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JFrame_TV_WIP.class.getName()).log(Level.SEVERE, null, e);
         }
     }

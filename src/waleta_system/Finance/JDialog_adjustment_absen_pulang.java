@@ -42,7 +42,7 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_adjustment_absen_pulang.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -347,7 +347,7 @@ public class JDialog_adjustment_absen_pulang extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "data Failed");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_adjustment_absen_pulang.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveActionPerformed

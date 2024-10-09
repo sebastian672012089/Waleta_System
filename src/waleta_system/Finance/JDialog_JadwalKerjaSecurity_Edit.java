@@ -43,7 +43,7 @@ public class JDialog_JadwalKerjaSecurity_Edit extends javax.swing.JDialog {
             }
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_JadwalKerjaSecurity_Edit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -285,7 +285,7 @@ public class JDialog_JadwalKerjaSecurity_Edit extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "data Failed");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_JadwalKerjaSecurity_Edit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveActionPerformed

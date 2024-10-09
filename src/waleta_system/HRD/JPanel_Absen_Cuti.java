@@ -106,7 +106,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 }
             });
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -231,7 +231,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
             label_total_cuti_tahunan.setText(Integer.toString(tot_cuti_tahunan));
             label_total_absen.setText(Integer.toString(tot_absen));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -268,7 +268,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_Cuti_per_karyawan);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -355,7 +355,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
             String total_data = Integer.toString(Table_Data_Cuti.getRowCount());
             label_total_data_absen_keseluruhan.setText(total_data);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -431,7 +431,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
             String total_data = Integer.toString(Table_pengajuan.getRowCount());
             label_total_data_pengajuan.setText(total_data);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1434,7 +1434,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_ijin_cutiActionPerformed
@@ -1499,7 +1499,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 ComboBox_bagian_pengajuan.addItem(rs.getString("nama_bagian"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ComboBox_departemen_pengajuanActionPerformed
@@ -1542,7 +1542,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Maaf hanya login user HRD yang dapat mengetahui pengajuan Cuti!");
                     }
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -1586,7 +1586,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_disetujui_pengajuanActionPerformed
@@ -1651,7 +1651,7 @@ public class JPanel_Absen_Cuti extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absen_Cuti.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_dibatalkan_pengajuanActionPerformed

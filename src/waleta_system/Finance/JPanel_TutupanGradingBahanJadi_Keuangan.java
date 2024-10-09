@@ -120,7 +120,7 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
             label_total_data.setText(decimalFormat.format(rowData));
             label_total_hpp_tutupan.setText(decimalFormat.format(total_biaya_tutupan));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TutupanGradingBahanJadi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -150,7 +150,7 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
             label_total_gram_detail_asal.setText(decimalFormat.format(total_berat));
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TutupanGradingBahanJadi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -185,7 +185,7 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
             label_total_kpg_rincianBox.setText(decimalFormat.format(total_kpg));
             label_total_gram_rincianBox.setText(decimalFormat.format(total_gram));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TutupanGradingBahanJadi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -734,7 +734,7 @@ public class JPanel_TutupanGradingBahanJadi_Keuangan extends javax.swing.JPanel 
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TutupanGradingBahanJadi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_set_hpp_boxActionPerformed

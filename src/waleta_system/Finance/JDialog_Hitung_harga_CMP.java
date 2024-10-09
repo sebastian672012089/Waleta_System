@@ -206,7 +206,7 @@ public class JDialog_Hitung_harga_CMP extends javax.swing.JDialog {
                 }
             }
         } catch (NumberFormatException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Hitung_harga_CMP.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             JOptionPane.showMessageDialog(this, "berhasil masuk : " + berhasil + ", gagal : " + gagal);

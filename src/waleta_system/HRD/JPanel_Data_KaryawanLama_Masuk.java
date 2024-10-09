@@ -420,7 +420,7 @@ public class JPanel_Data_KaryawanLama_Masuk extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "GAGAL, silahkan lapor ke bagian IT");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Data_KaryawanLama_Masuk.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {

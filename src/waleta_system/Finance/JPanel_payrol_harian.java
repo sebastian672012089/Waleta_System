@@ -819,7 +819,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                     } catch (SQLException e) {
                         Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, e);
                     }
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     try {
@@ -830,7 +830,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -879,7 +879,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
 //        dialog.setEnabled(true);
 //        dialog.setVisible(true);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1571,7 +1571,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, new JRBeanCollectionDataSource(listPayrolHarian));
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_slip_per_grupActionPerformed
@@ -1653,7 +1653,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             }
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_slip_borong_cabutActionPerformed
@@ -1734,7 +1734,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             }
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_slip_mandiri_cetakActionPerformed
@@ -1806,7 +1806,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             }
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_slip_harianActionPerformed
@@ -1830,7 +1830,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, new JRBeanCollectionDataSource(listPayrolHarian));
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_slip_per_grup2ActionPerformed
@@ -1850,7 +1850,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_slip_cabutActionPerformed
@@ -1932,7 +1932,7 @@ public class JPanel_payrol_harian extends javax.swing.JPanel {
             }
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_slip_borong_cetak2ActionPerformed

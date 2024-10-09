@@ -145,7 +145,7 @@ public class JPanel_DataCetakSub extends javax.swing.JPanel implements Interface
             label_total_kpg.setText(decimalFormat.format(total_kpg));
             label_total_gram.setText(decimalFormat.format(total_gram));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCetakSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }

@@ -71,7 +71,7 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Table_pelanggaran_ph);
             label_total_data.setText("Total data : " + Integer.toString(Table_pelanggaran_ph.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_personalHygiene.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -107,7 +107,7 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Table_pelanggaran_ph_rekap);
             label_total_data_rekap.setText("Total data : " + Integer.toString(Table_pelanggaran_ph_rekap.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_personalHygiene.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -136,7 +136,7 @@ public class JPanel_Data_personalHygiene extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_pelanggaran_ph_rekap_detail);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_personalHygiene.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

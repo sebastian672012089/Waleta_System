@@ -1997,7 +1997,7 @@ public class JPanel_BonusPetikRSB extends javax.swing.JPanel implements Interfac
                 JOptionPane.showMessageDialog(this, "Insert failed !");
             }
         } catch (SQLException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_BonusPetikRSB.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_new_data_bonusActionPerformed
@@ -2013,7 +2013,7 @@ public class JPanel_BonusPetikRSB extends javax.swing.JPanel implements Interfac
                 JOptionPane.showMessageDialog(this, "Edit failed !");
             }
         } catch (SQLException | NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BonusPetikRSB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_edit_data_bonusActionPerformed
@@ -2038,7 +2038,7 @@ public class JPanel_BonusPetikRSB extends javax.swing.JPanel implements Interfac
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_data_bonusActionPerformed
 
@@ -2076,7 +2076,7 @@ public class JPanel_BonusPetikRSB extends javax.swing.JPanel implements Interfac
                 JOptionPane.showMessageDialog(this, "Edit failed !");
             }
         } catch (SQLException | NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BonusPetikRSB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Button_edit_kategori_bonusActionPerformed

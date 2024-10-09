@@ -33,7 +33,7 @@ public class JPanel_Absensi_Karyawan_ViewOnly extends javax.swing.JPanel {
             Subordinates = Utility.GetListBawahanFromKodeBagian(Integer.toString(MainForm.Login_kodeBagian));
             refreshTable_absen();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Karyawan_ViewOnly.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -126,7 +126,7 @@ public class JPanel_Absensi_Karyawan_ViewOnly extends javax.swing.JPanel {
             label_total_data_absen.setText(Integer.toString(tabel_data_absen.getRowCount()));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_absen);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Karyawan_ViewOnly.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

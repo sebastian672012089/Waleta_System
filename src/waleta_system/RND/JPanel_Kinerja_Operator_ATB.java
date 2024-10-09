@@ -222,7 +222,7 @@ public class JPanel_Kinerja_Operator_ATB extends javax.swing.JPanel {
             label_total_bobotLP_operator.setText(decimalFormat.format(total_bobot_lp));
             label_total_bonus_operator.setText(decimalFormat.format(total_bonus_operator));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Kinerja_Operator_ATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -307,7 +307,7 @@ public class JPanel_Kinerja_Operator_ATB extends javax.swing.JPanel {
             label_total_data_dikerjakan.setText(decimalFormat.format(total_data));
             label_total_bobot_dikerjakan.setText(decimalFormat.format(total_bobot_lp));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Kinerja_Operator_ATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -363,7 +363,7 @@ public class JPanel_Kinerja_Operator_ATB extends javax.swing.JPanel {
 //            label_total_kpg_dikerjakan.setText(decimalFormat.format(total_kpg));
 //            label_total_gram_dikerjakan.setText(decimalFormat.format(total_gram));
 //        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, e);
+//            JOptionPane.showMessageDialog(this, e.getMessage());
 //            Logger.getLogger(JPanel_Kinerja_Operator_ATB.class.getName()).log(Level.SEVERE, null, e);
 //        }
 //    }

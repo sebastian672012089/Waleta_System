@@ -53,7 +53,7 @@ public class JDialog_terima_retur extends javax.swing.JDialog {
             label_total_keping.setText(Integer.toString(tot_kpg));
             label_total_gram.setText(Integer.toString(tot_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(JDialog_terima_retur.class.getName()).log(Level.SEVERE, null, ex);

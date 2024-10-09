@@ -78,7 +78,7 @@ public class JPanel_DataKaryawanATB extends javax.swing.JPanel {
             int rowData = Table_pegawaiATB.getRowCount();
             label_total_data_customer_baku.setText(Integer.toString(rowData));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataKaryawanATB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -457,7 +457,7 @@ public class JPanel_DataKaryawanATB extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataKaryawanATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_new_pegawai_atbActionPerformed
@@ -497,7 +497,7 @@ public class JPanel_DataKaryawanATB extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataKaryawanATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_pegawai_atbActionPerformed
@@ -532,7 +532,7 @@ public class JPanel_DataKaryawanATB extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataKaryawanATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_pegawai_atbActionPerformed
@@ -558,7 +558,7 @@ public class JPanel_DataKaryawanATB extends javax.swing.JPanel {
                 JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             } catch (JRException e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_DataKaryawanATB.class.getName()).log(Level.SEVERE, null, e);
             }
         }
@@ -587,7 +587,7 @@ public class JPanel_DataKaryawanATB extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataKaryawanATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_print_semua_id_karyawanActionPerformed

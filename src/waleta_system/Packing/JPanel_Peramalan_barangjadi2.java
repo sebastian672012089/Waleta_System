@@ -46,7 +46,7 @@ public class JPanel_Peramalan_barangjadi2 extends javax.swing.JPanel {
                 }
 
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_Peramalan_barangjadi2.class.getName()).log(Level.SEVERE, null, e);
             }
 
@@ -126,7 +126,7 @@ public class JPanel_Peramalan_barangjadi2 extends javax.swing.JPanel {
             refreshTable_gradeJadi();
             refreshTable_baku_jadi();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Peramalan_barangjadi2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -182,7 +182,7 @@ public class JPanel_Peramalan_barangjadi2 extends javax.swing.JPanel {
             label_total_kpg_gradeBaku.setText(decimalFormat.format(tot_kpg));
             label_total_gram_gradeBaku.setText(decimalFormat.format(tot_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Peramalan_barangjadi2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -240,7 +240,7 @@ public class JPanel_Peramalan_barangjadi2 extends javax.swing.JPanel {
             label_total_kpg_gradeJadi.setText(decimalFormat.format(tot_kpg));
             label_total_gram_gradeJadi.setText(decimalFormat.format(tot_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Peramalan_barangjadi2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -310,7 +310,7 @@ public class JPanel_Peramalan_barangjadi2 extends javax.swing.JPanel {
             label_total_bakujadi.setText(Integer.toString(tabel_rekap_bakujadi.getRowCount()));
             label_total_gram_bakujadi.setText(decimalFormat.format(tot_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Peramalan_barangjadi2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -440,7 +440,7 @@ public class JPanel_Peramalan_barangjadi2 extends javax.swing.JPanel {
             label_total_kpg_rekap_ramalan.setText(decimalFormat.format(tot_kpg_rekap_hasil_grading));
             label_total_gram_rekap_ramalan.setText(decimalFormat.format(tot_gram_rekap_hasil_grading));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Peramalan_barangjadi2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

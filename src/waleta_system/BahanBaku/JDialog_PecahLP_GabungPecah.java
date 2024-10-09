@@ -77,7 +77,7 @@ public class JDialog_PecahLP_GabungPecah extends javax.swing.JDialog {
             ColumnsAutoSizer.sizeColumnsToFit(Table_pecah_lp);
             int rowData = Table_pecah_lp.getRowCount();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_PecahLP_GabungPecah.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -148,7 +148,7 @@ public class JDialog_PecahLP_GabungPecah extends javax.swing.JDialog {
             ColumnsAutoSizer.sizeColumnsToFit(Table_pecah_lp_baru);
             button_gabung_pecah.setEnabled(check);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_PecahLP_GabungPecah.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -394,7 +394,7 @@ public class JDialog_PecahLP_GabungPecah extends javax.swing.JDialog {
             } catch (SQLException ex1) {
                 Logger.getLogger(JDialog_PecahLP_GabungPecah.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_PecahLP_GabungPecah.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

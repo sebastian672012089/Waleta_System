@@ -107,7 +107,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
             refreshTable_dataKaryawan();
             refreshTable_PindahGrup();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -141,7 +141,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(tb_grup);
             label_total_grup.setText(Integer.toString(tb_grup.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -168,7 +168,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
             int rowData = tb_detail_grup.getRowCount();
             label_total_pegawai.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -301,7 +301,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
             int rowData = tabel_pindah_grup.getRowCount();
             label_total_data_pindahGrup.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1086,7 +1086,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Anda belum memilih data!");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Button_pindahGrup_disetujuiActionPerformed
@@ -1131,7 +1131,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Anda belum memilih data!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Button_pindahGrup_diketahuiHRActionPerformed
@@ -1168,7 +1168,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Anda belum memilih data!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Button_pindahGrup_diketahuiKeuActionPerformed
@@ -1187,7 +1187,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                         refreshTable_PindahGrup();
                     }
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -1280,7 +1280,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                 } catch (SQLException ex1) {
                     Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_PindahGrup_disetujui.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
@@ -1312,7 +1312,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
             }
         } catch (SQLException ex) {
             check = false;
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -1366,7 +1366,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                     } catch (SQLException ex1) {
                         Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex1);
                     }
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JDialog_PindahGrup_disetujui.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     try {
@@ -1394,7 +1394,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
             }
         } catch (SQLException ex) {
             check = false;
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -1456,7 +1456,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                 } catch (SQLException ex1) {
                     Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_PindahGrup_disetujui.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
@@ -1490,7 +1490,7 @@ public class JPanel_DataPindahBagian extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Laporan per ruangan, silahkan pilih ruangan terlebih dahulu");
             }
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPindahBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_laporanActionPerformed

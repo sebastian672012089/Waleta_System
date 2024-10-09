@@ -124,7 +124,7 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
             label_total_keping.setText(decimalFormat.format(total_kpg));
             label_total_gram.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -540,7 +540,7 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_label_packingActionPerformed
@@ -584,7 +584,7 @@ public class JPanel_DataPacking extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_set_tgl_masukActionPerformed

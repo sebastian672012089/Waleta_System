@@ -306,7 +306,7 @@ public class JDialog_EDIT_SPK_RSB extends javax.swing.JDialog {
             } catch (SQLException ex1) {
                 Logger.getLogger(JDialog_EDIT_SPK_RSB.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_EDIT_SPK_RSB.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

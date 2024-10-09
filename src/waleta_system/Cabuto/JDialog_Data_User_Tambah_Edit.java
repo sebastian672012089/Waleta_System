@@ -48,7 +48,7 @@ public class JDialog_Data_User_Tambah_Edit extends javax.swing.JDialog {
                     ComboBox_Level.setSelectedItem(rs.getString("level"));
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_Data_User_Tambah_Edit.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -114,7 +114,7 @@ public class JDialog_Data_User_Tambah_Edit extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Data Saved !");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Data_User_Tambah_Edit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -178,7 +178,7 @@ public class JDialog_Data_User_Tambah_Edit extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Data Saved !");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Data_User_Tambah_Edit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

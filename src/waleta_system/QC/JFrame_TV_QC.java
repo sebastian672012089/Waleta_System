@@ -163,7 +163,7 @@ public class JFrame_TV_QC extends javax.swing.JFrame {
             label_total_kartu_jadi_merah.setText(Integer.toString(merah));
             ColumnsAutoSizer.sizeColumnsToFit(Table_Data_Nitrit_jadi);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -189,7 +189,7 @@ public class JFrame_TV_QC extends javax.swing.JFrame {
                 label_tgl_nitrit_baku.setText("Treatment " + new SimpleDateFormat("dd MMM yyyy").format(rs.getDate("tanggal_besok")));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -241,7 +241,7 @@ public class JFrame_TV_QC extends javax.swing.JFrame {
             });
             tabel_warning_dokumen.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

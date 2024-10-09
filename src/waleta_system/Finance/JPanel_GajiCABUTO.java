@@ -142,7 +142,7 @@ public class JPanel_GajiCABUTO extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_penggajian_cabuto_rekap_karyawan);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCABUTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -179,7 +179,7 @@ public class JPanel_GajiCABUTO extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_detail_LP_Asal);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCABUTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -213,7 +213,7 @@ public class JPanel_GajiCABUTO extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_detail_Evaluasi);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GajiCABUTO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -375,13 +375,13 @@ public class JPanel_Data_TglLibur extends javax.swing.JPanel {
                         Utility.db.getStatement().executeUpdate(Query);
                         refreshTable_Libur();
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_Data_TglLibur.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_deleteActionPerformed
 

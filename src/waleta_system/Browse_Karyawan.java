@@ -50,7 +50,7 @@ public class Browse_Karyawan extends javax.swing.JDialog {
             }
             ComboBox_posisi.setSelectedItem("PEJUANG");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         refreshTable();
@@ -92,7 +92,7 @@ public class Browse_Karyawan extends javax.swing.JDialog {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_list_karyawan);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

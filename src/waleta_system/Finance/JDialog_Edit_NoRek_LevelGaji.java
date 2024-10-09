@@ -58,7 +58,7 @@ public class JDialog_Edit_NoRek_LevelGaji extends javax.swing.JDialog {
             ComboBox_LevelGaji.setSelectedItem(level_gaji);
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_NoRek_LevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -245,7 +245,7 @@ public class JDialog_Edit_NoRek_LevelGaji extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "data Failed");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_NoRek_LevelGaji.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveActionPerformed

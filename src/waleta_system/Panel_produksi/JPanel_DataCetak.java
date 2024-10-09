@@ -170,7 +170,7 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
             label_total_kpg.setText(decimalFormat.format(total_kpg_lp));
             label_total_gram.setText(decimalFormat.format(total_gram_lp));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataCetak.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -209,7 +209,7 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
             label_total_kpg_pekerja_cetak.setText(decimalFormat.format(total_kpg));
             label_total_gram_pekerja_cetak.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataCetak.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -914,7 +914,7 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCetak.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_cetak_deleteActionPerformed
@@ -933,7 +933,7 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
                 edit_cetak.setEnabled(true);
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCetak.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_cetak_editActionPerformed
@@ -1216,7 +1216,7 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCetak.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_pekerja_cetakActionPerformed
@@ -1238,7 +1238,7 @@ public class JPanel_DataCetak extends javax.swing.JPanel {
                 refreshTable_Pekerja_cetak();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCetak.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_pekerja_cetakActionPerformed

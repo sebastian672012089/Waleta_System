@@ -64,7 +64,7 @@ public class JPanel_TimBantu extends javax.swing.JPanel {
             ComboBox_status_karyawan.setSelectedItem("IN");
             refreshTable();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TimBantu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -125,7 +125,7 @@ public class JPanel_TimBantu extends javax.swing.JPanel {
             int rowData = Table_TimBantu.getRowCount();
             label_total_data.setText(Integer.toString(rowData));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TimBantu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -162,7 +162,7 @@ public class JPanel_TimBantu extends javax.swing.JPanel {
                         } catch (SQLException ex1) {
                             Logger.getLogger(JPanel_TimBantu.class.getName()).log(Level.SEVERE, null, ex1);
                         }
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_TimBantu.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         try {
@@ -175,7 +175,7 @@ public class JPanel_TimBantu extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TimBantu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -593,7 +593,7 @@ public class JPanel_TimBantu extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_customer_bakuActionPerformed
 
@@ -636,7 +636,7 @@ public class JPanel_TimBantu extends javax.swing.JPanel {
                 ComboBox_bagian.addItem(rs.getString("nama_bagian"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_ComboBox_departemenActionPerformed
 

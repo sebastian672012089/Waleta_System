@@ -72,7 +72,7 @@ public class JPanel_Isu_Produksi extends javax.swing.JPanel {
             label_total_data.setText(Integer.toString(tabel_data_isu_produksi.getRowCount()));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_isu_produksi);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Isu_Produksi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -86,7 +86,7 @@ public class JPanel_Isu_Produksi extends javax.swing.JPanel {
                 label_image1.setIcon(Utility.ResizeImage("\\\\192.168.10.2\\Shared Folder\\DOKUMEN SISTEM\\ISSUE_IMAGE\\" + rs.getString("kode_isu") + ".JPG", null, label_image1.getWidth(), label_image1.getHeight()));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Isu_Produksi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -361,7 +361,7 @@ public class JPanel_Isu_Produksi extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Isu_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_delete_isuActionPerformed

@@ -48,7 +48,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 list_kode_sub.add(rs.getString("kode_sub"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
         if ("insert".equals(status)) {
@@ -115,7 +115,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 }
             }
         } catch (SQLException | NullPointerException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }
         String no_LP = kode + new SimpleDateFormat("yyMM").format(Date_LP.getDate()) + String.format("%05d", LastNumber);
@@ -204,7 +204,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 txt_susur_kering.setText(rs.getString("susur_kering"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -299,7 +299,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
@@ -1543,7 +1543,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
             countBK();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_LP_select_kartuActionPerformed
@@ -1673,7 +1673,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             }
         } catch (SQLException ex) {
             Check = false;
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -1723,7 +1723,7 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                 countBK();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_pilih_pecah_lpActionPerformed

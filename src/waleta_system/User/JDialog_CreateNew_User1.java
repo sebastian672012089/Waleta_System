@@ -4349,7 +4349,7 @@ public class JDialog_CreateNew_User1 extends javax.swing.JDialog {
                 label_status.setText(rs.getString("status"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_CreateNew_User1.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_pilih_pegawaiActionPerformed
@@ -4393,7 +4393,7 @@ public class JDialog_CreateNew_User1 extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_CreateNew_User1.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {

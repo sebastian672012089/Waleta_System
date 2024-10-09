@@ -73,7 +73,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                 ComboBox_supplier.addItem(rs.getString("nama_supplier"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -121,7 +121,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
             int rowData = Table_pembelian.getRowCount();
             label_total_data_supplier.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -148,7 +148,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_kartu_baku);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -649,7 +649,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                 button_clear.doClick();
             }
         } catch (HeadlessException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_insertActionPerformed
@@ -697,7 +697,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_updateActionPerformed
@@ -735,7 +735,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -795,7 +795,7 @@ public class JPanel_Pembelian_Baku extends javax.swing.JPanel {
                     refreshTable();
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Pembelian_Baku.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

@@ -130,7 +130,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataRendam.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -532,7 +532,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_update_rendamActionPerformed
 
@@ -576,7 +576,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                 txt_no_lp_rendam.requestFocus();
             }
         } catch (SQLException | NullPointerException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataRendam.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_insert_rendamActionPerformed
@@ -597,7 +597,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                 button_clear_rendam.doClick();
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_rendamActionPerformed
 
@@ -721,7 +721,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataRendam.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_input_waktu_rendamActionPerformed

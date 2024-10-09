@@ -78,7 +78,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
             }
 //            refreshTable();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_ProgressLP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -645,7 +645,7 @@ public class JPanel_ProgressLP extends javax.swing.JPanel implements InterfacePa
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }

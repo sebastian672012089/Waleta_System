@@ -390,7 +390,7 @@ public class JDialog_Invoice_Payment extends javax.swing.JDialog {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(JDialog_Invoice_Payment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -416,7 +416,7 @@ public class JDialog_Invoice_Payment extends javax.swing.JDialog {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(JDialog_Invoice_Payment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -448,7 +448,7 @@ public class JDialog_Invoice_Payment extends javax.swing.JDialog {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(JDialog_Invoice_Payment.class.getName()).log(Level.SEVERE, null, ex);
         }

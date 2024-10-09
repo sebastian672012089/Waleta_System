@@ -153,7 +153,7 @@ public class JDialog_NewEdit_IsuProduksi extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_NewEdit_IsuProduksi.class.getName()).log(Level.SEVERE, null, e);
         }
         imgPath = null;
@@ -211,7 +211,7 @@ public class JDialog_NewEdit_IsuProduksi extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_NewEdit_IsuProduksi.class.getName()).log(Level.SEVERE, null, e);
         }
         imgPath = null;

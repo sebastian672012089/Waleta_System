@@ -70,7 +70,7 @@ public class JPanel_DataKinerjaCabut extends javax.swing.JPanel {
                 loadDataAll();
                 loadGrupRank();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_DataKinerjaCabut.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -170,7 +170,7 @@ public class JPanel_DataKinerjaCabut extends javax.swing.JPanel {
                 total_gaji = total_gaji + gaji_transfer;
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataKinerjaCabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

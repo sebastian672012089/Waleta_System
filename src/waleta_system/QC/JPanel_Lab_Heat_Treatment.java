@@ -134,7 +134,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
             label_total_data.setText(Integer.toString(Table_data.getRowCount()));
             ColumnsAutoSizer.sizeColumnsToFit(Table_data);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lab_Heat_Treatment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -498,7 +498,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Failed !");
                     }
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                 }
             }
         }
@@ -550,7 +550,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lab_Heat_Treatment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_catatan_pemanasan_barang_jadiActionPerformed
@@ -627,7 +627,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                         Utility.db.getConnection().commit();
                     } catch (Exception ex) {
                         Utility.db.getConnection().rollback();
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_Lab_Heat_Treatment.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         Utility.db.getConnection().setAutoCommit(true);
@@ -637,7 +637,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lab_Heat_Treatment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_input_data_csvActionPerformed
@@ -669,7 +669,7 @@ public class JPanel_Lab_Heat_Treatment extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Failed !");
                     }
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                 }
             }
         }

@@ -55,7 +55,7 @@ public class JPanel_Reproses_Sub extends javax.swing.JPanel {
             });
             refreshTable_reProses();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Reproses_Sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -110,7 +110,7 @@ public class JPanel_Reproses_Sub extends javax.swing.JPanel {
             decimalFormat.setMaximumFractionDigits(2);
             ColumnsAutoSizer.sizeColumnsToFit(table_data_reproses_cabut);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Reproses_Sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -145,7 +145,7 @@ public class JPanel_Reproses_Sub extends javax.swing.JPanel {
             label_total_data_pencabut.setText(Integer.toString(total_data));
             label_total_gram_cabutan.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Reproses_Sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -532,7 +532,7 @@ public class JPanel_Reproses_Sub extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Reproses_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_selesai_reprosesActionPerformed
@@ -576,7 +576,7 @@ public class JPanel_Reproses_Sub extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Reproses_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_pekerja_cabutActionPerformed
@@ -633,7 +633,7 @@ public class JPanel_Reproses_Sub extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Reproses_Sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_terima_reproses_scan_qrActionPerformed

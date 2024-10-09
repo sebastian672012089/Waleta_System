@@ -2689,7 +2689,7 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Data Saved Successfully");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BonusMangkok.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveData_bonusCabutActionPerformed
@@ -2714,7 +2714,7 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Data Saved Successfully");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BonusMangkok.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveData_bonusCetakActionPerformed
@@ -2751,7 +2751,7 @@ public class JPanel_BonusMangkok extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Data Saved Successfully");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BonusMangkok.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveData_bonusF2ActionPerformed

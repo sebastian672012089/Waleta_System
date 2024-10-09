@@ -242,7 +242,7 @@ public class JDialog_total_cucian_hari_ini extends javax.swing.JDialog {
             myTextSub = myTextSub + "*Total Bahan Jidun (Gram) memo LP mengandung JD*\n";
             myTextSub = myTextSub + label_total_jdn_sub1.getText() + "\n";
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_total_cucian_hari_ini.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -257,7 +257,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
             refreshTable_rekapKinerja();
             refreshTable_rekap_per_grade();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -290,7 +290,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
             label_total_data_rekap_kinerja.setText(decimalFormat.format(total_data));
             label_avg_kpg_per_shift_rekap_kinerja.setText(decimalFormat.format(total_kpg_per_shift / total_data));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -323,7 +323,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
             label_total_data_rekap_grade.setText(decimalFormat.format(total_data));
             label_avg_kpg_per_shift_rekap_grade.setText(decimalFormat.format(total_kpg_per_shift / total_data));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1269,14 +1269,14 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                     refreshTable_produksi();
                 } catch (Exception e) {
                     Utility.db.getConnection().rollback();
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, e);
                 } finally {
                     Utility.db.getConnection().setAutoCommit(true);
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_tambahActionPerformed
@@ -1301,7 +1301,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -1361,7 +1361,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_waktu_selesaiActionPerformed
@@ -1465,7 +1465,7 @@ public class JPanel_ProduksiATB extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_ProduksiATB.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_editActionPerformed

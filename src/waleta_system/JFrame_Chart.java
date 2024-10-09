@@ -265,7 +265,7 @@ public class JFrame_Chart extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
         return gradeList;
     }

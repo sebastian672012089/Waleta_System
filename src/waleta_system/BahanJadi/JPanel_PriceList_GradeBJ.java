@@ -78,7 +78,7 @@ public class JPanel_PriceList_GradeBJ extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Table_PriceList);
             label_total_GNS.setText(Integer.toString(Table_PriceList.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PriceList_GradeBJ.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -127,7 +127,7 @@ public class JPanel_PriceList_GradeBJ extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Table_History);
             label_total_GNS.setText(Integer.toString(Table_History.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PriceList_GradeBJ.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -387,7 +387,7 @@ public class JPanel_PriceList_GradeBJ extends javax.swing.JPanel {
                     }
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_PriceList_GradeBJ.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

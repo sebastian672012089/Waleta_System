@@ -35,7 +35,7 @@ public class JDialog_Terima_LP_Cabut extends javax.swing.JDialog {
                 ComboBox_jenisBulu.addItem(rs.getString("bulu_upah"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Terima_LP_Cabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -86,7 +86,7 @@ public class JDialog_Terima_LP_Cabut extends javax.swing.JDialog {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Terima_LP_Cabut.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -324,7 +324,7 @@ public class JDialog_Terima_LP_Cabut extends javax.swing.JDialog {
                 Check = true;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Terima_LP_Cabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_txt_no_lpFocusLost

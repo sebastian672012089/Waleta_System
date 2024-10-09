@@ -145,7 +145,7 @@ public class JFrame_SistemScanKeping extends javax.swing.JFrame {
                 txt_berat_timbangan.requestFocus();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataScanKeping.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

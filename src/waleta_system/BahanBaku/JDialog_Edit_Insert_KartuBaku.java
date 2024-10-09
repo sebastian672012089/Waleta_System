@@ -52,7 +52,7 @@ public class JDialog_Edit_Insert_KartuBaku extends javax.swing.JDialog {
                 getDataEdit(no_kartu);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_KartuBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -79,7 +79,7 @@ public class JDialog_Edit_Insert_KartuBaku extends javax.swing.JDialog {
                 berat_real = rs.getFloat("berat_real");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_KartuBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -203,7 +203,7 @@ public class JDialog_Edit_Insert_KartuBaku extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Edit data FAILED!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_KartuBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }

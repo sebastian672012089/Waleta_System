@@ -178,7 +178,7 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
             label_total_NS.setText(Integer.toString(Table_GradeNS.getRowCount()));
             button_ubah_status.setEnabled(false);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -589,7 +589,7 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataGradeBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -613,7 +613,7 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Failed !!");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataGradeBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_ubah_statusActionPerformed
@@ -685,7 +685,7 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataGradeBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_delete_NSActionPerformed
@@ -709,7 +709,7 @@ public class JPanel_DataGradeBahanJadi extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Failed !!");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataGradeBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_ubah_status_NSActionPerformed

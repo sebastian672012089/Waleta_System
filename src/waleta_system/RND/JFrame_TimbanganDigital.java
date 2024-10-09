@@ -48,15 +48,19 @@ public class JFrame_TimbanganDigital extends javax.swing.JFrame {
         }
 
         // Menentukan port serial yang digunakan (ubah sesuai port yang Anda gunakan)
-        SerialPort comPort = SerialPort.getCommPorts()[9]; // Misal menggunakan port pertama dalam daftar
+        SerialPort comPort = SerialPort.getCommPorts()[4]; // Misal menggunakan port pertama dalam daftar
 
         // Mengatur parameter komunikasi serial
         comPort.setComPortParameters(9600, 8, 1, 0); // Baud rate, Data bits, Stop bits, Parity
-        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
+        comPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
+//        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
+        comPort.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING, 0, 0);
 
         // Membuka port
         if (comPort.openPort()) {
             System.out.println("Port " + comPort.getSystemPortName() + " terbuka.");
+            System.out.println("Menunggu data dari port: " + comPort.getSystemPortName());
+
 
             // Membuat thread untuk membaca data secara asynchronous
             Thread thread = new Thread(() -> {
@@ -65,10 +69,12 @@ public class JFrame_TimbanganDigital extends javax.swing.JFrame {
                     java.io.InputStream in = comPort.getInputStream();
                     byte[] buffer = new byte[1024];
                     int nextChar;
-                    
+
                     StringBuilder sb = new StringBuilder();
 
+                    System.out.println("Memulai pembacaan data...");
                     while ((nextChar = in.read()) != -1) {
+                        System.out.println("Membaca karakter: " + nextChar);
                         char c = (char) nextChar;
                         if (c == '\n' || c == '\r') {
                             if (sb.length() > 0) {

@@ -88,7 +88,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 ComboBox_kode_dokumen.addItem(rs.getString("kode_dokumen") + "-" + rs.getString("nama_dokumen"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -132,7 +132,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
             label_total_data.setText(Integer.toString(rowData));
             
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -238,7 +238,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
             });
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -818,7 +818,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_insert_pembaruan_dokumenActionPerformed
@@ -851,7 +851,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_update_pembaruan_dokumenActionPerformed
@@ -883,7 +883,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_pembaruan_dokumenActionPerformed
 
@@ -936,7 +936,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_insert_master_dokumenActionPerformed
@@ -971,7 +971,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Dokumen_QC.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_update_master_dokumenActionPerformed
@@ -1008,7 +1008,7 @@ public class JPanel_Dokumen_QC extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_master_dokumenActionPerformed
 

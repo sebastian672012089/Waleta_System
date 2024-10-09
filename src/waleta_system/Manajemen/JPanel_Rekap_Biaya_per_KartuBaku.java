@@ -54,7 +54,7 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
                 }
             });
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Rekap_Biaya_per_KartuBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -195,7 +195,7 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
 
             ColumnsAutoSizer.sizeColumnsToFit(Table_KartuBaku);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Rekap_Biaya_per_KartuBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -269,7 +269,7 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
             label_total_data_grading_supplier.setText(Integer.toString(tabel_grade_supplier.getRowCount()));
             label_total_grading_supplier.setText("Total : " + decimalFormat.format(total_gram) + "Gr  Rp." + decimalFormat.format(total_nilai));
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Rekap_Biaya_per_KartuBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -298,7 +298,7 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
             label_total_data_grading_baku.setText(Integer.toString(tabel_hasilGrading_baku.getRowCount()));
             label_total_grading_baku.setText("Total : " + decimalFormat.format(total_gram) + "Gr  Rp." + decimalFormat.format(total_nilai));
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Rekap_Biaya_per_KartuBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -333,7 +333,7 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
             label_total_data_grading_jadi.setText(Integer.toString(tabel_hasilGrading_jadi.getRowCount()));
             label_total_grading_jadi.setText("Total : " + decimalFormat.format(total_gram) + "Gr  Rp." + decimalFormat.format(total_nilai));
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Rekap_Biaya_per_KartuBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -374,7 +374,7 @@ public class JPanel_Rekap_Biaya_per_KartuBaku extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_PembelianBaku);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Rekap_Biaya_per_KartuBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }

@@ -126,7 +126,7 @@ public class JFrame_TV_BelumSetor_QC extends javax.swing.JFrame {
             label_jumlah_LP_uji_PASSED.setText(decimalFormat.format(Table_LP_uji_PASSED.getRowCount()));
             label_jumlah_LP_uji_HOLD.setText(decimalFormat.format(Table_LP_uji_HOLD.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_QC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

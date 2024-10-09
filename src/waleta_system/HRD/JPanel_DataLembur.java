@@ -162,7 +162,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             ComboBox_status_karyawan_data_lembur.setSelectedItem("IN");
             refreshTable_SPL_PEJUANG();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -280,7 +280,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             label_total_SPL_PEJUANG.setText(String.valueOf(rowCount));
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -328,7 +328,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             label_total_SPL_STAFF.setText(String.valueOf(rowCount));
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -361,7 +361,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -426,7 +426,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_rekap_pegawai);
             label_total_jam.setText(String.valueOf(tot_jam));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Ijin_keluar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -452,7 +452,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             int rowCount = tabel_detail_lembur_rekap.getRowCount();
             label_total_SPL.setText(String.valueOf(rowCount));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -546,7 +546,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
             });
             table_data_lembur_makan.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1872,7 +1872,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 refreshTable_SPL_PEJUANG();
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_SPL_PEJUANGActionPerformed
@@ -1908,7 +1908,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_SPL_PEJUANGActionPerformed
@@ -1941,7 +1941,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 ComboBox_bagian_rekap.addItem(rs.getString("nama_bagian"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_ComboBox_departemen_rekapActionPerformed
 
@@ -1973,7 +1973,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                     Utility.db.getStatement().executeUpdate(sql);
                     refreshTable_SPL_PEJUANG();
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -2005,7 +2005,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                     Utility.db.getStatement().executeUpdate(sql);
                     refreshTable_SPL_PEJUANG();
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -2096,7 +2096,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                     } catch (SQLException ex1) {
                         Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex1);
                     }
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     try {
@@ -2136,7 +2136,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 refreshTable_SPL_STAFF();
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_SPL_STAFFActionPerformed
@@ -2172,7 +2172,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_SPL_STAFFActionPerformed
@@ -2199,7 +2199,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                     Utility.db.getStatement().executeUpdate(sql);
                     refreshTable_SPL_STAFF();
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -2231,7 +2231,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                     Utility.db.getStatement().executeUpdate(sql);
                     refreshTable_SPL_STAFF();
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -2272,7 +2272,7 @@ public class JPanel_DataLembur extends javax.swing.JPanel {
                     } catch (SQLException ex1) {
                         Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex1);
                     }
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_DataLembur.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     try {

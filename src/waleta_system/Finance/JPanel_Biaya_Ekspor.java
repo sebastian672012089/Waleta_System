@@ -147,7 +147,7 @@ public class JPanel_Biaya_Ekspor extends javax.swing.JPanel {
                         } catch (SQLException x) {
                             Logger.getLogger(JPanel_Biaya_Ekspor.class.getName()).log(Level.SEVERE, null, x);
                         }
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_Biaya_Ekspor.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
@@ -155,7 +155,7 @@ public class JPanel_Biaya_Ekspor extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 

@@ -90,7 +90,7 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
             int rowData = Table_Data_Lab_BahanBaku.getRowCount();
             label_total_data_lab_bahan_baku.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lab_BahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -554,7 +554,7 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
                 button_clear_lab_bm.doClick();
             }
         } catch (NumberFormatException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_insert_lab_bmActionPerformed
@@ -585,7 +585,7 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_update_lab_bmActionPerformed
@@ -622,7 +622,7 @@ public class JPanel_Lab_BahanBaku extends javax.swing.JPanel {
                 button_clear_lab_bm.doClick();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_lab_bmActionPerformed

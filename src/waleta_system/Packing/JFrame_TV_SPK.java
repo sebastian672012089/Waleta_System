@@ -118,7 +118,7 @@ public class JFrame_TV_SPK extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_SPK_All);
             refresh_JAM();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_SPK.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -148,7 +148,7 @@ public class JFrame_TV_SPK extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_Detail_SPK);
             refresh_JAM();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_SPK.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -178,7 +178,7 @@ public class JFrame_TV_SPK extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_box_belum_retur);
             label_total_belum_retur.setText(Integer.toString(Tabel_box_belum_retur.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_SPK.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

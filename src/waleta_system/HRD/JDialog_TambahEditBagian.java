@@ -39,7 +39,7 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
                 getDataEdit();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_TambahEditBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -62,7 +62,7 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
                 NamaBagian();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_TambahEditBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -110,7 +110,7 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_TambahEditBagian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -148,7 +148,7 @@ public class JDialog_TambahEditBagian extends javax.swing.JDialog {
             } catch (SQLException ex1) {
                 Logger.getLogger(JDialog_TambahEditBagian.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_TambahEditBagian.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

@@ -87,7 +87,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                 ComboBox_bagian.addItem(rs.getString("sub"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -148,7 +148,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Filter Tanggal harus dipilih!");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -232,7 +232,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Filter Tanggal harus dipilih!");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -312,7 +312,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Filter Tanggal harus dipilih!");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -449,7 +449,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
             label_bonusCabut_total_bonusLP.setText(decimalFormat.format(total_bonus_cabut));
             label_bonusCabut_total_nilaiLP.setText(decimalFormat.format(total_upah_cabut));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -528,7 +528,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
             label_bonusCabut_total_bobotLP_BP.setText(decimalFormat.format(total_bobot_lp_bp));
             label_bonusCabut_total_bonus_LP_BP.setText(decimalFormat.format(total_bonus_lp_bp));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -607,7 +607,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
             label_bonusCabut_total_bobotLP_SP.setText(decimalFormat.format(total_bobot_lp_sp));
             label_bonusCabut_total_bonus_LP_SP.setText(decimalFormat.format(total_bonus_lp_sp));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -696,7 +696,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(table_data_RekapBonus_LP_Sub);
             label_total_bonusCabut_Sub.setText(decimalFormat.format(total_bonus_cabut_per_sub));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -789,7 +789,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
             label_bonusMKU_Cabut_total_bonusLP.setText(decimalFormat.format(total_bonus_mku_cabut));
             label_bonusMKU_Cabut_total_bonusKaryawan.setText(decimalFormat.format(total_bonus_mku_karyawan));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -863,7 +863,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
             label_bonusMKU_Cetak_total_bonusLP.setText(decimalFormat.format(total_bonus_mku_cetak));
             label_bonusMKU_Cetak_total_bonusKaryawan.setText(decimalFormat.format(total_bonus_mku_karyawan));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1286,7 +1286,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                 ColumnsAutoSizer.sizeColumnsToFit(Tabel_data_rekap_transfer_sub);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1346,7 +1346,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
             int rowData = Tabel_data_tersimpan.getRowCount();
             label_total_data_tersimpan.setText(Integer.toString(rowData));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -3922,7 +3922,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                 } catch (SQLException ex) {
                     Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {
@@ -4026,7 +4026,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                 } catch (SQLException ex) {
                     Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {
@@ -4105,7 +4105,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Nilai yang dimasukkan salah! \n" + ex);
@@ -4142,7 +4142,7 @@ public class JPanel_PenggajianSub extends javax.swing.JPanel {
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_PenggajianSub.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Nilai yang dimasukkan salah! \n" + ex);

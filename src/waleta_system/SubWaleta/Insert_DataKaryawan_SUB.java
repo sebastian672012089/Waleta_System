@@ -57,7 +57,7 @@ public class Insert_DataKaryawan_SUB extends javax.swing.JFrame {
                 txt_id_pegawai.setText("00" + new SimpleDateFormat("yyMM").format(new Date()) + String.format("%05d", result.getInt("last_id") + 1));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(Insert_DataKaryawan_SUB.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -107,7 +107,7 @@ public class Insert_DataKaryawan_SUB extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(Insert_DataKaryawan_SUB.class.getName()).log(Level.SEVERE, null, e);
         }
     }

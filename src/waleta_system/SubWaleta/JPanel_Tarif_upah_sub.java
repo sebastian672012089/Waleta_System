@@ -82,7 +82,7 @@ public class JPanel_Tarif_upah_sub extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_bulu_upah);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Tarif_upah_sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -110,7 +110,7 @@ public class JPanel_Tarif_upah_sub extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_bulu_upah_local_waleta);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Tarif_upah_sub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -735,7 +735,7 @@ public class JPanel_Tarif_upah_sub extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Tarif_upah_sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -770,7 +770,7 @@ public class JPanel_Tarif_upah_sub extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Tarif_upah_sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_editActionPerformed
@@ -798,7 +798,7 @@ public class JPanel_Tarif_upah_sub extends javax.swing.JPanel {
             }
             button_clear.doClick();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Tarif_upah_sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_newActionPerformed
@@ -921,7 +921,7 @@ public class JPanel_Tarif_upah_sub extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Tarif_upah_sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_data_local_waletaActionPerformed

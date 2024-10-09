@@ -314,7 +314,7 @@ public class JDialog_DataGajiBorongOM_dariCSV extends javax.swing.JDialog {
                         Utility.db.getConnection().commit();
                     } catch (Exception ex) {
                         Utility.db.getConnection().rollback();
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JDialog_BonusPencapaianProduksi.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         Utility.db.getConnection().setAutoCommit(true);
@@ -323,7 +323,7 @@ public class JDialog_DataGajiBorongOM_dariCSV extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_BonusPencapaianProduksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_input_gaji_borong_OMActionPerformed
@@ -362,7 +362,7 @@ public class JDialog_DataGajiBorongOM_dariCSV extends javax.swing.JDialog {
                 } catch (SQLException ex1) {
                     Logger.getLogger(JDialog_DataGajiBorongOM_dariCSV.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_BonusPencapaianProduksi.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {

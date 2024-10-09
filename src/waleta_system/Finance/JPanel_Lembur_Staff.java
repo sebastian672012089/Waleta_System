@@ -411,7 +411,7 @@ public class JPanel_Lembur_Staff extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_lembur);
             label_total_data.setText(Integer.toString(tabel_data_lembur.getRowCount()));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -439,7 +439,7 @@ public class JPanel_Lembur_Staff extends javax.swing.JPanel {
 //        dialog.setEnabled(true);
 //        dialog.setVisible(true);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

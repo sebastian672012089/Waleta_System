@@ -292,7 +292,7 @@ public class JPanel_BahanBakuMasuk_Cheat extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1145,7 +1145,7 @@ public class JPanel_BahanBakuMasuk_Cheat extends javax.swing.JPanel {
                 executeSQLQuery(sql, "updated !");
             }
         } catch (HeadlessException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_updateActionPerformed
 
@@ -1183,7 +1183,7 @@ public class JPanel_BahanBakuMasuk_Cheat extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_save_timbang_bahan_bakuActionPerformed
 
@@ -1422,7 +1422,7 @@ public class JPanel_BahanBakuMasuk_Cheat extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_deleteActionPerformed
 

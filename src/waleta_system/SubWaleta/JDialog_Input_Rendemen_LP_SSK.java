@@ -43,7 +43,7 @@ public class JDialog_Input_Rendemen_LP_SSK extends javax.swing.JDialog {
                 label_susut_hilang.setText(gram_sh + " Gram (" + persen_sh + "%)");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Input_Rendemen_LP_SSK.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -71,7 +71,7 @@ public class JDialog_Input_Rendemen_LP_SSK extends javax.swing.JDialog {
             float persen_sh = (gram_sh / gram_ssk) * 100f;
             label_susut_hilang.setText(gram_sh + " Gram (" + persen_sh + "%)");
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Input_Rendemen_LP_SSK.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -341,7 +341,7 @@ public class JDialog_Input_Rendemen_LP_SSK extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Input_Rendemen_LP_SSK.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

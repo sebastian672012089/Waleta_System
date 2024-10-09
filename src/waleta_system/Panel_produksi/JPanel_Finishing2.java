@@ -116,43 +116,13 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                             button_input_f2.setEnabled(false);
                             button_f2_setor_lp.setEnabled(false);
                             button_f2_edit.setEnabled(false);
-                        } else if (!Table_Data_f2.getValueAt(i, 4).toString().equals("C") && !Table_Data_f2.getValueAt(i, 4).toString().equals("CABUTO")) {
-                            if (Table_Data_f2.getValueAt(i, 8) == null) {
-                                button_input_koreksi.setEnabled(true);
-                                button_input_koreksi_v2.setEnabled(true);
-                                button_input_f1.setEnabled(false);
-                                button_input_f2.setEnabled(false);
-                                button_f2_edit.setEnabled(false);
-                                button_f2_setor_lp.setEnabled(false);
-                            } else {
-                                button_input_koreksi.setEnabled(false);
-                                button_input_koreksi_v2.setEnabled(false);
-
-                                if (Table_Data_f2.getValueAt(i, 10) == null) {
-                                    button_f2_setor_lp.setEnabled(true);
-                                    button_input_f1.setEnabled(true);
-                                    button_input_f2.setEnabled(false);
-                                } else {
-                                    button_input_f1.setEnabled(false);
-                                    if (Table_Data_f2.getValueAt(i, 12) == null) {
-                                        button_input_f2.setEnabled(true);
-                                        button_f2_setor_lp.setEnabled(false);
-                                    } else {
-                                        button_input_f2.setEnabled(false);
-                                        button_f2_setor_lp.setEnabled(true);
-                                    }
-                                }
-
-                                if (Table_Data_f2.getValueAt(i, 14) == null) {
-                                    button_f2_edit.setEnabled(false);
-                                    button_f2_setor_lp.setEnabled(true);
-                                } else {
-                                    button_f2_setor_lp.setEnabled(false);
-                                    button_f2_edit.setEnabled(true);
-                                    button_input_f1.setEnabled(false);
-                                    button_input_f2.setEnabled(false);
-                                }
-                            }
+                        } else {
+                            button_input_koreksi.setEnabled(true);
+                            button_input_koreksi_v2.setEnabled(true);
+                            button_input_f1.setEnabled(true);
+                            button_input_f2.setEnabled(true);
+                            button_f2_setor_lp.setEnabled(true);
+                            button_f2_edit.setEnabled(true);
                         }
                     }
                 }
@@ -1043,7 +1013,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             label_total_stok.setText(decimalFormat.format(total_stok));
             label_total_keluar_f2.setText(decimalFormat.format(total_keluar_f2));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1078,7 +1048,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             label_total_LaporanProduksi_lpsuwir.setText(Integer.toString(table_LaporanProduksi_LPSuwir.getRowCount()));
             label_total_gram_LaporanProduksi_lpsuwir.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1112,7 +1082,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             label_total_BoxRepacking_lpsuwir.setText(Integer.toString(table_BoxReprosesi_LPSuwir.getRowCount()));
             label_total_gram_BoxRepracking_lpsuwir.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1145,7 +1115,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             label_total_keping_asalBox_lpsuwir.setText(Integer.toString(total_keping));
             label_total_gram_asalBox_lpsuwir.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -3823,7 +3793,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Harap memberikan info edit ke bagian keuangan, karena data akan mempengaruhi perhitungan upah !!");
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_f2_editActionPerformed
@@ -3854,7 +3824,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_f2_deleteActionPerformed
@@ -4018,7 +3988,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -4087,7 +4057,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_laporan_f2ActionPerformed
@@ -4112,7 +4082,7 @@ public class JPanel_Finishing2 extends javax.swing.JPanel {
             }
             refreshTable_F2();
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Finishing2.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_f2_edit_kakiActionPerformed

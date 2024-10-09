@@ -197,7 +197,7 @@ public class JDialog_AdjustmentBaku extends javax.swing.JDialog {
                 return false;
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_AdjustmentBaku.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }

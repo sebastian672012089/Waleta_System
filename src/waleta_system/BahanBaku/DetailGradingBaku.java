@@ -83,7 +83,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
             }
             AutoCompleteDecorator.decorate(ComboBox_kode_grading);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
         Table_Grading_Bahan_Baku.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -249,7 +249,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1048,7 +1048,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
                 executeSQLQuery(Query, "inserted !");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_Button_Tambah_data_gradingActionPerformed
@@ -1110,7 +1110,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_Button_hapus_data_gradingActionPerformed
@@ -1147,7 +1147,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
             }
         } catch (SQLException | HeadlessException e) {
 //            JOptionPane.showMessageDialog(this, "there's must be a mistake please do tripple check");
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_grading_selesaiActionPerformed
@@ -1166,7 +1166,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(DetailGradingBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_printActionPerformed
@@ -1214,7 +1214,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_Button_Tambah_data_grade_supplierActionPerformed
@@ -1238,7 +1238,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         } catch (SQLException ex) {
             Logger.getLogger(DetailGradingBaku.class.getName()).log(Level.SEVERE, null, ex);
@@ -1344,7 +1344,7 @@ public class DetailGradingBaku extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(DetailGradingBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_Button_Edit_data_grade_supplierActionPerformed

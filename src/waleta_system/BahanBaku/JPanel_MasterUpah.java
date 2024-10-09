@@ -99,7 +99,7 @@ public class JPanel_MasterUpah extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_bulu_upah);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -115,7 +115,7 @@ public class JPanel_MasterUpah extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -747,7 +747,7 @@ public class JPanel_MasterUpah extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -790,7 +790,7 @@ public class JPanel_MasterUpah extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_editActionPerformed
@@ -827,7 +827,7 @@ public class JPanel_MasterUpah extends javax.swing.JPanel {
             }
             button_clear.doClick();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_newActionPerformed
@@ -894,7 +894,7 @@ public class JPanel_MasterUpah extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_aktifActionPerformed
@@ -917,7 +917,7 @@ public class JPanel_MasterUpah extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_non_aktifActionPerformed

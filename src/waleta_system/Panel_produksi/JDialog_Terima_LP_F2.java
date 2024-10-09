@@ -32,31 +32,27 @@ public class JDialog_Terima_LP_F2 extends javax.swing.JDialog {
     public void input_f2() {
         try {
             Boolean Check = true;
-            sql = "SELECT `no_laporan_produksi`, `tgl_selesai_cetak`, `cetak_diserahkan` "
-                    + "FROM `tb_cetak` "
-                    + "WHERE `no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
-            rs = Utility.db.getStatement().executeQuery(sql);
 
-            String query = "SELECT `tb_laporan_produksi`.`ruangan`, `tb_cetak`.`no_laporan_produksi`, `tgl_selesai_cetak`, `cetak_diserahkan` \n"
-                    + "FROM `tb_laporan_produksi`\n"
-                    + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
-                    + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
-            ResultSet result = Utility.db.getStatement().executeQuery(query);
-            if (!result.next()) {
-                JOptionPane.showMessageDialog(this, "No LP salah, " + txt_no_lp.getText() + " tidak ditemukan di data LP !");
-                Check = false;
-            } else if (result.getString("ruangan").length() != 5) {
-                if (result.getString("no_laporan_produksi") == null) {
-                    JOptionPane.showMessageDialog(this, "No LP (" + txt_no_lp.getText() + ") belum masuk Cetak !");
-                    Check = false;
-                } else if ("-".equals(result.getString("cetak_diserahkan")) || result.getDate("tgl_selesai_cetak") == null) {
-                    JOptionPane.showMessageDialog(this, "LP Sedang di cetak, belum di setorkan!!");
-                    Check = false;
-                } else if (Date_terima.getDate().before(result.getDate("tgl_selesai_cetak"))) {
-                    JOptionPane.showMessageDialog(this, "Tanggal masuk F2 harus setelah tanggal setor cetak\ntanggal setor cetak LP " + txt_no_lp.getText() + " : " + new SimpleDateFormat("dd MMMM yyyy").format(result.getDate("tgl_selesai_cetak")));
-                    Check = false;
-                }
-            }
+//            String query = "SELECT `tb_laporan_produksi`.`ruangan`, `tb_cetak`.`no_laporan_produksi`, `tgl_selesai_cetak`, `cetak_diserahkan` \n"
+//                    + "FROM `tb_laporan_produksi`\n"
+//                    + "LEFT JOIN `tb_cetak` ON `tb_laporan_produksi`.`no_laporan_produksi` = `tb_cetak`.`no_laporan_produksi`\n"
+//                    + "WHERE `tb_laporan_produksi`.`no_laporan_produksi` = '" + txt_no_lp.getText() + "'";
+//            ResultSet result = Utility.db.getStatement().executeQuery(query);
+//            if (!result.next()) {
+//                JOptionPane.showMessageDialog(this, "No LP salah, " + txt_no_lp.getText() + " tidak ditemukan di data LP !");
+//                Check = false;
+//            } else if (result.getString("ruangan").length() != 5) {
+//                if (result.getString("no_laporan_produksi") == null) {
+//                    JOptionPane.showMessageDialog(this, "No LP (" + txt_no_lp.getText() + ") belum masuk Cetak !");
+//                    Check = false;
+//                } else if ("-".equals(result.getString("cetak_diserahkan")) || result.getDate("tgl_selesai_cetak") == null) {
+//                    JOptionPane.showMessageDialog(this, "LP Sedang di cetak, belum di setorkan!!");
+//                    Check = false;
+//                } else if (Date_terima.getDate().before(result.getDate("tgl_selesai_cetak"))) {
+//                    JOptionPane.showMessageDialog(this, "Tanggal masuk F2 harus setelah tanggal setor cetak\ntanggal setor cetak LP " + txt_no_lp.getText() + " : " + new SimpleDateFormat("dd MMMM yyyy").format(result.getDate("tgl_selesai_cetak")));
+//                    Check = false;
+//                }
+//            }
 
             if (Check) {
                 String Query = "INSERT INTO `tb_finishing_2`(`no_laporan_produksi`, `tgl_masuk_f2`, `f2_diterima`) "
@@ -69,6 +65,7 @@ public class JDialog_Terima_LP_F2 extends javax.swing.JDialog {
                 }
             }
         } catch (HeadlessException | SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Terima_LP_F2.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -82,33 +79,30 @@ public class JDialog_Terima_LP_F2 extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label_title_terima_lp = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txt_no_lp = new javax.swing.JTextField();
-        button_save = new javax.swing.JButton();
-        button_cancel = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        Date_terima = new com.toedter.calendar.JDateChooser();
+        jPanel1 = new javax.swing.JPanel();
         button_pick_diserahkan = new javax.swing.JButton();
+        button_save = new javax.swing.JButton();
+        label_title_terima_lp = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txt_no_lp = new javax.swing.JTextField();
+        Date_terima = new com.toedter.calendar.JDateChooser();
+        button_cancel = new javax.swing.JButton();
         txt_diterima = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Terima LP Oleh Cabut");
+        setTitle("Terima LP Oleh F2");
         setResizable(false);
 
-        label_title_terima_lp.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
-        label_title_terima_lp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_title_terima_lp.setText("Terima LP");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jLabel2.setText("No. Laporan Produksi :");
-
-        txt_no_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        txt_no_lp.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txt_no_lpKeyTyped(evt);
+        button_pick_diserahkan.setBackground(new java.awt.Color(255, 255, 255));
+        button_pick_diserahkan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_pick_diserahkan.setText("...");
+        button_pick_diserahkan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_pick_diserahkanActionPerformed(evt);
             }
         });
 
@@ -121,30 +115,32 @@ public class JDialog_Terima_LP_F2 extends javax.swing.JDialog {
             }
         });
 
-        button_cancel.setBackground(new java.awt.Color(255, 255, 255));
-        button_cancel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_cancel.setText("Cancel");
-        button_cancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_cancelActionPerformed(evt);
-            }
-        });
+        label_title_terima_lp.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        label_title_terima_lp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_title_terima_lp.setText("Terima LP");
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel5.setText("Tanggal Masuk :");
+
+        txt_no_lp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_no_lp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt_no_lpKeyTyped(evt);
+            }
+        });
 
         Date_terima.setBackground(new java.awt.Color(255, 255, 255));
         Date_terima.setDateFormatString("dd MMMM yyyy");
         Date_terima.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
         Date_terima.setMaxSelectableDate(new Date());
 
-        button_pick_diserahkan.setBackground(new java.awt.Color(255, 255, 255));
-        button_pick_diserahkan.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        button_pick_diserahkan.setText("...");
-        button_pick_diserahkan.addActionListener(new java.awt.event.ActionListener() {
+        button_cancel.setBackground(new java.awt.Color(255, 255, 255));
+        button_cancel.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_cancel.setText("Cancel");
+        button_cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_pick_diserahkanActionPerformed(evt);
+                button_cancelActionPerformed(evt);
             }
         });
 
@@ -156,57 +152,72 @@ public class JDialog_Terima_LP_F2 extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel6.setText("Diterima Oleh :");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        jLabel2.setText("No. Laporan Produksi :");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(label_title_terima_lp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(button_cancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_save))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(txt_diterima)
                                 .addGap(0, 0, 0)
                                 .addComponent(button_pick_diserahkan, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(Date_terima, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                            .addComponent(Date_terima, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                             .addComponent(txt_no_lp, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(10, 10, 10))
+                .addContainerGap())
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label_title_terima_lp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_no_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Date_terima, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_diterima, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_pick_diserahkan, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_save, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -253,6 +264,7 @@ public class JDialog_Terima_LP_F2 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label_title_terima_lp;
     private javax.swing.JTextField txt_diterima;
     public javax.swing.JTextField txt_no_lp;

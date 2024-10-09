@@ -44,7 +44,7 @@ public class JDialog_Edit_Data_PekerjaSesek extends javax.swing.JDialog {
                 txt_nilai_sesekan.setText(rs.getString("nilai_sesekan"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Data_PekerjaSesek.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -285,7 +285,7 @@ public class JDialog_Edit_Data_PekerjaSesek extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Edit_Data_PekerjaSesek.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

@@ -230,7 +230,7 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
 //            PieChart_dataset.setValue("NON AKTIF", total_non_aktif);
 //            PieChart_dataset.setValue("NO KATEGORI", total_no_kategori);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_KategoriStokJualTV.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -380,7 +380,7 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
             PieChart_dataset.setValue("REPROSES", (total_reproses_bp + total_reproses + total_reproses_swr));
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_KategoriStokJualTV.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -411,7 +411,7 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
             decimalFormat.setMaximumFractionDigits(0);
             label_total_mlem.setText(decimalFormat.format(total_gram_mlem / 1000.f) + " Kg");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_KategoriStokJualTV.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -441,7 +441,7 @@ public class JFrame_KategoriStokJualTV extends javax.swing.JFrame {
             }
             label_total_wip_reproses.setText(decimalFormat.format(total_gram_wip_reproses / 1000.f) + " Kg");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_KategoriStokJualTV.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

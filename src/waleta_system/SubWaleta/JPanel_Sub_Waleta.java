@@ -62,7 +62,7 @@ public class JPanel_Sub_Waleta extends javax.swing.JPanel {
                 }
             });
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Sub_Waleta.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -95,7 +95,7 @@ public class JPanel_Sub_Waleta extends javax.swing.JPanel {
             int rowData = Table_Sub_Waleta.getRowCount();
             label_total_data.setText(Integer.toString(rowData));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Sub_Waleta.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -543,7 +543,7 @@ public class JPanel_Sub_Waleta extends javax.swing.JPanel {
                 } catch (SQLException ex) {
                     Logger.getLogger(JPanel_Sub_Waleta.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_Sub_Waleta.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {
@@ -590,7 +590,7 @@ public class JPanel_Sub_Waleta extends javax.swing.JPanel {
                 } catch (SQLException ex) {
                     Logger.getLogger(JPanel_Sub_Waleta.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_Sub_Waleta.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {

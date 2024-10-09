@@ -72,7 +72,7 @@ public class JPanel_Aset_NotaPembelian extends javax.swing.JPanel {
             label_total_data_nota.setText(decimalFormat.format(table_nota.getRowCount()));
             label_total_nilai_nota.setText("Rp. " + decimalFormat.format(total_nilai) + ",-");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_NotaPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -112,7 +112,7 @@ public class JPanel_Aset_NotaPembelian extends javax.swing.JPanel {
             label_total_data_detailNota.setText(decimalFormat.format(table_nota_detail.getRowCount()));
             label_total_nilai_detailNota.setText("Rp. " + decimalFormat.format(total_nilai) + ",-");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_NotaPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -473,7 +473,7 @@ public class JPanel_Aset_NotaPembelian extends javax.swing.JPanel {
                 refreshTable();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_NotaPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_newActionPerformed
@@ -497,7 +497,7 @@ public class JPanel_Aset_NotaPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_NotaPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_editActionPerformed
@@ -521,7 +521,7 @@ public class JPanel_Aset_NotaPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_NotaPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -570,7 +570,7 @@ public class JPanel_Aset_NotaPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_NotaPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_edit_detailNotaActionPerformed
@@ -594,7 +594,7 @@ public class JPanel_Aset_NotaPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_NotaPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_new_detailNotaActionPerformed
@@ -629,7 +629,7 @@ public class JPanel_Aset_NotaPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_NotaPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_delete_detailNotaActionPerformed

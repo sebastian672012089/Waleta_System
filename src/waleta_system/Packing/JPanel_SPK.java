@@ -97,7 +97,7 @@ public class JPanel_SPK extends javax.swing.JPanel {
                 }
             });
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GradeBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -886,7 +886,7 @@ public class JPanel_SPK extends javax.swing.JPanel {
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_SPK.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -925,7 +925,7 @@ public class JPanel_SPK extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_delete_spkActionPerformed
@@ -971,7 +971,7 @@ public class JPanel_SPK extends javax.swing.JPanel {
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_SPK.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

@@ -96,7 +96,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 return_value = "Hari Kerja";
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
         }
         return return_value;
@@ -211,7 +211,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_jadwal);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -506,7 +506,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_lembur_security);
             label_total_data.setText(Integer.toString(tabel_data_lembur_security.getRowCount()));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -715,7 +715,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 label_total_tunjangan_hadir.setText(decimalFormat.format(total_premi_hadir_all));
                 label_total_gaji.setText(decimalFormat.format(total_transfer_all));
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, e);
             }
         }
@@ -759,7 +759,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1679,7 +1679,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                         Utility.db.getConnection().commit();
                     } catch (Exception ex) {
                         Utility.db.getConnection().rollback();
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
@@ -1688,7 +1688,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_insert_jadwalActionPerformed
@@ -1733,7 +1733,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_jadwalActionPerformed
@@ -1883,7 +1883,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
                 } catch (SQLException e) {
                     Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, e);
                 }
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {
@@ -1969,7 +1969,7 @@ public class JPanel_Lembur_ShiftMalam extends javax.swing.JPanel {
             }
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lembur_ShiftMalam.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_slip_harianActionPerformed

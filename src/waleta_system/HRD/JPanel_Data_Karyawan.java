@@ -146,7 +146,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
 //            ComboBox_status_karyawan.setSelectedItem("IN");
             refreshTable();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
 
@@ -302,7 +302,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 KaryawanList.add(Karyawan);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -541,7 +541,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             }
         } catch (SQLException | HeadlessException e) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -665,7 +665,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                             }
                         }
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
                         Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
@@ -675,7 +675,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 
@@ -717,7 +717,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                             }
                         }
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
                         Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
@@ -727,7 +727,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 
@@ -756,7 +756,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -2053,7 +2053,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
 //                ComboBox_filter_ruang.addItem(rs.getString("ruang_bagian"));
 //            }
 //        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(this, e);
+//            JOptionPane.showMessageDialog(this, e.getMessage());
 //        }
     }//GEN-LAST:event_ComboBox_filter_departemenActionPerformed
 
@@ -2080,7 +2080,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_status_OUTActionPerformed
@@ -2138,7 +2138,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_status_INActionPerformed
@@ -2172,7 +2172,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_status_batalActionPerformed
@@ -2221,7 +2221,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_PrintIDCARD_TrainingActionPerformed
@@ -2309,7 +2309,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_masuk_kembaliActionPerformed
@@ -2383,7 +2383,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 refreshTable();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_set_jemputanActionPerformed
@@ -2497,7 +2497,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_PrintIDCARDActionPerformed
@@ -2524,7 +2524,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_status_absenActionPerformed
@@ -2543,7 +2543,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_PrintIDCARD_QRActionPerformed
@@ -2627,7 +2627,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 ComboBox_filter_ruang.addItem(rs.getString("ruang_bagian"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_ComboBox_filter_divisiActionPerformed
 
@@ -2669,7 +2669,7 @@ public class JPanel_Data_Karyawan extends javax.swing.JPanel {
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_PrintIDCARD_CABUTOActionPerformed

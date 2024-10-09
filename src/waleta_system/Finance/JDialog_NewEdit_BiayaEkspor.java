@@ -259,7 +259,7 @@ public class JDialog_NewEdit_BiayaEkspor extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Data Berhasil simpan");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_NewEdit_BiayaEkspor.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Maaf format angka salah");

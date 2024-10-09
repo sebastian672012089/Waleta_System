@@ -315,7 +315,7 @@ public class JDialog_InsertTBT extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Data Inserted !");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_InsertTBT.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

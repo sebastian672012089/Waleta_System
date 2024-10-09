@@ -38,7 +38,7 @@ public class JDialog_Insert_Edit_Ekspedisi_Armada extends javax.swing.JDialog {
                 ComboBox_ekspedisi.addItem(result.getString("id_ekspedisi"));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Insert_Edit_Ekspedisi_Armada.class.getName()).log(Level.SEVERE, null, e);
         }
 
@@ -82,7 +82,7 @@ public class JDialog_Insert_Edit_Ekspedisi_Armada extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "FAILED!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Insert_Edit_Ekspedisi_Armada.class.getName()).log(Level.SEVERE, null, e);
         }
         imgPath = null;
@@ -119,7 +119,7 @@ public class JDialog_Insert_Edit_Ekspedisi_Armada extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "FAILED!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Insert_Edit_Ekspedisi_Armada.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -140,7 +140,7 @@ public class JDialog_Insert_Edit_Ekspedisi_Armada extends javax.swing.JDialog {
                 lbl_Image.setIcon(image);
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Insert_Edit_Ekspedisi_Armada.class.getName()).log(Level.SEVERE, null, e);
         }
     }

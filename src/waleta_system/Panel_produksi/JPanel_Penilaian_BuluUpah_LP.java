@@ -189,7 +189,7 @@ public class JPanel_Penilaian_BuluUpah_LP extends javax.swing.JPanel {
             label_total_kpg.setText(decimalFormat.format(total_kpg));
             label_total_gram.setText(decimalFormat.format(total_gram));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Penilaian_BuluUpah_LP.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -546,7 +546,7 @@ public class JPanel_Penilaian_BuluUpah_LP extends javax.swing.JPanel {
                     Utility.db.getConnection().rollback();
                     Utility.db_sub.getConnection().rollback();
                     Utility.db_maklun.getConnection().rollback();
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                     Logger.getLogger(JPanel_Penilaian_BuluUpah_LP.class.getName()).log(Level.SEVERE, null, e);
                 } finally {
                     Utility.db.getConnection().setAutoCommit(true);
@@ -555,7 +555,7 @@ public class JPanel_Penilaian_BuluUpah_LP extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Penilaian_BuluUpah_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_setujuiActionPerformed

@@ -66,7 +66,7 @@ public class JPanel_GradeBarangJadi_Cabuto extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Table_grade_barang_jadi_cabuto);
             label_total_data.setText(Integer.toString(Table_grade_barang_jadi_cabuto.getRowCount()));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBarangJadi_Cabuto.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -388,7 +388,7 @@ public class JPanel_GradeBarangJadi_Cabuto extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBarangJadi_Cabuto.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_customer_bakuActionPerformed
@@ -410,7 +410,7 @@ public class JPanel_GradeBarangJadi_Cabuto extends javax.swing.JPanel {
                 refresh_tabel_grade_bj_cabuto();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBarangJadi_Cabuto.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_update_customer_bakuActionPerformed
@@ -430,7 +430,7 @@ public class JPanel_GradeBarangJadi_Cabuto extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Input gagal!!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_GradeBarangJadi_Cabuto.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_insert_customer_bakuActionPerformed

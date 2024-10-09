@@ -97,7 +97,7 @@ public class JPanel_Harga_BahanBakuKeluar extends javax.swing.JPanel {
             label_total_gram_grade.setText(decimalFormat.format(total_gram) + " Grams");
             label_total_harga_beli_grade.setText(decimalFormat.format(total_harga));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_BahanBakuKeluar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -151,7 +151,7 @@ public class JPanel_Harga_BahanBakuKeluar extends javax.swing.JPanel {
             label_total_nilai_beli_penjualan.setText(decimalFormat.format(total_nilai_beli));
             label_total_nilai_jual_penjualan.setText(decimalFormat.format(total_nilai_jual));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_BahanBakuKeluar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -911,7 +911,7 @@ public class JPanel_Harga_BahanBakuKeluar extends javax.swing.JPanel {
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Harga_BahanBaku.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");
@@ -939,7 +939,7 @@ public class JPanel_Harga_BahanBakuKeluar extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Update failed!");
                     }
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_Harga_BahanBakuKeluar.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

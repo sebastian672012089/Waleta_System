@@ -265,7 +265,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             int rowData = Table_Grading_Bahan_Baku.getRowCount();
             label_total_data_grading.setText(decimalFormat.format(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -331,7 +331,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             label_total_gram_sistem.setText(decimalFormat.format(total_gram_sistem));
             label_total_gram_riil.setText(decimalFormat.format(total_gram_riil));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -411,7 +411,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_rekap_grade);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -446,7 +446,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             int rowData = Table_grading_conveyor.getRowCount();
             label_total_data_grading_conveyor.setText(decimalFormat.format(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -462,7 +462,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1772,7 +1772,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 executeSQLQuery(Query, "updated !");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_save_uji_kemasanActionPerformed
@@ -1798,7 +1798,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_save_timbang_bahan_bakuActionPerformed
@@ -1937,7 +1937,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_Catatan_Penimbangan_Sarang_Burung_MentahActionPerformed
@@ -1970,7 +1970,7 @@ public class JPanel_BahanBakuMasuk extends javax.swing.JPanel {
                 JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             } catch (JRException e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_BahanBakuMasuk.class.getName()).log(Level.SEVERE, null, e);
             }
         }

@@ -515,7 +515,7 @@ public class JPanel_Kartu_Campuran extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(JPanel_Kartu_Campuran.class.getName()).log(Level.SEVERE, null, ex);
         }

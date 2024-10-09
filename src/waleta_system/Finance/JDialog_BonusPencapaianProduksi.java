@@ -307,7 +307,7 @@ public class JDialog_BonusPencapaianProduksi extends javax.swing.JDialog {
                         Utility.db.getConnection().commit();
                     } catch (Exception ex) {
                         Utility.db.getConnection().rollback();
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JDialog_BonusPencapaianProduksi.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         Utility.db.getConnection().setAutoCommit(true);
@@ -316,7 +316,7 @@ public class JDialog_BonusPencapaianProduksi extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_BonusPencapaianProduksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_input_bonus_pencapaianActionPerformed
@@ -347,7 +347,7 @@ public class JDialog_BonusPencapaianProduksi extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_deleteActionPerformed
 

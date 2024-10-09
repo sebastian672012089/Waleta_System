@@ -138,7 +138,7 @@ public class JPanel_GradingLP_Tutupan extends javax.swing.JPanel {
                     + "ORDER BY `tb_bahan_jadi_masuk`.`kode_tutupan`";
             refreshTable_RekapPerTutupan(sql);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_GradingLP_Tutupan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -137,7 +137,7 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Add_SuratPerintahLembur.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Add_SuratPerintahLembur.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
@@ -195,7 +195,7 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Add_SuratPerintahLembur.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Add_SuratPerintahLembur.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
@@ -559,7 +559,7 @@ public class JDialog_Add_SuratPerintahLembur extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Add_SuratPerintahLembur.class.getName()).log(Level.SEVERE, null, e);
             check = false;
         }

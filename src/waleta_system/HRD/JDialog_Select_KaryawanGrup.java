@@ -62,7 +62,7 @@ public class JDialog_Select_KaryawanGrup extends javax.swing.JDialog {
             }
             ComboBox_posisi.setSelectedItem("PEJUANG");
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
         refreshTable();
         AutoCompleteDecorator.decorate(ComboBox_bagian);
@@ -308,7 +308,7 @@ public class JDialog_Select_KaryawanGrup extends javax.swing.JDialog {
                 } catch (Exception e) {
                     Logger.getLogger(JDialog_Select_KaryawanGrup.class.getName()).log(Level.SEVERE, null, e);
                 }
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_Select_KaryawanGrup.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 try {

@@ -223,7 +223,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
             label_total_berat.setText(decimalFormat.format(total_gram));
             label_total_keping.setText(decimalFormat.format(total_kpg));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -258,7 +258,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                 label_total_gram_detail_asal.setText(decimalFormat.format(total_berat));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -307,7 +307,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                 label_total_gram_hasil_grading.setText(decimalFormat.format(total_berat));
                 label_total_box_hasil_grading.setText(decimalFormat.format(total_box));
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -340,7 +340,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                 label_total_kpg_rincianLP.setText(decimalFormat.format(total_kpg));
                 label_total_gram_rincianLP.setText(decimalFormat.format(total_gram));
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -372,7 +372,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
             label_total_kpg_rincianBox.setText(decimalFormat.format(total_kpg));
             label_total_gram_rincianBox.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -387,7 +387,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_TutupanGradingBahanJadi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1430,7 +1430,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_selesai_tutupanActionPerformed
 
@@ -1466,7 +1466,7 @@ public class JPanel_TutupanGradingBahanJadi extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_selesai_boxActionPerformed
 

@@ -656,7 +656,7 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
             });
             table_on_proses.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataBahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -857,7 +857,7 @@ public class JFrame_TV_GradingBaku extends javax.swing.JFrame {
             });
             Table_Data_Nitrit_baku_merah.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_TV_GradingBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

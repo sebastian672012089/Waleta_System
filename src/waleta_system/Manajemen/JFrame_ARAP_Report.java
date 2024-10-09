@@ -148,7 +148,7 @@ public class JFrame_ARAP_Report extends javax.swing.JFrame {
             });
             jTable_ARAP.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_ARAP_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -222,7 +222,7 @@ public class JFrame_ARAP_Report extends javax.swing.JFrame {
 //            });
 //            jTable_ARAP.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_ARAP_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -293,7 +293,7 @@ public class JFrame_ARAP_Report extends javax.swing.JFrame {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_ARAP_Esta);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_ARAP_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -324,7 +324,7 @@ public class JFrame_ARAP_Report extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_hutangExim, 20);
             label_total_hutang_exim.setText("USD $" + decimalFormat.format(total_dollar) + " - IDR Rp." + decimalFormat.format(total_rupiah));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Payment_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

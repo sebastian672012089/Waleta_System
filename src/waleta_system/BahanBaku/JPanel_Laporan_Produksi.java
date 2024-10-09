@@ -73,7 +73,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 }
             });
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -156,7 +156,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 LaporanProduksiList.add(LaporanProduksi);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }
         return LaporanProduksiList;
@@ -267,7 +267,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             int rowData = Table_laporan_produksi.getRowCount();
             label_total_data_laporan_produksi.setText(Integer.toString(rowData));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -340,7 +340,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(Table_laporan_produksi_sub);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -423,7 +423,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             label_jumlah_lp_cabuto_175.setText(decimalFormat.format(jumlah_lp_cabuto_175));
             label_jumlah_lp_cabuto_200.setText(decimalFormat.format(jumlah_lp_cabuto_200));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1897,7 +1897,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                     refreshTable();
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -1969,7 +1969,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(DetailGradingBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_report_lp_wltActionPerformed
@@ -2006,7 +2006,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_laporan_ozonActionPerformed
@@ -2064,7 +2064,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
 
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(DetailGradingBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_report_lp_subActionPerformed
@@ -2242,7 +2242,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             } catch (JRException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
@@ -2274,7 +2274,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_laporan_produksi.getValueAt(i, 1).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2292,7 +2292,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                                     + "WHERE `no_laporan_produksi` = '" + Table_laporan_produksi.getValueAt(i, 1).toString() + "'";
                             Utility.db.getStatement().executeUpdate(sql);
                         } catch (SQLException e) {
-                            JOptionPane.showMessageDialog(this, e);
+                            JOptionPane.showMessageDialog(this, e.getMessage());
                             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
                         }
                     }
@@ -2301,7 +2301,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Maaf Rumah burung belum terdaftar / teregistrasi !");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -2322,7 +2322,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_laporan_produksi.getValueAt(i, 1).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2338,7 +2338,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                                     + "WHERE `no_laporan_produksi` = '" + Table_laporan_produksi.getValueAt(i, 1).toString() + "'";
                             Utility.db.getStatement().executeUpdate(sql);
                         } catch (SQLException e) {
-                            JOptionPane.showMessageDialog(this, e);
+                            JOptionPane.showMessageDialog(this, e.getMessage());
                             Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
                         }
                     }
@@ -2347,7 +2347,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Maaf No Kartu salah, tidak ada di bahan baku masuk !");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -2368,7 +2368,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_laporan_produksi.getValueAt(i, 1).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }
@@ -2382,7 +2382,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                                 + "WHERE `no_laporan_produksi` = '" + Table_laporan_produksi.getValueAt(i, 1).toString() + "'";
                         Utility.db.getStatement().executeUpdate(sql);
                     } catch (SQLException e) {
-                        JOptionPane.showMessageDialog(this, e);
+                        JOptionPane.showMessageDialog(this, e.getMessage());
                         Logger.getLogger(JPanel_Laporan_Produksi.class.getName()).log(Level.SEVERE, null, e);
                     }
                 }

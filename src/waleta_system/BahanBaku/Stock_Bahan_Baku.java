@@ -155,7 +155,7 @@ public class Stock_Bahan_Baku extends javax.swing.JDialog {
             });
             Table_stock_bahan_baku.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(Stock_Bahan_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

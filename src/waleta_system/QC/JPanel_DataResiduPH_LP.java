@@ -70,7 +70,7 @@ public class JPanel_DataResiduPH_LP extends javax.swing.JPanel {
             label_rata_ph.setText(decimalFormat.format(rata2_ph));
             ColumnsAutoSizer.sizeColumnsToFit(Table_data_residu_ph);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataResiduPH_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

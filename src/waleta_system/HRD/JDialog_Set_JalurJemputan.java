@@ -42,7 +42,7 @@ public class JDialog_Set_JalurJemputan extends javax.swing.JDialog {
 //                }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Set_JalurJemputan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -200,7 +200,7 @@ public class JDialog_Set_JalurJemputan extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Data Saved !");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_Button_saveActionPerformed

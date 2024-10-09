@@ -46,7 +46,7 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
             }
             loadData_edit(ID_pegawai);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Edit_DataKaryawanSUB_Online.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -74,7 +74,7 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
                 lbl_Image_ktp.setIcon(Utility.ResizeImage("https://waleta019.com/subwaleta/assets/foto_ktp/subwaleta_temp_foto_ktp_1096356267050937179.jpg", null, lbl_Image_ktp.getWidth(), lbl_Image_ktp.getHeight()));
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Edit_DataKaryawanSUB_Online.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -505,7 +505,7 @@ public class JDialog_Edit_DataKaryawanSUB_Online extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Edit_DataKaryawanSUB_Online.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_proceed_insertActionPerformed

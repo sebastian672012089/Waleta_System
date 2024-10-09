@@ -34,7 +34,7 @@ public class JDialog_Edit_PecahLP extends javax.swing.JDialog {
                 ComboBox_buluUpah.addItem(rs.getString("bulu_upah"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_PecahLP.class.getName()).log(Level.SEVERE, null, ex);
         }
 

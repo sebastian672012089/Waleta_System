@@ -347,7 +347,7 @@ public class JDialog_Terima_LP_Cetak extends javax.swing.JDialog {
                     pekerja_koreksi_grup = rs.getString("kode_grup");
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JDialog_Setor_LP_Cetak.class.getName()).log(Level.SEVERE, null, e);
             }
         }

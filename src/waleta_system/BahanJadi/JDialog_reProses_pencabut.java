@@ -302,7 +302,7 @@ public class JDialog_reProses_pencabut extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Failed !");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_reProses_pencabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_edit_pencabutActionPerformed
@@ -378,7 +378,7 @@ public class JDialog_reProses_pencabut extends javax.swing.JDialog {
             }
             this.dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_reProses_pencabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_add_pencabutActionPerformed

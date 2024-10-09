@@ -280,7 +280,7 @@ public class JPanel_DataCashOnBank extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(JPanel_DataCashOnBank.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -169,7 +169,7 @@ public class JFrame_RekapPengeluaranBaku extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_bentuk);
             label_total_bentuk.setText("Total gram : " + decimalFormat.format(total_gram) + " - Rp. " + decimalFormat.format(total_harga));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_RekapPengeluaranBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -224,7 +224,7 @@ public class JFrame_RekapPengeluaranBaku extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_bulu);
             label_total_bulu.setText("Total gram : " + decimalFormat.format(total_gram) + " - Rp. " + decimalFormat.format(total_harga));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_RekapPengeluaranBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -258,7 +258,7 @@ public class JFrame_RekapPengeluaranBaku extends javax.swing.JFrame {
             ColumnsAutoSizer.sizeColumnsToFit(Tabel_warna);
             label_total_warna.setText("Total gram : " + decimalFormat.format(total_gram) + " - Rp. " + decimalFormat.format(total_harga));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_RekapPengeluaranBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

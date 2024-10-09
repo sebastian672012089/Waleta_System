@@ -135,7 +135,7 @@ public class JPanel_Pengiriman_PickUp extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(Table_pickup_request);
             label_total_data_pickup_request.setText(decimalFormat.format(Table_pickup_request.getRowCount()));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Pengiriman_PickUp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -164,7 +164,7 @@ public class JPanel_Pengiriman_PickUp extends javax.swing.JPanel {
             label_total_data_sopir.setText(decimalFormat.format(Table_data_sopir.getRowCount()));
             Label_Foto_Sopir.setText(null);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Pengiriman_PickUp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -193,7 +193,7 @@ public class JPanel_Pengiriman_PickUp extends javax.swing.JPanel {
             label_total_data_armada.setText(decimalFormat.format(Table_data_armada.getRowCount()));
             Label_Foto_Armada.setText(null);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Pengiriman_PickUp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -794,7 +794,7 @@ public class JPanel_Pengiriman_PickUp extends javax.swing.JPanel {
                             JOptionPane.showMessageDialog(this, "Delete failed!");
                         }
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_Pengiriman_PickUp.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }

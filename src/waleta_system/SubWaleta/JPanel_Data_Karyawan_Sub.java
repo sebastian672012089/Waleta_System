@@ -134,7 +134,7 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(table_data_online);
             label_total_data_online.setText(Integer.toString(table_data_online.getRowCount()));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -480,7 +480,7 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
                 refreshTabel_online();
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_status_OUT_onlineActionPerformed
@@ -502,7 +502,7 @@ public class JPanel_Data_Karyawan_Sub extends javax.swing.JPanel {
                 refreshTabel_online();
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan_Sub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_data_onlineActionPerformed

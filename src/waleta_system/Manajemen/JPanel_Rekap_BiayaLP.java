@@ -55,7 +55,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                     ComboBox_Ruangan.addItem(rs.getString("ruangan"));
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_Rekap_BiayaLP.class.getName()).log(Level.SEVERE, null, e);
             }
             AutoCompleteDecorator.decorate(ComboBox_Grade);
@@ -227,7 +227,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
             decimalFormat.setMaximumFractionDigits(1);
             label_total_margin_persen.setText("(" + decimalFormat.format(persen_margin) + "%)");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Rekap_BiayaLP.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -281,7 +281,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_hasilGrading_rekap);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Rekap_BiayaLP.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -329,7 +329,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
             label_total_gram_grading.setText(decimalFormat.format(total_gram) + " Gram");
             label_total_harga_grading.setText("Rp. " + decimalFormat.format(total_harga));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Rekap_BiayaLP.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1140,7 +1140,7 @@ public class JPanel_Rekap_BiayaLP extends javax.swing.JPanel {
                     model.addRow(new Object[]{result.getString("kode_grade"), bentuk, bulu, result.getString("jenis_warna")});
                 }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_Rekap_BiayaLP.class.getName()).log(Level.SEVERE, null, e);
             }
 

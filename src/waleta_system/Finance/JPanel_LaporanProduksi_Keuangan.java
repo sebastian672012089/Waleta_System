@@ -325,7 +325,7 @@ public class JPanel_LaporanProduksi_Keuangan extends javax.swing.JPanel {
             label_harga_saldoAkhir_BJ.setText(decimalFormat.format(nilaibaku_saldo_akhir_bjd));
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_LaporanProduksi_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

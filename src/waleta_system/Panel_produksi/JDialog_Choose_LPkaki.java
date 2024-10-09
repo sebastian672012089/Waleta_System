@@ -99,7 +99,7 @@ public class JDialog_Choose_LPkaki extends javax.swing.JDialog {
             }
 //            ColumnsAutoSizer.sizeColumnsToFit(tabel_data_noLP);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(JDialog_Choose_LPkaki.class.getName()).log(Level.SEVERE, null, ex);
@@ -305,7 +305,7 @@ public class JDialog_Choose_LPkaki extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_saveActionPerformed
 

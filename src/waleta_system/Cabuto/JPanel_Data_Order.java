@@ -118,7 +118,7 @@ public class JPanel_Data_Order extends javax.swing.JPanel {
             label_total_berat_lp.setText(decimalFormat.format(total_berat_lp));
             label_total_nilai_lp.setText(decimalFormat.format(total_nilai_lp));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Order.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -144,7 +144,7 @@ public class JPanel_Data_Order extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_list_lp);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Order.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -167,7 +167,7 @@ public class JPanel_Data_Order extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_evaluasi);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Order.class.getName()).log(Level.SEVERE, null, e);
         }
     }

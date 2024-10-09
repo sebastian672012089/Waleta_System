@@ -249,7 +249,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(table_data_reproses_cetak);
             ColumnsAutoSizer.sizeColumnsToFit(table_data_reproses_cabut);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -284,7 +284,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
             label_total_data_pencabut.setText(Integer.toString(total_data));
             label_total_gram_cabutan.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Reproses.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1136,7 +1136,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Reproses.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_tgl_selesai_cabutActionPerformed
@@ -1186,7 +1186,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Reproses.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_pekerja_cabutActionPerformed
@@ -1233,7 +1233,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_LP_Reproses_SubActionPerformed
@@ -1263,7 +1263,7 @@ public class JPanel_Reproses extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_LP_ReprosesActionPerformed

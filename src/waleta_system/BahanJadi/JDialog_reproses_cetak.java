@@ -60,7 +60,7 @@ public class JDialog_reproses_cetak extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_reproses_cetak.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_reproses_cetak.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             this.dispose();
@@ -341,7 +341,7 @@ public class JDialog_reproses_cetak extends javax.swing.JDialog {
                 update();
             }
         } catch (HeadlessException | NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_reproses_cetak.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_okActionPerformed

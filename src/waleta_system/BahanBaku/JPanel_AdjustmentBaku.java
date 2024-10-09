@@ -36,7 +36,7 @@ public class JPanel_AdjustmentBaku extends javax.swing.JPanel {
                 ComboBox_Search_grade.addItem(rs1.getString("kode_grade"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (Exception ex) {
             Logger.getLogger(Stock_Bahan_Baku.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -87,7 +87,7 @@ public class JPanel_AdjustmentBaku extends javax.swing.JPanel {
 //            label_total_gram_reproses.setText(Float.toString(gram_reproses));
             ColumnsAutoSizer.sizeColumnsToFit(table_adjustment);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_AdjustmentBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -85,7 +85,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                     ComboBox_posisi2.addItem(rs.getString("posisi"));
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_Absensi_Karyawan.class.getName()).log(Level.SEVERE, null, e);
             }
 //            tabel_data_absen.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -180,7 +180,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             label_total_data_absen.setText(Integer.toString(tabel_data_absen.getRowCount()));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_absen);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -288,7 +288,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             label_total_data_absen1.setText(Integer.toString(tabel_data_lembur.getRowCount()));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_lembur);
         } catch (SQLException | ParseException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -494,7 +494,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             label_total_masuk.setText(Integer.toString(jumlah_masuk));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_TidakMasuk);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -565,7 +565,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                 }
                 JOptionPane.showMessageDialog(this, count + " Saved !");
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Absensi_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -622,7 +622,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                 }
                 JOptionPane.showMessageDialog(this, count + " Saved !");
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Absensi_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1620,7 +1620,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
                 ComboBox_bagian_karyawan1.addItem(rs.getString("nama_bagian"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_ComboBox_departemen_karyawan1ActionPerformed
 
@@ -1946,7 +1946,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, new JRBeanCollectionDataSource(listRekap));
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_export_rekapActionPerformed
@@ -2431,7 +2431,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, new JRBeanCollectionDataSource(newList));
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Absensi_Karyawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_export_rekap_ctActionPerformed
@@ -2454,7 +2454,7 @@ public class JPanel_Absensi_Karyawan extends javax.swing.JPanel {
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, null, Utility.db.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_form_tidak_masukActionPerformed

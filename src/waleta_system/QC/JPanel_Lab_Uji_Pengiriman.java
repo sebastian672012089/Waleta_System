@@ -106,7 +106,7 @@ public class JPanel_Lab_Uji_Pengiriman extends javax.swing.JPanel {
             label_rata2_kadarAir.setText(decimalFormat.format(rata_KA));
             ColumnsAutoSizer.sizeColumnsToFit(Table_data_uji_pengiriman);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Lab_Uji_Pengiriman.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -502,7 +502,7 @@ public class JPanel_Lab_Uji_Pengiriman extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(this, "Failed !");
                     }
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, e);
+                    JOptionPane.showMessageDialog(this, e.getMessage());
                 }
             }
         }

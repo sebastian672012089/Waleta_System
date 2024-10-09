@@ -63,7 +63,7 @@ public class JPanel_Absen_Keuangan extends javax.swing.JPanel {
                     ComboBox_posisi_bin.addItem(rs.getString("posisi"));
                 }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, e);
             }
             tabel_data_absen.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -163,7 +163,7 @@ public class JPanel_Absen_Keuangan extends javax.swing.JPanel {
             label_total_data_absen.setText(Integer.toString(tabel_data_absen.getRowCount()));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_absen);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -278,7 +278,7 @@ public class JPanel_Absen_Keuangan extends javax.swing.JPanel {
             label_total_data.setText(Integer.toString(tabel_data_TidakMasuk.getRowCount()));
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_TidakMasuk);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -350,7 +350,7 @@ public class JPanel_Absen_Keuangan extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_absen_bin);
             label_total_data_absen_bin.setText(Integer.toString(tabel_data_absen_bin.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_BoxBahanJadi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1348,7 +1348,7 @@ public class JPanel_Absen_Keuangan extends javax.swing.JPanel {
                     } catch (SQLException ex1) {
                         Logger.getLogger(JPanel_Absen_Keuangan.class.getName()).log(Level.SEVERE, null, ex1);
                     }
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_Absen_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     try {
@@ -1396,7 +1396,7 @@ public class JPanel_Absen_Keuangan extends javax.swing.JPanel {
                     } catch (SQLException ex1) {
                         Logger.getLogger(JPanel_Absen_Keuangan.class.getName()).log(Level.SEVERE, null, ex1);
                     }
-                    JOptionPane.showMessageDialog(this, ex);
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
                     Logger.getLogger(JPanel_Absen_Keuangan.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     try {
@@ -1455,7 +1455,7 @@ public class JPanel_Absen_Keuangan extends javax.swing.JPanel {
                         Utility.db.getConnection().commit();
                     } catch (Exception ex) {
                         Utility.db.getConnection().rollback();
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JDialog_BonusPencapaianProduksi.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
@@ -1464,7 +1464,7 @@ public class JPanel_Absen_Keuangan extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_BonusPencapaianProduksi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_input_bonus_pencapaianActionPerformed

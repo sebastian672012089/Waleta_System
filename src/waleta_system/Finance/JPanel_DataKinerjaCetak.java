@@ -158,7 +158,7 @@ public class JPanel_DataKinerjaCetak extends javax.swing.JPanel {
                 total_gaji = total_gaji + gaji_transfer;
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataKinerjaCetak.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

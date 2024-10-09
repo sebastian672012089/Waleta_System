@@ -67,7 +67,7 @@ public class JDialog_Edit_Data_Cetak extends javax.swing.JDialog {
                 txt_admin.setText(rs.getString("admin_cetak"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Data_Cetak.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -599,7 +599,7 @@ public class JDialog_Edit_Data_Cetak extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "failed!, jumlah keping cetak tidak sama dengan jumlah keping LP\nSilahkan cek kembali, Terima kasih !");
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

@@ -109,7 +109,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
             label_total_berat1.setText(decimalFormat.format(tot_gram));
             label_total_harga1.setText(decimalFormat.format(total_harga_kartu));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_BahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -148,7 +148,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
             label_total_kpg.setText(Double.toString(total_keping) + " Keping");
             label_total_harga.setText("Rp. " + decimalFormat.format(tot_harga));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -612,7 +612,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
                         } catch (SQLException e) {
                             Logger.getLogger(JPanel_Harga_BahanBaku.class.getName()).log(Level.SEVERE, null, e);
                         }
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_Harga_BahanBaku.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
                         try {
@@ -626,7 +626,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Harga_BahanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_edit_csvActionPerformed
@@ -685,7 +685,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
                 }
                 Utility.db.getConnection().commit();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 try {
                     Utility.db.getConnection().rollback();
                 } catch (SQLException e) {
@@ -732,7 +732,7 @@ public class JPanel_Harga_BahanBaku extends javax.swing.JPanel implements Interf
                     JOptionPane.showMessageDialog(this, "Update failed!");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_Harga_BahanBaku.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");

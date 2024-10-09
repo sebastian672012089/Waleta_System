@@ -147,7 +147,7 @@ public class JDialog_ScanQR extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_ScanQR.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -659,7 +659,7 @@ public class JDialog_ScanQR extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Silahkan Klik data yang akan di hapus pada tabel !");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_ScanQR.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -767,7 +767,7 @@ public class JDialog_ScanQR extends javax.swing.JFrame {
             } catch (SQLException ex1) {
                 Logger.getLogger(JDialog_terima_box.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_ScanQR.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
@@ -795,7 +795,7 @@ public class JDialog_ScanQR extends javax.swing.JFrame {
             } catch (SQLException ex1) {
                 Logger.getLogger(JDialog_terima_box.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_ScanQR.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
@@ -855,7 +855,7 @@ public class JDialog_ScanQR extends javax.swing.JFrame {
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataPacking.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_labelActionPerformed

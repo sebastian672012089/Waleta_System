@@ -182,7 +182,7 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
             jPanel_chart.validate();
             jPanel_chart.repaint();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Suhu_dan_Kelembapan2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -221,7 +221,7 @@ public class JPanel_Suhu_dan_Kelembapan2 extends javax.swing.JPanel {
                 Table_suhu_dan_kelembapan.getColumnModel().getColumn(i).setCellRenderer(TableAlignment);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Suhu_dan_Kelembapan2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

@@ -36,7 +36,7 @@ public class JDialog_Edit_Harga_Pelunasan_PenjualanBaku extends javax.swing.JDia
                 Date_pelunasan.setDate(null);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Harga_Pelunasan_PenjualanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -223,7 +223,7 @@ public class JDialog_Edit_Harga_Pelunasan_PenjualanBaku extends javax.swing.JDia
                 JOptionPane.showMessageDialog(this, "data Failed");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Harga_Pelunasan_PenjualanBaku.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_saveActionPerformed

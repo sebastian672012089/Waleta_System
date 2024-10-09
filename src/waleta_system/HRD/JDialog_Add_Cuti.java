@@ -514,7 +514,7 @@ public class JDialog_Add_Cuti extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Add_Cuti.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {

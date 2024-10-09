@@ -655,7 +655,7 @@ public class JPanel_BonusGrading extends javax.swing.JPanel {
                 refreshTable_harga();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_BonusGrading.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_editActionPerformed

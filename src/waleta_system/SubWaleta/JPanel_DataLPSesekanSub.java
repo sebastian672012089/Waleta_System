@@ -57,7 +57,7 @@ public class JPanel_DataLPSesekanSub extends javax.swing.JPanel {
                 }
             });
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataLPSesekanSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -133,7 +133,7 @@ public class JPanel_DataLPSesekanSub extends javax.swing.JPanel {
             label_total_sesekan_kuning.setText(decimalFormat.format(total_ssk_kuning) + " Gram");
             label_total_sesekan_pasir.setText(decimalFormat.format(total_ssk_pasir) + " Gram");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataLPSesekanSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -164,7 +164,7 @@ public class JPanel_DataLPSesekanSub extends javax.swing.JPanel {
             label_total_data_pekerja_sesek.setText(decimalFormat.format(rowData));
             label_total_nilai_dikerjakan.setText(decimalFormat.format(total_nilai_dikerjakan));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataLPSesekanSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -229,7 +229,7 @@ public class JPanel_DataLPSesekanSub extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_data_rekap);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataLPSesekanSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1015,7 +1015,7 @@ public class JPanel_DataLPSesekanSub extends javax.swing.JPanel {
                 refreshTable_pekerja_sesekan(label_no_lp_detail.getText());
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataLPSesekanSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_pekerja_sesekanActionPerformed
@@ -1036,7 +1036,7 @@ public class JPanel_DataLPSesekanSub extends javax.swing.JPanel {
                 refreshTable_lp_sesekan();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataLPSesekanSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_input_rendemenActionPerformed

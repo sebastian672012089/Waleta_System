@@ -301,7 +301,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
             label_total_batal.setText(Integer.toString(BATAL));
             label_total_strip.setText(Integer.toString(STRIP));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataKaryawan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -875,7 +875,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_ubah_level_gajiActionPerformed
 
@@ -905,7 +905,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                             }
                         }
                     } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
                         Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
@@ -915,7 +915,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_button_ubah_level_gaji1ActionPerformed
 
@@ -931,7 +931,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_buka_kunci_grupActionPerformed
@@ -966,7 +966,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                             }
                         }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
                         Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
@@ -976,7 +976,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
             }
             refreshTable();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_daftar_bpjsActionPerformed
 
@@ -1046,7 +1046,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
                             }
                         }
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
                         Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
                     } finally {
@@ -1056,7 +1056,7 @@ public class JPanel_DataKaryawan extends javax.swing.JPanel implements Interface
             }
             refreshTable();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_daftar_bpjs_tkActionPerformed
 

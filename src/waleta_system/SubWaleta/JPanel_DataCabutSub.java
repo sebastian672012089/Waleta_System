@@ -150,7 +150,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
             label_total_kpg.setText(decimalFormat.format(total_kpg_upah));
             label_total_gram.setText(decimalFormat.format(total_gram));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -185,7 +185,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
             label_total_cabutan.setText(decimalFormat.format(total_kpg));
             label_total_gram_cabutan.setText(decimalFormat.format(total_gram));
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -779,7 +779,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                 refresh_cabut_sub_online();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_cabut_onlineActionPerformed
@@ -832,7 +832,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                     button_clear_pencabut.doClick();
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -884,7 +884,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_pencabut_onlineActionPerformed
@@ -912,7 +912,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_hapus_pencabut_onlineActionPerformed
@@ -968,7 +968,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
                     }
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Nilai yang dimasukkan salah! \n" + ex);
@@ -997,7 +997,7 @@ public class JPanel_DataCabutSub extends javax.swing.JPanel implements Interface
             JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, map, Utility.db_sub.getConnection());
             JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataCabutSub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_laporan_terima_cabut_subActionPerformed

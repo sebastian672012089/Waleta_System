@@ -35,7 +35,7 @@ public class JDialog_Setor_LP_Cetak_OM extends javax.swing.JDialog {
                 txt_mk.setText(rs.getString("jumlah_keping"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Setor_LP_Cabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -425,7 +425,7 @@ public class JDialog_Setor_LP_Cetak_OM extends javax.swing.JDialog {
                 }
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Setor_LP_Cabut.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

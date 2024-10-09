@@ -86,7 +86,7 @@ public class JPanel_Customer extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -386,7 +386,7 @@ public class JPanel_Customer extends javax.swing.JPanel {
             executeSQLQuery(Query, "inserted !");
             button_clear_customer_baku.doClick();
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_insert_customer_bakuActionPerformed
 
@@ -420,7 +420,7 @@ public class JPanel_Customer extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_update_customer_bakuActionPerformed
 
@@ -448,7 +448,7 @@ public class JPanel_Customer extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_delete_customer_bakuActionPerformed
 

@@ -116,7 +116,7 @@ public class JPanel_DataTreatment extends javax.swing.JPanel {
             label_rata2_perubahanNitrit_Persen.setText(decimalFormat.format(rata2_perubahan_persen));
             ColumnsAutoSizer.sizeColumnsToFit(Table_data_treatment);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataTreatment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -596,7 +596,7 @@ public class JPanel_DataTreatment extends javax.swing.JPanel {
             Utility.db.getStatement().executeUpdate(Query_update);
             refreshTable_Treatment();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataTreatment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_print_labelQCActionPerformed

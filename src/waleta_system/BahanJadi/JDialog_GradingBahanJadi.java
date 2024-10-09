@@ -238,7 +238,7 @@ public class JDialog_GradingBahanJadi extends javax.swing.JDialog {
             }
         } catch (Exception e) {
             add = false;
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
         if (add) {
@@ -651,7 +651,7 @@ public class JDialog_GradingBahanJadi extends javax.swing.JDialog {
             }
         } catch (Exception e) {
             check = false;
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
 
         if (check) {
@@ -708,7 +708,7 @@ public class JDialog_GradingBahanJadi extends javax.swing.JDialog {
                 } catch (SQLException ex) {
                     Logger.getLogger(JDialog_reProcess.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, e);
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 Logger.getLogger(JDialog_reProcess.class.getName()).log(Level.SEVERE, null, e);
             } finally {
                 try {

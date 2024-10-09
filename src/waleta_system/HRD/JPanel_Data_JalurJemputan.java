@@ -405,7 +405,7 @@ public class JPanel_Data_JalurJemputan extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Input Error");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_JalurJemputan.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_Button_AddDateActionPerformed
@@ -443,7 +443,7 @@ public class JPanel_Data_JalurJemputan extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_JalurJemputan.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_deleteActionPerformed

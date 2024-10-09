@@ -183,7 +183,7 @@ public class JPanel_Data_Karyawan_wltsub extends javax.swing.JPanel implements I
             int rowData = table_data_ktp.getRowCount();
             label_total_data.setText(Integer.toString(rowData));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_Karyawan_wltsub.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

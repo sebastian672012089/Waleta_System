@@ -123,7 +123,7 @@ public class JDialog_Edit_Insert_LP_Sapon extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Edit_Insert_LP_Sapon.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_LP_Sapon.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {
@@ -173,7 +173,7 @@ public class JDialog_Edit_Insert_LP_Sapon extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Edit_Insert_LP_Sapon.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Edit_Insert_LP_Sapon.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {

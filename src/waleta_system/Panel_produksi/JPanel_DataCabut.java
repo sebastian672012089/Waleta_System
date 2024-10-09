@@ -190,7 +190,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
             label_total_kpg.setText(decimalFormat.format(total_kpg_upah));
             label_total_gram.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataCabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -228,7 +228,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 label_total_pencabut.setText(rs.getString("pencabut"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCabut.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -263,7 +263,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 button_clear_pencabut.doClick();
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataCabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -344,7 +344,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataCabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -359,7 +359,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCabut.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -1060,7 +1060,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_cabutActionPerformed
@@ -1081,7 +1081,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 edit_cabut.setEnabled(true);
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
 
@@ -1148,7 +1148,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_pencabutActionPerformed
@@ -1200,7 +1200,7 @@ public class JPanel_DataCabut extends javax.swing.JPanel implements InterfacePan
                 button_clear_pencabut.doClick();
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(JPanel_DataCabut.class.getName()).log(Level.SEVERE, null, ex);
         }

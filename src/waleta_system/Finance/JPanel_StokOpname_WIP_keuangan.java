@@ -85,7 +85,7 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
 //            ColumnsAutoSizer.sizeColumnsToFit(tabel_stockOpname);
             label_total_data_SO.setText(Integer.toString(tabel_stockOpname.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpname_WIP_keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -202,7 +202,7 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
             label_total_gram_lp_wip.setText(decimalFormat.format(total_gram));
             label_total_nilai_lp_wip.setText(decimalFormat.format(total_nilai));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpname_WIP_keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -261,7 +261,7 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_data_LP_SCAN_rekap_posisi);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpname_WIP_keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -948,7 +948,7 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_StokOpname_WIP_keuangan.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_noLP_ScanActionPerformed
@@ -975,7 +975,7 @@ public class JPanel_StokOpname_WIP_keuangan extends javax.swing.JPanel {
                 JasperViewer.viewReport(JASP_PRINT, false);//isExitOnClose (false)
             }
         } catch (JRException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpname_WIP_keuangan.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_printActionPerformed

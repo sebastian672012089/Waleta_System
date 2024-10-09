@@ -161,7 +161,7 @@ public class JPanel_ProgressSPKPengiriman extends javax.swing.JPanel {
             label_total_keping.setText(decimalFormat.format(total_kpg));
             label_total_gram.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_ProgressSPKPengiriman.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -186,7 +186,7 @@ public class JPanel_ProgressSPKPengiriman extends javax.swing.JPanel {
             }
             ColumnsAutoSizer.sizeColumnsToFit(tabel_detail_update_harian);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_ProgressSPKPengiriman.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -640,7 +640,7 @@ public class JPanel_ProgressSPKPengiriman extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Silahkan Klik data yang akan di hapus pada tabel !");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_ScanQR.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_data_kinerjaActionPerformed

@@ -87,7 +87,7 @@ public class JPanel_StokOpnameGBJ_RekapGrade extends javax.swing.JPanel {
             ColumnsAutoSizer.sizeColumnsToFit(tabel_stockOpname);
             label_total_data_SO.setText(Integer.toString(tabel_stockOpname.getRowCount()));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpnameGBJ_RekapGrade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -132,7 +132,7 @@ public class JPanel_StokOpnameGBJ_RekapGrade extends javax.swing.JPanel {
             label_total_gram_box.setText(decimalFormat.format(total_gram));
             label_total_nilai_jual.setText(decimalFormat.format(total_nilai_jual));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_StokOpnameGBJ_RekapGrade.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -490,7 +490,7 @@ public class JPanel_StokOpnameGBJ_RekapGrade extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(this, "Update failed!");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_StokOpnameGBJ_RekapGrade.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Input must be number!");

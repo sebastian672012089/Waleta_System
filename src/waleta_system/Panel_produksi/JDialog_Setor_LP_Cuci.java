@@ -548,7 +548,7 @@ public class JDialog_Setor_LP_Cuci extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "data failed!");
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

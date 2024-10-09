@@ -39,7 +39,7 @@ public class JDialog_Setor_LP_Cabut extends javax.swing.JDialog {
                 Date_Setor.setMinSelectableDate(rs.getDate("mulai_cabut"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Setor_LP_Cabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -439,7 +439,7 @@ public class JDialog_Setor_LP_Cabut extends javax.swing.JDialog {
                 }
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_saveActionPerformed

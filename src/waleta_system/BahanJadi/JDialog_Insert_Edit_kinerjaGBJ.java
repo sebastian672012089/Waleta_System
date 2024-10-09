@@ -414,7 +414,7 @@ public class JDialog_Insert_Edit_kinerjaGBJ extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Insert_Edit_kinerjaGBJ.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_editActionPerformed
@@ -467,7 +467,7 @@ public class JDialog_Insert_Edit_kinerjaGBJ extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Insert_Edit_kinerjaGBJ.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_insertActionPerformed

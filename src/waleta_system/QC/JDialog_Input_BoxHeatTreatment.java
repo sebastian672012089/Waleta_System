@@ -72,7 +72,7 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
                 }
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Input_BoxHeatTreatment.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -110,7 +110,7 @@ public class JDialog_Input_BoxHeatTreatment extends javax.swing.JDialog {
                 this.dispose();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Input_BoxHeatTreatment.class.getName()).log(Level.SEVERE, null, e);
         }
     }

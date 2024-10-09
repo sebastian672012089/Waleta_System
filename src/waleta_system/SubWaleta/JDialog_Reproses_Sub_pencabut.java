@@ -40,7 +40,7 @@ public class JDialog_Reproses_Sub_pencabut extends javax.swing.JDialog {
                     txt_jmlh_keping.setText(rs.getString("jumlah_cabut"));
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_Reproses_Sub_pencabut.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -81,7 +81,7 @@ public class JDialog_Reproses_Sub_pencabut extends javax.swing.JDialog {
             }
             this.dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Reproses_Sub_pencabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -119,7 +119,7 @@ public class JDialog_Reproses_Sub_pencabut extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Failed !");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Reproses_Sub_pencabut.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

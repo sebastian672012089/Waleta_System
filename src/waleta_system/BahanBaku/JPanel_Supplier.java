@@ -79,7 +79,7 @@ public class JPanel_Supplier extends javax.swing.JPanel {
             int rowData = Table_Supplier.getRowCount();
             label_total_data_supplier.setText(Integer.toString(rowData));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Supplier.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -95,7 +95,7 @@ public class JPanel_Supplier extends javax.swing.JPanel {
             }
             refreshTable();
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -427,7 +427,7 @@ public class JPanel_Supplier extends javax.swing.JPanel {
                 button_clear_supplier.doClick();
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Supplier.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_insert_supplierActionPerformed
@@ -458,7 +458,7 @@ public class JPanel_Supplier extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Supplier.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_update_supplierActionPerformed
@@ -492,7 +492,7 @@ public class JPanel_Supplier extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Supplier.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_supplierActionPerformed
@@ -533,7 +533,7 @@ public class JPanel_Supplier extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Supplier.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_aktifkanActionPerformed
@@ -556,7 +556,7 @@ public class JPanel_Supplier extends javax.swing.JPanel {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Supplier.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_non_aktifkanActionPerformed

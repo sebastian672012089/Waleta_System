@@ -653,7 +653,7 @@ public class JPanel_Harga_Kartu_Campuran extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Harga_Kartu_Campuran.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_set_hargaActionPerformed

@@ -261,7 +261,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             });
             table_pengajuan.repaint();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -674,7 +674,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 refreshTable();
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_newActionPerformed
@@ -712,7 +712,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_editActionPerformed
@@ -753,7 +753,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_deleteActionPerformed
@@ -824,7 +824,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             } catch (SQLException ex1) {
                 Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -877,7 +877,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             } catch (SQLException ex1) {
                 Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -978,7 +978,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             } catch (SQLException ex1) {
                 Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -1009,7 +1009,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 clipboard.setContents(selection, null);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_buka_linkActionPerformed
@@ -1044,7 +1044,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_dikirimActionPerformed
@@ -1079,7 +1079,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_sampaiActionPerformed
@@ -1117,7 +1117,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_selesaiActionPerformed
@@ -1172,7 +1172,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
             } catch (SQLException ex1) {
                 Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex1);
             }
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
@@ -1213,7 +1213,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_realisasiActionPerformed
@@ -1255,7 +1255,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 JasperPrint JASP_PRINT = JasperFillManager.fillReport(JASP_REP, params, Utility.db.getConnection());
                 JasperViewer.viewReport(JASP_PRINT, false);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JPanel_payrol_harian.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1334,7 +1334,7 @@ public class JPanel_Aset_PengajuanPembelian extends javax.swing.JPanel {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Aset_PengajuanPembelian.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_batalActionPerformed

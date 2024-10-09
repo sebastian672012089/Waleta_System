@@ -621,7 +621,7 @@ public class JPanel_Hari_kerja extends javax.swing.JPanel {
                 ComboBox_bagian_karyawan.addItem(rs.getString("nama_bagian"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_ComboBox_departemen_karyawanActionPerformed
 

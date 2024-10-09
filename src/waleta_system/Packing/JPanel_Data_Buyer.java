@@ -68,7 +68,7 @@ public class JPanel_Data_Buyer extends javax.swing.JPanel {
                 model.addRow(row);
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Data_Buyer.class.getName()).log(Level.SEVERE, null, ex);
         }
         label_total_data.setText(Integer.toString(Table_buyer.getRowCount()));
@@ -86,7 +86,7 @@ public class JPanel_Data_Buyer extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "data not " + message);
             }
         } catch (SQLException | HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_Data_Buyer.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -416,7 +416,7 @@ public class JPanel_Data_Buyer extends javax.swing.JPanel {
                 button_clear_text.doClick();
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_insertActionPerformed
 
@@ -442,7 +442,7 @@ public class JPanel_Data_Buyer extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_updateActionPerformed
 
@@ -472,7 +472,7 @@ public class JPanel_Data_Buyer extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_button_deleteActionPerformed
 

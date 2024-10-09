@@ -202,7 +202,7 @@ public class JDialog_input_sesekanLP extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Update failed!");
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
                 Logger.getLogger(JDialog_input_sesekanLP.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

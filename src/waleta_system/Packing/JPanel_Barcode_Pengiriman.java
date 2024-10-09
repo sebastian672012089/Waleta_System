@@ -608,7 +608,7 @@ public class JPanel_Barcode_Pengiriman extends javax.swing.JPanel {
                             } catch (SQLException e) {
                                 Logger.getLogger(JPanel_Barcode_Pengiriman.class.getName()).log(Level.SEVERE, null, e);
                             }
-                            JOptionPane.showMessageDialog(this, ex);
+                            JOptionPane.showMessageDialog(this, ex.getMessage());
                             Logger.getLogger(JPanel_Barcode_Pengiriman.class.getName()).log(Level.SEVERE, null, ex);
                         } finally {
                             try {
@@ -622,7 +622,7 @@ public class JPanel_Barcode_Pengiriman extends javax.swing.JPanel {
                     }
                 }
             } catch (HeadlessException | IOException ex) {
-                JOptionPane.showMessageDialog(this, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         } else {
             JOptionPane.showMessageDialog(this, "Silahkan pilih grade terlebih dahulu !");

@@ -94,7 +94,7 @@ public class Browse_Bagian extends javax.swing.JDialog {
             }
             refreshTable();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(Browse_Bagian.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -146,7 +146,7 @@ public class Browse_Bagian extends javax.swing.JDialog {
             }
             ColumnsAutoSizer.sizeColumnsToFit(table_bagian);
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(Browse_Bagian.class.getName()).log(Level.SEVERE, null, e);
         }
     }

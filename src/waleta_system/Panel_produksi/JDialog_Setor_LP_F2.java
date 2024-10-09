@@ -88,7 +88,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
                 ruangan = rs.getString("ruangan");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Setor_LP_F2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -1355,7 +1355,7 @@ public class JDialog_Setor_LP_F2 extends javax.swing.JDialog {
             } catch (SQLException ex) {
                 Logger.getLogger(JDialog_Setor_LP_F2.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JDialog_Setor_LP_F2.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             try {

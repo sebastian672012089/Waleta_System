@@ -82,7 +82,7 @@ public class JFrame_Timer extends javax.swing.JFrame {
             t = new Timer();
             t.schedule(timer, 0, 1000);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JFrame_Timer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

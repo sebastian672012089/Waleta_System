@@ -42,7 +42,7 @@ public class JDialog_pengiriman_PickUp_insert_edit extends javax.swing.JDialog {
                 ComboBox_ekspedisi.addItem(rs.getString("id_ekspedisi"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman_PickUp_insert_edit.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (id_request != null) {
@@ -74,7 +74,7 @@ public class JDialog_pengiriman_PickUp_insert_edit extends javax.swing.JDialog {
                 label_spk.setText(result.getString("kode_spk"));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman_PickUp_insert_edit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -133,10 +133,10 @@ public class JDialog_pengiriman_PickUp_insert_edit extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Insert failed!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman_PickUp_insert_edit.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman_PickUp_insert_edit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -174,7 +174,7 @@ public class JDialog_pengiriman_PickUp_insert_edit extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Update failed!");
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman_PickUp_insert_edit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -451,7 +451,7 @@ public class JDialog_pengiriman_PickUp_insert_edit extends javax.swing.JDialog {
                 ComboBox_sopir.addItem(rs.getString("id_sopir") + "-" + rs.getString("nama"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_pengiriman_PickUp_insert_edit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_ComboBox_ekspedisiActionPerformed

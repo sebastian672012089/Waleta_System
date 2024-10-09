@@ -86,7 +86,7 @@ public class JPanel_DataTRSela extends javax.swing.JPanel {
             label_total_kpg_tr_sela.setText(decimalFormat.format(total_kpg));
             label_total_gram_tr_sela.setText(decimalFormat.format(total_gram));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_DataTRSela.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -364,7 +364,7 @@ public class JPanel_DataTRSela extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_delete_tr_selaActionPerformed
@@ -383,7 +383,7 @@ public class JPanel_DataTRSela extends javax.swing.JPanel {
                 edit_cetak.setEnabled(true);
             }
         } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, e);
         }
     }//GEN-LAST:event_button_edit_tr_selaActionPerformed

@@ -261,7 +261,7 @@ public class JPanel_Payment_Report extends javax.swing.JPanel {
             table_summary.setValueAt(total_ap_outstanding, 0, 12);
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Payment_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -321,7 +321,7 @@ public class JPanel_Payment_Report extends javax.swing.JPanel {
             label_total_hutang.setText(decimalFormat.format(total_hutang));
             label_total_hutang_belum_terbayar.setText(decimalFormat.format(total_belum_terbayar));
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JPanel_Payment_Report.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -364,7 +364,7 @@ public class JPanel_Payment_Report extends javax.swing.JPanel {
                         } catch (SQLException x) {
                             Logger.getLogger(JPanel_Payment_Report.class.getName()).log(Level.SEVERE, null, "BBB : " + x);
                         }
-                        JOptionPane.showMessageDialog(this, ex);
+                        JOptionPane.showMessageDialog(this, ex.getMessage());
                         Logger.getLogger(JPanel_Payment_Report.class.getName()).log(Level.SEVERE, null, "AAA : " + ex);
                     } finally {
                         JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + n);
@@ -372,7 +372,7 @@ public class JPanel_Payment_Report extends javax.swing.JPanel {
                 }
             }
         } catch (HeadlessException | IOException ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
 

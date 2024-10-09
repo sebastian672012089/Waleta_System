@@ -454,7 +454,7 @@ public class JDialog_Rekap_CabutCetakAbsen extends javax.swing.JDialog {
             rekap_sub = rekap_sub + "*TOTAL : " + total_sub + "*";
             label_totalSUB.setText(Integer.toString(total_sub));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Rekap_CabutCetakAbsen.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

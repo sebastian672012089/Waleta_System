@@ -256,7 +256,7 @@ public class JDialog_InputAbsenManual extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "data Failed");
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_InputAbsenManual.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             this.dispose();

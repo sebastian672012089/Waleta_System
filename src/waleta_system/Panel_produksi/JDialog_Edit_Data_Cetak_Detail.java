@@ -65,7 +65,7 @@ public class JDialog_Edit_Data_Cetak_Detail extends javax.swing.JDialog {
                 txt_jidun_real.setText(rs.getString("cetak_jidun_real"));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Data_Cetak_Detail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -119,7 +119,7 @@ public class JDialog_Edit_Data_Cetak_Detail extends javax.swing.JDialog {
                 }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
             Logger.getLogger(JDialog_Edit_Data_Cetak_Detail.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -154,7 +154,7 @@ public class JDialog_Edit_Data_Cetak_Detail extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Tidak ada perubahan data!");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e);
+            JOptionPane.showMessageDialog(this, e.getMessage());
             Logger.getLogger(JPanel_DataCetak.class.getName()).log(Level.SEVERE, null, e);
         }
     }
