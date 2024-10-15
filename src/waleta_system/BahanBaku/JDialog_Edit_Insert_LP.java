@@ -947,16 +947,16 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
                         .addGap(1, 1, 1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_pecah_lp5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_keping_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_berat_basah_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_berat_basah_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_kartu_waleta_LP, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_keping_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_kode_grade_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_berat_kering, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_jumlah_pecah_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_keping_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_berat_basah_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_jumlah_keping_lp1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_kode_grade_lp, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(label_jumlah_pecah_lp5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(6, 6, 6)
@@ -1558,17 +1558,14 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             Utility.db_sub.getConnection().setAutoCommit(false);
             Utility.db_cabuto.getConnection().setAutoCommit(false);
 
-            if (berat_kering > berat_basah) {
-                JOptionPane.showMessageDialog(this, "Maaf Berat Kering tidak bisa lebih besar dari berat angin2");
+            if (label_kode_pecah_lp.getText() == null || label_kode_pecah_lp.getText().equals("") || label_kode_pecah_lp.getText().equals("-")) {
+                JOptionPane.showMessageDialog(this, "Kode Pecah belum dipilih!");
                 Check = false;
             } else if (keping_upah <= 0) {
                 JOptionPane.showMessageDialog(this, "Maaf Keping upah tidak bisa kurang dari 1");
                 Check = false;
             } else if (berat_basah <= 0) {
                 JOptionPane.showMessageDialog(this, "Maaf Berat tidak bisa kurang dari 1");
-                Check = false;
-            } else if (label_kode_pecah_lp.getText() == null || label_kode_pecah_lp.getText().equals("") || label_kode_pecah_lp.getText().equals("-")) {
-                JOptionPane.showMessageDialog(this, "Kode Pecah belum dipilih!");
                 Check = false;
             }
 
@@ -1677,11 +1674,10 @@ public class JDialog_Edit_Insert_LP extends javax.swing.JDialog {
             Logger.getLogger(JDialog_Edit_Insert_LP.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (berat_kering > berat_basah) {
-            JOptionPane.showMessageDialog(this, "Maaf Berat Kering tidak bisa lebih besar dari berat angin2\nSilahkan cek kadar air kartu baku");
-            Check = false;
-        }
-        
+//        if (berat_kering > berat_basah) {
+//            JOptionPane.showMessageDialog(this, "Maaf Berat Kering tidak bisa lebih besar dari berat angin2\nSilahkan cek kadar air kartu baku");
+//            Check = false;
+//        }
         if (Check) {
             if (status.equals("sub")) {
                 insert_lp_sub();

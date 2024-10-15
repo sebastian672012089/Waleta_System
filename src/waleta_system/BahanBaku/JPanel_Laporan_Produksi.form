@@ -808,8 +808,8 @@
                             <Column editable="false" title="Bulu Upah" type="java.lang.String"/>
                             <Column editable="false" title="Keping" type="java.lang.Integer"/>
                             <Column editable="false" title="Kpg Upah" type="java.lang.Integer"/>
-                            <Column editable="false" title="Berat Angin2" type="java.lang.Integer"/>
-                            <Column editable="false" title="Berat Kering" type="java.lang.Integer"/>
+                            <Column editable="false" title="Berat Angin2" type="java.lang.Float"/>
+                            <Column editable="false" title="Berat Kering" type="java.lang.Float"/>
                             <Column editable="false" title="No Kartu" type="java.lang.String"/>
                             <Column editable="false" title="Ruang" type="java.lang.String"/>
                             <Column editable="false" title="Memo" type="java.lang.String"/>

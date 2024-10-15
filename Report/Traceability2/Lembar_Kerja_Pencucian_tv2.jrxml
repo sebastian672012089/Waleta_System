@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Kerja Pencucian" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
-	<property name="ireport.zoom" value="1.3636363636363638"/>
+	<property name="ireport.zoom" value="1.9487171000000014"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="Title" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+	<style name="Title" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -13,7 +12,7 @@
 			<rightPen lineWidth="1.0"/>
 		</box>
 	</style>
-	<style name="SubTitle" forecolor="#000000" vTextAlign="Middle" vImageAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+	<style name="SubTitle" forecolor="#000000" fontName="Arial" fontSize="12" isBold="false">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -65,7 +64,7 @@
 			<style backcolor="#F0F0F0"/>
 		</conditionalStyle>
 	</style>
-	<style name="Page footer" forecolor="#000000" vTextAlign="Middle" vImageAlign="Middle" fontName="Arial" fontSize="12">
+	<style name="Page footer" forecolor="#000000" fontName="Arial" fontSize="12">
 		<box>
 			<pen lineWidth="0.0"/>
 			<topPen lineWidth="0.0"/>
@@ -74,7 +73,7 @@
 			<rightPen lineWidth="0.0"/>
 		</box>
 	</style>
-	<style name="TTD" forecolor="#000000" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="Arial" fontSize="12">
+	<style name="TTD" forecolor="#000000" fontName="Arial" fontSize="12">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -197,7 +196,7 @@ WHERE `tb_cuci`.`no_laporan_produksi` IN ("WL-230909983")
 			</textField>
 			<staticText>
 				<reportElement style="SubTitle" x="350" y="0" width="70" height="15" uuid="20f530eb-d7a6-4eaa-92fe-c8ae014479e1"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[No Dokumen]]></text>
@@ -206,6 +205,7 @@ WHERE `tb_cuci`.`no_laporan_produksi` IN ("WL-230909983")
 				<reportElement style="Title" x="0" y="0" width="130" height="30" uuid="e04aa688-28ca-4235-bb47-6f7e138f3201"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="11" isBold="false" pdfFontName="Times-Roman"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[PT. WALETA ASIA JAYA]]></text>
 			</staticText>
@@ -213,26 +213,27 @@ WHERE `tb_cuci`.`no_laporan_produksi` IN ("WL-230909983")
 				<reportElement style="Title" x="0" y="30" width="130" height="45" uuid="769e7400-850b-4312-92a7-d48da4f55ff3"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[DEPARTEMEN BAHAN MENTAH]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="350" y="15" width="70" height="15" uuid="4171a1ae-c1b5-41a1-96e2-184e0625167d"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[No Revisi]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="350" y="30" width="70" height="15" uuid="6520effd-1275-4076-8dee-20b3995d3b7b"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Tanggal]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="350" y="45" width="70" height="30" uuid="3fad08bd-281a-4a16-9c19-e761bbcdc2f8"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Menggantikan dokumen no.]]></text>
@@ -267,28 +268,28 @@ WHERE `tb_cuci`.`no_laporan_produksi` IN ("WL-230909983")
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="435" y="0" width="120" height="15" uuid="8a1ce354-9ca5-4ae6-9903-6fe9455be9f7"/>
-				<textElement markup="none">
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[FR/WAJ/BM/03/c]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="435" y="15" width="120" height="15" uuid="c9527491-989f-4521-a824-8a015922bb80"/>
-				<textElement markup="none">
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[04]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="435" y="30" width="120" height="15" uuid="54a3e2ee-243f-471e-a810-5d65fe2047b9"/>
-				<textElement markup="none">
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[31 Mei 2024]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="435" y="45" width="120" height="30" uuid="1ec0f33f-0bd5-4905-8315-1358626883fc"/>
-				<textElement markup="none">
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[FR/WAJ/PRD/01/c]]></text>
@@ -302,7 +303,7 @@ WHERE `tb_cuci`.`no_laporan_produksi` IN ("WL-230909983")
 			</staticText>
 			<staticText>
 				<reportElement style="Title" x="130" y="0" width="220" height="75" uuid="478ed9de-18b4-49c5-8461-147709b5ed2c"/>
-				<textElement verticalAlignment="Top">
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial Narrow" size="12" isBold="true" pdfFontName="Times-Roman"/>
 					<paragraph spacingBefore="10"/>
 				</textElement>
@@ -467,7 +468,7 @@ WHERE `tb_cuci`.`no_laporan_produksi` IN ("WL-230909983")
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nama_pegawai}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="ScaleFont" pattern="dd/MM/yy">
+				<textField pattern="dd/MM/yy">
 					<reportElement style="Detail" x="0" y="0" width="40" height="20" uuid="e3de95b7-5324-4c41-b402-df0b2d1ef27d"/>
 					<box>
 						<leftPen lineWidth="1.0"/>

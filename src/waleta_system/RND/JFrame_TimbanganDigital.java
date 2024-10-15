@@ -1,26 +1,13 @@
 package waleta_system.RND;
 
 import com.fazecast.jSerialComm.SerialPort;
-import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import waleta_system.SoundJLayer;
 
 public class JFrame_TimbanganDigital extends javax.swing.JFrame {
 
@@ -54,13 +41,13 @@ public class JFrame_TimbanganDigital extends javax.swing.JFrame {
         comPort.setComPortParameters(9600, 8, 1, 0); // Baud rate, Data bits, Stop bits, Parity
         comPort.setFlowControl(SerialPort.FLOW_CONTROL_DISABLED);
 //        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
-        comPort.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING, 0, 0);
+        comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 5000, 0);
+//        comPort.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING, 1000, 0);
 
         // Membuka port
         if (comPort.openPort()) {
             System.out.println("Port " + comPort.getSystemPortName() + " terbuka.");
             System.out.println("Menunggu data dari port: " + comPort.getSystemPortName());
-
 
             // Membuat thread untuk membaca data secara asynchronous
             Thread thread = new Thread(() -> {
@@ -74,25 +61,23 @@ public class JFrame_TimbanganDigital extends javax.swing.JFrame {
 
                     System.out.println("Memulai pembacaan data...");
                     while ((nextChar = in.read()) != -1) {
-                        System.out.println("Membaca karakter: " + nextChar);
                         char c = (char) nextChar;
                         if (c == '\n' || c == '\r') {
                             if (sb.length() > 0) {
                                 String data = sb.toString().trim();
                                 System.out.println("Data dari " + comPort.getSystemPortName() + ": " + data);
 
-                                // Memproses string untuk mendapatkan angka saja
-                                String weightString = data.replaceAll("[^0-9.-]", "").trim();
-
-                                // Mengonversi string menjadi double
-                                try {
-                                    label_time.setText(weightString + " g");
-                                    double weight = Double.parseDouble(weightString);
-                                    System.out.println("Berat dalam kg: " + weight);
-                                } catch (NumberFormatException e) {
-                                    System.out.println("Gagal mengonversi data menjadi angka.");
-                                }
-
+//                                // Memproses string untuk mendapatkan angka saja
+//                                String weightString = data.replaceAll("[^0-9.-]", "").trim();
+//
+//                                // Mengonversi string menjadi double
+//                                try {
+//                                    label_time.setText(weightString + " g");
+//                                    double weight = Double.parseDouble(weightString);
+//                                    System.out.println("Berat dalam kg: " + weight);
+//                                } catch (NumberFormatException e) {
+//                                    System.out.println("Gagal mengonversi data menjadi angka.");
+//                                }
                                 sb.setLength(0); // Clear the StringBuilder for the next message
                             }
                         } else {

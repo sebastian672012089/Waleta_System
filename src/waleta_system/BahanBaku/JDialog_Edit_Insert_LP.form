@@ -163,16 +163,16 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel25" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="label_jumlah_pecah_lp5" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="label_berat_basah_lp1" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="label_kartu_waleta_LP" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="label_berat_kering" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
-                                  <Component id="label_jumlah_pecah_lp1" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                   <Component id="label_jumlah_keping_lp" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Component id="label_berat_basah_lp1" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                   <Component id="label_berat_basah_lp" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Component id="label_kartu_waleta_LP" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                   <Component id="label_jumlah_keping_lp1" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                                   <Component id="label_kode_grade_lp" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Component id="label_berat_kering" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Component id="label_jumlah_pecah_lp1" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Component id="jLabel25" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
+                                  <Component id="label_jumlah_pecah_lp5" alignment="0" min="-2" pref="110" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">

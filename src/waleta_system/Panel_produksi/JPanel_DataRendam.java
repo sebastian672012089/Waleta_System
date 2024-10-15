@@ -61,7 +61,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
             }
         });
     }
-    
+
     public void init() {
         refreshTable_Rendam();
     }
@@ -135,7 +135,6 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         }
     }
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -174,6 +173,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txt_search_memo = new javax.swing.JTextField();
         button_input_waktu_rendam = new javax.swing.JButton();
+        button_set_data_rendam_otomatis = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Data Rendam", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 14))); // NOI18N
@@ -433,6 +433,15 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
             }
         });
 
+        button_set_data_rendam_otomatis.setBackground(new java.awt.Color(255, 255, 255));
+        button_set_data_rendam_otomatis.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        button_set_data_rendam_otomatis.setText("Set data rendam otomatis");
+        button_set_data_rendam_otomatis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_set_data_rendam_otomatisActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel_DataRendamLayout = new javax.swing.GroupLayout(jPanel_DataRendam);
         jPanel_DataRendam.setLayout(jPanel_DataRendamLayout);
         jPanel_DataRendamLayout.setHorizontalGroup(
@@ -462,7 +471,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                         .addComponent(button_Catatan_Rendaman_Bahan_Mentah)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(button_input_waktu_rendam)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 76, Short.MAX_VALUE))
                     .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1002, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -471,7 +480,8 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                             .addGroup(jPanel_DataRendamLayout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_total_data_rendam)))))
+                                .addComponent(label_total_data_rendam))
+                            .addComponent(button_set_data_rendam_otomatis))))
                 .addContainerGap())
         );
         jPanel_DataRendamLayout.setVerticalGroup(
@@ -497,8 +507,10 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                         .addGroup(jPanel_DataRendamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(label_total_data_rendam))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(button_set_data_rendam_otomatis, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -644,7 +656,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                     + "WHERE "
                     + "`tb_rendam`.`no_laporan_produksi` IN (" + no_lp + ") "
                     + "AND `waktu_mulai_rendam` IS NOT NULL "
-//                    + "AND `cheat_rsb` IS NOT NULL "
+                    //                    + "AND `cheat_rsb` IS NOT NULL "
                     + "ORDER BY `tanggal_rendam` DESC, `waktu_mulai_rendam` DESC, `tb_rendam`.`no_laporan_produksi` ASC";
             JRDesignQuery newQuery = new JRDesignQuery();
             newQuery.setText(Query);
@@ -694,7 +706,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
                 Utility.db.getConnection();
                 File file = chooser.getSelectedFile();
                 String filename1 = file.getAbsolutePath();
-                try (BufferedReader br = new BufferedReader(new FileReader(filename1))) {
+                try ( BufferedReader br = new BufferedReader(new FileReader(filename1))) {
                     String line;
                     String Query = null;
                     try {
@@ -726,6 +738,48 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_button_input_waktu_rendamActionPerformed
 
+    private void button_set_data_rendam_otomatisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_set_data_rendam_otomatisActionPerformed
+        // TODO add your handling code here:
+        int x = JOptionPane.showConfirmDialog(this, "Fungsi ini untuk input semua data rendam yang lama waktu rendamnya 10 menit\n"
+                + "menjadi 2 menit untuk grade warna W1 dan W2, dan 3 menit untuk grade lainnya\n"
+                + "dan memasukkan nama pekerja rendam menjadi HENGKI FEBRI TRI NURYANTO\n"
+                + "Lanjutkan?", "Edit data rendam", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+        if (x == JOptionPane.YES_OPTION) {
+            try {
+                Utility.db.getConnection().setAutoCommit(false);
+                String Query1 = "UPDATE `tb_rendam` \n"
+                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_rendam`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                        + "SET \n"
+                        + "`pekerja_rendam` = 'HENGKI FEBRI TRI NURYANTO', `lama_waktu_rendam` = 2\n"
+                        + "WHERE (`tb_laporan_produksi`.`kode_grade` LIKE '%W1%' OR `tb_laporan_produksi`.`kode_grade` LIKE '%W2%')\n"
+                        + "AND `lama_waktu_rendam` = 10";
+                int a = Utility.db.getStatement().executeUpdate(Query1);
+                String Query2 = "UPDATE `tb_rendam` \n"
+                        + "LEFT JOIN `tb_laporan_produksi` ON `tb_rendam`.`no_laporan_produksi` = `tb_laporan_produksi`.`no_laporan_produksi`\n"
+                        + "SET \n"
+                        + "`pekerja_rendam` = 'HENGKI FEBRI TRI NURYANTO', `lama_waktu_rendam` = 3\n"
+                        + "WHERE (`tb_laporan_produksi`.`kode_grade` NOT LIKE '%W1%' AND `tb_laporan_produksi`.`kode_grade` NOT LIKE '%W2%')\n"
+                        + "AND `lama_waktu_rendam` = 10";
+                int b = Utility.db.getStatement().executeUpdate(Query2);
+                Utility.db.getConnection().commit();
+                JOptionPane.showMessageDialog(this, "Data Berhasil Masuk : " + (a + b));
+            } catch (Exception ex) {
+                try {
+                    Utility.db.getConnection().rollback();
+                } catch (SQLException ex1) {
+                    Logger.getLogger(JPanel_DataRendam.class.getName()).log(Level.SEVERE, null, ex1);
+                }
+                Logger.getLogger(JPanel_DataRendam.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    Utility.db.getConnection().setAutoCommit(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(JPanel_DataRendam.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_button_set_data_rendam_otomatisActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Date1_rendam;
@@ -739,6 +793,7 @@ public class JPanel_DataRendam extends javax.swing.JPanel {
     private javax.swing.JButton button_input_waktu_rendam;
     public javax.swing.JButton button_insert_rendam;
     private javax.swing.JButton button_search_rendam;
+    private javax.swing.JButton button_set_data_rendam_otomatis;
     public javax.swing.JButton button_update_rendam;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

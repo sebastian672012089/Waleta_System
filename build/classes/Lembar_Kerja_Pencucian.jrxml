@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Laporan Kerja Pencucian" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="dfb55c7b-c07a-43db-bca9-73d8ee732d21">
-	<property name="ireport.zoom" value="1.363636363636364"/>
+	<property name="ireport.zoom" value="2.1435888100000016"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="Title" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
+	<style name="Title" fontName="Times New Roman" fontSize="12" isBold="true" pdfFontName="Times-Bold">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -13,7 +12,7 @@
 			<rightPen lineWidth="1.0"/>
 		</box>
 	</style>
-	<style name="SubTitle" forecolor="#000000" vTextAlign="Middle" vImageAlign="Middle" fontName="Arial" fontSize="12" isBold="false">
+	<style name="SubTitle" forecolor="#000000" fontName="Arial" fontSize="12" isBold="false">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -65,7 +64,7 @@
 			<style backcolor="#F0F0F0"/>
 		</conditionalStyle>
 	</style>
-	<style name="Page footer" forecolor="#000000" vTextAlign="Middle" vImageAlign="Middle" fontName="Arial" fontSize="12">
+	<style name="Page footer" forecolor="#000000" fontName="Arial" fontSize="12">
 		<box>
 			<pen lineWidth="0.0"/>
 			<topPen lineWidth="0.0"/>
@@ -74,7 +73,7 @@
 			<rightPen lineWidth="0.0"/>
 		</box>
 	</style>
-	<style name="TTD" forecolor="#000000" hTextAlign="Center" hImageAlign="Center" vTextAlign="Middle" vImageAlign="Middle" fontName="Arial" fontSize="12">
+	<style name="TTD" forecolor="#000000" fontName="Arial" fontSize="12">
 		<box>
 			<pen lineWidth="1.0"/>
 			<topPen lineWidth="1.0"/>
@@ -156,21 +155,21 @@ ORDER BY `tb_cuci`.`tgl_masuk_cuci` ASC]]>
 			</textField>
 			<staticText>
 				<reportElement style="SubTitle" x="350" y="0" width="70" height="15" uuid="0dedc91c-82bc-471a-afde-cc369c91ce00"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[No Dokumen]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="350" y="15" width="70" height="15" uuid="eb56d88d-f654-43f6-a961-183588fcb209"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[No Revisi]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="350" y="45" width="70" height="30" uuid="dd53cebc-251c-4940-ba33-c74ea3e87b7e"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Menggantikan dokumen no.]]></text>
@@ -184,7 +183,7 @@ ORDER BY `tb_cuci`.`tgl_masuk_cuci` ASC]]>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="350" y="30" width="70" height="15" uuid="cd8a30f8-aef0-4115-a847-ee02ebddd150"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[Tanggal]]></text>
@@ -207,6 +206,7 @@ ORDER BY `tb_cuci`.`tgl_masuk_cuci` ASC]]>
 				<reportElement style="Title" x="0" y="30" width="130" height="45" uuid="70273c3a-448a-4a20-9cee-9577e3c13779"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[DEPARTEMEN BAHAN MENTAH]]></text>
 			</staticText>
@@ -221,6 +221,7 @@ ORDER BY `tb_cuci`.`tgl_masuk_cuci` ASC]]>
 				<reportElement style="Title" x="0" y="0" width="130" height="30" uuid="b11d95f6-8b2c-4593-94f1-7198e484306d"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial Narrow" size="11" isBold="false" pdfFontName="Times-Roman"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[PT. WALETA ASIA JAYA]]></text>
 			</staticText>
@@ -266,35 +267,35 @@ ORDER BY `tb_cuci`.`tgl_masuk_cuci` ASC]]>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="435" y="45" width="120" height="30" uuid="06092ec9-f08f-42be-8aef-28cfb5dcc3b3"/>
-				<textElement markup="none">
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[FR/WAJ/PRD/01/c]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="435" y="0" width="120" height="15" uuid="1408a731-69e1-478a-8ead-4635ad2fb755"/>
-				<textElement markup="none">
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[FR/WAJ/BM/03/c]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="435" y="15" width="120" height="15" uuid="6d9eafee-fa55-4dae-a1d9-3cf208e3f46f"/>
-				<textElement markup="none">
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[04]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="SubTitle" x="435" y="30" width="120" height="15" uuid="aada9603-65a6-4fb2-bebe-a867c502ac2a"/>
-				<textElement markup="none">
+				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Arial Narrow" size="10" isBold="false" pdfFontName="Times-Roman"/>
 				</textElement>
 				<text><![CDATA[31 Mei 2024]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Title" x="130" y="0" width="220" height="75" uuid="cd8575bb-758f-406c-b387-387b1581623c"/>
-				<textElement verticalAlignment="Top">
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Arial Narrow" size="12" isBold="true" pdfFontName="Times-Roman"/>
 					<paragraph spacingBefore="10"/>
 				</textElement>
@@ -422,7 +423,7 @@ ORDER BY `tb_cuci`.`tgl_masuk_cuci` ASC]]>
 		<band height="20" splitType="Stretch">
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="20" uuid="ceb3e7bd-a5cc-494b-873f-f1f6d6f4e1ca"/>
-				<textField textAdjust="ScaleFont" pattern="dd/MM/yy">
+				<textField pattern="dd/MM/yy">
 					<reportElement style="Detail" x="0" y="0" width="40" height="20" uuid="fe9f1ca1-530f-427f-89cf-5e700b68c5a6"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>

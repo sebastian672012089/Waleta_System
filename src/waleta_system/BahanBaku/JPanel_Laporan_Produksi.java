@@ -383,10 +383,10 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                 row[4] = result.getInt("jumlah_keping");
                 row[5] = result.getInt("keping_upah");
                 row[6] = result.getInt("berat_basah");
-                row[7] = result.getString("no_kartu_waleta");
-                row[8] = result.getString("ruangan");
-                row[9] = result.getString("memo_lp");
-                row[10] = result.getInt("berat_kering");
+                row[7] = result.getInt("berat_kering");
+                row[8] = result.getString("no_kartu_waleta");
+                row[9] = result.getString("ruangan");
+                row[10] = result.getString("memo_lp");
                 row[11] = result.getInt("harga_baku");
                 row[12] = result.getString("id_order");
                 model.addRow(row);
@@ -993,7 +993,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false
@@ -2401,7 +2401,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
             if (j == -1) {
                 JOptionPane.showMessageDialog(this, "Silahkan klik salah satu LP di tabel!", "warning!", 1);
             } else {
-                String query = "SELECT `no_laporan_produksi`, `tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `tb_laporan_produksi`.`kaki_besar_lp`, `tb_laporan_produksi`.`kaki_kecil_lp`, `tb_laporan_produksi`.`hilang_kaki_lp`, `tb_laporan_produksi`.`ada_susur_lp`, `tb_laporan_produksi`.`ada_susur_besar_lp`, `tb_laporan_produksi`.`tanpa_susur_lp`, `tb_laporan_produksi`.`utuh_lp`, `tb_laporan_produksi`.`hilang_ujung_lp`, `tb_laporan_produksi`.`pecah_1_lp`, `tb_laporan_produksi`.`pecah_2`, `tb_laporan_produksi`.`jumlah_sobek`, `tb_laporan_produksi`.`sobek_lepas`, `tb_laporan_produksi`.`jumlah_gumpil`, `target_ctk_mku`, `rontokan_gbm`, `berat_riil` "
+                String query = "SELECT `no_laporan_produksi`, `tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `tb_laporan_produksi`.`kaki_besar_lp`, `tb_laporan_produksi`.`kaki_kecil_lp`, `tb_laporan_produksi`.`hilang_kaki_lp`, `tb_laporan_produksi`.`ada_susur_lp`, `tb_laporan_produksi`.`ada_susur_besar_lp`, `tb_laporan_produksi`.`tanpa_susur_lp`, `tb_laporan_produksi`.`utuh_lp`, `tb_laporan_produksi`.`hilang_ujung_lp`, `tb_laporan_produksi`.`pecah_1_lp`, `tb_laporan_produksi`.`pecah_2`, `tb_laporan_produksi`.`jumlah_sobek`, `tb_laporan_produksi`.`sobek_lepas`, `tb_laporan_produksi`.`jumlah_gumpil`, `target_ctk_mku`, `rontokan_gbm`, `berat_riil`, `print_number_lp` "
                         + "FROM `tb_laporan_produksi`\n"
                         + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
                         + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
@@ -2513,7 +2513,7 @@ public class JPanel_Laporan_Produksi extends javax.swing.JPanel {
                     }
                     no_lp = no_lp + "'" + Table_laporan_produksi.getValueAt(i, 1).toString() + "'";
                 }
-                String query = "SELECT `no_laporan_produksi`, `tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `tb_laporan_produksi`.`kaki_besar_lp`, `tb_laporan_produksi`.`kaki_kecil_lp`, `tb_laporan_produksi`.`hilang_kaki_lp`, `tb_laporan_produksi`.`ada_susur_lp`, `tb_laporan_produksi`.`ada_susur_besar_lp`, `tb_laporan_produksi`.`tanpa_susur_lp`, `tb_laporan_produksi`.`utuh_lp`, `tb_laporan_produksi`.`hilang_ujung_lp`, `tb_laporan_produksi`.`pecah_1_lp`, `tb_laporan_produksi`.`pecah_2`, `tb_laporan_produksi`.`jumlah_sobek`, `tb_laporan_produksi`.`sobek_lepas`, `tb_laporan_produksi`.`jumlah_gumpil`, `target_ctk_mku`, `rontokan_gbm`, `berat_riil` "
+                String query = "SELECT `no_laporan_produksi`, `tanggal_lp`, `tb_laporan_produksi`.`no_kartu_waleta`, `tb_laporan_produksi`.`kode_grade`, `tb_laporan_produksi`.`ruangan`, `tb_laporan_produksi`.`memo_lp`, `tb_laporan_produksi`.`jumlah_keping`, `tb_laporan_produksi`.`berat_basah`, `tb_laporan_produksi`.`berat_kering`, `tb_laporan_produksi`.`jenis_bulu_lp`, `tb_bahan_baku_masuk_cheat`.`no_registrasi`, `cheat_no_kartu`, `cheat_rsb`, `tb_laporan_produksi`.`kaki_besar_lp`, `tb_laporan_produksi`.`kaki_kecil_lp`, `tb_laporan_produksi`.`hilang_kaki_lp`, `tb_laporan_produksi`.`ada_susur_lp`, `tb_laporan_produksi`.`ada_susur_besar_lp`, `tb_laporan_produksi`.`tanpa_susur_lp`, `tb_laporan_produksi`.`utuh_lp`, `tb_laporan_produksi`.`hilang_ujung_lp`, `tb_laporan_produksi`.`pecah_1_lp`, `tb_laporan_produksi`.`pecah_2`, `tb_laporan_produksi`.`jumlah_sobek`, `tb_laporan_produksi`.`sobek_lepas`, `tb_laporan_produksi`.`jumlah_gumpil`, `target_ctk_mku`, `rontokan_gbm`, `berat_riil`, `print_number_lp` "
                         + "FROM `tb_laporan_produksi`\n"
                         + "LEFT JOIN `tb_bahan_baku_masuk_cheat` ON `tb_laporan_produksi`.`no_kartu_waleta` = `tb_bahan_baku_masuk_cheat`.`no_kartu_waleta`\n"
                         + "LEFT JOIN `tb_grade_bahan_baku` ON `tb_laporan_produksi`.`kode_grade` = `tb_grade_bahan_baku`.`kode_grade`\n"
